@@ -1,0 +1,1 @@
+//! Fast-scheme rendering function.
