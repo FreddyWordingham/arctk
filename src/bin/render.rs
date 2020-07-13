@@ -2,6 +2,7 @@
 
 use arctk::*;
 use attr::input;
+use palette::{Gradient, LinSrgba};
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -18,8 +19,8 @@ struct Parameters {
     // sett: render::Settings,
     /// Surfaces map.
     surfs: Set<form::Mesh>,
-    // /// Colour map.
-    // cols: Set<form::Gradient>,
+    /// Colour map.
+    cols: Set<form::Gradient>,
     // /// Attributes map.
     // attrs: Set<render::Attributes>,
     // /// Scenes.
@@ -31,8 +32,8 @@ pub fn main() {
     banner::title("RENDER");
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, surfs) = build(&in_dir, params);
-    let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
+    let (tree_sett, grid_sett, surfs, _cols) = build(&in_dir, params);
+    let (_tree, _grid) = grow(tree_sett, grid_sett, &surfs);
     banner::section("Finished");
 }
 
@@ -70,7 +71,15 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(in_dir: &Path, params: Parameters) -> (tree::Settings, grid::Settings, Set<Mesh>) {
+fn build(
+    in_dir: &Path,
+    params: Parameters,
+) -> (
+    tree::Settings,
+    grid::Settings,
+    Set<Mesh>,
+    Set<Gradient<LinSrgba>>,
+) {
     banner::section("Building");
     banner::sub_section("Adaptive Tree Settings");
     let tree_sett = params.tree;
@@ -91,14 +100,14 @@ fn build(in_dir: &Path, params: Parameters) -> (tree::Settings, grid::Settings, 
         .expect("Unable to build surfaces.");
     report!("Surfaces", &surfs);
 
-    // banner::sub_section("Colours");
-    // let cols = params
-    //     .cols
-    //     .build(in_dir)
-    //     .expect("Unable to build colour gradients.");
-    // for (group, grad) in cols.map() {
-    //     report!(&format!("[{}]", group), gradient::to_string(&grad, 32));
-    // }
+    banner::sub_section("Colours");
+    let cols = params
+        .cols
+        .build(in_dir)
+        .expect("Unable to build colour gradients.");
+    for (group, grad) in cols.map() {
+        report!(&format!("[{}]", group), gradient::to_string(&grad, 32));
+    }
 
     // banner::sub_section("Attributes");
     // let attrs = params.attrs;
@@ -112,10 +121,8 @@ fn build(in_dir: &Path, params: Parameters) -> (tree::Settings, grid::Settings, 
     // report!("Scenes", &scenes);
 
     (
-        tree_sett, grid_sett,
-        // render_sett,
-        surfs,
-        // cols,
+        tree_sett, grid_sett, // render_sett,
+        surfs, cols,
         // attrs,
         // scenes,
     )
