@@ -18,10 +18,10 @@ pub fn output_derive_impl(input: TokenStream) -> TokenStream {
     };
 
     let output = quote! {
-        impl dia::Save for #name {
+        impl arctk::Save for #name {
             #[inline]
-            fn save(&self, path: &std::path::Path) -> std::result::Result<(), dia::Error> {
-                dia::as_json(self, path)
+            fn save(&self, path: &std::path::Path) -> std::result::Result<(), arctk::Error> {
+                arctk::as_json(self, path)
             }
         }
     };

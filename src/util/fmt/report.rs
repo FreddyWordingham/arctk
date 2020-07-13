@@ -62,7 +62,7 @@ macro_rules! report {
     ($expression: expr) => {
         println!(
             "{}",
-            dia::report::obj(stringify!($expression), $expression)
+            arctk::report::obj(stringify!($expression), $expression)
                 .expect("Could not write object.")
         );
     };
@@ -70,14 +70,14 @@ macro_rules! report {
     ($desc: expr, $expression: expr) => {
         println!(
             "{}",
-            dia::report::obj($desc, $expression).expect("Could not write object.")
+            arctk::report::obj($desc, $expression).expect("Could not write object.")
         );
     };
 
     ($desc: expr, $expression: expr, $units: tt) => {
         println!(
             "{}",
-            dia::report::obj_units($desc, $expression, $units).expect("Could not write object.")
+            arctk::report::obj_units($desc, $expression, $units).expect("Could not write object.")
         );
     };
 }
@@ -122,7 +122,7 @@ macro_rules! report_list {
     ($expression: expr) => {
         println!(
             "{}",
-            dia::report::list(stringify!($expression), $expression)
+            arctk::report::list(stringify!($expression), $expression)
                 .expect("Could not write object.")
         );
     };
@@ -130,14 +130,14 @@ macro_rules! report_list {
     ($desc: expr, $expression: expr) => {
         println!(
             "{}",
-            dia::report::list($desc, $expression).expect("Could not write object.")
+            arctk::report::list($desc, $expression).expect("Could not write object.")
         );
     };
 
     ($desc: expr, $expression: expr, $units: tt) => {
         println!(
             "{}",
-            dia::report::list_units($desc, $expression, $units).expect("Could not write object.")
+            arctk::report::list_units($desc, $expression, $units).expect("Could not write object.")
         );
     };
 }

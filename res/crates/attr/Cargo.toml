@@ -3,7 +3,7 @@ authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
 name = "attr"
 version = "0.0.0"
 description = "Support attribute macro library."
-repository = "https://github.com/FreddyWordingham/dia"
+repository = "https://github.com/FreddyWordingham/arctk"
 readme = "../../../README.md"
 keywords = ["support"]
 catagories = []
@@ -15,11 +15,12 @@ proc-macro = true
 [dependencies]
 proc = { path = "../proc" }
 
-proc-macro2 = "1.0.10"
-quote = "1.0.3"
-syn = { version = "1.0.17", features = ["full"] }
+proc-macro2 = "1.0.*"
+quote = "1.0.*"
+syn = { version = "1.0.*", features = ["full"] }
 
 [profile.dev]
+# Development profile: "cargo build".
 opt-level = 0
 debug = true
 rpath = false
@@ -31,17 +32,33 @@ incremental = true
 overflow-checks = true
 
 [profile.release]
+# Release profile: "cargo build --release"
+# # [DEV RELEASE]
 opt-level = 3
-debug = false
+debug = true
 rpath = false
 lto = false
-debug-assertions = false
+debug-assertions = true
 codegen-units = 16
-panic = 'unwind'
+panic = "unwind"
 incremental = false
-overflow-checks = false
+overflow-checks = true
+
+# [profile.release]
+# # [RELEASE]
+# # Release profile: "cargo build --release"
+# opt-level = 3
+# debug = false
+# rpath = false
+# lto = "fat"
+# debug-assertions = false
+# codegen-units = 1
+# panic = "abort"
+# incremental = false
+# overflow-checks = false
 
 [profile.test]
+# Testing profile: "cargo test"
 opt-level = 0
 debug = 2
 rpath = false
@@ -52,11 +69,12 @@ incremental = true
 overflow-checks = true
 
 [profile.bench]
+# Benchmark profile: "cargo bench" (and "cargo test --release)".
 opt-level = 3
 debug = false
 rpath = false
-lto = false
+lto = "fat"
 debug-assertions = false
-codegen-units = 16
+codegen-units = 1
 incremental = false
 overflow-checks = false
