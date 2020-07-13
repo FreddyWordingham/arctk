@@ -7,7 +7,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
+colored = "1.9.3"
+terminal_size = "0.1.13"
 
 [profile.dev]
 # Development profile: "cargo build".
@@ -55,7 +56,6 @@ rpath = false
 lto = false
 debug-assertions = true
 codegen-units = 16
-panic = "unwind"
 incremental = true
 overflow-checks = true
 
@@ -67,6 +67,5 @@ rpath = false
 lto = "fat"
 debug-assertions = false
 codegen-units = 1
-panic = "abort"
 incremental = false
 overflow-checks = false
