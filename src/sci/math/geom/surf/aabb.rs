@@ -206,7 +206,23 @@ impl Display for Aabb {
     #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
-        display_field_ln!(fmt, "mins", self.mins, "m")?;
-        display_field!(fmt, "maxs", self.maxs, "m")
+        display_field_ln!(
+            fmt,
+            "mins",
+            &format!(
+                "[{:+.2}, {:+.2}, {:+.2}]",
+                self.mins.x, self.mins.y, self.mins.z
+            ),
+            "m"
+        )?;
+        display_field!(
+            fmt,
+            "maxs",
+            &format!(
+                "[{:+.2}, {:+.2}, {:+.2}]",
+                self.maxs.x, self.maxs.y, self.maxs.z
+            ),
+            "m"
+        )
     }
 }
