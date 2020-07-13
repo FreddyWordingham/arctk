@@ -28,6 +28,8 @@ pub enum Error {
     Shape(ndarray::ShapeError),
     /// Parallelisation poison.
     Parallel,
+    /// String error.
+    Text(String),
 }
 
 macro_rules! impl_from_for_err {
@@ -60,6 +62,13 @@ impl<T> From<std::sync::PoisonError<T>> for Error {
     }
 }
 
+impl From<&str> for Error {
+    #[inline]
+    fn from(err: &str) -> Self {
+        Self::Text(err.to_string())
+    }
+}
+
 impl Debug for Error {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
@@ -79,6 +88,7 @@ impl Debug for Error {
                 Self::Format { .. } => "Formatting",
                 Self::Shape { .. } => "Shape",
                 Self::Parallel { .. } => "Parallelisation poison",
+                Self::Text { .. } => "Text string",
             },
             match self {
                 Self::Load { 0: err } => format!("{:?}", err),
@@ -93,6 +103,7 @@ impl Debug for Error {
                 Self::Format { 0: err } => format!("{:?}", err),
                 Self::Shape { 0: err } => format!("{:?}", err),
                 Self::Parallel => "Parallelisation fail".to_string(),
+                Self::Text { 0: err } => format!("{:?}", err),
             }
         )
     }
