@@ -1,3 +1,23 @@
 {
+    tree: {
+        tar_tris: 8,
+        max_depth: 4,
+        padding: 0.1
+    },
+    grid: {
+        boundary: {
+            mins: [-200, -200, -200],
+            maxs: [ 200,  200,  200]
+        },
+        res: [1,1,1]
+    },
 
+
+    surfs: {
+            stand   : [['objs/shatter/stand.obj'], null],
+            bulk    : [['objs/shatter/base_bulk.obj'], null],
+            core    : [['objs/shatter/base_core.obj'], null],
+            gems    : [['objs/shatter/base_gems.obj'], null],
+            vein    : [['objs/shatter/base_vein.obj'], null],
+    },
 }
