@@ -4,10 +4,10 @@ use crate::{Aabb, Grp, SmoothTriangle};
 
 /// Tree cell enumeration.
 ///
-///         6npp   7ppp
-///       4nnp   5pnp
-/// z  y    2npn   3ppn
-/// | /   0nnn   1pnn
+///         6 npp   7 ppp
+///       4 nnp   5 pnp
+/// z  y    2 npn   3 ppn
+/// | /   0 nnn   1 pnn
 /// |/__x
 pub enum Cell<'a> {
     /// Root cell.
