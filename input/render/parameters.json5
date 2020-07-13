@@ -11,26 +11,66 @@
         },
         res: [1,1,1]
     },
-    technical: {
-        bump_dist       : 1e-6,
-        block_size      : 200,
-        sub_block_size  : 10,
-        min_weight      : 0.01,
-        order           : 'Backward',
-        live            : true
+    sett: {
+        engine      : 'Test',
+        order       : 'Backward',
+        bump_dist   : 1e-6,
+        min_weight  : 0.01,
+        block_size  : 200,
+        live        : 1000
     },
     surfs: {
         stand   : [['objs/shatter/stand.obj'], null],
         bulk    : [['objs/shatter/base_bulk.obj'], null],
         core    : [['objs/shatter/base_core.obj'], null],
         gems    : [['objs/shatter/base_gems.obj'], null],
-        vein    : [['objs/shatter/base_vein.obj'], null],
+        vein    : [['objs/shatter/base_vein.obj'], null]
+    },
+    attrs: {
+        gems: { Mirror: {abs: 0.3} },
+        vein: { Refractive: {abs:0.05, inside: 1.5, outside: 1.0} }
     },
     cols: {
         core    : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
         gems    : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
         vein    : ['#ffe200ff', '#ff4700ff', '#ff000dff'],
-        bulk    : ['#0542A8ff', '#1552C6ff', '#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff', '#71A8EEff'],
+        bulk    : ['#0542A8ff', '#1552C6ff', '#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff', '#71A8EEff']
     },
+    scenes: {
+        first_view: {
+            cam: {
+                pos     : [2.1, -1.1, 1.1],
+                tar     : [0.0, 0.0, 0.5],
+                // dof     : [17, 0.1],
+                // swivel  : [0.1, 0.1],
+                hr_fov  : 75.0,
+                aspect  : "Square",
+                hr_res  : 1024,
+                // ss_power: 2
+            },
+            lighting: {
+                samples: {
+                    // ambient_occlusion   : 64,
+                    // soft_shadows        : 17
+                },
+                sky: {
+                    brightness  : 0.7,
+                    sun_pos     : [10.0, 10.0, 10.0],
+                    sun_rad     : 0.2
+                },
+                light: {
+                    ambient : 0.3,
+                    diffuse : 0.5,
+                    specular: 0.2,
+                    spec_pow: 8
+                },
+                shadow: {
+                    ambient : 0.7,
+                    direct  : 0.3,
+                    ao_pow  : 2
+                }
+            }
+        }
+    }
 }

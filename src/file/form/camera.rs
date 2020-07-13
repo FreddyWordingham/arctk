@@ -16,7 +16,7 @@ pub struct Camera {
     tar: Pos3,
     /// Optional depth-of-field samples and maximum angular sample [deg].
     dof: Option<(i32, f64)>,
-    /// Optional targeting swivel adjustment.
+    /// Optional targeting swivel adjustment [deg].
     swivel: Option<[f64; 2]>,
     /// Horizontal field of view [deg].
     hr_fov: f64,
@@ -68,11 +68,7 @@ impl Display for Camera {
             display_field_ln!(fmt, "depth-of-field", "[OFF]")?;
         }
         if let Some(s) = self.swivel {
-            display_field_ln!(
-                fmt,
-                "depth-of-field samples",
-                &format!("{:.2}, {:.2}", s[X], s[Y])
-            )?;
+            display_field_ln!(fmt, "swivel", &format!("{:.2}, {:.2}", s[X], s[Y]), "deg")?;
         } else {
             display_field_ln!(fmt, "swivel", "[OFF]")?;
         }

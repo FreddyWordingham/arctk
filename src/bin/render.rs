@@ -15,16 +15,16 @@ struct Parameters {
     tree: tree::Settings,
     /// Regular grid settings.
     grid: grid::Settings,
-    // /// Render runtime settings.
-    // sett: render::Settings,
+    /// Render runtime settings.
+    sett: render::Technical,
     /// Surfaces map.
     surfs: Set<form::Mesh>,
+    /// Attributes map.
+    attrs: Set<render::Attributes>,
     /// Colour map.
     cols: Set<form::Gradient>,
-    // /// Attributes map.
-    // attrs: Set<render::Attributes>,
-    // /// Scenes.
-    // scenes: Set<form::Scene>,
+    /// Scenes.
+    scenes: Set<render::Scene>,
 }
 
 /// Main function.
@@ -32,7 +32,7 @@ pub fn main() {
     banner::title("RENDER");
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, surfs, _cols) = build(&in_dir, params);
+    let (tree_sett, grid_sett, _render_sett, surfs, _attrs, _cols) = build(&in_dir, params);
     let (_tree, _grid) = grow(tree_sett, grid_sett, &surfs);
     banner::section("Finished");
 }
@@ -77,7 +77,9 @@ fn build(
 ) -> (
     tree::Settings,
     grid::Settings,
+    render::Technical,
     Set<Mesh>,
+    Set<render::Attributes>,
     Set<Gradient<LinSrgba>>,
 ) {
     banner::section("Building");
@@ -89,9 +91,9 @@ fn build(
     let grid_sett = params.grid;
     report!("Grid settings", &grid_sett);
 
-    // banner::sub_section("Render Settings");
-    // let render_sett = params.sett;
-    // report!("Render settings", &render_sett);
+    banner::sub_section("Render Settings");
+    let render_sett = params.sett;
+    report!("Render settings", &render_sett);
 
     banner::sub_section("Surfaces");
     let surfs = params
@@ -99,6 +101,10 @@ fn build(
         .build(in_dir)
         .expect("Unable to build surfaces.");
     report!("Surfaces", &surfs);
+
+    banner::sub_section("Attributes");
+    let attrs = params.attrs;
+    report!("Attributes", &attrs);
 
     banner::sub_section("Colours");
     let cols = params
@@ -109,10 +115,6 @@ fn build(
         report!(&format!("[{}]", group), gradient::to_string(&grad, 32));
     }
 
-    // banner::sub_section("Attributes");
-    // let attrs = params.attrs;
-    // report!("Attributes", &attrs);
-
     // banner::sub_section("Scenes");
     // let scenes = params
     //     .scenes
@@ -121,9 +123,12 @@ fn build(
     // report!("Scenes", &scenes);
 
     (
-        tree_sett, grid_sett, // render_sett,
-        surfs, cols,
-        // attrs,
+        tree_sett,
+        grid_sett,
+        render_sett,
+        surfs,
+        attrs,
+        cols,
         // scenes,
     )
 }
