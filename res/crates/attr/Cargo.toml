@@ -1,0 +1,62 @@
+[package]
+authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
+name = "attr"
+version = "0.0.0"
+description = "Support attribute macro library."
+repository = "https://github.com/FreddyWordingham/dia"
+readme = "../../../README.md"
+keywords = ["support"]
+catagories = []
+edition = "2018"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc = { path = "../proc" }
+
+proc-macro2 = "1.0.10"
+quote = "1.0.3"
+syn = { version = "1.0.17", features = ["full"] }
+
+[profile.dev]
+opt-level = 0
+debug = true
+rpath = false
+lto = false
+debug-assertions = true
+codegen-units = 16
+panic = 'unwind'
+incremental = true
+overflow-checks = true
+
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = false
+debug-assertions = false
+codegen-units = 16
+panic = 'unwind'
+incremental = false
+overflow-checks = false
+
+[profile.test]
+opt-level = 0
+debug = 2
+rpath = false
+lto = false
+debug-assertions = true
+codegen-units = 16
+incremental = true
+overflow-checks = true
+
+[profile.bench]
+opt-level = 3
+debug = false
+rpath = false
+lto = false
+debug-assertions = false
+codegen-units = 16
+incremental = false
+overflow-checks = false

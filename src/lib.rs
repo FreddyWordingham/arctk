@@ -27,6 +27,15 @@
     clippy::cast_sign_loss
 )]
 
+pub mod error;
+// pub mod file;
+// pub mod sci;
+// pub mod sim;
+// pub mod tools;
 pub mod util;
 
-pub use self::util::*;
+pub use self::{
+    error::*,
+    // file::*, sci::*, sim::*, tools::*,
+    util::*,
+};
