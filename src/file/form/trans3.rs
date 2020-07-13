@@ -43,7 +43,6 @@ impl Build for Trans3 {
 }
 
 impl Display for Trans3 {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         if let Some(trans) = self.trans {

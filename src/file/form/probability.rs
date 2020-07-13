@@ -44,7 +44,6 @@ impl Build for Probability {
 }
 
 impl Display for Probability {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         let kind = match self {

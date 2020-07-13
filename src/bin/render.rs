@@ -24,7 +24,7 @@ struct Parameters {
     /// Colour map.
     cols: Set<form::Gradient>,
     /// Scenes.
-    scenes: Set<render::Scene>,
+    scenes: Set<form::Scene>,
 }
 
 /// Main function.
@@ -32,7 +32,8 @@ pub fn main() {
     banner::title("RENDER");
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, _render_sett, surfs, _attrs, _cols) = build(&in_dir, params);
+    let (tree_sett, grid_sett, _render_sett, surfs, _attrs, _cols, _scenes) =
+        build(&in_dir, params);
     let (_tree, _grid) = grow(tree_sett, grid_sett, &surfs);
     banner::section("Finished");
 }
@@ -81,6 +82,7 @@ fn build(
     Set<Mesh>,
     Set<render::Attributes>,
     Set<Gradient<LinSrgba>>,
+    Set<render::Scene>,
 ) {
     banner::section("Building");
     banner::sub_section("Adaptive Tree Settings");
@@ -115,12 +117,12 @@ fn build(
         report!(&format!("[{}]", group), gradient::to_string(&grad, 32));
     }
 
-    // banner::sub_section("Scenes");
-    // let scenes = params
-    //     .scenes
-    //     .build(in_dir)
-    //     .expect("Unable to build scenes.");
-    // report!("Scenes", &scenes);
+    banner::sub_section("Scenes");
+    let scenes = params
+        .scenes
+        .build(in_dir)
+        .expect("Unable to build scenes.");
+    report!("Scenes", &scenes);
 
     (
         tree_sett,
@@ -129,7 +131,7 @@ fn build(
         surfs,
         attrs,
         cols,
-        // scenes,
+        scenes,
     )
 }
 

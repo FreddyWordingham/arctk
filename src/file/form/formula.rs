@@ -58,7 +58,6 @@ impl Build for Formula {
 }
 
 impl Display for Formula {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         let kind = match self {

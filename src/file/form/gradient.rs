@@ -38,7 +38,6 @@ impl Build for Gradient {
 }
 
 impl Display for Gradient {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field!(fmt, "number of colours", self.0.len())

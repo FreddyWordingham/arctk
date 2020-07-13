@@ -11,7 +11,6 @@ pub enum Engine {
 }
 
 impl Display for Engine {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         let kind = match self {

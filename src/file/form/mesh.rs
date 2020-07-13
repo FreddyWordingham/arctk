@@ -41,7 +41,6 @@ impl Build for Mesh {
 }
 
 impl Display for Mesh {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "number of objects", self.0.len())?;

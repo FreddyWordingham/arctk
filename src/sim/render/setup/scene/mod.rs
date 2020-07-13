@@ -4,14 +4,12 @@ pub mod lighting;
 
 pub use self::lighting::*;
 
-use crate::{access, display_field, display_field_ln, form::Camera};
-use attr::load;
+use crate::{access, display_field, display_field_ln, render::Camera};
 use std::fmt::{Display, Formatter, Result};
 
 /// Scene settings structure.
-#[load]
 pub struct Scene {
-    /// Engine selection.
+    /// Camera.
     cam: Camera,
     /// Lighting properties.
     lighting: Lighting,
@@ -20,10 +18,16 @@ pub struct Scene {
 impl Scene {
     access!(cam, Camera);
     access!(lighting, Lighting);
+
+    /// Construct a new instance.
+    #[inline]
+    #[must_use]
+    pub fn new(cam: Camera, lighting: Lighting) -> Self {
+        Self { cam, lighting }
+    }
 }
 
 impl Display for Scene {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "camera", &self.cam)?;
