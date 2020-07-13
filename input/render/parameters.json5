@@ -46,8 +46,8 @@
                 // swivel  : [0.1, 0.1],
                 hr_fov  : 75.0,
                 aspect  : "Square",
-                hr_res  : 1024,
-                // ss_power: 2
+                // ss_power: 2,
+                hr_res  : 1024
             },
             lighting: {
                 samples: {
