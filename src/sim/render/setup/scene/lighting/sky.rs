@@ -1,10 +1,11 @@
 //! Sky setup structure.
 
 use crate::{access, clone, display_field, display_field_ln, Pos3};
+use attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Lighting structure.
-#[derive(Debug)]
+#[load]
 pub struct Sky {
     /// Sky brightness fraction.
     brightness: f64,

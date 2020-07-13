@@ -38,6 +38,22 @@ impl Orient {
         }
     }
 
+    /// Construct with an up-direction.
+    #[inline]
+    #[must_use]
+    pub fn new_up(ray: Ray, up: &Dir3) -> Self {
+        let (pos, forward) = ray.destruct();
+        let right = Dir3::new_normalize(forward.cross(up));
+        let up = Dir3::new_normalize(right.cross(&forward));
+
+        Self {
+            pos,
+            forward,
+            up,
+            right,
+        }
+    }
+
     /// Construct a new instance.
     #[inline]
     #[must_use]
