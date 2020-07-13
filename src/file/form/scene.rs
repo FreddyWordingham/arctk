@@ -1,6 +1,10 @@
-//! Scene settings structure.
+//! Scene builder structure.
 
-use crate::{display_field, display_field_ln, form::Camera, render::Lighting, Build, Error};
+use crate::{
+    display_field, display_field_ln,
+    form::{Camera, Lighting},
+    Build, Error,
+};
 use attr::load;
 use std::fmt::{Display, Formatter};
 use std::path::Path;
@@ -19,7 +23,10 @@ impl Build for Scene {
 
     #[inline]
     fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        Ok(Self::Inst::new(self.cam.build(in_dir)?, self.lighting))
+        Ok(Self::Inst::new(
+            self.cam.build(in_dir)?,
+            self.lighting.build(in_dir)?,
+        ))
     }
 }
 

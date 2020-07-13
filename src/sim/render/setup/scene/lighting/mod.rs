@@ -7,13 +7,10 @@ pub mod sky;
 
 pub use self::{light::*, samples::*, shadow::*, sky::*};
 
-/// Conglomerate lighting setup structure.
 use crate::{access, display_field, display_field_ln};
-use attr::load;
 use std::fmt::{Display, Formatter, Result};
 
-/// Lighting structure.
-#[load]
+/// Conglomerate lighting setup structure.
 pub struct Lighting {
     /// Sky settings.
     sky: Sky,

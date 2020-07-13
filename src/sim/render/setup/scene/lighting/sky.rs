@@ -1,11 +1,9 @@
 //! Sky setup structure.
 
 use crate::{access, clone, display_field, display_field_ln, Pos3};
-use attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Lighting structure.
-#[load]
 pub struct Sky {
     /// Sky brightness fraction.
     brightness: f64,
@@ -42,6 +40,6 @@ impl Display for Sky {
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "sky brightness", self.brightness)?;
         display_field_ln!(fmt, "sun position", &self.sun_pos, "m")?;
-        display_field!(fmt, "sun radius", &self.sun_rad.to_degrees(), "deg")
+        display_field!(fmt, "sun radius", self.sun_rad.to_degrees(), "deg")
     }
 }
