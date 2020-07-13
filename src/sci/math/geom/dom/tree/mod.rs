@@ -3,12 +3,6 @@
 use crate::{Aabb, Grp, SmoothTriangle};
 
 /// Tree cell enumeration.
-///
-///           six npp  seven ppp
-///        four nnp   five pnp
-/// z   y     two npn   three ppn
-/// |  /   zero nnn    one pnn
-/// |/__x
 pub enum Cell<'a> {
     /// Root cell.
     Root {
