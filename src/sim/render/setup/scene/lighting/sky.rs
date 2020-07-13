@@ -24,7 +24,7 @@ impl Sky {
     pub fn new(brightness: f64, sun_pos: Pos3, sun_rad: f64) -> Self {
         debug_assert!(brightness >= 0.0);
         debug_assert!(brightness >= 0.0);
-        debug_assert!(sun_rad <= 0.0);
+        debug_assert!(sun_rad >= 0.0);
 
         Self {
             brightness,
