@@ -1,12 +1,13 @@
 //! Rendering engine: Test.
 
 pub mod event;
-pub mod input;
 
 pub use self::event::*;
-pub use self::input::*;
 
-use crate::{render::Scene, Ray};
+use crate::{
+    render::{Input, Scene},
+    Ray,
+};
 use palette::LinSrgba;
 use rand::rngs::ThreadRng;
 

@@ -35,19 +35,12 @@ pub fn main() {
     let (tree_sett, grid_sett, render_sett, surfs, attrs, cols, scenes) = build(&in_dir, params);
     let engine = render_sett.engine();
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
+    let input = render::Input::new(&tree, &grid, &render_sett, &surfs, &attrs, &cols);
     for (name, scene) in scenes.map() {
         banner::section(&format!("Scene: {}", name));
 
         match engine {
             form::Engine::Test => {
-                let input = render::engine::test::Input::new(
-                    &tree,
-                    &grid,
-                    &render_sett,
-                    &surfs,
-                    &attrs,
-                    &cols,
-                );
                 let output = render::live::run();
             }
         };
