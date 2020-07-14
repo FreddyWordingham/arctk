@@ -40,8 +40,14 @@ pub fn main() {
 
         match engine {
             form::Engine::Test => {
-                let input =
-                    render::test::Input::new(&tree, &grid, &render_sett, &surfs, &attrs, &cols);
+                let input = render::engine::test::Input::new(
+                    &tree,
+                    &grid,
+                    &render_sett,
+                    &surfs,
+                    &attrs,
+                    &cols,
+                );
                 let output = render::live::run();
             }
         };

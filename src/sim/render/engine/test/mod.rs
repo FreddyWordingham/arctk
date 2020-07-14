@@ -5,3 +5,24 @@ pub mod input;
 
 pub use self::event::*;
 pub use self::input::*;
+
+use crate::{render::Scene, Ray};
+use palette::LinSrgba;
+use rand::rngs::ThreadRng;
+
+/// Test rendering engine function.
+#[allow(clippy::never_loop)]
+#[allow(clippy::option_expect_used)]
+#[allow(clippy::single_match_else)]
+#[allow(clippy::too_many_lines)]
+#[inline]
+#[must_use]
+pub fn engine(
+    mut rng: &mut ThreadRng,
+    input: &Input,
+    scene: &Scene,
+    mut ray: Ray,
+    mut weight: f64,
+) -> LinSrgba {
+    LinSrgba::default()
+}
