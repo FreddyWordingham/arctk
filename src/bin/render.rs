@@ -30,7 +30,7 @@ struct Parameters {
 /// Main function.
 pub fn main() {
     banner::title("RENDER");
-    let (params_path, in_dir, _out_dir) = init();
+    let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
     let (tree_sett, grid_sett, render_sett, surfs, attrs, cols, scenes) = build(&in_dir, params);
     let engine = render_sett.engine();
@@ -41,7 +41,11 @@ pub fn main() {
 
         match engine {
             form::Engine::Test => {
-                let _output = render::engine::test::live::run(&input, &scene);
+                let output = render::engine::test::live::run(&input, &scene);
+                output
+                    .expect("Rendering failed.")
+                    .save(&out_dir)
+                    .expect("Failed to save output data.");
             }
         };
     }

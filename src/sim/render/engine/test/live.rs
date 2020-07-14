@@ -12,13 +12,13 @@ use crate::{
 /// a mutex unwrapping failed or
 /// an arc unwrapping failed.
 #[inline]
-pub fn run(_input: &Input, _scene: &Scene) -> Result<Output, Error> {
-    let output = Output::new();
-
+pub fn run(_input: &Input, scene: &Scene) -> Result<Output, Error> {
     // let num_pixels = scene.cam().sensor().num_pixels();
-    // let width = scene.cam().sensor().res().0 as usize;
-    // let height = scene.cam().sensor().res().1 as usize;
+    let width = scene.cam().sensor().res().0 as usize;
+    let height = scene.cam().sensor().res().1 as usize;
 
+    let output = Output::new([width, height]);
+    Ok(output)
     // let order: Vec<u64> = match input.sett.order() {
     //     Order::Forward => (0..num_pixels).collect(),
     //     Order::Backward => {

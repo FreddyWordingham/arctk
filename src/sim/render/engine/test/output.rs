@@ -37,10 +37,13 @@ impl AddAssign<&Self> for Output {
 impl Save for Output {
     #[inline]
     fn save(&self, out_dir: &Path) -> Result<(), Error> {
-        let path = out_dir.join("image.png");
+        let time = chrono::offset::Local::now()
+            .format("%Y%m%d%H%M%S")
+            .to_string();
+        let path = out_dir.join(&format!("{}_{}", time, "image.png"));
         println!("Saving: {}", path.display());
         self.image.save(&path)?;
-        let path = out_dir.join("time.png");
+        let path = out_dir.join(&format!("{}_{}", time, "time.png"));
         println!("Saving: {}", path.display());
         self.time.save(&path)
     }
