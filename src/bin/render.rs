@@ -41,7 +41,7 @@ pub fn main() {
 
         match engine {
             form::Engine::Test => {
-                let output = render::live::run();
+                let _output = render::engine::test::live::run(&input, &scene);
             }
         };
     }

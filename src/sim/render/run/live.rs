@@ -1,1 +1,0 @@
-//! Live-scheme rendering function.
