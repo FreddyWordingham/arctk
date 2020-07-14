@@ -133,12 +133,14 @@ fn render_pix(
             let t = time_scaler(weight * time as f64);
             let time_col = input.cols.map()["time"].get(t as f32);
             data.lock().expect("Could not lock data.").time[pixel] = time_col;
+            let raw_time: [u8; 4] = time_col.into_format().into_raw();
 
             data.lock().expect("Could not lock data.").image[pixel] = col;
-            let raw_col: [u8; 4] = col.into_format().into_raw();
+            let _raw_col: [u8; 4] = col.into_format().into_raw();
             buffer.lock().expect("Could not lock window buffer.")
                 [(total_pixels - (p + 1)) as usize] =
-                from_u8_rgb(raw_col[RED], raw_col[GREEN], raw_col[BLUE]);
+                // from_u8_rgb(raw_col[RED], raw_col[GREEN], raw_col[BLUE]);
+                from_u8_rgb(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
         }
     }
 }

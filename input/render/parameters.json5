@@ -13,11 +13,11 @@
     },
     sett: {
         engine      : 'Test',
-        order       : 'Backward',
+        order       : 'Forward',
         bump_dist   : 1e-6,
         min_weight  : 0.01,
-        block_size  : 200,
-        live        : 1000
+        block_size  : 1,
+        live        : 10
     },
     surfs: {
         stand   : [['objs/shatter/stand.obj'], null],
