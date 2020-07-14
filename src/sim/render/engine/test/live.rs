@@ -1,6 +1,10 @@
 //! Live-scheme rendering function.
 
-use crate::render::{Input, Scene};
+use super::Output;
+use crate::{
+    render::{Input, Scene},
+    Error,
+};
 
 /// Render an image with a live preview.
 /// # Errors
@@ -8,9 +12,9 @@ use crate::render::{Input, Scene};
 /// a mutex unwrapping failed or
 /// an arc unwrapping failed.
 #[inline]
-pub fn run(_input: &Input, _scene: &Scene)
-// -> Result<Output, Error>
-{
+pub fn run(_input: &Input, _scene: &Scene) -> Result<Output, Error> {
+    let output = Output::new();
+
     // let num_pixels = scene.cam().sensor().num_pixels();
     // let width = scene.cam().sensor().res().0 as usize;
     // let height = scene.cam().sensor().res().1 as usize;

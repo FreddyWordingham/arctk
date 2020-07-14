@@ -6,8 +6,10 @@ use crate::{
     Build, Error,
 };
 use attr::load;
-use std::fmt::{Display, Formatter};
-use std::path::Path;
+use std::{
+    fmt::{Display, Formatter},
+    path::Path,
+};
 
 /// Scene settings structure.
 #[load]
