@@ -32,9 +32,20 @@ pub fn main() {
     banner::title("RENDER");
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, _render_sett, surfs, _attrs, _cols, _scenes) =
-        build(&in_dir, params);
-    let (_tree, _grid) = grow(tree_sett, grid_sett, &surfs);
+    let (tree_sett, grid_sett, render_sett, surfs, attrs, cols, scenes) = build(&in_dir, params);
+    let engine = render_sett.engine();
+    let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
+    for (name, scene) in scenes.map() {
+        banner::section(&format!("Scene: {}", name));
+
+        match engine {
+            form::Engine::Test => {
+                let input =
+                    render::test::Input::new(&tree, &grid, &render_sett, &surfs, &attrs, &cols);
+                let output = render::live::run();
+            }
+        };
+    }
     banner::section("Finished");
 }
 
