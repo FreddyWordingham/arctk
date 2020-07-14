@@ -1,6 +1,7 @@
 //! Rendering order enumeration implementation.
 
 use attr::load;
+use rand::{seq::SliceRandom, thread_rng};
 use std::fmt::{Display, Formatter, Result};
 
 /// Rendering order.
@@ -13,6 +14,27 @@ pub enum Order {
     Backward,
     /// Shuffle.
     Shuffle,
+}
+
+impl Order {
+    /// Generate the order list.
+    #[inline]
+    #[must_use]
+    pub fn list(&self, n: u64) -> Vec<u64> {
+        match self {
+            Order::Forward => (0..n).collect(),
+            Order::Backward => {
+                let mut ord: Vec<u64> = (0..n).collect();
+                ord.reverse();
+                ord
+            }
+            Order::Shuffle => {
+                let mut ord: Vec<u64> = (0..n).collect();
+                ord.shuffle(&mut thread_rng());
+                ord
+            }
+        }
+    }
 }
 
 impl Display for Order {
