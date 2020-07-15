@@ -75,8 +75,15 @@ impl Crossing {
     /// Calculate the reflection direction.
     #[inline]
     #[must_use]
-    pub fn init_ref_dir(inc: &Dir3, norm: &Dir3, ci: f64) -> Dir3 {
+    fn init_ref_dir(inc: &Dir3, norm: &Dir3, ci: f64) -> Dir3 {
         Dir3::new_unchecked(inc.into_inner() + (2.0 * ci * norm.into_inner()))
+    }
+
+    /// Calculate the reflection direction and the required constant.
+    #[inline]
+    #[must_use]
+    pub fn calc_ref_dir(inc: &Dir3, norm: &Dir3) -> Dir3 {
+        Self::init_ref_dir(inc, norm, -inc.dot(norm))
     }
 
     /// Calculate the transmission direction.
