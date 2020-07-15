@@ -1,6 +1,6 @@
 //! Image painter function.
 
-use super::Event;
+use super::{illumination, Event};
 use crate::{
     render::{Attributes, Input, Scene},
     Crossing, Dir3, Hit, Ray, Trace,
@@ -124,12 +124,9 @@ pub fn paint(
 
 /// Perform a colouring.
 #[inline]
-fn colour(_rng: &mut ThreadRng, input: &Input, scene: &Scene, ray: &Ray, hit: &Hit) -> LinSrgba {
-    // let light = (light(scene, ray, hit) + 0.5).min(1.0);
-    // let shadow = shadow(input, scene, ray, hit, input.sett.bump_dist(), rng);
-
-    let light = 1.0;
-    let shadow = 0.7;
+fn colour(rng: &mut ThreadRng, input: &Input, scene: &Scene, ray: &Ray, hit: &Hit) -> LinSrgba {
+    let light = illumination::light(scene, ray, hit);
+    let shadow = illumination::shadow(input, scene, ray, hit, input.sett.bump_dist(), rng);
 
     let sun_dir = Dir3::new_normalize(ray.pos() - scene.lighting().sky().sun_pos());
     let base_col = input.cols.map()[hit.group()].get(hit.side().norm().dot(&sun_dir).abs() as f32);

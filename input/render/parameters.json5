@@ -13,11 +13,11 @@
     },
     sett: {
         engine      : 'Test',
-        order       : 'Shuffle',
+        order       : 'Forward',
         bump_dist   : 1e-6,
         min_weight  : 0.01,
-        block_size  : 10,
-        live        : 1000
+        block_size  : 1,
+        live        : 10
     },
     surfs: {
         stand   : [['objs/shatter/stand.obj'], null],
@@ -27,8 +27,8 @@
         vein    : [['objs/shatter/base_vein.obj'], null]
     },
     attrs: {
-        gems: { Mirror: {abs: 0.3} },
-        vein: { Refractive: {abs:0.05, inside: 1.5, outside: 1.0} }
+        // gems: { Mirror: {abs: 0.3} },
+        // vein: { Refractive: {abs:0.05, inside: 1.5, outside: 1.0} }
     },
     cols: {
         time    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
@@ -41,19 +41,19 @@
     scenes: {
         first_view: {
             cam: {
-                pos     : [2.1, -1.1, 1.1],
-                tar     : [0.0, 0.0, 0.5],
+                pos     : [2.123, -1.21213, 1.1213],
+                tar     : [0.002131, 0.0021331, 0.5023],
                 // dof     : [17, 0.1],
                 // swivel  : [0.1, 0.1],
                 hr_fov  : 75.0,
                 aspect  : "Square",
                 // ss_power: 2,
-                hr_res  : 1024
+                hr_res  : 124
             },
             lighting: {
                 samples: {
-                    // ambient_occlusion   : 64,
-                    // soft_shadows        : 17
+                    ambient_occlusion   : 64,
+                    soft_shadows        : 17
                 },
                 sky: {
                     brightness  : 0.7,
