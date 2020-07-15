@@ -1,13 +1,14 @@
 //! Live-scheme rendering function.
 
-use super::Output;
+use super::{paint, Output};
 use crate::{
+    fmt::rgb::components_to_u32,
     render::{Input, Scene},
-    Bar, Error, Ray, SilentBar, BLUE, GREEN, RED,
+    Bar, Error, SilentBar, BLUE, GREEN, RED,
 };
 use minifb::{CursorStyle, Scale, ScaleMode, Window, WindowOptions};
-use palette::{LinSrgba, Pixel};
-use rand::{rngs::ThreadRng, thread_rng, Rng};
+use palette::Pixel;
+use rand::{thread_rng, Rng};
 use rayon::prelude::*;
 use std::{
     f64::consts::PI,
@@ -31,7 +32,7 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
 
     let buffer: Vec<u32> = vec![0; num_pixels as usize];
     let buffer = Arc::new(Mutex::new(buffer));
-    let mut img_win = Window::new(
+    let mut window = Window::new(
         "ARCTK - Rendering",
         width,
         height,
@@ -43,8 +44,8 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
         },
     )
     .expect("Could not create live window.");
-    img_win.set_cursor_style(CursorStyle::Crosshair);
-    img_win
+    window.set_cursor_style(CursorStyle::Crosshair);
+    window
         .update_with_buffer(&buffer.lock()?, width, height)
         .expect("Could not update window buffer.");
 
@@ -59,10 +60,10 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
         let pb = Arc::new(Mutex::new(pb));
 
         while !pb.lock()?.is_done() {
-            let _out: Vec<()> = threads
+            threads
                 .par_iter()
                 .map(|_id| {
-                    render_pix(
+                    render_range(
                         &order,
                         start,
                         &Arc::clone(&pb),
@@ -72,10 +73,10 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
                         &Arc::clone(&buffer),
                     )
                 })
-                .collect();
+                .collect::<()>();
         }
 
-        img_win
+        window
             .update_with_buffer(&buffer.lock()?, width, height)
             .expect("Could not update window buffer.");
     }
@@ -91,9 +92,9 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
 /// Render a range of pixels using a single thread.
 #[allow(clippy::result_expect_used)]
 #[inline]
-fn render_pix(
+fn render_range(
     order: &[u64],
-    buffer_start: u64,
+    offset: u64,
     pb: &Arc<Mutex<SilentBar>>,
     input: &Input,
     scene: &Scene,
@@ -110,17 +111,20 @@ fn render_pix(
 
     if let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
-        let b = pb.block(input.sett.block_size());
+        let block = pb.block(input.sett.block_size());
         std::mem::drop(pb);
-        b
+        block
     } {
-        for q in start..end {
+        for i in start..end {
+            // Timing.
             let now = std::time::Instant::now();
 
-            let p = order[(q + buffer_start) as usize];
+            // Pixel index.
+            let p = order[(i + offset) as usize];
             let pixel = [(p % h_res) as usize, (p / h_res) as usize];
-            let mut col = palette::LinSrgba::default();
 
+            // Image colour.
+            let mut col = palette::LinSrgba::default();
             for sub_sample in 0..super_samples {
                 let offset = rng.gen_range(0.0, 2.0 * PI);
                 for depth_sample in 0..dof_samples {
@@ -128,50 +132,27 @@ fn render_pix(
                     col += paint(&mut rng, input, scene, ray, 1.0) * weight as f32;
                 }
             }
+            data.lock().expect("Could not lock data.").image[pixel] = col;
+            let _raw_col: [u8; 4] = col.into_format().into_raw();
 
+            // Time colour.
             let time = std::time::Instant::now().duration_since(now).as_nanos();
             let t = time_scaler(weight * time as f64);
             let time_col = input.cols.map()["time"].get(t as f32);
             data.lock().expect("Could not lock data.").time[pixel] = time_col;
             let raw_time: [u8; 4] = time_col.into_format().into_raw();
 
-            data.lock().expect("Could not lock data.").image[pixel] = col;
-            let _raw_col: [u8; 4] = col.into_format().into_raw();
+            // Window writing.
             buffer.lock().expect("Could not lock window buffer.")
                 [(total_pixels - (p + 1)) as usize] =
-                // from_u8_rgb(raw_col[RED], raw_col[GREEN], raw_col[BLUE]);
-                from_u8_rgb(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
+                components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
         }
     }
-}
-
-/// Naboo rendering engine function.
-#[allow(clippy::never_loop)]
-#[allow(clippy::option_expect_used)]
-#[allow(clippy::single_match_else)]
-#[allow(clippy::too_many_lines)]
-#[inline]
-#[must_use]
-pub fn paint(
-    mut _rng: &mut ThreadRng,
-    _input: &Input,
-    _scene: &Scene,
-    mut _ray: Ray,
-    mut _weight: f64,
-) -> LinSrgba {
-    LinSrgba::default()
-}
-
-/// Create a 32 bit colour representation from 8 bit components.
-#[inline]
-#[must_use]
-const fn from_u8_rgb(r: u8, g: u8, b: u8) -> u32 {
-    ((r as u32) << 16) | ((g as u32) << 8) | (b as u32)
 }
 
 /// Scale a time in nano seconds to between zero and unity.
 #[inline]
 #[must_use]
 fn time_scaler(time: f64) -> f64 {
-    (time.log10() * 0.1).min(1.0)
+    time.log10().max(0.0).min(10.0) * 0.1
 }

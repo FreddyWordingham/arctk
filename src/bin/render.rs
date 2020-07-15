@@ -30,12 +30,18 @@ struct Parameters {
 /// Main function.
 pub fn main() {
     banner::title("RENDER");
+
     let (params_path, in_dir, out_dir) = init();
+
     let params = input(&in_dir, &params_path);
+
     let (tree_sett, grid_sett, render_sett, surfs, attrs, cols, scenes) = build(&in_dir, params);
     let engine = render_sett.engine();
+
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
+
     let input = render::Input::new(&tree, &grid, &render_sett, &surfs, &attrs, &cols);
+
     for (name, scene) in scenes.map() {
         banner::section(&format!("Scene: {}", name));
 
@@ -49,6 +55,7 @@ pub fn main() {
             }
         };
     }
+
     banner::section("Finished");
 }
 
