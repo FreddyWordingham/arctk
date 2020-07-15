@@ -109,6 +109,11 @@ fn render_range(
 
     let weight = 1.0 / f64::from(super_samples * dof_samples);
 
+    let tl_offset = 0;
+    let tr_offset = h_res;
+    let bl_offset = 2 * total_pixels;
+    let br_offset = tr_offset + bl_offset;
+
     if let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
         let block = pb.block(input.sett.block_size());
@@ -133,7 +138,7 @@ fn render_range(
                 }
             }
             data.lock().expect("Could not lock data.").image[pixel] = col;
-            let _raw_col: [u8; 4] = col.into_format().into_raw();
+            let raw_col: [u8; 4] = col.into_format().into_raw();
 
             // Time colour.
             let time = std::time::Instant::now().duration_since(now).as_nanos();
@@ -143,21 +148,20 @@ fn render_range(
             let raw_time: [u8; 4] = time_col.into_format().into_raw();
 
             // Window writing.
+            // [(total_pixels - (p + 1)) as usize] =
             let b = p + ((p / h_res) * h_res);
-            // println!("{} -> {}", b, p);
             buffer.lock().expect("Could not lock window buffer.")
-                // [(total_pixels - (p + 1)) as usize] =
-                [b as usize] = components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
-            buffer.lock().expect("Could not lock window buffer.")[(b + h_res) as usize] =
+                [((4 * total_pixels) - (1 + b + tl_offset)) as usize] =
                 components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
-
             buffer.lock().expect("Could not lock window buffer.")
-                [(b + (2 * total_pixels)) as usize] =
-                components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
-
+                [((4 * total_pixels) - (1 + b + tr_offset)) as usize] =
+                components_to_u32(raw_col[RED], raw_col[GREEN], raw_col[BLUE]);
             buffer.lock().expect("Could not lock window buffer.")
-                [(b + (2 * total_pixels) + h_res) as usize] =
-                components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
+                [((4 * total_pixels) - (1 + b + bl_offset)) as usize] =
+                components_to_u32(raw_col[BLUE], raw_col[RED], raw_col[GREEN]);
+            buffer.lock().expect("Could not lock window buffer.")
+                [((4 * total_pixels) - (1 + b + br_offset)) as usize] =
+                components_to_u32(raw_time[BLUE], raw_time[RED], raw_time[GREEN]);
         }
     }
 }
