@@ -30,12 +30,12 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
     let num_pixels = scene.cam().sensor().num_pixels();
     let order = input.sett.order().list(num_pixels);
 
-    let buffer: Vec<u32> = vec![0; num_pixels as usize];
+    let buffer: Vec<u32> = vec![0; (num_pixels * 4) as usize];
     let buffer = Arc::new(Mutex::new(buffer));
     let mut window = Window::new(
         "ARCTK - Rendering",
-        width,
-        height,
+        width * 2,
+        height * 2,
         WindowOptions {
             resize: true,
             scale: Scale::FitScreen,
@@ -46,7 +46,7 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
     .expect("Could not create live window.");
     window.set_cursor_style(CursorStyle::Crosshair);
     window
-        .update_with_buffer(&buffer.lock()?, width, height)
+        .update_with_buffer(&buffer.lock()?, width * 2, height * 2)
         .expect("Could not update window buffer.");
 
     let mut main_bar = Bar::new("Rendering", num_pixels as u64);
@@ -77,7 +77,7 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
         }
 
         window
-            .update_with_buffer(&buffer.lock()?, width, height)
+            .update_with_buffer(&buffer.lock()?, width * 2, height * 2)
             .expect("Could not update window buffer.");
     }
     main_bar.finish_with_message("Render complete.");
@@ -143,8 +143,20 @@ fn render_range(
             let raw_time: [u8; 4] = time_col.into_format().into_raw();
 
             // Window writing.
+            let b = p + ((p / h_res) * h_res);
+            // println!("{} -> {}", b, p);
             buffer.lock().expect("Could not lock window buffer.")
-                [(total_pixels - (p + 1)) as usize] =
+                // [(total_pixels - (p + 1)) as usize] =
+                [b as usize] = components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
+            buffer.lock().expect("Could not lock window buffer.")[(b + h_res) as usize] =
+                components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
+
+            buffer.lock().expect("Could not lock window buffer.")
+                [(b + (2 * total_pixels)) as usize] =
+                components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
+
+            buffer.lock().expect("Could not lock window buffer.")
+                [(b + (2 * total_pixels) + h_res) as usize] =
                 components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
         }
     }
