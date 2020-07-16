@@ -27,8 +27,8 @@
         vein    : [['objs/shatter/base_vein.obj'], null]
     },
     attrs: {
-        // gems: { Mirror: {abs: 0.3} },
-        // vein: { Refractive: {abs:0.05, inside: 1.5, outside: 1.0} }
+        gems: { Mirror: {abs: 0.3} },
+        vein: { Refractive: {abs:0.05, inside: 1.5, outside: 1.0} }
     },
     cols: {
         time    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],

@@ -21,16 +21,18 @@ pub fn paint(
     scene: &Scene,
     mut ray: Ray,
     mut weight: f64,
-) -> LinSrgba {
+) -> (LinSrgba, f64) {
     debug_assert!(weight > 0.0);
     debug_assert!(weight <= 1.0);
 
     let bump_dist = input.sett.bump_dist();
     let mut col = LinSrgba::default();
+    let mut total_dist = 0.0;
 
     // Move rays into the grid.
     if !input.grid.boundary().contains(ray.pos()) {
         if let Some(dist) = input.grid.boundary().dist(&ray) {
+            total_dist += dist + bump_dist;
             ray.travel(dist + bump_dist)
         }
     }
@@ -46,6 +48,7 @@ pub fn paint(
             // Handle event.
             match Event::new(voxel_dist, surf_hit) {
                 Event::Voxel(dist) => {
+                    total_dist += dist + bump_dist;
                     ray.travel(dist + bump_dist);
                     // col += sky_col(scene, &ray, &input.cols.map()["sky"]) * weight as f32;
                     break;
@@ -61,6 +64,7 @@ pub fn paint(
                                     * weight as f32;
                                 weight *= 1.0 - *abs;
                                 ray.travel(bump_dist);
+                                total_dist += hit.dist() + bump_dist;
                             }
                             Attributes::Mirror { abs } => {
                                 ray.travel(hit.dist());
@@ -70,6 +74,7 @@ pub fn paint(
                                 *ray.dir_mut() =
                                     Crossing::calc_ref_dir(ray.dir(), hit.side().norm());
                                 ray.travel(bump_dist);
+                                total_dist += hit.dist() + bump_dist;
                             }
                             Attributes::Refractive {
                                 abs,
@@ -94,18 +99,22 @@ pub fn paint(
                                     let mut trans_ray = ray.clone();
                                     *trans_ray.dir_mut() = *trans_dir;
                                     trans_ray.travel(bump_dist);
-                                    col += paint(rng, input, scene, trans_ray, weight * trans_prob)
-                                        * weight as f32;
+                                    let (c, d) =
+                                        paint(rng, input, scene, trans_ray, weight * trans_prob);
+                                    col += c * weight as f32;
+                                    total_dist += d;
                                 }
 
                                 weight *= crossing.ref_prob();
                                 *ray.dir_mut() = *crossing.ref_dir();
                                 ray.travel(bump_dist);
+                                total_dist += hit.dist() + bump_dist;
                             }
                         }
                     } else {
                         ray.travel(hit.dist());
                         col += colour(&mut rng, input, scene, &ray, &hit) * weight as f32;
+                        total_dist += hit.dist();
                         break;
                     }
                 }
@@ -119,7 +128,7 @@ pub fn paint(
         // col += sky_col(scene, &ray, &input.cols.map()["sky"]);
     }
 
-    col
+    (col, total_dist)
 }
 
 /// Perform a colouring.

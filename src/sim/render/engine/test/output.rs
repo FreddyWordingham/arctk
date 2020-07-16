@@ -9,6 +9,8 @@ pub struct Output {
     pub image: Image,
     /// Time image.
     pub time: Image,
+    /// Distance image.
+    pub dist: Image,
 }
 
 impl Output {
@@ -22,6 +24,7 @@ impl Output {
         Self {
             image: Image::default(img_res),
             time: Image::default(img_res),
+            dist: Image::default(img_res),
         }
     }
 }
@@ -31,6 +34,7 @@ impl AddAssign<&Self> for Output {
     fn add_assign(&mut self, rhs: &Self) {
         self.image += &rhs.image;
         self.time += &rhs.time;
+        self.dist += &rhs.dist;
     }
 }
 
@@ -45,6 +49,9 @@ impl Save for Output {
         self.image.save(&path)?;
         let path = out_dir.join(&format!("{}_{}", time, "time.png"));
         println!("Saving: {}", path.display());
-        self.time.save(&path)
+        self.time.save(&path)?;
+        let path = out_dir.join(&format!("{}_{}", time, "dist.png"));
+        println!("Saving: {}", path.display());
+        self.dist.save(&path)
     }
 }
