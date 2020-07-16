@@ -159,7 +159,7 @@ fn render_range(
             let raw_dist: [u8; 4] = dist_col.into_format().into_raw();
 
             // Loops colour.
-            let l = loops * 1.0e-3;
+            let l = loops * 1.0e-2;
             let loops_col = input.cols.map()["loops"].get(l as f32);
             data.lock().expect("Could not lock data.").loops[pixel] = loops_col;
             let raw_loops: [u8; 4] = loops_col.into_format().into_raw();
