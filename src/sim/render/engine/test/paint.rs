@@ -21,13 +21,14 @@ pub fn paint(
     scene: &Scene,
     mut ray: Ray,
     mut weight: f64,
-) -> (LinSrgba, f64) {
+) -> (LinSrgba, f64, u64) {
     debug_assert!(weight > 0.0);
     debug_assert!(weight <= 1.0);
 
     let bump_dist = input.sett.bump_dist();
     let mut col = LinSrgba::default();
     let mut total_dist = 0.0;
+    let mut total_loops = 0;
 
     // Move rays into the grid.
     if !input.grid.boundary().contains(ray.pos()) {
@@ -39,6 +40,8 @@ pub fn paint(
 
     if let Some((_index, voxel)) = input.grid.gen_index_voxel(ray.pos()) {
         loop {
+            total_loops += 1;
+
             // Determine possible event distances.
             let voxel_dist = voxel
                 .dist(&ray)
@@ -99,10 +102,11 @@ pub fn paint(
                                     let mut trans_ray = ray.clone();
                                     *trans_ray.dir_mut() = *trans_dir;
                                     trans_ray.travel(bump_dist);
-                                    let (c, d) =
+                                    let (c, d, l) =
                                         paint(rng, input, scene, trans_ray, weight * trans_prob);
                                     col += c * weight as f32;
                                     total_dist += d;
+                                    total_loops += l;
                                 }
 
                                 weight *= crossing.ref_prob();
@@ -128,7 +132,7 @@ pub fn paint(
         // col += sky_col(scene, &ray, &input.cols.map()["sky"]);
     }
 
-    (col, total_dist)
+    (col, total_dist, total_loops)
 }
 
 /// Perform a colouring.

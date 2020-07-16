@@ -11,6 +11,8 @@ pub struct Output {
     pub time: Image,
     /// Distance image.
     pub dist: Image,
+    /// Loops image.
+    pub loops: Image,
 }
 
 impl Output {
@@ -25,6 +27,7 @@ impl Output {
             image: Image::default(img_res),
             time: Image::default(img_res),
             dist: Image::default(img_res),
+            loops: Image::default(img_res),
         }
     }
 }
@@ -35,6 +38,7 @@ impl AddAssign<&Self> for Output {
         self.image += &rhs.image;
         self.time += &rhs.time;
         self.dist += &rhs.dist;
+        self.loops += &rhs.loops;
     }
 }
 
@@ -44,12 +48,19 @@ impl Save for Output {
         let time = chrono::offset::Local::now()
             .format("%Y%m%d%H%M%S")
             .to_string();
+
         let path = out_dir.join(&format!("{}_{}", time, "image.png"));
         println!("Saving: {}", path.display());
         self.image.save(&path)?;
+
         let path = out_dir.join(&format!("{}_{}", time, "time.png"));
         println!("Saving: {}", path.display());
         self.time.save(&path)?;
+
+        let path = out_dir.join(&format!("{}_{}", time, "loops.png"));
+        println!("Saving: {}", path.display());
+        self.loops.save(&path)?;
+
         let path = out_dir.join(&format!("{}_{}", time, "dist.png"));
         println!("Saving: {}", path.display());
         self.dist.save(&path)

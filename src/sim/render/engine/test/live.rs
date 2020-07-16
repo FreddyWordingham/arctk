@@ -131,13 +131,15 @@ fn render_range(
             // Image colour.
             let mut col = palette::LinSrgba::default();
             let mut dist = 0.0;
+            let mut loops = 0.0;
             for sub_sample in 0..super_samples {
                 let offset = rng.gen_range(0.0, 2.0 * PI);
                 for depth_sample in 0..dof_samples {
                     let ray = scene.cam().gen_ray(pixel, offset, sub_sample, depth_sample);
-                    let (c, d) = paint(&mut rng, input, scene, ray, 1.0);
+                    let (c, d, l) = paint(&mut rng, input, scene, ray, 1.0);
                     col += c * weight as f32;
                     dist += d * weight;
+                    loops += l as f64 * weight;
                 }
             }
             data.lock().expect("Could not lock data.").image[pixel] = col;
@@ -151,10 +153,16 @@ fn render_range(
             let raw_time: [u8; 4] = time_col.into_format().into_raw();
 
             // Distance colour.
-            let d = dist * 1.0e-2;
+            let d = dist * 1.0e-1;
             let dist_col = input.cols.map()["dist"].get(d as f32);
             data.lock().expect("Could not lock data.").dist[pixel] = dist_col;
             let raw_dist: [u8; 4] = dist_col.into_format().into_raw();
+
+            // Loops colour.
+            let l = loops * 1.0e-3;
+            let loops_col = input.cols.map()["loops"].get(l as f32);
+            data.lock().expect("Could not lock data.").loops[pixel] = loops_col;
+            let raw_loops: [u8; 4] = loops_col.into_format().into_raw();
 
             // Window writing.
             // [(total_pixels - (p + 1)) as usize] =
@@ -162,15 +170,18 @@ fn render_range(
             buffer.lock().expect("Could not lock window buffer.")
                 [((4 * total_pixels) - (1 + b + tl_offset)) as usize] =
                 components_to_u32(raw_time[RED], raw_time[GREEN], raw_time[BLUE]);
+
             buffer.lock().expect("Could not lock window buffer.")
                 [((4 * total_pixels) - (1 + b + tr_offset)) as usize] =
                 components_to_u32(raw_col[RED], raw_col[GREEN], raw_col[BLUE]);
+
             buffer.lock().expect("Could not lock window buffer.")
                 [((4 * total_pixels) - (1 + b + bl_offset)) as usize] =
                 components_to_u32(raw_dist[RED], raw_dist[GREEN], raw_dist[BLUE]);
+
             buffer.lock().expect("Could not lock window buffer.")
                 [((4 * total_pixels) - (1 + b + br_offset)) as usize] =
-                components_to_u32(raw_time[BLUE], raw_time[RED], raw_time[GREEN]);
+                components_to_u32(raw_loops[RED], raw_loops[GREEN], raw_loops[BLUE]);
         }
     }
 }
