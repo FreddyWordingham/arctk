@@ -25,6 +25,8 @@ pub fn run(_input: &Input, scene: &Scene) -> Result<Output, Error> {
     let width = scene.cam().sensor().res().0 as usize;
     let height = scene.cam().sensor().res().1 as usize;
 
+    println!("Hello!");
+
     let data = Output::new([width, height]);
     Ok(data)
 }

@@ -1,18 +1,15 @@
 //! Output structure.
 
 use crate::{Error, Image, Save, X, Y};
+use ndarray::Array2;
 use std::{ops::AddAssign, path::Path};
 
 /// Test engine output structure.
 pub struct Output {
     /// Base image.
     pub image: Image,
-    /// Time image.
-    pub time: Image,
-    /// Distance image.
-    pub dist: Image,
-    /// Loops image.
-    pub loops: Image,
+    /// Distance data.
+    pub dist: Array2<f64>,
 }
 
 impl Output {
@@ -25,9 +22,7 @@ impl Output {
 
         Self {
             image: Image::default(img_res),
-            time: Image::default(img_res),
-            dist: Image::default(img_res),
-            loops: Image::default(img_res),
+            dist: Array2::zeros(img_res),
         }
     }
 }
@@ -36,9 +31,7 @@ impl AddAssign<&Self> for Output {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
         self.image += &rhs.image;
-        self.time += &rhs.time;
         self.dist += &rhs.dist;
-        self.loops += &rhs.loops;
     }
 }
 
@@ -51,18 +44,10 @@ impl Save for Output {
 
         let path = out_dir.join(&format!("{}_{}", time, "image.png"));
         println!("Saving: {}", path.display());
-        self.image.save(&path)?;
+        self.image.save(&path)
 
-        let path = out_dir.join(&format!("{}_{}", time, "time.png"));
-        println!("Saving: {}", path.display());
-        self.time.save(&path)?;
-
-        let path = out_dir.join(&format!("{}_{}", time, "loops.png"));
-        println!("Saving: {}", path.display());
-        self.loops.save(&path)?;
-
-        let path = out_dir.join(&format!("{}_{}", time, "dist.png"));
-        println!("Saving: {}", path.display());
-        self.dist.save(&path)
+        // let path = out_dir.join(&format!("{}_{}", time, "dist.png"));
+        // println!("Saving: {}", path.display());
+        // self.dist.save(&path)
     }
 }
