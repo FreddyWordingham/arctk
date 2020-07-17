@@ -41,6 +41,7 @@ impl Save for Array2<LinSrgba> {
             for yi in 0..res.1 {
                 let col = self[(xi, yi)];
                 data[(xi, res.1 - yi - 1)] = Srgba::from_linear(col).into_format().into_raw();
+                // data[(xi, yi)] = Srgba::from_linear(col).into_format().into_raw();
             }
         }
 

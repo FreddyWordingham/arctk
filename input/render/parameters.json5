@@ -31,6 +31,7 @@
         vein: { Refractive: {abs:0.05, inside: 1.5, outside: 1.0} }
     },
     cols: {
+        sky     : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         time    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         dist    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         loops   : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
@@ -50,7 +51,7 @@
                 hr_fov  : 75.0,
                 aspect  : "Square",
                 // ss_power: 2,
-                hr_res  : 1024
+                hr_res  : 124
             },
             lighting: {
                 samples: {
