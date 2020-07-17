@@ -60,7 +60,8 @@
                 sky: {
                     brightness  : 0.7,
                     sun_pos     : [10.0, 10.0, 10.0],
-                    sun_rad     : 10
+                    sun_rad     : 10,
+                    segments    : [32,32]
                 },
                 light: {
                     ambient : 0.3,
