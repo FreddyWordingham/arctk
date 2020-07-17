@@ -22,13 +22,13 @@ impl Order {
     #[must_use]
     pub fn list(&self, n: u64) -> Vec<u64> {
         match self {
-            Order::Forward => (0..n).collect(),
-            Order::Backward => {
+            Self::Forward => (0..n).collect(),
+            Self::Backward => {
                 let mut ord: Vec<u64> = (0..n).collect();
                 ord.reverse();
                 ord
             }
-            Order::Shuffle => {
+            Self::Shuffle => {
                 let mut ord: Vec<u64> = (0..n).collect();
                 ord.shuffle(&mut thread_rng());
                 ord

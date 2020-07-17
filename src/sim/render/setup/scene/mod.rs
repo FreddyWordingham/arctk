@@ -22,7 +22,7 @@ impl Scene {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(cam: Camera, lighting: Lighting) -> Self {
+    pub const fn new(cam: Camera, lighting: Lighting) -> Self {
         Self { cam, lighting }
     }
 }
