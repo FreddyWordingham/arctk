@@ -31,10 +31,10 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
         .collect();
     bar.lock()?.finish_with_message("Render complete.");
 
-    let data = out.pop().expect("No data recieved.");
-    // while if let Some(o) = out.pop() {
-    //     data += o;
-    // }
+    let mut data = out.pop().expect("No data recieved.");
+    while let Some(o) = out.pop() {
+        data += &o;
+    }
 
     Ok(data)
 }
