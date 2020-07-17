@@ -47,7 +47,7 @@ pub fn main() {
 
         match engine {
             form::Engine::Test => {
-                let output = render::engine::test::live::run(&input, &scene);
+                let output = render::engine::green::fast::run(&input, &scene);
                 output
                     .expect("Rendering failed.")
                     .save(&out_dir)
