@@ -16,8 +16,8 @@
         order       : 'Forward',
         bump_dist   : 1e-6,
         min_weight  : 0.01,
-        block_size  : 1,
-        live        : 10
+        block_size  : 40,
+        live        : 400
     },
     surfs: {
         stand   : [['objs/shatter/stand.obj'], null],
@@ -50,12 +50,12 @@
                 hr_fov  : 75.0,
                 aspect  : "Square",
                 // ss_power: 2,
-                hr_res  : 124
+                hr_res  : 1024
             },
             lighting: {
                 samples: {
-                    ambient_occlusion   : 64,
-                    soft_shadows        : 17
+                    // ambient_occlusion   : 64,
+                    // soft_shadows        : 17
                 },
                 sky: {
                     brightness  : 0.7,

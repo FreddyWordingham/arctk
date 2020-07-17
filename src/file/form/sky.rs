@@ -1,7 +1,8 @@
 //! Sky builder structure.
 
-use crate::{display_field, display_field_ln, Build, Error, Pos3};
+use crate::{display_field, display_field_ln, Build, Error, PerlinMap, Pos3, X, Y};
 use attr::load;
+use rand::thread_rng;
 use std::{
     fmt::{Display, Formatter},
     path::Path,
@@ -16,6 +17,8 @@ pub struct Sky {
     sun_pos: Pos3,
     /// Sun angular radius when calculating soft shadows [deg].
     sun_rad: f64,
+    /// Noise segments.
+    segments: [usize; 2],
 }
 
 impl Build for Sky {
@@ -27,6 +30,7 @@ impl Build for Sky {
             self.brightness,
             self.sun_pos,
             self.sun_rad.to_radians(),
+            PerlinMap::new(self.segments, &mut thread_rng()),
         ))
     }
 }
@@ -37,6 +41,11 @@ impl Display for Sky {
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "sky brightness", self.brightness)?;
         display_field_ln!(fmt, "sun position", &self.sun_pos, "m")?;
-        display_field!(fmt, "sun radius", self.sun_rad, "deg")
+        display_field_ln!(fmt, "sun radius", self.sun_rad, "deg")?;
+        display_field!(
+            fmt,
+            "segments",
+            &format!("{} x {}", self.segments[X], self.segments[Y])
+        )
     }
 }
