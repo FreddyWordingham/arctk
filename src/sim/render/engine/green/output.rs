@@ -8,8 +8,8 @@ use std::{ops::AddAssign, path::Path};
 pub struct Output {
     /// Base image.
     pub image: Image,
-    /// Distance data.
-    pub dist: Array2<f64>,
+    /// Time data.
+    pub time: Array2<f64>,
 }
 
 impl Output {
@@ -22,7 +22,7 @@ impl Output {
 
         Self {
             image: Image::default(img_res),
-            dist: Array2::zeros(img_res),
+            time: Array2::zeros(img_res),
         }
     }
 }
@@ -31,7 +31,7 @@ impl AddAssign<&Self> for Output {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
         self.image += &rhs.image;
-        self.dist += &rhs.dist;
+        self.time += &rhs.time;
     }
 }
 
