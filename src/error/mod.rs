@@ -26,6 +26,8 @@ pub enum Error {
     Format(std::fmt::Error),
     /// Shape error.
     Shape(ndarray::ShapeError),
+    /// Min/max error.
+    MinMax(ndarray_stats::errors::MinMaxError),
     /// Parallelisation poison.
     Parallel,
     /// String error.
@@ -54,6 +56,7 @@ impl_from_for_err!(Self::WritePng, png::EncodingError);
 impl_from_for_err!(Self::EnvVar, std::env::VarError);
 impl_from_for_err!(Self::Format, std::fmt::Error);
 impl_from_for_err!(Self::Shape, ndarray::ShapeError);
+impl_from_for_err!(Self::MinMax, ndarray_stats::errors::MinMaxError);
 
 impl<T> From<std::sync::PoisonError<T>> for Error {
     #[inline]
@@ -87,6 +90,7 @@ impl Debug for Error {
                 Self::EnvVar { .. } => "Environment variable missing",
                 Self::Format { .. } => "Formatting",
                 Self::Shape { .. } => "Shape",
+                Self::MinMax { .. } => "MinMax",
                 Self::Parallel { .. } => "Parallelisation poison",
                 Self::Text { .. } => "Text string",
             },
@@ -102,6 +106,7 @@ impl Debug for Error {
                 Self::EnvVar { 0: err } => format!("{:?}", err),
                 Self::Format { 0: err } => format!("{:?}", err),
                 Self::Shape { 0: err } => format!("{:?}", err),
+                Self::MinMax { 0: err } => format!("{:?}", err),
                 Self::Parallel => "Parallelisation fail".to_string(),
                 Self::Text { 0: err } => format!("{:?}", err),
             }

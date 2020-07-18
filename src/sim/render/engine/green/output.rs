@@ -53,7 +53,7 @@ impl Save for Output {
         println!("Saving: {}", path.display());
         self.image.save(&path)?;
 
-        let time_max = *self.time.max().unwrap();
+        let time_max = *self.time.max()?;
         let time_log = self.time.map(|x| x.log(time_max));
         let time_log_img = time_log.map(|x| greyscale.get(*x as f32));
         let path = out_dir.join(&format!("{}_{}", time, "time_log.png"));
