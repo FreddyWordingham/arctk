@@ -50,13 +50,13 @@
                 // swivel  : [0.1, 0.1],
                 hr_fov  : 75.0,
                 aspect  : "Square",
-                // ss_power: 2,
+                ss_power: 2,
                 hr_res  : 1024
             },
             lighting: {
                 samples: {
-                    // ambient_occlusion   : 64,
-                    // soft_shadows        : 17
+                    ambient_occlusion   : 64,
+                    soft_shadows        : 17
                 },
                 sky: {
                     brightness  : 0.7,
