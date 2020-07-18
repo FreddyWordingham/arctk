@@ -24,10 +24,29 @@
         roofs       : [['naboo/roofs.obj'], null],
         cliff       : [['naboo/cliff.obj'], null],
         grass       : [['naboo/grass.obj'], null],
+        water       : [['naboo/water.obj', 'naboo/waterfall_left.obj', 'naboo/waterfall_right.obj'], null],
+        rocks       : [['naboo/rockbed.obj', 'naboo/rockfall.obj'], null],
+        solar       : [['naboo/solar.obj'], null],
+        land_0      : [['naboo/land_0.obj'], null],
+        land_1      : [['naboo/land_1.obj'], null],
+        clouds_0    : [['naboo/clouds_0.obj'], null],
+        clouds_1    : [['naboo/clouds_1.obj'], null],
+        royal       : [['naboo/royal.obj'], null],
+        r0          : [['naboo/fighter_r0.obj'], null],
+        r1          : [['naboo/fighter_r1.obj'], null],
+        r2          : [['naboo/fighter_r2.obj'], null],
+        fighter_body    : [['naboo/fighter_body.obj'], null],
+        fighter_detail  : [['naboo/fighter_detail.obj'], null],
+        royal_windows   : [['naboo/royal_windows.obj'], null],
     },
     attrs: {
-        gems: { Mirror: {abs: 0.3} },
-        vein: { Refractive: {abs:0.05, inside: 1.5, outside: 1.0} }
+        royal: { Mirror: {abs: 0.3} },
+        fighter_detail: { Mirror: {abs: 0.3} },
+        water: { Refractive: {abs:0.4, inside: 1.2, outside: 1.0} },
+        solar: { Refractive: {abs:0.4, inside: 1.2, outside: 1.0} },
+        clouds_0: { Transparent: {abs:0.2} },
+        clouds_1: { Transparent: {abs:0.2} },
+        royal_windows: { Transparent: {abs:0.4} },
     },
     cols: {
         sky             : ['#ffffffff', '#d2eeffff', '#0095ffff'],
@@ -38,48 +57,50 @@
         roofs           : ['#008b8bff', '#3cb371ff', '#90ee90ff'],
         cliff           : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
         grass            : ['#228b22ff', '#88f26aff', '#34ff99ff', '#b1ed37ff', '#4dc94dff', '#90ee90ff'],
+        rocks           : ['#72482aff', '#ff703cff', '#aed8d4ff', '#856e5dff', '#c9c1bbff'],
 
-        // mirror          : ['#242424ff', '#6d6d6dff'],
-        // windows         : ['#000000ff', '#8c8c8cff', '#242424ff', '#6d6d6dff'],
-        // r0              : ['#ff8c00ff', '#ff4500ff'],
-        // r1              : ['#eeeb51ff', '#00ff45ff'],
-        // r2              : ['#ff82f2ff', '#82b7ffff'],
-        // fighter_body    : ['#ffd549ff', '#ffec88ff', '#ffa12fff', '#ffff00ff', '#ffff49ff', '#ffff80ff'],
-        // rocks           : ['#72482aff', '#ff703cff', '#aed8d4ff', '#856e5dff', '#c9c1bbff'],
-        // water           : ['#8282ffff', '#82a8ffff', '#82f1ffff'],
-        // planet_0_land   : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
-        // planet_1_land   : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
+        royal          : ['#242424ff', '#6d6d6dff'],
+        fighter_detail          : ['#242424ff', '#6d6d6dff'],
+        royal_windows         : ['#000000ff', '#8c8c8cff', '#242424ff', '#6d6d6dff'],
+        r0              : ['#ff8c00ff', '#ff4500ff'],
+        r1              : ['#eeeb51ff', '#00ff45ff'],
+        r2              : ['#ff82f2ff', '#82b7ffff'],
+        fighter_body    : ['#ffd549ff', '#ffec88ff', '#ffa12fff', '#ffff00ff', '#ffff49ff', '#ffff80ff'],
+        water           : ['#8282ffff', '#82a8ffff', '#82f1ffff'],
+        land_0   : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
+        land_1   : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         // planet_2_land   : ['#e53b3bff', '#ff8d2aff' , '#e8423fff'],
         // planet_0_sea    : ['#0542A8ff', '#1552C6ff', '#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff', '#71A8EEff'],
         // planet_1_sea    : ['#724ceeff', '#8e6fe4ff', '#ec61fdff', '#29afefff', '#5be2d8ff'],
-        // clouds_0        : ['#97d9c5ff', '#f0f0b2ff', '#ffffffff'],
-        // clouds_1        : ['#97aed9ff', '#cdcdffff', '#ffffffff'],
+        clouds_0        : ['#97d9c5ff', '#f0f0b2ff', '#ffffffff'],
+        clouds_1        : ['#97aed9ff', '#cdcdffff', '#ffffffff'],
         // clouds_2        : ['#d493e4ff', '#f1c7ffff', '#ffffffff'],
-        // solar           : ['#ffe200ff', '#ff4700ff', '#ff000dff'],
+        solar           : ['#ffe200ff', '#ff4700ff', '#ff000dff'],
         // stars           : ['#fffec1ff', '#f4f2e2ff'],
     },
     scenes: {
         first_view: {
             cam: {
-                pos     : [52, 49, 43],
+                pos     : [40, 39, 63],
                 tar     : [-1, -5, 28],
                 // dof     : [17, 0.1],
                 // swivel  : [0.1, 0.1],
-                hr_fov  : 75.0,
-                aspect  : "Square",
-                // ss_power: 2,
-                hr_res  : 1024
+                hr_fov  : 45.0,
+                aspect  : "IPhoneXS",
+                ss_power: 2,
+                hr_res  : 1125
             },
             lighting: {
                 samples: {
-                    // ambient_occlusion   : 64,
-                    // soft_shadows        : 17
+                    ambient_occlusion   : 64,
+                    soft_shadows        : 17
                 },
                 sky: {
                     brightness  : 0.7,
-                    sun_pos     : [2300, -3400, 4500],
+                    // sun_pos     : [2300, -3400, 4500],
+                    sun_pos     : [-1450, -4200, 6200],
                     sun_rad     : 10,
-                    segments    : [32,32]
+                    segments    : [16,16]
                 },
                 light: {
                     ambient : 0.3,
@@ -88,8 +109,8 @@
                     spec_pow: 8
                 },
                 shadow: {
-                    ambient : 0.7,
-                    direct  : 0.3,
+                    ambient : 0.3,
+                    direct  : 0.7,
                     ao_pow  : 2
                 }
             }
