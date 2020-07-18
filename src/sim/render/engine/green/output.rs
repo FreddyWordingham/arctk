@@ -54,11 +54,16 @@ impl Save for Output {
         self.image.save(&path)?;
 
         let time_max = *self.time.max().unwrap();
-        // let time_norm = &self.time / time_max;
-        let time_norm = self.time.map(|x| x.log(time_max));
-        let time_img = time_norm.map(|x| greyscale.get(*x as f32));
-        let path = out_dir.join(&format!("{}_{}", time, "dist.png"));
+        let time_log = self.time.map(|x| x.log(time_max));
+        let time_log_img = time_log.map(|x| greyscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "time_log.png"));
         println!("Saving: {}", path.display());
-        time_img.save(&path)
+        time_log_img.save(&path)?;
+
+        let time_lin = &self.time / time_max;
+        let time_lin_img = time_lin.map(|x| greyscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "time_lin.png"));
+        println!("Saving: {}", path.display());
+        time_lin_img.save(&path)
     }
 }
