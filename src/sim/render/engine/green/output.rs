@@ -2,6 +2,8 @@
 
 use crate::{Error, Image, Save, X, Y};
 use ndarray::Array2;
+use ndarray_stats::QuantileExt;
+use palette::{Gradient, LinSrgba};
 use std::{ops::AddAssign, path::Path};
 
 /// Test engine output structure.
@@ -42,12 +44,21 @@ impl Save for Output {
             .format("%Y%m%d%H%M%S")
             .to_string();
 
+        let greyscale = Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(1.0, 1.0, 1.0, 1.0),
+        ]);
+
         let path = out_dir.join(&format!("{}_{}", time, "image.png"));
         println!("Saving: {}", path.display());
-        self.image.save(&path)
+        self.image.save(&path)?;
 
-        // let path = out_dir.join(&format!("{}_{}", time, "dist.png"));
-        // println!("Saving: {}", path.display());
-        // self.dist.save(&path)
+        let time_max = *self.time.max().unwrap();
+        // let time_norm = &self.time / time_max;
+        let time_norm = self.time.map(|x| x.log(time_max));
+        let time_img = time_norm.map(|x| greyscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "dist.png"));
+        println!("Saving: {}", path.display());
+        time_img.save(&path)
     }
 }

@@ -131,7 +131,7 @@ pub fn paint(
 /// Perform a colouring.
 #[inline]
 fn colour(
-    _rng: &mut ThreadRng,
+    rng: &mut ThreadRng,
     input: &Input,
     scene: &Scene,
     ray: &Ray,
@@ -139,8 +139,7 @@ fn colour(
     sun_dir: &Dir3,
 ) -> LinSrgba {
     let light = (illumination::light(scene, ray, hit) + 0.5).min(1.0);
-    // let shadow = illumination::shadow(input, scene, ray, hit, input.sett.bump_dist(), rng);
-    let shadow = 0.5;
+    let shadow = illumination::shadow(input, scene, ray, hit, input.sett.bump_dist(), rng);
 
     let base_col = input.cols.map()[hit.group()].get(hit.side().norm().dot(sun_dir).abs() as f32);
     let grad = palette::Gradient::new(vec![palette::LinSrgba::default(), base_col]);

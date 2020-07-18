@@ -48,7 +48,6 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
 
     let mut data = Output::new([width, height]);
 
-    // let mut rng = thread_rng();
     let super_samples = scene.cam().sensor().super_samples();
     let dof_samples = scene.cam().focus().dof_samples();
     let h_res = scene.cam().sensor().res().0;
