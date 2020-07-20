@@ -40,6 +40,7 @@ pub fn run(input: &Input, scene: &Scene) -> Result<Output, Error> {
 }
 
 /// Render pixels using a single thread.
+#[allow(clippy::option_expect_used)]
 #[allow(clippy::result_expect_used)]
 #[inline]
 fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
@@ -68,14 +69,18 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
             let pixel = [(p % h_res) as usize, (p / h_res) as usize];
 
             let mut col = palette::LinSrgba::default();
+            let mut last_hits = Vec::with_capacity((super_samples * dof_samples) as usize);
             for sub_sample in 0..super_samples {
                 let offset = rng.gen_range(0.0, 2.0 * PI);
                 for depth_sample in 0..dof_samples {
                     let ray = scene.cam().gen_ray(pixel, offset, sub_sample, depth_sample);
-                    col += paint(&mut rng, input, scene, ray, 1.0) * weight as f32;
+                    let (c, lh) = paint(&mut rng, input, scene, ray, 1.0);
+                    col += c * weight as f32;
+                    last_hits.push(lh);
                 }
             }
             data.image[pixel] += col;
+            data.last_hit[pixel] = mode(&last_hits).expect("Could not determine last hit.");
 
             let time = std::time::Instant::now().duration_since(now).as_nanos();
             data.time[pixel] += time as f64;
@@ -83,4 +88,17 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
     }
 
     data
+}
+
+/// Get the mode of a slice.
+#[inline]
+#[must_use]
+fn mode(numbers: &[usize]) -> Option<usize> {
+    let mut counts = std::collections::HashMap::new();
+
+    numbers.iter().copied().max_by_key(|&n| {
+        let count = counts.entry(n).or_insert(0);
+        *count += 1;
+        *count
+    })
 }

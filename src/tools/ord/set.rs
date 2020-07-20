@@ -55,6 +55,20 @@ impl<T> Set<T> {
     pub fn mut_map(&mut self) -> &mut Map<T> {
         &mut self.0
     }
+
+    /// Determine the index of a given key within the Set.
+    /// Return None if the key does not exist.
+    #[inline]
+    #[must_use]
+    pub fn index_of(&self, k: &str) -> Option<usize> {
+        for (index, key) in self.0.keys().enumerate() {
+            if k == key {
+                return Some(index);
+            }
+        }
+
+        None
+    }
 }
 
 impl<T> Load for Set<T>

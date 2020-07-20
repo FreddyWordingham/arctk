@@ -26,15 +26,15 @@
         grass           : [['naboo/grass.obj'], null],
         water           : [['naboo/water.obj', 'naboo/waterfall_left.obj', 'naboo/waterfall_right.obj'], null],
         rocks           : [['naboo/rockbed.obj', 'naboo/rockfall.obj'], null],
-        solar           : [['naboo/solar.obj'], null],
-        sea_0           : [['naboo/sea_0.obj'], null],
-        sea_2           : [['naboo/sea_2.obj'], null],
-        land_0          : [['naboo/land_0.obj'], null],
-        land_1          : [['naboo/land_1.obj'], null],
-        land_2          : [['naboo/land_2.obj'], null],
-        clouds_0        : [['naboo/clouds_0.obj'], null],
-        clouds_1        : [['naboo/clouds_1.obj'], null],
-        clouds_2        : [['naboo/clouds_2.obj'], null],
+        solar           : [['naboo/solar.obj'], {'trans':[0,0,20]}],
+        sea_2           : [['naboo/sea_0.obj'], null],
+        sea_0           : [['naboo/sea_2.obj'], null],
+        land_2          : [['naboo/land_0.obj'], null],
+        land_1          : [['naboo/land_1.obj'], {'trans':[0,0,25]}],
+        land_0          : [['naboo/land_2.obj'], null],
+        clouds_2        : [['naboo/clouds_0.obj'], null],
+        clouds_1        : [['naboo/clouds_1.obj'], {'trans':[0,0,25]}],
+        clouds_0        : [['naboo/clouds_2.obj'], null],
         royal           : [['naboo/royal.obj'], null],
         royal_windows   : [['naboo/royal_windows.obj'], null],
         r0              : [['naboo/fighter_r0.obj'], null],
@@ -116,14 +116,14 @@
                 // dof     : [17, 0.1],
                 swivel  : [10.0, 0.0],
                 hr_fov  : 70.0,
-                aspect  : "Square",
-                ss_power: 2,
-                hr_res  : 1000
+                aspect  : "IPhoneXS",
+                // ss_power: 2,
+                hr_res  : 375
             },
             lighting: {
                 samples: {
-                    ambient_occlusion   : 64,
-                    soft_shadows        : 17
+                    // ambient_occlusion   : 64,
+                    // soft_shadows        : 17
                 },
                 sky: {
                     brightness  : 0.7,
