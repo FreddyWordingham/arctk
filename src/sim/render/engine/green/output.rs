@@ -12,6 +12,8 @@ pub struct Output {
     pub image: Image,
     /// Time data.
     pub time: Array2<f64>,
+    /// First hit.
+    pub first_hit: Array2<usize>,
     /// Last hit.
     pub last_hit: Array2<usize>,
 }
@@ -27,6 +29,7 @@ impl Output {
         Self {
             image: Image::default(img_res),
             time: Array2::zeros(img_res),
+            first_hit: Array2::zeros(img_res),
             last_hit: Array2::zeros(img_res),
         }
     }
@@ -37,6 +40,7 @@ impl AddAssign<&Self> for Output {
     fn add_assign(&mut self, rhs: &Self) {
         self.image += &rhs.image;
         self.time += &rhs.time;
+        self.first_hit += &rhs.first_hit;
         self.last_hit += &rhs.last_hit;
     }
 }
@@ -69,6 +73,13 @@ impl Save for Output {
         let path = out_dir.join(&format!("{}_{}", time, "time_lin.png"));
         println!("Saving: {}", path.display());
         time_lin_img.save(&path)?;
+
+        let first_hit_max = *self.first_hit.max()? as f64 + 1.0e-3;
+        let first_hit_lin = self.first_hit.map(|x| *x as f64 + 1.0e-3) / first_hit_max;
+        let first_hit_img = first_hit_lin.map(|x| greyscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "first_hit.png"));
+        println!("Saving: {}", path.display());
+        first_hit_img.save(&path)?;
 
         let last_hit_max = *self.last_hit.max()? as f64 + 1.0e-3;
         let last_hit_lin = self.last_hit.map(|x| *x as f64 + 1.0e-3) / last_hit_max;

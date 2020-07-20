@@ -141,13 +141,14 @@ pub fn paint(
     scene: &Scene,
     mut ray: Ray,
     mut weight: f64,
-) -> (LinSrgba, usize) {
+) -> (LinSrgba, usize, usize) {
     debug_assert!(weight > 0.0);
     debug_assert!(weight <= 1.0);
 
     let bump_dist = input.sett.bump_dist();
     let sun_pos = scene.lighting().sky().sun_pos();
     let mut col = LinSrgba::default();
+    let mut first_hit = None;
     let mut last_hit = 0;
 
     // Move rays into the grid.
@@ -174,7 +175,10 @@ pub fn paint(
                 }
                 Event::Surface(hit) => {
                     let group = hit.group();
-                    last_hit = 1 + input.cols.index_of(group).expect("Missing hit entry.");
+                    if first_hit.is_none() {
+                        first_hit = Some(input.cols.index_of(group).expect("Missing hit entry."));
+                    }
+                    last_hit = input.cols.index_of(group).expect("Missing hit entry.");
                     if let Some(attr) = input.attrs.map().get(group) {
                         match attr {
                             Attributes::Transparent { abs } => {
@@ -220,7 +224,7 @@ pub fn paint(
                                     let mut trans_ray = ray.clone();
                                     *trans_ray.dir_mut() = *trans_dir;
                                     trans_ray.travel(bump_dist);
-                                    let (c, _) =
+                                    let (c, _, _) =
                                         paint(rng, input, scene, trans_ray, weight * trans_prob);
                                     col += c * weight as f32;
                                 }
@@ -247,7 +251,10 @@ pub fn paint(
         col += sky_col(scene, &ray, &input.cols.map()["sky"]);
     }
 
-    (col, last_hit)
+    let first_hit = if let Some(fh) = first_hit { fh + 1 } else { 0 };
+    let last_hit = 1 + last_hit;
+
+    (col, first_hit, last_hit)
 }
 
 /// Perform a colouring.
