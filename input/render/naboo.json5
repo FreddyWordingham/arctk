@@ -116,9 +116,9 @@
                 // dof     : [17, 0.1],
                 swivel  : [10.0, 0.0],
                 hr_fov  : 70.0,
-                aspect  : "IPhoneXS",
+                aspect  : "Square",
                 // ss_power: 2,
-                hr_res  : 375
+                hr_res  : 800
             },
             lighting: {
                 samples: {

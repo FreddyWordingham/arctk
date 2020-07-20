@@ -1,6 +1,6 @@
 //! Output structure.
 
-use crate::{Error, Image, Save, X, Y};
+use crate::{Dir3, Error, Image, Save, Vec3, X, Y};
 use ndarray::Array2;
 use ndarray_stats::QuantileExt;
 use palette::{Gradient, LinSrgba};
@@ -14,6 +14,8 @@ pub struct Output {
     pub time: Array2<f64>,
     /// First hit.
     pub first_hit: Array2<usize>,
+    /// First norm.
+    pub first_norm: Array2<Vec3>,
     /// Last hit.
     pub last_hit: Array2<usize>,
 }
@@ -30,6 +32,7 @@ impl Output {
             image: Image::default(img_res),
             time: Array2::zeros(img_res),
             first_hit: Array2::zeros(img_res),
+            first_norm: Array2::default(img_res),
             last_hit: Array2::zeros(img_res),
         }
     }
@@ -41,6 +44,7 @@ impl AddAssign<&Self> for Output {
         self.image += &rhs.image;
         self.time += &rhs.time;
         self.first_hit += &rhs.first_hit;
+        self.first_norm += &rhs.first_norm;
         self.last_hit += &rhs.last_hit;
     }
 }
@@ -55,6 +59,18 @@ impl Save for Output {
         let greyscale = Gradient::new(vec![
             LinSrgba::new(0.0, 0.0, 0.0, 1.0),
             LinSrgba::new(1.0, 1.0, 1.0, 1.0),
+        ]);
+        let red_scale = Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(1.0, 0.0, 0.0, 1.0),
+        ]);
+        let green_scale = Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(0.0, 1.0, 0.0, 1.0),
+        ]);
+        let blue_scale = Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(0.0, 0.0, 1.0, 1.0),
         ]);
 
         let path = out_dir.join(&format!("{}_{}", time, "image.png"));
@@ -80,6 +96,20 @@ impl Save for Output {
         let path = out_dir.join(&format!("{}_{}", time, "first_hit.png"));
         println!("Saving: {}", path.display());
         first_hit_img.save(&path)?;
+
+        let first_norm_lin = self.first_norm.map(|v| {
+            if v.magnitude() < 1.0e-3 {
+                Vec3::z_axis()
+            } else {
+                Dir3::new_normalize(*v)
+            }
+        });
+        let first_norm_img = first_norm_lin.map(|v| {
+            red_scale.get(v.x as f32) + green_scale.get(v.y as f32) + blue_scale.get(v.z as f32)
+        });
+        let path = out_dir.join(&format!("{}_{}", time, "first_norm.png"));
+        println!("Saving: {}", path.display());
+        first_norm_img.save(&path)?;
 
         let last_hit_max = *self.last_hit.max()? as f64 + 1.0e-3;
         let last_hit_lin = self.last_hit.map(|x| *x as f64 + 1.0e-3) / last_hit_max;

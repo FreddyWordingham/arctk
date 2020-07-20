@@ -3,7 +3,7 @@
 use super::{illumination, Event};
 use crate::{
     render::{Attributes, Input, Scene},
-    Crossing, Dir3, Hit, Ray, Trace,
+    Crossing, Dir3, Hit, Ray, Trace, Vec3,
 };
 use palette::LinSrgba;
 use rand::rngs::ThreadRng;
@@ -141,7 +141,7 @@ pub fn paint(
     scene: &Scene,
     mut ray: Ray,
     mut weight: f64,
-) -> (LinSrgba, usize, usize) {
+) -> (LinSrgba, usize, Vec3, usize) {
     debug_assert!(weight > 0.0);
     debug_assert!(weight <= 1.0);
 
@@ -150,6 +150,7 @@ pub fn paint(
     let mut col = LinSrgba::default();
     let mut first_hit = None;
     let mut last_hit = 0;
+    let mut first_norm = None;
 
     // Move rays into the grid.
     if !input.grid.boundary().contains(ray.pos()) {
@@ -177,6 +178,7 @@ pub fn paint(
                     let group = hit.group();
                     if first_hit.is_none() {
                         first_hit = Some(input.cols.index_of(group).expect("Missing hit entry."));
+                        first_norm = Some(*hit.side().norm());
                     }
                     last_hit = input.cols.index_of(group).expect("Missing hit entry.");
                     if let Some(attr) = input.attrs.map().get(group) {
@@ -224,7 +226,7 @@ pub fn paint(
                                     let mut trans_ray = ray.clone();
                                     *trans_ray.dir_mut() = *trans_dir;
                                     trans_ray.travel(bump_dist);
-                                    let (c, _, _) =
+                                    let (c, ..) =
                                         paint(rng, input, scene, trans_ray, weight * trans_prob);
                                     col += c * weight as f32;
                                 }
@@ -252,9 +254,14 @@ pub fn paint(
     }
 
     let first_hit = if let Some(fh) = first_hit { fh + 1 } else { 0 };
+    let first_norm = if let Some(fir_n) = first_norm {
+        fir_n.into_inner()
+    } else {
+        Vec3::new(0.0, 0.0, 0.0)
+    };
     let last_hit = 1 + last_hit;
 
-    (col, first_hit, last_hit)
+    (col, first_hit, first_norm, last_hit)
 }
 
 /// Perform a colouring.
