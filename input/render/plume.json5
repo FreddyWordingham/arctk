@@ -28,14 +28,14 @@
     },
     attrs: {
         millenium_glass: { Refractive: {abs:0.4, inside: 1.3, outside: 1.0} },
-        plume: { Refractive: {abs:0.4, inside: 1.3, outside: 1.0} },
+        plume: { Refractive: {abs:0.2, inside: 1.3, outside: 1.0} },
     },
     cols: {
         time                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         dist                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         loops               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
 
-        plume               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        plume               : ['#ffffffff', '#ffffffff', '#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
         millenium_body      : ['#808080ff', '#d3d3d3ff', '#a3d0d0ff'],
         millenium_detail    : ['#595c62ff', '#282a2eff'],
@@ -49,11 +49,12 @@
                 // tar     : [0,0,1],
                 pos     : [-7,-7,6],
                 tar     : [0.18,1.76,0.59],
-                // dof     : [17, 1.0],
+                dof     : [65, 1.0],
+                // dof     : [17, 0.5],
                 swivel  : [4.0, 2.0],
                 hr_fov  : 22.0,
                 aspect  : "Square",
-                // ss_power: 2,
+                ss_power: 2,
                 hr_res  : 1080
             },
             lighting: {
@@ -62,11 +63,11 @@
                     // soft_shadows        : 17
                 },
                 sky: {
-                    brightness  : 0.2,
+                    brightness  : 0.01,
                     // sun_pos     : [2300, -3400, 4500],
-                    sun_pos     : [14, -26, 22],
+                    sun_pos     : [2,1,1],
                     sun_rad     : 10,
-                    segments    : [16,16]
+                    segments    : [32,32]
                 },
                 light: {
                     ambient : 0.3,

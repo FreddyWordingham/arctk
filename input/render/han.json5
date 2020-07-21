@@ -20,7 +20,7 @@
         live        : 10000
     },
     surfs: {
-        plume            : [['han/plume.obj'], null],
+        // plume            : [['han/plume.obj'], null],
         balls            : [['han/balls.obj'], null],
         // floor            : [['han/floor.obj'], null],
         flower_inner_in  : [['han/flower_inner_in.obj'], null],
@@ -49,7 +49,7 @@
         dist                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         loops               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
 
-        plume               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        // plume               : ['#ffffffff', '#ffffffff', '#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         sky                 : ['#ffffffff', '#fde9a7ff', '#ffe200ff'],
         numbers             : ['#d2eeffff', '#9a49ffff', '#0095ffff', '#a62ab5ff'],
         flower_inner_in     : ['#e754d1ff', '#ff82f2ff', '#ff34f3ff'],
@@ -74,13 +74,13 @@
                 swivel  : [0.0, 0.0],
                 hr_fov  : 30.0,
                 aspect  : "Square",
-                ss_power: 2,
+                // ss_power: 2,
                 hr_res  : 1080
             },
             lighting: {
                 samples: {
-                    ambient_occlusion   : 64,
-                    soft_shadows        : 17
+                    // ambient_occlusion   : 64,
+                    // soft_shadows        : 17
                 },
                 sky: {
                     brightness  : 0.7,
