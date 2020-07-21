@@ -101,6 +101,14 @@ impl Save for Output {
         println!("Saving: {}", path.display());
         first_hit_img.save(&path)?;
 
+        let first_hit_edge = edge_detect(&self.first_hit);
+        let first_hit_edge_max = *first_hit_edge.max()? as f64 + 1.0e-3;
+        let first_hit_edge_lin = first_hit_edge.map(|x| *x as f64 + 1.0e-3) / first_hit_edge_max;
+        let first_hit_edge_lin_img = first_hit_edge_lin.map(|x| greyscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "first_hit_edge.png"));
+        println!("Saving: {}", path.display());
+        first_hit_edge_lin_img.save(&path)?;
+
         let first_dist_max = *self.first_dist.max()?;
         let first_dist = &self.first_dist / first_dist_max;
         let first_dist_img = first_dist.map(|x| greyscale.get(*x as f32));
@@ -135,4 +143,45 @@ impl Save for Output {
         println!("Saving: {}", path.display());
         last_hit_img.save(&path)
     }
+}
+
+/// Calculate the number of surrounding edges.
+#[inline]
+#[must_use]
+fn edge_detect(img: &Array2<usize>) -> Array2<usize> {
+    let mut num_edges = Vec::with_capacity(img.len());
+    for win in img.windows([3, 3]) {
+        let mut total = 0;
+        let centre = win[[1, 1]];
+
+        if win[[0, 0]] != centre {
+            total += 1;
+        }
+        if win[[1, 0]] != centre {
+            total += 1;
+        }
+        if win[[2, 0]] != centre {
+            total += 1;
+        }
+        if win[[0, 1]] != centre {
+            total += 1;
+        }
+        if win[[2, 1]] != centre {
+            total += 1;
+        }
+        if win[[0, 2]] != centre {
+            total += 1;
+        }
+        if win[[1, 2]] != centre {
+            total += 1;
+        }
+        if win[[2, 2]] != centre {
+            total += 1;
+        }
+
+        num_edges.push(total);
+    }
+
+    Array2::from_shape_vec([img.shape()[X] - 2, img.shape()[Y] - 2], num_edges)
+        .expect("Could not form edge image.")
 }
