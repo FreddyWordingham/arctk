@@ -1,0 +1,85 @@
+{
+    tree: {
+        tar_tris: 8,
+        max_depth: 8,
+        padding: 0.1
+    },
+    grid: {
+        boundary: {
+            mins: [-200, -200, -200],
+            maxs: [ 200,  200,  200]
+        },
+        res: [1,1,1]
+    },
+    sett: {
+        engine      : 'Test',
+        order       : 'Forward',
+        bump_dist   : 1e-6,
+        min_weight  : 0.01,
+        block_size  : 1000,
+        live        : 10000
+    },
+    surfs: {
+        plume            : [['han/plume.obj'], null],
+        millenium_body   : [['han/millenium_body.obj'],   null],
+        millenium_detail : [['han/millenium_detail.obj'], null],
+        millenium_feet   : [['han/millenium_feet.obj'],   null],
+        millenium_glass  : [['han/millenium_glass.obj'],  null],
+    },
+    attrs: {
+        millenium_glass: { Refractive: {abs:0.4, inside: 1.3, outside: 1.0} },
+        plume: { Refractive: {abs:0.4, inside: 1.3, outside: 1.0} },
+    },
+    cols: {
+        time                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        dist                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        loops               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+
+        plume               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
+        millenium_body      : ['#808080ff', '#d3d3d3ff', '#a3d0d0ff'],
+        millenium_detail    : ['#595c62ff', '#282a2eff'],
+        millenium_feet      : ['#595c62ff', '#282a2eff'],
+        millenium_glass     : ['#2551a2ff', '#3e76deff'],
+    },
+    scenes: {
+        first_view: {
+            cam: {
+                // pos     : [0,-5.5,0.25],
+                // tar     : [0,0,1],
+                pos     : [-7,-7,6],
+                tar     : [0.18,1.76,0.59],
+                // dof     : [17, 1.0],
+                swivel  : [4.0, 2.0],
+                hr_fov  : 22.0,
+                aspect  : "Square",
+                // ss_power: 2,
+                hr_res  : 1080
+            },
+            lighting: {
+                samples: {
+                    // ambient_occlusion   : 64,
+                    // soft_shadows        : 17
+                },
+                sky: {
+                    brightness  : 0.2,
+                    // sun_pos     : [2300, -3400, 4500],
+                    sun_pos     : [14, -26, 22],
+                    sun_rad     : 10,
+                    segments    : [16,16]
+                },
+                light: {
+                    ambient : 0.3,
+                    diffuse : 0.5,
+                    specular: 0.2,
+                    spec_pow: 8
+                },
+                shadow: {
+                    ambient : 0.3,
+                    direct  : 0.7,
+                    ao_pow  : 2
+                }
+            }
+        }
+    }
+}

@@ -63,6 +63,7 @@
         millenium_detail    : ['#595c62ff', '#282a2eff'],
         millenium_feet      : ['#595c62ff', '#282a2eff'],
         millenium_glass     : ['#2551a2ff', '#3e76deff'],
+        // sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
     },
     scenes: {
         first_view: {
