@@ -71,20 +71,23 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
             let mut col = palette::LinSrgba::default();
             let mut first_hits = Vec::with_capacity((super_samples * dof_samples) as usize);
             let mut ave_first_norm = Vec3::new(0.0, 0.0, 0.0);
+            let mut ave_first_dist = 0.0;
             let mut last_hits = Vec::with_capacity((super_samples * dof_samples) as usize);
             for sub_sample in 0..super_samples {
                 let offset = rng.gen_range(0.0, 2.0 * PI);
                 for depth_sample in 0..dof_samples {
                     let ray = scene.cam().gen_ray(pixel, offset, sub_sample, depth_sample);
-                    let (c, fh, first_norm, lh) = paint(&mut rng, input, scene, ray, 1.0);
+                    let (c, fh, fd, first_norm, lh) = paint(&mut rng, input, scene, ray, 1.0);
                     col += c * weight as f32;
                     ave_first_norm += first_norm * weight;
+                    ave_first_dist += fd * weight;
                     first_hits.push(fh);
                     last_hits.push(lh);
                 }
             }
             data.image[pixel] += col;
             data.first_hit[pixel] = mode(&first_hits).expect("Could not determine first hit.");
+            data.first_dist[pixel] = ave_first_dist;
             data.first_norm[pixel] = ave_first_norm;
             data.last_hit[pixel] = mode(&last_hits).expect("Could not determine last hit.");
 

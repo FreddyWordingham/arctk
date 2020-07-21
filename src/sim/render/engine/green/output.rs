@@ -14,6 +14,8 @@ pub struct Output {
     pub time: Array2<f64>,
     /// First hit.
     pub first_hit: Array2<usize>,
+    /// Distance data.
+    pub first_dist: Array2<f64>,
     /// First norm.
     pub first_norm: Array2<Vec3>,
     /// Last hit.
@@ -32,6 +34,7 @@ impl Output {
             image: Image::default(img_res),
             time: Array2::zeros(img_res),
             first_hit: Array2::zeros(img_res),
+            first_dist: Array2::zeros(img_res),
             first_norm: Array2::default(img_res),
             last_hit: Array2::zeros(img_res),
         }
@@ -44,6 +47,7 @@ impl AddAssign<&Self> for Output {
         self.image += &rhs.image;
         self.time += &rhs.time;
         self.first_hit += &rhs.first_hit;
+        self.first_dist += &rhs.first_dist;
         self.first_norm += &rhs.first_norm;
         self.last_hit += &rhs.last_hit;
     }
@@ -97,15 +101,28 @@ impl Save for Output {
         println!("Saving: {}", path.display());
         first_hit_img.save(&path)?;
 
-        let first_norm_lin = self.first_norm.map(|v| {
+        let first_dist_max = *self.first_dist.max()?;
+        let first_dist = &self.first_dist / first_dist_max;
+        let first_dist_img = first_dist.map(|x| greyscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "first_dist_lin.png"));
+        println!("Saving: {}", path.display());
+        first_dist_img.save(&path)?;
+
+        let first_dist_log = self
+            .first_dist
+            .map(|d| 1.0 - (first_dist_max - d).log(first_dist_max));
+        let first_dist_log_img = first_dist_log.map(|x| greyscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "first_dist_log.png"));
+        println!("Saving: {}", path.display());
+        first_dist_log_img.save(&path)?;
+
+        let first_norm_img = self.first_norm.map(|v| {
             if v.magnitude() < 1.0e-3 {
-                Vec3::z_axis()
+                greyscale.get(1.0)
             } else {
-                Dir3::new_normalize(*v)
+                let n = Dir3::new_normalize(*v);
+                red_scale.get(n.x as f32) + green_scale.get(n.y as f32) + blue_scale.get(n.z as f32)
             }
-        });
-        let first_norm_img = first_norm_lin.map(|v| {
-            red_scale.get(v.x as f32) + green_scale.get(v.y as f32) + blue_scale.get(v.z as f32)
         });
         let path = out_dir.join(&format!("{}_{}", time, "first_norm.png"));
         println!("Saving: {}", path.display());

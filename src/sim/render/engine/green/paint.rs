@@ -141,7 +141,7 @@ pub fn paint(
     scene: &Scene,
     mut ray: Ray,
     mut weight: f64,
-) -> (LinSrgba, usize, Vec3, usize) {
+) -> (LinSrgba, usize, f64, Vec3, usize) {
     debug_assert!(weight > 0.0);
     debug_assert!(weight <= 1.0);
 
@@ -149,6 +149,7 @@ pub fn paint(
     let sun_pos = scene.lighting().sky().sun_pos();
     let mut col = LinSrgba::default();
     let mut first_hit = None;
+    let mut first_dist = None;
     let mut last_hit = 0;
     let mut first_norm = None;
 
@@ -178,6 +179,7 @@ pub fn paint(
                     let group = hit.group();
                     if first_hit.is_none() {
                         first_hit = Some(input.cols.index_of(group).expect("Missing hit entry."));
+                        first_dist = Some(hit.dist());
                         first_norm = Some(*hit.side().norm());
                     }
                     last_hit = input.cols.index_of(group).expect("Missing hit entry.");
@@ -254,6 +256,7 @@ pub fn paint(
     }
 
     let first_hit = if let Some(fh) = first_hit { fh + 1 } else { 0 };
+    let first_dist = if let Some(fd) = first_dist { fd } else { 0.0 };
     let first_norm = if let Some(fir_n) = first_norm {
         fir_n.into_inner()
     } else {
@@ -261,7 +264,7 @@ pub fn paint(
     };
     let last_hit = 1 + last_hit;
 
-    (col, first_hit, first_norm, last_hit)
+    (col, first_hit, first_dist, first_norm, last_hit)
 }
 
 /// Perform a colouring.
