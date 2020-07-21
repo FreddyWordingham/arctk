@@ -16,8 +16,8 @@
         order       : 'Forward',
         bump_dist   : 1e-6,
         min_weight  : 0.01,
-        block_size  : 400,
-        live        : 4000
+        block_size  : 1000,
+        live        : 10000
     },
     surfs: {
         balls            : [['han/balls.obj'], null],
@@ -35,7 +35,12 @@
         vines            : [['han/vines.obj'], null],
     },
     attrs: {
-        royal: { Mirror: {abs: 0.3} }
+        royal: { Mirror: {abs: 0.3} },
+        millenium_glass: { Refractive: {abs:0.4, inside: 1.3, outside: 1.0} },
+        flower_inner_in: { Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        flower_inner_out:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        flower_outer_in: { Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        flower_outer_out:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
     },
     cols: {
         time                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
@@ -66,12 +71,12 @@
                 hr_fov  : 30.0,
                 aspect  : "Square",
                 ss_power: 2,
-                hr_res  : 2000
+                hr_res  : 1080
             },
             lighting: {
                 samples: {
-                    // ambient_occlusion   : 64,
-                    // soft_shadows        : 17
+                    ambient_occlusion   : 64,
+                    soft_shadows        : 17
                 },
                 sky: {
                     brightness  : 0.7,
