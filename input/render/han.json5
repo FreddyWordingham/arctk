@@ -20,6 +20,7 @@
         live        : 10000
     },
     surfs: {
+        plume            : [['han/plume.obj'], null],
         balls            : [['han/balls.obj'], null],
         // floor            : [['han/floor.obj'], null],
         flower_inner_in  : [['han/flower_inner_in.obj'], null],
@@ -37,16 +38,18 @@
     attrs: {
         royal: { Mirror: {abs: 0.3} },
         millenium_glass: { Refractive: {abs:0.4, inside: 1.3, outside: 1.0} },
-        flower_inner_in: { Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
-        flower_inner_out:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
-        flower_outer_in: { Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
-        flower_outer_out:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        // flower_inner_in: { Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        // flower_inner_out:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        // flower_outer_in: { Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        // flower_outer_out:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        numbers:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
     },
     cols: {
         time                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         dist                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         loops               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
 
+        plume               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         sky                 : ['#ffffffff', '#fde9a7ff', '#ffe200ff'],
         numbers             : ['#d2eeffff', '#9a49ffff', '#0095ffff', '#a62ab5ff'],
         flower_inner_in     : ['#e754d1ff', '#ff82f2ff', '#ff34f3ff'],
