@@ -60,6 +60,10 @@ impl Save for Output {
             .format("%Y%m%d%H%M%S")
             .to_string();
 
+        let blackscale = Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 0.0),
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+        ]);
         let greyscale = Gradient::new(vec![
             LinSrgba::new(0.0, 0.0, 0.0, 1.0),
             LinSrgba::new(1.0, 1.0, 1.0, 1.0),
@@ -108,6 +112,10 @@ impl Save for Output {
         let path = out_dir.join(&format!("{}_{}", time, "first_hit_edge.png"));
         println!("Saving: {}", path.display());
         first_hit_edge_lin_img.save(&path)?;
+        let first_hit_edge_lin_img_blk = first_hit_edge_lin.map(|x| blackscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "first_hit_edge_blk.png"));
+        println!("Saving: {}", path.display());
+        first_hit_edge_lin_img_blk.save(&path)?;
 
         let first_dist_max = *self.first_dist.max()?;
         let first_dist = &self.first_dist / first_dist_max;
@@ -149,7 +157,11 @@ impl Save for Output {
         let last_hit_edge_lin_img = last_hit_edge_lin.map(|x| greyscale.get(*x as f32));
         let path = out_dir.join(&format!("{}_{}", time, "last_hit_edge.png"));
         println!("Saving: {}", path.display());
-        last_hit_edge_lin_img.save(&path)
+        last_hit_edge_lin_img.save(&path)?;
+        let last_hit_edge_lin_img_blk = last_hit_edge_lin.map(|x| blackscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "last_hit_edge_blk.png"));
+        println!("Saving: {}", path.display());
+        last_hit_edge_lin_img_blk.save(&path)
     }
 }
 

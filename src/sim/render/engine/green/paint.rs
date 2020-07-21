@@ -280,7 +280,17 @@ fn colour(
     let light = (illumination::light(scene, ray, hit) + 0.5).min(1.0);
     let shadow = illumination::shadow(input, scene, ray, hit, input.sett.bump_dist(), rng);
 
-    let base_col = input.cols.map()[hit.group()].get(hit.side().norm().dot(sun_dir).abs() as f32);
+    let mut x = hit.side().norm().dot(sun_dir).abs();
+    if x >= 0.75 {
+        // Cel shading.
+        x = 1.0;
+    } else if x > 0.5 {
+        x = 0.6;
+    } else {
+        x = 0.3;
+    }
+
+    let base_col = input.cols.map()[hit.group()].get(x as f32);
     let grad = palette::Gradient::new(vec![palette::LinSrgba::default(), base_col]);
 
     grad.get((light * shadow) as f32)
