@@ -141,7 +141,15 @@ impl Save for Output {
         let last_hit_img = last_hit_lin.map(|x| greyscale.get(*x as f32));
         let path = out_dir.join(&format!("{}_{}", time, "last_hit.png"));
         println!("Saving: {}", path.display());
-        last_hit_img.save(&path)
+        last_hit_img.save(&path)?;
+
+        let last_hit_edge = edge_detect(&self.last_hit);
+        let last_hit_edge_max = *last_hit_edge.max()? as f64 + 1.0e-3;
+        let last_hit_edge_lin = last_hit_edge.map(|x| *x as f64 + 1.0e-3) / last_hit_edge_max;
+        let last_hit_edge_lin_img = last_hit_edge_lin.map(|x| greyscale.get(*x as f32));
+        let path = out_dir.join(&format!("{}_{}", time, "last_hit_edge.png"));
+        println!("Saving: {}", path.display());
+        last_hit_edge_lin_img.save(&path)
     }
 }
 
