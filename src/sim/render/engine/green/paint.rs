@@ -237,6 +237,13 @@ pub fn paint(
                                 *ray.dir_mut() = *crossing.ref_dir();
                                 ray.travel(bump_dist);
                             }
+                            Attributes::Luminous => {
+                                ray.travel(hit.dist());
+                                let sun_dir = Dir3::new_normalize(ray.pos() - sun_pos);
+                                col += colour(&mut rng, input, scene, &ray, &hit, &sun_dir)
+                                    * weight as f32;
+                                break;
+                            }
                         }
                     } else {
                         ray.travel(hit.dist());

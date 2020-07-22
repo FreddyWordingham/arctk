@@ -148,6 +148,9 @@ pub fn visibility(input: &Input, mut ray: Ray, bump_dist: f64, mut vis: f64) -> 
 
                     return trans_vis + ref_vis;
                 }
+                Attributes::Luminous => {
+                    break;
+                }
             }
         } else {
             return 0.0;

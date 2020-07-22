@@ -25,6 +25,8 @@ pub enum Attributes {
         /// External refractive index.
         outside: f64,
     },
+    /// Luminous.
+    Luminous,
 }
 
 impl Display for Attributes {
@@ -39,6 +41,7 @@ impl Display for Attributes {
                 inside,
                 outside,
             } => format!("Refractive: [{}]\t\t{}:|{}", abs, inside, outside),
+            Self::Luminous => "Luminous".to_string(),
         };
         write!(fmt, "{}", kind)
     }

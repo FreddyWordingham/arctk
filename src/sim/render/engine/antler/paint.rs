@@ -107,19 +107,47 @@ pub fn paint(
                                 let crossing =
                                     Crossing::new(ray.dir(), hit.side().norm(), n_curr, n_next);
 
-                                let trans_prob = crossing.trans_prob();
-                                if let Some(trans_dir) = crossing.trans_dir() {
-                                    let mut trans_ray = ray.clone();
-                                    *trans_ray.dir_mut() = *trans_dir;
-                                    trans_ray.travel(bump_dist);
-                                    let (c, ..) =
-                                        paint(rng, input, scene, trans_ray, weight * trans_prob);
-                                    col += c * weight as f32;
+                                // Reflection ray.
+                                let ref_prob = crossing.ref_prob();
+                                if ref_prob >= input.sett.min_weight() {
+                                    let mut ref_ray = ray.clone();
+                                    *ref_ray.dir_mut() = *crossing.ref_dir();
+                                    ref_ray.travel(bump_dist);
+                                    let (c, _fhi, lhi) =
+                                        paint(rng, input, scene, ref_ray, weight * ref_prob);
+
+                                    col += c * (weight * ref_prob) as f32;
+                                    last_hit = Some(lhi);
                                 }
 
-                                weight *= crossing.ref_prob();
-                                *ray.dir_mut() = *crossing.ref_dir();
-                                ray.travel(bump_dist);
+                                // Transmission ray.
+                                let trans_prob = crossing.trans_prob();
+                                if trans_prob >= input.sett.min_weight() {
+                                    if let Some(trans_dir) = crossing.trans_dir() {
+                                        let mut trans_ray = ray.clone();
+                                        *trans_ray.dir_mut() = *trans_dir;
+                                        trans_ray.travel(bump_dist);
+                                        let (c, _fhi, lhi) = paint(
+                                            rng,
+                                            input,
+                                            scene,
+                                            trans_ray,
+                                            weight * trans_prob,
+                                        );
+
+                                        col += c * (weight * trans_prob) as f32;
+                                        last_hit = Some(lhi);
+                                    }
+                                }
+
+                                break;
+                            }
+                            Attributes::Luminous => {
+                                ray.travel(hit.dist());
+                                let sun_dir = Dir3::new_normalize(ray.pos() - sun_pos);
+                                col += colour(&mut rng, input, scene, &ray, &hit, &sun_dir)
+                                    * weight as f32;
+                                break;
                             }
                         }
                     } else {
