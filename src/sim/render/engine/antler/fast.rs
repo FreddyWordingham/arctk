@@ -1,11 +1,12 @@
 //! Fast-scheme rendering function.
 
 use super::{paint, Output};
-use crate::order::mode;
 use crate::{
+    order::mode,
     render::{Input, Scene},
     Bar, Error,
 };
+use palette::{Gradient, LinSrgba};
 use rand::{thread_rng, Rng};
 use rayon::prelude::*;
 use std::{
@@ -48,7 +49,18 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
     let width = scene.cam().sensor().res().0 as usize;
     let height = scene.cam().sensor().res().1 as usize;
 
-    let mut data = Output::new([width, height], input.cols.map()["scale"].clone());
+    let mut data = Output::new(
+        [width, height],
+        input.cols.map()["scale"].clone(),
+        Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 0.0),
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+        ]),
+        Gradient::new(vec![
+            LinSrgba::new(0.0, 0.0, 0.0, 1.0),
+            LinSrgba::new(1.0, 1.0, 1.0, 1.0),
+        ]),
+    );
 
     let super_samples = scene.cam().sensor().super_samples();
     let dof_samples = scene.cam().focus().dof_samples();

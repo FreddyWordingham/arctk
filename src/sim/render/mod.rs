@@ -3,6 +3,7 @@
 pub mod attributes;
 pub mod camera;
 pub mod engine;
+pub mod img;
 pub mod input;
 pub mod setup;
 

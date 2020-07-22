@@ -7,8 +7,4 @@ pub mod illumination;
 pub mod output;
 pub mod paint;
 
-pub use self::event::*;
-pub use self::fast::*;
-pub use self::illumination::*;
-pub use self::output::*;
-pub use self::paint::*;
+pub use self::{event::*, fast::*, illumination::*, output::*, paint::*};
