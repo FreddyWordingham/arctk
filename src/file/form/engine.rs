@@ -8,6 +8,8 @@ use std::fmt::{Display, Formatter, Result};
 pub enum Engine {
     /// Green engine.
     Green,
+    /// Antler engine.
+    Antler,
 }
 
 impl Display for Engine {
@@ -15,6 +17,7 @@ impl Display for Engine {
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         let kind = match self {
             Self::Green => "Green".to_string(),
+            Self::Antler => "Antler".to_string(),
         };
         write!(fmt, "{}", kind)
     }

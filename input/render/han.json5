@@ -12,7 +12,7 @@
         res: [1,1,1]
     },
     sett: {
-        engine      : 'Green',
+        engine      : 'Antler',
         order       : 'Forward',
         bump_dist   : 1e-6,
         min_weight  : 0.01,
@@ -45,6 +45,7 @@
         numbers:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
     },
     cols: {
+        scale               : ['#ffffffff', '#000000ff'],
         time                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         dist                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         loops               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],

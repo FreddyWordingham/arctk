@@ -53,6 +53,13 @@ pub fn main() {
                     .save(&out_dir)
                     .expect("Failed to save output data.");
             }
+            form::Engine::Antler => {
+                let output = render::engine::antler::fast::run(&input, &scene);
+                output
+                    .expect("Rendering failed.")
+                    .save(&out_dir)
+                    .expect("Failed to save output data.");
+            }
         };
     }
 

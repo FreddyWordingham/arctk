@@ -39,3 +39,16 @@ pub fn is_descending(vec: &[f64]) -> bool {
 
     true
 }
+
+/// Get the mode of a slice.
+#[inline]
+#[must_use]
+pub fn mode<T: Copy + Eq + std::hash::Hash>(numbers: &[T]) -> Option<T> {
+    let mut counts = std::collections::HashMap::new();
+
+    numbers.iter().copied().max_by_key(|&n| {
+        let count = counts.entry(n).or_insert(0);
+        *count += 1;
+        *count
+    })
+}
