@@ -83,20 +83,25 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
 
             let mut col = palette::LinSrgba::default();
             let mut first_hits = Vec::with_capacity((super_samples * dof_samples) as usize);
+            let mut last_hits = Vec::with_capacity((super_samples * dof_samples) as usize);
 
             for sub_sample in 0..super_samples {
                 let offset = rng.gen_range(0.0, 2.0 * PI);
                 for depth_sample in 0..dof_samples {
                     let ray = scene.cam().gen_ray(pixel, offset, sub_sample, depth_sample);
 
-                    let (c, first_hit_index) = paint(&mut rng, input, scene, ray, 1.0);
+                    let (c, first_hit_index, last_hit_index) =
+                        paint(&mut rng, input, scene, ray, 1.0);
                     col += c * weight as f32;
                     first_hits.push(first_hit_index);
+                    last_hits.push(last_hit_index);
                 }
             }
             data.image[pixel] = col;
             data.first_hit_index[pixel] =
                 mode(&first_hits).expect("Could not determine first hit index.");
+            data.last_hit_index[pixel] =
+                mode(&last_hits).expect("Could not determine last hit index.");
 
             let time = std::time::Instant::now().duration_since(now).as_nanos();
             data.time[pixel] += time as f64;

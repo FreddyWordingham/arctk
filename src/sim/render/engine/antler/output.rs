@@ -6,6 +6,11 @@ use ndarray_stats::QuantileExt;
 use palette::{Gradient, LinSrgba};
 use std::{ops::AddAssign, path::Path};
 
+/// First hit edge detection radius.
+const FIRST_HIT_RAD: i32 = 4;
+/// Last hit edge detection radius.
+const LAST_HIT_RAD: i32 = 2;
+
 /// Test engine output structure.
 pub struct Output {
     /// Intensity colouring scale.
@@ -20,6 +25,8 @@ pub struct Output {
     pub time: Array2<f64>,
     /// First hit index.
     pub first_hit_index: Array2<i32>,
+    /// Las hit index.
+    pub last_hit_index: Array2<i32>,
 }
 
 impl Output {
@@ -42,6 +49,7 @@ impl Output {
             image: Image::default(img_res),
             time: Array2::zeros(img_res),
             first_hit_index: Array2::zeros(img_res),
+            last_hit_index: Array2::zeros(img_res),
         }
     }
 
@@ -77,9 +85,9 @@ impl Output {
         }
 
         {
-            let edges = img::find_edges(&self.first_hit_index, 3)?;
+            let edges = img::find_edges(&self.first_hit_index, FIRST_HIT_RAD)?;
             let max = edges.max()? + 1.0e-3;
-            let linear = edges.map(|x| f64::from(*x) + 1.0e-3) / max;
+            let linear = edges.map(|x| *x + 1.0e-3) / max;
 
             {
                 let img = linear.map(|x| self.black_scale.get(*x as f32));
@@ -96,6 +104,40 @@ impl Output {
             }
         }
     }
+
+    /// Save the last hit data.
+    #[inline]
+    fn save_last_hit_index(&self, path: &Path) -> Result<(), Error> {
+        {
+            let max = f64::from(*self.last_hit_index.max()? + 1) + 1.0e-3;
+            let linear = self.last_hit_index.map(|x| f64::from(*x + 1) + 1.0e-3) / max;
+
+            let img = linear.map(|x| self.scale.get(*x as f32));
+            let p = path.join("last_hit.png");
+            println!("Saving: {}", p.display());
+            img.save(&p)?;
+        }
+
+        {
+            let edges = img::find_edges(&self.last_hit_index, LAST_HIT_RAD)?;
+            let max = edges.max()? + 1.0e-3;
+            let linear = edges.map(|x| *x + 1.0e-3) / max;
+
+            {
+                let img = linear.map(|x| self.black_scale.get(*x as f32));
+                let p = path.join("last_hit_edges_bk.png");
+                println!("Saving: {}", p.display());
+                img.save(&p)?;
+            }
+
+            {
+                let img = linear.map(|x| self.outline_scale.get(*x as f32));
+                let p = path.join("last_hit_edges_ol.png");
+                println!("Saving: {}", p.display());
+                img.save(&p)
+            }
+        }
+    }
 }
 
 impl AddAssign<&Self> for Output {
@@ -104,6 +146,7 @@ impl AddAssign<&Self> for Output {
         self.image += &rhs.image;
         self.time += &rhs.time;
         self.first_hit_index += &rhs.first_hit_index;
+        self.last_hit_index += &rhs.last_hit_index;
     }
 }
 
@@ -119,6 +162,7 @@ impl Save for Output {
 
         self.save_main_img(&path)?;
         self.save_time_img(&path)?;
-        self.save_first_hit_index(&path)
+        self.save_first_hit_index(&path)?;
+        self.save_last_hit_index(&path)
     }
 }
