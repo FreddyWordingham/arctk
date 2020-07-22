@@ -131,21 +131,20 @@ pub fn visibility(input: &Input, mut ray: Ray, bump_dist: f64, mut vis: f64) -> 
                     };
                     let crossing = Crossing::new(ray.dir(), hit.side().norm(), n_curr, n_prev);
 
-                    let trans_prob = crossing.trans_prob();
                     let trans_vis = if let Some(trans_dir) = crossing.trans_dir() {
                         let mut trans_ray = ray.clone();
                         *trans_ray.dir_mut() = *trans_dir;
                         trans_ray.travel(bump_dist);
 
-                        visibility(input, trans_ray, bump_dist, vis * trans_prob)
+                        visibility(input, trans_ray, bump_dist, vis * crossing.trans_prob())
                     } else {
                         0.0
                     };
 
-                    let ref_prob = crossing.ref_prob();
                     let mut ref_ray = ray;
                     *ref_ray.dir_mut() = *crossing.ref_dir();
-                    let ref_vis = visibility(input, ref_ray, bump_dist, vis * ref_prob);
+                    ref_ray.travel(bump_dist);
+                    let ref_vis = visibility(input, ref_ray, bump_dist, vis * crossing.ref_prob());
 
                     return trans_vis + ref_vis;
                 }
