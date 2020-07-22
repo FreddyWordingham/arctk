@@ -21,13 +21,16 @@ pub fn paint(
     scene: &Scene,
     mut ray: Ray,
     mut weight: f64,
-) -> LinSrgba {
+) -> (LinSrgba, i32) {
     debug_assert!(weight > 0.0);
     debug_assert!(weight <= 1.0);
 
     let bump_dist = input.sett.bump_dist();
     let sun_pos = scene.lighting().sky().sun_pos();
+
+    // Tracked items.
     let mut col = LinSrgba::default();
+    let mut first_hit = None;
 
     // Move rays into the grid.
     if !input.grid.boundary().contains(ray.pos()) {
@@ -53,6 +56,12 @@ pub fn paint(
                 }
                 Event::Surface(hit) => {
                     let group = hit.group();
+
+                    if first_hit.is_none() {
+                        first_hit =
+                            Some(input.cols.index_of(group).expect("Missing hit entry.") as i32);
+                    }
+
                     if let Some(attr) = input.attrs.map().get(group) {
                         match attr {
                             Attributes::Transparent { abs } => {
@@ -98,8 +107,9 @@ pub fn paint(
                                     let mut trans_ray = ray.clone();
                                     *trans_ray.dir_mut() = *trans_dir;
                                     trans_ray.travel(bump_dist);
-                                    col += paint(rng, input, scene, trans_ray, weight * trans_prob)
-                                        * weight as f32;
+                                    let (c, _fhi) =
+                                        paint(rng, input, scene, trans_ray, weight * trans_prob);
+                                    col += c * weight as f32;
                                 }
 
                                 weight *= crossing.ref_prob();
@@ -125,7 +135,7 @@ pub fn paint(
         println!("Sky");
     }
 
-    col
+    (col, first_hit.unwrap_or(-1))
 }
 
 /// Perform a colouring.

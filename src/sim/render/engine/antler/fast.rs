@@ -1,6 +1,7 @@
 //! Fast-scheme rendering function.
 
 use super::{paint, Output};
+use crate::order::mode;
 use crate::{
     render::{Input, Scene},
     Bar, Error,
@@ -69,15 +70,21 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
             let pixel = [(p % h_res) as usize, (p / h_res) as usize];
 
             let mut col = palette::LinSrgba::default();
+            let mut first_hits = Vec::with_capacity((super_samples * dof_samples) as usize);
+
             for sub_sample in 0..super_samples {
                 let offset = rng.gen_range(0.0, 2.0 * PI);
                 for depth_sample in 0..dof_samples {
                     let ray = scene.cam().gen_ray(pixel, offset, sub_sample, depth_sample);
-                    let c = paint(&mut rng, input, scene, ray, 1.0);
+
+                    let (c, first_hit_index) = paint(&mut rng, input, scene, ray, 1.0);
                     col += c * weight as f32;
+                    first_hits.push(first_hit_index);
                 }
             }
-            data.image[pixel] += col;
+            data.image[pixel] = col;
+            data.first_hit_index[pixel] =
+                mode(&first_hits).expect("Could not determine first hit index.");
 
             let time = std::time::Instant::now().duration_since(now).as_nanos();
             data.time[pixel] += time as f64;
