@@ -44,6 +44,58 @@ impl Output {
             first_hit_index: Array2::zeros(img_res),
         }
     }
+
+    /// Save the main image data.
+    #[inline]
+    fn save_main_img(&self, path: &Path) -> Result<(), Error> {
+        let p = path.join("image.png");
+        println!("Saving: {}", p.display());
+        self.image.save(&p)
+    }
+
+    /// Save the temporal image data.
+    #[inline]
+    fn save_time_img(&self, path: &Path) -> Result<(), Error> {
+        let max = *self.time.max()?;
+        let img = self.time.map(|x| self.scale.get(x.log(max) as f32));
+        let p = path.join("time.png");
+        println!("Saving: {}", p.display());
+        img.save(&p)
+    }
+
+    /// Save the first hit data.
+    #[inline]
+    fn save_first_hit_index(&self, path: &Path) -> Result<(), Error> {
+        {
+            let max = f64::from(*self.first_hit_index.max()? + 1) + 1.0e-3;
+            let linear = self.first_hit_index.map(|x| f64::from(*x + 1) + 1.0e-3) / max;
+
+            let img = linear.map(|x| self.scale.get(*x as f32));
+            let p = path.join("first_hit.png");
+            println!("Saving: {}", p.display());
+            img.save(&p)?;
+        }
+
+        {
+            let edges = img::find_edges(&self.first_hit_index, 3)?;
+            let max = edges.max()? + 1.0e-3;
+            let linear = edges.map(|x| f64::from(*x) + 1.0e-3) / max;
+
+            {
+                let img = linear.map(|x| self.black_scale.get(*x as f32));
+                let p = path.join("first_hit_edges_bk.png");
+                println!("Saving: {}", p.display());
+                img.save(&p)?;
+            }
+
+            {
+                let img = linear.map(|x| self.outline_scale.get(*x as f32));
+                let p = path.join("first_hit_edges_ol.png");
+                println!("Saving: {}", p.display());
+                img.save(&p)
+            }
+        }
+    }
 }
 
 impl AddAssign<&Self> for Output {
@@ -62,41 +114,11 @@ impl Save for Output {
         let time = chrono::offset::Local::now()
             .format("%Y%m%d%H%M%S")
             .to_string();
+        let path = out_dir.join(time);
+        std::fs::create_dir(&path)?;
 
-        // Save main image.
-        let path = out_dir.join(&format!("{}_{}", time, "image.png"));
-        println!("Saving: {}", path.display());
-        self.image.save(&path)?;
-
-        // Save first hit data.
-        let first_hit_max = f64::from(*self.first_hit_index.max()? + 1) + 1.0e-3;
-        let first_hit_lin =
-            self.first_hit_index.map(|x| f64::from(*x + 1) + 1.0e-3) / first_hit_max;
-        let first_hit_img = first_hit_lin.map(|x| self.scale.get(*x as f32));
-        let path = out_dir.join(&format!("{}_{}", time, "first_hit.png"));
-        println!("Saving: {}", path.display());
-        first_hit_img.save(&path)?;
-
-        let first_hit_index_edge = img::find_edges(&self.first_hit_index, 3)?;
-        let edge_max = first_hit_index_edge.max()? + 1.0e-3;
-        let first_hit_index_edge_lin = (&first_hit_index_edge + 1.0e-3) / edge_max;
-        let first_hit_index_edge_lin = first_hit_index_edge_lin.map(|x| x.sqrt());
-        let first_hit_index_edge_img =
-            first_hit_index_edge_lin.map(|x| self.black_scale.get(*x as f32));
-        let path = out_dir.join(&format!("{}_{}", time, "first_hit_edge_outline.png"));
-        println!("Saving: {}", path.display());
-        first_hit_index_edge_img.save(&path)?;
-        let first_hit_index_edge_img =
-            first_hit_index_edge_lin.map(|x| self.outline_scale.get(*x as f32));
-        let path = out_dir.join(&format!("{}_{}", time, "first_hit_edge.png"));
-        println!("Saving: {}", path.display());
-        first_hit_index_edge_img.save(&path)?;
-
-        // Save temporal data.
-        let time_max = *self.time.max()?;
-        let time_img = self.time.map(|x| self.scale.get(x.log(time_max) as f32));
-        let path = out_dir.join(&format!("{}_{}", time, "log_time.png"));
-        println!("Saving: {}", path.display());
-        time_img.save(&path)
+        self.save_main_img(&path)?;
+        self.save_time_img(&path)?;
+        self.save_first_hit_index(&path)
     }
 }
