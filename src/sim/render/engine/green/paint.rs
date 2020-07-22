@@ -280,7 +280,7 @@ fn colour(
     let light = (illumination::light(scene, ray, hit) + 0.5).min(1.0);
     let shadow = illumination::shadow(input, scene, ray, hit, input.sett.bump_dist(), rng);
 
-    let mut x = hit.side().norm().dot(sun_dir).abs();
+    let x = hit.side().norm().dot(sun_dir).abs();
     // if x >= 0.75 {
     //     // Cel shading.
     //     x = 1.0;

@@ -46,7 +46,7 @@ pub fn main() {
         banner::section(&format!("Scene: {}", name));
 
         match engine {
-            form::Engine::Test => {
+            form::Engine::Green => {
                 let output = render::engine::green::fast::run(&input, &scene);
                 output
                     .expect("Rendering failed.")
