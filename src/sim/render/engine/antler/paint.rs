@@ -1,6 +1,6 @@
 //! Image painter function.
 
-use super::{illumination, Event};
+use super::{illumination, Collision, Event};
 use crate::{
     render::{Attributes, Input, Scene},
     Crossing, Dir3, Hit, Ray, Trace,
@@ -21,7 +21,7 @@ pub fn paint(
     scene: &Scene,
     mut ray: Ray,
     mut weight: f64,
-) -> (LinSrgba, i32, i32) {
+) -> (LinSrgba, Option<Collision>, Option<Collision>) {
     debug_assert!(weight > 0.0);
     debug_assert!(weight <= 1.0);
 
@@ -59,12 +59,21 @@ pub fn paint(
                     let group = hit.group();
 
                     if first_hit.is_none() {
-                        first_hit =
-                            Some(input.cols.index_of(group).expect("Missing hit entry.") as i32);
-                        last_hit = first_hit;
+                        first_hit = Some(Collision::new(
+                            input
+                                .surfs
+                                .index_of(group)
+                                .expect("Could not determine group index."),
+                            *hit.side().norm(),
+                        ));
                     } else {
-                        last_hit =
-                            Some(input.cols.index_of(group).expect("Missing hit entry.") as i32);
+                        last_hit = Some(Collision::new(
+                            input
+                                .surfs
+                                .index_of(group)
+                                .expect("Could not determine group index."),
+                            *hit.side().norm(),
+                        ));
                     }
 
                     if let Some(attr) = input.attrs.map().get(group) {
@@ -117,7 +126,7 @@ pub fn paint(
                                         paint(rng, input, scene, ref_ray, weight * ref_prob);
 
                                     col += c * (weight * ref_prob) as f32;
-                                    last_hit = Some(lhi);
+                                    last_hit = lhi;
                                 }
 
                                 // Transmission ray.
@@ -127,7 +136,7 @@ pub fn paint(
                                         let mut trans_ray = ray.clone();
                                         *trans_ray.dir_mut() = *trans_dir;
                                         trans_ray.travel(bump_dist);
-                                        let (c, _fhi, lhi) = paint(
+                                        let (c, _fhi, lh) = paint(
                                             rng,
                                             input,
                                             scene,
@@ -136,7 +145,7 @@ pub fn paint(
                                         );
 
                                         col += c * (weight * trans_prob) as f32;
-                                        last_hit = Some(lhi);
+                                        last_hit = lh;
                                     }
                                 }
 
@@ -168,7 +177,7 @@ pub fn paint(
         println!("Sky");
     }
 
-    (col, first_hit.unwrap_or(-1), last_hit.unwrap_or(-1))
+    (col, first_hit, last_hit)
 }
 
 /// Perform a colouring.
@@ -185,14 +194,7 @@ fn colour(
     let shadow = illumination::shadow(input, scene, ray, hit, input.sett.bump_dist(), rng);
 
     let x = hit.side().norm().dot(sun_dir).abs();
-    // if x >= 0.75 {
-    //     // Cel shading.
-    //     x = 1.0;
-    // } else if x > 0.5 {
-    //     x = 0.6;
-    // } else {
-    //     x = 0.3;
-    // }
+    // let x = cel(x);
 
     let base_col = input.cols.map()[hit.group()].get(x as f32);
     let grad = palette::Gradient::new(vec![palette::LinSrgba::default(), base_col]);
@@ -212,9 +214,25 @@ fn sky_col(
     let v = (ray.dir().dot(scene.cam().focus().orient().right()) + 1.0) * 0.5;
 
     let x = (scene.lighting().sky().noise().sample(u, v) + 1.0) * 0.5;
+    // let x = cel(x);
 
     let col = grad.get(x as f32);
 
     palette::Gradient::new(vec![palette::LinSrgba::default(), col])
         .get(scene.lighting().sky().brightness() as f32)
 }
+
+// /// Cel shade.
+// #[inline]
+// #[must_use]
+// fn cel(x: f64) -> f64 {
+//     if x > 0.8 {
+//         return 0.9;
+//     }
+
+//     if x > 0.2 {
+//         return 0.5;
+//     }
+
+//     return 0.1;
+// }

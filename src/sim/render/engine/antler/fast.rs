@@ -2,7 +2,6 @@
 
 use super::{paint, Output};
 use crate::{
-    order::mode,
     render::{Input, Scene},
     Bar, Error,
 };
@@ -98,10 +97,12 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
                 }
             }
             data.image[pixel] = col;
-            data.first_hit_index[pixel] =
-                mode(&first_hits).expect("Could not determine first hit index.");
-            data.last_hit_index[pixel] =
-                mode(&last_hits).expect("Could not determine last hit index.");
+            data.first_hit_index[pixel] = if let Some(collision) = &first_hits[0] {
+                collision.index as i32
+            } else {
+                -1
+            };
+            // data.last_hit_index[pixel] = last_hits[0].unwrap_or(-1_i32).index as i32;
 
             let time = std::time::Instant::now().duration_since(now).as_nanos();
             data.time[pixel] += time as f64;
