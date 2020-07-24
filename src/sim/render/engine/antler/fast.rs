@@ -3,7 +3,7 @@
 use super::{paint, Output};
 use crate::{
     render::{Input, Scene},
-    Bar, Error,
+    Bar, Dir3, Error, Vec3,
 };
 use palette::{Gradient, LinSrgba};
 use rand::{thread_rng, Rng};
@@ -59,6 +59,20 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
             LinSrgba::new(0.0, 0.0, 0.0, 1.0),
             LinSrgba::new(1.0, 1.0, 1.0, 1.0),
         ]),
+        [
+            Gradient::new(vec![
+                LinSrgba::new(0.0, 0.0, 0.0, 0.0),
+                LinSrgba::new(1.0, 0.0, 0.0, 1.0),
+            ]),
+            Gradient::new(vec![
+                LinSrgba::new(0.0, 0.0, 0.0, 0.0),
+                LinSrgba::new(0.0, 1.0, 0.0, 1.0),
+            ]),
+            Gradient::new(vec![
+                LinSrgba::new(0.0, 0.0, 0.0, 0.0),
+                LinSrgba::new(0.0, 0.0, 1.0, 1.0),
+            ]),
+        ],
     );
 
     let super_samples = scene.cam().sensor().super_samples();
@@ -96,16 +110,58 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, scene: &Scene) -> Output {
                     last_hits.push(last_hit_index);
                 }
             }
-            data.image[pixel] = col;
-            data.first_hit_index[pixel] = if let Some(collision) = &first_hits[0] {
-                collision.index as i32
-            } else {
-                -1
-            };
-            // data.last_hit_index[pixel] = last_hits[0].unwrap_or(-1_i32).index as i32;
 
-            let time = std::time::Instant::now().duration_since(now).as_nanos();
-            data.time[pixel] += time as f64;
+            // Colouring.
+            {
+                data.image[pixel] = col;
+            }
+
+            // First hit.
+            {
+                let mut indices = Vec::with_capacity(first_hits.len());
+                let mut total_norm = Vec3::new(0.0, 0.0, 0.0);
+                for fh in &first_hits {
+                    if let Some(hit) = fh {
+                        indices.push(hit.index as i32);
+                        total_norm += hit.norm.into_inner();
+                    } else {
+                        indices.push(-1);
+                    }
+                }
+                data.first_hit_index[pixel] =
+                    crate::sci::math::sort::order::mode(&indices).unwrap();
+                data.first_hit_norm[pixel] = if total_norm.magnitude() > 1.0e-3 {
+                    Some(Dir3::new_normalize(total_norm))
+                } else {
+                    None
+                };
+            }
+
+            // Last hit.
+            {
+                let mut indices = Vec::with_capacity(last_hits.len());
+                let mut total_norm = Vec3::new(0.0, 0.0, 0.0);
+                for lh in &last_hits {
+                    if let Some(hit) = lh {
+                        indices.push(hit.index as i32);
+                        total_norm += hit.norm.into_inner();
+                    } else {
+                        indices.push(-1);
+                    }
+                }
+                data.last_hit_index[pixel] = crate::sci::math::sort::order::mode(&indices).unwrap();
+                data.last_hit_norm[pixel] = if total_norm.magnitude() > 1.0e-3 {
+                    Some(Dir3::new_normalize(total_norm))
+                } else {
+                    None
+                };
+            }
+
+            // Time.
+            {
+                let time = std::time::Instant::now().duration_since(now).as_nanos();
+                data.time[pixel] += time as f64;
+            }
         }
     }
 

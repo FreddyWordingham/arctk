@@ -1,7 +1,7 @@
 //! Output structure.
 
-use crate::{render::img, Error, Image, Save, X, Y};
-use ndarray::Array2;
+use crate::{render::img, Dir3, Error, Image, Save, X, Y, Z};
+use ndarray::{Array2, Zip};
 use ndarray_stats::QuantileExt;
 use palette::{Gradient, LinSrgba};
 use std::{ops::AddAssign, path::Path};
@@ -19,14 +19,20 @@ pub struct Output {
     black_scale: Gradient<LinSrgba>,
     /// Outline scale.
     outline_scale: Gradient<LinSrgba>,
+    /// Dimension colour scales.
+    dim_scales: [Gradient<LinSrgba>; 3],
     /// Base image.
     pub image: Image,
     /// Time data.
     pub time: Array2<f64>,
     /// First hit index.
     pub first_hit_index: Array2<i32>,
+    /// First hit normal.
+    pub first_hit_norm: Array2<Option<Dir3>>,
     /// Las hit index.
     pub last_hit_index: Array2<i32>,
+    /// Last hit normal.
+    pub last_hit_norm: Array2<Option<Dir3>>,
 }
 
 impl Output {
@@ -38,6 +44,7 @@ impl Output {
         scale: Gradient<LinSrgba>,
         black_scale: Gradient<LinSrgba>,
         outline_scale: Gradient<LinSrgba>,
+        dim_scales: [Gradient<LinSrgba>; 3],
     ) -> Self {
         debug_assert!(img_res[X] > 0);
         debug_assert!(img_res[Y] > 0);
@@ -46,10 +53,13 @@ impl Output {
             scale,
             black_scale,
             outline_scale,
+            dim_scales,
             image: Image::default(img_res),
             time: Array2::zeros(img_res),
             first_hit_index: Array2::zeros(img_res),
+            first_hit_norm: Array2::default(img_res),
             last_hit_index: Array2::zeros(img_res),
+            last_hit_norm: Array2::default(img_res),
         }
     }
 
@@ -105,6 +115,23 @@ impl Output {
         }
     }
 
+    /// Save the first hit normal data.
+    #[inline]
+    fn save_first_hit_norm(&self, path: &Path) -> Result<(), Error> {
+        let img = self.first_hit_norm.map(|norm| {
+            if let Some(n) = norm {
+                self.dim_scales[X].get(n.x.abs() as f32)
+                    + self.dim_scales[Y].get(n.y.abs() as f32)
+                    + self.dim_scales[Z].get(n.z.abs() as f32)
+            } else {
+                LinSrgba::new(0.0, 0.0, 0.0, 1.0)
+            }
+        });
+        let p = path.join("first_hit_norm.png");
+        println!("Saving: {}", p.display());
+        img.save(&p)
+    }
+
     /// Save the last hit data.
     #[inline]
     fn save_last_hit_index(&self, path: &Path) -> Result<(), Error> {
@@ -138,6 +165,23 @@ impl Output {
             }
         }
     }
+
+    /// Save the last hit normal data.
+    #[inline]
+    fn save_last_hit_norm(&self, path: &Path) -> Result<(), Error> {
+        let img = self.last_hit_norm.map(|norm| {
+            if let Some(n) = norm {
+                self.dim_scales[X].get(n.x.abs() as f32)
+                    + self.dim_scales[Y].get(n.y.abs() as f32)
+                    + self.dim_scales[Z].get(n.z.abs() as f32)
+            } else {
+                LinSrgba::new(1.0, 1.0, 1.0, 1.0)
+            }
+        });
+        let p = path.join("last_hit_norm.png");
+        println!("Saving: {}", p.display());
+        img.save(&p)
+    }
 }
 
 impl AddAssign<&Self> for Output {
@@ -147,6 +191,10 @@ impl AddAssign<&Self> for Output {
         self.time += &rhs.time;
         self.first_hit_index += &rhs.first_hit_index;
         self.last_hit_index += &rhs.last_hit_index;
+
+        Zip::from(&mut self.first_hit_norm)
+            .and(&rhs.first_hit_norm)
+            .apply(|a, &b| *a = if a.is_some() { *a } else { b });
     }
 }
 
@@ -163,6 +211,8 @@ impl Save for Output {
         self.save_main_img(&path)?;
         self.save_time_img(&path)?;
         self.save_first_hit_index(&path)?;
-        self.save_last_hit_index(&path)
+        self.save_first_hit_norm(&path)?;
+        self.save_last_hit_index(&path)?;
+        self.save_last_hit_norm(&path)
     }
 }

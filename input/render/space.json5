@@ -142,13 +142,13 @@
                 // swivel  : [0.0, 0.1],
                 hr_fov  : 120.0,
                 aspect  : "Widescreen",
-                // ss_power: 2,
-                hr_res  : 344
+                ss_power: 2,
+                hr_res  : 3440
             },
             lighting: {
                 samples: {
-                    ambient_occlusion   : 16,
-                    soft_shadows        : 7,
+                    // ambient_occlusion   : 16,
+                    // soft_shadows        : 7,
                     // ambient_occlusion   : 64,
                     // soft_shadows        : 17
                 },
