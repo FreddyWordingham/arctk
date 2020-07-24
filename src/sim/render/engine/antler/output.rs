@@ -195,6 +195,9 @@ impl AddAssign<&Self> for Output {
         Zip::from(&mut self.first_hit_norm)
             .and(&rhs.first_hit_norm)
             .apply(|a, &b| *a = if a.is_some() { *a } else { b });
+        Zip::from(&mut self.last_hit_norm)
+            .and(&rhs.last_hit_norm)
+            .apply(|a, &b| *a = if a.is_some() { *a } else { b });
     }
 }
 

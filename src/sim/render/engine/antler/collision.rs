@@ -14,7 +14,7 @@ impl Collision {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(index: usize, norm: Dir3) -> Self {
+    pub const fn new(index: usize, norm: Dir3) -> Self {
         Self { index, norm }
     }
 }
