@@ -194,7 +194,10 @@ fn colour(
     let shadow = illumination::shadow(input, scene, ray, hit, input.sett.bump_dist(), rng);
 
     let x = hit.side().norm().dot(sun_dir).abs();
-    // let x = cel(x);
+
+    let light = cel(light);
+    let shadow = cel(shadow);
+    let x = cel(x);
 
     let base_col = input.cols.map()[hit.group()].get(x as f32);
     let grad = palette::Gradient::new(vec![palette::LinSrgba::default(), base_col]);
@@ -214,7 +217,6 @@ fn sky_col(
     let v = (ray.dir().dot(scene.cam().focus().orient().right()) + 1.0) * 0.5;
 
     let x = (scene.lighting().sky().noise().sample(u, v) + 1.0) * 0.5;
-    // let x = cel(x);
 
     let col = grad.get(x as f32);
 
@@ -222,17 +224,17 @@ fn sky_col(
         .get(scene.lighting().sky().brightness() as f32)
 }
 
-// /// Cel shade.
-// #[inline]
-// #[must_use]
-// fn cel(x: f64) -> f64 {
-//     if x > 0.8 {
-//         return 0.9;
-//     }
+/// Cel shade.
+#[inline]
+#[must_use]
+fn cel(x: f64) -> f64 {
+    if x > 0.95 {
+        return 1.0;
+    }
 
-//     if x > 0.2 {
-//         return 0.5;
-//     }
+    if x > 0.2 {
+        return 0.7;
+    }
 
-//     return 0.1;
-// }
+    return 0.1;
+}

@@ -1,11 +1,13 @@
 //! Image detection functions.
 
-use crate::Error;
+use crate::{Dir3, Error};
 use ndarray::Array2;
 
-/// Calculate the edge map from the first hit index data.
+/// Calculate the edge map from the hit index data.
+/// # Errors
+/// if the resulting scalar array can not be constructed.
 #[inline]
-pub fn find_edges<T: PartialEq>(img: &Array2<T>, rad: i32) -> Result<Array2<f64>, Error> {
+pub fn find_index_edges<T: PartialEq>(img: &Array2<T>, rad: i32) -> Result<Array2<f64>, Error> {
     debug_assert!(rad > 0);
 
     let [width, height] = [img.shape()[0] as i32, img.shape()[1] as i32];
@@ -34,7 +36,51 @@ pub fn find_edges<T: PartialEq>(img: &Array2<T>, rad: i32) -> Result<Array2<f64>
         }
     }
 
-    println!("Edges len: {}", edges.len());
+    Ok(Array2::from_shape_vec(
+        [width as usize, height as usize],
+        edges,
+    )?)
+}
+
+/// Calculate the edge map from the hit normal data.
+/// # Errors
+/// if the resulting scalar array can not be constructed.
+#[inline]
+pub fn find_normal_edges(map: &Array2<Option<Dir3>>, rad: i32) -> Result<Array2<f64>, Error> {
+    debug_assert!(rad > 0);
+
+    let [width, height] = [map.shape()[0] as i32, map.shape()[1] as i32];
+    let mut edges = Vec::with_capacity(map.len());
+
+    let scan = scan_circle(rad);
+    for xi in 0..width {
+        for yi in 0..height {
+            if let Some(centre) = &map[[xi as usize, yi as usize]] {
+                let mut max = 0.0;
+                let mut dot_sum = 0.0;
+
+                for ([dx, dy], w) in &scan {
+                    let px = xi + dx;
+                    let py = yi + dy;
+
+                    if (px >= 0) && (px < width) && (py >= 0) && (py < height) {
+                        if let Some(norm) = &map[[px as usize, py as usize]] {
+                            max += w;
+                            dot_sum += (1.0 - centre.dot(norm)) * w;
+                        }
+                    }
+                }
+
+                if dot_sum > 0.0 {
+                    edges.push(dot_sum / max);
+                } else {
+                    edges.push(0.0);
+                }
+            } else {
+                edges.push(0.0);
+            }
+        }
+    }
 
     Ok(Array2::from_shape_vec(
         [width as usize, height as usize],

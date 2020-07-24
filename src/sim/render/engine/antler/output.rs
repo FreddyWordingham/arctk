@@ -95,7 +95,7 @@ impl Output {
         }
 
         {
-            let edges = img::find_edges(&self.first_hit_index, FIRST_HIT_RAD)?;
+            let edges = img::find_index_edges(&self.first_hit_index, FIRST_HIT_RAD)?;
             let max = edges.max()? + 1.0e-3;
             let linear = edges.map(|x| *x + 1.0e-3) / max;
 
@@ -118,18 +118,40 @@ impl Output {
     /// Save the first hit normal data.
     #[inline]
     fn save_first_hit_norm(&self, path: &Path) -> Result<(), Error> {
-        let img = self.first_hit_norm.map(|norm| {
-            if let Some(n) = norm {
-                self.dim_scales[X].get(n.x.abs() as f32)
-                    + self.dim_scales[Y].get(n.y.abs() as f32)
-                    + self.dim_scales[Z].get(n.z.abs() as f32)
-            } else {
-                LinSrgba::new(0.0, 0.0, 0.0, 1.0)
+        {
+            let img = self.first_hit_norm.map(|norm| {
+                if let Some(n) = norm {
+                    self.dim_scales[X].get(n.x.abs() as f32)
+                        + self.dim_scales[Y].get(n.y.abs() as f32)
+                        + self.dim_scales[Z].get(n.z.abs() as f32)
+                } else {
+                    LinSrgba::new(0.0, 0.0, 0.0, 0.0)
+                }
+            });
+            let p = path.join("first_hit_norm.png");
+            println!("Saving: {}", p.display());
+            img.save(&p)?;
+        }
+
+        {
+            let edges = img::find_normal_edges(&self.first_hit_norm, LAST_HIT_RAD)?;
+            let max = edges.max()? + 1.0e-3;
+            let linear = edges.map(|x| *x + 1.0e-3) / max;
+
+            {
+                let img = linear.map(|x| self.black_scale.get(*x as f32));
+                let p = path.join("first_hit_norm_bk.png");
+                println!("Saving: {}", p.display());
+                img.save(&p)?;
             }
-        });
-        let p = path.join("first_hit_norm.png");
-        println!("Saving: {}", p.display());
-        img.save(&p)
+
+            {
+                let img = linear.map(|x| self.outline_scale.get(*x as f32));
+                let p = path.join("first_hit_norm_ol.png");
+                println!("Saving: {}", p.display());
+                img.save(&p)
+            }
+        }
     }
 
     /// Save the last hit data.
@@ -146,7 +168,7 @@ impl Output {
         }
 
         {
-            let edges = img::find_edges(&self.last_hit_index, LAST_HIT_RAD)?;
+            let edges = img::find_index_edges(&self.last_hit_index, LAST_HIT_RAD)?;
             let max = edges.max()? + 1.0e-3;
             let linear = edges.map(|x| *x + 1.0e-3) / max;
 
@@ -169,18 +191,40 @@ impl Output {
     /// Save the last hit normal data.
     #[inline]
     fn save_last_hit_norm(&self, path: &Path) -> Result<(), Error> {
-        let img = self.last_hit_norm.map(|norm| {
-            if let Some(n) = norm {
-                self.dim_scales[X].get(n.x.abs() as f32)
-                    + self.dim_scales[Y].get(n.y.abs() as f32)
-                    + self.dim_scales[Z].get(n.z.abs() as f32)
-            } else {
-                LinSrgba::new(1.0, 1.0, 1.0, 1.0)
+        {
+            let img = self.last_hit_norm.map(|norm| {
+                if let Some(n) = norm {
+                    self.dim_scales[X].get(n.x.abs() as f32)
+                        + self.dim_scales[Y].get(n.y.abs() as f32)
+                        + self.dim_scales[Z].get(n.z.abs() as f32)
+                } else {
+                    LinSrgba::new(0.0, 0.0, 0.0, 0.0)
+                }
+            });
+            let p = path.join("last_hit_norm.png");
+            println!("Saving: {}", p.display());
+            img.save(&p)?;
+        }
+
+        {
+            let edges = img::find_normal_edges(&self.last_hit_norm, LAST_HIT_RAD)?;
+            let max = edges.max()? + 1.0e-3;
+            let linear = edges.map(|x| *x + 1.0e-3) / max;
+
+            {
+                let img = linear.map(|x| self.black_scale.get(*x as f32));
+                let p = path.join("last_hit_norm_bk.png");
+                println!("Saving: {}", p.display());
+                img.save(&p)?;
             }
-        });
-        let p = path.join("last_hit_norm.png");
-        println!("Saving: {}", p.display());
-        img.save(&p)
+
+            {
+                let img = linear.map(|x| self.outline_scale.get(*x as f32));
+                let p = path.join("last_hit_norm_ol.png");
+                println!("Saving: {}", p.display());
+                img.save(&p)
+            }
+        }
     }
 }
 
