@@ -58,11 +58,11 @@ pub fn shadow(
             let (r, theta) = golden::circle(n, samples);
             let mut soft_ray = light_ray.clone();
             soft_ray.rotate(r * scene.lighting().sky().sun_rad(), theta + offset);
-            total += visibility(input, soft_ray, bump_dist, 1.0);
+            total += visibility(input, soft_ray, bump_dist, 1.0, 0.0, 1000.0);
         }
         total / f64::from(samples)
     } else {
-        visibility(input, light_ray, bump_dist, 1.0)
+        visibility(input, light_ray, bump_dist, 1.0, 0.0, 1000.0)
     };
 
     if let Some(samples) = scene.lighting().samples().ambient_occlusion() {
@@ -74,7 +74,7 @@ pub fn shadow(
             let (phi, theta) = golden::hemisphere(n, samples);
             let mut ambient_ray = norm_ray.clone();
             ambient_ray.rotate(phi, theta + offset);
-            total += visibility(input, ambient_ray, bump_dist, 1.0);
+            total += visibility(input, ambient_ray, bump_dist, 1.0, 0.0, 10.0);
         }
         let ambient = (total / f64::from(samples)).powi(scene.lighting().shadow().ao_pow());
 
@@ -90,7 +90,14 @@ pub fn shadow(
 /// Calculate the visibility of a given ray.
 #[inline]
 #[must_use]
-pub fn visibility(input: &Input, mut ray: Ray, bump_dist: f64, mut vis: f64) -> f64 {
+pub fn visibility(
+    input: &Input,
+    mut ray: Ray,
+    bump_dist: f64,
+    mut vis: f64,
+    mut dist: f64,
+    max_dist: f64,
+) -> f64 {
     debug_assert!(vis > 0.0);
     debug_assert!(vis <= 1.0);
     debug_assert!(bump_dist > 0.0);
@@ -103,18 +110,24 @@ pub fn visibility(input: &Input, mut ray: Ray, bump_dist: f64, mut vis: f64) -> 
             return 0.0;
         }
 
+        if dist >= max_dist {
+            return vis;
+        }
+
         let group = hit.group();
         if let Some(attr) = input.attrs.map().get(group) {
             match attr {
                 Attributes::Transparent { abs } => {
                     vis *= 1.0 - *abs;
                     ray.travel(hit.dist() + bump_dist);
+                    dist += hit.dist() + bump_dist;
                 }
                 Attributes::Mirror { abs } => {
                     ray.travel(hit.dist());
                     vis *= 1.0 - *abs;
                     *ray.dir_mut() = Crossing::calc_ref_dir(ray.dir(), hit.side().norm());
                     ray.travel(bump_dist);
+                    dist += hit.dist() + bump_dist;
                 }
                 Attributes::Refractive {
                     abs,
@@ -135,8 +148,16 @@ pub fn visibility(input: &Input, mut ray: Ray, bump_dist: f64, mut vis: f64) -> 
                         let mut trans_ray = ray.clone();
                         *trans_ray.dir_mut() = *trans_dir;
                         trans_ray.travel(bump_dist);
+                        dist += hit.dist();
 
-                        visibility(input, trans_ray, bump_dist, vis * crossing.trans_prob())
+                        visibility(
+                            input,
+                            trans_ray,
+                            bump_dist,
+                            vis * crossing.trans_prob(),
+                            dist,
+                            max_dist,
+                        )
                     } else {
                         0.0
                     };
@@ -144,7 +165,15 @@ pub fn visibility(input: &Input, mut ray: Ray, bump_dist: f64, mut vis: f64) -> 
                     let mut ref_ray = ray;
                     *ref_ray.dir_mut() = *crossing.ref_dir();
                     ref_ray.travel(bump_dist);
-                    let ref_vis = visibility(input, ref_ray, bump_dist, vis * crossing.ref_prob());
+                    dist += hit.dist();
+                    let ref_vis = visibility(
+                        input,
+                        ref_ray,
+                        bump_dist,
+                        vis * crossing.ref_prob(),
+                        dist,
+                        max_dist,
+                    );
 
                     return trans_vis + ref_vis;
                 }

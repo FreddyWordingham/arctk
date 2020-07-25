@@ -1,7 +1,7 @@
 {
     tree: {
-        tar_tris: 8,
-        max_depth: 8,
+        tar_tris: 5,
+        max_depth: 10,
         padding: 0.001
     },
     grid: {
@@ -89,6 +89,7 @@
         solar_8                 : { Transparent: {abs:0.2} },
         solar_9                 : { Transparent: {abs:0.2} },
         solar_core              : { Luminous:{} },
+        ties_engines            : { Luminous:{} },
 
         shots_blue              : { Luminous:{} },
         shots_green             : { Luminous:{} },
@@ -105,6 +106,8 @@
         planet_clouds_upper     : { Transparent:{abs:0.1} },
         planet_sea              : { Refractive: {abs:0.3, inside: 1.3, outside: 1.0} },
 
+        xwing_details           : { Mirror:      {abs: 0.5} },
+        ties_windows            : { Mirror:      {abs: 0.5} },
         falcon_glass            : { Mirror:      {abs: 0.5} },
         falcon_plume            : { Transparent: {abs: 0.5} },
     },
@@ -174,14 +177,19 @@
     scenes: {
         first_view: {
             cam: {
-                pos     : [-14, -26, -6],
-                tar     : [0,0,0.25],
-                // dof     : [17, 0.1],
-                // swivel  : [0.0, 0.1],
-                hr_fov  : 35.0,
+                // pos     : [-14, -26, -6],
+                // tar     : [2.8807,-0.53698,3.245],
+                // pos     : [-1, -14, 0],
+                // tar     : [0,0,0.25],
+                pos     : [4,-16,-2],
+                tar     : [2.8807,-0.53698,3.245],
+                // dof     : [17, 0.8],
+                swivel  : [-5, -4],
+                hr_fov  : 45.0,
                 aspect  : "IPhoneXS",
-                // ss_power: 2,
-                hr_res  : 1125
+                // ss_power: 3,
+                hr_res  : 4500
+                // hr_res  : 1125
             },
             lighting: {
                 samples: {

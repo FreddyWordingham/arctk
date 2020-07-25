@@ -6,10 +6,14 @@ use ndarray_stats::QuantileExt;
 use palette::{Gradient, LinSrgba};
 use std::{ops::AddAssign, path::Path};
 
-/// First hit edge detection radius.
-const FIRST_HIT_RAD: i32 = 4;
-/// Last hit edge detection radius.
-const LAST_HIT_RAD: i32 = 2;
+/// First hit index edge-detection radius.
+const FIRST_HIT_INDEX_RAD: i32 = 12;
+/// First hit normal edge-detection radius.
+const FIRST_HIT_NORM_RAD: i32 = 8;
+/// Last hit index edge-detection radius.
+const LAST_HIT_INDEX_RAD: i32 = 6;
+/// Last hit normal edge-detection radius.
+const LAST_HIT_NORM_RAD: i32 = 4;
 
 /// Test engine output structure.
 pub struct Output {
@@ -95,7 +99,7 @@ impl Output {
         }
 
         {
-            let edges = img::find_index_edges(&self.first_hit_index, FIRST_HIT_RAD)?;
+            let edges = img::find_index_edges(&self.first_hit_index, FIRST_HIT_INDEX_RAD)?;
             let max = edges.max()? + 1.0e-3;
             let linear = edges.map(|x| *x + 1.0e-3) / max;
 
@@ -134,19 +138,24 @@ impl Output {
         }
 
         {
-            let edges = img::find_normal_edges(&self.first_hit_norm, LAST_HIT_RAD)?;
-            let max = edges.max()? + 1.0e-3;
-            let linear = edges.map(|x| *x + 1.0e-3) / max;
+            let mut edges = img::find_normal_edges(&self.first_hit_norm, FIRST_HIT_NORM_RAD)?;
+            let max = edges.max()? + 1.0e-9;
+            let linear = edges.map(|x| *x + 1.0e-9) / max;
+            // edges = linear.map(|x| if *x >= 1.0e-6 { 1.0 } else { 0.0 });
+            let scalar = 1.0e-1;
+            edges = linear / scalar;
+            edges -= 1.0;
+            edges = edges.map(|x| 1.0 / (1.0 + (-5.0 * x).exp()));
 
             {
-                let img = linear.map(|x| self.black_scale.get(*x as f32));
+                let img = edges.map(|x| self.black_scale.get(*x as f32));
                 let p = path.join("first_hit_norm_bk.png");
                 println!("Saving: {}", p.display());
                 img.save(&p)?;
             }
 
             {
-                let img = linear.map(|x| self.outline_scale.get(*x as f32));
+                let img = edges.map(|x| self.outline_scale.get(*x as f32));
                 let p = path.join("first_hit_norm_ol.png");
                 println!("Saving: {}", p.display());
                 img.save(&p)
@@ -168,7 +177,7 @@ impl Output {
         }
 
         {
-            let edges = img::find_index_edges(&self.last_hit_index, LAST_HIT_RAD)?;
+            let edges = img::find_index_edges(&self.last_hit_index, LAST_HIT_INDEX_RAD)?;
             let max = edges.max()? + 1.0e-3;
             let linear = edges.map(|x| *x + 1.0e-3) / max;
 
@@ -207,19 +216,24 @@ impl Output {
         }
 
         {
-            let edges = img::find_normal_edges(&self.last_hit_norm, LAST_HIT_RAD)?;
-            let max = edges.max()? + 1.0e-3;
-            let linear = edges.map(|x| *x + 1.0e-3) / max;
+            let mut edges = img::find_normal_edges(&self.last_hit_norm, LAST_HIT_NORM_RAD)?;
+            let max = edges.max()? + 1.0e-9;
+            let linear = edges.map(|x| *x + 1.0e-9) / max;
+            // edges = linear.map(|x| if *x >= 1.0e-6 { 1.0 } else { 0.0 });
+            let scalar = 1.0e-1;
+            edges = linear / scalar;
+            edges -= 1.0;
+            edges = edges.map(|x| 1.0 / (1.0 + (-5.0 * x).exp()));
 
             {
-                let img = linear.map(|x| self.black_scale.get(*x as f32));
+                let img = edges.map(|x| self.black_scale.get(*x as f32));
                 let p = path.join("last_hit_norm_bk.png");
                 println!("Saving: {}", p.display());
                 img.save(&p)?;
             }
 
             {
-                let img = linear.map(|x| self.outline_scale.get(*x as f32));
+                let img = edges.map(|x| self.outline_scale.get(*x as f32));
                 let p = path.join("last_hit_norm_ol.png");
                 println!("Saving: {}", p.display());
                 img.save(&p)

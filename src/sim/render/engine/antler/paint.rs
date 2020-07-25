@@ -228,13 +228,14 @@ fn sky_col(
 #[inline]
 #[must_use]
 fn cel(x: f64) -> f64 {
-    if x > 0.95 {
-        return 1.0;
-    }
+    // if x > 0.95 {
+    //     return 1.0;
+    // }
 
-    if x > 0.2 {
-        return 0.7;
-    }
+    // if x > 0.2 {
+    //     return 0.7;
+    // }
 
-    return 0.1;
+    // return 0.1;
+    x
 }
