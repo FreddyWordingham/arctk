@@ -28,14 +28,12 @@
     },
     attrs: {
         gems: { Mirror: {abs: 0.3} },
-        vein: { Refractive: {abs:0.5, inside: 1.3, outside: 1.0} }
+        vein: { Refractive: {abs:0.1, inside: 1.3, outside: 1.0} }
     },
     cols: {
         scale   : ['#000000ff', '#ffffffff'],
-        sky     : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
-        time    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
-        dist    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
-        loops   : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
+
         core    : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
         gems    : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],

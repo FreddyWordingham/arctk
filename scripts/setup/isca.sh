@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Replace fjmw201 with your username!
 
 # First, login to isca:
