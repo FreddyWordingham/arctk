@@ -42,6 +42,10 @@ pub fn paint(
 
     if let Some((_index, voxel)) = input.grid.gen_index_voxel(ray.pos()) {
         loop {
+            if weight < input.sett.min_weight() {
+                break;
+            }
+
             // Determine possible event distances.
             let voxel_dist = voxel
                 .dist(&ray)
@@ -166,10 +170,6 @@ pub fn paint(
                         break;
                     }
                 }
-            }
-
-            if weight < input.sett.min_weight() {
-                break;
             }
         }
     } else {
