@@ -1,4 +1,4 @@
-//! Hello Arctk!
+//! Arctk rendering engine.
 
 use arctk::*;
 use attr::input;

@@ -1,0 +1,13 @@
+{
+    grid: {
+        boundary: {
+            mins: [-200, -200, -200],
+            maxs: [ 200,  200,  200]
+        },
+        res: [1,1,1]
+    },
+    surfs: {
+        sphere  : [['objs/test/sphere.obj'], null],
+        cube    : [['objs/test/cube.obj'], null]
+    }
+}
