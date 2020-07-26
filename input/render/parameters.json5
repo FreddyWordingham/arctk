@@ -32,7 +32,8 @@
     },
     cols: {
         scale   : ['#000000ff', '#ffffffff'],
-        sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
+        sky     : ['#000000ff', '#ffffffff'],
+        // sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
 
         core    : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
@@ -43,7 +44,7 @@
     scenes: {
         first_view: {
             cam: {
-                pos     : [-2.123, 1.21213, 1.1213],
+                pos     : [2.123, 1.21213, 2.1213],
                 tar     : [0.002131, 0.0021331, 0.5023],
                 // dof     : [17, 0.1],
                 // swivel  : [0.1, 0.1],
