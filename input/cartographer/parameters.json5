@@ -6,8 +6,21 @@
         },
         res: [64,64,64]
     },
+    tree: {
+        tar_tris: 5,
+        max_depth: 6,
+        padding: 0.1
+    },
+    sett: {
+        cast      : 'Antler',
+        block_size  : 1000,
+    },
     surfs: {
-        cube    : ['air', 'water', ['objs/test/cube.obj'], null],
-        sphere  : ['water', 'air', ['objs/test/sphere.obj'], null]
+        cube    : [['objs/test/cube.obj'], null],
+        sphere  : [['objs/test/sphere.obj'], null]
+    },
+    interfaces: {
+        cube    : { out: 'air', in: 'fog' },
+        sphere  : { out: 'fog', in: 'water' }
     }
 }
