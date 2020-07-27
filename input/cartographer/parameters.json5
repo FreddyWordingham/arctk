@@ -1,13 +1,13 @@
 {
     grid: {
         boundary: {
-            mins: [-200, -200, -200],
-            maxs: [ 200,  200,  200]
+            mins: [-2,-2,-2],
+            maxs: [ 2, 2, 2]
         },
-        res: [1,1,1]
+        res: [64,64,64]
     },
     surfs: {
-        sphere  : [['objs/test/sphere.obj'], null],
-        cube    : [['objs/test/cube.obj'], null]
+        cube    : ['air', 'water', ['objs/test/cube.obj'], null],
+        sphere  : ['water', 'air', ['objs/test/sphere.obj'], null]
     }
 }
