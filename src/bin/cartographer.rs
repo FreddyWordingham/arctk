@@ -14,6 +14,8 @@ struct Parameters {
     tree: tree::Settings,
     /// Regular grid settings.
     grid: grid::Settings,
+    /// Cartographer settings.
+    sett: cartographer::Settings,
     /// Surfaces map.
     surfs: Set<form::Mesh>,
 }
@@ -24,9 +26,9 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, surfs) = build(&in_dir, params);
+    let (tree_sett, grid_sett, sett, surfs) = build(&in_dir, params);
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
-    let input = cartographer::Input::new(&tree, &grid, &surfs);
+    let input = cartographer::Input::new(&tree, &grid, &sett, &surfs);
     let _data = cartographer::map(&input);
 
     banner::section("Finished");
@@ -66,7 +68,15 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(in_dir: &Path, params: Parameters) -> (tree::Settings, grid::Settings, Set<Mesh>) {
+fn build(
+    in_dir: &Path,
+    params: Parameters,
+) -> (
+    tree::Settings,
+    grid::Settings,
+    cartographer::Settings,
+    Set<Mesh>,
+) {
     banner::section("Building");
     banner::sub_section("Adaptive Tree Settings");
     let tree_sett = params.tree;
@@ -75,6 +85,11 @@ fn build(in_dir: &Path, params: Parameters) -> (tree::Settings, grid::Settings, 
     banner::sub_section("Grid Settings");
     let grid_sett = params.grid;
     report!("Grid settings", &grid_sett);
+
+    banner::sub_section("Cartographer Settings");
+    let sett = params.sett;
+    report!("Cartographer settings", &sett);
+
     banner::sub_section("Surfaces");
     let surfs = params
         .surfs
@@ -82,7 +97,7 @@ fn build(in_dir: &Path, params: Parameters) -> (tree::Settings, grid::Settings, 
         .expect("Unable to build surfaces.");
     report!("Surfaces", &surfs);
 
-    (tree_sett, grid_sett, surfs)
+    (tree_sett, grid_sett, sett, surfs)
 }
 
 /// Grow domains.
