@@ -1,6 +1,7 @@
 //! Ray implementation.
 
-use crate::{access, Dir3, Pos3, Rot3, Vec3};
+use crate::{access, display_field, display_field_ln, Dir3, Pos3, Rot3, Vec3};
+use std::fmt::{Display, Formatter, Result};
 
 /// Ray structure.
 #[derive(Clone)]
@@ -53,5 +54,19 @@ impl Ray {
 
         self.dir = roll_rot * pitch_rot * self.dir;
         self.dir.renormalize();
+    }
+}
+
+impl Display for Ray {
+    #[allow(clippy::result_expect_used)]
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result {
+        display_field_ln!(fmt, "position", self.pos, "m")?;
+        display_field!(
+            fmt,
+            "direction",
+            &format!("[{:.2}, {:.2}, {:.2}]", self.dir.x, self.dir.y, self.dir.z),
+            "m"
+        )
     }
 }

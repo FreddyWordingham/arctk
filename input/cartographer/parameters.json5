@@ -8,12 +8,14 @@
     },
     tree: {
         tar_tris: 5,
-        max_depth: 6,
+        max_depth: 4,
         padding: 0.1
     },
     sett: {
-        cast      : 'Antler',
+        // cast        : {Direction:[0,0,-1]},
+        cast        : {Target:[0,0,0]},
         block_size  : 1000,
+        bump_dist   : 1e-6,
     },
     surfs: {
         cube    : [['objs/test/cube.obj'], null],
