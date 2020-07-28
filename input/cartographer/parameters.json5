@@ -4,7 +4,7 @@
             mins: [-2,-2,-2],
             maxs: [ 2, 2, 2]
         },
-        res: [64,64,64]
+        res: [256,256,256]
     },
     tree: {
         tar_tris: 5,
@@ -13,16 +13,16 @@
     },
     sett: {
         // cast        : {Direction:[0,0,-1]},
-        cast        : {Target:[0,0,0]},
+        cast        : {Target:[0.01232,0.013123,-0.023312]},
         block_size  : 1000,
-        bump_dist   : 1e-6,
+        bump_dist   : 1e-6
     },
     surfs: {
         cube    : [['objs/test/cube.obj'], null],
         sphere  : [['objs/test/sphere.obj'], null]
     },
     inters: {
-        cube    : ['air', 'fog'],
-        sphere  : ['fog', 'water']
+        cube    : ['fog', 'air'],
+        sphere  : ['water', 'fog']
     }
 }
