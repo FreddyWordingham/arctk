@@ -28,9 +28,9 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, sett, surfs) = build(&in_dir, params);
+    let (tree_sett, grid_sett, sett, surfs, inters) = build(&in_dir, params);
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
-    let input = cartographer::Input::new(&tree, &grid, &sett, &surfs);
+    let input = cartographer::Input::new(&tree, &grid, &sett, &surfs, &inters);
     let _data = cartographer::map(&input);
 
     banner::section("Finished");
@@ -78,6 +78,7 @@ fn build(
     grid::Settings,
     cartographer::Settings,
     Set<Mesh>,
+    Set<(Group, Group)>,
 ) {
     banner::section("Building");
     banner::sub_section("Adaptive Tree Settings");
@@ -99,7 +100,16 @@ fn build(
         .expect("Unable to build surfaces.");
     report!("Surfaces", &surfs);
 
-    (tree_sett, grid_sett, sett, surfs)
+    banner::sub_section("Interfaces");
+    let inters = params.inters;
+    for (group, inter) in inters.map() {
+        report!(
+            &format!("[{}]", group),
+            &format!("{} :| {}", inter.0, inter.1)
+        );
+    }
+
+    (tree_sett, grid_sett, sett, surfs, inters)
 }
 
 /// Grow domains.
