@@ -24,11 +24,19 @@ impl Output {
         }
     }
 
-    /// Save the material maps.
+    /// Unwrap the mat map.
     #[inline]
     #[must_use]
+    pub fn mat_map(&self) -> Array3<Group> {
+        self.mats.map(|m| m.as_ref().unwrap().clone())
+    }
+
+    /// Save the material maps.
+    /// # Errors
+    /// if a map can not be saved.
+    #[inline]
     pub fn save_mat_maps(&self, out_dir: &Path) -> Result<(), Error> {
-        let base = self.mats.map(|m| m.as_ref().unwrap().clone());
+        let base = self.mat_map();
 
         let mut mat_list = Vec::new();
         for m in base.iter() {
