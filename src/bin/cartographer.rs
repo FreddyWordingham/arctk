@@ -26,12 +26,13 @@ struct Parameters {
 pub fn main() {
     banner::title("CARTOGRAPHER");
 
-    let (params_path, in_dir, _out_dir) = init();
+    let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
     let (tree_sett, grid_sett, sett, surfs, inters) = build(&in_dir, params);
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
     let input = cartographer::Input::new(&tree, &grid, &sett, &surfs, &inters);
-    let _data = cartographer::map(&input);
+    let data = cartographer::map(&input).expect("Failed to chart region.");
+    data.save(&out_dir).expect("Failed to save output.");
 
     banner::section("Finished");
 }

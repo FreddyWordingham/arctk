@@ -13,7 +13,6 @@ use std::sync::{Arc, Mutex};
 /// an arc unwrapping failed.
 #[allow(clippy::option_expect_used)]
 #[inline]
-#[must_use]
 pub fn map(input: &Input) -> Result<Output, Error> {
     let res = *input.grid.res();
     let num_cells = res[X] * res[Y] * res[Z];
@@ -42,7 +41,7 @@ pub fn map(input: &Input) -> Result<Output, Error> {
 #[must_use]
 pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input) -> Output {
     let res = *input.grid.res();
-    let data = Output::new(res);
+    let mut data = Output::new(res);
 
     let bump_dist = input.sett.bump_dist();
 
@@ -75,7 +74,15 @@ pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input) -> Output {
                 .expect("Could not determine voxel distance.");
 
             if let Some(hit) = input.tree.observe(ray.clone(), bump_dist, bound_dist) {
-                println!("{}\t{}", hit.side().is_inside(), hit.group());
+                if let Some((inside, outside)) = input.inters.map().get(hit.group()) {
+                    if hit.side().is_inside() {
+                        data.mats[index] = Some(inside.clone());
+                    } else {
+                        data.mats[index] = Some(outside.clone());
+                    }
+                } else {
+                    panic!("No interface entry for surface group {}", hit.group());
+                }
             } else {
                 println!("[WARN]: Did not observe surface with ray: {}", &ray);
             }

@@ -1,7 +1,7 @@
 //! Save trait.
 
-use crate::Error;
-use ndarray::{Array2, ShapeBuilder};
+use crate::{Error, X, Y, Z};
+use ndarray::{Array2, Array3, ShapeBuilder};
 use palette::{LinSrgba, Pixel, Srgba};
 use png::{BitDepth, ColorType, Encoder};
 use serde::Serialize;
@@ -59,42 +59,42 @@ impl Save for Array2<LinSrgba> {
     }
 }
 
-// impl Save for Array2<f64> {
-//     #[inline]
-//     fn save(&self, path: &Path) -> Result<(), Error> {
-//         let mut file = netcdf::create(path)?;
+impl Save for Array2<f64> {
+    #[inline]
+    fn save(&self, path: &Path) -> Result<(), Error> {
+        let mut file = netcdf::create(path)?;
 
-//         let shape = self.shape();
+        let shape = self.shape();
 
-//         let dim1_name = "x";
-//         file.add_dimension(dim1_name, shape[X])?;
-//         let dim2_name = "y";
-//         file.add_dimension(dim2_name, shape[Y])?;
+        let dim1_name = "x";
+        file.add_dimension(dim1_name, shape[X])?;
+        let dim2_name = "y";
+        file.add_dimension(dim2_name, shape[Y])?;
 
-//         let mut var = file.add_variable::<f64>("data", &[dim1_name, dim2_name])?;
-//         var.put_values(self.as_slice().ok_or("Missing slice data.")?, None, None)?;
+        let mut var = file.add_variable::<f64>("data", &[dim1_name, dim2_name])?;
+        var.put_values(self.as_slice().ok_or("Missing slice data.")?, None, None)?;
 
-//         Ok(())
-//     }
-// }
+        Ok(())
+    }
+}
 
-// impl Save for Array3<f64> {
-//     #[inline]
-//     fn save(&self, path: &Path) -> Result<(), Error> {
-//         let mut file = netcdf::create(path)?;
+impl Save for Array3<f64> {
+    #[inline]
+    fn save(&self, path: &Path) -> Result<(), Error> {
+        let mut file = netcdf::create(path)?;
 
-//         let shape = self.shape();
+        let shape = self.shape();
 
-//         let dim1_name = "x";
-//         file.add_dimension(dim1_name, shape[X])?;
-//         let dim2_name = "y";
-//         file.add_dimension(dim2_name, shape[Y])?;
-//         let dim3_name = "z";
-//         file.add_dimension(dim3_name, shape[Z])?;
+        let dim1_name = "x";
+        file.add_dimension(dim1_name, shape[X])?;
+        let dim2_name = "y";
+        file.add_dimension(dim2_name, shape[Y])?;
+        let dim3_name = "z";
+        file.add_dimension(dim3_name, shape[Z])?;
 
-//         let mut var = file.add_variable::<f64>("data", &[dim1_name, dim2_name, dim3_name])?;
-//         var.put_values(self.as_slice().ok_or("Missing slice data.")?, None, None)?;
+        let mut var = file.add_variable::<f64>("data", &[dim1_name, dim2_name, dim3_name])?;
+        var.put_values(self.as_slice().ok_or("Missing slice data.")?, None, None)?;
 
-//         Ok(())
-//     }
-// }
+        Ok(())
+    }
+}
