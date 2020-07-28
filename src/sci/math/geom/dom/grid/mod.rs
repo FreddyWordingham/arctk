@@ -90,6 +90,23 @@ impl Grid {
             None
         }
     }
+
+    /// Generate the voxel for the given index.
+    #[inline]
+    #[must_use]
+    pub fn gen_voxel(&self, index: &[usize; 3]) -> Aabb {
+        debug_assert!(index[X] < self.res[X]);
+        debug_assert!(index[Y] < self.res[Y]);
+        debug_assert!(index[Z] < self.res[Z]);
+
+        let x = self.boundary.mins().x + (self.voxel_size.x * index[X] as f64);
+        let y = self.boundary.mins().y + (self.voxel_size.y * index[Y] as f64);
+        let z = self.boundary.mins().z + (self.voxel_size.z * index[Z] as f64);
+
+        let mins = Pos3::new(x, y, z);
+
+        Aabb::new(mins, mins + self.voxel_size)
+    }
 }
 
 impl Display for Grid {

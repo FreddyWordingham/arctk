@@ -8,9 +8,10 @@ use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
 /// Map a volume of surfaces.
-/// #Errors
+/// # Errors
 /// if a mutex unwrapping failed or
 /// an arc unwrapping failed.
+#[allow(clippy::option_expect_used)]
 #[inline]
 #[must_use]
 pub fn map(input: &Input) -> Result<Output, Error> {
@@ -35,10 +36,12 @@ pub fn map(input: &Input) -> Result<Output, Error> {
 }
 
 /// Map a volume of surfaces using a single thread.
+#[allow(clippy::result_expect_used)]
 #[inline]
 #[must_use]
 pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input) -> Output {
-    let data = Output::new(*input.grid.res());
+    let res = *input.grid.res();
+    let data = Output::new(res);
 
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
@@ -46,7 +49,15 @@ pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input) -> Output {
         std::mem::drop(pb);
         b
     } {
-        for _i in start..end {}
+        for i in start..end {
+            let n = i as usize;
+            let xi = n % res[X];
+            let yi = (n / res[X]) % res[Y];
+            let zi = n / (res[X] * res[Y]);
+            let index = [xi, yi, zi];
+
+            let cell = input.grid.gen_voxel(&index);
+        }
     }
 
     data
