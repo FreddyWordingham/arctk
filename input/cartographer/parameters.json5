@@ -12,8 +12,9 @@
         padding: 0.1
     },
     sett: {
+        cast        : {Radiant:63},
         // cast        : {Direction:[0,0,-1]},
-        cast        : {Target:[0.01232,0.013123,-0.023312]},
+        // cast        : {Target:[0.01232,0.013123,-0.023312]},
         block_size  : 1000,
         bump_dist   : 1e-6
     },
