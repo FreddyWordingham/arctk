@@ -21,8 +21,8 @@
         cube    : [['objs/test/cube.obj'], null],
         sphere  : [['objs/test/sphere.obj'], null]
     },
-    interfaces: {
-        cube    : { out: 'air', in: 'fog' },
-        sphere  : { out: 'fog', in: 'water' }
+    inters: {
+        cube    : ['air', 'fog'],
+        sphere  : ['fog', 'water']
     }
 }
