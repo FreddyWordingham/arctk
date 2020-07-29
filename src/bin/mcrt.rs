@@ -14,8 +14,10 @@ struct Parameters {
     tree: tree::Settings,
     /// Regular grid settings.
     grid: grid::Settings,
-    /// Surfaces map.
+    /// Surfaces set.
     surfs: Set<form::Mesh>,
+    /// Attributes set.
+    attrs: Set<mcrt::Attributes>,
 }
 
 /// Main function.
@@ -24,7 +26,7 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, surfs) = build(&in_dir, params);
+    let (tree_sett, grid_sett, surfs, _attrs) = build(&in_dir, params);
     let (_tree, _grid) = grow(tree_sett, grid_sett, &surfs);
     // let input = cartographer::Input::new(&tree, &grid, &sett, &surfs, &inters);
     // let data = cartographer::map(&input).expect("Failed to chart region.");
@@ -67,7 +69,15 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(in_dir: &Path, params: Parameters) -> (tree::Settings, grid::Settings, Set<Mesh>) {
+fn build(
+    in_dir: &Path,
+    params: Parameters,
+) -> (
+    tree::Settings,
+    grid::Settings,
+    Set<Mesh>,
+    Set<mcrt::Attributes>,
+) {
     banner::section("Building");
     banner::sub_section("Adaptive Tree Settings");
     let tree_sett = params.tree;
@@ -84,7 +94,11 @@ fn build(in_dir: &Path, params: Parameters) -> (tree::Settings, grid::Settings, 
         .expect("Unable to build surfaces.");
     report!("Surfaces", &surfs);
 
-    (tree_sett, grid_sett, surfs)
+    banner::sub_section("Attributes");
+    let attrs = params.attrs;
+    report!("Attributes", &attrs);
+
+    (tree_sett, grid_sett, surfs, attrs)
 }
 
 /// Grow domains.

@@ -11,6 +11,8 @@ pub enum Attributes {
         /// Absorption fraction.
         abs: f64,
     },
+    /// Absorber.
+    Absorber,
 }
 
 impl Display for Attributes {
@@ -19,6 +21,7 @@ impl Display for Attributes {
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         let kind = match self {
             Self::Mirror { abs } => format!("Mirror: [{}]", abs),
+            Self::Absorber => "Absorber".to_string(),
         };
         write!(fmt, "{}", kind)
     }
