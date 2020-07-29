@@ -11,12 +11,21 @@
         max_depth: 6,
         padding: 0.01
     },
+    sett: {
+        block_size  : 1000,
+        bump_dist   : 1e-6
+    },
     surfs: {
         cube    : [['objs/test/cube.obj'], null],
         sphere  : [['objs/test/sphere.obj'], null]
     },
-    inters: {
-        cube    : ['fog', 'air'],
-        sphere  : ['water', 'fog']
-    }
+    attrs: {
+        cube    : { Mirror: {abs: 0.3} },
+        sphere  : { Mirror: {abs: 0.3} },
+    },
+    // mats: {
+    //     air     : {  },
+    //     fog     : {  },
+    //     water   : {  },
+    // }
 }

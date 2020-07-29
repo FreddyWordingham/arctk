@@ -64,33 +64,10 @@ pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input) -> Output {
 
             // Create a ray from the voxel centre.
             let centre = voxel.centre();
-            let mat = cast.observe_mat(&input, centre);
+            let mat = cast.observe_mat(input, centre);
             data.mats[index] = mat;
         }
     }
 
     data
 }
-
-// let ray = input.sett.cast().gen_ray(centre);
-
-// // Determine what the ray observes.
-// let bound_dist = input
-//     .grid
-//     .boundary()
-//     .dist(&ray)
-//     .expect("Could not determine voxel distance.");
-
-// if let Some(hit) = input.tree.observe(ray.clone(), bump_dist, bound_dist) {
-//     if let Some((inside, outside)) = input.inters.map().get(hit.group()) {
-//         if hit.side().is_inside() {
-//             data.mats[index] = Some(inside.clone());
-//         } else {
-//             data.mats[index] = Some(outside.clone());
-//         }
-//     } else {
-//         panic!("No interface entry for surface group {}", hit.group());
-//     }
-// } else {
-//     println!("[WARN]: Did not observe surface with ray: {}", &ray);
-// }
