@@ -16,15 +16,15 @@ use std::sync::{Arc, Mutex};
 pub fn map(input: &Input) -> Result<Output, Error> {
     let res = *input.grid.res();
     let num_cells = res[X] * res[Y] * res[Z];
-    let bar = Bar::new("Mapping", num_cells as u64);
-    let bar = Arc::new(Mutex::new(bar));
+    let br = Bar::new("Mapping", num_cells as u64);
+    let br = Arc::new(Mutex::new(br));
 
     let threads: Vec<usize> = (0..num_cpus::get()).collect();
     let mut out: Vec<Output> = threads
         .par_iter()
-        .map(|_id| run_thread(&Arc::clone(&bar), input))
+        .map(|_id| run_thread(&Arc::clone(&br), input))
         .collect();
-    bar.lock()?.finish_with_message("Render complete.");
+    br.lock()?.finish_with_message("Render complete.");
 
     let mut data = out.pop().expect("No data received.");
     while let Some(o) = out.pop() {
