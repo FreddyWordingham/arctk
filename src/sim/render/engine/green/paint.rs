@@ -269,9 +269,8 @@ pub fn paint(
     } else {
         Vec3::new(0.0, 0.0, 0.0)
     };
-    let last_hit = 1 + last_hit;
 
-    (col, first_hit, first_dist, first_norm, last_hit)
+    (col, first_hit, first_dist, first_norm, last_hit + 1)
 }
 
 /// Perform a colouring.
