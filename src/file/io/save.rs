@@ -24,7 +24,7 @@ pub fn as_json<T: Serialize>(instance: &T, path: &Path) -> Result<(), Error> {
     Ok(write(path, s)?)
 }
 
-impl<T: netcdf::variable::Numeric> Save for Array2<T> {
+impl<T: netcdf::Numeric> Save for Array2<T> {
     #[inline]
     fn save(&self, path: &Path) -> Result<(), Error> {
         let mut file = netcdf::create(path)?;
@@ -43,7 +43,7 @@ impl<T: netcdf::variable::Numeric> Save for Array2<T> {
     }
 }
 
-impl<T: netcdf::variable::Numeric> Save for Array3<T> {
+impl<T: netcdf::Numeric> Save for Array3<T> {
     #[inline]
     fn save(&self, path: &Path) -> Result<(), Error> {
         let mut file = netcdf::create(path)?;
