@@ -52,3 +52,16 @@ pub fn mode<T: Clone + Eq + std::hash::Hash>(numbers: &[T]) -> Option<T> {
         *count
     })
 }
+
+/// Get the number of kinds within a slice.
+#[inline]
+#[must_use]
+pub fn kinds<T: Clone + Eq + std::hash::Hash>(numbers: &[T]) -> usize {
+    let mut counts = std::collections::HashMap::new();
+    for n in numbers {
+        if !counts.contains_key(n) {
+            counts.insert(n, true);
+        }
+    }
+    counts.len()
+}
