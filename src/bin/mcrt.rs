@@ -14,6 +14,8 @@ struct Parameters {
     tree: tree::Settings,
     /// Regular grid settings.
     grid: grid::Settings,
+    /// MCRT runtime settings.
+    sett: mcrt::Settings,
     /// Surfaces set.
     surfs: Set<form::Mesh>,
     /// Attributes set.
