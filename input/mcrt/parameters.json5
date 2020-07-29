@@ -1,0 +1,22 @@
+{
+    grid: {
+        boundary: {
+            mins: [-2,-2,-2],
+            maxs: [ 2, 2, 2]
+        },
+        res: [64,64,64]
+    },
+    tree: {
+        tar_tris: 5,
+        max_depth: 6,
+        padding: 0.01
+    },
+    surfs: {
+        cube    : [['objs/test/cube.obj'], null],
+        sphere  : [['objs/test/sphere.obj'], null]
+    },
+    inters: {
+        cube    : ['fog', 'air'],
+        sphere  : ['water', 'fog']
+    }
+}
