@@ -52,12 +52,12 @@ impl Output {
             self.mats.shape()[Z],
         ]);
         for (index, mat) in mat_list.iter().enumerate() {
-            let map: Array3<f64> = base.map(|m| if m == mat { 1.0 } else { 0.0 });
+            let map: Array3<i32> = base.map(|m| if m == mat { 1 } else { 0 });
             let p = out_dir.join(format!("{}.nc", mat));
             println!("Saving: {}", p.display());
             map.save(&p)?;
 
-            composite += &(map * (index + 1) as f64);
+            composite += &(map * (index + 1) as i32);
         }
 
         let p = out_dir.join("composite.nc");
