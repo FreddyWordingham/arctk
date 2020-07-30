@@ -1,9 +1,9 @@
 //! Group layout structure.
 
-use crate::{access, Group, Grp};
+use crate::{access, Error, Group, Grp, Save};
 use ndarray::Array3;
-// use std::path::Path;
 use num::traits::{One, Zero};
+use std::path::Path;
 
 /// Group three-dimensional layout organiser.
 pub struct Layout {
@@ -52,5 +52,20 @@ impl Layout {
                 num::zero::<T>()
             }
         })
+    }
+}
+
+impl Save for Layout {
+    #[inline]
+    fn save(&self, path: &Path) -> Result<(), Error> {
+        for group in &self.groups {
+            let p = path.join(format!("{}.nc", group));
+            println!("Saving: {}", p.display());
+            self.group_stencil::<i8>(group).save(&p)?;
+        }
+
+        let p = path.join(format!("{}.nc", "composite"));
+        println!("Saving: {}", p.display());
+        self.map.map(|x| (x + 1) as i8).save(&p)
     }
 }
