@@ -6,8 +6,4 @@ pub mod map;
 pub mod output;
 pub mod settings;
 
-pub use self::cast::*;
-pub use self::input::*;
-pub use self::map::*;
-pub use self::output::*;
-pub use self::settings::*;
+pub use self::{cast::*, input::*, map::*, output::*, settings::*};

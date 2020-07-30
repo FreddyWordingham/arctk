@@ -26,6 +26,7 @@ nalgebra = { version = "0.21.*", features = ["serde-serialize"] }
 ndarray = { version = "0.13.*", features = ["rayon", "serde-1"] }
 ndarray-parallel = "0.9.*"
 ndarray-stats = "0.3.*"
+num = "0.3.*"
 num_cpus = "1.13.*"
 palette = "0.5.*"
 physical_constants = "0.3.*"

@@ -1,6 +1,6 @@
 //! Material map.
 
-use crate::{access, Error, Group, Grp, Load};
+use crate::{access, order, Error, Group, Grp, Load};
 use ndarray::Array3;
 use std::path::Path;
 
@@ -8,7 +8,7 @@ use std::path::Path;
 pub struct GroupMap {
     /// List of entries.
     groups: Vec<Group>,
-    /// Index map.
+    /// Id (index) map.
     map: Array3<i32>,
 }
 
@@ -48,7 +48,7 @@ impl GroupMap {
     #[inline]
     pub fn load(path: &Path, groups: Vec<Group>) -> Result<Self, Error> {
         let map = Array3::load(path)?;
-        let kinds = crate::order::kinds(
+        let kinds = order::kinds(
             map.as_slice()
                 .expect("Could not create slice from loaded group map."),
         );
@@ -59,10 +59,33 @@ impl GroupMap {
         Ok(Self { groups, map })
     }
 
-    /// Get the material group at a given index of the map.
+    /// Convert a valid id to it's corresponding group.
     #[inline]
     #[must_use]
-    pub fn get_mat(&self, index: [usize; 3]) -> &Grp {
+    fn id_to_group(&self, id: i32) -> &Grp {
+        &self.groups[id as usize]
+    }
+
+    /// Convert a valid group to it's corresponding id.
+    #[inline]
+    #[must_use]
+    fn group_to_id(&self, group: &Group) -> i32 {
+        self.groups
+            .binary_search(group)
+            .expect("Invalid group entry.") as i32
+    }
+
+    /// Get the group at a given index of the map.
+    #[inline]
+    #[must_use]
+    pub fn group_at_index(&self, index: [usize; 3]) -> &Grp {
         &self.groups[self.map[index] as usize]
+    }
+
+    /// Get the map for a given group.
+    #[inline]
+    #[must_use]
+    pub fn group_map(&self, group: &Group) -> Array3<f64> {
+        let
     }
 }
