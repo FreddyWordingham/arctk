@@ -1,6 +1,6 @@
 //! Group layout structure.
 
-use crate::{access, Error, Group, Grp, Save};
+use crate::{access, order, Error, Group, Grp, Load, Save};
 use ndarray::Array3;
 use num::traits::{One, Zero};
 use std::path::Path;
@@ -16,6 +16,50 @@ pub struct Layout {
 impl Layout {
     access!(groups, Vec<Group>);
     access!(map, Array3<usize>);
+
+    /// Construct a new instance from an actual group map.
+    #[inline]
+    #[must_use]
+    pub fn new(gs: &Array3<Group>) -> Self {
+        let mut groups = Vec::new();
+        for g in gs {
+            if !groups.contains(g) {
+                groups.push(g.clone());
+            }
+        }
+        groups.sort();
+
+        let ids: Vec<_> = groups.iter().enumerate().collect();
+        let map = gs.map(|g| {
+            for (id, group) in &ids {
+                if group == &g {
+                    return *id;
+                }
+            }
+            panic!("Missing group entry!");
+        });
+
+        Self { groups, map }
+    }
+
+    /// Construct a new instance.
+    /// # Errors
+    /// if the material map can not be loaded.
+    #[allow(clippy::option_expect_used)]
+    #[inline]
+    pub fn load(path: &Path, groups: Vec<Group>) -> Result<Self, Error> {
+        let map: Array3<i8> = Array3::load(path)?;
+        let map = map.map(|x| *x as usize);
+        let kinds = order::kinds(
+            map.as_slice()
+                .expect("Could not create slice from loaded group map."),
+        );
+        if kinds != groups.len() {
+            panic!("Number of groups in the map does not match number in the given list.");
+        }
+
+        Ok(Self { groups, map })
+    }
 
     /// Convert a valid id to it's corresponding group.
     #[inline]
