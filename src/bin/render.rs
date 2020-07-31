@@ -1,31 +1,31 @@
 //! Arctk rendering engine.
 
 use arctk::*;
-// use attr::input;
-// use palette::{Gradient, LinSrgba};
-// use std::{
-//     env::current_dir,
-//     path::{Path, PathBuf},
-// };
+use attr::input;
+use palette::{Gradient, LinSrgba};
+use std::{
+    env::current_dir,
+    path::{Path, PathBuf},
+};
 
-// /// Input parameters.
-// #[input]
-// struct Parameters {
-//     /// Adaptive mesh settings.
-//     tree: tree::Settings,
-//     /// Regular grid settings.
-//     grid: grid::Settings,
-//     /// Render runtime settings.
-//     sett: render::Technical,
-//     /// Surfaces map.
-//     surfs: Set<form::Mesh>,
-//     /// Attributes map.
-//     attrs: Set<render::Attributes>,
-//     /// Colour map.
-//     cols: Set<form::Gradient>,
-//     /// Scenes.
-//     scenes: Set<form::Scene>,
-// }
+/// Input parameters.
+#[input]
+struct Parameters {
+    /// Adaptive mesh settings.
+    tree: tree::Settings,
+    /// Regular grid settings.
+    grid: grid::Settings,
+    /// Render runtime settings.
+    sett: render::Technical,
+    /// Surfaces map.
+    surfs: Set<form::Mesh>,
+    /// Attributes map.
+    attrs: Set<render::Attributes>,
+    /// Colour map.
+    cols: Set<form::Gradient>,
+    /// Scenes.
+    scenes: Set<form::Scene>,
+}
 
 // /// Main function.
 pub fn main() {
