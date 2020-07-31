@@ -18,8 +18,8 @@ struct Parameters {
     attrs: Set<render::Attributes>,
     /// Colour map.
     cols: Set<form::Gradient>,
-    /// Scenes.
-    scenes: Set<form::Scene>,
+    // /// Scenes.
+    // scenes: Set<form::Scene>,
 }
 
 /// Main function.
