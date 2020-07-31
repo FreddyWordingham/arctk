@@ -20,6 +20,8 @@ struct Parameters {
     surfs: Set<form::Mesh>,
     /// Attributes set.
     attrs: Set<mcrt::Attributes>,
+    /// Light form.
+    light: mcrt::LightForm,
 }
 
 /// Main function.
@@ -28,10 +30,10 @@ pub fn main() {
 
     let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, mcrt_sett, surfs, attrs) = build(&in_dir, params);
+    let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, light) = build(&in_dir, params);
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
     let input = mcrt::Input::new(&tree, &grid, &mcrt_sett, &surfs, &attrs);
-    let data = mcrt::run::multi(&input).expect("Failed to run MCRT simulation.");
+    let data = mcrt::run::multi(&input, &light).expect("Failed to run MCRT simulation.");
     data.save(&out_dir).expect("Failed to save output.");
 
     banner::section("Finished");
@@ -80,6 +82,7 @@ fn build(
     mcrt::Settings,
     Set<Mesh>,
     Set<mcrt::Attributes>,
+    mcrt::Light,
 ) {
     banner::section("Building");
     banner::sub_section("Adaptive Tree Settings");
@@ -106,7 +109,14 @@ fn build(
     let attrs = params.attrs;
     report!("Attributes", &attrs);
 
-    (tree_sett, grid_sett, mcrt_sett, surfs, attrs)
+    banner::sub_section("Light");
+    let light = params
+        .light
+        .build(in_dir)
+        .expect("Unable to build light source.");
+    report!("Light", &light);
+
+    (tree_sett, grid_sett, mcrt_sett, surfs, attrs, light)
 }
 
 /// Grow domains.

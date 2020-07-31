@@ -1,6 +1,6 @@
 //! Probability form implementation.
 
-use crate::{Build, Error};
+use crate::{Build, Error, Probability};
 use attr::load;
 use ndarray::Array1;
 use std::{
@@ -8,9 +8,9 @@ use std::{
     path::Path,
 };
 
-/// Probability distribution.
+/// Loadable probability distribution.
 #[load]
-pub enum Probability {
+pub enum ProbabilityForm {
     /// Point.
     Point(f64),
     /// Points.
@@ -25,8 +25,8 @@ pub enum Probability {
     ConstantSpline(Vec<f64>, Vec<f64>),
 }
 
-impl Build for Probability {
-    type Inst = crate::Probability;
+impl Build for ProbabilityForm {
+    type Inst = Probability;
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
@@ -43,7 +43,7 @@ impl Build for Probability {
     }
 }
 
-impl Display for Probability {
+impl Display for ProbabilityForm {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         let kind = match self {

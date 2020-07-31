@@ -121,10 +121,10 @@ impl Probability {
         }
     }
 
-    /// Generate a random number from the described distribution.
+    /// Sample a number from the described distribution.
     #[inline]
     #[must_use]
-    pub fn gen(&self, rng: &mut ThreadRng) -> f64 {
+    pub fn sample(&self, rng: &mut ThreadRng) -> f64 {
         match self {
             Self::Point { c } => *c,
             Self::Points { cs } => cs[rng.gen_range(0, cs.len())],
