@@ -2,4 +2,4 @@
 
 pub mod cartographer;
 pub mod mcrt;
-// pub mod render;
+pub mod render;
