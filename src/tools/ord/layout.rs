@@ -69,6 +69,7 @@ impl Layout {
     }
 
     /// Convert a valid group to it's corresponding id.
+    #[allow(clippy::result_expect_used)]
     #[inline]
     #[must_use]
     fn group_to_id(&self, group: &Group) -> usize {

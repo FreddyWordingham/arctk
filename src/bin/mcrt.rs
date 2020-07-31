@@ -28,9 +28,9 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, surfs, _attrs) = build(&in_dir, params);
-    let (_tree, _grid) = grow(tree_sett, grid_sett, &surfs);
-    // let input = cartographer::Input::new(&tree, &grid, &sett, &surfs, &inters);
+    let (tree_sett, grid_sett, surfs, attrs) = build(&in_dir, params);
+    let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
+    let _input = mcrt::Input::new(&tree, &grid, &surfs, &attrs);
     // let data = cartographer::map(&input).expect("Failed to chart region.");
     // data.save(&out_dir).expect("Failed to save output.");
 
