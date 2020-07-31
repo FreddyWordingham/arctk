@@ -1,6 +1,12 @@
 //! Input module.
 
-use crate::{display_field, display_field_ln, grid::Grid, mcrt::Attributes, tree::Cell, Mesh, Set};
+use crate::{
+    display_field, display_field_ln,
+    grid::Grid,
+    mcrt::{Attributes, Settings},
+    tree::Cell,
+    Mesh, Set,
+};
 use std::fmt::{Display, Formatter, Result};
 
 /// Cartographer mapping input structure.
@@ -9,6 +15,8 @@ pub struct Input<'a> {
     pub tree: &'a Cell<'a>,
     /// Surface tree.
     pub grid: &'a Grid,
+    /// MCRT settings.
+    pub sett: &'a Settings,
     /// Surfaces.
     pub surfs: &'a Set<Mesh>,
     /// Attributes.
@@ -23,12 +31,14 @@ impl<'a> Input<'a> {
     pub const fn new(
         tree: &'a Cell<'a>,
         grid: &'a Grid,
+        sett: &'a Settings,
         surfs: &'a Set<Mesh>,
         attrs: &'a Set<Attributes>,
     ) -> Self {
         Self {
             tree,
             grid,
+            sett,
             surfs,
             attrs,
         }
@@ -41,6 +51,7 @@ impl<'a> Display for Input<'a> {
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "tree", &self.tree)?;
         display_field_ln!(fmt, "grid", &self.grid)?;
+        display_field_ln!(fmt, "settings", &self.sett)?;
         display_field_ln!(fmt, "surfaces", &self.surfs)?;
         display_field!(fmt, "attributes", &self.attrs)
     }

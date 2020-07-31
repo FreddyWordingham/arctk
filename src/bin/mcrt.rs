@@ -26,13 +26,13 @@ struct Parameters {
 pub fn main() {
     banner::title("MCRT");
 
-    let (params_path, in_dir, _out_dir) = init();
+    let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, surfs, attrs) = build(&in_dir, params);
+    let (tree_sett, grid_sett, mcrt_sett, surfs, attrs) = build(&in_dir, params);
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
-    let _input = mcrt::Input::new(&tree, &grid, &surfs, &attrs);
-    let data = mcrt::run(&input).expect("Failed to run MCRT simulation.");
-    // data.save(&out_dir).expect("Failed to save output.");
+    let input = mcrt::Input::new(&tree, &grid, &mcrt_sett, &surfs, &attrs);
+    let data = mcrt::run::multi(&input).expect("Failed to run MCRT simulation.");
+    data.save(&out_dir).expect("Failed to save output.");
 
     banner::section("Finished");
 }
@@ -77,6 +77,7 @@ fn build(
 ) -> (
     tree::Settings,
     grid::Settings,
+    mcrt::Settings,
     Set<Mesh>,
     Set<mcrt::Attributes>,
 ) {
@@ -87,6 +88,11 @@ fn build(
 
     banner::sub_section("Grid Settings");
     let grid_sett = params.grid;
+    report!("Grid settings", &grid_sett);
+    report!("Tree settings", &tree_sett);
+
+    banner::sub_section("MCRT Settings");
+    let mcrt_sett = params.sett;
     report!("Grid settings", &grid_sett);
 
     banner::sub_section("Surfaces");
@@ -100,7 +106,7 @@ fn build(
     let attrs = params.attrs;
     report!("Attributes", &attrs);
 
-    (tree_sett, grid_sett, surfs, attrs)
+    (tree_sett, grid_sett, mcrt_sett, surfs, attrs)
 }
 
 /// Grow domains.

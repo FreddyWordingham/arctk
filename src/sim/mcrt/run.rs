@@ -7,9 +7,11 @@ use crate::{
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
-/// Run an MCRT simulation.
+/// Run a multi-threaded MCRT simulation.
+/// # Errors
+/// if the progress bad can not be locked.
 #[inline]
-pub fn run(input: &Input) -> Result<Output, Error> {
+pub fn multi(input: &Input) -> Result<Output, Error> {
     let res = *input.grid.res();
     let num_cells = res[X] * res[Y] * res[Z];
     let br = Bar::new("Mapping", num_cells as u64);
