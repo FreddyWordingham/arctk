@@ -1,6 +1,7 @@
 //! Photon structure.
 
-use crate::{access, clone, Ray};
+use crate::{access, clone, display_field, display_field_ln, Ray};
+use std::fmt::{Display, Formatter, Result};
 
 /// Light quanta.
 pub struct Photon {
@@ -28,5 +29,15 @@ impl Photon {
             wavelength,
             weight: 1.0,
         }
+    }
+}
+
+impl Display for Photon {
+    #[allow(clippy::result_expect_used)]
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result {
+        display_field_ln!(fmt, "ray", &self.ray)?;
+        display_field_ln!(fmt, "wavelength", self.wavelength * 1.0e9, "nm")?;
+        display_field!(fmt, "weight", self.weight)
     }
 }

@@ -14,7 +14,7 @@ pub struct LightForm {
     spec: ProbabilityForm,
 }
 
-impl<'a> Display for LightForm {
+impl Display for LightForm {
     #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {

@@ -26,7 +26,7 @@ impl Light {
     }
 }
 
-impl<'a> Display for Light {
+impl Display for Light {
     #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
