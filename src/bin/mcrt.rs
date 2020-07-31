@@ -31,7 +31,7 @@ pub fn main() {
     let (tree_sett, grid_sett, surfs, attrs) = build(&in_dir, params);
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
     let _input = mcrt::Input::new(&tree, &grid, &surfs, &attrs);
-    // let data = cartographer::map(&input).expect("Failed to chart region.");
+    let data = mcrt::run(&input).expect("Failed to run MCRT simulation.");
     // data.save(&out_dir).expect("Failed to save output.");
 
     banner::section("Finished");
