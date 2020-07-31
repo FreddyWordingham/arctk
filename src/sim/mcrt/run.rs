@@ -38,7 +38,7 @@ pub fn multi(input: &Input, light: &Light) -> Result<Output, Error> {
 #[must_use]
 pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, light: &Light) -> Output {
     let res = *input.grid.res();
-    let mut data = Output::new(res);
+    let data = Output::new(res);
 
     let mut rng = thread_rng();
 
@@ -48,8 +48,9 @@ pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, light: &Light) -> Output 
         std::mem::drop(pb);
         b
     } {
-        for i in start..end {
-            let phot = light.emit(&mut rng);
+        for _i in start..end {
+            let _phot = light.emit(&mut rng);
+            println!("TODO: Engine!");
         }
     }
 

@@ -16,6 +16,13 @@ impl Light {
     access!(surf, Mesh);
     access!(spec, Probability);
 
+    /// Construct a new instance.
+    #[inline]
+    #[must_use]
+    pub fn new(surf: Mesh, spec: Probability) -> Self {
+        Self { surf, spec }
+    }
+
     /// Emit a new photon.
     #[inline]
     #[must_use]
