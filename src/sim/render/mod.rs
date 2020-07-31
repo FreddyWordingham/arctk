@@ -8,7 +8,9 @@ pub mod output;
 pub mod run;
 pub mod scene;
 pub mod settings;
+pub mod tracer;
 
 pub use self::{
     attributes::*, camera::*, camera_builder::*, input::*, output::*, scene::*, settings::*,
+    tracer::*,
 };

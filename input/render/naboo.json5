@@ -127,7 +127,6 @@
                 },
                 sky: {
                     brightness  : 0.7,
-                    // sun_pos     : [2300, -3400, 4500],
                     sun_pos     : [-1450, -4200, 6200],
                     sun_rad     : 10,
                     segments    : [16,16]
