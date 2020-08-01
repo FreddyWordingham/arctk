@@ -91,7 +91,7 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, shader: &Shader) -> Output {
                 }
             }
 
-            data.img[pixel] = total_col;
+            data.img.pixels_mut()[pixel] = total_col;
         }
     }
 

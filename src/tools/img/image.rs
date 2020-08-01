@@ -1,6 +1,6 @@
 //! Image alias.
 
-use crate::{Error, Save, X, Y};
+use crate::{access, Error, Save, X, Y};
 use ndarray::{Array2, ShapeBuilder};
 use palette::{LinSrgba, Pixel, Srgba};
 use png::{BitDepth, ColorType, Encoder};
@@ -14,6 +14,8 @@ pub struct Image {
 }
 
 impl Image {
+    access!(pixels, pixels_mut, Array2<LinSrgba>);
+
     /// Construct a new instance.
     #[inline]
     #[must_use]
