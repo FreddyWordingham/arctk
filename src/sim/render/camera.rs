@@ -1,4 +1,4 @@
-//! Camera module.
+//! Camera structure.
 
 pub mod focus;
 pub mod lens;

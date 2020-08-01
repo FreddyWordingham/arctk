@@ -3,14 +3,12 @@
 pub mod attributes;
 pub mod camera;
 pub mod camera_builder;
-pub mod input;
-pub mod output;
+pub mod io;
 pub mod run;
 pub mod settings;
 pub mod shader;
-pub mod tracer;
+pub mod util;
 
 pub use self::{
-    attributes::*, camera::*, camera_builder::*, input::*, output::*, settings::*, shader::*,
-    tracer::*,
+    attributes::*, camera::*, camera_builder::*, io::*, io::*, settings::*, shader::*, util::*,
 };

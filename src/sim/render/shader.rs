@@ -7,7 +7,7 @@ pub mod sky;
 
 pub use self::{light::*, samples::*, shadow::*, sky::*};
 
-use crate::{access, display_field, display_field_ln};
+use crate::{access, display_field, display_field_ln, render::Camera};
 use std::fmt::{Display, Formatter, Result};
 
 /// Conglomerate lighting and shadowing settings.
@@ -20,6 +20,8 @@ pub struct Shader {
     light: Light,
     /// Shadowing settings.
     shadow: Shadow,
+    /// Imaging camera.
+    cam: Camera,
 }
 
 impl Shader {
@@ -27,16 +29,24 @@ impl Shader {
     access!(samples, Samples);
     access!(light, Light);
     access!(shadow, Shadow);
+    access!(cam, Camera);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(sky: Sky, samples: Samples, light: Light, shadow: Shadow) -> Self {
+    pub const fn new(
+        sky: Sky,
+        samples: Samples,
+        light: Light,
+        shadow: Shadow,
+        cam: Camera,
+    ) -> Self {
         Self {
             sky,
             samples,
             light,
             shadow,
+            cam,
         }
     }
 }
@@ -48,6 +58,7 @@ impl Display for Shader {
         display_field_ln!(fmt, "sky", &self.sky)?;
         display_field_ln!(fmt, "sampling", &self.samples)?;
         display_field_ln!(fmt, "light", &self.light)?;
-        display_field!(fmt, "shadow", &self.shadow)
+        display_field_ln!(fmt, "shadow", &self.shadow)?;
+        display_field!(fmt, "camera", &self.cam)
     }
 }
