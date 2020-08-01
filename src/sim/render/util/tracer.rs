@@ -49,6 +49,13 @@ impl Tracer {
         self.ray.dir()
     }
 
+    /// Set the tracer direction.
+    #[inline]
+    #[must_use]
+    pub fn set_dir(&mut self, dir: Dir3) {
+        *self.ray.dir_mut() = dir;
+    }
+
     /// Move along the direction of travel a given distance.
     #[inline]
     pub fn travel(&mut self, dist: f64) {

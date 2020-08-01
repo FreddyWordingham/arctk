@@ -14,9 +14,9 @@
         body    : [['objs/dino/body.obj'], null],
         eyes    : [['objs/dino/eyes.obj'], null],
         fans    : [['objs/dino/fans.obj'], null],
-        // hair    : [['objs/dino/hair.obj'], null],
+        hair    : [['objs/dino/hair.obj'], null],
         tail    : [['objs/dino/tail.obj'], null],
-        stand   : [['objs/dino/stand.obj'], null],
+        stand   : [['objs/dino/stand.obj'], {trans:[0,0,1e-2]}],
         water   : [['objs/dino/water.obj'], null],
     },
     attrs: {
@@ -38,13 +38,13 @@
     shader: {
         cam: {
             pos     : [-2,-3,1],
-            tar     : [0,0,0.6],
+            tar     : [0,-0.8,0.43],
             // dof     : [17, 0.1],
-            // swivel  : [0.1, 0.1],
+            swivel  : [-7, 0],
             hr_fov  : 30.0,
             aspect  : "Square",
             // ss_power: 2,
-            hr_res  : 1000
+            hr_res  : 1080
         },
         samples: {
             // ambient_occlusion   : 64,
@@ -52,19 +52,19 @@
         },
         sky: {
             brightness  : 0.7,
-            sun_pos     : [10.0, 10.0, 10.0],
+            sun_pos     : [-10.0, -10.0, 10.0],
             sun_rad     : 10,
             segments    : [32,32]
         },
         light: {
-            ambient : 0.3,
-            diffuse : 0.5,
+            ambient : 0.1,
+            diffuse : 0.7,
             specular: 0.2,
             spec_pow: 8
         },
         shadow: {
-            ambient : 0.7,
-            direct  : 0.3,
+            ambient : 0.3,
+            direct  : 0.7,
             ao_pow  : 2
         }
     }

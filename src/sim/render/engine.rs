@@ -58,7 +58,7 @@ fn colour(
     sun_dir: &Dir3,
 ) -> LinSrgba {
     let light = illumination::light(shader, trace.ray(), hit);
-    let shadow = illumination::shadow(input, shader, trace.ray(), hit, input.sett.bump_dist(), rng);
+    let shadow = illumination::shadow(input, shader, trace.ray(), hit, rng);
 
     let x = hit.side().norm().dot(sun_dir).abs();
 
