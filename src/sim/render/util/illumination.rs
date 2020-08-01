@@ -98,6 +98,15 @@ pub fn visibility(
     debug_assert!(vis > 0.0);
     debug_assert!(vis <= 1.0);
     debug_assert!(bump_dist > 0.0);
+    debug_assert!(vis > 0.0);
+    debug_assert!(vis <= 1.0);
+    debug_assert!(dist > 0.0);
+    debug_assert!(max_dist > 0.0);
+
+    while let Some(hit) = input.tree.observe(ray, bump_dist, max_dist - dist) {
+        vis = 0.0;
+        break;
+    }
 
     vis
 }
