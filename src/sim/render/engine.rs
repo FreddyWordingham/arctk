@@ -1,9 +1,8 @@
 //! Image painter function.
 
-use super::illumination;
 use crate::{
-    render::{Input, Shader, Tracer},
-    Dir3, Hit, Ray,
+    render::{illumination, Attributes, Input, Shader, Tracer},
+    Crossing, Dir3, Hit, Ray,
 };
 use palette::{Gradient, LinSrgba};
 use rand::rngs::ThreadRng;
@@ -34,10 +33,41 @@ pub fn paint(
     // Event loop.
     loop {
         if let Some(hit) = input.tree.observe(trace.ray().clone(), bump_dist, 1_000.0) {
-            trace.travel(hit.dist());
-            let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-            col += colour(&mut rng, input, shader, &trace, &hit, &sun_dir) * trace.weight() as f32;
-            break;
+            if let Some(attr) = input.attrs.map().get(hit.group()) {
+                match attr {
+                    Attributes::Transparent { abs } => {
+                        trace.travel(hit.dist());
+                        let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
+                        col += colour(&mut rng, input, shader, &trace, &hit, &sun_dir)
+                            * *abs as f32
+                            * trace.weight() as f32;
+                        *trace.weight_mut() *= 1.0 - *abs;
+                        trace.travel(bump_dist);
+                    }
+                    Attributes::Mirror { abs } => {
+                        trace.travel(hit.dist());
+                        let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
+                        col += colour(&mut rng, input, shader, &trace, &hit, &sun_dir)
+                            * (*abs * trace.weight()) as f32;
+                        *trace.weight_mut() *= 1.0 - *abs;
+                        trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
+                        trace.travel(bump_dist);
+                    }
+                    Attributes::Luminous => {
+                        trace.travel(hit.dist());
+                        let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
+                        col += colour(&mut rng, input, shader, &trace, &hit, &sun_dir)
+                            * trace.weight() as f32;
+                        break;
+                    }
+                }
+            } else {
+                trace.travel(hit.dist());
+                let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
+                col +=
+                    colour(&mut rng, input, shader, &trace, &hit, &sun_dir) * trace.weight() as f32;
+                break;
+            }
         } else {
             col += sky_col(shader, trace.ray(), &input.cols.map()["sky"]);
             break;

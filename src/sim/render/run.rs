@@ -42,6 +42,7 @@ pub fn multi_thread(input: &Input, shader: &Shader) -> Result<Output, Error> {
 #[allow(clippy::option_expect_used)]
 #[allow(clippy::result_expect_used)]
 #[inline]
+#[must_use]
 pub fn single_thread(input: &Input, shader: &Shader) -> Output {
     let num_pixels = shader.cam().sensor().num_pixels();
     let pb = Bar::new("Rendering", num_pixels as u64);
@@ -54,6 +55,7 @@ pub fn single_thread(input: &Input, shader: &Shader) -> Output {
 #[allow(clippy::option_expect_used)]
 #[allow(clippy::result_expect_used)]
 #[inline]
+#[must_use]
 fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, shader: &Shader) -> Output {
     let w = shader.cam().sensor().res().0 as usize;
     let h = shader.cam().sensor().res().1 as usize;

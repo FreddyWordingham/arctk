@@ -19,7 +19,7 @@ impl Tracer {
     access!(ray, Ray);
     clone!(gen, i32);
     clone!(dist_travelled, f64);
-    clone!(weight, f64);
+    clone!(weight, weight_mut, f64);
 
     /// Construct a new instance.
     #[inline]
