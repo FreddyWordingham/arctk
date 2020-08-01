@@ -70,7 +70,7 @@ impl Save for Output {
         let path = out_dir.join(time);
         std::fs::create_dir(&path)?;
 
-        let p = out_dir.join("img.png");
+        let p = path.join("img.png");
         println!("Saving: {}", p.display());
         // self.img.save(&p)
         Self::save_png(&self.img, &p)
