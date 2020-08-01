@@ -47,8 +47,8 @@
             hr_res  : 1080
         },
         samples: {
-            // ambient_occlusion   : 64,
-            // soft_shadows        : 17
+            ambient_occlusion   : 64,
+            soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,
