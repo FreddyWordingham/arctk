@@ -19,7 +19,7 @@ impl Light {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(surf: Mesh, spec: Probability) -> Self {
+    pub const fn new(surf: Mesh, spec: Probability) -> Self {
         Self { surf, spec }
     }
 
