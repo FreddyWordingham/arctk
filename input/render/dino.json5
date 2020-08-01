@@ -15,6 +15,7 @@
         eyes    : [['objs/dino/eyes.obj'], null],
         fans    : [['objs/dino/fans.obj'], null],
         // hair    : [['objs/dino/hair.obj'], null],
+        tail    : [['objs/dino/tail.obj'], null],
         stand   : [['objs/dino/stand.obj'], null],
         water   : [['objs/dino/water.obj'], null],
     },
@@ -28,6 +29,7 @@
 
         hair    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         eyes    : ['#000000ff', '#797475ff'],
+        tail    : ['#e53b3bff', '#ff8d2aff' , '#e8423fff'],
         fans    : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
         body    : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
