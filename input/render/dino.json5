@@ -7,20 +7,21 @@
     },
     sett: {
         bump_dist   : 1e-6,
-        block_size  : 10,
+        block_size  : 1000,
         min_weight  : 0.1
     },
     surfs: {
-        body    : [['objs/dino/body.obj'], null],
-        eyes    : [['objs/dino/eyes.obj'], null],
-        fans    : [['objs/dino/fans.obj'], null],
-        hair    : [['objs/dino/hair.obj'], null],
-        tail    : [['objs/dino/tail.obj'], null],
+        body    : [['objs/dino/body.obj'],  null],
+        eyes    : [['objs/dino/eyes.obj'],  null],
+        fans    : [['objs/dino/fans.obj'],  null],
+        hair    : [['objs/dino/hair.obj'],  null],
+        tail    : [['objs/dino/tail.obj'],  null],
         stand   : [['objs/dino/stand.obj'], {trans:[0,0,1e-2]}],
         water   : [['objs/dino/water.obj'], null],
     },
     attrs: {
-        gems: { Mirror: {abs: 0.3} },
+        fans: { Mirror: {abs: 0.7} },
+        hair: { Transparent: {abs: 0.1} },
     },
     cols: {
         scale   : ['#000000ff', '#ffffffff'],
@@ -29,11 +30,11 @@
 
         hair    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         eyes    : ['#000000ff', '#797475ff'],
-        tail    : ['#e53b3bff', '#ff8d2aff' , '#e8423fff'],
+        tail    : ['#e53b3bff', '#ff8d2aff', '#e8423fff'],
         fans    : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
-        body    : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
-        water   : ['#0542A8ff', '#1552C6ff', '#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff', '#71A8EEff']
+        water   : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
+        body    : ['#0542A8ff', '#1552C6ff', '#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff', '#71A8EEff']
     },
     shader: {
         cam: {
@@ -47,8 +48,8 @@
             hr_res  : 1080
         },
         samples: {
-            ambient_occlusion   : 64,
-            soft_shadows        : 17
+            // ambient_occlusion   : 64,
+            // soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,

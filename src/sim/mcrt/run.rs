@@ -11,6 +11,7 @@ use std::sync::{Arc, Mutex};
 /// Run a multi-threaded MCRT simulation.
 /// # Errors
 /// if the progress bad can not be locked.
+#[allow(clippy::option_expect_used)]
 #[inline]
 pub fn multi_thread(input: &Input, light: &Light) -> Result<Output, Error> {
     let res = *input.grid.res();
@@ -22,7 +23,7 @@ pub fn multi_thread(input: &Input, light: &Light) -> Result<Output, Error> {
     let threads: Vec<usize> = (0..num_cpus::get()).collect();
     let mut out: Vec<Output> = threads
         .par_iter()
-        .map(|_id| run_thread(&Arc::clone(&pb), input, light))
+        .map(|_id| thread(&Arc::clone(&pb), input, light))
         .collect();
     pb.lock()?.finish_with_message("Render complete.");
 
@@ -44,13 +45,13 @@ pub fn single_thread(input: &Input, light: &Light) -> Output {
     let pb = Bar::new("Single-threaded", num_cells as u64);
     let pb = Arc::new(Mutex::new(pb));
 
-    run_thread(&pb, input, light)
+    thread(&pb, input, light)
 }
 
 /// Run and MCRT simulation using a single thread.
 #[inline]
 #[must_use]
-pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, light: &Light) -> Output {
+pub fn thread(pb: &Arc<Mutex<Bar>>, input: &Input, light: &Light) -> Output {
     let res = *input.grid.res();
     let data = Output::new(res);
 

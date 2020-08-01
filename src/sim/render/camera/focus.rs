@@ -62,7 +62,7 @@ impl Focus {
             theta += offset;
 
             let r = nalgebra::distance(self.orient.pos(), &self.tar);
-            pos += self.orient.forward().as_ref() * (r - (r.powi(2) - rho.powi(2)).sqrt()); // TODO: See what happens when you don't bum forward.
+            pos += self.orient.forward().as_ref() * (r - (r.powi(2) - rho.powi(2)).sqrt());
             pos += self.orient.right().as_ref() * theta.sin() * max_rad * rho;
             pos += self.orient.up().as_ref() * theta.cos() * max_rad * rho;
         }

@@ -32,6 +32,10 @@ pub fn paint(
 
     // Event loop.
     loop {
+        if trace.weight() <= input.sett.min_weight() {
+            break;
+        }
+
         if let Some(hit) = input.tree.observe(trace.ray().clone(), bump_dist, 1_000.0) {
             if let Some(attr) = input.attrs.map().get(hit.group()) {
                 match attr {
