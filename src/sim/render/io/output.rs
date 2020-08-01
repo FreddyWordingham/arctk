@@ -4,6 +4,7 @@ use crate::{Error, X, Y};
 use ndarray::{Array2, ShapeBuilder};
 use palette::{LinSrgba, Pixel, Srgba};
 use png::{BitDepth, ColorType, Encoder};
+use slice_of_array::prelude::*;
 use std::{fs::File, io::BufWriter, ops::AddAssign, path::Path};
 
 /// Rendering output structure.
@@ -30,7 +31,7 @@ impl Output {
     #[inline]
     fn save_png(img: &Array2<LinSrgba>, path: &Path) -> Result<(), Error> {
         let res = (img.shape()[0], img.shape()[1]);
-        let mut data = Array2::from_elem((res.0, res.1).f(), [0; 4]);
+        let mut data: Array2<[u8; 4]> = Array2::from_elem((res.0, res.1).f(), [0; 4]);
         for xi in 0..res.0 {
             for yi in 0..res.1 {
                 let col = img[(xi, yi)];
@@ -46,7 +47,7 @@ impl Output {
         encoder.set_depth(BitDepth::Eight);
         let mut writer = encoder.write_header()?;
 
-        writer.write_image_data(data.into_raw_vec().flatten())?;
+        writer.write_image_data(data.into_raw_vec().flat())?;
 
         Ok(())
     }
