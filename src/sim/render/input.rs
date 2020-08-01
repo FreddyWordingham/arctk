@@ -3,7 +3,7 @@
 use crate::{
     display_field, display_field_ln,
     grid::Grid,
-    mcrt::{Attributes, Settings},
+    render::{Attributes, Settings, Shader},
     tree::Cell,
     Mesh, Set,
 };
@@ -21,6 +21,8 @@ pub struct Input<'a> {
     pub surfs: &'a Set<Mesh>,
     /// Attributes.
     pub attrs: &'a Set<Attributes>,
+    /// Shading settings.
+    pub shade: &'a Shader,
 }
 
 impl<'a> Input<'a> {
@@ -34,6 +36,7 @@ impl<'a> Input<'a> {
         sett: &'a Settings,
         surfs: &'a Set<Mesh>,
         attrs: &'a Set<Attributes>,
+        shade: &'a Shader,
     ) -> Self {
         Self {
             tree,
@@ -41,6 +44,7 @@ impl<'a> Input<'a> {
             sett,
             surfs,
             attrs,
+            shade,
         }
     }
 }
@@ -53,6 +57,7 @@ impl<'a> Display for Input<'a> {
         display_field_ln!(fmt, "grid", &self.grid)?;
         display_field_ln!(fmt, "settings", &self.sett)?;
         display_field_ln!(fmt, "surfaces", &self.surfs)?;
-        display_field!(fmt, "attributes", &self.attrs)
+        display_field_ln!(fmt, "attributes", &self.attrs)?;
+        display_field!(fmt, "shader", &self.shade)
     }
 }

@@ -1,4 +1,4 @@
-//! Lighting setup module.
+//! Shading setup module.
 
 pub mod light;
 pub mod samples;
@@ -10,8 +10,8 @@ pub use self::{light::*, samples::*, shadow::*, sky::*};
 use crate::{access, display_field, display_field_ln};
 use std::fmt::{Display, Formatter, Result};
 
-/// Conglomerate lighting setup structure.
-pub struct Lighting {
+/// Conglomerate lighting and shadowing settings.
+pub struct Shader {
     /// Sky settings.
     sky: Sky,
     /// Lighting samples.
@@ -22,7 +22,7 @@ pub struct Lighting {
     shadow: Shadow,
 }
 
-impl Lighting {
+impl Shader {
     access!(sky, Sky);
     access!(samples, Samples);
     access!(light, Light);
@@ -41,7 +41,7 @@ impl Lighting {
     }
 }
 
-impl Display for Lighting {
+impl Display for Shader {
     #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
