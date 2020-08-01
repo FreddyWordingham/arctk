@@ -31,15 +31,14 @@
     },
     cols: {
         scale   : ['#000000ff', '#ffffffff'],
-        sky     : ['#000000ff', '#ffffffff'],
-        // sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
+
+        sky     : ['#3072EBff', '#ffffffff'],
 
         time    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         eyes    : ['#000000ff', '#797475ff'],
         fans    : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
         body    : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
-        // vein    : ['#ffe200ff', '#ff4700ff', '#ff000dff'],
         water   : ['#0542A8ff', '#1552C6ff', '#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff', '#71A8EEff']
     },
     shader: {

@@ -36,7 +36,10 @@ pub fn main() {
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
     let input = render::Input::new(&tree, &grid, &render_sett, &surfs, &attrs, &cols);
     banner::section("Rendering");
-    let output = render::run::multi_thread(&input, &shader);
+    let output = render::run::multi_thread(&input, &shader).expect("Failed to perform rendering.");
+    banner::section("Saving");
+    output.save(&out_dir).expect("Failed to save output data.");
+    banner::section("Finished");
 }
 
 /// Initialise the command line arguments and directories.
