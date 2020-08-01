@@ -55,8 +55,8 @@ pub fn single_thread(input: &Input, shader: &Shader) -> Output {
 #[allow(clippy::result_expect_used)]
 #[inline]
 fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, shader: &Shader) -> Output {
-    let width = shader.cam().sensor().res().0 as usize;
-    let height = shader.cam().sensor().res().1 as usize;
+    let w = shader.cam().sensor().res().0 as usize;
+    let h = shader.cam().sensor().res().1 as usize;
 
     let super_samples = shader.cam().sensor().super_samples();
     let dof_samples = shader.cam().focus().dof_samples();
@@ -66,7 +66,7 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, shader: &Shader) -> Output {
 
     let mut rng = thread_rng();
 
-    let mut data = Output::new([width, height]);
+    let mut data = Output::new([w, h]);
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress pb.");
         let b = pb.block(input.sett.block_size());

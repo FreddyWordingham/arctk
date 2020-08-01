@@ -13,8 +13,6 @@ use std::{
 struct Parameters {
     /// Adaptive mesh settings.
     tree: tree::Settings,
-    /// Regular grid settings.
-    grid: grid::Settings,
     /// Render runtime settings.
     sett: render::Settings,
     /// Surfaces map.
@@ -32,9 +30,9 @@ pub fn main() {
     banner::title("RENDER");
     let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (tree_sett, grid_sett, render_sett, surfs, attrs, cols, shader) = build(&in_dir, params);
-    let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
-    let input = render::Input::new(&tree, &grid, &render_sett, &surfs, &attrs, &cols);
+    let (tree_sett, render_sett, surfs, attrs, cols, shader) = build(&in_dir, params);
+    let tree = grow(tree_sett, &surfs);
+    let input = render::Input::new(&tree, &render_sett, &surfs, &attrs, &cols);
     banner::section("Rendering");
     let output = render::run::multi_thread(&input, &shader).expect("Failed to perform rendering.");
     banner::section("Saving");
@@ -81,7 +79,6 @@ fn build(
     params: Parameters,
 ) -> (
     tree::Settings,
-    grid::Settings,
     render::Settings,
     Set<Mesh>,
     Set<render::Attributes>,
@@ -92,10 +89,6 @@ fn build(
     banner::sub_section("Adaptive Tree Settings");
     let tree_sett = params.tree;
     report!("Tree settings", &tree_sett);
-
-    banner::sub_section("Grid Settings");
-    let grid_sett = params.grid;
-    report!("Grid settings", &grid_sett);
 
     banner::sub_section("Render Settings");
     let render_sett = params.sett;
@@ -128,32 +121,16 @@ fn build(
         .expect("Unable to build scenes.");
     report!("Main image", &shader);
 
-    (
-        tree_sett,
-        grid_sett,
-        render_sett,
-        surfs,
-        attrs,
-        cols,
-        shader,
-    )
+    (tree_sett, render_sett, surfs, attrs, cols, shader)
 }
 
 /// Grow domains.
-fn grow<'a>(
-    tree_sett: tree::Settings,
-    grid_sett: grid::Settings,
-    surfs: &'a Set<Mesh>,
-) -> (tree::Cell<'a>, grid::Grid) {
+fn grow<'a>(tree_sett: tree::Settings, surfs: &'a Set<Mesh>) -> tree::Cell<'a> {
     banner::section("Growing");
 
     banner::sub_section("Adaptive Tree");
     let tree = tree::Cell::new_root(&tree_sett, &surfs);
     report!("Adaptive tree", &tree);
 
-    banner::sub_section("Regular Grid");
-    let grid = grid::Grid::new(&grid_sett);
-    report!("Regular grid", &grid);
-
-    (tree, grid)
+    tree
 }

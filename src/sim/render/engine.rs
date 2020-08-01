@@ -1,6 +1,6 @@
 //! Image painter function.
 
-use super::{illumination, Collision, Event};
+use super::{illumination, Collision};
 use crate::{
     render::{Attributes, Input, Shader, Tracer},
     Crossing, Dir3, Hit, Ray, Trace,
@@ -21,7 +21,17 @@ pub fn paint(
     shader: &Shader,
     mut trace: Tracer,
 ) -> LinSrgba {
-    LinSrgba::new(1.0, 0.0, 1.0, 1.0)
+    debug_assert!(trace.weight() > 0.0);
+    debug_assert!(trace.weight() <= 1.0);
+
+    // Convenience.
+    let bump_dist = input.sett.bump_dist();
+    let sun_pos = shader.sky().sun_pos();
+
+    // Tracked items.
+    let mut col = LinSrgba::default();
+
+    col
 }
 
 /// Perform a colouring.
