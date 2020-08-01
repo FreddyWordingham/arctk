@@ -11,11 +11,13 @@
         min_weight  : 0.1
     },
     surfs: {
-        body    : [['objs/dino/body.obj'],  null],
-        eyes    : [['objs/dino/eyes.obj'],  null],
-        fans    : [['objs/dino/fans.obj'],  null],
-        // hair    : [['objs/dino/hair.obj'],  null],
-        tail    : [['objs/dino/tail.obj'],  null],
+        claws   : [['objs/spine/claws.obj'],  null],
+        body    : [['objs/spine/body.obj'],  null],
+        eyes    : [['objs/spine/eyes.obj'],  null],
+        ridge   : [['objs/spine/ridge.obj'],  null],
+        spots   : [['objs/spine/spots.obj'],  null],
+        head    : [['objs/spine/head.obj'],  null],
+
         stand   : [['objs/dino/stand.obj'], {trans:[0,0,0.02]}],
         water   : [['objs/dino/water.obj'], null],
     },
@@ -28,13 +30,15 @@
 
         sky     : ['#3072EBff', '#ffffffff'],
 
-        hair    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
-        eyes    : ['#000000ff', '#797475ff'],
-        tail    : ['#e53b3bff', '#ff8d2aff', '#e8423fff'],
-        fans    : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
         water   : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
-        body    : ['#0542A8ff', '#1552C6ff', '#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff', '#71A8EEff']
+
+        eyes    : ['#000000ff', '#797475ff'],
+        body    : ['#ccccccff', '#ffffffff'],
+        claws   : ['#ccccccff', '#ffffffff'],
+        ridge   : ['#ccccccff', '#ffffffff'],
+        spots   : ['#ffccccff', '#ff0000ff'],
+        head    : ['#ccccccff', '#ffffffff'],
     },
     shader: {
         cam: {
@@ -42,14 +46,14 @@
             tar     : [0,-0.8,0.43],
             // dof     : [17, 0.1],
             swivel  : [-7, 0],
-            hr_fov  : 30.0,
+            hr_fov  : 35.0,
             aspect  : "Square",
             ss_power: 2,
             hr_res  : 1080
         },
         samples: {
-            // ambient_occlusion   : 64,
-            // soft_shadows        : 17
+            ambient_occlusion   : 64,
+            soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,
