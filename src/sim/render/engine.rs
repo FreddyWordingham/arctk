@@ -31,6 +31,19 @@ pub fn paint(
     // Tracked items.
     let mut col = LinSrgba::default();
 
+    // Event loop.
+    loop {
+        if let Some(hit) = input.tree.observe(trace.ray().clone(), bump_dist, 1_000.0) {
+            trace.travel(hit.dist());
+            let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
+            col += colour(&mut rng, input, shader, &trace, &hit, &sun_dir) * trace.weight() as f32;
+            break;
+        } else {
+            col += sky_col(shader, trace.ray(), &input.cols.map()["sky"]);
+            break;
+        }
+    }
+
     col
 }
 
@@ -60,11 +73,11 @@ fn colour(
 #[must_use]
 fn sky_col(
     shader: &Shader,
-    trace: &Tracer,
+    ray: &Ray,
     grad: &palette::Gradient<palette::LinSrgba>,
 ) -> palette::LinSrgba {
-    let u = (trace.dir().dot(shader.cam().up()) + 1.0) * 0.5;
-    let v = (trace.dir().dot(shader.cam().right()) + 1.0) * 0.5;
+    let u = (ray.dir().dot(shader.cam().up()) + 1.0) * 0.5;
+    let v = (ray.dir().dot(shader.cam().right()) + 1.0) * 0.5;
 
     let x = (shader.sky().noise().sample(u, v) + 1.0) * 0.5;
 

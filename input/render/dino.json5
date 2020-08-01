@@ -7,15 +7,14 @@
     },
     sett: {
         bump_dist   : 1e-6,
-        block_size  : 1000,
-        live        : 10000,
+        block_size  : 10,
         min_weight  : 0.1
     },
     surfs: {
         body    : [['objs/dino/body.obj'], null],
         eyes    : [['objs/dino/eyes.obj'], null],
         fans    : [['objs/dino/fans.obj'], null],
-        hair    : [['objs/dino/hair.obj'], null],
+        // hair    : [['objs/dino/hair.obj'], null],
         stand   : [['objs/dino/stand.obj'], null],
         water   : [['objs/dino/water.obj'], null],
     },
@@ -27,7 +26,7 @@
 
         sky     : ['#3072EBff', '#ffffffff'],
 
-        time    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        hair    : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         eyes    : ['#000000ff', '#797475ff'],
         fans    : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
@@ -36,14 +35,14 @@
     },
     shader: {
         cam: {
-            pos     : [2.123, 1.21213, 2.1213],
-            tar     : [0.002131, 0.0021331, 0.5023],
+            pos     : [-2,-3,1],
+            tar     : [0,0,0.6],
             // dof     : [17, 0.1],
             // swivel  : [0.1, 0.1],
-            hr_fov  : 75.0,
+            hr_fov  : 30.0,
             aspect  : "Square",
             // ss_power: 2,
-            hr_res  : 1024
+            hr_res  : 1000
         },
         samples: {
             // ambient_occlusion   : 64,
