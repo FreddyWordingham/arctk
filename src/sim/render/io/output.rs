@@ -2,12 +2,13 @@
 
 use crate::{X, Y};
 use ndarray::Array2;
+use palette::LinSrgba;
 use std::ops::AddAssign;
 
 /// Rendering output structure.
 pub struct Output {
-    /// Average distance travelled by the tracers.
-    ave_dist: Array2<f64>,
+    /// Coloured output image.
+    pub img: Array2<LinSrgba>,
 }
 
 impl Output {
@@ -19,7 +20,7 @@ impl Output {
         debug_assert!(res[Y] > 0);
 
         Self {
-            ave_dist: Array2::zeros(res),
+            img: Array2::default(res),
         }
     }
 }
@@ -27,6 +28,6 @@ impl Output {
 impl AddAssign<&Self> for Output {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
-        self.ave_dist += &rhs.ave_dist;
+        self.img += &rhs.img;
     }
 }

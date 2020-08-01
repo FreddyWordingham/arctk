@@ -1,10 +1,9 @@
 //! Fast-scheme rendering function.
 
 use crate::{
-    render::{Input, Output, Shader},
-    Bar, Dir3, Error, Vec3,
+    render::{engine, Input, Output, Shader, Tracer},
+    Bar, Error,
 };
-use palette::{Gradient, LinSrgba};
 use rand::{thread_rng, Rng};
 use rayon::prelude::*;
 use std::{
@@ -12,24 +11,24 @@ use std::{
     sync::{Arc, Mutex},
 };
 
-/// Render an image fast.
+/// Render an image as fast as possible.
 /// # Errors
 /// if a mutex unwrapping failed or
 /// an arc unwrapping failed.
 #[allow(clippy::option_expect_used)]
 #[allow(clippy::result_expect_used)]
 #[inline]
-pub fn run(input: &Input, shader: &Shader) -> Result<Output, Error> {
+pub fn multi_thread(input: &Input, shader: &Shader) -> Result<Output, Error> {
     let num_pixels = shader.cam().sensor().num_pixels();
-    let bar = Bar::new("Rendering", num_pixels as u64);
-    let bar = Arc::new(Mutex::new(bar));
+    let pb = Bar::new("Rendering", num_pixels as u64);
+    let pb = Arc::new(Mutex::new(pb));
 
     let threads: Vec<usize> = (0..num_cpus::get()).collect();
     let mut out: Vec<Output> = threads
         .par_iter()
-        .map(|_id| run_thread(&Arc::clone(&bar), input, shader))
+        .map(|_id| run_thread(&Arc::clone(&pb), input, shader))
         .collect();
-    bar.lock()?.finish_with_message("Render complete.");
+    pb.lock()?.finish_with_message("Render complete.");
 
     let mut data = out.pop().expect("No data received.");
     while let Some(o) = out.pop() {
@@ -37,6 +36,18 @@ pub fn run(input: &Input, shader: &Shader) -> Result<Output, Error> {
     }
 
     Ok(data)
+}
+
+/// Render an image using a single thread.
+#[allow(clippy::option_expect_used)]
+#[allow(clippy::result_expect_used)]
+#[inline]
+pub fn single_thread(input: &Input, shader: &Shader) -> Output {
+    let num_pixels = shader.cam().sensor().num_pixels();
+    let pb = Bar::new("Rendering", num_pixels as u64);
+    let pb = Arc::new(Mutex::new(pb));
+
+    run_thread(&pb, input, shader)
 }
 
 /// Render pixels using a single thread.
@@ -57,7 +68,7 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, shader: &Shader) -> Output {
 
     let mut data = Output::new([width, height]);
     while let Some((start, end)) = {
-        let mut pb = pb.lock().expect("Could not lock progress bar.");
+        let mut pb = pb.lock().expect("Could not lock progress pb.");
         let b = pb.block(input.sett.block_size());
         std::mem::drop(pb);
         b
@@ -73,12 +84,12 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input, shader: &Shader) -> Output {
                         .cam()
                         .gen_ray(pixel, offset, sub_sample, depth_sample);
 
-                    let col = paint(&mut rng, input, shader, ray, 1.0);
+                    let col = engine::paint(&mut rng, input, shader, Tracer::new(ray, 0));
                     total_col += col * weight as f32;
                 }
             }
 
-            data.image[pixel] = col;
+            data.img[pixel] = total_col;
         }
     }
 

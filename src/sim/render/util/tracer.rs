@@ -1,6 +1,6 @@
 //! Pixel colouring structure implementation.
 
-use crate::{access, clone, display_field, display_field_ln, Ray};
+use crate::{access, clone, display_field, display_field_ln, Dir3, Pos3, Ray};
 use std::fmt::{Display, Formatter, Result};
 
 /// Light quanta.
@@ -29,6 +29,20 @@ impl Tracer {
             gen,
             dist_travelled: 0.0,
         }
+    }
+
+    /// Access the position.
+    #[inline]
+    #[must_use]
+    pub fn pos(&self) -> &Pos3 {
+        self.ray.pos()
+    }
+
+    /// Access the direction.
+    #[inline]
+    #[must_use]
+    pub fn dir(&self) -> &Dir3 {
+        self.ray.dir()
     }
 }
 

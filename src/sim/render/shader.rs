@@ -1,11 +1,12 @@
-//! Shading setup module.
+//! Shader module and combination structure.
 
 pub mod light;
 pub mod samples;
 pub mod shadow;
 pub mod sky;
+pub mod sky_builder;
 
-pub use self::{light::*, samples::*, shadow::*, sky::*};
+pub use self::{light::*, samples::*, shadow::*, sky::*, sky_builder::*};
 
 use crate::{access, display_field, display_field_ln, render::Camera};
 use std::fmt::{Display, Formatter, Result};

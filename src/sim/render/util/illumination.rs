@@ -2,7 +2,7 @@
 
 use crate::{
     golden,
-    render::{Attributes, Input, Shader},
+    render::{Input, Shader},
     Crossing, Dir3, Hit, Ray,
 };
 use rand::{rngs::ThreadRng, Rng};

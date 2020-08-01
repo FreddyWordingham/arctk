@@ -6,7 +6,7 @@ pub mod sensor;
 
 pub use self::{focus::*, lens::*, sensor::*};
 
-use crate::{access, display_field, display_field_ln, Ray, Rot3, X, Y};
+use crate::{access, display_field, display_field_ln, Dir3, Ray, Rot3, X, Y};
 use std::fmt::{Display, Formatter, Result};
 
 /// Camera structure.
@@ -34,6 +34,27 @@ impl Camera {
             lens,
             sensor,
         }
+    }
+
+    /// Quickly view the camera's forward direction.
+    #[inline]
+    #[must_use]
+    pub fn forward(&self) -> &Dir3 {
+        self.focus.orient().forward()
+    }
+
+    /// Quickly view the camera's upwards direction.
+    #[inline]
+    #[must_use]
+    pub fn up(&self) -> &Dir3 {
+        self.focus.orient().up()
+    }
+
+    /// Quickly view the camera's right direction.
+    #[inline]
+    #[must_use]
+    pub fn right(&self) -> &Dir3 {
+        self.focus.orient().right()
     }
 
     /// Generate a new observation ray.

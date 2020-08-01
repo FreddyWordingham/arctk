@@ -33,7 +33,7 @@ pub fn main() {
     let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, light) = build(&in_dir, params);
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
     let input = mcrt::Input::new(&tree, &grid, &mcrt_sett, &surfs, &attrs);
-    let data = mcrt::run::multi(&input, &light).expect("Failed to run MCRT simulation.");
+    let data = mcrt::run::multi_thread(&input, &light).expect("Failed to run MCRT simulation.");
     data.save(&out_dir).expect("Failed to save output.");
 
     banner::section("Finished");

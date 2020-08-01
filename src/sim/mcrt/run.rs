@@ -12,18 +12,19 @@ use std::sync::{Arc, Mutex};
 /// # Errors
 /// if the progress bad can not be locked.
 #[inline]
-pub fn multi(input: &Input, light: &Light) -> Result<Output, Error> {
+pub fn multi_thread(input: &Input, light: &Light) -> Result<Output, Error> {
     let res = *input.grid.res();
     let num_cells = res[X] * res[Y] * res[Z];
-    let br = Bar::new("Mapping", num_cells as u64);
-    let br = Arc::new(Mutex::new(br));
+
+    let pb = Bar::new("Multi-threaded", num_cells as u64);
+    let pb = Arc::new(Mutex::new(pb));
 
     let threads: Vec<usize> = (0..num_cpus::get()).collect();
     let mut out: Vec<Output> = threads
         .par_iter()
-        .map(|_id| run_thread(&Arc::clone(&br), input, light))
+        .map(|_id| run_thread(&Arc::clone(&pb), input, light))
         .collect();
-    br.lock()?.finish_with_message("Render complete.");
+    pb.lock()?.finish_with_message("Render complete.");
 
     let mut data = out.pop().expect("No data received.");
     while let Some(o) = out.pop() {
@@ -31,6 +32,19 @@ pub fn multi(input: &Input, light: &Light) -> Result<Output, Error> {
     }
 
     Ok(data)
+}
+
+/// Run and MCRT simulation using a single thread.
+#[inline]
+#[must_use]
+pub fn single_thread(input: &Input, light: &Light) -> Output {
+    let res = *input.grid.res();
+    let num_cells = res[X] * res[Y] * res[Z];
+
+    let pb = Bar::new("Single-threaded", num_cells as u64);
+    let pb = Arc::new(Mutex::new(pb));
+
+    run_thread(&pb, input, light)
 }
 
 /// Run and MCRT simulation using a single thread.

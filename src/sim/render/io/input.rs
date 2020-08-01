@@ -3,10 +3,11 @@
 use crate::{
     display_field, display_field_ln,
     grid::Grid,
-    render::{Attributes, Settings, Shader},
+    render::{Attributes, Settings},
     tree::Cell,
     Mesh, Set,
 };
+use palette::{Gradient, LinSrgba};
 use std::fmt::{Display, Formatter, Result};
 
 /// Cartographer mapping input structure.
@@ -21,8 +22,8 @@ pub struct Input<'a> {
     pub surfs: &'a Set<Mesh>,
     /// Attributes.
     pub attrs: &'a Set<Attributes>,
-    /// Shading settings.
-    pub shade: &'a Shader,
+    /// Colours.
+    pub cols: &'a Set<Gradient<LinSrgba>>,
 }
 
 impl<'a> Input<'a> {
@@ -36,7 +37,7 @@ impl<'a> Input<'a> {
         sett: &'a Settings,
         surfs: &'a Set<Mesh>,
         attrs: &'a Set<Attributes>,
-        shade: &'a Shader,
+        cols: &'a Set<Gradient<LinSrgba>>,
     ) -> Self {
         Self {
             tree,
@@ -44,7 +45,7 @@ impl<'a> Input<'a> {
             sett,
             surfs,
             attrs,
-            shade,
+            cols,
         }
     }
 }
@@ -58,6 +59,6 @@ impl<'a> Display for Input<'a> {
         display_field_ln!(fmt, "settings", &self.sett)?;
         display_field_ln!(fmt, "surfaces", &self.surfs)?;
         display_field_ln!(fmt, "attributes", &self.attrs)?;
-        display_field!(fmt, "shader", &self.shade)
+        display_field!(fmt, "colours", &format!("total {}", self.cols.map().len()))
     }
 }
