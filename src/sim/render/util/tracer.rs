@@ -38,20 +38,19 @@ impl Tracer {
     /// Access the position.
     #[inline]
     #[must_use]
-    pub fn pos(&self) -> &Pos3 {
+    pub const fn pos(&self) -> &Pos3 {
         self.ray.pos()
     }
 
     /// Access the direction.
     #[inline]
     #[must_use]
-    pub fn dir(&self) -> &Dir3 {
+    pub const fn dir(&self) -> &Dir3 {
         self.ray.dir()
     }
 
     /// Set the tracer direction.
     #[inline]
-    #[must_use]
     pub fn set_dir(&mut self, dir: Dir3) {
         *self.ray.dir_mut() = dir;
     }

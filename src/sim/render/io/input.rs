@@ -2,7 +2,6 @@
 
 use crate::{
     display_field, display_field_ln,
-    grid::Grid,
     render::{Attributes, Settings},
     tree::Cell,
     Mesh, Set,

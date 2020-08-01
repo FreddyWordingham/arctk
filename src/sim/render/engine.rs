@@ -1,9 +1,9 @@
 //! Image painter function.
 
-use super::{illumination, Collision};
+use super::illumination;
 use crate::{
-    render::{Attributes, Input, Shader, Tracer},
-    Crossing, Dir3, Hit, Ray, Trace,
+    render::{Input, Shader, Tracer},
+    Dir3, Hit, Ray,
 };
 use palette::{Gradient, LinSrgba};
 use rand::rngs::ThreadRng;
