@@ -63,31 +63,3 @@ impl<T: netcdf::Numeric> Save for Array3<T> {
         Ok(())
     }
 }
-
-// impl Save for Array2<LinSrgba> {
-//     #[allow(clippy::use_self)]
-//     #[inline]
-//     fn save(&self, path: &Path) -> Result<(), Error> {
-//         let res = (self.shape()[0], self.shape()[1]);
-//         let mut data = Array2::from_elem((res.0, res.1).f(), [0; 4]);
-//         for xi in 0..res.0 {
-//             for yi in 0..res.1 {
-//                 let col = self[(xi, yi)];
-//                 data[(xi, res.1 - yi - 1)] = Srgba::from_linear(col).into_format().into_raw();
-//                 // data[(xi, yi)] = Srgba::from_linear(col).into_format().into_raw();
-//             }
-//         }
-
-//         let file = File::create(path)?;
-//         let w = BufWriter::new(file);
-
-//         let mut encoder = Encoder::new(w, res.0 as u32, res.1 as u32);
-//         encoder.set_color(ColorType::RGBA);
-//         encoder.set_depth(BitDepth::Eight);
-//         let mut writer = encoder.write_header()?;
-
-//         writer.write_image_data(data.into_raw_vec().flat())?;
-
-//         Ok(())
-//     }
-// }
