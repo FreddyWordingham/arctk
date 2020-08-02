@@ -1,6 +1,6 @@
 //! Mesh form implementation.
 
-use crate::{display_field, display_field_ln, form::Trans3, Build, Error, Load, Transform};
+use crate::{display_field, display_field_ln, Build, Error, Load, Trans3Builder, Transform};
 use attr::load;
 use std::{
     fmt::{Display, Formatter},
@@ -9,14 +9,14 @@ use std::{
 
 /// Loadable triangle mesh conglomerate structure.
 #[load]
-pub struct Mesh(
+pub struct MeshBuilder(
     /// List of object files.
     Vec<String>,
     /// Optional transformation.
-    Option<Trans3>,
+    Option<Trans3Builder>,
 );
 
-impl Build for Mesh {
+impl Build for MeshBuilder {
     type Inst = crate::Mesh;
 
     #[inline]
@@ -40,7 +40,7 @@ impl Build for Mesh {
     }
 }
 
-impl Display for Mesh {
+impl Display for MeshBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "number of objects", self.0.len())?;
