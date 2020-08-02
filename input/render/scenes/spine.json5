@@ -22,7 +22,7 @@
         water   : [['objs/dino/water.obj'], null],
     },
     attrs: {
-        // fans: { Mirror: {abs: 0.8} },
+        spots: { Mirror: {abs: 0.5} },
         hair: { Transparent: {abs: 0.1} },
     },
     cols: {
@@ -33,12 +33,12 @@
         stand   : ['#b78d5cff', '#df9955ff', '#a66a3fff', '#dabb97ff', '#c46e1bff', '#a55555ff', '#ffd4a2ff'],
         water   : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff', '#51dab6ff', '#556b2fff', '#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
 
-        eyes    : ['#000000ff', '#797475ff'],
-        body    : ['#ccccccff', '#ffffffff'],
-        claws   : ['#ccccccff', '#ffffffff'],
-        ridge   : ['#ccccccff', '#ffffffff'],
-        spots   : ['#ffccccff', '#ff0000ff'],
-        head    : ['#ccccccff', '#ffffffff'],
+        eyes    : ['#000000ff', '#797475ff', '#ffffffff'],
+        body    : ['#ccffccff', '#63ff47ff'],
+        head    : ['#91c591ff', '#40d525ff'],
+        claws   : ['#9a663aff', '#ffaf6bff', '#ff4100ff'],
+        ridge   : ['#ffccccff', '#ff0000ff'],
+        spots   : ['#d4a271ff', '#a66a3fff'],
     },
     shader: {
         cam: {
@@ -48,12 +48,12 @@
             swivel  : [-5, 5],
             hr_fov  : 35.0,
             aspect  : "Square",
-            ss_power: 2,
+            // ss_power: 2,
             hr_res  : 1080
         },
         samples: {
-            // ambient_occlusion   : 64,
-            // soft_shadows        : 17
+            ambient_occlusion   : 64,
+            soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,
