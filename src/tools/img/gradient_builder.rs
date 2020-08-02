@@ -1,4 +1,4 @@
-//! Gradient form implementation.
+//! GradientBuilder form implementation.
 
 use crate::{display_field, Build, Error};
 use attr::load;
@@ -8,15 +8,15 @@ use std::{
     path::Path,
 };
 
-/// Loadable colour gradient structure.
+/// Loadable colour GradientBuilder structure.
 #[load]
-pub struct Gradient(
+pub struct GradientBuilder(
     /// List of colours.
     Vec<String>,
 );
 
-impl Build for Gradient {
-    type Inst = palette::Gradient<LinSrgba>;
+impl Build for GradientBuilder {
+    type Inst = palette::GradientBuilder<LinSrgba>;
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
@@ -37,7 +37,7 @@ impl Build for Gradient {
     }
 }
 
-impl Display for Gradient {
+impl Display for GradientBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field!(fmt, "number of colours", self.0.len())

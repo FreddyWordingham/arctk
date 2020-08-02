@@ -12,6 +12,6 @@ pub mod shader_builder;
 pub mod util;
 
 pub use self::{
-    attributes::*, camera::*, camera_builder::*, io::*, io::*, settings::*, shader::*,
-    shader_builder::*, util::*,
+    attributes::*, camera::*, camera_builder::*, io::*, settings::*, shader::*, shader_builder::*,
+    util::*,
 };
