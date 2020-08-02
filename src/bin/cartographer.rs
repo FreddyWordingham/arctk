@@ -17,7 +17,7 @@ struct Parameters {
     /// Cartographer settings.
     sett: cartographer::Settings,
     /// Surfaces map.
-    surfs: Set<form::Mesh>,
+    surfs: Set<MeshBuilder>,
     /// Interfaces map. (inside material, outside material).
     inters: Set<(Group, Group)>,
 }

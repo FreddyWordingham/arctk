@@ -1,7 +1,7 @@
 //! Light surface structure.
 
 use crate::{
-    display_field, display_field_ln, mcrt::Light, Build, Error, MeshForm, ProbabilityForm,
+    display_field, display_field_ln, mcrt::Light, Build, Error, MeshBuilder, ProbabilityForm,
 };
 use attr::load;
 use std::fmt::{Display, Formatter};
@@ -9,14 +9,14 @@ use std::path::Path;
 
 /// Loadable light structure.
 #[load]
-pub struct LightForm {
+pub struct LightBuilder {
     /// Object path link.
-    surf: MeshForm,
+    surf: MeshBuilder,
     /// Emission form.
     spec: ProbabilityForm,
 }
 
-impl Build for LightForm {
+impl Build for LightBuilder {
     type Inst = Light;
 
     #[inline]
@@ -28,7 +28,7 @@ impl Build for LightForm {
     }
 }
 
-impl Display for LightForm {
+impl Display for LightBuilder {
     #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {

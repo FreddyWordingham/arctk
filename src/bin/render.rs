@@ -16,7 +16,7 @@ struct Parameters {
     /// Render runtime settings.
     sett: render::Settings,
     /// Surfaces map.
-    surfs: Set<form::Mesh>,
+    surfs: Set<MeshBuilder>,
     /// Attributes map.
     attrs: Set<render::Attributes>,
     /// Colour map.

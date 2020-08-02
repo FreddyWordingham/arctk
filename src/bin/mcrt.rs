@@ -17,11 +17,11 @@ struct Parameters {
     /// MCRT runtime settings.
     sett: mcrt::Settings,
     /// Surfaces set.
-    surfs: Set<form::Mesh>,
+    surfs: Set<MeshBuilder>,
     /// Attributes set.
     attrs: Set<mcrt::Attributes>,
     /// Light form.
-    light: mcrt::LightForm,
+    light: mcrt::LightBuilder,
 }
 
 /// Main function.

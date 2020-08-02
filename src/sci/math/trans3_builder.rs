@@ -11,7 +11,7 @@ use std::{
 /// Loadable transform structure.
 #[load]
 #[derive(Clone)]
-pub struct Trans3 {
+pub struct Trans3Builder {
     /// Optional translation to apply.
     trans: Option<Translation3<f64>>,
     /// Rotation applied as Euler angles.
@@ -20,7 +20,7 @@ pub struct Trans3 {
     scale: Option<f64>,
 }
 
-impl Build for Trans3 {
+impl Build for Trans3Builder {
     type Inst = crate::Trans3;
 
     #[inline]
@@ -42,7 +42,7 @@ impl Build for Trans3 {
     }
 }
 
-impl Display for Trans3 {
+impl Display for Trans3Builder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         if let Some(trans) = self.trans {
