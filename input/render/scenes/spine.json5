@@ -45,15 +45,15 @@
             pos     : [-2,-3,1],
             tar     : [0,-0.8,0.43],
             // dof     : [17, 0.1],
-            swivel  : [-7, 0],
+            swivel  : [-5, 5],
             hr_fov  : 35.0,
             aspect  : "Square",
             ss_power: 2,
             hr_res  : 1080
         },
         samples: {
-            ambient_occlusion   : 64,
-            soft_shadows        : 17
+            // ambient_occlusion   : 64,
+            // soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,
