@@ -30,9 +30,10 @@
 pub mod error;
 pub mod file;
 pub mod geom;
-pub mod sci;
+pub mod math;
+pub mod phys;
 pub mod sim;
 pub mod tools;
 pub mod util;
 
-pub use self::{error::*, file::*, geom::*, sci::*, sim::*, tools::*, util::*};
+pub use self::{error::*, file::*, geom::*, math::*, phys::*, sim::*, tools::*, util::*};
