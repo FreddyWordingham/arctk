@@ -20,7 +20,7 @@ struct Parameters {
     /// Attributes map.
     attrs: Set<render::Attributes>,
     /// Colour map.
-    cols: Set<form::Gradient>,
+    cols: Set<GradientBuilder>,
     /// Shader.
     shader: render::ShaderBuilder,
 }

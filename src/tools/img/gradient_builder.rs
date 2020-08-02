@@ -16,7 +16,7 @@ pub struct GradientBuilder(
 );
 
 impl Build for GradientBuilder {
-    type Inst = palette::GradientBuilder<LinSrgba>;
+    type Inst = palette::Gradient<LinSrgba>;
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
