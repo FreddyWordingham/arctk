@@ -34,6 +34,13 @@ pub fn paint(mut rng: &mut ThreadRng, scene: &Scene, shader: &Shader, mut trace:
         if let Some(hit) = scene.tree.observe(trace.ray().clone(), bump_dist, 1_000.0) {
             if let Some(attr) = scene.attrs.map().get(hit.group()) {
                 match attr {
+                    Attributes::Luminous => {
+                        trace.travel(hit.dist());
+                        let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
+                        col += colour(&mut rng, scene, shader, &trace, &hit, &sun_dir)
+                            * trace.weight() as f32;
+                        break;
+                    }
                     Attributes::Transparent { abs } => {
                         trace.travel(hit.dist());
                         let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
@@ -52,12 +59,12 @@ pub fn paint(mut rng: &mut ThreadRng, scene: &Scene, shader: &Shader, mut trace:
                         trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
                         trace.travel(bump_dist);
                     }
-                    Attributes::Luminous => {
-                        trace.travel(hit.dist());
-                        let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
-                        col += colour(&mut rng, scene, shader, &trace, &hit, &sun_dir)
-                            * trace.weight() as f32;
-                        break;
+                    Attributes::Refractive {
+                        abs: _,
+                        inside: _,
+                        outside: _,
+                    } => {
+                        unimplemented!();
                     }
                 }
             } else {

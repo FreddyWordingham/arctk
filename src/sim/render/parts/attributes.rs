@@ -18,6 +18,15 @@ pub enum Attributes {
         /// Absorption fraction.
         abs: f64,
     },
+    /// Refractive.
+    Refractive {
+        /// Absorption fraction.
+        abs: f64,
+        /// Inside refractive index.
+        inside: f64,
+        /// Outside refractive index.
+        outside: f64,
+    },
 }
 
 impl Display for Attributes {
@@ -28,6 +37,11 @@ impl Display for Attributes {
             Self::Luminous => "Luminous".to_string(),
             Self::Transparent { abs } => format!("Transparent: [{}]", abs),
             Self::Mirror { abs } => format!("Mirror: [{}]", abs),
+            Self::Refractive {
+                abs,
+                inside,
+                outside,
+            } => format!("Refractive: [{}]\t{} :| {}", abs, inside, outside),
         };
         write!(fmt, "{}", kind)
     }

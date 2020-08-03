@@ -89,7 +89,7 @@
         hills       : ['#cd853fff', '#556b2fff', '#45c074ff', '#61ff7dff'],
         soil        : ['#8b542bff', '#7a4824ff', '#bc6f37ff', '#d69565ff'],
         leaves      : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
-        path        : ['#a0522dff', '#bc8f8fff', '#008b8bff', '#88b0b5ff'],
+        path        : ['#a0522dff', '#bc8f8fff', '#cc8867ff', '#bbbbbbff'],
         under_path  : ['#9b694cff', '#a48e63ff', '#556b2fff', '#7d905dff'],
         wood        : ['#9b694cff', '#a0522dff', '#dc7e51ff', '#f8a134ff'],
         water       : ['#372bd0ff', '#1552C6ff', '#0095ffff', '#71A8EEff'],
@@ -134,14 +134,14 @@
             pos     : [-18,32,4],
             // dof     : [17, 0.1],
             swivel  : [0, 5],
-            hr_fov  : 60.0,
+            hr_fov  : 90.0,
             aspect  : "Square",
-            ss_power: 2,
+            // ss_power: 2,
             hr_res  : 1080
         },
         samples: {
-            ambient_occlusion   : 64,
-            soft_shadows        : 17
+            // ambient_occlusion   : 64,
+            // soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,

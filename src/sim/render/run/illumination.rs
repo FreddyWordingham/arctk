@@ -94,6 +94,9 @@ pub fn visibility(scene: &Scene, mut trace: Tracer, mut vis: f64) -> f64 {
         let group = hit.group();
         if let Some(attr) = scene.attrs.map().get(group) {
             match attr {
+                Attributes::Luminous => {
+                    return vis;
+                }
                 Attributes::Transparent { abs } => {
                     vis *= 1.0 - *abs;
                     trace.travel(hit.dist() + bump_dist);
@@ -104,8 +107,12 @@ pub fn visibility(scene: &Scene, mut trace: Tracer, mut vis: f64) -> f64 {
                     trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
                     trace.travel(bump_dist);
                 }
-                Attributes::Luminous => {
-                    return vis;
+                Attributes::Refractive {
+                    abs: _,
+                    inside: _,
+                    outside: _,
+                } => {
+                    unimplemented!();
                 }
             }
         } else {
