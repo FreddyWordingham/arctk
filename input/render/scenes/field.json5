@@ -57,6 +57,11 @@
         sea_1       : [['objs/field/sky/sea_1.obj'],  null],
         solar       : [['objs/field/sky/solar.obj'],  null],
         // starfield   : [['objs/field/sky/starfield.obj'],  null],
+
+        sf_heads    : [['objs/field/sunflower/head.obj'],  null],
+        sf_leaves   : [['objs/field/sunflower/leaves.obj'],  null],
+        sf_petals   : [['objs/field/sunflower/petals.obj'],  null],
+        sf_stems    : [['objs/field/sunflower/stems.obj'],  null]
     },
     attrs: {
         spots: { Mirror: {abs: 0.5} },
@@ -115,6 +120,12 @@
 
         solar       : ['#ffb800ff', '#ff7f23ff', '#ff4700ff', '#ff000dff'],
         starfield   : ['#ff5151ff', '#ffa000ff', '#fffa00ff', '#ffffffff'],
+
+        sf_heads    : ['#ef5656ff', '#863813ff', '#c16438ff', '#ea7c47ff'],
+        sf_leaves   : ['#96a75eff', '#6b8e23ff', '#00c719ff', '#77d12cff'],
+        sf_petals   : ['#ffb800ff', '#ff7f23ff', '#ff4700ff', '#fffa00ff'],
+        sf_stems    : ['#96a75eff', '#6b8e23ff', '#00c719ff', '#77d12cff']
+
     },
     shader: {
         cam: {
