@@ -2,7 +2,7 @@
 
 use crate::{
     golden,
-    render::{Attributes, Input, Shader, Tracer},
+    render::{Attributes, Scene, Shader, Tracer},
     Crossing, Dir3, Hit, Ray,
 };
 use rand::{rngs::ThreadRng, Rng};
@@ -36,8 +36,8 @@ pub fn light(shader: &Shader, ray: &Ray, hit: &Hit) -> f64 {
 /// Calculate the shadowing factor.
 #[inline]
 #[must_use]
-pub fn shadow(input: &Input, shader: &Shader, ray: &Ray, hit: &Hit, rng: &mut ThreadRng) -> f64 {
-    let bump_dist = input.sett.bump_dist();
+pub fn shadow(scene: &Scene, shader: &Shader, ray: &Ray, hit: &Hit, rng: &mut ThreadRng) -> f64 {
+    let bump_dist = scene.sett.bump_dist();
 
     let sun_dir = Dir3::new_normalize(shader.sky().sun_pos() - ray.pos());
     let mut light_ray = Ray::new(*ray.pos(), *hit.side().norm());
@@ -51,11 +51,11 @@ pub fn shadow(input: &Input, shader: &Shader, ray: &Ray, hit: &Hit, rng: &mut Th
             let (r, theta) = golden::circle(n, samples);
             let mut soft_ray = light_ray.clone();
             soft_ray.rotate(r * shader.sky().sun_rad(), theta + offset);
-            total += visibility(input, Tracer::new(soft_ray, -1), 1.0);
+            total += visibility(scene, Tracer::new(soft_ray, -1), 1.0);
         }
         total / f64::from(samples)
     } else {
-        visibility(input, Tracer::new(light_ray, -1), 1.0)
+        visibility(scene, Tracer::new(light_ray, -1), 1.0)
     };
 
     if let Some(samples) = shader.samples().ambient_occlusion() {
@@ -67,7 +67,7 @@ pub fn shadow(input: &Input, shader: &Shader, ray: &Ray, hit: &Hit, rng: &mut Th
             let (phi, theta) = golden::hemisphere(n, samples);
             let mut ambient_ray = norm_ray.clone();
             ambient_ray.rotate(phi, theta + offset);
-            total += visibility(input, Tracer::new(ambient_ray, -1), 1.0);
+            total += visibility(scene, Tracer::new(ambient_ray, -1), 1.0);
         }
         let ambient = (total / f64::from(samples)).powi(shader.shadow().ao_pow());
 
@@ -80,19 +80,19 @@ pub fn shadow(input: &Input, shader: &Shader, ray: &Ray, hit: &Hit, rng: &mut Th
 /// Calculate the visibility of a given ray.
 #[inline]
 #[must_use]
-pub fn visibility(input: &Input, mut trace: Tracer, mut vis: f64) -> f64 {
+pub fn visibility(scene: &Scene, mut trace: Tracer, mut vis: f64) -> f64 {
     debug_assert!(vis > 0.0);
     debug_assert!(vis <= 1.0);
 
-    let bump_dist = input.sett.bump_dist();
+    let bump_dist = scene.sett.bump_dist();
 
-    while let Some(hit) = input.tree.observe(
+    while let Some(hit) = scene.tree.observe(
         trace.ray().clone(),
         bump_dist,
         MAX_VISIBILITY_DIST - trace.dist_travelled(),
     ) {
         let group = hit.group();
-        if let Some(attr) = input.attrs.map().get(group) {
+        if let Some(attr) = scene.attrs.map().get(group) {
             match attr {
                 Attributes::Transparent { abs } => {
                     vis *= 1.0 - *abs;

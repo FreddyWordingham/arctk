@@ -32,9 +32,10 @@ pub fn main() {
     let params = input(&in_dir, &params_path);
     let (tree_sett, render_sett, surfs, attrs, cols, shader) = build(&in_dir, params);
     let tree = grow(tree_sett, &surfs);
-    let input = render::Input::new(&tree, &render_sett, &surfs, &attrs, &cols);
+    let input = render::Scene::new(&tree, &render_sett, &surfs, &attrs, &cols);
     banner::section("Rendering");
-    let output = render::run::multi_thread(&input, &shader).expect("Failed to perform rendering.");
+    let output =
+        render::capture::multi_thread(&input, &shader).expect("Failed to perform rendering.");
     banner::section("Saving");
     output.save(&out_dir).expect("Failed to save output data.");
     banner::section("Finished");

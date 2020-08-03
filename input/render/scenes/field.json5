@@ -117,7 +117,7 @@
             tar     : [0,0,0],
             pos     : [-16,64,32],
             // dof     : [17, 0.1],
-            swivel  : [-5, 5],
+            // swivel  : [-5, 5],
             hr_fov  : 75.0,
             aspect  : "Square",
             // ss_power: 2,
