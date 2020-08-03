@@ -107,11 +107,7 @@ pub fn visibility(scene: &Scene, mut trace: Tracer, mut vis: f64) -> f64 {
                     trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
                     trace.travel(bump_dist);
                 }
-                Attributes::Refractive {
-                    abs: _,
-                    inside: _,
-                    outside: _,
-                } => {
+                Attributes::Refractive { .. } => {
                     unimplemented!();
                 }
             }

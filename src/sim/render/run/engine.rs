@@ -59,11 +59,7 @@ pub fn paint(mut rng: &mut ThreadRng, scene: &Scene, shader: &Shader, mut trace:
                         trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
                         trace.travel(bump_dist);
                     }
-                    Attributes::Refractive {
-                        abs: _,
-                        inside: _,
-                        outside: _,
-                    } => {
+                    Attributes::Refractive { .. } => {
                         unimplemented!();
                     }
                 }
