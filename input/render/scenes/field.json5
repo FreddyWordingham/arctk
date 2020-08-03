@@ -26,6 +26,7 @@
         fence       : [['objs/field/landscape/fence.obj'],  null],
         hedge       : [['objs/field/landscape/hedge.obj'],  null],
         hills       : [['objs/field/landscape/hill_far.obj', 'objs/field/landscape/hill_near.obj'],  null],
+        soil        : [['objs/field/landscape/soil.obj'],  null],
         leaves      : [['objs/field/landscape/leaves.obj'],  null],
         path        : [['objs/field/landscape/path.obj'],  null],
         under_path  : [['objs/field/landscape/under_path.obj'],  null],
@@ -65,7 +66,6 @@
     },
     attrs: {
         spots: { Mirror: {abs: 0.5} },
-        hair: { Transparent: {abs: 0.1} },
     },
     cols: {
         scale       : ['#000000ff', '#ffffffff'],
@@ -83,10 +83,11 @@
         box         : ['#4c67cdff', '#0095ffff', '#6bd9deff', '#b5fcffff'],
 
         bluebells   : ['#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff'],
-        fence       : ['#b6702dff', '#eca96aff', '#f7cf59ff', '#ffdc28ff'],
+        fence       : ['#b6702dff', '#d15050ff', '#e61818ff', '#ffdc28ff'],
         grass       : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff'],
         hedge       : ['#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
         hills       : ['#cd853fff', '#556b2fff', '#45c074ff', '#61ff7dff'],
+        soil        : ['#8b542bff', '#7a4824ff', '#bc6f37ff', '#d69565ff'],
         leaves      : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
         path        : ['#a0522dff', '#bc8f8fff', '#008b8bff', '#88b0b5ff'],
         under_path  : ['#9b694cff', '#a48e63ff', '#556b2fff', '#7d905dff'],
@@ -130,9 +131,9 @@
     shader: {
         cam: {
             tar     : [0,0,0],
-            pos     : [-16,64,32],
+            pos     : [-18,32,4],
             // dof     : [17, 0.1],
-            // swivel  : [-5, 5],
+            swivel  : [0, 5],
             hr_fov  : 60.0,
             aspect  : "Square",
             ss_power: 2,
