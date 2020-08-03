@@ -7,7 +7,7 @@
     },
     sett: {
         bump_dist   : 1e-6,
-        block_size  : 1000,
+        block_size  : 10000,
         min_weight  : 0.1
     },
     surfs: {
@@ -20,9 +20,9 @@
         skin        : [['objs/field/entities/skin.obj'],  null],
         syrup       : [['objs/field/entities/syrup.obj'],  null],
 
-        // bluebells   : [['objs/field/landscape/bluebells.obj'],  null],
-        // grass       : [['objs/field/landscape/grass.obj'],  null],
-        // box         : [['objs/field/landscape/box.obj'],  null],
+        bluebells   : [['objs/field/landscape/bluebells.obj'],  null],
+        grass       : [['objs/field/landscape/grass.obj'],  null],
+        box         : [['objs/field/landscape/box.obj'],  null],
         fence       : [['objs/field/landscape/fence.obj'],  null],
         hedge       : [['objs/field/landscape/hedge.obj'],  null],
         hills       : [['objs/field/landscape/hill_far.obj', 'objs/field/landscape/hill_near.obj'],  null],
@@ -56,7 +56,7 @@
         ring_2      : [['objs/field/sky/ring_2.obj'],  null],
         sea_0       : [['objs/field/sky/sea_0.obj'],  null],
         sea_1       : [['objs/field/sky/sea_1.obj'],  null],
-        solar       : [['objs/field/sky/solar.obj'],  null],
+        // solar       : [['objs/field/sky/solar.obj'],  null],
         // starfield   : [['objs/field/sky/starfield.obj'],  null],
 
         sf_heads    : [['objs/field/sunflower/head.obj'],  null],
@@ -65,11 +65,19 @@
         sf_stems    : [['objs/field/sunflower/stems.obj'],  null]
     },
     attrs: {
-        spots: { Mirror: {abs: 0.5} },
+        water       : { Transparent: {abs: 0.4} },
+        hair_0      : { Transparent: {abs: 0.1} },
+        hair_1      : { Transparent: {abs: 0.1} },
+        ring_0      : { Transparent: {abs: 0.5} },
+        clouds_0    : { Transparent: {abs: 0.3} },
+        clouds_1    : { Transparent: {abs: 0.3} },
+        solar       : { Transparent: {abs: 0.5} },
+        box         : { Transparent: {abs: 0.2} }
     },
     cols: {
         scale       : ['#000000ff', '#ffffffff'],
-        sky         : ['#3072EBff', '#ffffffff'],
+        // sky         : ['#3072EBff', '#ffffffff'],
+        sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
 
         bone        : ['#ba9f83ff', '#e4a05aff', '#e8da9fff', '#fdffd9ff'],
         butterfly   : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
@@ -109,8 +117,8 @@
         dog         : ['#ff5151ff', '#ffa000ff', '#fffa00ff', '#ffffffff'],
         clouds_0    : ['#97aed9ff', '#cdcdffff', '#d493e4ff', '#f1c7ffff'],
         clouds_1    : ['#d997aeff', '#ffcdcdff', '#e4d493ff', '#fff1c7ff'],
-        land_0      : ['#000000ff', '#797475ff', '#ffffffff'],
-        land_1      : ['#000000ff', '#797475ff', '#ffffffff'],
+        land_0      : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
+        land_1      : ['#ff703cff', '#aed8d4ff', '#856e5dff', '#c9c1bbff'],
         moon_large  : ['#ce38ffff', '#a79884ff', '#d2b186ff', '#e3dccfff'],
         moon_small  : ['#8d6effff', '#797475ff', '#6fb094ff', '#79f28eff'],
         ring_0      : ['#008b8bff', '#3cb371ff', '#90ee90ff'],
@@ -131,17 +139,17 @@
     shader: {
         cam: {
             tar     : [0,0,0],
-            pos     : [-18,32,4],
+            pos     : [-18,48,12],
             // dof     : [17, 0.1],
-            swivel  : [0, 5],
-            hr_fov  : 90.0,
-            aspect  : "Square",
-            // ss_power: 2,
-            hr_res  : 1080
+            swivel  : [0, 10],
+            hr_fov  : 50.0,
+            aspect  : "IPhoneXS",
+            ss_power: 2,
+            hr_res  : 1125
         },
         samples: {
-            // ambient_occlusion   : 64,
-            // soft_shadows        : 17
+            ambient_occlusion   : 64,
+            soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,
