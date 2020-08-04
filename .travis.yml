@@ -22,7 +22,7 @@ addons:
     - cmake
     - gcc
     - binutils-dev
-    # - libnetcdf-dev
+    - libnetcdf-dev
 
 env:
   # matrix:
