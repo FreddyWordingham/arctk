@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["map","Map a volume of surfaces. # Errors if a mutex unwrapping failed or an arc unwrapping failed."],["run_thread","Map a volume of surfaces using a single thread."]]});

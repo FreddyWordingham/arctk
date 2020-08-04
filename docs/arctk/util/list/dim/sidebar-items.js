@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["cartesian","Cartesian implementation."],["polar","Spherical-polar implementation."],["spherical","Spherical implementation."]]});

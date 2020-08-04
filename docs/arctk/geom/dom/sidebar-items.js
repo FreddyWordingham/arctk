@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["grid","Regular grid cell scheme."],["tree","Adaptive tree cell scheme."]]});

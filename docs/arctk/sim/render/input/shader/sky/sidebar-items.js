@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Sky","Lighting structure."]]});

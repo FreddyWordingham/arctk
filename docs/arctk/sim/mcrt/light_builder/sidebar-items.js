@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LightBuilder","Loadable light structure."]]});

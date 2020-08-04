@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Light","Photon emission structure."]]});

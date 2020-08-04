@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Crossing","Crossing structure implementation. Optical interface Crossing information structure."]]});

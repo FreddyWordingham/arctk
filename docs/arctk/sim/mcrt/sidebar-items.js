@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["attributes","Surface attributes."],["input","Input module."],["light","Light surface structure."],["light_builder","Light surface structure."],["output","Output structure."],["photon","Photon structure."],["run","MCRT run functions."],["settings","Settings structure."]]});

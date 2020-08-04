@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SilentBar","Silent progress-bar structure."]]});

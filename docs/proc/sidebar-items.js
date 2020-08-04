@@ -1,0 +1,1 @@
+initSidebarItems({"derive":[["HelloMacro","Create the procedural macro `HelloMacro`."],["Input","Create the procedural macro Input."],["Load","Create the procedural macro Load."],["Output","Create the procedural macro Output."],["Save","Create the procedural macro Save."]]});

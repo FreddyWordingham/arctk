@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["settings","Regular grid settings implementation."]],"struct":[["Grid","Regular grid structure."]]});

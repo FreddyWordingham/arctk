@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["banner","Banner printing functions."],["display","Display macros."],["gradient","Gradient formatting function."],["report","Reporting functions."],["rgb","RGB formatting functions."],["term","Terminal width calculation function."]]});

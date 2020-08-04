@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["golden","Golden ratio sampling functions."]]});

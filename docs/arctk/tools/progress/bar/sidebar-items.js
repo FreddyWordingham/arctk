@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Bar","Progress-bar structure."]]});
