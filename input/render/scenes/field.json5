@@ -7,7 +7,7 @@
     },
     sett: {
         bump_dist   : 1e-6,
-        block_size  : 10000,
+        block_size  : 1000,
         min_weight  : 0.1
     },
     surfs: {
@@ -20,8 +20,8 @@
         skin        : [['objs/field/entities/skin.obj'],  null],
         syrup       : [['objs/field/entities/syrup.obj'],  null],
 
-        bluebells   : [['objs/field/landscape/bluebells.obj'],  null],
-        grass       : [['objs/field/landscape/grass.obj'],  null],
+        // bluebells   : [['objs/field/landscape/bluebells.obj'],  null],
+        // grass       : [['objs/field/landscape/grass.obj'],  null],
         box         : [['objs/field/landscape/box.obj'],  null],
         fence       : [['objs/field/landscape/fence.obj'],  null],
         hedge       : [['objs/field/landscape/hedge.obj'],  null],
@@ -44,20 +44,20 @@
         tail_0      : [['objs/field/steg/tail_0.obj'],  null],
         tail_1      : [['objs/field/steg/tail_1.obj'],  null],
 
-        clouds_0    : [['objs/field/sky/clouds_0.obj'],  null],
-        clouds_1    : [['objs/field/sky/clouds_1.obj'],  null],
-        dog         : [['objs/field/sky/dog.obj'],  null],
-        land_0      : [['objs/field/sky/land_0.obj'],  null],
-        land_1      : [['objs/field/sky/land_1.obj'],  null],
-        moon_large  : [['objs/field/sky/moon_large.obj'],  null],
-        moon_small  : [['objs/field/sky/moon_small.obj'],  null],
-        ring_0      : [['objs/field/sky/ring_0.obj'],  null],
-        ring_1      : [['objs/field/sky/ring_1.obj'],  null],
-        ring_2      : [['objs/field/sky/ring_2.obj'],  null],
-        sea_0       : [['objs/field/sky/sea_0.obj'],  null],
-        sea_1       : [['objs/field/sky/sea_1.obj'],  null],
-        // solar       : [['objs/field/sky/solar.obj'],  null],
+        clouds_0    : [['objs/field/sky/clouds_0.obj'],     {trans:[-60,100,0]}],
+        clouds_1    : [['objs/field/sky/clouds_1.obj'],     {trans:[-60,100,0]}],
+        dog         : [['objs/field/sky/dog.obj'],          null],
+        land_0      : [['objs/field/sky/land_0.obj'],       {trans:[-60,100,0]}],
+        land_1      : [['objs/field/sky/land_1.obj'],       {trans:[-60,100,0]}],
+        moon_large  : [['objs/field/sky/moon_large.obj'],   {trans:[-60,100,0]}],
+        moon_small  : [['objs/field/sky/moon_small.obj'],   {trans:[-60,100,0]}],
+        sea_0       : [['objs/field/sky/sea_0.obj'],        {trans:[-60,100,0]}],
+        sea_1       : [['objs/field/sky/sea_1.obj'],        {trans:[-60,100,0]}],
+        // ring_0      : [['objs/field/sky/ring_0.obj'],  null],
+        // ring_1      : [['objs/field/sky/ring_1.obj'],  null],
+        // ring_2      : [['objs/field/sky/ring_2.obj'],  null],
         // starfield   : [['objs/field/sky/starfield.obj'],  null],
+        solar       : [['objs/field/sky/solar.obj', 'objs/field/sky/solar_1.obj'],  null],
 
         sf_heads    : [['objs/field/sunflower/head.obj'],  null],
         sf_leaves   : [['objs/field/sunflower/leaves.obj'],  null],
@@ -65,19 +65,21 @@
         sf_stems    : [['objs/field/sunflower/stems.obj'],  null]
     },
     attrs: {
+        dog         : { Luminous: {} },
         water       : { Transparent: {abs: 0.4} },
         hair_0      : { Transparent: {abs: 0.1} },
         hair_1      : { Transparent: {abs: 0.1} },
         ring_0      : { Transparent: {abs: 0.5} },
         clouds_0    : { Transparent: {abs: 0.3} },
         clouds_1    : { Transparent: {abs: 0.3} },
-        solar       : { Transparent: {abs: 0.5} },
+        leaves      : { Transparent: {abs: 0.3} },
+        // solar       : { Transparent: {abs: 0.5} },
         box         : { Transparent: {abs: 0.2} }
     },
     cols: {
         scale       : ['#000000ff', '#ffffffff'],
-        // sky         : ['#3072EBff', '#ffffffff'],
-        sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
+        sky         : ['#3072EBff', '#ffffffff'],
+        // sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
 
         bone        : ['#ba9f83ff', '#e4a05aff', '#e8da9fff', '#fdffd9ff'],
         butterfly   : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
@@ -138,18 +140,21 @@
     },
     shader: {
         cam: {
-            tar     : [0,0,0],
-            pos     : [-18,48,12],
+            // tar     : [0,0,0],
+            // pos     : [-18,48,12],
+            tar     : [-15.8654, 21.3217,2.65219],
+            pos     : [26.5, 18.7, 7.4],
+            // pos     : [-24, 36, 2],
             // dof     : [17, 0.1],
-            swivel  : [0, 10],
-            hr_fov  : 50.0,
+            // swivel  : [0, 0],
+            hr_fov  : 15.0,
             aspect  : "IPhoneXS",
-            ss_power: 2,
+            // ss_power: 2,
             hr_res  : 1125
         },
         samples: {
-            ambient_occlusion   : 64,
-            soft_shadows        : 17
+            // ambient_occlusion   : 64,
+            // soft_shadows        : 17
         },
         sky: {
             brightness  : 0.7,
