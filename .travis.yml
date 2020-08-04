@@ -52,6 +52,8 @@ after_success:
   #   bash <(curl -s https://codecov.io/bash) &&
   #   echo "Uploaded code coverage."
   - |
+    echo ${TRAVIS_COMPILER}
+  - |
     [ $TRAVIS_BRANCH = master ] &&
     [ $TRAVIS_PULL_REQUEST = false ] &&
     cargo doc &&
