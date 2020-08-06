@@ -1,4 +1,4 @@
-//! Rendering simulation module.
+//! Output sub-module.
 
 pub mod data;
 pub mod sample;

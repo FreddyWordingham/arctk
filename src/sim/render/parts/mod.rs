@@ -1,4 +1,4 @@
-//! Rendering parts module.
+//! Rendering simulation parts sub-module.
 
 pub mod attributes;
 pub mod camera;

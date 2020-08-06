@@ -1,4 +1,4 @@
-//! Rendering simulation module.
+//! Input sub-module.
 
 pub mod scene;
 pub mod settings;
