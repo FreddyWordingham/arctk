@@ -36,11 +36,10 @@ impl<'a> Event<'a> {
             return Self::Surface(hit);
         }
 
-        if voxel_dist <= scat_dist {
-            return Self::Voxel(voxel_dist);
+        if scat_dist < voxel_dist {
+            return Self::Scattering(scat_dist);
         }
-
-        Self::Scattering(scat_dist)
+        Self::Voxel(voxel_dist)
     }
 }
 
