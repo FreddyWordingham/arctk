@@ -16,6 +16,7 @@ use std::{
 /// # Errors
 /// if a mutex unwrapping failed or
 /// an arc unwrapping failed.
+#[allow(clippy::module_name_repetitions)]
 #[allow(clippy::option_expect_used)]
 #[allow(clippy::result_expect_used)]
 #[inline]
@@ -40,6 +41,7 @@ pub fn multi_thread(scene: &Scene, shader: &Shader) -> Result<Data, Error> {
 }
 
 /// Render an image using a single thread.
+#[allow(clippy::module_name_repetitions)]
 #[allow(clippy::option_expect_used)]
 #[allow(clippy::result_expect_used)]
 #[inline]
@@ -53,6 +55,7 @@ pub fn single_thread(scene: &Scene, shader: &Shader) -> Data {
 }
 
 /// Render pixels using a single thread.
+#[allow(clippy::module_name_repetitions)]
 #[allow(clippy::option_expect_used)]
 #[allow(clippy::result_expect_used)]
 #[inline]
