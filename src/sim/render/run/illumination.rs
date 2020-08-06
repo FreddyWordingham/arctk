@@ -95,7 +95,7 @@ pub fn visibility(scene: &Scene, mut trace: Tracer, mut vis: f64) -> f64 {
         if let Some(attr) = scene.attrs.map().get(group) {
             match attr {
                 Attributes::Luminous => {
-                    return vis;
+                    return 1.0;
                 }
                 Attributes::Transparent { abs } | Attributes::Refractive { abs, .. } => {
                     vis *= 1.0 - *abs;

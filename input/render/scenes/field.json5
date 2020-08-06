@@ -22,6 +22,7 @@
 
         // bluebells   : [['objs/field/landscape/bluebells.obj'],  null],
         // grass       : [['objs/field/landscape/grass.obj'],  null],
+        straw       : [['objs/field/landscape/straw.obj'],  null],
         // box         : [['objs/field/landscape/box.obj'],  null],
         fence       : [['objs/field/landscape/fence.obj'],  null],
         hedge       : [['objs/field/landscape/hedge.obj'],  null],
@@ -46,7 +47,7 @@
 
         clouds_0    : [['objs/field/sky/clouds_0.obj'],     {trans:[-60,100,0]}],
         clouds_1    : [['objs/field/sky/clouds_1.obj'],     {trans:[-60,100,0]}],
-        dog         : [['objs/field/sky/dog.obj'],          null],
+        // dog         : [['objs/field/sky/dog.obj'],          null],
         land_0      : [['objs/field/sky/land_0.obj'],       {trans:[-60,100,0]}],
         land_1      : [['objs/field/sky/land_1.obj'],       {trans:[-60,100,0]}],
         moon_large  : [['objs/field/sky/moon_large.obj'],   {trans:[-60,100,0]}],
@@ -67,15 +68,15 @@
     attrs: {
         dog         : { Luminous: {} },
         water       : { Transparent: {abs: 0.4} },
-        hair_0      : { Transparent: {abs: 0.1} },
-        hair_1      : { Transparent: {abs: 0.1} },
+        hair_0      : { Transparent: {abs: 0.2} },
+        hair_1      : { Transparent: {abs: 0.2} },
         ring_0      : { Transparent: {abs: 0.5} },
         clouds_0    : { Transparent: {abs: 0.3} },
         clouds_1    : { Transparent: {abs: 0.3} },
-        // leaves      : { Transparent: {abs: 0.3} },
-        // solar       : { Transparent: {abs: 0.5} },
+        leaves      : { Transparent: {abs: 0.5} },
+        solar       : { Transparent: {abs: 0.75} },
         box         : { Transparent: {abs: 0.2} },
-        starfield   : { Mirror: {abs: 0.7} }
+        starfield   : { Luminous: {} }
     },
     cols: {
         scale       : ['#000000ff', '#ffffffff'],
@@ -95,6 +96,7 @@
 
         bluebells   : ['#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff'],
         fence       : ['#b6702dff', '#d15050ff', '#e61818ff', '#ffdc28ff'],
+        straw       : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff'],
         grass       : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff'],
         hedge       : ['#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
         hills       : ['#cd853fff', '#556b2fff', '#45c074ff', '#61ff7dff'],
