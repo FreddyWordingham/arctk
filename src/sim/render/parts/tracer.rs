@@ -26,7 +26,7 @@ impl Tracer {
     #[inline]
     #[must_use]
     pub fn new(ray: Ray, gen: i32) -> Self {
-        debug_assert!(gen >= 0);
+        // debug_assert!(gen >= 0);
 
         Self {
             ray,
