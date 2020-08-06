@@ -35,7 +35,9 @@ pub fn main() {
     let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light) = build(&in_dir, params);
     let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
     let input = mcrt::Scene::new(&tree, &grid, &mcrt_sett, &surfs, &attrs, &mats);
+    banner::section("Randomising");
     let data = mcrt::run::multi_thread(&input, &light).expect("Failed to run MCRT simulation.");
+    banner::section("Saving");
     data.save(&out_dir).expect("Failed to save output.");
 
     banner::section("Finished");
