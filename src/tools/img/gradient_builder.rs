@@ -1,4 +1,4 @@
-//! GradientBuilder form implementation.
+//! Gradient builder implementation.
 
 use crate::{display_field, Build, Error};
 use attr::load;
@@ -8,7 +8,7 @@ use std::{
     path::Path,
 };
 
-/// Loadable colour GradientBuilder structure.
+/// Loadable colour gradient structure.
 #[load]
 pub struct GradientBuilder(
     /// List of colours.

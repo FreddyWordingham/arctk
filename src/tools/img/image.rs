@@ -38,7 +38,6 @@ impl AddAssign<&Self> for Image {
 
 impl Save for Image {
     #[inline]
-    #[must_use]
     fn save(&self, path: &Path) -> Result<(), Error> {
         let res = (self.pixels.shape()[0], self.pixels.shape()[1]);
         let mut data: Array2<[u8; 4]> = Array2::from_elem((res.0, res.1).f(), [0; 4]);
