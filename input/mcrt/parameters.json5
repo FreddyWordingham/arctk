@@ -12,8 +12,10 @@
         padding: 0.01
     },
     sett: {
+        bump_dist   : 1e-6,
+        loop_limit  : 1e6,
         block_size  : 1000,
-        bump_dist   : 1e-6
+        num_phot    : 1e6
     },
     surfs: {
         cube    : [['objs/test/cube.obj'], null],
@@ -23,9 +25,19 @@
         cube    : { Mirror: {abs: 0.3} },
         sphere  : { Mirror: {abs: 0.3} },
     },
-    // mats: {
-    //     air     : {  },
-    //     fog     : {  },
-    //     water   : {  },
-    // }
+    mats: {
+        air: {
+            Here: {
+                ref_index:  {Constant: 1.0},
+                scat_coeff: {Constant: 1.0e-6},
+                asym_fact:  {Constant: 0.1}
+            }
+        },
+        flesh: {
+            There: 'mats/flesh.json5'
+        },
+        tumour: {
+            There: 'mats/tumour.json5'
+        }
+    }
 }
