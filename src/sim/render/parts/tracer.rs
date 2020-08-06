@@ -4,6 +4,7 @@ use crate::{access, clone, display_field, display_field_ln, Dir3, Pos3, Ray};
 use std::fmt::{Display, Formatter, Result};
 
 /// Colouring tracer.
+#[derive(Clone)]
 pub struct Tracer {
     /// Internal ray.
     ray: Ray,

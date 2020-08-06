@@ -59,7 +59,33 @@ pub fn paint(mut rng: &mut ThreadRng, scene: &Scene, shader: &Shader, mut trace:
                         trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
                         trace.travel(bump_dist);
                     }
-                    Attributes::Refractive { .. } => {
+                    Attributes::Refractive {
+                        abs,
+                        inside,
+                        outside,
+                    } => {
+                        trace.travel(hit.dist());
+                        let sun_dir = Dir3::new_normalize(trace.pos() - sun_pos);
+                        col += colour(&mut rng, scene, shader, &trace, &hit, &sun_dir)
+                            * (*abs * trace.weight()) as f32;
+
+                        let (n_curr, n_next) = if hit.side().is_inside() {
+                            (*inside, *outside)
+                        } else {
+                            (*outside, *inside)
+                        };
+                        let crossing =
+                            Crossing::new(trace.ray().dir(), hit.side().norm(), n_curr, n_next);
+
+                        if let Some(trans_dir) = crossing.trans_dir() {
+                            let mut trans = trace.clone();
+                            *trans.weight_mut() *= crossing.trans_prob();
+                            trans.set_dir(*trans_dir);
+                            trans.travel(bump_dist);
+
+                            let _trans_sample = paint(&mut rng, scene, shader, trans);
+                        }
+
                         unimplemented!();
                     }
                 }

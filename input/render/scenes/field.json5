@@ -7,7 +7,7 @@
     },
     sett: {
         bump_dist   : 1e-6,
-        block_size  : 1000,
+        block_size  : 100,
         min_weight  : 0.1
     },
     surfs: {
@@ -151,7 +151,7 @@
             hr_fov  : 20.0,
             aspect  : "IPhoneXS",
             // ss_power: 2,
-            hr_res  : 1125
+            hr_res  : 112
         },
         samples: {
             // ambient_occlusion   : 17,
