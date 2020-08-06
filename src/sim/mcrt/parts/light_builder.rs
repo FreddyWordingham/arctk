@@ -2,6 +2,7 @@
 
 use crate::{
     display_field, display_field_ln, mcrt::Light, Build, Error, MeshBuilder, ProbabilityForm,
+    Redirect,
 };
 use attr::load;
 use std::{
@@ -17,7 +18,7 @@ pub struct LightBuilder {
     /// Object path link.
     surf: MeshBuilder,
     /// Emission form.
-    spec: ProbabilityForm,
+    spec: Redirect<ProbabilityForm>,
 }
 
 impl Build for LightBuilder {
@@ -26,7 +27,7 @@ impl Build for LightBuilder {
     #[inline]
     fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let mesh = self.surf.build(in_dir)?;
-        let spec = self.spec.build(in_dir)?;
+        let spec = self.spec.build(in_dir)?.build(in_dir)?;
 
         Ok(Self::Inst::new(self.power, mesh, spec))
     }

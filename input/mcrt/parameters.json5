@@ -39,5 +39,10 @@
         tumour: {
             There: 'mats/tumour.json5'
         }
+    },
+    light: {
+        power   : 1.0,
+        surf    : [['objs/test/cube.obj'], null],
+        spec    : { Here: {Point: 6.3e-7}}
     }
 }
