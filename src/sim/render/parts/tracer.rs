@@ -22,7 +22,7 @@ impl Tracer {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(ray: Ray) -> Self {
+    pub const fn new(ray: Ray) -> Self {
         Self {
             ray,
             weight: 1.0,
