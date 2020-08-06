@@ -1,179 +1,107 @@
-
 {
     tree: {
-        tar_tris: 5,
+        tar_tris: 8,
         max_depth: 8,
-        padding: 0.01
+        padding: 0.1
+    },
+    grid: {
+        boundary: {
+            mins: [-200, -200, -200],
+            maxs: [ 200,  200,  200]
+        },
+        res: [1,1,1]
     },
     sett: {
+        engine      : 'Antler',
+        order       : 'Forward',
         bump_dist   : 1e-6,
-        block_size  : 100,
-        min_weight  : 0.1
+        min_weight  : 0.01,
+        block_size  : 1000,
+        live        : 10000
     },
     surfs: {
-        bone        : [['objs/field/entities/bone.obj'],  null],
-        butterfly   : [['objs/field/entities/butterfly.obj'],  null],
-        dress       : [['objs/field/entities/dress.obj'],  null],
-        hair        : [['objs/field/entities/hair.obj'],  null],
-        jacket      : [['objs/field/entities/jacket.obj'],  null],
-        shoes       : [['objs/field/entities/shoes.obj'],  null],
-        skin        : [['objs/field/entities/skin.obj'],  null],
-        syrup       : [['objs/field/entities/syrup.obj'],  null],
-
-        // bluebells   : [['objs/field/landscape/bluebells.obj'],  null],
-        // grass       : [['objs/field/landscape/grass.obj'],  null],
-        straw       : [['objs/field/landscape/straw.obj'],  null],
-        // box         : [['objs/field/landscape/box.obj'],  null],
-        fence       : [['objs/field/landscape/fence.obj'],  null],
-        hedge       : [['objs/field/landscape/hedge.obj'],  null],
-        hills       : [['objs/field/landscape/hill_far.obj', 'objs/field/landscape/hill_near.obj'],  null],
-        soil        : [['objs/field/landscape/soil.obj'],  null],
-        leaves      : [['objs/field/landscape/leaves.obj'],  null],
-        path        : [['objs/field/landscape/path.obj'],  null],
-        under_path  : [['objs/field/landscape/under_path.obj'],  null],
-        wood        : [['objs/field/landscape/stump.obj', 'objs/field/landscape/tree.obj'],  null],
-        water       : [['objs/field/landscape/water.obj'],  null],
-
-        body_0      : [['objs/field/steg/body_2.obj'],  null],
-        body_1      : [['objs/field/steg/body_3.obj'],  null],
-        eyes_0      : [['objs/field/steg/eyes_2.obj'],  null],
-        eyes_1      : [['objs/field/steg/eyes_3.obj'],  null],
-        fans_0      : [['objs/field/steg/fans_2.obj'],  null],
-        fans_1      : [['objs/field/steg/fans_3.obj'],  null],
-        hair_0      : [['objs/field/steg/hair_2.obj'],  null],
-        hair_1      : [['objs/field/steg/hair_3.obj'],  null],
-        tail_0      : [['objs/field/steg/tail_2.obj'],  null],
-        tail_1      : [['objs/field/steg/tail_3.obj'],  null],
-
-        clouds_0    : [['objs/field/sky/clouds_0.obj'],     {trans:[-60,100,0]}],
-        clouds_1    : [['objs/field/sky/clouds_1.obj'],     {trans:[-60,100,0]}],
-        // dog         : [['objs/field/sky/dog.obj'],          null],
-        land_0      : [['objs/field/sky/land_0.obj'],       {trans:[-60,100,0]}],
-        land_1      : [['objs/field/sky/land_1.obj'],       {trans:[-60,100,0]}],
-        moon_large  : [['objs/field/sky/moon_large.obj'],   {trans:[-60,100,0]}],
-        moon_small  : [['objs/field/sky/moon_small.obj'],   {trans:[-60,100,0]}],
-        sea_0       : [['objs/field/sky/sea_0.obj'],        {trans:[-60,100,0]}],
-        sea_1       : [['objs/field/sky/sea_1.obj'],        {trans:[-60,100,0]}],
-        // ring_0      : [['objs/field/sky/ring_0.obj'],  null],
-        // ring_1      : [['objs/field/sky/ring_1.obj'],  null],
-        // ring_2      : [['objs/field/sky/ring_2.obj'],  null],
-        starfield   : [['objs/field/sky/starfield.obj'],  null],
-        solar       : [['objs/field/sky/solar_1.obj'],  {trans:[-6,15,5], scale: 0.7}],
-
-        sf_heads    : [['objs/field/sunflower/head.obj'],  null],
-        sf_leaves   : [['objs/field/sunflower/leaves.obj'],  null],
-        sf_petals   : [['objs/field/sunflower/petals.obj'],  null],
-        sf_stems    : [['objs/field/sunflower/stems.obj'],  null]
+        // plume            : [['han/plume.obj'], null],
+        balls            : [['han/balls.obj'], null],
+        // floor            : [['han/floor.obj'], null],
+        flower_inner_in  : [['han/flower_inner_in.obj'], null],
+        flower_inner_out : [['han/flower_inner_out.obj'], null],
+        flower_outer_in  : [['han/flower_outer_in.obj'], null],
+        flower_outer_out : [['han/flower_outer_out.obj'], null],
+        millenium_body   : [['han/millenium_body.obj'],   {trans:[0.45,0,0.5], scale:1.25}],
+        millenium_detail : [['han/millenium_detail.obj'], {trans:[0.45,0,0.5], scale:1.25}],
+        millenium_feet   : [['han/millenium_feet.obj'],   {trans:[0.45,0,0.5], scale:1.25}],
+        millenium_glass  : [['han/millenium_glass.obj'],  {trans:[0.45,0,0.5], scale:1.25}],
+        numbers          : [['han/numbers.obj'], null],
+        stamen           : [['han/stamen.obj'], null],
+        vines            : [['han/vines.obj'], null],
     },
     attrs: {
-        dog         : { Luminous: {} },
-        water       : { Transparent: {abs: 0.4} },
-        hair_0      : { Transparent: {abs: 0.2} },
-        hair_1      : { Transparent: {abs: 0.2} },
-        ring_0      : { Transparent: {abs: 0.5} },
-        clouds_0    : { Transparent: {abs: 0.3} },
-        clouds_1    : { Transparent: {abs: 0.3} },
-        leaves      : { Transparent: {abs: 0.5} },
-        solar       : { Transparent: {abs: 0.75} },
-        box         : { Transparent: {abs: 0.2} },
-        starfield   : { Luminous: {} }
+        royal: { Mirror: {abs: 0.3} },
+        millenium_glass: { Refractive: {abs:0.4, inside: 1.3, outside: 1.0} },
+        // flower_inner_in: { Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        // flower_inner_out:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        // flower_outer_in: { Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        // flower_outer_out:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
+        numbers:{ Refractive: {abs:0.4, inside: 1.4, outside: 1.0} },
     },
     cols: {
-        scale       : ['#000000ff', '#ffffffff'],
-        // sky         : ['#3072EBff', '#ffffffff'],
-        sky     : ['#570070ff', '#2a00b0ff', '#3072EBff', '#0046b0ff'],
+        scale               : ['#ffffffff', '#000000ff'],
+        time                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        dist                : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        loops               : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
 
-        bone        : ['#ba9f83ff', '#e4a05aff', '#e8da9fff', '#fdffd9ff'],
-        butterfly   : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
-        dress       : ['#0542A8ff', '#1552C6ff', '#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff', '#71A8EEff'],
-        hair        : ['#b46d29ff', '#fbd36bff', '#f2f084ff', '#fef27aff'],
-        jacket      : ['#797475ff', '#f8f3c1ff', '#f9ecdaff', '#ffffffff'],
-        shoes       : ['#b52e3eff', '#dc5767ff', '#ff65e0ff', '#ff6575ff'],
-        skin        : ['#ec8989ff', '#f7acacff', '#ffcfcfff', '#ffe4e1ff'],
-        syrup       : ['#fbd36bff', '#f2f084ff', '#fef27aff', '#fff5c2ff'],
-
-        box         : ['#4c67cdff', '#0095ffff', '#6bd9deff', '#b5fcffff'],
-
-        bluebells   : ['#8e6fe4ff', '#724ceeff', '#7770ffff', '#3072EBff'],
-        fence       : ['#b6702dff', '#d15050ff', '#e61818ff', '#ffdc28ff'],
-        straw       : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff'],
-        grass       : ['#008000ff', '#32cd32ff', '#0ebb0eff', '#008080ff'],
-        hedge       : ['#1f841fff', '#56a556ff', '#67e2b9ff', '#3be3abff'],
-        hills       : ['#cd853fff', '#556b2fff', '#45c074ff', '#61ff7dff'],
-        soil        : ['#8b542bff', '#7a4824ff', '#bc6f37ff', '#d69565ff'],
-        leaves      : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
-        path        : ['#a0522dff', '#bc8f8fff', '#cc8867ff', '#bbbbbbff'],
-        under_path  : ['#9b694cff', '#a48e63ff', '#556b2fff', '#7d905dff'],
-        wood        : ['#9b694cff', '#a0522dff', '#dc7e51ff', '#f8a134ff'],
-        water       : ['#372bd0ff', '#1552C6ff', '#0095ffff', '#71A8EEff'],
-
-        eyes_0      : ['#ff33b0ff', '#797475ff', '#ffffffff'],
-        body_0      : ['#0542A8ff', '#8e6fe4ff', '#724ceeff', '#2bd0acff'],
-        fans_0      : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
-        hair_0      : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
-        tail_0      : ['#e53b3bff', '#ff8d2aff', '#e8423fff', '#ff27d4ff'],
-
-        eyes_1      : ['#ff33b0ff', '#797475ff', '#ffffffff'],
-        body_1      : ['#05A842ff', '#8ee46fff', '#72ee4cff', '#2bacd0ff'],
-        fans_1      : ['#a6b52aff', '#f04a79ff', '#e07e3cff', '#f1ff7bff'],
-        hair_1      : ['#b75c8dff', '#a6b52aff', '#fff282ff', '#00ff95ff', '#886af2ff', '#ff00e2ff', '#ff0047ff', '#ff0d00ff'],
-        tail_1      : ['#3be53bff', '#8dff2aff', '#42e83fff', '#27ffd4ff'],
-
-        dog         : ['#ff5151ff', '#ffa000ff', '#fffa00ff', '#ffffffff'],
-        clouds_0    : ['#97aed9ff', '#cdcdffff', '#d493e4ff', '#f1c7ffff'],
-        clouds_1    : ['#d997aeff', '#ffcdcdff', '#e4d493ff', '#fff1c7ff'],
-        land_0      : ['#a62ab5ff', '#f0794aff', '#e03c7eff', '#f17bffff'],
-        land_1      : ['#ff703cff', '#aed8d4ff', '#856e5dff', '#c9c1bbff'],
-        moon_large  : ['#ce38ffff', '#a79884ff', '#d2b186ff', '#e3dccfff'],
-        moon_small  : ['#8d6effff', '#797475ff', '#6fb094ff', '#79f28eff'],
-        ring_0      : ['#008b8bff', '#3cb371ff', '#90ee90ff'],
-        ring_1      : ['#bfbbb7ff', '#e4c7a1ff', '#f6f3d1ff'],
-        ring_2      : ['#a79884ff', '#d2b186ff', '#e3dccfff'],
-        sea_0       : ['#724ceeff', '#8e6fe4ff', '#ec61fdff', '#29afefff'],
-        sea_1       : ['#4c72eeff', '#6f8ee4ff', '#61ecfdff', '#af29efff'],
-
-        solar       : ['#ffb800ff', '#ff7f23ff', '#ff4700ff', '#ff000dff'],
-        starfield   : ['#ff5151ff', '#ffa000ff', '#fffa00ff', '#ffffffff'],
-
-        sf_heads    : ['#ef5656ff', '#863813ff', '#c16438ff', '#ea7c47ff'],
-        sf_leaves   : ['#96a75eff', '#6b8e23ff', '#00c719ff', '#77d12cff'],
-        sf_petals   : ['#fffa00ff', '#ffb800ff', '#ff7f23ff', '#ff4700ff'],
-        sf_stems    : ['#96a75eff', '#6b8e23ff', '#00c719ff', '#77d12cff']
-
+        // plume               : ['#ffffffff', '#ffffffff', '#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
+        sky                 : ['#ffffffff', '#fde9a7ff', '#ffe200ff'],
+        numbers             : ['#d2eeffff', '#9a49ffff', '#0095ffff', '#a62ab5ff'],
+        flower_inner_in     : ['#e754d1ff', '#ff82f2ff', '#ff34f3ff'],
+        flower_inner_out    : ['#8f40a5ff', '#a62ab5ff', '#ae33c4ff'],
+        flower_outer_in     : ['#58ce58ff', '#88f26aff', '#9fe95aff'],
+        flower_outer_out    : ['#2e952eff', '#25b263ff', '#4fa854ff'],
+        balls               : ['#d2691eff', '#ffd700ff'],
+        stamen              : ['#ff8c00ff', '#ffff00ff', '#90d22aff'],
+        vines               : ['#40c040ff', '#51a200ff'],
+        millenium_body      : ['#808080ff', '#d3d3d3ff', '#a3d0d0ff'],
+        millenium_detail    : ['#595c62ff', '#282a2eff'],
+        millenium_feet      : ['#595c62ff', '#282a2eff'],
+        millenium_glass     : ['#2551a2ff', '#3e76deff'],
+        // sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
     },
-    shader: {
-        cam: {
-            tar     : [-16.34, 21.29, 2.45],
-            pos     : [26.5, -0.5, -2.5],
-            // swivel  : [0, 10],
-            hr_fov  : 30.0,
-            aspect  : "Square",
-            // ss_power: 2,
-            dof     : [17, 0.1],
-            hr_res  : 1000
-        },
-        samples: {
-            // ambient_occlusion   : 17,
-            // soft_shadows        : 7,
-            // ambient_occlusion   : 64,
-            // soft_shadows        : 17
-        },
-        sky: {
-            brightness  : 0.3,
-            sun_pos     : [-10.0, -15.0, 22.0],
-            sun_rad     : 10,
-            segments    : [32,32]
-        },
-        light: {
-            ambient : 0.1,
-            diffuse : 0.7,
-            specular: 0.2,
-            spec_pow: 8
-        },
-        shadow: {
-            ambient : 0.3,
-            direct  : 0.7,
-            ao_pow  : 2
+    scenes: {
+        first_view: {
+            cam: {
+                pos     : [0,-5.5,0.25],
+                tar     : [0,0,1],
+                // dof     : [17, 0.1],
+                swivel  : [0.0, 0.0],
+                hr_fov  : 30.0,
+                aspect  : "Square",
+                // ss_power: 2,
+                hr_res  : 1080
+            },
+            lighting: {
+                samples: {
+                    // ambient_occlusion   : 64,
+                    // soft_shadows        : 17
+                },
+                sky: {
+                    brightness  : 0.7,
+                    // sun_pos     : [2300, -3400, 4500],
+                    sun_pos     : [-14, -42, 62],
+                    sun_rad     : 10,
+                    segments    : [16,16]
+                },
+                light: {
+                    ambient : 0.3,
+                    diffuse : 0.5,
+                    specular: 0.2,
+                    spec_pow: 8
+                },
+                shadow: {
+                    ambient : 0.3,
+                    direct  : 0.7,
+                    ao_pow  : 2
+                }
+            }
         }
     }
 }

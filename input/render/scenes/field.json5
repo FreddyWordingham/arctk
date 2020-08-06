@@ -149,13 +149,12 @@
             hr_fov  : 30.0,
             aspect  : "Square",
             // ss_power: 2,
+            // dof     : [17, 0.1],
             hr_res  : 1000
         },
         samples: {
             // ambient_occlusion   : 17,
             // soft_shadows        : 7,
-            // ambient_occlusion   : 64,
-            // soft_shadows        : 17
         },
         sky: {
             brightness  : 0.3,
