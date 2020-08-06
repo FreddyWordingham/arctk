@@ -51,11 +51,11 @@ pub fn shadow(scene: &Scene, shader: &Shader, ray: &Ray, hit: &Hit, rng: &mut Th
             let (r, theta) = golden::circle(n, samples);
             let mut soft_ray = light_ray.clone();
             soft_ray.rotate(r * shader.sky().sun_rad(), theta + offset);
-            total += visibility(scene, Tracer::new(soft_ray, -1), 1.0);
+            total += visibility(scene, Tracer::new(soft_ray), 1.0);
         }
         total / f64::from(samples)
     } else {
-        visibility(scene, Tracer::new(light_ray, -1), 1.0)
+        visibility(scene, Tracer::new(light_ray), 1.0)
     };
 
     if let Some(samples) = shader.samples().ambient_occlusion() {
@@ -67,7 +67,7 @@ pub fn shadow(scene: &Scene, shader: &Shader, ray: &Ray, hit: &Hit, rng: &mut Th
             let (phi, theta) = golden::hemisphere(n, samples);
             let mut ambient_ray = norm_ray.clone();
             ambient_ray.rotate(phi, theta + offset);
-            total += visibility(scene, Tracer::new(ambient_ray, -1), 1.0);
+            total += visibility(scene, Tracer::new(ambient_ray), 1.0);
         }
         let ambient = (total / f64::from(samples)).powi(shader.shadow().ao_pow());
 

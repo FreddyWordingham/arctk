@@ -8,8 +8,6 @@ use std::fmt::{Display, Formatter, Result};
 pub struct Tracer {
     /// Internal ray.
     ray: Ray,
-    /// Generation.
-    gen: i32,
     /// Weighting power.
     weight: f64,
     /// Cumulative distance travelled.
@@ -18,19 +16,15 @@ pub struct Tracer {
 
 impl Tracer {
     access!(ray, Ray);
-    clone!(gen, i32);
     clone!(dist_travelled, f64);
     clone!(weight, weight_mut, f64);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(ray: Ray, gen: i32) -> Self {
-        // debug_assert!(gen >= 0);
-
+    pub fn new(ray: Ray) -> Self {
         Self {
             ray,
-            gen,
             weight: 1.0,
             dist_travelled: 0.0,
         }
@@ -71,7 +65,6 @@ impl Display for Tracer {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "ray", &self.ray)?;
-        display_field_ln!(fmt, "generation", self.gen)?;
         display_field_ln!(fmt, "weighting", self.weight)?;
         display_field!(fmt, "distance travelled", self.dist_travelled, "m")
     }
