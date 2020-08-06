@@ -1,11 +1,15 @@
 //! Light surface structure.
 
-use crate::{access, display_field, display_field_ln, mcrt::Photon, Emit, Mesh, Probability};
+use crate::{
+    access, clone, display_field, display_field_ln, mcrt::Photon, Emit, Mesh, Probability,
+};
 use rand::rngs::ThreadRng;
 use std::fmt::{Display, Formatter, Result};
 
 /// Photon emission structure.
 pub struct Light {
+    /// Power [J/s].
+    power: f64,
     /// Emission surface.
     surf: Mesh,
     /// Emission spectrum.
@@ -13,14 +17,17 @@ pub struct Light {
 }
 
 impl Light {
+    clone!(power, f64);
     access!(surf, Mesh);
     access!(spec, Probability);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(surf: Mesh, spec: Probability) -> Self {
-        Self { surf, spec }
+    pub fn new(power: f64, surf: Mesh, spec: Probability) -> Self {
+        debug_assert!(power > 0.0);
+
+        Self { power, surf, spec }
     }
 
     /// Emit a new photon.
@@ -40,6 +47,7 @@ impl Display for Light {
     #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
+        display_field_ln!(fmt, "power", self.power, "J/s")?;
         display_field_ln!(fmt, "surface", &self.surf)?;
         display_field!(fmt, "spectrum", &self.spec)
     }
