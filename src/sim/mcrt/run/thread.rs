@@ -50,7 +50,7 @@ pub fn single_thread(scene: &Scene, light: &Light) -> Data {
 #[must_use]
 pub fn thread(pb: &Arc<Mutex<Bar>>, scene: &Scene, light: &Light) -> Data {
     let res = *scene.grid.res();
-    let data = Data::new(scene.grid.boundary(), res);
+    let mut data = Data::new(scene.grid.boundary().clone(), res);
 
     let mut rng = thread_rng();
 
@@ -63,7 +63,7 @@ pub fn thread(pb: &Arc<Mutex<Bar>>, scene: &Scene, light: &Light) -> Data {
         for _i in start..end {
             let phot = light.emit(&mut rng, light.power() / scene.sett.num_phot() as f64);
             let sample = super::the_photon_loop(phot);
-            println!("TODO: Engine!");
+            *data.escaped_weight_mut() += sample.remaining_weight;
         }
     }
 

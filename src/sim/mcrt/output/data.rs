@@ -14,6 +14,8 @@ pub struct Data {
     boundary: Aabb,
     /// Cell volume [m^3].
     cell_vol: f64,
+    /// Escaped weight.
+    escaped_weight: f64,
     /// Emission power.
     emission_power: Array3<f64>,
 }
@@ -21,6 +23,8 @@ pub struct Data {
 impl Data {
     access!(boundary, Aabb);
     clone!(cell_vol, f64);
+    clone!(escaped_weight, escaped_weight_mut, f64);
+    access!(emission_power, emission_power_mut, Array3<f64>);
 
     /// Construct a new instance.
     #[inline]
@@ -35,6 +39,7 @@ impl Data {
         Self {
             boundary,
             cell_vol,
+            escaped_weight: 0.0,
             emission_power: Array3::zeros(res),
         }
     }
@@ -43,6 +48,7 @@ impl Data {
 impl AddAssign<&Self> for Data {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
+        self.escaped_weight += &rhs.escaped_weight;
         self.emission_power += &rhs.emission_power;
     }
 }
@@ -52,6 +58,7 @@ impl Display for Data {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "cell volume", self.cell_vol, "m^3")?;
+        display_field_ln!(fmt, "escaped weight", self.escaped_weight)?;
         display_field!(fmt, "total emission power", self.emission_power.sum())
     }
 }
