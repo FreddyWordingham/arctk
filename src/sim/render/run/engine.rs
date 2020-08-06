@@ -77,16 +77,20 @@ pub fn paint(mut rng: &mut ThreadRng, scene: &Scene, shader: &Shader, mut trace:
                         let crossing =
                             Crossing::new(trace.ray().dir(), hit.side().norm(), n_curr, n_next);
 
-                        if let Some(trans_dir) = crossing.trans_dir() {
-                            let mut trans = trace.clone();
-                            *trans.weight_mut() *= crossing.trans_prob();
-                            trans.set_dir(*trans_dir);
-                            trans.travel(bump_dist);
+                        // // Transmission ray.
+                        // if let Some(trans_dir) = crossing.trans_dir() {
+                        //     let mut trans = trace.clone();
+                        //     *trans.weight_mut() *= crossing.trans_prob();
+                        //     trans.set_dir(*trans_dir);
+                        //     trans.travel(bump_dist);
 
-                            let _trans_sample = paint(&mut rng, scene, shader, trans);
-                        }
+                        //     let _trans_sample = paint(&mut rng, scene, shader, trans);
+                        // }
 
-                        unimplemented!();
+                        // Reflection ray.
+                        *trace.weight_mut() *= crossing.ref_prob();
+                        trace.set_dir(*crossing.ref_dir());
+                        trace.travel(bump_dist);
                     }
                 }
             } else {
