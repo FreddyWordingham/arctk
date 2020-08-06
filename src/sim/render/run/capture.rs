@@ -1,7 +1,7 @@
 //! Fast-scheme rendering function.
 
 use crate::{
-    render::{engine, Data, Scene, Shader, Tracer},
+    render::{Data, Scene, Shader, Tracer},
     Bar, Error,
 };
 use palette::LinSrgba;
@@ -87,7 +87,7 @@ fn run_thread(pb: &Arc<Mutex<Bar>>, scene: &Scene, shader: &Shader) -> Data {
                         .cam()
                         .gen_ray(pixel, offset, sub_sample, depth_sample);
 
-                    let sample = engine::paint(&mut rng, scene, shader, Tracer::new(ray));
+                    let sample = super::paint(&mut rng, scene, shader, Tracer::new(ray));
                     total_col += sample.col * weight as f32;
                 }
             }

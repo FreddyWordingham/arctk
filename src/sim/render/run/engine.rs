@@ -1,7 +1,7 @@
 //! Engine sampling function.
 
 use crate::{
-    render::{illumination, Attributes, Sample, Scene, Shader, Tracer},
+    render::{Attributes, Sample, Scene, Shader, Tracer},
     Crossing, Dir3, Hit, Ray,
 };
 use palette::{Gradient, LinSrgba};
@@ -119,8 +119,8 @@ fn colour(
     hit: &Hit,
     sun_dir: &Dir3,
 ) -> LinSrgba {
-    let light = illumination::light(shader, trace.ray(), hit);
-    let shadow = illumination::shadow(scene, shader, trace.ray(), hit, rng);
+    let light = super::light(shader, trace.ray(), hit);
+    let shadow = super::shadow(scene, shader, trace.ray(), hit, rng);
 
     let x = hit.side().norm().dot(sun_dir).abs();
 
