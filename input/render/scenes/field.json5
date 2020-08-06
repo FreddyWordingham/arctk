@@ -153,8 +153,8 @@
             hr_res  : 1000
         },
         samples: {
-            // ambient_occlusion   : 17,
-            // soft_shadows        : 7,
+            ambient_occlusion   : 17,
+            soft_shadows        : 7,
         },
         sky: {
             brightness  : 0.3,
