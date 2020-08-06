@@ -150,8 +150,8 @@
         cam: {
             tar     : [-16.34, 21.29, 2.45],
             pos     : [26.5, -0.5, -2.5],
-            swivel  : [0, 10],
-            hr_fov  : 30.0,
+            // swivel  : [0, 10],
+            hr_fov  : 40.0,
             aspect  : "IPhoneXS",
             ss_power: 3,
             // dof     : [17, 0.1],

@@ -10,7 +10,7 @@ use std::{
 
 /// Mathematical formulae accepting a single scalar argument.
 #[load]
-pub enum Formula {
+pub enum FormulaBuilder {
     /// Constant value. = c
     Constant(f64),
     /// Line formula. = (x * m) + c
@@ -27,7 +27,7 @@ pub enum Formula {
     QuadraticSpline(Vec<f64>, Vec<f64>, Vec<f64>, Vec<f64>),
 }
 
-impl Build for Formula {
+impl Build for FormulaBuilder {
     type Inst = crate::Formula;
 
     #[inline]
@@ -57,7 +57,7 @@ impl Build for Formula {
     }
 }
 
-impl Display for Formula {
+impl Display for FormulaBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         let kind = match self {
