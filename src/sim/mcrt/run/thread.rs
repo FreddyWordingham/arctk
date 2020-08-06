@@ -61,8 +61,8 @@ pub fn thread(pb: &Arc<Mutex<Bar>>, scene: &Scene, light: &Light) -> Data {
         b
     } {
         for _i in start..end {
-            let _phot = light.emit(&mut rng, light.power() / scene.sett.num_phot() as f64);
-            // let sample = engine(phot);
+            let phot = light.emit(&mut rng, light.power() / scene.sett.num_phot() as f64);
+            let sample = super::the_photon_loop(phot);
             println!("TODO: Engine!");
         }
     }
