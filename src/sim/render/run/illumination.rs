@@ -97,7 +97,7 @@ pub fn visibility(scene: &Scene, mut trace: Tracer, mut vis: f64) -> f64 {
                 Attributes::Luminous => {
                     return vis;
                 }
-                Attributes::Transparent { abs } => {
+                Attributes::Transparent { abs } | Attributes::Refractive { abs, .. } => {
                     vis *= 1.0 - *abs;
                     trace.travel(hit.dist() + bump_dist);
                 }
@@ -106,9 +106,6 @@ pub fn visibility(scene: &Scene, mut trace: Tracer, mut vis: f64) -> f64 {
                     vis *= 1.0 - *abs;
                     trace.set_dir(Crossing::calc_ref_dir(trace.dir(), hit.side().norm()));
                     trace.travel(bump_dist);
-                }
-                Attributes::Refractive { .. } => {
-                    unimplemented!();
                 }
             }
         } else {
