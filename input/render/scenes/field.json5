@@ -81,7 +81,7 @@
     cols: {
         scale       : ['#000000ff', '#ffffffff'],
         // sky         : ['#3072EBff', '#ffffffff'],
-        sky     : ['#570070ff', '#2a00b0ff', '#b00091ff', '#0046b0ff'],
+        sky     : ['#570070ff', '#2a00b0ff', '#3072EBff', '#0046b0ff'],
 
         bone        : ['#ba9f83ff', '#e4a05aff', '#e8da9fff', '#fdffd9ff'],
         butterfly   : ['#b78d5cff', '#a62ab5ff', '#ff82f2ff', '#0095ffff', '#88f26aff', '#ffe200ff', '#ff4700ff', '#ff000dff'],
@@ -137,14 +137,14 @@
 
         sf_heads    : ['#ef5656ff', '#863813ff', '#c16438ff', '#ea7c47ff'],
         sf_leaves   : ['#96a75eff', '#6b8e23ff', '#00c719ff', '#77d12cff'],
-        sf_petals   : ['#ffb800ff', '#ff7f23ff', '#ff4700ff', '#fffa00ff'],
+        sf_petals   : ['#fffa00ff', '#ffb800ff', '#ff7f23ff', '#ff4700ff'],
         sf_stems    : ['#96a75eff', '#6b8e23ff', '#00c719ff', '#77d12cff']
 
     },
     shader: {
         cam: {
             tar     : [-16.34, 21.29, 2.45],
-            pos     : [26.5, 0.5, -2.5],
+            pos     : [26.5, -0.5, -2.5],
             // swivel  : [0, 10],
             hr_fov  : 30.0,
             aspect  : "Square",
@@ -158,7 +158,7 @@
             // soft_shadows        : 17
         },
         sky: {
-            brightness  : 0.1,
+            brightness  : 0.3,
             sun_pos     : [-10.0, -15.0, 22.0],
             sun_rad     : 10,
             segments    : [32,32]
