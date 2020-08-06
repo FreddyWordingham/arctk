@@ -14,28 +14,29 @@ struct Parameters {
     tree: tree::Settings,
     /// Regular grid settings.
     grid: grid::Settings,
-    // /// MCRT runtime settings.
-    // sett: mcrt::Settings,
-    // /// Surfaces set.
-    // surfs: Set<MeshBuilder>,
-    // /// Attributes set.
-    // attrs: Set<mcrt::Attributes>,
-    // /// Light form.
-    // light: mcrt::LightBuilder,
+    /// MCRT runtime settings.
+    sett: mcrt::Settings,
+    /// Surfaces set.
+    surfs: Set<MeshBuilder>,
+    /// Attributes set.
+    attrs: Set<mcrt::Attributes>,
+    /// Material set.
+    mats: Set<Redirect<mcrt::MaterialBuilder>>,
+    /// Light form.
+    light: mcrt::LightBuilder,
 }
 
 /// Main function.
 pub fn main() {
     banner::title("MCRT");
 
-    let (params_path, in_dir, _out_dir) = init();
+    let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (_tree_sett, _grid_sett) = build(&in_dir, params);
-    // let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, light) = build(&in_dir, params);
-    // let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
-    // let input = mcrt::Input::new(&tree, &grid, &mcrt_sett, &surfs, &attrs);
-    // let data = mcrt::run::multi_thread(&input, &light).expect("Failed to run MCRT simulation.");
-    // data.save(&out_dir).expect("Failed to save output.");
+    let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light) = build(&in_dir, params);
+    let (tree, grid) = grow(tree_sett, grid_sett, &surfs);
+    let input = mcrt::Scene::new(&tree, &grid, &mcrt_sett, &surfs, &attrs, &mats);
+    let data = mcrt::run::multi_thread(&input, &light).expect("Failed to run MCRT simulation.");
+    data.save(&out_dir).expect("Failed to save output.");
 
     banner::section("Finished");
 }
@@ -75,15 +76,16 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 
 /// Build instances.
 fn build(
-    _in_dir: &Path,
+    in_dir: &Path,
     params: Parameters,
 ) -> (
     tree::Settings,
     grid::Settings,
-    // mcrt::Settings,
-    // Set<Mesh>,
-    // Set<mcrt::Attributes>,
-    // mcrt::Light,
+    mcrt::Settings,
+    Set<Mesh>,
+    Set<mcrt::Attributes>,
+    Set<mcrt::Material>,
+    mcrt::Light,
 ) {
     banner::section("Building");
     banner::sub_section("Adaptive Tree Settings");
@@ -94,47 +96,55 @@ fn build(
     let grid_sett = params.grid;
     report!("Grid settings", &grid_sett);
 
-    // banner::sub_section("MCRT Settings");
-    // let mcrt_sett = params.sett;
-    // report!("MCRT settings", &mcrt_sett);
+    banner::sub_section("MCRT Settings");
+    let mcrt_sett = params.sett;
+    report!("MCRT settings", &mcrt_sett);
 
-    // banner::sub_section("Surfaces");
-    // let surfs = params
-    //     .surfs
-    //     .build(in_dir)
-    //     .expect("Unable to build surfaces.");
-    // report!("Surfaces", &surfs);
+    banner::sub_section("Surfaces");
+    let surfs = params
+        .surfs
+        .build(in_dir)
+        .expect("Unable to build surfaces.");
+    report!("Surfaces", &surfs);
 
-    // banner::sub_section("Attributes");
-    // let attrs = params.attrs;
-    // report!("Attributes", &attrs);
+    banner::sub_section("Attributes");
+    let attrs = params.attrs;
+    report!("Attributes", &attrs);
 
-    // banner::sub_section("Light");
-    // let light = params
-    //     .light
-    //     .build(in_dir)
-    //     .expect("Unable to build light source.");
-    // report!("Light", &light);
+    banner::sub_section("Materials");
+    let mats = params
+        .mats
+        .build(in_dir)
+        .expect("Unable to build materials.")
+        .build(in_dir)
+        .expect("Unable to build materials.");
+    report!("Properties", &mats);
 
-    // (tree_sett, grid_sett, mcrt_sett, surfs, attrs, light)
-    (tree_sett, grid_sett)
+    banner::sub_section("Light");
+    let light = params
+        .light
+        .build(in_dir)
+        .expect("Unable to build light source.");
+    report!("Light", &light);
+
+    (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light)
 }
 
-// /// Grow domains.
-// fn grow<'a>(
-//     tree_sett: tree::Settings,
-//     grid_sett: grid::Settings,
-//     surfs: &'a Set<Mesh>,
-// ) -> (tree::Cell<'a>, grid::Grid) {
-//     banner::section("Growing");
+/// Grow domains.
+fn grow<'a>(
+    tree_sett: tree::Settings,
+    grid_sett: grid::Settings,
+    surfs: &'a Set<Mesh>,
+) -> (tree::Cell<'a>, grid::Grid) {
+    banner::section("Growing");
 
-//     banner::sub_section("Adaptive Tree");
-//     let tree = tree::Cell::new_root(&tree_sett, &surfs);
-//     report!("Adaptive tree", &tree);
+    banner::sub_section("Adaptive Tree");
+    let tree = tree::Cell::new_root(&tree_sett, &surfs);
+    report!("Adaptive tree", &tree);
 
-//     banner::sub_section("Regular Grid");
-//     let grid = grid::Grid::new(&grid_sett);
-//     report!("Regular grid", &grid);
+    banner::sub_section("Regular Grid");
+    let grid = grid::Grid::new(&grid_sett);
+    report!("Regular grid", &grid);
 
-//     (tree, grid)
-// }
+    (tree, grid)
+}

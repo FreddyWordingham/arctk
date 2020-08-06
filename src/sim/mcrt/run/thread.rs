@@ -46,6 +46,7 @@ pub fn single_thread(scene: &Scene, light: &Light) -> Data {
 
 /// Run and MCRT simulation using a single thread.
 #[allow(clippy::module_name_repetitions)]
+#[allow(clippy::result_expect_used)]
 #[inline]
 #[must_use]
 pub fn thread(pb: &Arc<Mutex<Bar>>, scene: &Scene, light: &Light) -> Data {
