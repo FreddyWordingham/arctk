@@ -71,7 +71,7 @@ impl Save for Data {
         let path = out_dir.join(time);
         std::fs::create_dir(&path)?;
 
-        let p = out_dir.join("emission_power_density.nc");
+        let p = path.join("emission_power_density.nc");
         println!("Saving: {}", p.display());
         (&self.emission_power / self.cell_vol).save(&p)
     }
