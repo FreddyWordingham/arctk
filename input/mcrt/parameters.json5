@@ -12,14 +12,18 @@
         padding: 0.01
     },
     sett: {
-        bump_dist   : 1e-6,
-        loop_limit  : 1e6,
-        block_size  : 1000,
-        num_phot    : 1e6
+        init_mat            : 'air',
+        range               : [400e-9, 700e-9],
+        roulette_weight     : 1e-3,
+        roulette_barrels    : 8,
+        bump_dist           : 1e-6,
+        loop_limit          : 1e6,
+        block_size          : 1000,
+        num_phot            : 1e6
     },
     surfs: {
-        cube    : [['objs/test/cube.obj'], null],
-        sphere  : [['objs/test/sphere.obj'], null]
+        cube        : [['objs/test/cube.obj'],      null],
+        cylinder    : [['objs/test/cylinder.obj'],  null]
     },
     attrs: {
         cube    : { Mirror: {abs: 0.3} },
@@ -41,8 +45,8 @@
         }
     },
     light: {
-        power   : 1.0,
-        surf    : [['objs/test/cube.obj'], null],
-        spec    : { Here: {Point: 6.3e-7}}
+        power       : 1.0,
+        surf        : [['objs/test/cube.obj'], null],
+        spec        : { Here: {Point: 6.3e-7}}
     }
 }
