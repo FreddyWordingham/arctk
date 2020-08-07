@@ -22,14 +22,16 @@
         num_phot            : 1e5
     },
     surfs: {
-        plane       : [['objs/test/plane.obj'],  null],
+        plane       : [['objs/test/plane.obj'],     null],
         cube        : [['objs/test/cube.obj'],      null],
         cylinder    : [['objs/test/cylinder.obj'],  null],
+        square      : [['objs/test/square.obj'],    null],
     },
     attrs: {
-        plane       : { Mirror: {} },
-        cube        : { Refractive: { inside: 'fog',  outside: 'air'} },
-        cylinder    : { Refractive: { inside: 'tumour', outside: 'fog'} },
+        plane       : { Mirror:         {} },
+        cube        : { Refractive:     { inside: 'fog',    outside: 'air'} },
+        cylinder    : { Refractive:     { inside: 'tumour', outside: 'fog'} },
+        square      : { Spectrometer:   {}},
     },
     mats: {
         air: {
