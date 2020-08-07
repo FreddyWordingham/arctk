@@ -1,6 +1,6 @@
 //! Settings implementation.
 
-use crate::{clone, display_field, display_field_ln};
+use crate::{clone, display_field, display_field_ln, Group, Range};
 use attr::load;
 use std::fmt::{Display, Formatter, Result};
 
@@ -15,6 +15,14 @@ pub struct Settings {
     bump_dist: f64,
     /// Loop limit.
     loop_limit: u64,
+    /// Weight to perform roulette at.
+    roulette_weight: f64,
+    /// Number of roulette barrels.
+    roulette_barrels: u64,
+    /// Initial material.
+    init_mat: Group,
+    /// Wavelength limits.
+    range: Range,
 }
 
 impl Settings {
@@ -22,6 +30,10 @@ impl Settings {
     clone!(num_phot, u64);
     clone!(bump_dist, f64);
     clone!(loop_limit, u64);
+    clone!(roulette_weight, f64);
+    clone!(roulette_barrels, u64);
+    clone!(init_mat, Group);
+    clone!(range, Range);
 }
 
 impl Display for Settings {
