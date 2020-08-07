@@ -77,22 +77,21 @@ pub fn simulate_photon(
 
                 if let Some(attr) = scene.attrs.map().get(hit.group()) {
                     match attr {
-                        Attributes::Transparent { abs } => {
-                            *phot.weight_mut() *= (1.0 - abs);
-                        }
-                        Attributes::Mirror { abs } => {
-                            *phot.weight_mut() *= (1.0 - abs);
+                        Attributes::Mirror => {
                             *phot.ray_mut().dir_mut() =
                                 Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
                         }
-                        Attributes::Refractive {
-                            abs,
-                            inside,
-                            outside,
-                        } => {
+                        Attributes::Refractive { inside, outside } => {
+                            // Determine far side material.
+                            let next_mat = if hit.side().is_inside() {
+                                outside
+                            } else {
+                                inside
+                            };
+
                             // Get the near, and far side refractive indices.
                             let curr_ref = env.ref_index();
-                            let next_env = scene.mats.map()["fog"].env(phot.wavelength());
+                            let next_env = scene.mats.map()[next_mat].env(phot.wavelength());
                             let next_ref = next_env.ref_index();
 
                             // Calculate the crossing normal vectors.
