@@ -6,6 +6,7 @@ use crate::{
     mcrt::{Attributes, Data, Local, Photon, Sample, Scene},
     Crossing, Trace,
 };
+use physical_constants::SPEED_OF_LIGHT_IN_VACUUM;
 use rand::{rngs::ThreadRng, Rng};
 use std::f64::consts::PI;
 
@@ -128,15 +129,13 @@ pub fn simulate_photon(
 
 /// Move the photon forward and record the flight.
 #[inline]
-fn travel(_data: &mut Data, _index: [usize; 3], _env: &Local, phot: &mut Photon, dist: f64) {
+fn travel(data: &mut Data, index: [usize; 3], env: &Local, phot: &mut Photon, dist: f64) {
     debug_assert!(dist > 0.0);
 
-    // let weight_power_dist = phot.weight() * phot.power() * dist;
-    // data.energy[index] += weight_power_dist * (env.ref_index() / SPEED_OF_LIGHT_IN_VACUUM);
-    // data.absorptions[index] += weight_power_dist * env.abs_coeff();
-    // data.shifts[index] += weight_power_dist * env.shift_coeff();
-
-    // data.dist_travelled[index] += dist;
+    let weight_power_dist = phot.weight() * phot.power() * dist;
+    data.energy[index] += weight_power_dist * (env.ref_index() / SPEED_OF_LIGHT_IN_VACUUM);
+    data.absorptions[index] += weight_power_dist * env.abs_coeff();
+    data.shifts[index] += weight_power_dist * env.shift_coeff();
 
     phot.ray_mut().travel(dist);
 }

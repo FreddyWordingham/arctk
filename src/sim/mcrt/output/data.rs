@@ -20,6 +20,10 @@ pub struct Data {
     pub emission_power: Array3<f64>,
     /// Local photo-energy [J].
     pub energy: Array3<f64>,
+    /// Local photo-absorptions [J].
+    pub absorptions: Array3<f64>,
+    /// Local photo-shifts [J].
+    pub shifts: Array3<f64>,
 }
 
 impl Data {
@@ -42,6 +46,8 @@ impl Data {
             escaped_weight: 0.0,
             emission_power: Array3::zeros(res),
             energy: Array3::zeros(res),
+            absorptions: Array3::zeros(res),
+            shifts: Array3::zeros(res),
         }
     }
 }
@@ -52,6 +58,8 @@ impl AddAssign<&Self> for Data {
         self.escaped_weight += &rhs.escaped_weight;
         self.emission_power += &rhs.emission_power;
         self.energy += &rhs.energy;
+        self.absorptions += &rhs.absorptions;
+        self.shifts += &rhs.shifts;
     }
 }
 
@@ -61,8 +69,15 @@ impl Display for Data {
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "cell volume", self.cell_vol, "m^3")?;
         display_field_ln!(fmt, "escaped weight", self.escaped_weight)?;
-        display_field_ln!(fmt, "total emission power", self.emission_power.sum())?;
-        display_field!(fmt, "total photo-energy", self.energy.sum())
+        display_field_ln!(
+            fmt,
+            "total emission power",
+            self.emission_power.sum(),
+            "J/s"
+        )?;
+        display_field_ln!(fmt, "total photo-energy", self.energy.sum(), "J")?;
+        display_field_ln!(fmt, "total photo-absorptions", self.absorptions.sum(), "J")?;
+        display_field!(fmt, "total photo-shifts", self.shifts.sum(), "J")
     }
 }
 
@@ -75,6 +90,14 @@ impl Save for Data {
 
         let path = out_dir.join("energy_density.nc");
         println!("Saving: {}", path.display());
-        (&self.energy / self.cell_vol).save(&path)
+        (&self.energy / self.cell_vol).save(&path)?;
+
+        let path = out_dir.join("absorption_density.nc");
+        println!("Saving: {}", path.display());
+        (&self.absorptions / self.cell_vol).save(&path)?;
+
+        let path = out_dir.join("shift_density.nc");
+        println!("Saving: {}", path.display());
+        (&self.shifts / self.cell_vol).save(&path)
     }
 }
