@@ -65,8 +65,8 @@ pub fn thread(pb: &Arc<Mutex<Bar>>, scene: &Scene, light: &Light) -> Data {
             let phot = light.emit(&mut rng, light.power() / scene.sett.num_phot() as f64);
             // let mat = &scene.mats.map()["air"];
 
-            let sample = super::emit_photon(scene, &mut rng, phot);
-            *data.escaped_weight_mut() += sample.remaining_weight;
+            let sample = super::simulate_photon(scene, &mut rng, &mut data, phot);
+            data.escaped_weight += sample.remaining_weight;
         }
     }
 

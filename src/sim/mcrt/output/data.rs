@@ -15,16 +15,14 @@ pub struct Data {
     /// Cell volume [m^3].
     cell_vol: f64,
     /// Escaped weight.
-    escaped_weight: f64,
+    pub escaped_weight: f64,
     /// Emission power.
-    emission_power: Array3<f64>,
+    pub emission_power: Array3<f64>,
 }
 
 impl Data {
     access!(boundary, Aabb);
     clone!(cell_vol, f64);
-    clone!(escaped_weight, escaped_weight_mut, f64);
-    access!(emission_power, emission_power_mut, Array3<f64>);
 
     /// Construct a new instance.
     #[inline]
