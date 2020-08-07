@@ -23,6 +23,8 @@ pub struct Settings {
     init_mat: Group,
     /// Wavelength limits.
     range: Range,
+    /// Histogram resolution.
+    hist_bins: u64,
 }
 
 impl Settings {
@@ -34,6 +36,7 @@ impl Settings {
     clone!(roulette_barrels, u64);
     clone!(init_mat, Group);
     clone!(range, Range);
+    clone!(hist_bins, u64);
 }
 
 impl Display for Settings {
@@ -43,6 +46,11 @@ impl Display for Settings {
         display_field_ln!(fmt, "block size", self.block_size)?;
         display_field_ln!(fmt, "number of photons", self.num_phot)?;
         display_field_ln!(fmt, "bump distance", self.bump_dist, "m")?;
-        display_field!(fmt, "loop limit", self.loop_limit)
+        display_field_ln!(fmt, "loop limit", self.loop_limit)?;
+        display_field_ln!(fmt, "roulette weight", self.roulette_weight)?;
+        display_field_ln!(fmt, "roulette barrels", self.roulette_barrels)?;
+        display_field_ln!(fmt, "initial material", &self.init_mat)?;
+        display_field_ln!(fmt, "wavelength range", &self.range, "m")?;
+        display_field!(fmt, "histogram resolution", self.hist_bins)
     }
 }

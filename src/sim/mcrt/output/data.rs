@@ -1,6 +1,8 @@
 //! MCRT output structure.
 
-use crate::{access, clone, display_field, display_field_ln, Aabb, Error, Save, X, Y, Z};
+use crate::{
+    access, clone, display_field, display_field_ln, Aabb, Error, Histogram, Range, Save, X, Y, Z,
+};
 use ndarray::Array3;
 use std::{
     fmt::{Display, Formatter},
@@ -14,6 +16,8 @@ pub struct Data {
     boundary: Aabb,
     /// Cell volume [m^3].
     cell_vol: f64,
+    /// Spectrometer.
+    pub spec: Histogram,
     /// Escaped weight.
     pub escaped_weight: f64,
     /// Emission power.
@@ -33,7 +37,7 @@ impl Data {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(boundary: Aabb, res: [usize; 3]) -> Self {
+    pub fn new(boundary: Aabb, res: [usize; 3], range: Range, hist_bins: u64) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
         debug_assert!(res[Z] > 0);
@@ -43,6 +47,7 @@ impl Data {
         Self {
             boundary,
             cell_vol,
+            spec: Histogram::new_range(range, hist_bins),
             escaped_weight: 0.0,
             emission_power: Array3::zeros(res),
             energy: Array3::zeros(res),

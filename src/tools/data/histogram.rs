@@ -16,7 +16,7 @@ impl Histogram {
     access!(binner, Binner);
     access!(counts, Array1<f64>);
 
-    /// Construct a new instance
+    /// Construct a new instance.
     #[inline]
     #[must_use]
     pub fn new(min: f64, max: f64, bins: u64) -> Self {
@@ -25,6 +25,16 @@ impl Histogram {
 
         Self {
             binner: Binner::new(Range::new(min, max), bins),
+            counts: Array1::zeros(bins as usize),
+        }
+    }
+
+    /// Construct a new instance using a range.
+    #[inline]
+    #[must_use]
+    pub fn new_range(range: Range, bins: u64) -> Self {
+        Self {
+            binner: Binner::new(range, bins),
             counts: Array1::zeros(bins as usize),
         }
     }

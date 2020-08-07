@@ -51,7 +51,12 @@ pub fn single_thread(scene: &Scene, light: &Light) -> Data {
 #[must_use]
 pub fn thread(pb: &Arc<Mutex<Bar>>, scene: &Scene, light: &Light) -> Data {
     let res = *scene.grid.res();
-    let mut data = Data::new(scene.grid.boundary().clone(), res);
+    let mut data = Data::new(
+        scene.grid.boundary().clone(),
+        res,
+        scene.sett.range(),
+        scene.sett.hist_bins(),
+    );
 
     let mut rng = thread_rng();
 
