@@ -89,6 +89,10 @@ impl Display for Data {
 impl Save for Data {
     #[inline]
     fn save(&self, out_dir: &Path) -> Result<(), Error> {
+        let path = out_dir.join("spectrometer.dat");
+        println!("Saving: {}", path.display());
+        self.spec.save(&path)?;
+
         let path = out_dir.join("emission_power_density.nc");
         println!("Saving: {}", path.display());
         (&self.emission_power / self.cell_vol).save(&path)?;
