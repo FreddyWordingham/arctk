@@ -64,16 +64,8 @@ impl Display for Data {
 impl Save for Data {
     #[inline]
     fn save(&self, out_dir: &Path) -> Result<(), Error> {
-        // // Get current time string.
-        // let time = chrono::offset::Local::now()
-        //     .format("%Y%m%d%H%M%S")
-        //     .to_string();
-        // let path = out_dir.join(time);
-        // std::fs::create_dir(&path)?;
-        let path = out_dir;
-
-        let p = path.join("emission_power_density.nc");
-        println!("Saving: {}", p.display());
-        (&self.emission_power / self.cell_vol).save(&p)
+        let path = out_dir.join("emission_power_density.nc");
+        println!("Saving: {}", path.display());
+        (&self.emission_power / self.cell_vol).save(&path)
     }
 }
