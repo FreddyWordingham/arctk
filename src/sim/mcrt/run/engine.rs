@@ -78,6 +78,9 @@ pub fn simulate_photon(
 
                 if let Some(attr) = scene.attrs.map().get(hit.group()) {
                     match attr {
+                        Attributes::Spectrometer => {
+                            data.spec.collect_weight(phot.wavelength(), phot.weight());
+                        }
                         Attributes::Mirror => {
                             *phot.ray_mut().dir_mut() =
                                 Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
