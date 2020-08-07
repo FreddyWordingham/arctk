@@ -18,6 +18,8 @@ pub struct Data {
     pub escaped_weight: f64,
     /// Emission power.
     pub emission_power: Array3<f64>,
+    /// Local photo-energy [J].
+    pub energy: Array3<f64>,
 }
 
 impl Data {
@@ -39,6 +41,7 @@ impl Data {
             cell_vol,
             escaped_weight: 0.0,
             emission_power: Array3::zeros(res),
+            energy: Array3::zeros(res),
         }
     }
 }
@@ -48,6 +51,7 @@ impl AddAssign<&Self> for Data {
     fn add_assign(&mut self, rhs: &Self) {
         self.escaped_weight += &rhs.escaped_weight;
         self.emission_power += &rhs.emission_power;
+        self.energy += &rhs.energy;
     }
 }
 
@@ -57,7 +61,8 @@ impl Display for Data {
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "cell volume", self.cell_vol, "m^3")?;
         display_field_ln!(fmt, "escaped weight", self.escaped_weight)?;
-        display_field!(fmt, "total emission power", self.emission_power.sum())
+        display_field_ln!(fmt, "total emission power", self.emission_power.sum())?;
+        display_field!(fmt, "total photo-energy", self.energy.sum())
     }
 }
 
@@ -66,6 +71,10 @@ impl Save for Data {
     fn save(&self, out_dir: &Path) -> Result<(), Error> {
         let path = out_dir.join("emission_power_density.nc");
         println!("Saving: {}", path.display());
-        (&self.emission_power / self.cell_vol).save(&path)
+        (&self.emission_power / self.cell_vol).save(&path)?;
+
+        let path = out_dir.join("energy_density.nc");
+        println!("Saving: {}", path.display());
+        (&self.energy / self.cell_vol).save(&path)
     }
 }

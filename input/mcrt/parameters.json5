@@ -1,8 +1,8 @@
 {
     grid: {
         boundary: {
-            mins: [-2,-2,-2],
-            maxs: [ 2, 2, 2]
+            mins: [-7,-7,-7],
+            maxs: [ 7, 7, 7]
         },
         res: [64,64,64]
     },
@@ -23,7 +23,8 @@
     },
     surfs: {
         cube        : [['objs/test/cube.obj'],      null],
-        cylinder    : [['objs/test/cylinder.obj'],  null]
+        cylinder    : [['objs/test/cylinder.obj'],  null],
+        plane       : [['objs/test/plane.obj'],  null],
     },
     attrs: {
         cube    : { Mirror: {abs: 0.3} },
@@ -46,7 +47,7 @@
     },
     light: {
         power       : 1.0,
-        surf        : [['objs/test/cube.obj'], null],
+        surf        : [['objs/test/circle.obj'], null],
         spec        : { Here: {Point: 6.3e-7}}
     }
 }
