@@ -14,6 +14,7 @@
     sett: {
         init_mat            : 'air',
         range               : [400e-9, 700e-9],
+        hist_bins           : 100,
         roulette_weight     : 1e-3,
         roulette_barrels    : 8,
         bump_dist           : 1e-6,
