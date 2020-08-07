@@ -116,6 +116,8 @@ pub fn simulate_photon(
                             }
                         }
                     }
+                } else {
+                    panic!("Unknown attribute group: {}", hit.group());
                 }
 
                 // Move slightly away from the surface.
