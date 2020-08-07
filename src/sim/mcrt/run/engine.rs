@@ -3,7 +3,7 @@
 use super::Event;
 use crate::{
     distribution,
-    mcrt::{Data, Local, Photon, Sample, Scene},
+    mcrt::{Attributes, Data, Local, Photon, Sample, Scene},
     Crossing, Trace,
 };
 use rand::{rngs::ThreadRng, Rng};
@@ -75,33 +75,47 @@ pub fn simulate_photon(
                 // Move to the collision point.
                 travel(data, index, &env, &mut phot, hit.dist());
 
-                // // Special collision events.
-                // match hit.group() {
-                //     "spectrometer" => {
-                //         // data.spec.collect_weight(phot.wavelength(), phot.weight());
-                //         continue;
-                //     }
-                //     _ => {}
-                // }
+                if let Some(attr) = scene.attrs.map().get(hit.group()) {
+                    match attr {
+                        Attributes::Transparent { abs } => {
+                            *phot.weight_mut() *= (1.0 - abs);
+                        }
+                        Attributes::Mirror { abs } => {
+                            *phot.weight_mut() *= (1.0 - abs);
+                            *phot.ray_mut().dir_mut() =
+                                Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
+                        }
+                        Attributes::Refractive {
+                            abs,
+                            inside,
+                            outside,
+                        } => {
+                            // Get the near, and far side refractive indices.
+                            let curr_ref = env.ref_index();
+                            let next_env = scene.mats.map()["fog"].env(phot.wavelength());
+                            let next_ref = next_env.ref_index();
 
-                // Get the near, and far side refractive indices.
-                let curr_ref = env.ref_index();
-                let next_env = scene.mats.map()["fog"].env(phot.wavelength());
-                let next_ref = next_env.ref_index();
+                            // Calculate the crossing normal vectors.
+                            let crossing = Crossing::new(
+                                phot.ray().dir(),
+                                hit.side().norm(),
+                                curr_ref,
+                                next_ref,
+                            );
 
-                // Calculate the crossing normal vectors.
-                let crossing =
-                    Crossing::new(phot.ray().dir(), hit.side().norm(), curr_ref, next_ref);
-
-                // Determine if a reflection or transmission occurs.
-                let r = rng.gen::<f64>();
-                if r <= crossing.ref_prob() {
-                    // Reflect.
-                    *phot.ray_mut().dir_mut() = *crossing.ref_dir();
-                } else {
-                    // Refract.
-                    *phot.ray_mut().dir_mut() = crossing.trans_dir().expect("Invalid refraction.");
-                    env = next_env;
+                            // Determine if a reflection or transmission occurs.
+                            let r = rng.gen::<f64>();
+                            if r <= crossing.ref_prob() {
+                                // Reflect.
+                                *phot.ray_mut().dir_mut() = *crossing.ref_dir();
+                            } else {
+                                // Refract.
+                                *phot.ray_mut().dir_mut() =
+                                    crossing.trans_dir().expect("Invalid refraction.");
+                                env = next_env;
+                            }
+                        }
+                    }
                 }
 
                 // Move slightly away from the surface.
