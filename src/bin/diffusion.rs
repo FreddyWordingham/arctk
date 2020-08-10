@@ -2,6 +2,7 @@
 
 use arctk::*;
 use attr::input;
+use ndarray::Array3;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -67,11 +68,37 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(_in_dir: &Path, params: Parameters) -> diffusion::Settings {
+fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64>, Array3<f64>) {
     banner::section("Building");
     banner::sub_section("Diffusion Settings");
     let diff_sett = params.sett;
     report!("Diffusion settings", &diff_sett);
 
-    diff_sett
+    banner::sub_section("Concentration");
+    let res = [61, 61, 61];
+    let mut concs = Vec::with_capacity(res[X] * res[Y] * res[Z]);
+    for _ in 0..res[X] {
+        for _ in 0..res[Y] {
+            for _ in 0..res[Z] {
+                concs.push(0.0);
+            }
+        }
+    }
+    let mut concs =
+        Array3::from_shape_vec(res, concs).expect("Could not create concentration array.");
+    concs[[30, 30, 30]] = 1.0;
+
+    banner::sub_section("Concentration");
+    let res = [61, 61, 61];
+    let mut coeffs = Vec::with_capacity(res[X] * res[Y] * res[Z]);
+    for _ in 0..res[X] {
+        for _ in 0..res[Y] {
+            for _ in 0..res[Z] {
+                coeffs.push(1.0);
+            }
+        }
+    }
+    let coeffs = Array3::from_shape_vec(res, coeffs).expect("Could not create coefficient array.");
+
+    (diff_sett, concs, coeffs)
 }
