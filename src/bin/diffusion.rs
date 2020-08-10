@@ -21,7 +21,8 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let _diff_sett = build(&in_dir, params);
+    let (diff_sett, concs, coeffs) = build(&in_dir, params);
+    let input = diffusion::Scene::new(&diff_sett, &coeffs);
 
     banner::section("Finished");
 }
