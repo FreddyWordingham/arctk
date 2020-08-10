@@ -1,4 +1,5 @@
 {
-    min_dt: 1e-3,
-    max_dt: 1e-2,
+    sett: {
+        total_time: 60.0
+    }
 }
