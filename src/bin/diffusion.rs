@@ -23,7 +23,7 @@ pub fn main() {
     let params = input(&in_dir, &params_path);
     let (diff_sett, concs, coeffs) = build(&in_dir, params);
     let input = diffusion::Scene::new(&diff_sett, &coeffs);
-    // let data = diffusion::run::multi_thread(&input, concs);
+    let data = diffusion::run::multi_thread(&input, concs);
 
     banner::section("Finished");
 }
@@ -96,7 +96,7 @@ fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64
     for _ in 0..res[X] {
         for _ in 0..res[Y] {
             for _ in 0..res[Z] {
-                coeffs.push(1.0);
+                coeffs.push(1e-3);
             }
         }
     }
