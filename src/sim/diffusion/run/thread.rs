@@ -1,6 +1,9 @@
 //! Diffusion thread control functions.
 
-use crate::{diffusion::Scene, order};
+use crate::{
+    diffusion::{Scene, Stencil},
+    Vec3, X, Y,
+};
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
 
@@ -10,16 +13,14 @@ use ndarray_stats::QuantileExt;
 #[inline]
 #[must_use]
 pub fn multi_thread(scene: &Scene, concs: Array3<f64>) -> Array3<f64> {
-    let dx = order::min(
-        &scene
-            .sett
-            .boundary()
-            .widths()
-            .iter()
-            .zip(concs.shape())
-            .map(|(w, r)| w / *r as f64)
-            .collect::<Vec<f64>>(),
-    );
+    debug_assert!(scene.coeffs.shape() == concs.shape());
+
+    let mut cell_size = scene.sett.boundary().widths();
+    for (w, n) in cell_size.iter_mut().zip(concs.shape()) {
+        *w /= *n as f64;
+    }
+    let dx = cell_size.min();
+
     let alpha = scene
         .coeffs
         .max()
@@ -27,5 +28,33 @@ pub fn multi_thread(scene: &Scene, concs: Array3<f64>) -> Array3<f64> {
 
     let max_dt = dx.powi(2) / (4.0 * alpha);
 
+    // concs = concs.map();
+
     concs
+}
+
+/// Calculate the diffusion rates for each cell.
+#[inline]
+#[must_use]
+pub fn diff_rate(cell_size: &Vec3, concs: &Array3<f64>, coeffs: &Array3<f64>) -> Array3<f64> {
+    debug_assert!(concs.shape() == coeffs.shape());
+
+    let num_cells = concs.len();
+
+    let mut rate = Array3::zeros(concs.raw_dim());
+    let res = concs.shape();
+
+    for n in 0..num_cells {
+        let xi = n % res[X];
+        let yi = (n / res[X]) % res[Y];
+        let zi = n / (res[X] * res[Y]);
+
+        let index = [xi, yi, zi];
+
+        let stencil = Stencil::new(index, concs);
+        let r = stencil.rate(coeffs[index], cell_size);
+        rate[index] = r;
+    }
+
+    rate
 }
