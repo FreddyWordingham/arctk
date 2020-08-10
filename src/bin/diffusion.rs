@@ -23,6 +23,7 @@ pub fn main() {
     let params = input(&in_dir, &params_path);
     let (diff_sett, concs, coeffs) = build(&in_dir, params);
     let input = diffusion::Scene::new(&diff_sett, &coeffs);
+    // let data = diffusion::run::multi_thread(&input, concs);
 
     banner::section("Finished");
 }
