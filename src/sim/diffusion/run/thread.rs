@@ -29,11 +29,12 @@ pub fn multi_thread(scene: &Scene, mut concs: Array3<f64>) -> Array3<f64> {
     let max_dt = dx.powi(2) / (4.0 * alpha);
 
     let steps = (scene.sett.total_time() / max_dt).ceil() as u64;
+    let dt = scene.sett.total_time() / steps as f64;
 
     let mut pb = Bar::new("Diffusing", steps);
     for _ in 0..steps {
         pb.tick();
-        concs += &(diff_rate(&cell_size, &concs, scene.coeffs) * max_dt);
+        concs += &(diff_rate(&cell_size, &concs, scene.coeffs) * dt);
     }
 
     concs
