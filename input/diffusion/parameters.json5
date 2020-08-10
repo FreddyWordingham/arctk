@@ -1,5 +1,9 @@
 {
     sett: {
+        boundary: {
+            mins:   [-1,-1,-1],
+            maxs:   [ 1, 1, 1]
+        },
         total_time: 60.0
     }
 }
