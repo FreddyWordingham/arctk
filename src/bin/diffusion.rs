@@ -10,18 +10,17 @@ use std::{
 /// Input parameters.
 #[input]
 struct Parameters {
-    /// Minimum timestep.
-    min_dt: f64,
-    /// Maximum timestep.
-    max_dt: f64,
+    /// Diffusion simulation settings.
+    sett: diffusion::Settings,
 }
 
 /// Main function.
 pub fn main() {
     banner::title("Diffusion");
 
-    let (params_path, in_dir, out_dir) = init();
+    let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
+    let _diff_sett = build(&in_dir, params);
 
     banner::section("Finished");
 }
@@ -65,4 +64,14 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
     let path = in_dir.join(params_path);
 
     Parameters::load(&path).expect("Could not load parameters file")
+}
+
+/// Build instances.
+fn build(_in_dir: &Path, params: Parameters) -> diffusion::Settings {
+    banner::section("Building");
+    banner::sub_section("Diffusion Settings");
+    let diff_sett = params.sett;
+    report!("Diffusion settings", &diff_sett);
+
+    diff_sett
 }
