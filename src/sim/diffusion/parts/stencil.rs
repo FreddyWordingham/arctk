@@ -1,5 +1,6 @@
 //! Stencil-type enumeration.
 
+use crate::{X, Y, Z};
 use nalgebra::Vector3;
 use ndarray::Array3;
 
@@ -27,13 +28,47 @@ impl Stencil {
     #[inline]
     #[must_use]
     pub fn new(index: [usize; 3], concs: &Array3<f64>) -> Self {
-        let c2 = 1.0;
-        let prev_x = 1.0;
-        let next_x = 1.0;
-        let prev_y = 1.0;
-        let next_y = 1.0;
-        let prev_z = 1.0;
-        let next_z = 1.0;
+        let maxs = concs.shape();
+        let max_x = maxs[X] - 1;
+        let max_y = maxs[Y] - 1;
+        let max_z = maxs[Z] - 1;
+
+        let [xi, yi, zi] = index;
+
+        let c2 = concs[[xi, yi, zi]] * 2.0;
+
+        let prev_x = if xi == 0 {
+            c2 - concs[[xi + 1, yi, zi]]
+        } else {
+            concs[[xi - 1, yi, zi]]
+        };
+        let next_x = if xi == max_x {
+            c2 - concs[[xi - 1, yi, zi]]
+        } else {
+            concs[[xi + 1, yi, zi]]
+        };
+
+        let prev_y = if yi == 0 {
+            c2 - concs[[xi, yi + 1, zi]]
+        } else {
+            concs[[xi, yi - 1, zi]]
+        };
+        let next_y = if yi == max_y {
+            c2 - concs[[xi, yi - 1, zi]]
+        } else {
+            concs[[xi, yi + 1, zi]]
+        };
+
+        let prev_z = if zi == 0 {
+            c2 - concs[[xi, yi, zi + 1]]
+        } else {
+            concs[[xi, yi, zi - 1]]
+        };
+        let next_z = if zi == max_z {
+            c2 - concs[[xi, yi, zi - 1]]
+        } else {
+            concs[[xi, yi, zi + 1]]
+        };
 
         Self {
             c2,
