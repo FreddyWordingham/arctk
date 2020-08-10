@@ -2,7 +2,7 @@
 
 use crate::{
     diffusion::{Scene, Stencil},
-    Vec3, X, Y,
+    Bar, Vec3, X, Y,
 };
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
@@ -12,7 +12,7 @@ use ndarray_stats::QuantileExt;
 #[allow(clippy::result_expect_used)]
 #[inline]
 #[must_use]
-pub fn multi_thread(scene: &Scene, concs: Array3<f64>) -> Array3<f64> {
+pub fn multi_thread(scene: &Scene, mut concs: Array3<f64>) -> Array3<f64> {
     debug_assert!(scene.coeffs.shape() == concs.shape());
 
     let mut cell_size = scene.sett.boundary().widths();
@@ -28,7 +28,13 @@ pub fn multi_thread(scene: &Scene, concs: Array3<f64>) -> Array3<f64> {
 
     let max_dt = dx.powi(2) / (4.0 * alpha);
 
-    // concs = concs.map();
+    let steps = (scene.sett.total_time() / max_dt).ceil() as u64;
+
+    let mut pb = Bar::new("Diffusing", steps);
+    for _ in 0..steps {
+        pb.tick();
+        concs += &(diff_rate(&cell_size, &concs, scene.coeffs) * max_dt);
+    }
 
     concs
 }

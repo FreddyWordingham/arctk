@@ -33,6 +33,13 @@ impl Bar {
         }
     }
 
+    /// Tick the bar forward a single increment.
+    #[inline]
+    pub fn tick(&mut self) {
+        self.count += 1;
+        self.pb.inc(1);
+    }
+
     /// Request a block of values to work on.
     /// Return the requested block if available.
     /// If there is not enough, return the remaining block.
