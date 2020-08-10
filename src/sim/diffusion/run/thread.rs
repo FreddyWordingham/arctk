@@ -6,6 +6,7 @@ use ndarray_stats::QuantileExt;
 
 /// Run a multi-threaded diffusion simulation.
 #[allow(clippy::module_name_repetitions)]
+#[allow(clippy::result_expect_used)]
 #[inline]
 #[must_use]
 pub fn multi_thread(scene: &Scene, concs: Array3<f64>) -> Array3<f64> {
