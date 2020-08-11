@@ -1,6 +1,6 @@
 {
     data: [
         "../../output/cartographer/fog.nc",
-        "../../output/cartographer/air.nc"
+        // "../../output/cartographer/air.nc"
     ]
 }

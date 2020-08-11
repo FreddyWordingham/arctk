@@ -28,8 +28,15 @@ pub fn main() {
     let params = input(&in_dir, &params_path);
     let (diff_sett, coeffs, mut concs) = build(&in_dir, params);
 
+    println!("-> {}", concs.sum());
+    let path = out_dir.join(&format!("diffusion_0.nc"));
+    println!("Saving: {}", path.display());
+    concs.save(&path).expect("Failed to save diffusion step.");
+
     for i in 0..diff_sett.num_dumps() {
         concs = diffusion::run::single_thread(&diff_sett, &coeffs, concs);
+
+        println!("-> {}", concs.sum());
         let path = out_dir.join(&format!("diffusion_{}.nc", i + 1));
         println!("Saving: {}", path.display());
         concs.save(&path).expect("Failed to save diffusion step.");

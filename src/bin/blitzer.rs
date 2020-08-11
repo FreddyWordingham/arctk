@@ -24,7 +24,7 @@ pub fn main() {
     let data = build(&in_dir, params);
 
     banner::section("Manipulating");
-    let out = &data[0] + &data[1];
+    let out = (&data[0] * 1.0e-3) + 1.0e-4;
 
     banner::section("Saving");
     out.save(&out_dir.join("output.nc"))

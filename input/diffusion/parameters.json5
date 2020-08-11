@@ -6,6 +6,8 @@
         },
         total_time  : 60.0,
         num_dumps   : 10,
-        step_frac   : 0.5
-    }
+        step_frac   : 0.1
+    },
+    coeffs      :   "../../output/blitzer/coeffs.nc",
+    init_concs  :   "../../output/blitzer/init_concs.nc"
 }
