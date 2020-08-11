@@ -32,7 +32,7 @@ impl Samples {
 }
 
 impl Display for Samples {
-    #[allow(clippy::result_expect_used)]
+    #[allow(clippy::expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         if let Some(ambient_occlusion) = self.ambient_occlusion {

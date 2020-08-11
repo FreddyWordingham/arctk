@@ -69,7 +69,7 @@ impl AddAssign<&Self> for Data {
 }
 
 impl Display for Data {
-    #[allow(clippy::result_expect_used)]
+    #[allow(clippy::expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "cell volume", self.cell_vol, "m^3")?;

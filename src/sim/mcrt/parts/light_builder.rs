@@ -34,7 +34,7 @@ impl Build for LightBuilder {
 }
 
 impl Display for LightBuilder {
-    #[allow(clippy::result_expect_used)]
+    #[allow(clippy::expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "power", self.power, "J/s")?;

@@ -11,7 +11,7 @@ use rand::{rngs::ThreadRng, Rng};
 use std::f64::consts::PI;
 
 /// Simulate the life of a within the photon.
-#[allow(clippy::option_expect_used)]
+#[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
 pub fn simulate_photon(

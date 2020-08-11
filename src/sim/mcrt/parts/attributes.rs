@@ -21,7 +21,7 @@ pub enum Attributes {
 }
 
 impl Display for Attributes {
-    #[allow(clippy::result_expect_used)]
+    #[allow(clippy::expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         let kind = match self {

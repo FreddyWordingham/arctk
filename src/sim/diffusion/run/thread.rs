@@ -9,7 +9,7 @@ use ndarray_stats::QuantileExt;
 
 /// Run a single-threaded diffusion simulation.
 #[allow(clippy::module_name_repetitions)]
-#[allow(clippy::result_expect_used)]
+#[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
 pub fn single_thread(sett: &Settings, coeffs: &Array3<f64>, mut concs: Array3<f64>) -> Array3<f64> {

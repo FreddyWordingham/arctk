@@ -40,7 +40,7 @@ impl Settings {
 }
 
 impl Display for Settings {
-    #[allow(clippy::result_expect_used)]
+    #[allow(clippy::expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "block size", self.block_size)?;

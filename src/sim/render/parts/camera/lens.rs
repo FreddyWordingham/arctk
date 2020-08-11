@@ -27,7 +27,7 @@ impl Lens {
 }
 
 impl Display for Lens {
-    #[allow(clippy::result_expect_used)]
+    #[allow(clippy::expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(
