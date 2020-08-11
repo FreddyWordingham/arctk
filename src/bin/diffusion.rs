@@ -14,6 +14,10 @@ use std::{
 struct Parameters {
     /// Diffusion simulation settings.
     sett: diffusion::Settings,
+    /// Path to the diffusion coefficient data cube.
+    coeffs: PathBuf,
+    /// Path to the initial concentration data cube.
+    init_concs: PathBuf,
 }
 
 /// Main function.
@@ -76,23 +80,15 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64>, Array3<f64>) {
+fn build(in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64>, Array3<f64>) {
     banner::section("Building");
     banner::sub_section("Diffusion Settings");
     let diff_sett = params.sett;
     report!("Diffusion settings", &diff_sett);
 
     banner::sub_section("Coefficents");
-    let res = [61, 61, 61];
-    let mut coeffs = Vec::with_capacity(res[X] * res[Y] * res[Z]);
-    for _ in 0..res[X] {
-        for _ in 0..res[Y] {
-            for _ in 0..res[Z] {
-                coeffs.push(1e-3);
-            }
-        }
-    }
-    let coeffs = Array3::from_shape_vec(res, coeffs).expect("Failed to create coefficient array.");
+    let coeffs =
+        Array3::load(&in_dir.join(params.coeffs)).expect("Failed to load coefficient array.");
     report!(
         "Minimum coefficient",
         coeffs
@@ -109,18 +105,8 @@ fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64
     );
 
     banner::sub_section("Concentration");
-    let res = [61, 61, 61];
-    let mut concs = Vec::with_capacity(res[X] * res[Y] * res[Z]);
-    for _ in 0..res[X] {
-        for _ in 0..res[Y] {
-            for _ in 0..res[Z] {
-                concs.push(0.0);
-            }
-        }
-    }
-    let mut concs =
-        Array3::from_shape_vec(res, concs).expect("Could not create concentration array.");
-    concs[[30, 30, 30]] = 1.0;
+    let concs = Array3::load(&in_dir.join(params.init_concs))
+        .expect("Failed to load initial concentration array.");
     report!(
         "Minimum concentration",
         concs
