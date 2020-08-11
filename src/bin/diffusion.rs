@@ -19,11 +19,17 @@ struct Parameters {
 pub fn main() {
     banner::title("Diffusion");
 
-    let (params_path, in_dir, _out_dir) = init();
+    let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (diff_sett, concs, coeffs) = build(&in_dir, params);
+    let (diff_sett, mut concs, coeffs) = build(&in_dir, params);
     let input = diffusion::Scene::new(&diff_sett, &coeffs);
-    let data = diffusion::run::multi_thread(&input, concs);
+
+    for i in 0..10 {
+        concs = diffusion::run::multi_thread(&input, concs);
+        let path = out_dir.join(&format!("diffusion_{}.nc", i));
+        println!("Saving: {}", path.display());
+        concs.save(&path).expect("Failed to save diffusion step.");
+    }
 
     banner::section("Finished");
 }
