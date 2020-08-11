@@ -1,10 +1,10 @@
 {
     grid: {
         boundary: {
-            mins: [-2,-2,-2],
-            maxs: [ 2, 2, 2]
+            mins: [-5,-5,-5],
+            maxs: [ 5, 5, 5]
         },
-        res: [256,256,256]
+        res: [65,65,65]
     },
     tree: {
         tar_tris: 5,
@@ -12,18 +12,17 @@
         padding: 0.1
     },
     sett: {
-        cast        : {Soft:[7,[0.01232,0.013123,-0.023312],0.1]},
+        // cast        : {Radiant:17},
+        cast        : {Soft:[7,[-1,0,0],0.1]},
         // cast        : {Direction:[0,0,-1]},
         // cast        : {Target:[0.01232,0.013123,-0.023312]},
         block_size  : 1000,
         bump_dist   : 1e-6
     },
     surfs: {
-        cube    : [['objs/test/cube.obj'], null],
-        sphere  : [['objs/test/sphere.obj'], null]
+        torus   : [['objs/test/torus_knot.obj'], null],
     },
     inters: {
-        cube    : ['fog', 'air'],
-        sphere  : ['water', 'fog']
+        torus    : ['fog', 'air']
     }
 }
