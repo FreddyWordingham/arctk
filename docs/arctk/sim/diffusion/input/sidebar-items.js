@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["settings","Settings implementation."]]});

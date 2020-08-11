@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["cartographer","Cartography simulation module."],["mcrt","MCRT simulation module."],["render","Rendering simulation module."]]});
+initSidebarItems({"mod":[["cartographer","Cartography simulation module."],["diffusion","Diffusion simulation module."],["mcrt","MCRT simulation module."],["render","Rendering simulation module."]]});

@@ -5,7 +5,7 @@
             maxs:   [ 1, 1, 1]
         },
         total_time  : 60.0,
-        num_dumps   : 10,
+        num_dumps   : 100,
         step_frac   : 0.1
     },
     coeffs      :   "../../output/blitzer/coeffs.nc",
