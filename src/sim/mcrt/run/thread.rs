@@ -12,7 +12,7 @@ use std::sync::{Arc, Mutex};
 /// # Errors
 /// if the progress bad can not be locked.
 #[allow(clippy::module_name_repetitions)]
-#[allow(clippy::option_expect_used)]
+#[allow(clippy::expect_used)]
 #[inline]
 pub fn multi_thread(scene: &Scene, light: &Light) -> Result<Data, Error> {
     let pb = Bar::new("Multi-threaded", scene.sett.num_phot());
@@ -46,7 +46,7 @@ pub fn single_thread(scene: &Scene, light: &Light) -> Data {
 
 /// Run and MCRT simulation using a single thread.
 #[allow(clippy::module_name_repetitions)]
-#[allow(clippy::result_expect_used)]
+#[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
 pub fn thread(pb: &Arc<Mutex<Bar>>, scene: &Scene, light: &Light) -> Data {

@@ -48,7 +48,7 @@ impl Sensor {
 }
 
 impl Display for Sensor {
-    #[allow(clippy::result_expect_used)]
+    #[allow(clippy::expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "res", &format!("{} x {}", self.res.0, self.res.1))?;
