@@ -3,6 +3,7 @@
 use arctk::*;
 use attr::input;
 use ndarray::Array3;
+use ndarray_stats::QuantileExt;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -95,6 +96,20 @@ fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64
     let mut concs =
         Array3::from_shape_vec(res, concs).expect("Could not create concentration array.");
     concs[[30, 30, 30]] = 1.0;
+    report!(
+        "Minimum concentration",
+        concs
+            .min()
+            .expect("Failed to determine minimum diffusion concentration."),
+        "X"
+    );
+    report!(
+        "Maximum concentration",
+        concs
+            .max()
+            .expect("Failed to determine maximum diffusion concentration."),
+        "X"
+    );
 
     banner::sub_section("Coefficents");
     let res = [61, 61, 61];
@@ -106,7 +121,21 @@ fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64
             }
         }
     }
-    let coeffs = Array3::from_shape_vec(res, coeffs).expect("Could not create coefficient array.");
+    let coeffs = Array3::from_shape_vec(res, coeffs).expect("Failed to create coefficient array.");
+    report!(
+        "Minimum coefficient",
+        coeffs
+            .min()
+            .expect("Failed to determine minimum diffusion coefficient."),
+        "X"
+    );
+    report!(
+        "Maximum coefficient",
+        coeffs
+            .max()
+            .expect("Failed to determine maximum diffusion coefficient."),
+        "X"
+    );
 
     (diff_sett, concs, coeffs)
 }
