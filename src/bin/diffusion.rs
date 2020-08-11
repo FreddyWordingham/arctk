@@ -26,7 +26,7 @@ pub fn main() {
 
     for i in 0..diff_sett.num_dumps() {
         concs = diffusion::run::single_thread(&diff_sett, &coeffs, concs);
-        let path = out_dir.join(&format!("diffusion_{}.nc", i));
+        let path = out_dir.join(&format!("diffusion_{}.nc", i + 1));
         println!("Saving: {}", path.display());
         concs.save(&path).expect("Failed to save diffusion step.");
     }
