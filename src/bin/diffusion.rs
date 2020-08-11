@@ -96,7 +96,7 @@ fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64
         Array3::from_shape_vec(res, concs).expect("Could not create concentration array.");
     concs[[30, 30, 30]] = 1.0;
 
-    banner::sub_section("Concentration");
+    banner::sub_section("Coefficents");
     let res = [61, 61, 61];
     let mut coeffs = Vec::with_capacity(res[X] * res[Y] * res[Z]);
     for _ in 0..res[X] {
