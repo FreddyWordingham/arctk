@@ -78,13 +78,6 @@ impl AddAssign<&Self> for Output {
 impl Save for Output {
     #[inline]
     fn save(&self, out_dir: &Path) -> Result<(), Error> {
-        // Get current time string.
-        let time = chrono::offset::Local::now()
-            .format("%Y%m%d%H%M%S")
-            .to_string();
-        let path = out_dir.join(time);
-        std::fs::create_dir(&path)?;
-
-        self.save_mat_maps(&path)
+        self.save_mat_maps(out_dir)
     }
 }
