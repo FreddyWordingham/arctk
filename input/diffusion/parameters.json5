@@ -4,7 +4,8 @@
             mins:   [-1,-1,-1],
             maxs:   [ 1, 1, 1]
         },
-        total_time: 6.0,
-        step_frac: 0.1
+        total_time  : 60.0,
+        num_dumps   : 10,
+        step_frac   : 0.1
     }
 }

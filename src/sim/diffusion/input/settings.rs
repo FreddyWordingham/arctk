@@ -28,9 +28,9 @@ impl Display for Settings {
     #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
-        display_field_ln!(fmt, "boundary", &self.boundary, "m")?;
-        display_field!(fmt, "number of dumps", self.num_dumps)?;
-        display_field!(fmt, "total time", self.total_time, "s")?;
+        display_field_ln!(fmt, "boundary", &self.boundary)?;
+        display_field_ln!(fmt, "number of dumps", self.num_dumps)?;
+        display_field_ln!(fmt, "total time", self.total_time, "s")?;
         display_field!(fmt, "step fraction", self.step_frac)
     }
 }
