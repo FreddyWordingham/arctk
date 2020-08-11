@@ -20,17 +20,16 @@ struct Parameters {
 pub fn main() {
     banner::title("Diffusion");
 
-    let (params_path, in_dir, _out_dir) = init();
+    let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (diff_sett, mut concs, coeffs) = build(&in_dir, params);
-    // let input = diffusion::Scene::new(&diff_sett, &coeffs);
+    let (diff_sett, coeffs, mut concs) = build(&in_dir, params);
 
-    // for i in 0..10 {
-    //     concs = diffusion::run::multi_thread(&input, concs);
-    //     let path = out_dir.join(&format!("diffusion_{}.nc", i));
-    //     println!("Saving: {}", path.display());
-    //     concs.save(&path).expect("Failed to save diffusion step.");
-    // }
+    for i in 0..diff_sett.num_dumps() {
+        concs = diffusion::run::single_thread(&diff_sett, &coeffs, concs);
+        let path = out_dir.join(&format!("diffusion_{}.nc", i));
+        println!("Saving: {}", path.display());
+        concs.save(&path).expect("Failed to save diffusion step.");
+    }
 
     banner::section("Finished");
 }
@@ -83,6 +82,32 @@ fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64
     let diff_sett = params.sett;
     report!("Diffusion settings", &diff_sett);
 
+    banner::sub_section("Coefficents");
+    let res = [61, 61, 61];
+    let mut coeffs = Vec::with_capacity(res[X] * res[Y] * res[Z]);
+    for _ in 0..res[X] {
+        for _ in 0..res[Y] {
+            for _ in 0..res[Z] {
+                coeffs.push(1e-3);
+            }
+        }
+    }
+    let coeffs = Array3::from_shape_vec(res, coeffs).expect("Failed to create coefficient array.");
+    report!(
+        "Minimum coefficient",
+        coeffs
+            .min()
+            .expect("Failed to determine minimum diffusion coefficient."),
+        "X"
+    );
+    report!(
+        "Maximum coefficient",
+        coeffs
+            .max()
+            .expect("Failed to determine maximum diffusion coefficient."),
+        "X"
+    );
+
     banner::sub_section("Concentration");
     let res = [61, 61, 61];
     let mut concs = Vec::with_capacity(res[X] * res[Y] * res[Z]);
@@ -111,31 +136,5 @@ fn build(_in_dir: &Path, params: Parameters) -> (diffusion::Settings, Array3<f64
         "X"
     );
 
-    banner::sub_section("Coefficents");
-    let res = [61, 61, 61];
-    let mut coeffs = Vec::with_capacity(res[X] * res[Y] * res[Z]);
-    for _ in 0..res[X] {
-        for _ in 0..res[Y] {
-            for _ in 0..res[Z] {
-                coeffs.push(1e-3);
-            }
-        }
-    }
-    let coeffs = Array3::from_shape_vec(res, coeffs).expect("Failed to create coefficient array.");
-    report!(
-        "Minimum coefficient",
-        coeffs
-            .min()
-            .expect("Failed to determine minimum diffusion coefficient."),
-        "X"
-    );
-    report!(
-        "Maximum coefficient",
-        coeffs
-            .max()
-            .expect("Failed to determine maximum diffusion coefficient."),
-        "X"
-    );
-
-    (diff_sett, concs, coeffs)
+    (diff_sett, coeffs, concs)
 }
