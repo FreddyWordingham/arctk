@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["input","Rendering simulation module."],["output","Rendering simulation module."],["parts","Rendering parts module."],["run","Rendering run module."]]});
+initSidebarItems({"mod":[["input","Input sub-module."],["output","Output sub-module."],["parts","Rendering simulation parts sub-module."],["run","Rendering run module."]]});

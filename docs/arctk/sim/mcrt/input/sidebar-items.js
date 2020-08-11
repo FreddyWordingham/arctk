@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Input","Cartographer mapping input structure."]]});
+initSidebarItems({"mod":[["scene","MCRT simulation input structure."],["settings","Settings implementation."]]});

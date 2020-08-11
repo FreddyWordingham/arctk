@@ -69,12 +69,6 @@
 <span id="69">69</span>
 <span id="70">70</span>
 <span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
-<span id="74">74</span>
-<span id="75">75</span>
-<span id="76">76</span>
-<span id="77">77</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Tracer structure.</span>
 
@@ -82,11 +76,10 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>, <span class="prelude-ty">Result</span>};
 
 <span class="doccomment">/// Colouring tracer.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Tracer</span> {
     <span class="doccomment">/// Internal ray.</span>
     <span class="ident">ray</span>: <span class="ident">Ray</span>,
-    <span class="doccomment">/// Generation.</span>
-    <span class="ident">gen</span>: <span class="ident">i32</span>,
     <span class="doccomment">/// Weighting power.</span>
     <span class="ident">weight</span>: <span class="ident">f64</span>,
     <span class="doccomment">/// Cumulative distance travelled.</span>
@@ -95,19 +88,15 @@
 
 <span class="kw">impl</span> <span class="ident">Tracer</span> {
     <span class="macro">access</span><span class="macro">!</span>(<span class="ident">ray</span>, <span class="ident">Ray</span>);
-    <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">gen</span>, <span class="ident">i32</span>);
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">dist_travelled</span>, <span class="ident">f64</span>);
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">weight</span>, <span class="ident">weight_mut</span>, <span class="ident">f64</span>);
 
     <span class="doccomment">/// Construct a new instance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">ray</span>: <span class="ident">Ray</span>, <span class="ident">gen</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">gen</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span>);
-
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">ray</span>: <span class="ident">Ray</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">ray</span>,
-            <span class="ident">gen</span>,
             <span class="ident">weight</span>: <span class="number">1.0</span>,
             <span class="ident">dist_travelled</span>: <span class="number">0.0</span>,
         }
@@ -148,10 +137,9 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span> {
         <span class="macro">display_field_ln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;ray&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ray</span>)<span class="question-mark">?</span>;
-        <span class="macro">display_field_ln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;generation&quot;</span>, <span class="self">self</span>.<span class="ident">gen</span>)<span class="question-mark">?</span>;
         <span class="macro">display_field_ln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;weighting&quot;</span>, <span class="self">self</span>.<span class="ident">weight</span>)<span class="question-mark">?</span>;
         <span class="macro">display_field</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;distance travelled&quot;</span>, <span class="self">self</span>.<span class="ident">dist_travelled</span>, <span class="string">&quot;m&quot;</span>)
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "arctk";</script><script src="../../../../../aliases.js"></script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "arctk";</script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>

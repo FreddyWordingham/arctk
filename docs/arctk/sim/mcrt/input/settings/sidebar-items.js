@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Settings","MCRT settings structure."]]});

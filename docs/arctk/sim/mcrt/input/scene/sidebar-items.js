@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Scene","MCRT main input structure."]]});

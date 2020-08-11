@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Attributes","Surface attributes."]]});

@@ -119,9 +119,6 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
-<span id="122">122</span>
-<span id="123">123</span>
-<span id="124">124</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Illumination functions.</span>
 
@@ -176,11 +173,11 @@
             <span class="kw">let</span> (<span class="ident">r</span>, <span class="ident">theta</span>) <span class="op">=</span> <span class="ident">golden</span>::<span class="ident">circle</span>(<span class="ident">n</span>, <span class="ident">samples</span>);
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">soft_ray</span> <span class="op">=</span> <span class="ident">light_ray</span>.<span class="ident">clone</span>();
             <span class="ident">soft_ray</span>.<span class="ident">rotate</span>(<span class="ident">r</span> <span class="op">*</span> <span class="ident">shader</span>.<span class="ident">sky</span>().<span class="ident">sun_rad</span>(), <span class="ident">theta</span> <span class="op">+</span> <span class="ident">offset</span>);
-            <span class="ident">total</span> <span class="op">+</span><span class="op">=</span> <span class="ident">visibility</span>(<span class="ident">scene</span>, <span class="ident">Tracer</span>::<span class="ident">new</span>(<span class="ident">soft_ray</span>, <span class="op">-</span><span class="number">1</span>), <span class="number">1.0</span>);
+            <span class="ident">total</span> <span class="op">+</span><span class="op">=</span> <span class="ident">visibility</span>(<span class="ident">scene</span>, <span class="ident">Tracer</span>::<span class="ident">new</span>(<span class="ident">soft_ray</span>), <span class="number">1.0</span>);
         }
         <span class="ident">total</span> <span class="op">/</span> <span class="ident">f64</span>::<span class="ident">from</span>(<span class="ident">samples</span>)
     } <span class="kw">else</span> {
-        <span class="ident">visibility</span>(<span class="ident">scene</span>, <span class="ident">Tracer</span>::<span class="ident">new</span>(<span class="ident">light_ray</span>, <span class="op">-</span><span class="number">1</span>), <span class="number">1.0</span>)
+        <span class="ident">visibility</span>(<span class="ident">scene</span>, <span class="ident">Tracer</span>::<span class="ident">new</span>(<span class="ident">light_ray</span>), <span class="number">1.0</span>)
     };
 
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">samples</span>) <span class="op">=</span> <span class="ident">shader</span>.<span class="ident">samples</span>().<span class="ident">ambient_occlusion</span>() {
@@ -192,7 +189,7 @@
             <span class="kw">let</span> (<span class="ident">phi</span>, <span class="ident">theta</span>) <span class="op">=</span> <span class="ident">golden</span>::<span class="ident">hemisphere</span>(<span class="ident">n</span>, <span class="ident">samples</span>);
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ambient_ray</span> <span class="op">=</span> <span class="ident">norm_ray</span>.<span class="ident">clone</span>();
             <span class="ident">ambient_ray</span>.<span class="ident">rotate</span>(<span class="ident">phi</span>, <span class="ident">theta</span> <span class="op">+</span> <span class="ident">offset</span>);
-            <span class="ident">total</span> <span class="op">+</span><span class="op">=</span> <span class="ident">visibility</span>(<span class="ident">scene</span>, <span class="ident">Tracer</span>::<span class="ident">new</span>(<span class="ident">ambient_ray</span>, <span class="op">-</span><span class="number">1</span>), <span class="number">1.0</span>);
+            <span class="ident">total</span> <span class="op">+</span><span class="op">=</span> <span class="ident">visibility</span>(<span class="ident">scene</span>, <span class="ident">Tracer</span>::<span class="ident">new</span>(<span class="ident">ambient_ray</span>), <span class="number">1.0</span>);
         }
         <span class="kw">let</span> <span class="ident">ambient</span> <span class="op">=</span> (<span class="ident">total</span> <span class="op">/</span> <span class="ident">f64</span>::<span class="ident">from</span>(<span class="ident">samples</span>)).<span class="ident">powi</span>(<span class="ident">shader</span>.<span class="ident">shadow</span>().<span class="ident">ao_pow</span>());
 
@@ -220,9 +217,9 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="ident">scene</span>.<span class="ident">attrs</span>.<span class="ident">map</span>().<span class="ident">get</span>(<span class="ident">group</span>) {
             <span class="kw">match</span> <span class="ident">attr</span> {
                 <span class="ident">Attributes</span>::<span class="ident">Luminous</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">return</span> <span class="ident">vis</span>;
+                    <span class="kw">return</span> <span class="number">1.0</span>;
                 }
-                <span class="ident">Attributes</span>::<span class="ident">Transparent</span> { <span class="ident">abs</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Attributes</span>::<span class="ident">Transparent</span> { <span class="ident">abs</span> } <span class="op">|</span> <span class="ident">Attributes</span>::<span class="ident">Refractive</span> { <span class="ident">abs</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">vis</span> <span class="kw-2">*</span><span class="op">=</span> <span class="number">1.0</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">abs</span>;
                     <span class="ident">trace</span>.<span class="ident">travel</span>(<span class="ident">hit</span>.<span class="ident">dist</span>() <span class="op">+</span> <span class="ident">bump_dist</span>);
                 }
@@ -231,9 +228,6 @@
                     <span class="ident">vis</span> <span class="kw-2">*</span><span class="op">=</span> <span class="number">1.0</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">abs</span>;
                     <span class="ident">trace</span>.<span class="ident">set_dir</span>(<span class="ident">Crossing</span>::<span class="ident">calc_ref_dir</span>(<span class="ident">trace</span>.<span class="ident">dir</span>(), <span class="ident">hit</span>.<span class="ident">side</span>().<span class="ident">norm</span>()));
                     <span class="ident">trace</span>.<span class="ident">travel</span>(<span class="ident">bump_dist</span>);
-                }
-                <span class="ident">Attributes</span>::<span class="ident">Refractive</span> { .. } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">unimplemented</span><span class="macro">!</span>();
                 }
             }
         } <span class="kw">else</span> {
@@ -248,4 +242,4 @@
     <span class="ident">vis</span>
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "arctk";</script><script src="../../../../../aliases.js"></script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../../";window.currentCrate = "arctk";</script><script src="../../../../../main.js"></script><script src="../../../../../source-script.js"></script><script src="../../../../../source-files.js"></script><script defer src="../../../../../search-index.js"></script></body></html>

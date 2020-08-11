@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["aspect_ratio","Formula implementation."],["gradient_builder","GradientBuilder form implementation."],["image","Image alias."]]});
+initSidebarItems({"mod":[["aspect_ratio","Formula implementation."],["gradient_builder","Gradient builder implementation."],["image","Image alias."]]});

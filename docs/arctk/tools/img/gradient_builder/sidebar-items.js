@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["GradientBuilder","Loadable colour GradientBuilder structure."]]});
+initSidebarItems({"struct":[["GradientBuilder","Loadable colour gradient structure."]]});

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Output","Test engine output structure."]]});
+initSidebarItems({"mod":[["data","MCRT output structure."],["sample","MCRT sampling information structure."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["simulate_photon","Simulate the life of a within the photon."]]});
