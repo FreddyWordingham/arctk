@@ -74,6 +74,7 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
+#[allow(clippy::type_complexity)]
 fn build(
     in_dir: &Path,
     params: Parameters,

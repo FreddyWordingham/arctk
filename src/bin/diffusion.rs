@@ -29,7 +29,7 @@ pub fn main() {
     let (diff_sett, coeffs, mut concs) = build(&in_dir, params);
 
     println!("-> {}", concs.sum());
-    let path = out_dir.join(&format!("diffusion_0.nc"));
+    let path = out_dir.join("diffusion_0.nc");
     println!("Saving: {}", path.display());
     concs.save(&path).expect("Failed to save diffusion step.");
 
