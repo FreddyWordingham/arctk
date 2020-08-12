@@ -11,7 +11,6 @@ use std::sync::{Arc, Mutex};
 /// # Errors
 /// if a mutex unwrapping failed or
 /// an arc unwrapping failed.
-#[allow(clippy::option_expect_used)]
 #[inline]
 pub fn map(input: &Input) -> Result<Output, Error> {
     let res = *input.grid.res();
@@ -35,8 +34,6 @@ pub fn map(input: &Input) -> Result<Output, Error> {
 }
 
 /// Map a volume of surfaces using a single thread.
-#[allow(clippy::option_expect_used)]
-#[allow(clippy::result_expect_used)]
 #[inline]
 #[must_use]
 pub fn run_thread(pb: &Arc<Mutex<Bar>>, input: &Input) -> Output {

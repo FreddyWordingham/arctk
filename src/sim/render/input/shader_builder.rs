@@ -69,7 +69,6 @@ impl Build for ShaderBuilder {
 }
 
 impl Display for ShaderBuilder {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "sky", &self.sky)?;

@@ -33,7 +33,6 @@ impl Shadow {
 }
 
 impl Display for Shadow {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "ambient fraction", self.ambient)?;

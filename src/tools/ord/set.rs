@@ -109,7 +109,6 @@ impl<T: Build> Build for Set<T> {
 }
 
 impl<T: Display> Display for Set<T> {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         let mut items = self.0.iter();

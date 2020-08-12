@@ -25,7 +25,6 @@ impl Settings {
 }
 
 impl Display for Settings {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "boundary", &self.boundary)?;

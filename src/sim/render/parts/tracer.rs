@@ -61,7 +61,6 @@ impl Tracer {
 }
 
 impl Display for Tracer {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "ray", &self.ray)?;

@@ -17,7 +17,6 @@ pub struct PerlinMap {
 
 impl PerlinMap {
     /// Construct a new instance.
-    #[allow(clippy::result_expect_used)]
     #[inline]
     #[must_use]
     pub fn new(res: [usize; 2], rng: &mut ThreadRng) -> Self {

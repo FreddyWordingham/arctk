@@ -49,7 +49,6 @@ impl<'a> Scene<'a> {
 }
 
 impl<'a> Display for Scene<'a> {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(fmt, "tree", &self.tree)?;

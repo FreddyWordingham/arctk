@@ -59,7 +59,6 @@ impl Cast {
     }
 
     /// Observe the material seen with a given ray.
-    #[allow(clippy::option_expect_used)]
     #[inline]
     #[must_use]
     pub fn see_mat(input: &Input, ray: Ray) -> Option<Group> {
@@ -86,7 +85,6 @@ impl Cast {
 }
 
 impl Display for Cast {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         let kind = match self {

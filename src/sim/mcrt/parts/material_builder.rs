@@ -52,7 +52,6 @@ impl Build for MaterialBuilder {
 }
 
 impl Display for MaterialBuilder {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "refractive index", &self.ref_index)?;

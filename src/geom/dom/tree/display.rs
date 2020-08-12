@@ -4,7 +4,6 @@ use crate::{report, tree::Cell};
 use std::fmt::{Display, Formatter, Result};
 
 impl<'a> Display for Cell<'a> {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         let name = match self {

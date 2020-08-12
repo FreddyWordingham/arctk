@@ -44,7 +44,6 @@ impl<'a> Event<'a> {
 }
 
 impl<'a> Display for Event<'a> {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         let event = match self {

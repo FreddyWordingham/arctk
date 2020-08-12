@@ -77,7 +77,6 @@ impl AspectRatio {
 }
 
 impl Display for AspectRatio {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         let kind = match self {

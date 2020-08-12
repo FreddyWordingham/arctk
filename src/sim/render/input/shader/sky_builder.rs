@@ -36,7 +36,6 @@ impl Build for SkyBuilder {
 }
 
 impl Display for SkyBuilder {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
         display_field_ln!(fmt, "sky brightness", self.brightness)?;

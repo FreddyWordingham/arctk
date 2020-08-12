@@ -10,6 +10,10 @@
 )]
 #![allow(
     clippy::as_conversions,
+    clippy::cast_possible_truncation,
+    clippy::cast_possible_wrap,
+    clippy::cast_precision_loss,
+    clippy::cast_sign_loss,
     clippy::else_if_without_else,
     clippy::float_arithmetic,
     clippy::implicit_return,
@@ -17,14 +21,10 @@
     clippy::integer_arithmetic,
     clippy::integer_division,
     clippy::modulo_arithmetic,
-    clippy::option_unwrap_used,
     clippy::panic,
     clippy::print_stdout,
     clippy::unreachable,
-    clippy::cast_possible_truncation,
-    clippy::cast_possible_wrap,
-    clippy::cast_precision_loss,
-    clippy::cast_sign_loss
+    clippy::unwrap_used
 )]
 
 pub mod error;

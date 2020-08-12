@@ -119,7 +119,6 @@ impl Grid {
 }
 
 impl Display for Grid {
-    #[allow(clippy::result_expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
         display_field_ln!(
