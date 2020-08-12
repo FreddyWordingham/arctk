@@ -45,7 +45,6 @@ impl Layout {
     /// Construct a new instance.
     /// # Errors
     /// if the material map can not be loaded.
-    #[allow(clippy::option_expect_used)]
     #[inline]
     pub fn load(path: &Path, groups: Vec<Group>) -> Result<Self, Error> {
         let map: Array3<i8> = Array3::load(path)?;

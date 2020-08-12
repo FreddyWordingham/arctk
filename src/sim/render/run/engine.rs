@@ -9,7 +9,6 @@ use rand::rngs::ThreadRng;
 
 /// Rendering engine sampling function.
 #[allow(clippy::never_loop)]
-#[allow(clippy::option_expect_used)]
 #[allow(clippy::single_match_else)]
 #[allow(clippy::too_many_lines)]
 #[inline]

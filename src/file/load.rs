@@ -31,7 +31,6 @@ where
 
 use ndarray::{Array2, Array3, ArrayD};
 impl<T: netcdf::Numeric> Load for ArrayD<T> {
-    #[allow(clippy::option_expect_used)]
     #[inline]
     fn load(path: &Path) -> Result<ArrayD<T>, Error> {
         let file = netcdf::open(path)?;
@@ -42,7 +41,6 @@ impl<T: netcdf::Numeric> Load for ArrayD<T> {
 }
 
 impl<T: netcdf::Numeric> Load for Array2<T> {
-    #[allow(clippy::option_expect_used)]
     #[inline]
     fn load(path: &Path) -> Result<Array2<T>, Error> {
         let arr_d = ArrayD::load(path)?;
@@ -56,7 +54,6 @@ impl<T: netcdf::Numeric> Load for Array2<T> {
 }
 
 impl<T: netcdf::Numeric> Load for Array3<T> {
-    #[allow(clippy::option_expect_used)]
     #[inline]
     fn load(path: &Path) -> Result<Array3<T>, Error> {
         let arr_d = ArrayD::load(path)?;
