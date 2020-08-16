@@ -34,8 +34,6 @@ pub fn start(input: &Input) {
     }
 }
 
-use crate::access;
-
 pub struct Entity {
     /// Position.
     pub pos: [i32; 2],

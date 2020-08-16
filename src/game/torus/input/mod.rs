@@ -1,8 +1,10 @@
 //! Input sub-module.
 
+pub mod symbols;
 pub mod system;
 pub mod world;
 
+pub use self::symbols::*;
 pub use self::system::*;
 pub use self::world::*;
 
@@ -12,13 +14,19 @@ pub struct Input<'a> {
     pub sys: &'a System,
     /// World settings.
     pub world: &'a World,
+    /// Symbols settings.
+    pub symbols: &'a Symbols,
 }
 
 impl<'a> Input<'a> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(sys: &'a System, world: &'a World) -> Self {
-        Self { sys, world }
+    pub const fn new(sys: &'a System, world: &'a World, symbols: &'a Symbols) -> Self {
+        Self {
+            sys,
+            world,
+            symbols,
+        }
     }
 }

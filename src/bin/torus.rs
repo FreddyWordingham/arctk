@@ -14,6 +14,8 @@ struct Parameters {
     system: game::torus::System,
     /// World settings.
     world: game::torus::World,
+    /// Symbol settings.
+    symbols: game::torus::Symbols,
 }
 
 /// Main function.
@@ -25,7 +27,7 @@ pub fn main() {
     report!("world", &params.world);
     report!("system", &params.system);
 
-    let sett = game::torus::Input::new(&params.system, &params.world);
+    let sett = game::torus::Input::new(&params.system, &params.world, &params.symbols);
     game::torus::start(&sett);
 
     banner::section("Finished");
