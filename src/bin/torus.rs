@@ -41,13 +41,6 @@ fn init() -> (PathBuf, PathBuf, PathBuf) {
 
     let (in_dir, out_dir) = dir::io_dirs(
         Some(cwd.join("input").join(exec_name.clone())),
-        // Some(
-        //     cwd.join("output").join(exec_name).join(
-        //         chrono::offset::Local::now()
-        //             .format("%Y%m%d%H%M%S")
-        //             .to_string(),
-        //     ),
-        // ),
         Some(cwd.join("output").join(exec_name)),
     )
     .expect("Could not initialise directories");
