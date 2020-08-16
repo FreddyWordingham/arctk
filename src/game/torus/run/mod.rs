@@ -5,8 +5,8 @@ use crate::{
     X, Y,
 };
 
-use tcod::colors::*;
-use tcod::console::*;
+use tcod::colors::WHITE;
+use tcod::console::{BackgroundFlag, Console, FontLayout, FontType, Root};
 
 /// Start a new game.
 #[inline]
@@ -42,6 +42,7 @@ fn render(window: &mut Root, symbols: &Symbols, player: &Entity) {
     window.flush();
 }
 
+/// Game entity.
 pub struct Entity {
     /// Position.
     pub pos: [i32; 2],
@@ -51,7 +52,7 @@ impl Entity {
     /// Construct a new entity.
     #[inline]
     #[must_use]
-    pub fn new(pos: [i32; 2]) -> Self {
+    pub const fn new(pos: [i32; 2]) -> Self {
         Self { pos }
     }
 }
