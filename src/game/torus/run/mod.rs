@@ -1,12 +1,16 @@
 //! Game running module.
 
+pub mod render;
+
+pub use self::render::*;
+
 use crate::{
     game::torus::{Coor2, Draw, Entity, Input, Move2},
     X, Y,
 };
 
 use tcod::colors::WHITE;
-use tcod::console::{BackgroundFlag, Console, FontLayout, FontType, Root};
+use tcod::console::{FontLayout, FontType, Root};
 use tcod::input::Key;
 
 /// Start a new game.
@@ -29,22 +33,11 @@ pub fn start(input: &Input) {
     );
 
     while !window.window_closed() {
-        render(&mut window, &player);
+        render::entities(&mut window, &player);
 
         let key = window.wait_for_keypress(true);
         handle_keys(key, &mut player);
     }
-}
-
-/// Render the current state of the game.
-fn render(window: &mut Root, player: &Entity) {
-    window.set_default_foreground(player.draw().col());
-    window.clear();
-
-    let px = player.pos()[X];
-    let py = window.height() - player.pos()[Y];
-    window.put_char(px, py, player.draw().sym(), BackgroundFlag::None);
-    window.flush();
 }
 
 /// Handle key input.
