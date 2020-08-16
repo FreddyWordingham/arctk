@@ -1,7 +1,7 @@
 //! Game running module.
 
 use crate::{
-    game::torus::{Coor2, Entity, Input, Move2, Symbols},
+    game::torus::{Coor2, Draw, Entity, Input, Move2},
     X, Y,
 };
 
@@ -23,13 +23,13 @@ pub fn start(input: &Input) {
         .init();
     tcod::system::set_fps(input.sys.fps());
 
-    let mut player = Entity::new(Coor2::new(
-        input.sys.resolution()[X] / 2,
-        input.sys.resolution()[Y] / 2,
-    ));
+    let mut player = Entity::new(
+        Coor2::new(input.sys.resolution()[X] / 2, input.sys.resolution()[Y] / 2),
+        Draw::new(input.symbols.player(), WHITE),
+    );
 
     while !window.window_closed() {
-        render(&mut window, input.symbols, &player);
+        render(&mut window, &player);
 
         let key = window.wait_for_keypress(true);
         handle_keys(key, &mut player);
@@ -37,13 +37,13 @@ pub fn start(input: &Input) {
 }
 
 /// Render the current state of the game.
-fn render(window: &mut Root, symbols: &Symbols, player: &Entity) {
-    window.set_default_foreground(WHITE);
+fn render(window: &mut Root, player: &Entity) {
+    window.set_default_foreground(player.draw().col());
     window.clear();
 
     let px = player.pos()[X];
     let py = window.height() - player.pos()[Y];
-    window.put_char(px, py, symbols.player(), BackgroundFlag::None);
+    window.put_char(px, py, player.draw().sym(), BackgroundFlag::None);
     window.flush();
 }
 
