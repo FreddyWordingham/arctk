@@ -1,3 +1,9 @@
 {
-    seed: 0
+    system: {
+        fps:        20,
+        resolution: [80, 50]
+    },
+    world: {
+        seed:   "mdma"
+    },
 }

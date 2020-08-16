@@ -10,8 +10,10 @@ use std::{
 /// Input parameters.
 #[input]
 struct Parameters {
-    /// Seed value.
-    seed: u64,
+    /// System settings.
+    system: game::torus::System,
+    /// World settings.
+    world: game::torus::World,
 }
 
 /// Main function.
@@ -20,7 +22,8 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    report!("seed", params.seed);
+    report!("world", params.world);
+    report!("system", params.system);
 
     banner::section("Finished");
 }
