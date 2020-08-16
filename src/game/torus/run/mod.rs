@@ -7,6 +7,7 @@ use crate::{
 
 use tcod::colors::WHITE;
 use tcod::console::{BackgroundFlag, Console, FontLayout, FontType, Root};
+use tcod::input::{Key, KeyCode};
 
 /// Start a new game.
 #[inline]
@@ -21,11 +22,13 @@ pub fn start(input: &Input) {
         .init();
     tcod::system::set_fps(input.sys.fps());
 
-    let player = Entity::new([1, 1]);
+    let mut player = Entity::new([input.sys.resolution()[X] / 2, input.sys.resolution()[Y] / 2]);
 
     while !window.window_closed() {
         render(&mut window, input.symbols, &player);
-        window.wait_for_keypress(true);
+
+        let key = window.wait_for_keypress(true);
+        handle_keys(key, &mut player);
     }
 }
 
@@ -40,6 +43,31 @@ fn render(window: &mut Root, symbols: &Symbols, player: &Entity) {
         BackgroundFlag::None,
     );
     window.flush();
+}
+
+/// Handle key input.
+fn handle_keys(key: Key, player: &mut Entity) -> bool {
+    match key {
+        // movement keys
+        Key {
+            code: KeyCode::Up, ..
+        } => player.pos[Y] -= 1,
+        Key {
+            code: KeyCode::Down,
+            ..
+        } => player.pos[Y] += 1,
+        Key {
+            code: KeyCode::Left,
+            ..
+        } => player.pos[X] -= 1,
+        Key {
+            code: KeyCode::Right,
+            ..
+        } => player.pos[X] += 1,
+        _ => {}
+    }
+
+    false
 }
 
 /// Game entity.
