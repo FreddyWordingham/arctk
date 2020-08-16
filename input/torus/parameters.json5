@@ -1,8 +1,8 @@
 {
     system: {
         title:      "Arc::Torus",
-        fps:        20,
-        resolution: [80, 50],
+        fps:        100,
+        resolution: [64, 48],
         font:       "fonts/arial10x10.png"
     },
     world: {

@@ -19,6 +19,7 @@ pub fn start(input: &Input) {
         .font_type(FontType::Greyscale)
         .size(input.sys.resolution()[X], input.sys.resolution()[Y])
         .title(input.sys.title())
+        .fullscreen(true)
         .init();
     tcod::system::set_fps(input.sys.fps());
 
@@ -36,12 +37,10 @@ pub fn start(input: &Input) {
 fn render(window: &mut Root, symbols: &Symbols, player: &Entity) {
     window.set_default_foreground(WHITE);
     window.clear();
-    window.put_char(
-        player.pos[X],
-        player.pos[Y],
-        symbols.player(),
-        BackgroundFlag::None,
-    );
+
+    let px = player.pos[X];
+    let py = window.height() - player.pos[Y];
+    window.put_char(px, py, symbols.player(), BackgroundFlag::None);
     window.flush();
 }
 
