@@ -22,8 +22,11 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    report!("world", params.world);
-    report!("system", params.system);
+    report!("world", &params.world);
+    report!("system", &params.system);
+
+    let sett = game::torus::Input::new(&params.system, &params.world);
+    game::torus::start(&sett);
 
     banner::section("Finished");
 }
