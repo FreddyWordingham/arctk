@@ -1,13 +1,13 @@
 //! Game running module.
 
 use crate::{
-    game::torus::{Input, Symbols},
+    game::torus::{Coor2, Entity, Input, Move2, Symbols},
     X, Y,
 };
 
 use tcod::colors::WHITE;
 use tcod::console::{BackgroundFlag, Console, FontLayout, FontType, Root};
-use tcod::input::{Key, KeyCode};
+use tcod::input::Key;
 
 /// Start a new game.
 #[inline]
@@ -23,7 +23,10 @@ pub fn start(input: &Input) {
         .init();
     tcod::system::set_fps(input.sys.fps());
 
-    let mut player = Entity::new([input.sys.resolution()[X] / 2, input.sys.resolution()[Y] / 2]);
+    let mut player = Entity::new(Coor2::new(
+        input.sys.resolution()[X] / 2,
+        input.sys.resolution()[Y] / 2,
+    ));
 
     while !window.window_closed() {
         render(&mut window, input.symbols, &player);
@@ -38,8 +41,8 @@ fn render(window: &mut Root, symbols: &Symbols, player: &Entity) {
     window.set_default_foreground(WHITE);
     window.clear();
 
-    let px = player.pos[X];
-    let py = window.height() - player.pos[Y];
+    let px = player.pos()[X];
+    let py = window.height() - player.pos()[Y];
     window.put_char(px, py, symbols.player(), BackgroundFlag::None);
     window.flush();
 }
@@ -47,25 +50,10 @@ fn render(window: &mut Root, symbols: &Symbols, player: &Entity) {
 /// Handle key input.
 fn handle_keys(key: Key, player: &mut Entity) {
     match key {
-        Key { printable: 'w', .. } => player.pos[Y] += 1,
-        Key { printable: 's', .. } => player.pos[Y] -= 1,
-        Key { printable: 'd', .. } => player.pos[X] += 1,
-        Key { printable: 'a', .. } => player.pos[X] -= 1,
+        Key { printable: 'w', .. } => player.travel(Move2::new(0, 1)),
+        Key { printable: 's', .. } => player.travel(Move2::new(0, -1)),
+        Key { printable: 'd', .. } => player.travel(Move2::new(1, 0)),
+        Key { printable: 'a', .. } => player.travel(Move2::new(-1, 0)),
         _ => {}
-    }
-}
-
-/// Game entity.
-pub struct Entity {
-    /// Position.
-    pub pos: [i32; 2],
-}
-
-impl Entity {
-    /// Construct a new entity.
-    #[inline]
-    #[must_use]
-    pub const fn new(pos: [i32; 2]) -> Self {
-        Self { pos }
     }
 }
