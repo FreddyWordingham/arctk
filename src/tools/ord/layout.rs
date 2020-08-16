@@ -45,6 +45,7 @@ impl Layout {
     /// Construct a new instance.
     /// # Errors
     /// if the material map can not be loaded.
+    #[allow(clippy::expect_used)]
     #[inline]
     pub fn load(path: &Path, groups: Vec<Group>) -> Result<Self, Error> {
         let map: Array3<i8> = Array3::load(path)?;
@@ -70,6 +71,7 @@ impl Layout {
     /// Convert a valid group to it's corresponding id.
     #[inline]
     #[must_use]
+    #[allow(clippy::expect_used)]
     fn group_to_id(&self, group: &Group) -> usize {
         self.groups
             .binary_search(group)
