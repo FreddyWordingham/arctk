@@ -1,6 +1,9 @@
 //! Game running module.
 
-use crate::{game::torus::Input, X, Y};
+use crate::{
+    game::torus::{Input, Symbols},
+    X, Y,
+};
 
 use tcod::colors::*;
 use tcod::console::*;
@@ -21,17 +24,22 @@ pub fn start(input: &Input) {
     let player = Entity::new([1, 1]);
 
     while !window.window_closed() {
-        window.set_default_foreground(WHITE);
-        window.clear();
-        window.put_char(
-            player.pos[X],
-            player.pos[Y],
-            input.symbols.player(),
-            BackgroundFlag::None,
-        );
-        window.flush();
+        render(&mut window, input.symbols, &player);
         window.wait_for_keypress(true);
     }
+}
+
+/// Render the current state of the game.
+fn render(window: &mut Root, symbols: &Symbols, player: &Entity) {
+    window.set_default_foreground(WHITE);
+    window.clear();
+    window.put_char(
+        player.pos[X],
+        player.pos[Y],
+        symbols.player(),
+        BackgroundFlag::None,
+    );
+    window.flush();
 }
 
 pub struct Entity {
