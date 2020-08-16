@@ -46,28 +46,14 @@ fn render(window: &mut Root, symbols: &Symbols, player: &Entity) {
 }
 
 /// Handle key input.
-fn handle_keys(key: Key, player: &mut Entity) -> bool {
+fn handle_keys(key: Key, player: &mut Entity) {
     match key {
-        // movement keys
-        Key {
-            code: KeyCode::Up, ..
-        } => player.pos[Y] -= 1,
-        Key {
-            code: KeyCode::Down,
-            ..
-        } => player.pos[Y] += 1,
-        Key {
-            code: KeyCode::Left,
-            ..
-        } => player.pos[X] -= 1,
-        Key {
-            code: KeyCode::Right,
-            ..
-        } => player.pos[X] += 1,
+        Key { printable: 'w', .. } => player.pos[Y] += 1,
+        Key { printable: 's', .. } => player.pos[Y] -= 1,
+        Key { printable: 'd', .. } => player.pos[X] += 1,
+        Key { printable: 'a', .. } => player.pos[X] -= 1,
         _ => {}
     }
-
-    false
 }
 
 /// Game entity.
