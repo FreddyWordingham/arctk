@@ -1,10 +1,10 @@
-//! Rendering simulation structure.
+//! System settings structure.
 
 use crate::{clone, display_field, display_field_ln, X, Y};
 use attr::load;
 use std::fmt::{Display, Formatter, Result};
 
-/// Loadable render settings structure.
+/// Loadable system settings structure.
 #[load]
 pub struct System {
     /// Frames-per-second limit.
