@@ -10,6 +10,8 @@ use std::{
 /// Loadable system settings structure.
 #[load]
 pub struct System {
+    /// Window title.
+    title: String,
     /// Frames-per-second limit.
     fps: i32,
     /// Screen resolution.
@@ -22,11 +24,19 @@ impl System {
     clone!(fps, i32);
     clone!(resolution, [i32; 2]);
     access!(font, PathBuf);
+
+    /// Reference the title string.
+    #[inline]
+    #[must_use]
+    pub fn title(&self) -> &str {
+        &self.title
+    }
 }
 
 impl Display for System {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
+        display_field_ln!(fmt, "window title", &self.title)?;
         display_field_ln!(fmt, "fps", self.fps)?;
         display_field_ln!(
             fmt,
