@@ -26,6 +26,7 @@ pub fn main() {
     let params = input(&in_dir, &params_path);
     report!("world", &params.world);
     report!("system", &params.system);
+    report!("symbols", &params.symbols);
 
     let sett = game::torus::Input::new(&params.system, &params.world, &params.symbols);
     game::torus::start(&sett);

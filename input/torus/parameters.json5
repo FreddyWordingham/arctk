@@ -8,4 +8,7 @@
     world: {
         seed:   "mdma"
     },
+    symbols: {
+        player: '@'
+    }
 }
