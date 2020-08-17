@@ -29,6 +29,7 @@ impl Register {
     }
 
     /// Retrieve the chemical index for a given name.
+    #[allow(clippy::expect_used)]
     #[inline]
     #[must_use]
     pub fn chem(&self, name: &str) -> Chem {

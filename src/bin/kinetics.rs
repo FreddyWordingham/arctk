@@ -12,15 +12,21 @@ use std::{
 struct Parameters {
     /// Reaction simulation settings.
     sett: kinetics::Settings,
+    /// Species names.
+    names: Vec<String>,
 }
 
 /// Main function.
 pub fn main() {
-    banner::title("MCRT");
+    banner::title("Kinetics");
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let _react_sett = build(&in_dir, params);
+    let (_react_sett, names) = build(&in_dir, params);
+
+    let reg = kinetics::Register::new(names);
+    report!(reg.chem("ppix"));
+    report!(reg.name(3));
 
     banner::section("Finished");
 }
@@ -67,11 +73,12 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(_in_dir: &Path, params: Parameters) -> kinetics::Settings {
+fn build(_in_dir: &Path, params: Parameters) -> (kinetics::Settings, Vec<String>) {
     banner::section("Building");
     banner::sub_section("Reaction Settings");
     let react_sett = params.sett;
     report!("Reaction settings", &react_sett);
 
-    react_sett
+    let names = params.names;
+    (react_sett, names)
 }
