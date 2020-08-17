@@ -21,9 +21,6 @@ addons:
     - libdw-dev
     - cmake
     - gcc
-    - g++
-    - make
-    - libsdl2-dev
     - binutils-dev
     - libnetcdf-dev
 

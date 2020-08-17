@@ -42,7 +42,7 @@ terminal_size = "0.1.*"
 netcdf = "0.5.*"
 # minifb = "0.17.*"
 
-tcod = "0.15.*"
+# tcod = "0.15.*"
 
 [profile.dev]
 # Development profile: "cargo build".
