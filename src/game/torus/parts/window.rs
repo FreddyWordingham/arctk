@@ -53,10 +53,10 @@ impl Window {
         self.root.wait_for_keypress(true)
     }
 
-    /// Clear the root canvas.
+    /// Clear the back canvas.
     #[inline]
     pub fn clear(&mut self) {
-        self.root.clear()
+        self.back.clear()
     }
 
     /// Flush the root canvas.

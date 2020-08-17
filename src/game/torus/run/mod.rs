@@ -26,6 +26,14 @@ pub fn start(input: &Input) {
         input.symbols.player(),
         WHITE,
     ));
+    ents.push(Entity::new(
+        Coor2::new(
+            input.sys.resolution()[X] / 2 - 5,
+            input.sys.resolution()[Y] / 2 + 2,
+        ),
+        '*',
+        tcod::colors::RED,
+    ));
 
     while !window.root().window_closed() {
         window.clear();
