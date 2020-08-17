@@ -2,6 +2,6 @@
 
 pub mod cartographer;
 pub mod diffusion;
+pub mod kinetics;
 pub mod mcrt;
-pub mod reaction;
 pub mod render;

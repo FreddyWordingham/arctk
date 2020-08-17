@@ -11,7 +11,7 @@ use std::{
 #[input]
 struct Parameters {
     /// Reaction simulation settings.
-    sett: reaction::Settings,
+    sett: kinetics::Settings,
 }
 
 /// Main function.
@@ -67,7 +67,7 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(_in_dir: &Path, params: Parameters) -> reaction::Settings {
+fn build(_in_dir: &Path, params: Parameters) -> kinetics::Settings {
     banner::section("Building");
     banner::sub_section("Reaction Settings");
     let react_sett = params.sett;
