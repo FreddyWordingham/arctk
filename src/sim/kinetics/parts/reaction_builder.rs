@@ -21,7 +21,7 @@ impl Name for ReactionBuilder {
     type Inst = Reaction;
 
     #[inline]
-    fn register(self, reg: &Register) -> Result<Self::Inst, Error> {
+    fn build(self, reg: &Register) -> Result<Self::Inst, Error> {
         let mut reacts = Vec::with_capacity(self.reactants.len());
         for (s, name) in self.reactants {
             reacts.push((s, reg.index(&name)));
@@ -35,7 +35,7 @@ impl Name for ReactionBuilder {
         Ok(Self::Inst::new(
             reacts,
             prods,
-            self.rate.register(reg)?,
+            self.rate.build(reg)?,
             reg.names().len(),
         ))
     }

@@ -13,7 +13,7 @@ impl Name for ConcBuilder {
     type Inst = Array1<f64>;
 
     #[inline]
-    fn register(self, reg: &Register) -> Result<Self::Inst, Error> {
+    fn build(self, reg: &Register) -> Result<Self::Inst, Error> {
         let mut concs = Array1::zeros(reg.names().len());
 
         for (name, c) in self {

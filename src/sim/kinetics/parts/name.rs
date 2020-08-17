@@ -10,5 +10,5 @@ pub trait Name {
     /// Build the instance type.
     /// # Errors
     /// if a component could not be named successfully.
-    fn register(self, reg: &Register) -> Result<Self::Inst, Error>;
+    fn build(self, reg: &Register) -> Result<Self::Inst, Error>;
 }

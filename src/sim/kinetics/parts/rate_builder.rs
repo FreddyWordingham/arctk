@@ -14,7 +14,7 @@ impl Name for RateBuilder {
     type Inst = Rate;
 
     #[inline]
-    fn register(self, reg: &Register) -> Result<Self::Inst, Error> {
+    fn build(self, reg: &Register) -> Result<Self::Inst, Error> {
         let mut orders = Vec::with_capacity(self.1.len());
         for (name, m) in self.1 {
             orders.push((reg.index(&name), m))
