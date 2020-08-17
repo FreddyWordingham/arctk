@@ -3,7 +3,7 @@
 use crate::game::torus::Coor2;
 use tcod::{
     colors::WHITE,
-    console::{Console, Root},
+    console::{Console, Offscreen},
     BackgroundFlag, Color,
 };
 
@@ -28,7 +28,7 @@ pub trait Draw {
 
     /// Draw
     #[inline]
-    fn draw(&self, window: &mut Root) {
+    fn draw(&self, window: &mut Offscreen) {
         window.set_default_foreground(self.col());
 
         let pos = self.pos();

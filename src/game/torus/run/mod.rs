@@ -30,11 +30,12 @@ pub fn start(input: &Input) {
     while !window.root().window_closed() {
         window.clear();
         for ent in &ents {
-            ent.draw(window.root_mut());
+            ent.draw(window.back_mut());
         }
+        window.swap();
         window.flush();
 
-        let key = window.root_mut().wait_for_keypress(true);
+        let key = window.wait_for_keypress();
         if handle_keys(key, &mut ents[0]) {
             break;
         }

@@ -2,16 +2,26 @@
 
 use crate::{access, X, Y};
 use std::path::Path;
-use tcod::{console::Root, Console, FontLayout, FontType};
+use tcod::{
+    console::Root,
+    console::{blit, Offscreen},
+    input::Key,
+    Console, FontLayout, FontType,
+};
 
 /// Game rendering window.
 pub struct Window {
+    /// Resolution.
+    res: [i32; 2],
     /// Root window.
     root: Root,
+    /// Back window.
+    back: Offscreen,
 }
 
 impl Window {
     access!(root, root_mut, Root);
+    access!(back, back_mut, Offscreen);
 
     /// Construct a new entity.
     #[inline]
@@ -30,7 +40,17 @@ impl Window {
             .init();
         tcod::system::set_fps(fps);
 
-        Self { root }
+        Self {
+            res,
+            root,
+            back: Offscreen::new(res[X], res[Y]),
+        }
+    }
+
+    /// Await the next keypress.
+    #[inline]
+    pub fn wait_for_keypress(&mut self) -> Key {
+        self.root.wait_for_keypress(true)
     }
 
     /// Clear the root canvas.
@@ -43,5 +63,19 @@ impl Window {
     #[inline]
     pub fn flush(&mut self) {
         self.root.flush()
+    }
+
+    /// Blit the back screen to the root.
+    #[inline]
+    pub fn swap(&mut self) {
+        blit(
+            &self.back,
+            (0, 0),
+            (self.res[X], self.res[Y]),
+            &mut self.root,
+            (0, 0),
+            1.0,
+            1.0,
+        );
     }
 }
