@@ -25,7 +25,7 @@ pub fn main() {
     let (_react_sett, names) = build(&in_dir, params);
 
     let reg = kinetics::Register::new(names);
-    report!(reg.chem("ppix"));
+    report!(reg.index("ppix"));
     report!(reg.name(3));
 
     banner::section("Finished");

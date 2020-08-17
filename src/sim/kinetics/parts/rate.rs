@@ -15,6 +15,8 @@ impl Rate {
     #[inline]
     #[must_use]
     pub fn new(k: f64, orders: Vec<(Chem, f64)>) -> Self {
+        debug_assert!(k > 0.0);
+
         Self { k, orders }
     }
 

@@ -32,7 +32,7 @@ impl Register {
     #[allow(clippy::expect_used)]
     #[inline]
     #[must_use]
-    pub fn chem(&self, name: &str) -> Chem {
+    pub fn index(&self, name: &str) -> Chem {
         self.names
             .iter()
             .position(|n| n == name)
