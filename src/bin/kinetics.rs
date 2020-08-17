@@ -3,6 +3,7 @@
 use arctk::kinetics::Name;
 use arctk::*;
 use attr::input;
+use ndarray::Array1;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -15,6 +16,8 @@ struct Parameters {
     sett: kinetics::Settings,
     /// Reactions.
     reactions: Vec<kinetics::ReactionBuilder>,
+    /// Initial concentrations.
+    concs: kinetics::ConcBuilder,
 }
 
 /// Main function.
@@ -23,7 +26,11 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (_react_sett, _reactions) = build(&in_dir, params);
+    let (_react_sett, _reactions, _concs) = build(&in_dir, params);
+
+    // for 0..100 {
+
+    // }
 
     banner::section("Finished");
 }
@@ -70,7 +77,10 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(_in_dir: &Path, params: Parameters) -> (kinetics::Settings, Vec<kinetics::Reaction>) {
+fn build(
+    _in_dir: &Path,
+    params: Parameters,
+) -> (kinetics::Settings, Vec<kinetics::Reaction>, Array1<f64>) {
     banner::section("Building");
     banner::sub_section("Reaction Settings");
     let react_sett = params.sett;
@@ -94,5 +104,11 @@ fn build(_in_dir: &Path, params: Parameters) -> (kinetics::Settings, Vec<kinetic
     }
     report!("Total reactions", reactions.len());
 
-    (react_sett, reactions)
+    banner::sub_section("Initial Concentrations");
+    let concs = params
+        .concs
+        .build(&reg)
+        .expect("Failed to build concentration array.");
+
+    (react_sett, reactions, concs)
 }
