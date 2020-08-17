@@ -32,6 +32,11 @@ impl Name for ReactionBuilder {
             prods.push((s, reg.index(&name)));
         }
 
-        Ok(Self::Inst::new(reacts, prods, self.rate.register(reg)?))
+        Ok(Self::Inst::new(
+            reacts,
+            prods,
+            self.rate.register(reg)?,
+            reg.names().len(),
+        ))
     }
 }

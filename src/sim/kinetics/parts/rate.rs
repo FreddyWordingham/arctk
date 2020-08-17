@@ -1,6 +1,7 @@
 //! Chemical reaction rate implementation.
 
 use crate::kinetics::Chem;
+use ndarray::Array1;
 
 /// Chemical reaction rate.
 pub struct Rate {
@@ -23,7 +24,7 @@ impl Rate {
     /// Calculate the current rate given the current concentrations.
     #[inline]
     #[must_use]
-    pub fn rate(&self, concs: &[f64]) -> f64 {
+    pub fn rate(&self, concs: &Array1<f64>) -> f64 {
         let mut r = self.k;
 
         for (c, m) in &self.orders {

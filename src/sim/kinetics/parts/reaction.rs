@@ -1,35 +1,45 @@
 //! Chemical reaction implementation.
 
-use crate::{
-    access,
-    kinetics::{Chem, Rate},
-};
+use crate::kinetics::{Chem, Rate};
+use ndarray::Array1;
 
 /// Chemical reaction.
 pub struct Reaction {
-    /// Reaction reactants and their respective stoichiometric coefficients.
-    reactants: Vec<(i32, Chem)>,
-    /// Reaction products and their respective stoichiometric coefficients.
-    products: Vec<(i32, Chem)>,
+    /// Stoichiometric coefficent map.
+    coeffs: Array1<f64>,
     /// Reaction rate.
     rate: Rate,
 }
 
 impl Reaction {
-    access!(reactants, Vec<(i32, Chem)>);
-    access!(products, Vec<(i32, Chem)>);
-    access!(rate, Rate);
-
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(reactants: Vec<(i32, Chem)>, products: Vec<(i32, Chem)>, rate: Rate) -> Self {
+    pub fn new(
+        reactants: Vec<(i32, Chem)>,
+        products: Vec<(i32, Chem)>,
+        rate: Rate,
+        num_chems: usize,
+    ) -> Self {
         debug_assert!(!reactants.is_empty());
+        debug_assert!(num_chems > 0);
 
-        Self {
-            reactants,
-            products,
-            rate,
+        let mut coeffs = Array1::zeros(num_chems);
+        for (s, c) in reactants {
+            coeffs[c] -= s as f64;
         }
+
+        for (s, c) in products {
+            coeffs[c] += s as f64;
+        }
+
+        Self { coeffs, rate }
+    }
+
+    /// Determine the rate of change for each chemical within the system.
+    #[inline]
+    #[must_use]
+    pub fn rate(&self, concs: &Array1<f64>) -> Array1<f64> {
+        self.rate.rate(concs) * &self.coeffs
     }
 }
