@@ -11,7 +11,7 @@ use crate::{
 
 use tcod::colors::WHITE;
 use tcod::console::{FontLayout, FontType, Root};
-use tcod::input::Key;
+use tcod::input::{Key, KeyCode};
 
 /// Start a new game.
 #[inline]
@@ -27,26 +27,37 @@ pub fn start(input: &Input) {
         .init();
     tcod::system::set_fps(input.sys.fps());
 
-    let mut player = Entity::new(
+    let mut ents = Vec::new();
+    ents.push(Entity::new(
         Coor2::new(input.sys.resolution()[X] / 2, input.sys.resolution()[Y] / 2),
         Draw::new(input.symbols.player(), WHITE),
-    );
+    ));
+    let mut player = &mut ents[0];
 
     while !window.window_closed() {
-        render::entities(&mut window, &player);
+        render::entities(&mut window, player);
 
         let key = window.wait_for_keypress(true);
-        handle_keys(key, &mut player);
+        if handle_keys(key, &mut player) {
+            break;
+        }
     }
 }
 
 /// Handle key input.
-fn handle_keys(key: Key, player: &mut Entity) {
+/// Return true when the window should close.
+fn handle_keys(key: Key, player: &mut Entity) -> bool {
     match key {
         Key { printable: 'w', .. } => player.travel(Move2::new(0, 1)),
         Key { printable: 's', .. } => player.travel(Move2::new(0, -1)),
         Key { printable: 'd', .. } => player.travel(Move2::new(1, 0)),
         Key { printable: 'a', .. } => player.travel(Move2::new(-1, 0)),
+        Key {
+            code: KeyCode::Escape,
+            ..
+        } => return true,
         _ => {}
     }
+
+    false
 }
