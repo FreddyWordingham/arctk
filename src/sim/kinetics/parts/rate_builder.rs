@@ -10,6 +10,23 @@ use attr::load;
 #[load]
 pub struct RateBuilder(f64, Vec<(Group, f64)>);
 
+impl RateBuilder {
+    /// Get a list of all species involved in the rate calculation.
+    #[inline]
+    #[must_use]
+    pub fn names(&self) -> Vec<Group> {
+        let mut names = Vec::new();
+        for (n, _) in &self.1 {
+            names.push(n.to_string());
+        }
+
+        names.sort();
+        names.dedup();
+
+        names
+    }
+}
+
 impl Name for RateBuilder {
     type Inst = Rate;
 

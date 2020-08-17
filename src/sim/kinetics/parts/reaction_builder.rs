@@ -17,6 +17,27 @@ pub struct ReactionBuilder {
     rate: RateBuilder,
 }
 
+impl ReactionBuilder {
+    /// Get a list of all species involved in the reaction.
+    #[inline]
+    #[must_use]
+    pub fn names(&self) -> Vec<Group> {
+        let mut names = Vec::new();
+        for (_, n) in &self.reactants {
+            names.push(n.to_string());
+        }
+        for (_, n) in &self.products {
+            names.push(n.to_string());
+        }
+        names.append(&mut self.rate.names());
+
+        names.sort();
+        names.dedup();
+
+        names
+    }
+}
+
 impl Name for ReactionBuilder {
     type Inst = Reaction;
 

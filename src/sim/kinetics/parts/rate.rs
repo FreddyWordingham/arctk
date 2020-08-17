@@ -1,6 +1,6 @@
 //! Chemical reaction rate implementation.
 
-use crate::kinetics::Chem;
+use crate::{access, clone, kinetics::Chem};
 use ndarray::Array1;
 
 /// Chemical reaction rate.
@@ -12,6 +12,9 @@ pub struct Rate {
 }
 
 impl Rate {
+    clone!(k, f64);
+    access!(orders, Vec<(Chem, f64)>);
+
     /// Construct a new instance.
     #[inline]
     #[must_use]

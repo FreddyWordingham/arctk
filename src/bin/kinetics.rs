@@ -1,5 +1,6 @@
 //! MCRT programme.
 
+use arctk::kinetics::Name;
 use arctk::*;
 use attr::input;
 use std::{
@@ -22,7 +23,7 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (react_sett, reactions) = build(&in_dir, params);
+    let (_react_sett, _reactions) = build(&in_dir, params);
 
     banner::section("Finished");
 }
@@ -75,8 +76,22 @@ fn build(_in_dir: &Path, params: Parameters) -> (kinetics::Settings, Vec<kinetic
     let react_sett = params.sett;
     report!("Reaction settings", &react_sett);
 
+    let mut names = Vec::new();
+    for react in &params.reactions {
+        names.append(&mut react.names());
+    }
+    names.sort();
+    names.dedup();
+    let reg = kinetics::Register::new(names);
+    for i in 0..reg.names().len() {
+        report!(&format!("{}", i), &reg.names()[i]);
+    }
+
     banner::sub_section("Reactions");
-    let reactions = Vec::with_capacity(params.reactions.len());
+    let mut reactions = Vec::with_capacity(params.reactions.len());
+    for react in params.reactions {
+        reactions.push(react.build(&reg).expect("Failed to build reaction."));
+    }
     report!("Total reactions", reactions.len());
 
     (react_sett, reactions)
