@@ -1,0 +1,14 @@
+{
+    sett: {
+        min_time_step: 1.0e-6
+    },
+    names: [
+
+    "one",
+    "two",
+    "three",
+    "ppix",
+    "five"
+
+    ]
+}
