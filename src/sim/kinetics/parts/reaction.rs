@@ -26,11 +26,11 @@ impl Reaction {
 
         let mut coeffs = Array1::zeros(num_chems);
         for (s, c) in reactants {
-            coeffs[c] -= s as f64;
+            coeffs[c] -= f64::from(s);
         }
 
         for (s, c) in products {
-            coeffs[c] += s as f64;
+            coeffs[c] += f64::from(s);
         }
 
         Self { coeffs, rate }

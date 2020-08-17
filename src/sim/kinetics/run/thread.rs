@@ -23,7 +23,6 @@ pub fn single_thread(
         deltas.map_mut(|x| *x = 0.0);
         for react in reactions {
             deltas += &react.rate(&concs);
-
             concs += &(&deltas * dt);
         }
         time += dt;
