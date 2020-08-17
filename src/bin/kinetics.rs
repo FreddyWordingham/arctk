@@ -77,10 +77,7 @@ fn build(_in_dir: &Path, params: Parameters) -> (kinetics::Settings, Vec<kinetic
 
     banner::sub_section("Reactions");
     let reactions = Vec::with_capacity(params.reactions.len());
-
-    for r in reactions {
-        report!(r);
-    }
+    report!("Total reactions", reactions.len());
 
     (react_sett, reactions)
 }
