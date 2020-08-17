@@ -17,4 +17,17 @@ impl Rate {
     pub fn new(k: f64, orders: Vec<(Chem, f64)>) -> Self {
         Self { k, orders }
     }
+
+    /// Calculate the current rate given the current concentrations.
+    #[inline]
+    #[must_use]
+    pub fn rate(&self, concs: &[f64]) -> f64 {
+        let mut r = self.k;
+
+        for (c, m) in &self.orders {
+            r *= concs[*c].powf(*m)
+        }
+
+        r
+    }
 }
