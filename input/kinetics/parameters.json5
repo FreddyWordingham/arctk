@@ -1,6 +1,6 @@
 {
     sett: {
-        min_time_step: 1.0e-6,
+        dt: 1.0e-6,
         concs: [
             ["a", 0.12],
             ["five", 1.0],

@@ -12,8 +12,8 @@ use std::{
 struct Parameters {
     /// Reaction simulation settings.
     sett: kinetics::Settings,
-    /// Species names.
-    names: Vec<String>,
+    /// Reactions.
+    reactions: Vec<kinetics::ReactionBuilder>,
 }
 
 /// Main function.
@@ -22,11 +22,7 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (_react_sett, names) = build(&in_dir, params);
-
-    let reg = kinetics::Register::new(names);
-    report!(reg.index("ppix"));
-    report!(reg.name(3));
+    let (react_sett, reactions) = build(&in_dir, params);
 
     banner::section("Finished");
 }
@@ -73,12 +69,18 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(_in_dir: &Path, params: Parameters) -> (kinetics::Settings, Vec<String>) {
+fn build(_in_dir: &Path, params: Parameters) -> (kinetics::Settings, Vec<kinetics::Reaction>) {
     banner::section("Building");
     banner::sub_section("Reaction Settings");
     let react_sett = params.sett;
     report!("Reaction settings", &react_sett);
 
-    let names = params.names;
-    (react_sett, names)
+    banner::sub_section("Reactions");
+    let reactions = Vec::with_capacity(params.reactions.len());
+
+    for r in reactions {
+        report!(r);
+    }
+
+    (react_sett, reactions)
 }
