@@ -1,6 +1,6 @@
 //! Chemical name register implementation.
 
-use crate::kinetics::Chem;
+use crate::{access, kinetics::Chem};
 
 /// Chemical name conversion handler.
 pub struct Register {
@@ -9,6 +9,8 @@ pub struct Register {
 }
 
 impl Register {
+    access!(names, Vec<String>);
+
     /// Construct a new instance.
     #[inline]
     #[must_use]
