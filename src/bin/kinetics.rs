@@ -26,11 +26,17 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let (_react_sett, _reactions, _concs) = build(&in_dir, params);
+    let (sett, reactions, mut concs) = build(&in_dir, params);
 
-    // for 0..100 {
-
-    // }
+    let num_steps = 100;
+    let dt = 1.0 / num_steps as f64;
+    for _ in 0..num_steps {
+        concs = kinetics::single_thread(&sett, &reactions, concs, dt);
+        for c in &concs {
+            print!("{}\t", c);
+        }
+        println!();
+    }
 
     banner::section("Finished");
 }
