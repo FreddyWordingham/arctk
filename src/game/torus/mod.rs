@@ -5,7 +5,4 @@ pub mod input;
 pub mod parts;
 pub mod run;
 
-pub use self::alias::*;
-pub use self::input::*;
-pub use self::parts::*;
-pub use self::run::*;
+pub use self::{alias::*, input::*, parts::*, run::*};

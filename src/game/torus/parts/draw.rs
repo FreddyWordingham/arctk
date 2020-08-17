@@ -1,24 +1,39 @@
 //! Drawing information structure.
 
-use crate::clone;
-use tcod::Color;
+use crate::game::torus::Coor2;
+use tcod::{
+    colors::WHITE,
+    console::{Console, Root},
+    BackgroundFlag, Color,
+};
 
-/// Drawing information.
-pub struct Draw {
-    /// Symbol.
-    sym: char,
-    /// Colour.
-    col: Color,
-}
+/// Drawable trait.
+pub trait Draw {
+    /// Get the coordindates of the drawable.
+    fn pos(&self) -> Coor2;
 
-impl Draw {
-    clone!(sym, char);
-    clone!(col, Color);
-
-    /// Construct a new instance.
+    /// Get the drawable character.
     #[inline]
     #[must_use]
-    pub const fn new(sym: char, col: Color) -> Self {
-        Self { sym, col }
+    fn sym(&self) -> char {
+        '*'
+    }
+
+    /// Get the drawable colour.
+    #[inline]
+    #[must_use]
+    fn col(&self) -> Color {
+        WHITE
+    }
+
+    /// Draw
+    #[inline]
+    fn draw(&self, window: &mut Root) {
+        window.set_default_foreground(self.col());
+
+        let pos = self.pos();
+        let px = pos.x;
+        let py = window.height() - pos.y;
+        window.put_char(px, py, self.sym(), BackgroundFlag::None);
     }
 }

@@ -4,9 +4,7 @@ pub mod symbols;
 pub mod system;
 pub mod world;
 
-pub use self::symbols::*;
-pub use self::system::*;
-pub use self::world::*;
+pub use self::{symbols::*, system::*, world::*};
 
 /// Torus game input structure.
 pub struct Input<'a> {

@@ -3,5 +3,4 @@
 pub mod data;
 pub mod sample;
 
-pub use self::data::*;
-pub use self::sample::*;
+pub use self::{data::*, sample::*};

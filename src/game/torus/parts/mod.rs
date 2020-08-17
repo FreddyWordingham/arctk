@@ -2,6 +2,6 @@
 
 pub mod draw;
 pub mod entity;
+pub mod window;
 
-pub use self::draw::*;
-pub use self::entity::*;
+pub use self::{draw::*, entity::*, window::*};

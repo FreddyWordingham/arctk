@@ -1,44 +1,41 @@
 //! Game running module.
 
-pub mod render;
-
-pub use self::render::*;
-
 use crate::{
-    game::torus::{Coor2, Draw, Entity, Input, Move2},
+    game::torus::{Coor2, Draw, Entity, Input, Move2, Window},
     X, Y,
 };
 
-use tcod::colors::WHITE;
-use tcod::console::{FontLayout, FontType, Root};
-use tcod::input::{Key, KeyCode};
+use tcod::{
+    colors::WHITE,
+    input::{Key, KeyCode},
+};
 
 /// Start a new game.
 #[inline]
 pub fn start(input: &Input) {
-    println!("Hello world!");
-
-    let mut window = Root::initializer()
-        .font(input.sys.font(), FontLayout::Tcod)
-        .font_type(FontType::Greyscale)
-        .size(input.sys.resolution()[X], input.sys.resolution()[Y])
-        .title(input.sys.title())
-        .fullscreen(true)
-        .init();
-    tcod::system::set_fps(input.sys.fps());
+    let mut window = Window::new(
+        input.sys.title(),
+        input.sys.font(),
+        input.sys.resolution(),
+        input.sys.fps(),
+    );
 
     let mut ents = Vec::new();
     ents.push(Entity::new(
         Coor2::new(input.sys.resolution()[X] / 2, input.sys.resolution()[Y] / 2),
-        Draw::new(input.symbols.player(), WHITE),
+        input.symbols.player(),
+        WHITE,
     ));
-    let mut player = &mut ents[0];
 
-    while !window.window_closed() {
-        render::entities(&mut window, player);
+    while !window.root().window_closed() {
+        window.clear();
+        for ent in &ents {
+            ent.draw(window.root_mut());
+        }
+        window.flush();
 
-        let key = window.wait_for_keypress(true);
-        if handle_keys(key, &mut player) {
+        let key = window.root_mut().wait_for_keypress(true);
+        if handle_keys(key, &mut ents[0]) {
             break;
         }
     }
