@@ -10,29 +10,17 @@ use std::{
 /// Input parameters.
 #[input]
 struct Parameters {
-    /// Adaptive mesh settings.
-    tree: tree::Settings,
-    /// Regular grid settings.
-    grid: grid::Settings,
-    /// MCRT runtime settings.
-    sett: mcrt::Settings,
-    /// Surfaces set.
-    surfs: Set<MeshBuilder>,
-    /// Attributes set.
-    attrs: Set<mcrt::Attributes>,
-    /// Material set.
-    mats: Set<Redirect<mcrt::MaterialBuilder>>,
-    /// Light form.
-    light: mcrt::LightBuilder,
+    /// Reaction simulation settings.
+    sett: reaction::Settings,
 }
 
 /// Main function.
 pub fn main() {
     banner::title("MCRT");
 
-    let (params_path, in_dir, out_dir) = init();
+    let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
-    let react_sett = build(&in_dir, params);
+    let _react_sett = build(&in_dir, params);
 
     banner::section("Finished");
 }
@@ -79,11 +67,11 @@ fn input(in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(in_dir: &Path, params: Parameters) -> reaction::Settings {
+fn build(_in_dir: &Path, params: Parameters) -> reaction::Settings {
     banner::section("Building");
     banner::sub_section("Reaction Settings");
     let react_sett = params.sett;
     report!("Reaction settings", &react_sett);
 
-    (react_sett)
+    react_sett
 }
