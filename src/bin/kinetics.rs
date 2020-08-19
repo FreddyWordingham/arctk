@@ -18,6 +18,10 @@ struct Parameters {
     reactions: Vec<kinetics::ReactionBuilder>,
     /// Initial concentrations.
     concs: kinetics::ConcBuilder,
+    /// Number of steps.
+    num_steps: i32,
+    /// Total time.
+    total_time: f64,
 }
 
 /// Main function.
@@ -26,14 +30,17 @@ pub fn main() {
 
     let (params_path, in_dir, _out_dir) = init();
     let params = input(&in_dir, &params_path);
+
+    let num_steps = params.num_steps;
+    let total_time = params.total_time;
+
     let (sett, reactions, mut concs) = build(&in_dir, params);
 
-    let num_steps = 100;
-    let dt = 1.0 / num_steps as f64;
+    let dt = total_time / num_steps as f64;
     for _ in 0..num_steps {
         concs = kinetics::single_thread(&sett, &reactions, concs, dt);
         for c in &concs {
-            print!("{}\t", c);
+            print!("{},\t", c);
         }
         println!();
     }
