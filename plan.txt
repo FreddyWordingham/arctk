@@ -117,6 +117,8 @@
                     Portability
                 Arctk physics library
                     Design philosophy
+                    Documentation
+                        *Appendix Ia*
                     Input
                         back-end code implementation
                         front-end parameters file
@@ -127,6 +129,8 @@
                             Output overview
                 Binaries
                     Design philosophy
+                    Documentation
+                        *Appendix Ib*
                     Binaries
                         Cartographer
                             Example parameters file
