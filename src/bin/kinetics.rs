@@ -135,9 +135,9 @@ use std::{fs::File, io::Write};
 fn save(out_dir: &Path, data: Vec<Array1<f64>>) {
     let mut file = File::create(out_dir.join("concs.csv")).expect("Failed to create output file.");
     for row in data {
-        write!(&mut file, "{}", row[0]).expect("Failed to write to file.");
+        write!(&mut file, "{:<20}", row[0]).expect("Failed to write to file.");
         for x in row.iter().skip(1) {
-            write!(&mut file, ",\t{}", x).expect("Failed to write to file.");
+            write!(&mut file, ", {:<20}", x).expect("Failed to write to file.");
         }
         writeln!(&mut file).expect("Failed to write to file.");
     }
