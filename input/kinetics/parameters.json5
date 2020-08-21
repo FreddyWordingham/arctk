@@ -1,6 +1,7 @@
 {
     sett: {
         dt: 1.0e-3,
+        min_step: 1.0e-9
     },
     concs: [
         ["A", 1]

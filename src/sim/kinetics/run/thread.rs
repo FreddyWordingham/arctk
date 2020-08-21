@@ -2,7 +2,7 @@
 
 use crate::kinetics::{Reaction, Settings};
 use ndarray::Array1;
-use ndarray_stats::QuantileExt;
+// use ndarray_stats::QuantileExt;
 
 /// Run a single-threaded reaction simulation.
 #[allow(clippy::module_name_repetitions)]
@@ -19,8 +19,7 @@ pub fn single_thread(
     let mut rates = Array1::zeros(concs.len());
 
     let mut time = 0.0;
-    // let dt = sett.dt();
-    let dt = 0.001_f64;
+    let dt = sett.dt();
 
     while time <= total_time {
         rates.map_mut(|x| *x = 1.0e-12);
@@ -28,7 +27,7 @@ pub fn single_thread(
             rates += &react.rate(&concs);
         }
 
-        let delta = dt.min(total_time - time).max(1.0e-9);
+        let delta = dt.min(total_time - time).max(sett.min_step());
         // println!("Delta: {}\t{}\t{}", dt, delta, time);
         concs += &(&rates * delta);
         time += delta;

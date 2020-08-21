@@ -28,7 +28,7 @@ struct Parameters {
 pub fn main() {
     banner::title("Kinetics");
 
-    let (params_path, in_dir, _out_dir) = init();
+    let (params_path, in_dir, out_dir) = init();
     let params = input(&in_dir, &params_path);
 
     let num_steps = params.num_steps;
@@ -36,14 +36,19 @@ pub fn main() {
 
     let (sett, reactions, mut concs) = build(&in_dir, params);
 
+    // let mut file =
+    //     std::fs::File::create(out_dir.join("concs.txt")).expect("Failed to create output file.");
+
+    let mut history = Vec::with_capacity((num_steps + 1) as usize);
+    history.push(concs.clone());
+
     let dt = total_time / num_steps as f64;
     for _ in 0..num_steps {
         concs = kinetics::single_thread(&sett, &reactions, concs, dt);
-        for c in &concs {
-            print!("{},\t", c);
-        }
-        println!();
+        history.push(concs.clone());
     }
+
+    save(&out_dir, history);
 
     banner::section("Finished");
 }
@@ -124,4 +129,16 @@ fn build(
         .expect("Failed to build concentration array.");
 
     (react_sett, reactions, concs)
+}
+
+use std::{fs::File, io::Write};
+fn save(out_dir: &Path, data: Vec<Array1<f64>>) {
+    let mut file = File::create(out_dir.join("concs.csv")).expect("Failed to create output file.");
+    for row in data {
+        write!(&mut file, "{}", row[0]).expect("Failed to write to file.");
+        for x in row.iter().skip(1) {
+            write!(&mut file, ",\t{}", x).expect("Failed to write to file.");
+        }
+        writeln!(&mut file).expect("Failed to write to file.");
+    }
 }
