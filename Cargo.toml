@@ -12,8 +12,8 @@ categories = ["science", "simulation"]
 # default-run = "render"
 
 [dependencies]
-attr = { path = "res/crates/attr" }
-proc = { path = "res/crates/proc" }
+attr = { path = "res/crates/attr", version = "0.1.*" }
+proc = { path = "res/crates/proc", version = "0.1.*" }
 
 ansi_rgb = "0.2.*"
 chrono = "0.4.*"
