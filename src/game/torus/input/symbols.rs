@@ -1,7 +1,7 @@
 //! System settings structure.
 
 use crate::{clone, display_field};
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Loadable symbols settings structure.

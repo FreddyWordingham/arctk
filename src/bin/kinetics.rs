@@ -2,7 +2,7 @@
 
 use arctk::kinetics::Name;
 use arctk::*;
-use attr::input;
+use arctk_attr::input;
 use ndarray::Array1;
 use std::{
     env::current_dir,

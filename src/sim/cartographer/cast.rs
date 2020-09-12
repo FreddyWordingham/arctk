@@ -1,7 +1,7 @@
 //! Ray casting order implementation.
 
 use crate::{cartographer::Input, sample::golden, Dir3, Group, Pos3, Ray, Trace, Vec3};
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Rendering order.

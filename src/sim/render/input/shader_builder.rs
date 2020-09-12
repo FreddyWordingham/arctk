@@ -5,7 +5,7 @@ use crate::{
     render::{CameraBuilder, Light, Samples, Shader, Shadow, SkyBuilder},
     Build, Error,
 };
-use attr::load;
+use arctk_attr::load;
 use std::{
     fmt::{Display, Formatter},
     path::Path,

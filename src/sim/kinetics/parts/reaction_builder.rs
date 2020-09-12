@@ -4,7 +4,7 @@ use crate::{
     kinetics::{Name, RateBuilder, Reaction, Register},
     Error, Group,
 };
-use attr::load;
+use arctk_attr::load;
 
 /// Loadable reaction structure.
 #[load]

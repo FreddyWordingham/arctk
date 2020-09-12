@@ -1,7 +1,7 @@
 //! Settings implementation.
 
 use crate::{clone, display_field, display_field_ln, Group, Range};
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// MCRT settings structure.

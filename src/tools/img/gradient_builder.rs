@@ -1,7 +1,7 @@
 //! Gradient builder implementation.
 
 use crate::{display_field, Build, Error};
-use attr::load;
+use arctk_attr::load;
 use palette::LinSrgba;
 use std::{
     fmt::{Display, Formatter},

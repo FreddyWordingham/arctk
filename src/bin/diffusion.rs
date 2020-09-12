@@ -1,7 +1,7 @@
 //! Diffusion programme.
 
 use arctk::*;
-use attr::input;
+use arctk_attr::input;
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
 use std::{

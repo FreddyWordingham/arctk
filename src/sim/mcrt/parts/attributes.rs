@@ -1,7 +1,7 @@
 //! Attributes implementation.
 
 use crate::Group;
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Rendering attributes.

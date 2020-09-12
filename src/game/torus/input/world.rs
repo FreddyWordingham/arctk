@@ -1,7 +1,7 @@
 //! World settings structure.
 
 use crate::display_field;
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Loadable world settings structure.

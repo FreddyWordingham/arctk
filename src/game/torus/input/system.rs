@@ -1,7 +1,7 @@
 //! System settings structure.
 
 use crate::{access, clone, display_field, display_field_ln, X, Y};
-use attr::load;
+use arctk_attr::load;
 use std::{
     fmt::{Display, Formatter, Result},
     path::PathBuf,

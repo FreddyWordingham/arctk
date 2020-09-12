@@ -5,7 +5,7 @@ use crate::{
     render::{Focus, Lens, Sensor},
     AspectRatio, Build, Error, Pos3, X, Y,
 };
-use attr::load;
+use arctk_attr::load;
 use std::{
     fmt::{Display, Formatter},
     path::Path,

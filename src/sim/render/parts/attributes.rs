@@ -1,6 +1,6 @@
 //! Surface attributes structure.
 
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Surface rendering attributes.

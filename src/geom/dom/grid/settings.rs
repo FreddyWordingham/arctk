@@ -1,7 +1,7 @@
 //! Regular grid settings implementation.
 
 use crate::{access, display_field, display_field_ln, Aabb, X, Y, Z};
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Loadable triangle mesh conglomerate structure.

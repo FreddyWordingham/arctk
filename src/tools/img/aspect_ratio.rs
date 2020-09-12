@@ -1,6 +1,6 @@
 //! Formula implementation.
 
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Aspect-ratio enumeration.

@@ -1,7 +1,7 @@
 //! Settings implementation.
 
 use crate::{access, clone, display_field, display_field_ln, Aabb};
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Diffusion simulation settings structure.

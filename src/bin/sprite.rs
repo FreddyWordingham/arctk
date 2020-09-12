@@ -1,7 +1,7 @@
 //! Sprite production binary.
 
 use arctk::*;
-use attr::input;
+use arctk_attr::input;
 // use palette::{Gradient, LinSrgba};
 use std::{
     env::current_dir,

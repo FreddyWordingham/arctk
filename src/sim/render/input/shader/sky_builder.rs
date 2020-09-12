@@ -1,7 +1,7 @@
 //! Sky builder structure.
 
 use crate::{display_field, display_field_ln, render::Sky, Build, Error, PerlinMap, Pos3, X, Y};
-use attr::load;
+use arctk_attr::load;
 use rand::thread_rng;
 use std::{
     fmt::{Display, Formatter},

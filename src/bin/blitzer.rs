@@ -1,7 +1,7 @@
 //! Data cube manipulation programme.
 
 use arctk::*;
-use attr::input;
+use arctk_attr::input;
 use ndarray::Array3;
 use std::{
     env::current_dir,

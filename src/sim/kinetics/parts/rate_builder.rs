@@ -4,7 +4,7 @@ use crate::{
     kinetics::{Name, Rate, Register},
     Error, Group,
 };
-use attr::load;
+use arctk_attr::load;
 
 /// Loadable rate structure.
 #[load]

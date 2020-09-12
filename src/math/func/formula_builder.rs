@@ -1,7 +1,7 @@
 //! Formula form implementation.
 
 use crate::{Build, Error};
-use attr::load;
+use arctk_attr::load;
 use ndarray::Array1;
 use std::{
     fmt::{Display, Formatter},

@@ -1,7 +1,7 @@
 //! MCRT programme.
 
 use arctk::*;
-use attr::input;
+use arctk_attr::input;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},

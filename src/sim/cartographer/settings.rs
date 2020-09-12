@@ -1,7 +1,7 @@
 //! Settings structure.
 
 use crate::{access, cartographer::Cast, clone, display_field, display_field_ln};
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Loadable settings structure.

@@ -1,7 +1,7 @@
 //! Shadow setup structure.
 
 use crate::{access, clone, display_field, display_field_ln};
-use attr::load;
+use arctk_attr::load;
 use std::fmt::{Display, Formatter, Result};
 
 /// Lighting structure.

@@ -1,7 +1,7 @@
 //! Material builder implementation.
 
 use crate::{display_field, display_field_ln, Build, Error, FormulaBuilder};
-use attr::load;
+use arctk_attr::load;
 use std::{
     fmt::{Display, Formatter},
     path::Path,
