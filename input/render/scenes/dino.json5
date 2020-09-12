@@ -14,7 +14,7 @@
         body    : [['objs/dino/body.obj'],  null],
         eyes    : [['objs/dino/eyes.obj'],  null],
         fans    : [['objs/dino/fans.obj'],  null],
-        // hair    : [['objs/dino/hair.obj'],  null],
+        hair    : [['objs/dino/hair.obj'],  null],
         tail    : [['objs/dino/tail.obj'],  null],
         stand   : [['objs/dino/stand.obj'], {trans:[0,0,0.02]}],
         water   : [['objs/dino/water.obj'], null],
@@ -44,8 +44,8 @@
             swivel  : [-7, 0],
             hr_fov  : 30.0,
             aspect  : "Square",
-            ss_power: 2,
-            hr_res  : 1080
+            // ss_power: 1,
+            hr_res  : 512
         },
         samples: {
             // ambient_occlusion   : 64,
