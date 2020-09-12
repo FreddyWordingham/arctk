@@ -89,8 +89,7 @@ macro_rules! report {
 fn list_string<T: Display>(list: &[T]) -> Result<String, Error> {
     let mut s = String::new();
     for item in list {
-        write!(s, "{:>item_len$} ", item, item_len = NAME_LENGTH / 2)
-            .expect("Unable to format item.");
+        write!(s, "{:>item_len$} ", item, item_len = NAME_LENGTH / 2)?;
     }
 
     if !s.is_empty() {
