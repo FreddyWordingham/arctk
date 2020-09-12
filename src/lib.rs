@@ -33,7 +33,7 @@ pub mod file;
 // pub mod game;
 // pub mod geom;
 // pub mod math;
-// pub mod meta;
+pub mod meta;
 // pub mod phys;
 // pub mod sim;
 // pub mod tools;
