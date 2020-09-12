@@ -4,6 +4,8 @@ use std::fmt::{Debug, Formatter};
 
 /// Error enumeration.
 pub enum Error {
+    /// Description error.
+    Text(String),
     /// File loading error.
     LoadFile(std::io::Error),
     /// Integer parsing error.
@@ -14,6 +16,11 @@ pub enum Error {
     ReadJson(json5::Error),
     /// Json writing error.
     WriteJson(serde_json::Error),
+    /// Shape error.
+    InvalidShape(ndarray::ShapeError),
+    /// NetCDF io error.
+    #[cfg(feature = "netcdf")]
+    NetCDF(netcdf::error::Error),
 }
 
 macro_rules! impl_from_for_err {
@@ -32,6 +39,16 @@ impl_from_for_err!(Self::ParseInt, std::num::ParseIntError);
 impl_from_for_err!(Self::ParseFloat, std::num::ParseFloatError);
 impl_from_for_err!(Self::ReadJson, json5::Error);
 impl_from_for_err!(Self::WriteJson, serde_json::Error);
+impl_from_for_err!(Self::InvalidShape, ndarray::ShapeError);
+#[cfg(feature = "netcdf")]
+impl_from_for_err!(Self::NetCDF, netcdf::error::Error);
+
+impl From<&str> for Error {
+    #[inline]
+    fn from(err: &str) -> Self {
+        Self::Text(err.to_string())
+    }
+}
 
 impl Debug for Error {
     #[inline]
@@ -40,18 +57,26 @@ impl Debug for Error {
             fmt,
             "{} error: `{}`",
             match self {
+                Self::Text { .. } => "Description of",
                 Self::LoadFile { .. } => "File loading",
                 Self::ParseInt { .. } => "Integer parsing",
                 Self::ParseFloat { .. } => "Float parsing",
                 Self::ReadJson { .. } => "Json reading",
                 Self::WriteJson { .. } => "Json writing",
+                Self::InvalidShape { .. } => "Invalid array shape",
+                #[cfg(feature = "netcdf")]
+                Self::NetCDF { .. } => "NetCDF IO",
             },
             match self {
+                Self::Text { 0: err } => format!("{:?}", err),
                 Self::LoadFile { 0: err } => format!("{:?}", err),
                 Self::ParseInt { 0: err } => format!("{:?}", err),
                 Self::ParseFloat { 0: err } => format!("{:?}", err),
                 Self::ReadJson { 0: err } => format!("{:?}", err),
                 Self::WriteJson { 0: err } => format!("{:?}", err),
+                Self::InvalidShape { 0: err } => format!("{:?}", err),
+                #[cfg(feature = "netcdf")]
+                Self::NetCDF { 0: err } => format!("{:?}", err),
             }
         )
     }

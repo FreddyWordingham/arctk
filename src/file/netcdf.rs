@@ -8,7 +8,7 @@ impl<T: netcdf::Numeric> Load for ArrayD<T> {
     #[inline]
     fn load(path: &Path) -> Result<ArrayD<T>, Error> {
         let file = netcdf::open(path)?;
-        let var = &file.variable("data").expect("Missing variable 'data'.");
+        let var = &file.variable("data").ok_or("Missing variable 'data'.")?;
         let arr = var.values::<T>(None, None)?;
         Ok(arr)
     }
