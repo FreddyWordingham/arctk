@@ -12,10 +12,9 @@ categories = ["science", "simulation"]
 # default-run = "render"
 
 [dependencies]
-attr = { path = "res/crates/attr", version = "0.1.*" }
-proc = { path = "res/crates/proc", version = "0.1.*" }
-
 ansi_rgb = "0.2.*"
+arctk-attr = "0.1.*"
+arctk-proc = "0.1.*"
 chrono = "0.4.*"
 colored = "2.0.*"
 hex = "0.4.*"
