@@ -1,9 +1,10 @@
-//! NetCDF file handling.
+//! Netcdf file handling.
 
 use crate::{Error, Load, Save, X, Y, Z};
 use ndarray::{Array2, Array3, ArrayD};
 use std::path::Path;
 
+#[allow(clippy::use_self)]
 impl<T: netcdf::Numeric> Load for ArrayD<T> {
     #[inline]
     fn load(path: &Path) -> Result<ArrayD<T>, Error> {
@@ -14,6 +15,7 @@ impl<T: netcdf::Numeric> Load for ArrayD<T> {
     }
 }
 
+#[allow(clippy::use_self)]
 impl<T: netcdf::Numeric> Load for Array2<T> {
     #[inline]
     fn load(path: &Path) -> Result<Array2<T>, Error> {
@@ -27,6 +29,7 @@ impl<T: netcdf::Numeric> Load for Array2<T> {
     }
 }
 
+#[allow(clippy::use_self)]
 impl<T: netcdf::Numeric> Load for Array3<T> {
     #[inline]
     fn load(path: &Path) -> Result<Array3<T>, Error> {
