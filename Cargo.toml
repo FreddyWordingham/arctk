@@ -28,6 +28,7 @@ terminal_size = "0.1.*"
 ansi_rgb = "0.2.*"
 palette = "0.5.*"
 rgb = "0.8.*"
+nalgebra = "0.22.*"
 
 [profile.dev]
 # Development profile: "cargo build".
