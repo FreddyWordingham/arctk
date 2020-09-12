@@ -1,4 +1,4 @@
-//! Meta-programming module.
+//! Meta-programming.
 
 pub mod access;
 pub mod args;

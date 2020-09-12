@@ -1,4 +1,4 @@
-//! Physics module.
+//! Physics.
 
 pub mod opt;
 

@@ -28,15 +28,14 @@
     clippy::unwrap_used
 )]
 
+pub mod data;
 pub mod error;
 pub mod file;
-// pub mod game;
 // pub mod geom;
 // pub mod math;
 pub mod meta;
 pub mod phys;
 // pub mod sim;
-// pub mod tools;
 pub mod util;
 
-pub use self::{error::*, file::*, meta::*, phys::*, util::*};
+pub use self::{data::*, error::*, file::*, meta::*, phys::*, util::*};

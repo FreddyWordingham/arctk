@@ -1,4 +1,4 @@
-//! File module.
+//! File IO.
 
 pub mod build;
 pub mod json;

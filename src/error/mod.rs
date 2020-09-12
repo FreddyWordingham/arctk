@@ -1,4 +1,4 @@
-//! Error enumeration.
+//! Error handling.
 
 use std::fmt::{Debug, Formatter};
 
