@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["diff_rate","Calculate the diffusion rates for each cell."],["single_thread","Run a single-threaded diffusion simulation."]]});

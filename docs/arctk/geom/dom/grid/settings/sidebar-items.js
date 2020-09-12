@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Settings","Loadable triangle mesh conglomerate structure."]]});

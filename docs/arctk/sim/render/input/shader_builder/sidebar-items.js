@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["ShaderBuilder","Loadable light and shadow settings."]]});

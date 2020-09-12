@@ -1,1 +1,0 @@
-initSidebarItems({"type":[["Group","Group type alias."],["Grp","Group slice type alias."]]});

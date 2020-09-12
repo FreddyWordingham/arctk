@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["MaterialBuilder","Loadable material structure."]]});

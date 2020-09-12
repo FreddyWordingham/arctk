@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Settings","Diffusion simulation settings structure."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["paint","Rendering engine sampling function."]]});

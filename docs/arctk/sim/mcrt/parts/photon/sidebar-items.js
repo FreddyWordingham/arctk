@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Photon","Photon structure."]]});

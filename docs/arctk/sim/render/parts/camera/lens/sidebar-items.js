@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Lens","Lens structure."]]});

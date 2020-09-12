@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["PerlinMap","Perlin noise map structure."]]});

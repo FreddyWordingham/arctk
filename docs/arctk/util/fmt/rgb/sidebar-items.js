@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["components_to_u32","Create a 32 bit colour representation from 8 bit components."]]});

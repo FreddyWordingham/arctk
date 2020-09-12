@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["Transform","Types implementing this trait may be transformed."]]});

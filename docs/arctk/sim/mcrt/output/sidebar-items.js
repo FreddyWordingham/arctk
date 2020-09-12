@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["data","MCRT output structure."],["sample","MCRT sampling information structure."]]});

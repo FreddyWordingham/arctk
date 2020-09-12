@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Gradient","Gradient stencil implementation."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["engine","Engine sampling function."],["illumination","Illumination functions."],["thread","Fast-scheme rendering function."]]});

@@ -26,18 +26,6 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
-<span id="29">29</span>
-<span id="30">30</span>
-<span id="31">31</span>
-<span id="32">32</span>
-<span id="33">33</span>
-<span id="34">34</span>
-<span id="35">35</span>
-<span id="36">36</span>
-<span id="37">37</span>
-<span id="38">38</span>
-<span id="39">39</span>
-<span id="40">40</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Library core.</span>
 
@@ -51,6 +39,10 @@
 )]</span>
 <span class="attribute">#![<span class="ident">allow</span>(
     <span class="ident">clippy</span>::<span class="ident">as_conversions</span>,
+    <span class="ident">clippy</span>::<span class="ident">cast_possible_truncation</span>,
+    <span class="ident">clippy</span>::<span class="ident">cast_possible_wrap</span>,
+    <span class="ident">clippy</span>::<span class="ident">cast_precision_loss</span>,
+    <span class="ident">clippy</span>::<span class="ident">cast_sign_loss</span>,
     <span class="ident">clippy</span>::<span class="ident">else_if_without_else</span>,
     <span class="ident">clippy</span>::<span class="ident">float_arithmetic</span>,
     <span class="ident">clippy</span>::<span class="ident">implicit_return</span>,
@@ -58,26 +50,10 @@
     <span class="ident">clippy</span>::<span class="ident">integer_arithmetic</span>,
     <span class="ident">clippy</span>::<span class="ident">integer_division</span>,
     <span class="ident">clippy</span>::<span class="ident">modulo_arithmetic</span>,
-    <span class="ident">clippy</span>::<span class="ident">option_unwrap_used</span>,
     <span class="ident">clippy</span>::<span class="ident">panic</span>,
     <span class="ident">clippy</span>::<span class="ident">print_stdout</span>,
     <span class="ident">clippy</span>::<span class="ident">unreachable</span>,
-    <span class="ident">clippy</span>::<span class="ident">cast_possible_truncation</span>,
-    <span class="ident">clippy</span>::<span class="ident">cast_possible_wrap</span>,
-    <span class="ident">clippy</span>::<span class="ident">cast_precision_loss</span>,
-    <span class="ident">clippy</span>::<span class="ident">cast_sign_loss</span>
+    <span class="ident">clippy</span>::<span class="ident">unwrap_used</span>
 )]</span>
-
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">error</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">file</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">geom</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">math</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">meta</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">phys</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">sim</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">tools</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">util</span>;
-
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::{<span class="ident">error</span>::<span class="kw-2">*</span>, <span class="ident">file</span>::<span class="kw-2">*</span>, <span class="ident">geom</span>::<span class="kw-2">*</span>, <span class="ident">math</span>::<span class="kw-2">*</span>, <span class="ident">meta</span>::<span class="kw-2">*</span>, <span class="ident">phys</span>::<span class="kw-2">*</span>, <span class="ident">sim</span>::<span class="kw-2">*</span>, <span class="ident">tools</span>::<span class="kw-2">*</span>, <span class="ident">util</span>::<span class="kw-2">*</span>};
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "arctk";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

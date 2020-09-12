@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["SkyBuilder","Scene settings structure."]]});

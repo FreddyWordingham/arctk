@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["gradient","Gradient-type stencil structure."]]});

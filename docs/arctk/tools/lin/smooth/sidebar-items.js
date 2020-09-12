@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["lerp","Smooth-step function."]]});

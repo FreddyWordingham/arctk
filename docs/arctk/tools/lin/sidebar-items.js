@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["binner","Binner implementation."],["index","Index producing functions."],["range","Range implementation."],["smooth","Interpolation functions."]]});
