@@ -10,9 +10,20 @@ categories = ["science", "simulation"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
 
+[features]
+# netcdf = []
+
 [dependencies]
 arctk-attr = "0.1.*"
 arctk-proc = "0.1.*"
+serde = { version = "1.0.*", features = ["derive"] }
+ndarray = { version = "0.13.*", features = ["rayon", "serde-1"] }
+ndarray-parallel = "0.9.*"
+ndarray-stats = "0.3.*"
+serde_json = "1.0.*"
+json5 = "0.2.*"
+
+# netcdf = {version = "0.5.*", optional = true }
 
 [profile.dev]
 # Development profile: "cargo build".

@@ -21,6 +21,7 @@
     clippy::integer_arithmetic,
     clippy::integer_division,
     clippy::modulo_arithmetic,
+    clippy::module_name_repetitions,
     clippy::panic,
     clippy::print_stdout,
     clippy::unreachable,
@@ -28,7 +29,7 @@
 )]
 
 pub mod error;
-// pub mod file;
+pub mod file;
 // pub mod game;
 // pub mod geom;
 // pub mod math;
@@ -36,6 +37,6 @@ pub mod error;
 // pub mod phys;
 // pub mod sim;
 // pub mod tools;
-// pub mod util;
+pub mod util;
 
-pub use self::error::*;
+pub use self::{error::*, file::*, util::*};
