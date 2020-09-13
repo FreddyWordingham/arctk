@@ -1,42 +1,42 @@
 //! Adaptive tree cell scheme.
 
-use crate::{Aabb, Grp, SmoothTriangle};
+use crate::geom::{Cube, SmoothTriangle};
 
 /// Tree cell enumeration.
-pub enum Cell<'a> {
+pub enum Tree<'a, T> {
     /// Root cell.
     Root {
         /// Boundary.
-        boundary: Aabb,
+        boundary: Cube,
         /// Children.
-        children: [Box<Cell<'a>>; 8],
+        children: [Box<Tree<'a, T>>; 8],
     },
     /// Branching cell.
     Branch {
         /// Boundary.
-        boundary: Aabb,
+        boundary: Cube,
         /// Children.
-        children: [Box<Cell<'a>>; 8],
+        children: [Box<Tree<'a, T>>; 8],
     },
     /// Terminal populated cell.
     Leaf {
         /// Boundary.
-        boundary: Aabb,
+        boundary: Cube,
         /// Intersecting triangles.
-        tris: Vec<(&'a Grp, &'a SmoothTriangle)>,
+        tris: Vec<(T, &'a SmoothTriangle)>,
     },
     /// Terminal empty cell.
     Empty {
         /// Boundary.
-        boundary: Aabb,
+        boundary: Cube,
     },
 }
 
-impl<'a> Cell<'a> {
+impl<'a, T> Tree<'a, T> {
     /// Reference the cell's boundary.
     #[inline]
     #[must_use]
-    pub fn boundary(&self) -> &Aabb {
+    pub fn boundary(&self) -> &Cube {
         match self {
             Self::Root { boundary, .. }
             | Self::Branch { boundary, .. }
@@ -46,12 +46,11 @@ impl<'a> Cell<'a> {
     }
 }
 
-pub mod construct;
-pub mod display;
-pub mod info;
-pub mod observe;
-pub mod scan;
-pub mod search;
-pub mod settings;
+// pub mod display;
+// pub mod info;
+// pub mod observe;
+// pub mod scan;
+// pub mod search;
+// pub mod settings;
 
-pub use self::{construct::*, display::*, info::*, observe::*, scan::*, search::*, settings::*};
+// pub use self::{display::*, info::*, observe::*, scan::*, search::*, settings::*};
