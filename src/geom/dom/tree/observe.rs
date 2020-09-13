@@ -1,15 +1,12 @@
 //! Observation methods.
 
-use crate::{
-    tree::{Cell, Scan},
-    Hit, Ray, Trace,
-};
+use crate::geom::{Hit, Ray, Scan, Trace, Tree};
 
-impl<'a> Cell<'a> {
+impl<'a, T> Tree<'a, T> {
     /// Determine what a ray would observe within the cell.
     #[inline]
     #[must_use]
-    pub fn observe(&self, mut ray: Ray, bump_dist: f64, max_dist: f64) -> Option<Hit> {
+    pub fn observe(&self, mut ray: Ray, bump_dist: f64, max_dist: f64) -> Option<Hit<T>> {
         debug_assert!(bump_dist > 0.0);
         debug_assert!(max_dist > 0.0);
 
@@ -50,17 +47,17 @@ impl<'a> Cell<'a> {
     /// Scan for hits within the cell.
     #[inline]
     #[must_use]
-    pub fn hit_scan(&self, ray: &Ray, bump_dist: f64) -> Scan {
+    pub fn hit_scan(&self, ray: &Ray, bump_dist: f64) -> Scan<T> {
         debug_assert!(self.boundary().contains(ray.pos()));
         debug_assert!(bump_dist > 0.0);
 
         match self {
             Self::Leaf { boundary, tris } => {
-                let mut nearest: Option<Hit> = None;
+                let mut nearest: Option<Hit<T>> = None;
                 for (group, tri) in tris {
                     if let Some((dist, side)) = tri.dist_side(ray) {
                         if nearest.is_none() || (dist < nearest.as_ref().unwrap().dist()) {
-                            nearest = Some(Hit::new(*group, dist, side));
+                            nearest = Some(Hit::new(group, dist, side));
                         }
                     }
                 }

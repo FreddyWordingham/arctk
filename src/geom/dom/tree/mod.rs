@@ -47,11 +47,11 @@ impl<'a, T> Tree<'a, T> {
 }
 
 pub mod info;
-// pub mod observe;
+pub mod observe;
 pub mod scan;
 pub mod search;
 
 pub use self::info::*;
+pub use self::observe::*;
 pub use self::scan::*;
 pub use self::search::*;
-// pub use self::{observe::*, scan::*};
