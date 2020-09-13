@@ -1,6 +1,11 @@
 //! Histogram implementation.
 
-use crate::{access, err::Error, Binner, Range, Save};
+use crate::{
+    access,
+    err::Error,
+    tools::{Binner, Range},
+    Save,
+};
 use ndarray::Array1;
 use std::{fs::File, io::Write, ops::AddAssign, path::Path};
 

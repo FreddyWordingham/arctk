@@ -1,6 +1,6 @@
 //! Binner implementation.
 
-use crate::{clone, Range};
+use crate::{clone, tools::Range};
 
 /// One-dimensional binning structure.
 #[derive(Debug, Clone, PartialEq)]
