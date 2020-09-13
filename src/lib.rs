@@ -29,7 +29,7 @@
 )]
 
 // pub mod geom;
-// pub mod math;
+pub mod math;
 // pub mod sim;
 pub mod data;
 pub mod err;
