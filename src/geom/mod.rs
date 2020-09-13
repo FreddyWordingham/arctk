@@ -1,8 +1,8 @@
-//! Euclidean geometry.
+//! Three-dimensional Euclidean geometry.
 
 // pub mod dom;
 // pub mod props;
 // pub mod rt;
-// pub mod surf;
+pub mod shape;
 
-// pub use self::{dom::*, props::*, rt::*, surf::*};
+pub use self::shape::*;
