@@ -1,6 +1,6 @@
 //! Index manipulation functions.
 
-use crate::{Y, Z};
+use crate::ord::{Y, Z};
 
 /// Create the next three-dimensional index from the given linear index.
 #[inline]
