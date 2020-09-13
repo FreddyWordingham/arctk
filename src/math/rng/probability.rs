@@ -132,7 +132,7 @@ impl Probability {
             Self::Linear { t, delta, lambda } => {
                 t + (delta - (lambda * rng.gen_range(0.0, 1.0))).sqrt()
             }
-            Self::Gaussian { mu, sigma } => distribution::gaussian(rng, *mu, *sigma),
+            Self::Gaussian { mu, sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
             Self::ConstantSpline { cdf } => cdf.y(rng.gen()),
         }
     }
