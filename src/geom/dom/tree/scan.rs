@@ -3,14 +3,15 @@
 use crate::geom::Hit;
 
 /// Hit-scan result enumeration.
-pub enum Scan<'a, T> {
+#[derive(Clone)]
+pub enum Scan<T: Clone> {
     /// Boundary collision.
     Boundary(f64),
     /// Surface collision.
-    Surface(Hit<'a, T>),
+    Surface(Hit<T>),
 }
 
-impl<'a, T> Scan<'a, T> {
+impl<T: Clone> Scan<T> {
     /// Construct a new cell boundary detection instance.
     #[inline]
     #[must_use]
@@ -23,7 +24,7 @@ impl<'a, T> Scan<'a, T> {
     /// Construct a new surface detection instance.
     #[inline]
     #[must_use]
-    pub fn new_surface(hit: Hit<'a, T>) -> Self {
+    pub fn new_surface(hit: Hit<T>) -> Self {
         debug_assert!(hit.dist() > 0.0);
 
         Self::Surface(hit)

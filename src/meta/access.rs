@@ -33,16 +33,16 @@ macro_rules! clone {
     ($field:ident, $type:ty) => {
         #[inline]
         #[must_use]
-        pub fn $field(&self) -> $type {
-            self.$field.clone()
+        pub const fn $field(&self) -> $type {
+            self.$field
         }
     };
 
     ($field:ident, $setter:ident, $type:ty) => {
         #[inline]
         #[must_use]
-        pub fn $field(&self) -> $type {
-            self.$field.clone()
+        pub const fn $field(&self) -> $type {
+            self.$field
         }
 
         #[inline]

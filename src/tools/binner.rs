@@ -1,6 +1,6 @@
 //! Binner implementation.
 
-use crate::{clone, tools::Range};
+use crate::{access, clone, tools::Range};
 
 /// One-dimensional binning structure.
 #[derive(Debug, Clone, PartialEq)]
@@ -12,7 +12,7 @@ pub struct Binner {
 }
 
 impl Binner {
-    clone!(range, Range);
+    access!(range, Range);
     clone!(bins, u64);
 
     /// Construct a new Range.

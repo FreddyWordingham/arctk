@@ -2,7 +2,7 @@
 
 use crate::geom::{Hit, Ray, Scan, Trace, Tree};
 
-impl<'a, T> Tree<'a, T> {
+impl<'a, T: Clone> Tree<'a, T> {
     /// Determine what a ray would observe within the cell.
     #[inline]
     #[must_use]
@@ -54,10 +54,10 @@ impl<'a, T> Tree<'a, T> {
         match self {
             Self::Leaf { boundary, tris } => {
                 let mut nearest: Option<Hit<T>> = None;
-                for (group, tri) in tris {
+                for (key, tri) in tris {
                     if let Some((dist, side)) = tri.dist_side(ray) {
                         if nearest.is_none() || (dist < nearest.as_ref().unwrap().dist()) {
-                            nearest = Some(Hit::new(group, dist, side));
+                            nearest = Some(Hit::new(key.clone(), dist, side));
                         }
                     }
                 }
