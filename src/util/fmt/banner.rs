@@ -1,6 +1,6 @@
 //! Banner printing functions.
 
-use crate::term;
+use crate::util::term;
 use colored::Colorize;
 
 /// Index of the section.
