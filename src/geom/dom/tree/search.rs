@@ -1,8 +1,8 @@
 //! Search method.
 
-use crate::{tree::Cell, Pos3};
+use crate::{geom::Tree, math::Pos3};
 
-impl<'a> Cell<'a> {
+impl<'a, T> Tree<'a, T> {
     /// Determine the terminal cell containing the given position.
     #[inline]
     #[must_use]

@@ -49,7 +49,8 @@ impl<'a, T> Tree<'a, T> {
 pub mod info;
 // pub mod observe;
 // pub mod scan;
-// pub mod search;
-// pub mod settings;
+pub mod search;
 
-// pub use self::{info::*, observe::*, scan::*, search::*, settings::*};
+pub use self::info::*;
+pub use self::search::*;
+// pub use self::{observe::*, scan::*, search::*};
