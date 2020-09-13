@@ -1,10 +1,6 @@
 //! Crossing implementation.
 
-use crate::{access, clone};
-
-// TODO: Replace with math module.
-use nalgebra::{Unit, Vector3};
-pub type Dir3 = Unit<Vector3<f64>>;
+use crate::{access, clone, math::Dir3};
 
 /// Optical interface crossing information.
 /// Calculates trajectory information.
