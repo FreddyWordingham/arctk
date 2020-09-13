@@ -51,7 +51,4 @@ pub mod observe;
 pub mod scan;
 pub mod search;
 
-pub use self::info::*;
-pub use self::observe::*;
-pub use self::scan::*;
-pub use self::search::*;
+pub use self::{info::*, observe::*, scan::*, search::*};

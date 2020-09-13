@@ -6,9 +6,11 @@ use crate::{
     geom::{Mesh, SmoothTriangle},
     math::{Dir3, Pos3, Vec3},
 };
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-use std::path::Path;
+use std::{
+    fs::File,
+    io::{BufRead, BufReader},
+    path::Path,
+};
 
 impl Load for Mesh {
     #[inline]
