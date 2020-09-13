@@ -36,7 +36,7 @@ impl<'a, T> Tree<'a, T> {
     /// Reference the cell's boundary.
     #[inline]
     #[must_use]
-    pub fn boundary(&self) -> &Cube {
+    pub const fn boundary(&self) -> &Cube {
         match self {
             Self::Root { boundary, .. }
             | Self::Branch { boundary, .. }
@@ -46,11 +46,10 @@ impl<'a, T> Tree<'a, T> {
     }
 }
 
-// pub mod display;
-// pub mod info;
+pub mod info;
 // pub mod observe;
 // pub mod scan;
 // pub mod search;
 // pub mod settings;
 
-// pub use self::{display::*, info::*, observe::*, scan::*, search::*, settings::*};
+// pub use self::{info::*, observe::*, scan::*, search::*, settings::*};

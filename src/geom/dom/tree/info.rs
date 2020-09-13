@@ -1,8 +1,8 @@
 //! Information methods.
 
-use crate::tree::Cell;
+use crate::geom::Tree;
 
-impl<'a> Cell<'a> {
+impl<'a, T> Tree<'a, T> {
     /// Determine the number of cells contained within the cell.
     /// This cell is included in the count.
     #[inline]
