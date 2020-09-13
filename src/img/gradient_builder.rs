@@ -1,6 +1,6 @@
 //! Gradient builder implementation.
 
-use crate::{err::Error, Build};
+use crate::{err::Error, file::Build};
 use arctk_attr::load;
 use palette::LinSrgba;
 use std::path::Path;

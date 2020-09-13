@@ -3,8 +3,8 @@
 use crate::{
     access,
     err::Error,
+    file::Save,
     ord::{X, Y},
-    Save,
 };
 use ndarray::{Array2, ShapeBuilder};
 use palette::{LinSrgba, Pixel, Srgba};

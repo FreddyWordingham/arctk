@@ -3,8 +3,8 @@
 use crate::{
     access,
     err::Error,
+    file::Save,
     tools::{Binner, Range},
-    Save,
 };
 use ndarray::Array1;
 use std::{fs::File, io::Write, ops::AddAssign, path::Path};

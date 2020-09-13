@@ -2,8 +2,8 @@
 
 use crate::{
     err::Error,
+    file::{Load, Save},
     ord::{X, Y, Z},
-    Load, Save,
 };
 use ndarray::{Array2, Array3, ArrayD};
 use std::path::Path;
