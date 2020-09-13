@@ -11,7 +11,7 @@ pub enum Scan<'a, T> {
 }
 
 impl<'a, T> Scan<'a, T> {
-    /// Construct a new cell boundary instance.
+    /// Construct a new cell boundary detection instance.
     #[inline]
     #[must_use]
     pub fn new_boundary(dist: f64) -> Self {
@@ -20,7 +20,7 @@ impl<'a, T> Scan<'a, T> {
         Self::Boundary(dist)
     }
 
-    /// Construct a new surface instance.
+    /// Construct a new surface detection instance.
     #[inline]
     #[must_use]
     pub fn new_surface(hit: Hit<'a, T>) -> Self {
