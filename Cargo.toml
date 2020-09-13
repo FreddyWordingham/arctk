@@ -11,7 +11,7 @@ edition = "2018"
 license = "MIT OR Apache-2.0"
 
 [features]
-default = ["netcdf"]
+# default = ["netcdf"]
 
 [dependencies]
 ansi_rgb = "0.2.*"
