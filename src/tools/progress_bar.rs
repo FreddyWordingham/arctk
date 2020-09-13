@@ -1,21 +1,43 @@
-//! Silent progress-Bar implementation.
+//! Progress-Bar implementation.
 
-/// Silent progress-bar structure.
-pub struct SilentBar {
+/// Progress-bar structure.
+pub struct ProgressBar {
+    /// Graphics.
+    pb: indicatif::ProgressBar,
     /// Current value.
     count: u64,
     /// Total target value.
     total: u64,
 }
 
-impl SilentBar {
+impl ProgressBar {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(total: u64) -> Self {
+    pub fn new(msg: &str, total: u64) -> Self {
         debug_assert!(total > 0);
 
-        Self { count: 0, total }
+        let pb = indicatif::ProgressBar::new(total);
+
+        pb.set_style(
+            indicatif::ProgressStyle::default_bar()
+            .template("{spinner:.green} [{elapsed_precise}] [{bar:40.green/red}] [{pos}/{len}] {percent}% ({eta}) {msg}")
+            .progress_chars("\\/")
+        );
+        pb.set_message(msg);
+
+        Self {
+            pb,
+            count: 0,
+            total,
+        }
+    }
+
+    /// Tick the bar forward a single increment.
+    #[inline]
+    pub fn tick(&mut self) {
+        self.count += 1;
+        self.pb.inc(1);
     }
 
     /// Request a block of values to work on.
@@ -36,6 +58,7 @@ impl SilentBar {
             let end = start + alloc;
 
             self.count += alloc;
+            self.pb.inc(alloc);
 
             Some((start, end))
         }
@@ -46,5 +69,11 @@ impl SilentBar {
     #[must_use]
     pub const fn is_done(&self) -> bool {
         self.count >= self.total
+    }
+
+    /// Finish with a message.
+    #[inline]
+    pub fn finish_with_message(&mut self, msg: &'static str) {
+        self.pb.finish_with_message(msg);
     }
 }

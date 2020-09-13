@@ -1,9 +1,9 @@
 //! Useful tools.
 
-pub mod bar;
 pub mod binner;
 pub mod index;
+pub mod progress_bar;
 pub mod range;
-pub mod silent_bar;
+pub mod silent_progress_bar;
 
-pub use self::{bar::*, binner::*, index::*, range::*, silent_bar::*};
+pub use self::{binner::*, index::*, progress_bar::*, range::*, silent_progress_bar::*};
