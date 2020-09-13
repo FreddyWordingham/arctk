@@ -9,6 +9,7 @@ keywords = ["physics", "mcrt", "ode", "diffusion", "rt"]
 categories = ["science", "simulation"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
+documentation = "https://docs.rs/arctk"
 
 [features]
 default = ["netcdf"]
