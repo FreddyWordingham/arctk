@@ -30,7 +30,7 @@ impl TreeBuilder {
     /// Root cell has a depth of zero.
     #[inline]
     #[must_use]
-    pub fn build<'a, T: Display + Clone + Ord>(&self, surfs: &'a Set<T, Mesh>) -> Tree<'a, T> {
+    pub fn build<'a, T: Display + Clone + Ord>(&self, surfs: &'a Set<T, Mesh>) -> Tree<'a, &'a T> {
         let mut boundary = self.init_boundary(surfs);
         boundary.expand(self.padding);
 
@@ -38,7 +38,7 @@ impl TreeBuilder {
         for (key, mesh) in surfs.map() {
             tris.reserve(mesh.tris().len());
             for tri in mesh.tris() {
-                tris.push(((*key).clone(), tri));
+                tris.push((key, tri));
             }
         }
 
@@ -93,9 +93,9 @@ impl TreeBuilder {
         &self,
         parent_boundary: &Cube,
         depth: u32,
-        potential_tris: &[(T, &'a SmoothTriangle)],
+        potential_tris: &[(&'a T, &'a SmoothTriangle)],
         mut pb: &mut ProgressBar,
-    ) -> [Box<Tree<'a, T>>; 8] {
+    ) -> [Box<Tree<'a, &'a T>>; 8] {
         debug_assert!(depth <= self.max_depth);
         debug_assert!(!potential_tris.is_empty());
 
@@ -129,9 +129,9 @@ impl TreeBuilder {
         &self,
         boundary: Cube,
         depth: u32,
-        potential_tris: &[(T, &'a SmoothTriangle)],
+        potential_tris: &[(&'a T, &'a SmoothTriangle)],
         mut pb: &mut ProgressBar,
-    ) -> Tree<'a, T> {
+    ) -> Tree<'a, &'a T> {
         debug_assert!(depth <= self.max_depth);
 
         let mut detection_vol = boundary.clone();
@@ -140,7 +140,7 @@ impl TreeBuilder {
         let mut tris = Vec::new();
         for (key, tri) in potential_tris {
             if tri.overlap(&detection_vol) {
-                tris.push(((*key).clone(), *tri));
+                tris.push((*key, *tri));
             }
         }
 
