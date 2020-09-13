@@ -1,4 +1,4 @@
-//! Colours lists module.
+//! Colour systems.
 
 pub mod rgb;
 

@@ -36,6 +36,7 @@ pub mod err;
 pub mod file;
 pub mod img;
 pub mod meta;
+pub mod ord;
 pub mod phys;
 pub mod tools;
 pub mod util;

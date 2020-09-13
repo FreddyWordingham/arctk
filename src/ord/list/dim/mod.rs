@@ -1,4 +1,4 @@
-//! Dimension lists module.
+//! Physical dimensions.
 
 pub mod cartesian;
 pub mod polar;

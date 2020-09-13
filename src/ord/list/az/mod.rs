@@ -1,4 +1,4 @@
-//! Alphabet lists module.
+//! Alphabets.
 
 pub mod greek;
 

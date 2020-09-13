@@ -1,4 +1,4 @@
-//! Lists module.
+//! Enumerated lists.
 
 pub mod az;
 pub mod cols;

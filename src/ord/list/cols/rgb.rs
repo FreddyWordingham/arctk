@@ -1,6 +1,6 @@
-//! RGB implementation.
+//! Red-Green-Blue colour representation.
 
-/// RGB format channel indexing.
+/// RGB format.
 pub enum RGB {
     /// Red channel.
     Red,
@@ -10,11 +10,11 @@ pub enum RGB {
     Blue,
 }
 
-/// Red convenience constant.
+/// Red convenience indexing constant.
 pub const RED: usize = RGB::Red as usize;
 
-/// Green convenience constant.
+/// Green convenience indexing constant.
 pub const GREEN: usize = RGB::Green as usize;
 
-/// Blue convenience constant.
+/// Blue convenience indexing constant.
 pub const BLUE: usize = RGB::Blue as usize;

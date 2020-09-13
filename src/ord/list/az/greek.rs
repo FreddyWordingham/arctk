@@ -1,6 +1,6 @@
-//! Greek implementation.
+//! Greek alphabet.
 
-/// Greek letter indexing.
+/// Greek letters.
 pub enum Greek {
     /// First letter.
     Alpha,
@@ -10,11 +10,11 @@ pub enum Greek {
     Gamma,
 }
 
-/// Greek Alpha convenience constant.
+/// Greek Alpha convenience indexing constant.
 pub const ALPHA: usize = Greek::Alpha as usize;
 
-/// Greek Beta convenience constant.
+/// Greek Beta convenience indexing constant.
 pub const BETA: usize = Greek::Beta as usize;
 
-/// Greek Gamma convenience constant.
+/// Greek Gamma convenience indexing constant.
 pub const GAMMA: usize = Greek::Gamma as usize;
