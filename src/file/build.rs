@@ -1,6 +1,6 @@
 //! Build trait.
 
-use crate::Error;
+use crate::err::Error;
 use std::path::Path;
 
 /// Types implementing this trait can be built at runtime from an input form structure.

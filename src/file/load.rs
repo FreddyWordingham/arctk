@@ -1,6 +1,6 @@
 //! Load trait.
 
-use crate::Error;
+use crate::err::Error;
 use std::path::Path;
 
 /// Types implementing this trait can be loaded from a file.

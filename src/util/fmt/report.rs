@@ -1,6 +1,6 @@
 //! Reporting functions.
 
-use crate::Error;
+use crate::err::Error;
 use std::fmt::{Display, Write};
 
 /// Length allocated to name printing.

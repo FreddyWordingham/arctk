@@ -1,6 +1,6 @@
 //! File re-direction implementation.
 
-use crate::{as_json, from_json, Build, Error, Load, Save};
+use crate::{as_json, err::Error, from_json, Build, Load, Save};
 use serde::{Deserialize, Serialize};
 use std::{
     fmt::{Display, Formatter},

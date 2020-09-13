@@ -1,6 +1,6 @@
 //! Executable information.
 
-use crate::Error;
+use crate::err::Error;
 use std::{env::args, path::Path};
 
 /// Determine the name of the executable.

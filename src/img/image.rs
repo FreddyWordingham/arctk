@@ -1,6 +1,6 @@
 //! Image alias.
 
-use crate::{access, Error, Save, X, Y};
+use crate::{access, err::Error, Save, X, Y};
 use ndarray::{Array2, ShapeBuilder};
 use palette::{LinSrgba, Pixel, Srgba};
 use png::{BitDepth, ColorType, Encoder};

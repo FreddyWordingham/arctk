@@ -1,6 +1,6 @@
 //! Netcdf file handling.
 
-use crate::{Error, Load, Save, X, Y, Z};
+use crate::{err::Error, Load, Save, X, Y, Z};
 use ndarray::{Array2, Array3, ArrayD};
 use std::path::Path;
 

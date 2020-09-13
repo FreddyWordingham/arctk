@@ -1,6 +1,6 @@
 //! Json loading.
 
-use crate::Error;
+use crate::err::Error;
 use serde::Deserialize;
 use std::{fs::read_to_string, path::Path};
 
