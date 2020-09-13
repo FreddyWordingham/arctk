@@ -40,4 +40,4 @@ pub mod phys;
 pub mod tools;
 pub mod util;
 
-pub use self::{file::*, img::*, meta::*, phys::*, tools::*, util::*};
+pub use self::{file::*, meta::*, phys::*, tools::*, util::*};
