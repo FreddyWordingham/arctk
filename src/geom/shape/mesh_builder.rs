@@ -3,7 +3,8 @@
 use crate::{
     err::Error,
     file::{Build, Load},
-    math::{Trans3Builder, Transform},
+    geom::Transformable,
+    math::Trans3Builder,
 };
 use arctk_attr::load;
 use std::path::Path;

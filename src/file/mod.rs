@@ -5,6 +5,7 @@ pub mod json;
 pub mod load;
 pub mod redirect;
 pub mod save;
+pub mod wavefront;
 
 #[cfg(feature = "netcdf")]
 pub mod netcdf;
@@ -12,4 +13,4 @@ pub mod netcdf;
 #[cfg(feature = "netcdf")]
 pub use self::netcdf::*;
 
-pub use self::{build::*, json::*, load::*, redirect::*, save::*};
+pub use self::{build::*, json::*, load::*, redirect::*, save::*, wavefront::*};

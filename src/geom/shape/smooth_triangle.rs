@@ -2,8 +2,8 @@
 
 use crate::{
     access,
-    geom::{Aabb, Collide, Emit, Ray, Side, Trace, Triangle},
-    math::{Dir3, Pos3, Trans3, Transform},
+    geom::{Collide, Cube, Emit, Ray, Side, Trace, Transformable, Triangle},
+    math::{Dir3, Pos3, Trans3},
     ord::{ALPHA, BETA, GAMMA},
 };
 use rand::{rngs::ThreadRng, Rng};
@@ -42,8 +42,8 @@ impl SmoothTriangle {
 impl Collide for SmoothTriangle {
     #[inline]
     #[must_use]
-    fn overlap(&self, aabb: &Aabb) -> bool {
-        self.tri.overlap(aabb)
+    fn overlap(&self, cube: &Cube) -> bool {
+        self.tri.overlap(cube)
     }
 }
 
@@ -81,7 +81,7 @@ impl Trace for SmoothTriangle {
     }
 }
 
-impl Transform for SmoothTriangle {
+impl Transformable for SmoothTriangle {
     #[inline]
     fn transform(&mut self, trans: &Trans3) {
         self.tri.transform(trans);

@@ -2,8 +2,8 @@
 
 use crate::{
     access,
-    geom::{Collide, Cube, Emit, Ray, Side, Trace},
-    math::{Dir3, Pos3, Trans3, Transform, Vec3},
+    geom::{Collide, Cube, Emit, Ray, Side, Trace, Transformable},
+    math::{Dir3, Pos3, Trans3, Vec3},
     ord::{ALPHA, BETA, GAMMA},
 };
 use rand::{rngs::ThreadRng, Rng};
@@ -124,9 +124,9 @@ impl Triangle {
 impl Collide for Triangle {
     #[inline]
     #[must_use]
-    fn overlap(&self, aabb: &Cube) -> bool {
-        let c = aabb.centre();
-        let e = aabb.half_widths();
+    fn overlap(&self, cube: &Cube) -> bool {
+        let c = cube.centre();
+        let e = cube.half_widths();
 
         let v0 = self.verts[ALPHA] - c;
         let v1 = self.verts[BETA] - c;
@@ -246,7 +246,7 @@ impl Trace for Triangle {
     }
 }
 
-impl Transform for Triangle {
+impl Transformable for Triangle {
     #[inline]
     fn transform(&mut self, trans: &Trans3) {
         for v in &mut self.verts {

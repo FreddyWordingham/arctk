@@ -163,42 +163,42 @@ impl Cube {
     }
 }
 
-// impl Collide for Cube {
-//     #[inline]
-//     #[must_use]
-//     fn overlap(&self, aabb: &Cube) -> bool {
-//         self.mins <= aabb.maxs && self.maxs >= aabb.mins
-//     }
-// }
+impl Collide for Cube {
+    #[inline]
+    #[must_use]
+    fn overlap(&self, aabb: &Cube) -> bool {
+        self.mins <= aabb.maxs && self.maxs >= aabb.mins
+    }
+}
 
-// impl Trace for Cube {
-//     #[inline]
-//     #[must_use]
-//     fn hit(&self, ray: &Ray) -> bool {
-//         let (t_min, t_max) = self.intersections(ray);
+impl Trace for Cube {
+    #[inline]
+    #[must_use]
+    fn hit(&self, ray: &Ray) -> bool {
+        let (t_min, t_max) = self.intersections(ray);
 
-//         !(t_max <= 0.0 || t_min > t_max)
-//     }
+        !(t_max <= 0.0 || t_min > t_max)
+    }
 
-//     #[inline]
-//     #[must_use]
-//     fn dist(&self, ray: &Ray) -> Option<f64> {
-//         let (t_min, t_max) = self.intersections(ray);
+    #[inline]
+    #[must_use]
+    fn dist(&self, ray: &Ray) -> Option<f64> {
+        let (t_min, t_max) = self.intersections(ray);
 
-//         if t_max <= 0.0 || t_min > t_max {
-//             return None;
-//         }
+        if t_max <= 0.0 || t_min > t_max {
+            return None;
+        }
 
-//         if t_min > 0.0 {
-//             return Some(t_min);
-//         }
+        if t_min > 0.0 {
+            return Some(t_min);
+        }
 
-//         Some(t_max)
-//     }
+        Some(t_max)
+    }
 
-//     #[inline]
-//     #[must_use]
-//     fn dist_side(&self, _ray: &Ray) -> Option<(f64, Side)> {
-//         unimplemented!("Tell me (Freddy) if you need this.");
-//     }
-// }
+    #[inline]
+    #[must_use]
+    fn dist_side(&self, _ray: &Ray) -> Option<(f64, Side)> {
+        unimplemented!("Tell me (Freddy) if you need this.");
+    }
+}
