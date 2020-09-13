@@ -32,7 +32,7 @@
 // pub mod math;
 // pub mod sim;
 pub mod data;
-pub mod error;
+pub mod err;
 pub mod file;
 pub mod img;
 pub mod meta;
@@ -40,4 +40,4 @@ pub mod phys;
 pub mod tools;
 pub mod util;
 
-pub use self::{data::*, error::*, file::*, img::*, meta::*, phys::*, tools::*, util::*};
+pub use self::{data::*, err::*, file::*, img::*, meta::*, phys::*, tools::*, util::*};
