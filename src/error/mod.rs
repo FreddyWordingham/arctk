@@ -16,10 +16,14 @@ pub enum Error {
     ParseInt(std::num::ParseIntError),
     /// Float parsing error.
     ParseFloat(std::num::ParseFloatError),
+    /// Hexadecimal parsing error.
+    ParseHex(hex::FromHexError),
     /// Json reading error.
     ReadJson(json5::Error),
     /// Json writing error.
     WriteJson(serde_json::Error),
+    /// Png writing error.
+    WritePng(png::EncodingError),
     /// Shape error.
     InvalidShape(ndarray::ShapeError),
     /// NetCDF io error.
@@ -50,8 +54,10 @@ impl_from_for_err!(Self::EnvVar, std::env::VarError);
 impl_from_for_err!(Self::LoadFile, std::io::Error);
 impl_from_for_err!(Self::ParseInt, std::num::ParseIntError);
 impl_from_for_err!(Self::ParseFloat, std::num::ParseFloatError);
+impl_from_for_err!(Self::ParseHex, hex::FromHexError);
 impl_from_for_err!(Self::ReadJson, json5::Error);
 impl_from_for_err!(Self::WriteJson, serde_json::Error);
+impl_from_for_err!(Self::WritePng, png::EncodingError);
 impl_from_for_err!(Self::InvalidShape, ndarray::ShapeError);
 #[cfg(feature = "netcdf")]
 impl_from_for_err!(Self::NetCDF, netcdf::error::Error);
@@ -69,8 +75,10 @@ impl Debug for Error {
                 Self::LoadFile { .. } => "File loading",
                 Self::ParseInt { .. } => "Integer parsing",
                 Self::ParseFloat { .. } => "Float parsing",
+                Self::ParseHex { .. } => "Hexadecimal parsing",
                 Self::ReadJson { .. } => "Json reading",
                 Self::WriteJson { .. } => "Json writing",
+                Self::WritePng { .. } => "Png writing",
                 Self::InvalidShape { .. } => "Invalid array shape",
                 #[cfg(feature = "netcdf")]
                 Self::NetCDF { .. } => "NetCDF IO",
@@ -82,8 +90,10 @@ impl Debug for Error {
                 Self::LoadFile { 0: err } => format!("{:?}", err),
                 Self::ParseInt { 0: err } => format!("{:?}", err),
                 Self::ParseFloat { 0: err } => format!("{:?}", err),
+                Self::ParseHex { 0: err } => format!("{:?}", err),
                 Self::ReadJson { 0: err } => format!("{:?}", err),
                 Self::WriteJson { 0: err } => format!("{:?}", err),
+                Self::WritePng { 0: err } => format!("{:?}", err),
                 Self::InvalidShape { 0: err } => format!("{:?}", err),
                 #[cfg(feature = "netcdf")]
                 Self::NetCDF { 0: err } => format!("{:?}", err),
