@@ -11,7 +11,7 @@ edition = "2018"
 license = "MIT OR Apache-2.0"
 
 [features]
-# default = ["netcdf"]
+default = ["netcdf"]
 
 [dependencies]
 ansi_rgb = "0.2.*"
@@ -93,3 +93,7 @@ debug-assertions = false
 codegen-units = 1
 incremental = false
 overflow-checks = false
+
+[package.metadata.docs.rs]
+default-target = "x86_64-apple-darwin"
+targets = ["x86_64-unknown-linux-gnu"]
