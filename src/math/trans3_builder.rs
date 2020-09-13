@@ -1,12 +1,9 @@
 //! Transform form implementation.
 
-use crate::{display_field, display_field_ln, err::Error, file::Build, math::Vec3};
+use crate::{err::Error, file::Build, math::Vec3};
 use arctk_attr::load;
 use nalgebra::{Translation3, UnitQuaternion};
-use std::{
-    fmt::{Display, Formatter},
-    path::Path,
-};
+use std::path::Path;
 
 /// Loadable transform structure.
 #[load]
@@ -39,26 +36,5 @@ impl Build for Trans3Builder {
         let scale = self.scale.unwrap_or(1.0);
 
         Ok(Self::Inst::from_parts(trans, rot, scale))
-    }
-}
-
-impl Display for Trans3Builder {
-    #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
-        if let Some(trans) = self.trans {
-            display_field_ln!(fmt, "translation", trans)?
-        } else {
-            display_field_ln!(fmt, "translation", "none")?
-        };
-        if let Some(rot) = self.rot {
-            display_field_ln!(fmt, "rotation", rot)?
-        } else {
-            display_field_ln!(fmt, "rotation", "none")?
-        };
-        if let Some(scale) = self.scale {
-            display_field!(fmt, "scaling", scale)
-        } else {
-            display_field!(fmt, "scaling", "none")
-        }
     }
 }
