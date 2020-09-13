@@ -15,8 +15,8 @@ documentation = "https://docs.rs/arctk"
 default = ["netcdf"]
 
 [dependencies]
-arctk-attr = "0.1.5"
-arctk-proc = "0.1.5"
+arctk-attr = "0.1.*"
+arctk-proc = "0.1.*"
 # arctk-attr = { path = "../arctk-attr" }
 # arctk-proc = { path = "../arctk-proc" }
 
