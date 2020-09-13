@@ -28,13 +28,12 @@
     clippy::unwrap_used
 )]
 
-// pub mod geom;
-pub mod math;
-// pub mod sim;
 pub mod data;
 pub mod err;
 pub mod file;
+pub mod geom;
 pub mod img;
+pub mod math;
 pub mod meta;
 pub mod ord;
 pub mod phys;
