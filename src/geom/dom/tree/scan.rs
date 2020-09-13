@@ -1,16 +1,16 @@
 //! Scan result enumeration.
 
-use crate::Hit;
+use crate::geom::Hit;
 
 /// Hit-scan result enumeration.
-pub enum Scan<'a> {
+pub enum Scan<'a, T> {
     /// Boundary collision.
     Boundary(f64),
     /// Surface collision.
-    Surface(Hit<'a>),
+    Surface(Hit<'a, T>),
 }
 
-impl<'a> Scan<'a> {
+impl<'a, T> Scan<'a, T> {
     /// Construct a new cell boundary instance.
     #[inline]
     #[must_use]
@@ -23,7 +23,7 @@ impl<'a> Scan<'a> {
     /// Construct a new surface instance.
     #[inline]
     #[must_use]
-    pub fn new_surface(hit: Hit<'a>) -> Self {
+    pub fn new_surface(hit: Hit<'a, T>) -> Self {
         debug_assert!(hit.dist() > 0.0);
 
         Self::Surface(hit)

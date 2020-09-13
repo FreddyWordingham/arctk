@@ -1,36 +1,36 @@
 //! Hit implementation.
 
-use crate::{access, clone, geom::Side, ord::Grp};
+use crate::{access, clone, geom::Side};
 
 /// Hit collision information.
 #[derive(Clone)]
-pub struct Hit<'a> {
-    /// Group hit.
-    group: &'a Grp,
+pub struct Hit<'a, T> {
+    /// Hit tag.
+    tag: &'a T,
     /// Distance to the hit.
     dist: f64,
     /// Normal of the surface.
     side: Side,
 }
 
-impl<'a> Hit<'a> {
+impl<'a, T> Hit<'a, T> {
     clone!(dist, dist_mut, f64);
     access!(side, Side);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(group: &'a Grp, dist: f64, side: Side) -> Self {
+    pub fn new(tag: &'a T, dist: f64, side: Side) -> Self {
         debug_assert!(dist > 0.0);
 
-        Self { group, dist, side }
+        Self { tag, dist, side }
     }
 
-    /// Access the group str.
+    /// Access the hit tag.
     #[inline]
     #[must_use]
-    pub const fn group(&self) -> &str {
-        self.group
+    pub const fn tag(&self) -> &T {
+        self.tag
     }
 
     /// Flip the contained side.
