@@ -31,7 +31,7 @@ impl TreeBuilder {
     #[inline]
     #[must_use]
     pub fn build<'a, T: Display + Clone + Ord>(&self, surfs: &'a Set<T, Mesh>) -> Tree<'a, &'a T> {
-        let mut boundary = self.init_boundary(surfs);
+        let mut boundary = Self::init_boundary(surfs);
         boundary.expand(self.padding);
 
         let mut tris = Vec::new();
@@ -52,7 +52,7 @@ impl TreeBuilder {
     /// Initialise the boundary encompassing all of the mesh vertices.
     #[inline]
     #[must_use]
-    fn init_boundary<T: Display + Clone + Ord>(&self, surfs: &Set<T, Mesh>) -> Cube {
+    fn init_boundary<T: Display + Clone + Ord>(surfs: &Set<T, Mesh>) -> Cube {
         let mut mins = None;
         let mut maxs = None;
 

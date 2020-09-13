@@ -2,7 +2,7 @@
 
 use crate::{
     access,
-    geom::{Collide, Ray, Side, Trace},
+    geom::{Collide, Mesh, Ray, Side, Trace},
     math::{Pos3, Vec3},
 };
 use arctk_attr::load;
@@ -39,6 +39,42 @@ impl Cube {
         debug_assert!(hws.iter().all(|x| *x > 0.0));
 
         Self::new(centre - hws, centre + hws)
+    }
+
+    /// Initialise the boundary encompassing all of the mesh vertices.
+    #[inline]
+    #[must_use]
+    pub fn new_shrink(surfs: &[Mesh]) -> Self {
+        let mut mins = None;
+        let mut maxs = None;
+
+        for mesh in surfs {
+            let (mesh_mins, mesh_maxs) = mesh.boundary().mins_maxs();
+
+            if mins.is_none() {
+                mins = Some(mesh_mins);
+            } else {
+                for (grid_min, mesh_min) in mins.as_mut().unwrap().iter_mut().zip(mesh_mins.iter())
+                {
+                    if mesh_min < grid_min {
+                        *grid_min = *mesh_min;
+                    }
+                }
+            }
+
+            if maxs.is_none() {
+                maxs = Some(mesh_maxs);
+            } else {
+                for (grid_max, mesh_max) in maxs.as_mut().unwrap().iter_mut().zip(mesh_maxs.iter())
+                {
+                    if mesh_max > grid_max {
+                        *grid_max = *mesh_max;
+                    }
+                }
+            }
+        }
+
+        Self::new(mins.unwrap(), maxs.unwrap())
     }
 
     /// Get mins and maxs together.

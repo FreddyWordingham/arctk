@@ -59,9 +59,9 @@ impl<T: Display + Ord + PartialEq, S> Set<T, S> {
     /// Return None if the key does not exist.
     #[inline]
     #[must_use]
-    pub fn index_of(&self, k: T) -> Option<usize> {
+    pub fn index_of(&self, k: &T) -> Option<usize> {
         for (index, key) in self.0.keys().enumerate() {
-            if k == *key {
+            if k == key {
                 return Some(index);
             }
         }
@@ -89,6 +89,7 @@ impl<T: Ord + Serialize, S: Serialize> Save for Set<T, S> {
     }
 }
 
+#[allow(clippy::use_self)]
 impl<T: Display + Ord, S: Build> Build for Set<T, S> {
     type Inst = Set<T, S::Inst>;
 
