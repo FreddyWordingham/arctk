@@ -6,6 +6,8 @@ use std::fmt::{Debug, Formatter};
 pub enum Error {
     /// Description error.
     Text(String),
+    /// Parallelisation poison.
+    Parallel,
     /// Formatting error.
     Format(std::fmt::Error),
     /// Missing environment variable error.
@@ -26,6 +28,8 @@ pub enum Error {
     WritePng(png::EncodingError),
     /// Shape error.
     InvalidShape(ndarray::ShapeError),
+    /// Min/max error.
+    MinMax(ndarray_stats::errors::MinMaxError),
     /// NetCDF io error.
     #[cfg(feature = "netcdf")]
     NetCDF(netcdf::error::Error),
@@ -49,6 +53,13 @@ impl From<&str> for Error {
     }
 }
 
+impl<T> From<std::sync::PoisonError<T>> for Error {
+    #[inline]
+    fn from(_e: std::sync::PoisonError<T>) -> Self {
+        Self::Parallel
+    }
+}
+
 impl_from_for_err!(Self::Format, std::fmt::Error);
 impl_from_for_err!(Self::EnvVar, std::env::VarError);
 impl_from_for_err!(Self::LoadFile, std::io::Error);
@@ -59,6 +70,7 @@ impl_from_for_err!(Self::ReadJson, json5::Error);
 impl_from_for_err!(Self::WriteJson, serde_json::Error);
 impl_from_for_err!(Self::WritePng, png::EncodingError);
 impl_from_for_err!(Self::InvalidShape, ndarray::ShapeError);
+impl_from_for_err!(Self::MinMax, ndarray_stats::errors::MinMaxError);
 #[cfg(feature = "netcdf")]
 impl_from_for_err!(Self::NetCDF, netcdf::error::Error);
 
@@ -70,6 +82,7 @@ impl Debug for Error {
             "{} error: `{}`",
             match self {
                 Self::Text { .. } => "Text string",
+                Self::Parallel { .. } => "Parallelisation poison",
                 Self::Format { .. } => "Formatting",
                 Self::EnvVar { .. } => "Environment variable",
                 Self::LoadFile { .. } => "File loading",
@@ -80,11 +93,13 @@ impl Debug for Error {
                 Self::WriteJson { .. } => "Json writing",
                 Self::WritePng { .. } => "Png writing",
                 Self::InvalidShape { .. } => "Invalid array shape",
+                Self::MinMax { .. } => "MinMax",
                 #[cfg(feature = "netcdf")]
                 Self::NetCDF { .. } => "NetCDF IO",
             },
             match self {
                 Self::Format { 0: err } => format!("{:?}", err),
+                Self::Parallel => "Parallelisation fail".to_string(),
                 Self::Text { 0: err } => format!("{:?}", err),
                 Self::EnvVar { 0: err } => format!("{:?}", err),
                 Self::LoadFile { 0: err } => format!("{:?}", err),
@@ -95,6 +110,7 @@ impl Debug for Error {
                 Self::WriteJson { 0: err } => format!("{:?}", err),
                 Self::WritePng { 0: err } => format!("{:?}", err),
                 Self::InvalidShape { 0: err } => format!("{:?}", err),
+                Self::MinMax { 0: err } => format!("{:?}", err),
                 #[cfg(feature = "netcdf")]
                 Self::NetCDF { 0: err } => format!("{:?}", err),
             }
