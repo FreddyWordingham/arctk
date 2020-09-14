@@ -19,7 +19,7 @@ pub struct Image {
 }
 
 impl Image {
-    access!(pixels, Array2<LinSrgba>);
+    access!(pixels, pixels_mut, Array2<LinSrgba>);
 
     /// Construct a new instance.
     #[inline]
