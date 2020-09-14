@@ -14,6 +14,7 @@ pub struct Hit<T> {
 }
 
 impl<T> Hit<T> {
+    access!(tag, T);
     clone!(dist, dist_mut, f64);
     access!(side, Side);
 
