@@ -59,7 +59,6 @@ impl Orient {
 
     /// Calculate the re-orientation directions.
     #[inline]
-    #[must_use]
     pub fn re_orientate(&mut self) {
         self.right = Dir3::new_normalize(self.forward.cross(&Vec3::z_axis()));
         self.up = Dir3::new_normalize(self.right.cross(&self.forward));
