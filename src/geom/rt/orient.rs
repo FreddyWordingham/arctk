@@ -20,7 +20,7 @@ pub struct Orient {
 }
 
 impl Orient {
-    access!(pos, Pos3);
+    access!(pos, pos_mut, Pos3);
     access!(forward, Dir3);
     access!(right, Dir3);
     access!(up, Dir3);
@@ -55,6 +55,14 @@ impl Orient {
             up,
             right,
         }
+    }
+
+    /// Calculate the re-orientation directions.
+    #[inline]
+    #[must_use]
+    pub fn re_orientate(&mut self) {
+        self.right = Dir3::new_normalize(self.forward.cross(&Vec3::z_axis()));
+        self.up = Dir3::new_normalize(self.right.cross(&self.forward));
     }
 
     /// Construct a new instance.
