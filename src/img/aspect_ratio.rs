@@ -23,6 +23,8 @@ pub enum AspectRatio {
     IPhoneXS,
     /// IPhone 7. (750 x 1334)
     IPhone7,
+    /// Custom. (w x h)
+    Custom(f64, f64),
 }
 
 impl AspectRatio {
@@ -39,6 +41,7 @@ impl AspectRatio {
             Self::Widescreen => 43.0 / 18.0,
             Self::IPhoneXS => 1125.0 / 2436.0,
             Self::IPhone7 => 750.0 / 1334.0,
+            Self::Custom(w, h) => w / h,
         }
     }
 
@@ -81,19 +84,16 @@ impl AspectRatio {
 impl Display for AspectRatio {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
-        write!(
-            fmt,
-            "{}",
-            match self {
-                Self::Square { .. } => "Square",
-                Self::Classic { .. } => "Classic",
-                Self::Golden { .. } => "Golden",
-                Self::Silver { .. } => "Silver",
-                Self::Standard { .. } => "Standard",
-                Self::Widescreen { .. } => "Widescreen",
-                Self::IPhoneXS { .. } => "IPhoneXS",
-                Self::IPhone7 { .. } => "IPhone7",
-            }
-        )
+        match self {
+            Self::Square { .. } => write!(fmt, "Square"),
+            Self::Classic { .. } => write!(fmt, "Classic"),
+            Self::Golden { .. } => write!(fmt, "Golden"),
+            Self::Silver { .. } => write!(fmt, "Silver"),
+            Self::Standard { .. } => write!(fmt, "Standard"),
+            Self::Widescreen { .. } => write!(fmt, "Widescreen"),
+            Self::IPhoneXS { .. } => write!(fmt, "IPhoneXS"),
+            Self::IPhone7 { .. } => write!(fmt, "IPhone7"),
+            Self::Custom(w, h) => write!(fmt, "Custom [{}:{}]", w, h),
+        }
     }
 }
