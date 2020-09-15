@@ -20,12 +20,12 @@ impl Image {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(res: [usize; 2]) -> Self {
+    pub fn new(res: [usize; 2], base: LinSrgba) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
 
         Self {
-            pixels: Array2::default(res),
+            pixels: Array2::from_elem(res, base),
         }
     }
 }
