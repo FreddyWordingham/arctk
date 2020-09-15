@@ -15,7 +15,7 @@ pub struct Ray {
 }
 
 impl Ray {
-    access!(pos, Pos3);
+    access!(pos, pos_mut, Pos3);
     access!(dir, dir_mut, Dir3);
 
     /// Construct a new instance.
