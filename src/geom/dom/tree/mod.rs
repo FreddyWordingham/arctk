@@ -36,7 +36,7 @@ impl<'a, T> Tree<'a, T> {
     /// Reference the cell's boundary.
     #[inline]
     #[must_use]
-    pub const fn boundary(&self) -> &Cube {
+    pub fn boundary(&self) -> &Cube {
         match self {
             Self::Root { boundary, .. }
             | Self::Branch { boundary, .. }
