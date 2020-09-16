@@ -1,6 +1,5 @@
 //! Banner printing functions.
 
-use crate::util::term;
 use colored::Colorize;
 
 /// Index of the section.
@@ -10,10 +9,8 @@ static mut SECTION: i32 = 0;
 /// # Errors
 /// if the terminal width can not be determined.
 #[inline]
-pub fn title(title: &str) -> Result<(), String> {
+pub fn title(title: &str, term_width: usize) -> Result<(), String> {
     let title = title.to_uppercase();
-
-    let term_width: usize = term::width()?;
 
     let (left_bar, right_bar) = if term_width < ((title.len() * 2) + 11) {
         (4, 4)
@@ -42,10 +39,8 @@ pub fn title(title: &str) -> Result<(), String> {
 }
 
 /// Print a section bar to the terminal.
-/// # Errors
-/// if the terminal width can not be determined.
 #[inline]
-pub fn section(title: &str) -> Result<(), String> {
+pub fn section(title: &str, term_width: usize) {
     let title = title.to_uppercase();
     unsafe {
         SECTION += 1;
@@ -54,11 +49,10 @@ pub fn section(title: &str) -> Result<(), String> {
     print!("====");
     print!(" {}", colour(&title).bold());
 
-    let term_width = term::width()?;
     let mut cur_len = 5 + title.len();
     if cur_len >= term_width {
         println!();
-        return Ok(());
+        return;
     }
 
     print!(" ");
@@ -69,22 +63,16 @@ pub fn section(title: &str) -> Result<(), String> {
     }
 
     println!();
-
-    Ok(())
 }
 
 /// Print a sub-section message to the terminal.
-/// # Errors
-/// if the terminal width can not be determined.
 #[inline]
-pub fn sub_section(title: &str) -> Result<(), String> {
+pub fn sub_section(title: &str, term_width: usize) {
     println!(
         "---- {} {}",
         colour(title).bold(),
-        "-".repeat(term::width()? - 6 - title.len())
+        "-".repeat(term_width - 6 - title.len())
     );
-
-    Ok(())
 }
 
 /// Print a sub-sub-section message to the terminal.
