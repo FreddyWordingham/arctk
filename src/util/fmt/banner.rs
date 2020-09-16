@@ -6,10 +6,8 @@ use colored::Colorize;
 static mut SECTION: i32 = 0;
 
 /// Print a colourful title bar to the terminal.
-/// # Errors
-/// if the terminal width can not be determined.
 #[inline]
-pub fn title(title: &str, term_width: usize) -> Result<(), String> {
+pub fn title(title: &str, term_width: usize) {
     let title = title.to_uppercase();
 
     let (left_bar, right_bar) = if term_width < ((title.len() * 2) + 11) {
@@ -34,8 +32,6 @@ pub fn title(title: &str, term_width: usize) -> Result<(), String> {
     }
 
     println!("  {}", "\u{2588}".repeat(right_bar));
-
-    Ok(())
 }
 
 /// Print a section bar to the terminal.
