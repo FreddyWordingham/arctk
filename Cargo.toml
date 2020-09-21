@@ -10,6 +10,7 @@ categories = ["science", "simulation"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
 documentation = "https://docs.rs/arctk"
+exclude = ["docs/"]
 
 [features]
 default = ["netcdf"]
