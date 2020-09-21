@@ -9,7 +9,7 @@ keywords = ["physics", "mcrt", "ode", "diffusion", "rt"]
 categories = ["science", "simulation"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
-documentation = "freddywordingham.github.io/arctk"
+documentation = "https://freddywordingham.github.io/arctk"
 exclude = ["docs/"]
 
 [features]
