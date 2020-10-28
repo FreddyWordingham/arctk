@@ -25,6 +25,7 @@ pub enum Error {
     /// Json writing error.
     WriteJson(serde_json::Error),
     /// Png writing error.
+    #[cfg(feature = "png")]
     WritePng(png::EncodingError),
     /// Shape error.
     InvalidShape(ndarray::ShapeError),
@@ -68,6 +69,7 @@ impl_from_for_err!(Self::ParseFloat, std::num::ParseFloatError);
 impl_from_for_err!(Self::ParseHex, hex::FromHexError);
 impl_from_for_err!(Self::ReadJson, json5::Error);
 impl_from_for_err!(Self::WriteJson, serde_json::Error);
+#[cfg(feature = "png")]
 impl_from_for_err!(Self::WritePng, png::EncodingError);
 impl_from_for_err!(Self::InvalidShape, ndarray::ShapeError);
 impl_from_for_err!(Self::MinMax, ndarray_stats::errors::MinMaxError);
@@ -91,6 +93,7 @@ impl Debug for Error {
                 Self::ParseHex { .. } => "Hexadecimal parsing",
                 Self::ReadJson { .. } => "Json reading",
                 Self::WriteJson { .. } => "Json writing",
+                #[cfg(feature = "png")]
                 Self::WritePng { .. } => "Png writing",
                 Self::InvalidShape { .. } => "Invalid array shape",
                 Self::MinMax { .. } => "MinMax",
@@ -108,6 +111,7 @@ impl Debug for Error {
                 Self::ParseHex { 0: err } => format!("{:?}", err),
                 Self::ReadJson { 0: err } => format!("{:?}", err),
                 Self::WriteJson { 0: err } => format!("{:?}", err),
+                #[cfg(feature = "png")]
                 Self::WritePng { 0: err } => format!("{:?}", err),
                 Self::InvalidShape { 0: err } => format!("{:?}", err),
                 Self::MinMax { 0: err } => format!("{:?}", err),
