@@ -7,7 +7,7 @@ use ndarray::Array1;
 pub struct Rate {
     /// Reaction rate constant.
     k: f64,
-    /// List of each index and its associated Partial order of reaction.
+    /// List of each index and its associated partial order of reaction.
     orders: Vec<(usize, f64)>,
 }
 
@@ -28,8 +28,8 @@ impl Rate {
     pub fn rate(&self, concs: &Array1<f64>) -> f64 {
         let mut r = self.k;
 
-        for (c, m) in &self.orders {
-            r *= concs[*c].powf(*m);
+        for &(c, m) in &self.orders {
+            r *= concs[c].powf(m);
         }
 
         r
