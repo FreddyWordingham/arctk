@@ -9,5 +9,4 @@ pub mod reaction;
 // pub mod reaction_builder;
 // pub mod reactor;
 
-pub use self::rate::*;
-pub use self::reaction::*;
+pub use self::{rate::*, reaction::*};
