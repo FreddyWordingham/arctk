@@ -1,7 +1,9 @@
 //! Concentration builder.
 
-use crate::err::Error;
-use crate::ord::{Name, Register};
+use crate::{
+    err::Error,
+    ord::{Name, Register},
+};
 use ndarray::Array1;
 
 /// Loadable concentration structure.
