@@ -1,6 +1,6 @@
 //! Chemical kinetics.
 
-// pub mod conc_builder;
+pub mod conc_builder;
 // pub mod flask;
 // pub mod flask_builder;
 pub mod rate;
@@ -9,4 +9,4 @@ pub mod reaction;
 // pub mod reaction_builder;
 // pub mod reactor;
 
-pub use self::{rate::*, reaction::*};
+pub use self::{conc_builder::*, rate::*, reaction::*};
