@@ -7,8 +7,8 @@ pub trait Name {
     /// Type to be constructed.
     type Inst;
 
-    /// Build the instance type.
+    /// Build the instance type by registering the names as indices.
     /// # Errors
     /// if a component could not be named successfully.
-    fn build(self, reg: &Register) -> Result<Self::Inst, Error>;
+    fn reg(self, reg: &Register) -> Result<Self::Inst, Error>;
 }
