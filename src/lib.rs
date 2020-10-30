@@ -28,6 +28,7 @@
     clippy::unwrap_used
 )]
 
+pub mod chem;
 pub mod data;
 pub mod err;
 pub mod file;
