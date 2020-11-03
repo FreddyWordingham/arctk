@@ -127,17 +127,21 @@ impl Formula {
     #[inline]
     #[must_use]
     pub fn y(&self, x: f64) -> f64 {
-        match self {
-            Self::Constant { c } => *c,
-            Self::Line { c, m } => (x * m) + c,
-            Self::Bifurcation { t, under, over } => {
+        match *self {
+            Self::Constant { ref c } => *c,
+            Self::Line { c, m } => x.mul_add(m, c),
+            Self::Bifurcation {
+                ref t,
+                ref under,
+                ref over,
+            } => {
                 if x < *t {
                     *under
                 } else {
                     *over
                 }
             }
-            Self::ConstantSpline { xs, ys } => {
+            Self::ConstantSpline { ref xs, ref ys } => {
                 debug_assert!(x >= xs[0]);
                 debug_assert!(x <= xs[xs.len() - 1]);
 
@@ -148,7 +152,11 @@ impl Formula {
                 }
                 ys[ys.len() - 1]
             }
-            Self::LinearSpline { xs, ys, grads } => {
+            Self::LinearSpline {
+                ref xs,
+                ref ys,
+                ref grads,
+            } => {
                 debug_assert!(x >= xs[0]);
                 debug_assert!(x <= xs[xs.len() - 1]);
 
@@ -161,10 +169,10 @@ impl Formula {
                 ys[ys.len() - 1]
             }
             Self::QuadraticSpline {
-                xs,
-                ys,
-                grads,
-                quads,
+                ref xs,
+                ref ys,
+                ref grads,
+                ref quads,
             } => {
                 debug_assert!(x >= xs[0]);
                 debug_assert!(x <= xs[xs.len() - 1]);
@@ -175,7 +183,7 @@ impl Formula {
                         let y = ys[index - 1];
                         let g = grads[index - 1];
                         let q = quads[index - 1];
-                        return q.mul_add(dx.powi(2), g.mul_add(dx, y));
+                        return q.mul_add(dx * dx, g.mul_add(dx, y));
                     }
                 }
                 ys[ys.len() - 1]

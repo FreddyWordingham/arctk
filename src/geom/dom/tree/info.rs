@@ -8,8 +8,8 @@ impl<'a, T> Tree<'a, T> {
     #[inline]
     #[must_use]
     pub fn num_cells(&self) -> usize {
-        match self {
-            Self::Root { children, .. } | Self::Branch { children, .. } => {
+        match *self {
+            Self::Root { ref children, .. } | Self::Branch { ref children, .. } => {
                 1 + children.iter().map(|ch| ch.num_cells()).sum::<usize>()
             }
             Self::Leaf { .. } | Self::Empty { .. } => 1,
@@ -21,8 +21,8 @@ impl<'a, T> Tree<'a, T> {
     #[inline]
     #[must_use]
     pub fn num_leaf_cells(&self) -> usize {
-        match self {
-            Self::Root { children, .. } | Self::Branch { children, .. } => {
+        match *self {
+            Self::Root { ref children, .. } | Self::Branch { ref children, .. } => {
                 children.iter().map(|ch| ch.num_leaf_cells()).sum::<usize>()
             }
             Self::Leaf { .. } => 1,
@@ -34,11 +34,11 @@ impl<'a, T> Tree<'a, T> {
     #[inline]
     #[must_use]
     pub fn num_tri_refs(&self) -> usize {
-        match self {
-            Self::Root { children, .. } | Self::Branch { children, .. } => {
+        match *self {
+            Self::Root { ref children, .. } | Self::Branch { ref children, .. } => {
                 children.iter().map(|c| c.num_tri_refs()).sum()
             }
-            Self::Leaf { tris, .. } => tris.len(),
+            Self::Leaf { ref tris, .. } => tris.len(),
             Self::Empty { .. } => 0,
         }
     }
@@ -47,9 +47,11 @@ impl<'a, T> Tree<'a, T> {
     #[inline]
     #[must_use]
     pub fn depth(&self) -> usize {
-        match self {
-            Self::Root { children, .. } => children.iter().map(|c| c.depth()).max().unwrap(),
-            Self::Branch { children, .. } => 1 + children.iter().map(|c| c.depth()).max().unwrap(),
+        match *self {
+            Self::Root { ref children, .. } => children.iter().map(|c| c.depth()).max().unwrap(),
+            Self::Branch { ref children, .. } => {
+                1 + children.iter().map(|c| c.depth()).max().unwrap()
+            }
             Self::Leaf { .. } | Self::Empty { .. } => 1,
         }
     }

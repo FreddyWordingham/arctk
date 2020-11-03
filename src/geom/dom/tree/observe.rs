@@ -51,10 +51,13 @@ impl<'a, T: Clone> Tree<'a, T> {
         debug_assert!(self.boundary().contains(ray.pos()));
         debug_assert!(bump_dist > 0.0);
 
-        match self {
-            Self::Leaf { boundary, tris } => {
+        match *self {
+            Self::Leaf {
+                ref boundary,
+                ref tris,
+            } => {
                 let mut nearest: Option<Hit<T>> = None;
-                for (key, tri) in tris {
+                for &(ref key, tri) in tris {
                     if let Some((dist, side)) = tri.dist_side(ray) {
                         if nearest.is_none() || (dist < nearest.as_ref().unwrap().dist()) {
                             nearest = Some(Hit::new(key.clone(), dist, side));
@@ -71,7 +74,7 @@ impl<'a, T: Clone> Tree<'a, T> {
 
                 Scan::new_boundary(boundary_dist)
             }
-            Self::Empty { boundary } => Scan::new_boundary(boundary.dist(ray).unwrap()),
+            Self::Empty { ref boundary } => Scan::new_boundary(boundary.dist(ray).unwrap()),
             Self::Root { .. } | Self::Branch { .. } => {
                 panic!("Should not be performing hit scans on branching cells!");
             }

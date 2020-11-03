@@ -38,7 +38,7 @@ impl Crossing {
         let (ref_prob, trans_dir) = if crit_ang.is_some() && (ci.acos() >= crit_ang.unwrap()) {
             (1.0, None)
         } else {
-            let s2t = n.powi(2) * (1.0 - ci.powi(2));
+            let s2t = (n * n) * (1.0 - (ci * ci));
             let ct = (1.0 - s2t).sqrt();
 
             (
@@ -63,13 +63,15 @@ impl Crossing {
 
         let n1_c_i = n1 * ci;
         let n2_c_t = n2 * ct;
-        let rn = ((n1_c_i - n2_c_t) / (n1_c_i + n2_c_t)).powi(2);
+        let r_norm_sqrt = (n1_c_i - n2_c_t) / (n1_c_i + n2_c_t);
+        let r_norm = r_norm_sqrt * r_norm_sqrt;
 
         let n2_c_i = n2 * ci;
         let n1_c_t = n1 * ct;
-        let rt = ((n2_c_i - n1_c_t) / (n2_c_i + n1_c_t)).powi(2);
+        let r_tran_sqrt = (n2_c_i - n1_c_t) / (n2_c_i + n1_c_t);
+        let r_tran = r_tran_sqrt * r_tran_sqrt;
 
-        (rn + rt) / 2.0
+        (r_norm + r_tran) / 2.0
     }
 
     /// Calculate the reflection direction.

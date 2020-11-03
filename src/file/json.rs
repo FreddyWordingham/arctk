@@ -25,5 +25,5 @@ pub fn from_json_str<T>(s: &str) -> Result<T, Error>
 where
     for<'de> T: Deserialize<'de>,
 {
-    Ok(json5::from_str(&s)?)
+    Ok(json5::from_str(s)?)
 }

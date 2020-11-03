@@ -46,7 +46,7 @@ impl Build for ProbabilityBuilder {
 impl Display for ProbabilityBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
-        let kind = match self {
+        let kind = match *self {
             Self::Point { .. } => "Constant",
             Self::Points { .. } => "Line",
             Self::Uniform { .. } => "Bifurcation",

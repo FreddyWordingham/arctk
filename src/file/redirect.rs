@@ -55,9 +55,9 @@ impl<T: Load> Build for Redirect<T> {
 impl<T: Display> Display for Redirect<T> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
-        match self {
-            Self::There(path) => write!(fmt, "-> {}", path),
-            Self::Here(item) => write!(fmt, "_! {}", item),
+        match *self {
+            Self::There(ref path) => write!(fmt, "-> {}", path),
+            Self::Here(ref item) => write!(fmt, "_! {}", item),
         }
     }
 }

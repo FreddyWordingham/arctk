@@ -138,9 +138,9 @@ impl TreeBuilder {
         detection_vol.expand(self.padding);
 
         let mut tris = Vec::new();
-        for (key, tri) in potential_tris {
+        for &(key, tri) in potential_tris {
             if tri.overlap(&detection_vol) {
-                tris.push((*key, *tri));
+                tris.push((key, tri));
             }
         }
 

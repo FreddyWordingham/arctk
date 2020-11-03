@@ -17,7 +17,7 @@ impl RateBuilder {
     #[must_use]
     pub fn names(&self) -> Vec<String> {
         let mut names = Vec::new();
-        for (n, _) in &self.1 {
+        for &(ref n, _) in &self.1 {
             names.push(n.to_string());
         }
 

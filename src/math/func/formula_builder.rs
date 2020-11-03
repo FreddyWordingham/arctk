@@ -60,7 +60,7 @@ impl Build for FormulaBuilder {
 impl Display for FormulaBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
-        let kind = match self {
+        let kind = match *self {
             Self::Constant { .. } => "Constant",
             Self::Line { .. } => "Line",
             Self::Bifurcation { .. } => "Bifurcation",

@@ -32,7 +32,7 @@ impl AspectRatio {
     #[inline]
     #[must_use]
     pub fn ratio(&self) -> f64 {
-        match self {
+        match *self {
             Self::Square => 1.0,
             Self::Classic => 3.0 / 2.0,
             Self::Golden => (1.0 + 5.0_f64.sqrt()) / 2.0,
@@ -84,7 +84,7 @@ impl AspectRatio {
 impl Display for AspectRatio {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
-        match self {
+        match *self {
             Self::Square { .. } => write!(fmt, "Square"),
             Self::Classic { .. } => write!(fmt, "Classic"),
             Self::Golden { .. } => write!(fmt, "Golden"),

@@ -32,16 +32,16 @@ impl Side {
     /// Reference the normal vector.
     #[inline]
     #[must_use]
-    pub fn norm(&self) -> &Dir3 {
-        match self {
-            Self::Inside { norm } | Self::Outside { norm } => norm,
+    pub const fn norm(&self) -> &Dir3 {
+        match *self {
+            Self::Inside { ref norm } | Self::Outside { ref norm } => norm,
         }
     }
 
     /// Reverse the side.
     #[inline]
     #[must_use]
-    pub fn flip(self) -> Self {
+    pub const fn flip(self) -> Self {
         match self {
             Self::Inside { norm } => Self::Outside { norm },
             Self::Outside { norm } => Self::Inside { norm },
@@ -51,8 +51,8 @@ impl Side {
     /// Check if the side is an inside.
     #[inline]
     #[must_use]
-    pub fn is_inside(&self) -> bool {
-        match self {
+    pub const fn is_inside(&self) -> bool {
+        match *self {
             Self::Inside { .. } => true,
             Self::Outside { .. } => false,
         }
@@ -61,8 +61,8 @@ impl Side {
     /// Check if the side is an outside.
     #[inline]
     #[must_use]
-    pub fn is_outside(&self) -> bool {
-        match self {
+    pub const fn is_outside(&self) -> bool {
+        match *self {
             Self::Inside { .. } => false,
             Self::Outside { .. } => true,
         }

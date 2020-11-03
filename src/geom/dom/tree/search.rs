@@ -11,9 +11,16 @@ impl<'a, T> Tree<'a, T> {
             return None;
         }
 
-        match self {
+        match *self {
             Self::Leaf { .. } | Self::Empty { .. } => Some(self),
-            Self::Root { boundary, children } | Self::Branch { boundary, children } => {
+            Self::Root {
+                ref boundary,
+                ref children,
+            }
+            | Self::Branch {
+                ref boundary,
+                ref children,
+            } => {
                 let mut index = 0;
                 let c = boundary.centre();
 

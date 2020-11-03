@@ -20,10 +20,10 @@ pub fn sample_henyey_greenstein(rng: &mut ThreadRng, asym: f64) -> f64 {
         return rng.gen_range(-1.0_f64, 1.0).acos();
     }
 
-    ((1.0 + asym.powi(2)
-        - ((1.0 - asym.powi(2)) / asym.mul_add(rng.gen_range(-1.0, 1.0), 1.0)).powi(2))
-        / (2.0 * asym))
-        .acos()
+    let asym_sq = asym * asym;
+
+    let a = (1.0 - asym_sq) / asym.mul_add(rng.gen_range(-1.0, 1.0), 1.0);
+    ((1.0 + asym_sq - (a * a)) / (2.0 * asym)).acos()
 }
 
 /// Sample the normal distribution.
@@ -54,7 +54,7 @@ pub fn rand_isotropic_dir(rng: &mut ThreadRng) -> Dir3 {
     let theta = rng.gen_range(0.0, 2.0 * PI);
     let z: f64 = rng.gen_range(-1.0, 1.0);
 
-    let v = (1.0 - z.powi(2)).sqrt();
+    let v = (1.0 - (z * z)).sqrt();
 
     let x = v * theta.cos();
     let y = v * theta.sin();

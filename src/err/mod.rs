@@ -82,7 +82,7 @@ impl Debug for Error {
         write!(
             fmt,
             "{} error: `{}`",
-            match self {
+            match *self {
                 Self::Text { .. } => "Text string",
                 Self::Parallel { .. } => "Parallelisation poison",
                 Self::Format { .. } => "Formatting",
@@ -100,23 +100,23 @@ impl Debug for Error {
                 #[cfg(feature = "netcdf")]
                 Self::NetCDF { .. } => "NetCDF IO",
             },
-            match self {
-                Self::Format { 0: err } => format!("{:?}", err),
+            match *self {
+                Self::Text { 0: ref err } => format!("{:?}", err),
                 Self::Parallel => "Parallelisation fail".to_string(),
-                Self::Text { 0: err } => format!("{:?}", err),
-                Self::EnvVar { 0: err } => format!("{:?}", err),
-                Self::LoadFile { 0: err } => format!("{:?}", err),
-                Self::ParseInt { 0: err } => format!("{:?}", err),
-                Self::ParseFloat { 0: err } => format!("{:?}", err),
-                Self::ParseHex { 0: err } => format!("{:?}", err),
-                Self::ReadJson { 0: err } => format!("{:?}", err),
-                Self::WriteJson { 0: err } => format!("{:?}", err),
+                Self::Format { 0: ref err } => format!("{:?}", err),
+                Self::EnvVar { 0: ref err } => format!("{:?}", err),
+                Self::LoadFile { 0: ref err } => format!("{:?}", err),
+                Self::ParseInt { 0: ref err } => format!("{:?}", err),
+                Self::ParseFloat { 0: ref err } => format!("{:?}", err),
+                Self::ParseHex { 0: ref err } => format!("{:?}", err),
+                Self::ReadJson { 0: ref err } => format!("{:?}", err),
+                Self::WriteJson { 0: ref err } => format!("{:?}", err),
                 #[cfg(feature = "png")]
-                Self::WritePng { 0: err } => format!("{:?}", err),
-                Self::InvalidShape { 0: err } => format!("{:?}", err),
-                Self::MinMax { 0: err } => format!("{:?}", err),
+                Self::WritePng { 0: ref err } => format!("{:?}", err),
+                Self::InvalidShape { 0: ref err } => format!("{:?}", err),
+                Self::MinMax { 0: ref err } => format!("{:?}", err),
                 #[cfg(feature = "netcdf")]
-                Self::NetCDF { 0: err } => format!("{:?}", err),
+                Self::NetCDF { 0: ref err } => format!("{:?}", err),
             }
         )
     }

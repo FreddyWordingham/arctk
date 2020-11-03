@@ -78,12 +78,12 @@ impl Probability {
     pub fn new_linear(min: f64, max: f64, grad: f64, c: f64) -> Self {
         debug_assert!(grad != 0.0);
 
-        let lower = (grad / 2.0).mul_add(min.powi(2), c * min);
-        let upper = (grad / 2.0).mul_add(max.powi(2), c * max);
+        let lower = (grad / 2.0).mul_add(min * min, c * min);
+        let upper = (grad / 2.0).mul_add(max * max, c * max);
         let area = upper - lower;
 
         let t = -c / grad;
-        let delta = (c.powi(2) / grad.powi(2)) + (2.0 * lower / grad);
+        let delta = ((c * c) / (grad * grad)) + (2.0 * lower / grad);
         let lambda = 2.0 * area / grad;
 
         Self::Linear { t, delta, lambda }
@@ -125,15 +125,15 @@ impl Probability {
     #[inline]
     #[must_use]
     pub fn sample(&self, rng: &mut ThreadRng) -> f64 {
-        match self {
-            Self::Point { c } => *c,
-            Self::Points { cs } => cs[rng.gen_range(0, cs.len())],
-            Self::Uniform { min, max } => rng.gen_range(*min, *max),
+        match *self {
+            Self::Point { ref c } => *c,
+            Self::Points { ref cs } => cs[rng.gen_range(0, cs.len())],
+            Self::Uniform { ref min, ref max } => rng.gen_range(min, max),
             Self::Linear { t, delta, lambda } => {
                 t + (delta - (lambda * rng.gen_range(0.0, 1.0))).sqrt()
             }
-            Self::Gaussian { mu, sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
-            Self::ConstantSpline { cdf } => cdf.y(rng.gen()),
+            Self::Gaussian { ref mu, ref sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
+            Self::ConstantSpline { ref cdf } => cdf.y(rng.gen()),
         }
     }
 }
@@ -141,7 +141,7 @@ impl Probability {
 impl Display for Probability {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
-        let kind = match self {
+        let kind = match *self {
             Self::Point { .. } => "Point",
             Self::Points { .. } => "Points",
             Self::Uniform { .. } => "Uniform",

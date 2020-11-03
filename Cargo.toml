@@ -1,14 +1,14 @@
 [package]
-authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
 name = "arctk"
-version = "0.10.4"
-description = "Physics simulation library and binaries."
+version = "0.10.5"
+authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
+description = "Physics simulation library and binaries"
 repository = "https://github.com/FreddyWordingham/arctk"
 readme = "README.md"
+license = "MIT OR Apache-2.0"
 keywords = ["physics", "mcrt", "ode", "diffusion", "rt"]
 categories = ["science", "simulation"]
 edition = "2018"
-license = "MIT OR Apache-2.0"
 documentation = "https://freddywordingham.github.io/arctk"
 exclude = ["docs/"]
 
