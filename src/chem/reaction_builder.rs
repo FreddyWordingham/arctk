@@ -25,10 +25,10 @@ impl ReactionBuilder {
     #[must_use]
     pub fn names(&self) -> Vec<String> {
         let mut names = Vec::new();
-        for (n, _) in &self.reactants {
+        for &(ref n, _) in &self.reactants {
             names.push(n.to_string());
         }
-        for (n, _) in &self.products {
+        for &(ref n, _) in &self.products {
             names.push(n.to_string());
         }
         names.append(&mut self.rate.names());
