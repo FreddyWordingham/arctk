@@ -1,11 +1,14 @@
 //! Rate building structure.
 
-use crate::chem::Rate;
-use crate::err::Error;
-use crate::ord::{Name, Register};
+use crate::{
+    chem::Rate,
+    err::Error,
+    ord::{Name, Register},
+};
+use arctk_attr::load;
 
 /// Rate of reaction builder.
-#[derive(Clone)]
+#[load]
 pub struct RateBuilder(f64, Vec<(String, f64)>);
 
 impl RateBuilder {
