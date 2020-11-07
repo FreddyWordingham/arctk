@@ -12,14 +12,16 @@ edition = "2018"
 documentation = "https://freddywordingham.github.io/arctk"
 exclude = ["docs/"]
 
-[features]
+
+# [features]
 # default = ["netcdf", "png", "terminal_size"]
+# [dependencies]
+# arctk-attr = { path = "../arctk-attr" }
+# arctk-proc = { path = "../arctk-proc" }
 
 [dependencies]
 arctk-attr = "0.2.*"
 arctk-proc = "0.2.*"
-# arctk-attr = { path = "../arctk-attr" }
-# arctk-proc = { path = "../arctk-proc" }
 
 ansi_rgb = "0.2.*"
 colored = "2.0.*"
