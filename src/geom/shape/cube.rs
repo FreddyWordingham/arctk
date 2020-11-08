@@ -216,7 +216,7 @@ impl Cube {
     /// Generate a uniformly indexed position within the cube's volume.
     #[inline]
     #[must_use]
-    pub fn uniform_pos(&self, res: [usize; 3], index: [usize; 3]) -> Pos3 {
+    pub fn uniform_pos(&self, res: &[usize; 3], index: &[usize; 3]) -> Pos3 {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
         debug_assert!(res[Z] > 0);
