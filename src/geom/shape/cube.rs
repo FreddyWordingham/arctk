@@ -4,8 +4,10 @@ use crate::{
     access,
     geom::{Collide, Mesh, Ray, Side, Trace},
     math::{Pos3, Vec3},
+    ord::{X, Y, Z},
 };
 use arctk_attr::load;
+use rand::Rng;
 use std::cmp::Ordering;
 
 /// Axis-aligned bounding box geometry.
@@ -197,6 +199,50 @@ impl Cube {
 
         (t_min, t_max)
     }
+
+    /// Generate a random position within the cube's volume.
+    #[inline]
+    #[must_use]
+    pub fn rand_pos<R: Rng>(&self, rng: &mut R) -> Pos3 {
+        let widths = self.widths();
+
+        let x = self.mins.x + rng.gen_range(0.0, widths.x);
+        let y = self.mins.y + rng.gen_range(0.0, widths.y);
+        let z = self.mins.z + rng.gen_range(0.0, widths.z);
+
+        Pos3::new(x, y, z)
+    }
+
+    /// Generate a uniformly indexed position within the cube's volume.
+    #[inline]
+    #[must_use]
+    pub fn uniform_pos(&self, res: [usize; 3], index: [usize; 3]) -> Pos3 {
+        debug_assert!(res[X] > 0);
+        debug_assert!(res[Y] > 0);
+        debug_assert!(res[Z] > 0);
+        debug_assert!(res[X] > index[X]);
+        debug_assert!(res[Y] > index[Y]);
+        debug_assert!(res[Z] > index[Z]);
+
+        let ws = self.widths();
+        let half_deltas = Pos3::new(
+            ws.x / (res[X] * 2) as f64,
+            ws.y / (res[Y] * 2) as f64,
+            ws.z / (res[Z] * 2) as f64,
+        );
+
+        let x = half_deltas
+            .x
+            .mul_add((((index[X] - 1) * 2) + 1) as f64, self.mins.x);
+        let y = half_deltas
+            .y
+            .mul_add((((index[Y] - 1) * 2) + 1) as f64, self.mins.y);
+        let z = half_deltas
+            .z
+            .mul_add((((index[Z] - 1) * 2) + 1) as f64, self.mins.z);
+
+        Pos3::new(x, y, z)
+    }
 }
 
 impl Collide for Cube {
@@ -235,6 +281,7 @@ impl Trace for Cube {
     #[inline]
     #[must_use]
     fn dist_side(&self, _ray: &Ray) -> Option<(f64, Side)> {
+        // TODO: Think of an efficient way to do this.
         unimplemented!("Tell me (Freddy) if you need this.");
     }
 }
