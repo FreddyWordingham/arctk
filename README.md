@@ -5,6 +5,7 @@ Numerical simulations of physical systems - library and example binaries
 
 Examples of ARCTK in use:
 
-[Antler render engine](https://crates.io/crates/antler)
+[Antler render engine](https://github.com/FreddyWordingham/antler)
+<!-- [Antler render engine](https://crates.io/crates/antler) -->
 
 [MCRT tool](https://crates.io/crates/mcrt)
