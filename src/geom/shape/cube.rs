@@ -233,13 +233,13 @@ impl Cube {
 
         let x = half_deltas
             .x
-            .mul_add((((index[X] - 1) * 2) + 1) as f64, self.mins.x);
+            .mul_add(((index[X] * 2) + 1) as f64, self.mins.x);
         let y = half_deltas
             .y
-            .mul_add((((index[Y] - 1) * 2) + 1) as f64, self.mins.y);
+            .mul_add(((index[Y] * 2) + 1) as f64, self.mins.y);
         let z = half_deltas
             .z
-            .mul_add((((index[Z] - 1) * 2) + 1) as f64, self.mins.z);
+            .mul_add(((index[Z] * 2) + 1) as f64, self.mins.z);
 
         Pos3::new(x, y, z)
     }
