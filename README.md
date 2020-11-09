@@ -10,4 +10,10 @@ Examples of ARCTK in use:
 [Antler render engine](https://github.com/FreddyWordingham/antler)
 <!-- [Antler render engine](https://crates.io/crates/antler) -->
 
-[MCRT tool](https://crates.io/crates/mcrt)
+[MCRT tool](https://github.com/FreddyWordingham/mcrt)
+
+[Cartograph tool](https://github.com/FreddyWordingham/cartograph)
+
+[Diffusion tool](https://github.com/FreddyWordingham/diffuse)
+
+[Kinetics tool](https://github.com/FreddyWordingham/reactor)
