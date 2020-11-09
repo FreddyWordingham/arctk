@@ -13,8 +13,8 @@ documentation = "https://freddywordingham.github.io/arctk"
 exclude = ["docs/"]
 
 
-# [features]
-# default = ["netcdf", "png", "terminal_size"]
+[features]
+default = ["netcdf", "png", "terminal_size"]
 # [dependencies]
 # arctk-attr = { path = "../arctk-attr" }
 # arctk-proc = { path = "../arctk-proc" }
