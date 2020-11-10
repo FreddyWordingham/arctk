@@ -2,7 +2,7 @@
 
 use crate::{err::Error, file::Build};
 use arctk_attr::load;
-use palette::LinSrgba;
+use palette::{Gradient, LinSrgba};
 use std::path::Path;
 
 /// Loadable colour gradient structure.
@@ -13,7 +13,7 @@ pub struct GradientBuilder(
 );
 
 impl Build for GradientBuilder {
-    type Inst = palette::Gradient<LinSrgba>;
+    type Inst = Gradient<LinSrgba>;
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {

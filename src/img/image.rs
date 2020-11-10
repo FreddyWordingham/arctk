@@ -5,7 +5,7 @@ use crate::{
     ord::{X, Y},
 };
 use ndarray::Array2;
-use palette::LinSrgba;
+use palette::{Gradient, LinSrgba};
 use std::ops::AddAssign;
 
 /// Image builder.
@@ -26,6 +26,15 @@ impl Image {
 
         Self {
             pixels: Array2::from_elem(res, base),
+        }
+    }
+
+    /// Construct a new instance from numerical data and a gradient.
+    #[inline]
+    #[must_use]
+    pub fn new_from_data(data: &Array2<f64>, grad: &Gradient<LinSrgba>) -> Self {
+        Self {
+            pixels: data.map(|x| grad.get(*x as f32)),
         }
     }
 }
