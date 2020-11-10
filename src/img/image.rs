@@ -53,7 +53,7 @@ impl Image {
         let min = *data.min()?;
         let max = *data.max()?;
         let linear = (data + min) / (max - min);
-        let log = linear.map(|x| x.log(10.0));
+        let log = linear.map(|x| x.log(max));
 
         Ok(Self {
             pixels: log.map(|x| grad.get(*x as f32)),
