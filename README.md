@@ -6,8 +6,6 @@ Numerical simulations of physical systems - library and example binaries
 ![minimum rustc 1.47](https://img.shields.io/badge/rustc-1.47+-red.svg)
 [![Build Status](https://travis-ci.org/FreddyWordingham/arctk.svg?branch=master)](https://travis-ci.org/FreddyWordingham/arctk)
 
-[Documentation](https://freddywordingham.github.io/arctk)
-
 Examples of ARCTK in use:
 
 [Antler render engine](https://github.com/FreddyWordingham/antler)
