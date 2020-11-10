@@ -2,9 +2,11 @@
 
 use crate::{
     access,
+    err::Error,
     ord::{X, Y},
 };
 use ndarray::Array2;
+use ndarray_stats::QuantileExt;
 use palette::{Gradient, LinSrgba};
 use std::ops::AddAssign;
 
@@ -30,12 +32,32 @@ impl Image {
     }
 
     /// Construct a new instance from numerical data and a gradient.
+    /// # Errors
+    /// if the minimum or maximum data value can not be determined.
     #[inline]
-    #[must_use]
-    pub fn new_from_data(data: &Array2<f64>, grad: &Gradient<LinSrgba>) -> Self {
-        Self {
-            pixels: data.map(|x| grad.get(*x as f32)),
-        }
+    pub fn data_to_linear(data: &Array2<f64>, grad: &Gradient<LinSrgba>) -> Result<Self, Error> {
+        let min = *data.min()?;
+        let max = *data.max()?;
+        let linear = (data + min) / (max - min);
+
+        Ok(Self {
+            pixels: linear.map(|x| grad.get(*x as f32)),
+        })
+    }
+
+    /// Construct a new instance from numerical data and a gradient.
+    /// # Errors
+    /// if the minimum or maximum data value can not be determined.
+    #[inline]
+    pub fn data_to_log(data: &Array2<f64>, grad: &Gradient<LinSrgba>) -> Result<Self, Error> {
+        let min = *data.min()?;
+        let max = *data.max()?;
+        let linear = (data + min) / (max - min);
+        let log = linear.map(|x| x.log(10.0));
+
+        Ok(Self {
+            pixels: log.map(|x| grad.get(*x as f32)),
+        })
     }
 }
 
