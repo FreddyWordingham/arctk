@@ -2,7 +2,8 @@
 
 use arctk::{
     args,
-    file::Load,
+    data::Table,
+    file::{Load, Save},
     util::{banner, dir},
 };
 use arctk_attr::input;
@@ -13,24 +14,29 @@ use std::{
 
 // Input parameters.
 #[input]
-struct Parameters {}
+struct Parameters {
+    /// Data table.
+    table: PathBuf,
+}
 
 /// Main function.
 pub fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     banner::title("BABBAGE", term_width);
 
-    let (params_path, in_dir, _out_dir) = init(term_width);
+    let (params_path, in_dir, out_dir) = init(term_width);
 
-    let _params = input(term_width, &in_dir, &params_path);
+    let params = input(term_width, &in_dir, &params_path);
 
-    // let op = build(term_width, &in_dir, params);
+    let table = build(term_width, &in_dir, params);
 
     // banner::section("Operation", term_width);
     // let output = op.run();
 
-    // banner::section("Saving", term_width);
-    // output.save(&out_dir);
+    banner::section("Saving", term_width);
+    table
+        .save(&out_dir.join("out.csv"))
+        .expect("Failed to save output data.");
 
     banner::section("Finished", term_width);
 }
@@ -62,4 +68,13 @@ fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
     let path = in_dir.join(params_path);
 
     Parameters::load(&path).expect("Failed to load parameters file.")
+}
+
+/// Build instances.
+fn build(term_width: usize, in_dir: &Path, params: Parameters) -> Table<f64> {
+    banner::section("Building", term_width);
+    banner::sub_section("Table", term_width);
+    let table = Table::load(&in_dir.join(params.table)).expect("Failed to build table.");
+
+    table
 }
