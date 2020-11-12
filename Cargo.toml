@@ -14,12 +14,11 @@ exclude = ["docs/"]
 
 
 [features]
-default = ["netcdf", "png", "terminal_size"]
-# [dependencies]
-# arctk-attr = { path = "../arctk-attr" }
-# arctk-proc = { path = "../arctk-proc" }
+# default = ["netcdf", "png", "terminal_size"]
 
 [dependencies]
+# arctk-attr = { path = "../arctk-attr" }
+# arctk-proc = { path = "../arctk-proc" }
 arctk-attr = "0.2.*"
 arctk-proc = "0.2.*"
 
@@ -42,6 +41,10 @@ slice-of-array = "0.2.*"
 terminal_size = { version = "0.1.*", optional = true }
 rand = "0.7.*"
 lazy_static = "1.4.*"
+
+[[bin]]
+name = "babbage"
+required-features = ["netcdf"]
 
 [profile.dev]
 # Development profile: "cargo build".
