@@ -1,11 +1,11 @@
 //! Commer-Separated-Variable file handling.
 
 use crate::{data::Table, err::Error, file::Load};
-use std::str::FromStr;
 use std::{
     fs::File,
     io::{BufRead, BufReader},
     path::Path,
+    str::FromStr,
 };
 
 impl<T: FromStr> Load for Table<T> {
