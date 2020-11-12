@@ -1,3 +1,5 @@
 {
-    table: "points.csv"
+    op : {
+        Sample: ["points.csv", "unit.nc", {There: "grid/10m_64.json5"}]
+    }
 }

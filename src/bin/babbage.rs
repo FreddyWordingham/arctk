@@ -2,8 +2,8 @@
 
 use arctk::{
     args,
-    data::Table,
-    file::{Load, Save},
+    file::{Build, Load},
+    sim::babbage::{Operation, OperationBuilder},
     util::{banner, dir},
 };
 use arctk_attr::input;
@@ -15,8 +15,8 @@ use std::{
 // Input parameters.
 #[input]
 struct Parameters {
-    /// Data table.
-    table: PathBuf,
+    /// Operation to perform.
+    op: OperationBuilder,
 }
 
 /// Main function.
@@ -28,15 +28,11 @@ pub fn main() {
 
     let params = input(term_width, &in_dir, &params_path);
 
-    let table = build(term_width, &in_dir, params);
+    let op = build(term_width, &in_dir, params);
 
-    // banner::section("Operation", term_width);
-    // let output = op.run();
-
-    banner::section("Saving", term_width);
-    table
-        .save(&out_dir.join("out.csv"))
-        .expect("Failed to save output data.");
+    banner::section("Operation", term_width);
+    op.run(&out_dir)
+        .expect("Operation failed... we'll get 'em next time.");
 
     banner::section("Finished", term_width);
 }
@@ -71,10 +67,10 @@ fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
 }
 
 /// Build instances.
-fn build(term_width: usize, in_dir: &Path, params: Parameters) -> Table<f64> {
+fn build(term_width: usize, in_dir: &Path, params: Parameters) -> Operation {
     banner::section("Building", term_width);
-    banner::sub_section("Table", term_width);
-    let table = Table::load(&in_dir.join(params.table)).expect("Failed to build table.");
+    banner::sub_section("Operation", term_width);
+    let op = params.op.build(in_dir).expect("Failed to build operation.");
 
-    table
+    op
 }
