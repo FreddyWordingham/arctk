@@ -31,7 +31,7 @@ impl<T> Table<T> {
     /// Deconstruct the table and yeild the inner rows vector.
     #[inline]
     #[must_use]
-    pub fn into_inner(self) -> Vec<Vec<T>> {
+    pub const fn into_inner(self) -> Vec<Vec<T>> {
         self.rows
     }
 }
