@@ -2,7 +2,7 @@
 
 use crate::math::{distribution, Formula};
 use ndarray::Array1;
-use rand::{rngs::ThreadRng, Rng};
+use rand::Rng;
 use std::fmt::{Display, Formatter, Result};
 
 /// Probability distribution formulae.
@@ -124,7 +124,7 @@ impl Probability {
     /// Sample a number from the described distribution.
     #[inline]
     #[must_use]
-    pub fn sample(&self, rng: &mut ThreadRng) -> f64 {
+    pub fn sample<R: Rng>(&self, rng: &mut R) -> f64 {
         match *self {
             Self::Point { ref c } => *c,
             Self::Points { ref cs } => cs[rng.gen_range(0, cs.len())],

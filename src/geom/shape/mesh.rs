@@ -6,7 +6,7 @@ use crate::{
     math::Trans3,
     ord::{ALPHA, X},
 };
-use rand::{rngs::ThreadRng, Rng};
+use rand::Rng;
 
 /// Boundary padding.
 const PADDING: f64 = 1e-6;
@@ -107,7 +107,7 @@ impl Transformable for Mesh {
 impl Emit for Mesh {
     #[inline]
     #[must_use]
-    fn cast(&self, rng: &mut ThreadRng) -> Ray {
+    fn cast<R: Rng>(&self, rng: &mut R) -> Ray {
         let r = rng.gen_range(0.0, self.area);
         let mut total_area = 0.0;
         for tri in &self.tris {

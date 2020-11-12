@@ -6,7 +6,7 @@ use crate::{
     math::{Dir3, Pos3, Trans3},
     ord::{ALPHA, BETA, GAMMA},
 };
-use rand::{rngs::ThreadRng, Rng};
+use rand::Rng;
 
 /// Triangle geometry with normal interpolation.
 pub struct SmoothTriangle {
@@ -95,7 +95,7 @@ impl Transformable for SmoothTriangle {
 impl Emit for SmoothTriangle {
     #[inline]
     #[must_use]
-    fn cast(&self, rng: &mut ThreadRng) -> Ray {
+    fn cast<R: Rng>(&self, rng: &mut R) -> Ray {
         let mut u = rng.gen::<f64>();
         let mut v = rng.gen::<f64>();
 

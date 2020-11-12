@@ -6,7 +6,7 @@ use crate::{
     math::{Dir3, Pos3, Trans3, Vec3},
     ord::{ALPHA, BETA, GAMMA},
 };
-use rand::{rngs::ThreadRng, Rng};
+use rand::Rng;
 
 /// Triangle.
 pub struct Triangle {
@@ -258,7 +258,7 @@ impl Transformable for Triangle {
 impl Emit for Triangle {
     #[inline]
     #[must_use]
-    fn cast(&self, rng: &mut ThreadRng) -> Ray {
+    fn cast<R: Rng>(&self, rng: &mut R) -> Ray {
         let mut u = rng.gen::<f64>();
         let mut v = rng.gen::<f64>();
 
