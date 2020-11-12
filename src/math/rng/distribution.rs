@@ -2,7 +2,7 @@
 
 use crate::math::{Dir3, Vec3};
 use lazy_static::lazy_static;
-use rand::{rngs::ThreadRng, Rng};
+use rand::Rng;
 use std::f64::consts::{FRAC_PI_2, PI};
 
 lazy_static! {
@@ -13,7 +13,7 @@ lazy_static! {
 /// Sample the Henyey-Greenstein phase function with a given asymmetry parameter.
 #[inline]
 #[must_use]
-pub fn sample_henyey_greenstein(rng: &mut ThreadRng, asym: f64) -> f64 {
+pub fn sample_henyey_greenstein<R: Rng>(rng: &mut R, asym: f64) -> f64 {
     debug_assert!(asym.abs() <= 1.0);
 
     if asym.abs() < 1.0e-6 {
@@ -29,7 +29,7 @@ pub fn sample_henyey_greenstein(rng: &mut ThreadRng, asym: f64) -> f64 {
 /// Sample the normal distribution.
 #[inline]
 #[must_use]
-pub fn sample_normal(rng: &mut ThreadRng) -> f64 {
+pub fn sample_normal<R: Rng>(rng: &mut R) -> f64 {
     let a = (-2.0 * rng.gen_range(0.0_f64, 1.0).ln()).sqrt();
     let theta = rng.gen_range(0.0, 2.0 * PI);
 
@@ -41,7 +41,7 @@ pub fn sample_normal(rng: &mut ThreadRng) -> f64 {
 /// Sample a gaussian distribution.
 #[inline]
 #[must_use]
-pub fn sample_gaussian(rng: &mut ThreadRng, mu: f64, sigma: f64) -> f64 {
+pub fn sample_gaussian<R: Rng>(rng: &mut R, mu: f64, sigma: f64) -> f64 {
     debug_assert!(sigma > 0.0);
 
     sample_normal(rng).mul_add(sigma, mu)
@@ -50,7 +50,7 @@ pub fn sample_gaussian(rng: &mut ThreadRng, mu: f64, sigma: f64) -> f64 {
 /// Create a random unit vector.
 #[inline]
 #[must_use]
-pub fn rand_isotropic_dir(rng: &mut ThreadRng) -> Dir3 {
+pub fn rand_isotropic_dir<R: Rng>(rng: &mut R) -> Dir3 {
     let theta = rng.gen_range(0.0, 2.0 * PI);
     let z: f64 = rng.gen_range(-1.0, 1.0);
 
