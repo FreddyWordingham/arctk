@@ -31,7 +31,7 @@ env:
     secure: oCbiOVL9aIVbE3I/gpVfZepPSH2nVgNBxziVEEI3KtCZRKPLz1FQxkBSRtqbBdMC4kYdo8hWMfwFceiVjLph5pzuZKrfXjntHRqeSvGVb3D7UfMuJbsDmNYVBjl6X4QwNLsVdtVCJP0e/sKphNshWNHc1iqI8w0G3o8xhs10/dBmLY82UQ8z5fqucmRu4kT50i3U8vfUeF3az9VcNBlKGLYohIPwHNvQzNjuf44QdcyVnwFHlb7EkpAJF3xTvllTHTBmKNa/8C3c9LhftnewmwkxSQZpNFX+O02qXIxsMrmTUkEJspUdm7b6Px3vHaAoVxFA/9/jgy40c1h+MtJzQVDyEQhz8Q2XFFcQoZaFFJM3ZPTezJ3/lZSRcDqWvni4bQRl5L3dUpUpO0/Y+/J6Ac+wXvmf4x5l+pFS2lPO0jY2qtUkD3nTqu+cZARax5qg+9O37vcsZjEpA+dQPJAsLAFptVEGTTifCy/6Ut/5fQdlcvMu4nauivYSNmNoWomtYYshZiOIyS3+DNusTXM4uQqftGkKraQ8g+x9aoKjzgG1AfcDodFF/U+iU+03XMVSr5BW2KtC6I05MQg+Q0MWH4zdUrB1u1w0RHfum5pQ3Uh2dci0gYLsnlspDFuTOb7BYkKzxE4vUhD/oNsSFrAI/GQY9eHI4htFdZVKiNBDqpo=
 
 script:
-  - cargo build
+  - cargo build --all-features
   - cargo test
 
 after_success:
