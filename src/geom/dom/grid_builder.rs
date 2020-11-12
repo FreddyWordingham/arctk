@@ -9,6 +9,7 @@ use arctk_attr::load;
 
 /// Grid builder.
 #[load]
+#[derive(Clone)]
 pub struct GridBuilder {
     /// Boundary.
     boundary: Cube,
