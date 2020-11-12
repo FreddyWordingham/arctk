@@ -28,10 +28,11 @@ impl<T> Table<T> {
         Self { rows, num_cols }
     }
 
-    /// Deconstruct the table and yeild the inner rows vector.
+    /// Deconstruct the table and yield the inner rows vector.
+    #[allow(clippy::missing_const_for_fn)]
     #[inline]
     #[must_use]
-    pub const fn into_inner(self) -> Vec<Vec<T>> {
+    pub fn into_inner(self) -> Vec<Vec<T>> {
         self.rows
     }
 }
