@@ -39,5 +39,6 @@ pub mod math;
 pub mod meta;
 pub mod ord;
 pub mod phys;
+pub mod sim;
 pub mod tools;
 pub mod util;

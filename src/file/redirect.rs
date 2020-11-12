@@ -11,7 +11,7 @@ use std::{
 };
 
 /// Possible file redirection structure.
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum Redirect<T> {
     /// Path to file.
     There(String),

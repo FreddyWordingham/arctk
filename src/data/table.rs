@@ -27,6 +27,13 @@ impl<T> Table<T> {
 
         Self { rows, num_cols }
     }
+
+    /// Deconstruct the table and yeild the inner rows vector.
+    #[inline]
+    #[must_use]
+    pub fn into_inner(self) -> Vec<Vec<T>> {
+        self.rows
+    }
 }
 
 impl<T: AddAssign + Clone> AddAssign<&Self> for Table<T> {
