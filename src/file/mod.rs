@@ -1,6 +1,7 @@
 //! File IO.
 
 pub mod build;
+pub mod csv;
 pub mod json;
 pub mod load;
 pub mod redirect;
@@ -19,4 +20,4 @@ pub use self::netcdf::*;
 #[cfg(feature = "png")]
 pub use self::png::*;
 
-pub use self::{build::*, json::*, load::*, redirect::*, save::*, wavefront::*};
+pub use self::{build::*, csv::*, json::*, load::*, redirect::*, save::*, wavefront::*};
