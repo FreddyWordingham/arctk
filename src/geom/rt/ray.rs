@@ -21,7 +21,8 @@ impl Ray {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(pos: Pos3, dir: Dir3) -> Self {
+    pub fn new(pos: Pos3, mut dir: Dir3) -> Self {
+        dir.renormalize();
         Self { pos, dir }
     }
 
