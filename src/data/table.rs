@@ -1,61 +1,65 @@
 //! Data table implementation.
 
-use crate::{
-    access,
-    err::Error,
-    file::Save,
-    tools::{Binner, Range},
-};
-use ndarray::Array1;
-use std::{fs::File, io::Write, ops::AddAssign, path::Path};
+use crate::{access, clone, err::Error, file::Save};
+use std::{fmt::Display, fs::File, io::Write, ops::AddAssign, path::Path};
 
 /// Table of row data.
 pub struct Table<T> {
     /// Count data.
     rows: Vec<Vec<T>>,
     /// Number of columns.
-    cols: usize,
+    num_cols: usize,
 }
 
 impl<T> Table<T> {
     access!(rows, Vec<Vec<T>>);
+    clone!(num_cols, usize);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
     pub fn new(rows: Vec<Vec<T>>) -> Self {
         debug_assert!(!rows.is_empty());
-        let cols = rows[0].len();
+        let num_cols = rows[0].len();
         for row in &rows {
-            debug_assert!(row.len() == cols);
+            debug_assert!(row.len() == num_cols);
         }
 
-        Self { rows, cols }
+        Self { rows, num_cols }
     }
 }
 
-// impl AddAssign<&Self> for Histogram {
-//     #[inline]
-//     fn add_assign(&mut self, rhs: &Self) {
-//         debug_assert!(self.binner == rhs.binner);
-//         debug_assert!(self.counts.len() == rhs.counts.len());
+impl<T: AddAssign + Clone> AddAssign<&Self> for Table<T> {
+    #[inline]
+    fn add_assign(&mut self, rhs: &Self) {
+        debug_assert!(self.rows.len() == rhs.rows.len());
+        debug_assert!(self.num_cols == rhs.num_cols);
 
-//         self.counts += &rhs.counts;
-//     }
-// }
+        for (lhs, rhs) in self.rows.iter_mut().zip(&rhs.rows) {
+            for (l, r) in lhs.iter_mut().zip(rhs) {
+                *l += r.clone();
+            }
+        }
+    }
+}
 
-// impl Save for Table {
-//     #[inline]
-//     fn save(&self, path: &Path) -> Result<(), Error> {
-//         let mut file = File::create(path)?;
+impl<T: Display> Save for Table<T> {
+    #[inline]
+    fn save(&self, path: &Path) -> Result<(), Error> {
+        let mut file = File::create(path)?;
 
-//         let mut center = self.binner.range().min();
-//         let delta = self.binner.range().width() / (self.counts.len() - 1) as f64;
-//         for count in &self.counts {
-//             center += delta;
-//             writeln!(file, "{:>32}, {:<32}", center, count)?;
-//         }
+        for row in &self.rows {
+            let mut iter = row.iter();
+            if let Some(x) = iter.next() {
+                write!(file, "{:>32}", x)?;
+            }
 
-//         Ok(())
-//     }
-// }
+            for x in iter {
+                write!(file, ", {:>32}", x)?;
+            }
+            writeln!(file)?;
+        }
+
+        Ok(())
+    }
+}
