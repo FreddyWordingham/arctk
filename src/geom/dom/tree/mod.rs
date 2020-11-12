@@ -34,9 +34,10 @@ pub enum Tree<'a, T> {
 
 impl<'a, T> Tree<'a, T> {
     /// Reference the cell's boundary.
+    #[allow(clippy::missing_const_for_fn)]
     #[inline]
     #[must_use]
-    pub const fn boundary(&self) -> &Cube {
+    pub fn boundary(&self) -> &Cube {
         match *self {
             Self::Root { ref boundary, .. }
             | Self::Branch { ref boundary, .. }
