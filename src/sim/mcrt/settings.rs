@@ -35,6 +35,7 @@ impl Settings {
     access!(detector_pos, Pos3);
 
     /// Construct a new instance.
+    #[allow(clippy::too_many_arguments)]
     #[inline]
     #[must_use]
     pub fn new(

@@ -12,6 +12,7 @@ const THRESHOLD: f64 = 1.0e-6;
 
 /// Calculate the change in weight over a give flight towards a given point.
 /// Perform a peel off event.
+#[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
 pub fn peel_off(env: &Local, uni: &Universe, mut phot: Photon, pos: Pos3) -> Option<f64> {
