@@ -7,3 +7,4 @@ use rand::rngs::ThreadRng;
 pub type Engine = fn(&mut ThreadRng, uni: &Universe, data: &mut Data, phot: Photon) -> Sample;
 
 pub mod basic;
+pub mod raman;

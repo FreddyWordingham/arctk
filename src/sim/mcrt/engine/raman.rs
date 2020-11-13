@@ -1,4 +1,4 @@
-//! Photon-lifetime engine function.
+//! Raman specialised photon-lifetime engine function.
 
 use super::super::{Attributes, Data, Event, Local, Photon, Sample, Universe};
 use crate::{geom::Trace, math::sample_henyey_greenstein, phys::Crossing};
@@ -7,6 +7,7 @@ use rand::{rngs::ThreadRng, Rng};
 use std::f64::consts::PI;
 
 /// Simulate the life of a single photon.
+/// Peel-off Raman detection.
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]

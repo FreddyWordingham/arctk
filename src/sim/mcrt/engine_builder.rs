@@ -9,6 +9,8 @@ use arctk_attr::load;
 pub enum EngineBuilder {
     /// Basic sampling engine.
     Basic,
+    /// Raman specialised engine.
+    Raman,
 }
 
 impl EngineBuilder {
@@ -18,6 +20,7 @@ impl EngineBuilder {
     pub fn build(self) -> Engine {
         match self {
             Self::Basic => engine::basic::sample,
+            Self::Raman => engine::raman::sample,
         }
     }
 }
