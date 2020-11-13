@@ -24,10 +24,13 @@ impl Display for Attributes {
     #[allow(clippy::expect_used)]
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result {
-        let kind = match self {
+        let kind = match *self {
             Self::Spectrometer => "Spectrometer".to_string(),
             Self::Mirror => "Mirror".to_string(),
-            Self::Refractive { inside, outside } => format!("Refractive: {}:|{}", inside, outside),
+            Self::Refractive {
+                ref inside,
+                ref outside,
+            } => format!("Refractive: {}:|{}", inside, outside),
         };
         write!(fmt, "{}", kind)
     }

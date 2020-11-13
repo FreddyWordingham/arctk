@@ -51,18 +51,15 @@ impl Material {
 
         let scat = self.scat_coeff.y(w);
 
-        let abs = if let Some(abs_coeff_formula) = &self.abs_coeff {
-            abs_coeff_formula.y(w)
-        } else {
-            0.0
-        };
+        let abs = self
+            .abs_coeff
+            .as_ref()
+            .map_or(0.0, |abs_coeff_formula| abs_coeff_formula.y(w));
 
-        let shift = if let Some(shift_coeff_formula) = &self.shift_coeff {
-            shift_coeff_formula.y(w)
-        } else {
-            0.0
-        };
-
+        let shift = self
+            .shift_coeff
+            .as_ref()
+            .map_or(0.0, |shift_coeff_formula| shift_coeff_formula.y(w));
         let g = self.asym_fact.y(w);
 
         Local::new(index, scat, abs, shift, g)

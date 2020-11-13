@@ -26,7 +26,7 @@ impl<'a> Universe<'a> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(
+    pub const fn new(
         tree: &'a Tree<'a, &Key>,
         grid: &'a Grid,
         sett: &'a Settings,
