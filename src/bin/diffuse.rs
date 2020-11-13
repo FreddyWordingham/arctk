@@ -122,7 +122,8 @@ fn build(
 }
 
 /// Grow domains.
-fn grow<'a>(term_width: usize, grid_sett: GridBuilder) -> Grid {
+#[allow(clippy::let_and_return)]
+fn grow(term_width: usize, grid_sett: GridBuilder) -> Grid {
     banner::section("Growing", term_width);
 
     banner::sub_section("Regular Grid", term_width);

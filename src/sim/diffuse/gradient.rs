@@ -86,10 +86,10 @@ impl Gradient {
     /// Calculate the rate of diffusion.
     #[inline]
     #[must_use]
-    pub fn rate(&self, coeff: f64, cell_size: &Vec3) -> f64 {
+    pub fn rate(&self, coeff: f64, cell_size_sq: &Vec3) -> f64 {
         coeff
-            * (((self.next_x - self.c2 + self.prev_x) / cell_size.x.powi(2))
-                + ((self.next_y - self.c2 + self.prev_y) / cell_size.y.powi(2))
-                + ((self.next_z - self.c2 + self.prev_z) / cell_size.z.powi(2)))
+            * (((self.next_x - self.c2 + self.prev_x) / cell_size_sq.x)
+                + ((self.next_y - self.c2 + self.prev_y) / cell_size_sq.y)
+                + ((self.next_z - self.c2 + self.prev_z) / cell_size_sq.z))
     }
 }

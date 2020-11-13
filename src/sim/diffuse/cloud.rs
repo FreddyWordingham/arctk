@@ -128,7 +128,19 @@ impl<'a> Cloud<'a> {
         coeffs: &Array3<f64>,
     ) -> Array3<f64> {
         let rates = Array3::zeros(*grid.res());
-        Self::diff_rate(pb, block_size, grid.voxel_size(), values, coeffs, rates)
+        let voxel_size = grid.voxel_size();
+        Self::diff_rate(
+            pb,
+            block_size,
+            &Vec3::new(
+                voxel_size.x * voxel_size.x,
+                voxel_size.y * voxel_size.y,
+                voxel_size.z * voxel_size.z,
+            ),
+            values,
+            coeffs,
+            rates,
+        )
     }
 
     /// Calculate the diffusion rates for each cell.
@@ -137,7 +149,7 @@ impl<'a> Cloud<'a> {
     fn diff_rate(
         pb: &Arc<Mutex<SilentProgressBar>>,
         block_size: u64,
-        cell_size: &Vec3,
+        cell_size_sq: &Vec3,
         values: &Array3<f64>,
         coeffs: &Array3<f64>,
         mut rate: Array3<f64>,
@@ -159,7 +171,7 @@ impl<'a> Cloud<'a> {
                 let index = [xi, yi, zi];
 
                 let stencil = Gradient::new(index, values);
-                let r = stencil.rate(coeffs[index], cell_size);
+                let r = stencil.rate(coeffs[index], cell_size_sq);
                 rate[index] = r;
             }
         }
