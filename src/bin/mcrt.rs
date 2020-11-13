@@ -5,6 +5,7 @@ use arctk::{
     file::{Build, Load, Redirect, Save},
     geom::{Grid, GridBuilder, Mesh, MeshBuilder, Tree, TreeBuilder},
     ord::{Key, Set},
+    report,
     sim::mcrt::{
         run, Attributes, Data, Engine, EngineBuilder, Light, LightBuilder, Material,
         MaterialBuilder, Settings, Universe,
@@ -42,6 +43,8 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     banner::title("MCRT", term_width);
 
+    let list = vec![1, 2, 3, 5, 4];
+    arctk::reports!(list);
     let (params_path, in_dir, out_dir) = init(term_width);
 
     let params = input(term_width, &in_dir, &params_path);
@@ -54,8 +57,9 @@ fn main() {
     let input = Universe::new(&tree, &grid, &mcrt_sett, &surfs, &attrs, &mats);
     let output = simulate(term_width, engine, &input, &light);
 
-    banner::section("Saving", term_width);
-    output.save(&out_dir).expect("Failed to save output data.");
+    post_analysis(term_width, &output);
+
+    save(term_width, &out_dir, &output);
 
     banner::section("Finished", term_width);
 }
@@ -67,7 +71,8 @@ fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     args!(bin_path: PathBuf;
         params_path: PathBuf
     );
-    println!("{:>32} : {}", "binary path", bin_path.display());
+    report!(bin_path.display(), "binary path");
+    // println!("{:>32} : {}", "binary path", bin_path.display());
     println!("{:>32} : {}", "parameters path", params_path.display());
 
     banner::sub_section("Directories", term_width);
@@ -86,7 +91,10 @@ fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
     banner::sub_section("Parameters", term_width);
     let path = in_dir.join(params_path);
 
-    Parameters::load(&path).expect("Failed to load parameters file.")
+    let params = Parameters::load(&path).expect("Failed to load parameters file.");
+    // // println!("{:>32} : {}", "parameters", params);
+
+    params
 }
 
 /// Build instances.
@@ -166,4 +174,29 @@ fn simulate(term_width: usize, engine: Engine, uni: &Universe, light: &Light) ->
     banner::section("Simulating", term_width);
     // run::single_thread(engine, &uni, &light).expect("Failed to complete simulation.")
     run::multi_thread(engine, &uni, &light).expect("Failed to complete simulation.")
+}
+
+/// Review the output data.
+fn post_analysis(term_width: usize, output: &Data) {
+    banner::section("Post-Analysis", term_width);
+
+    println!("{:>32} : {}", "escaped weight", output.escaped_weight);
+
+    let total_emission: f64 = output.emission_power.sum();
+    println!("{:>32} : {}W", "total emission power", total_emission);
+
+    let total_energy: f64 = output.energy.sum();
+    println!("{:>32} : {}W", "total power", total_energy);
+
+    let total_emission: f64 = output.emission_power.sum();
+    println!("{:>32} : {}W", "total absorption power", total_emission);
+
+    let total_shifts: f64 = output.shifts.sum();
+    println!("{:>32} : {}", "total shifts", total_shifts);
+}
+
+/// Save the output data.
+fn save(term_width: usize, out_dir: &Path, output: &Data) {
+    banner::section("Saving", term_width);
+    output.save(&out_dir).expect("Failed to save output data.");
 }

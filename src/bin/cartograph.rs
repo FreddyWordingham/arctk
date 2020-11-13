@@ -182,6 +182,5 @@ fn post_analysis(term_width: usize, output: &Data) {
 /// Save the output data.
 fn save(term_width: usize, out_dir: &Path, output: &Data) {
     banner::section("Saving", term_width);
-
     output.save(&out_dir).expect("Failed to save output data.");
 }
