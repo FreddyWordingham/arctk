@@ -1,7 +1,10 @@
 //! Simulation control functions.
 
 use super::{Data, Landscape};
-use crate::{err::Error, tools::linear_to_three_dim, tools::ProgressBar};
+use crate::{
+    err::Error,
+    tools::{linear_to_three_dim, ProgressBar},
+};
 use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};

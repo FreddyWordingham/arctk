@@ -1,11 +1,11 @@
-//! Mapping program.
+//! MCRT binary.
 
 use arctk::{
     args,
     file::{Build, Load, Redirect, Save},
     geom::{Grid, GridBuilder, Mesh, MeshBuilder, Tree, TreeBuilder},
     ord::{Key, Set},
-    sim::cartograph::{Data, Interface, Landscape, Settings},
+    sim::mcrt::{Attributes, Light, LightBuilder, Material, MaterialBuilder, Settings, Universe},
     util::{banner, dir},
 };
 use arctk_attr::input;
@@ -14,40 +14,43 @@ use std::{
     path::{Path, PathBuf},
 };
 
-// Input parameters.
+/// Input parameters.
 #[input]
 struct Parameters {
     /// Adaptive mesh settings.
-    tree: Redirect<TreeBuilder>,
-    /// Sampling grid settings.
-    grid: Redirect<GridBuilder>,
-    /// Runtime settings.
-    sett: Redirect<Settings>,
+    tree: TreeBuilder,
+    /// Regular grid settings.
+    grid: GridBuilder,
+    /// MCRT runtime settings.
+    sett: Settings,
     /// Surfaces set.
-    surfs: Redirect<Set<Key, MeshBuilder>>,
-    /// Interfaces map. (Inside material, outside material).
-    inters: Redirect<Set<Key, Interface>>,
+    surfs: Set<Key, MeshBuilder>,
+    /// Attributes set.
+    attrs: Set<Key, Attributes>,
+    /// Materials set.
+    mats: Set<Key, Redirect<MaterialBuilder>>,
+    /// Light form.
+    light: LightBuilder,
 }
 
-/// Main function.
-pub fn main() {
+fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
-    banner::title("CARTOGRAPHER", term_width);
+    banner::title("MCRT", term_width);
 
     let (params_path, in_dir, out_dir) = init(term_width);
 
     let params = input(term_width, &in_dir, &params_path);
 
-    let (tree_sett, grid_sett, sett, surfs, inters) = build(term_width, &in_dir, params);
+    let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light) =
+        build(term_width, &in_dir, params);
 
     let (tree, grid) = grow(term_width, tree_sett, grid_sett, &surfs);
 
-    let input = Landscape::new(&tree, &grid, &sett, &surfs, &inters);
-    let output = mapping(term_width, &input);
+    let input = Universe::new(&tree, &grid, &mcrt_sett, &surfs, &attrs, &mats);
+    let output = simulate(term_width, &input);
 
-    post_analysis(term_width, &output);
-
-    save(term_width, &out_dir, &output);
+    banner::section("Saving", term_width);
+    output.save(&out_dir).expect("Failed to save output data.");
 
     banner::section("Finished", term_width);
 }
@@ -92,52 +95,52 @@ fn build(
     GridBuilder,
     Settings,
     Set<Key, Mesh>,
-    Set<Key, Interface>,
+    Set<Key, Attributes>,
+    Set<Key, Material>,
+    Light,
 ) {
     banner::section("Building", term_width);
     banner::sub_section("Adaptive Tree Settings", term_width);
-    let tree_sett = params
-        .tree
-        .build(in_dir)
-        .expect("Failed to redirect adaptive tree settings.");
+    let tree_sett = params.tree;
 
-    banner::sub_section("Measurement Grid Settings", term_width);
-    let grid_sett = params
-        .grid
-        .build(in_dir)
-        .expect("Failed to redirect grid settings.");
+    banner::sub_section("Grid Settings", term_width);
+    let grid_sett = params.grid;
 
-    banner::sub_section("Runtime Settings", term_width);
-    let sett = params
-        .sett
-        .build(in_dir)
-        .expect("Failed to redirect runtime settings.");
+    banner::sub_section("MCRT Settings", term_width);
+    let mcrt_sett = params.sett;
 
     banner::sub_section("Surfaces", term_width);
     let surfs = params
         .surfs
         .build(in_dir)
-        .expect("Failed to redirect surfaces set.")
-        .build(in_dir)
-        .expect("Failed to build surfaces set.");
+        .expect("Failed to build surfaces.");
 
-    banner::sub_section("Interfaces", term_width);
-    let inters = params
-        .inters
-        .build(in_dir)
-        .expect("Failed to redirect interfaces set.");
+    banner::sub_section("Attributes", term_width);
+    let attrs = params.attrs;
 
-    (tree_sett, grid_sett, sett, surfs, inters)
+    banner::sub_section("Materials", term_width);
+    let mats = params
+        .mats
+        .build(in_dir)
+        .expect("Failed to remove redirections in materials.")
+        .build(in_dir)
+        .expect("Failed to build materials.");
+
+    banner::sub_section("Light", term_width);
+    let light = params.light.build(in_dir).expect("Failed to build light.");
+
+    (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light)
 }
 
 /// Grow domains.
-fn grow<'a>(
+fn grow(
     term_width: usize,
     tree_sett: TreeBuilder,
     grid_sett: GridBuilder,
-    surfs: &'a Set<Key, Mesh>,
-) -> (Tree<'a, &Key>, Grid) {
+    surfs: &Set<Key, Mesh>,
+) -> (Tree<&Key>, Grid) {
     banner::section("Growing", term_width);
+
     banner::sub_section("Adaptive Tree", term_width);
     let tree = tree_sett.build(&surfs);
 
@@ -147,34 +150,8 @@ fn grow<'a>(
     (tree, grid)
 }
 
-/// Perform the mapping.
-fn mapping(term_width: usize, input: &Landscape) -> Data {
-    banner::section("Mapping", term_width);
-    arctk::sim::cartograph::run::multi_thread(&input).expect("Failed to complete survey.")
-}
-
-/// Review the output data.
-fn post_analysis(term_width: usize, output: &Data) {
-    banner::section("Post-Analysis", term_width);
-
-    let mut total: f64 = output.maps.map().values().map(|m| m.sum()).sum();
-    println!("{:>32} : {}", "total occupancy", total);
-
-    for (key, map) in output.maps.map() {
-        let occupancy = map.sum();
-        println!(
-            "{:>32} : {} ({}%)",
-            key,
-            occupancy,
-            occupancy / total * 100.0
-        );
-        total += occupancy;
-    }
-}
-
-/// Save the output data.
-fn save(term_width: usize, out_dir: &Path, output: &Data) {
-    banner::section("Saving", term_width);
-
-    output.save(&out_dir).expect("Failed to save output data.");
+/// Run the simulation.
+fn simulate(term_width: usize, uni: &Universe) -> Data {
+    banner::section("Simulating", term_width);
+    arctk::sim::mcrt::multi_thread(&uni, &light).expect("Failed to complete simulation.")
 }

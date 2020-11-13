@@ -1,12 +1,11 @@
-//! Photon-lifetime engine function.
+//! Sampling engine function.
 
 use super::super::{Data, Landscape};
 use crate::{
     geom::{Ray, Trace},
     ord::{Key, X, Y, Z},
 };
-use rand::prelude::SliceRandom;
-use rand::Rng;
+use rand::{prelude::SliceRandom, Rng};
 
 /// Determine what a single ray will observe.
 #[inline]
