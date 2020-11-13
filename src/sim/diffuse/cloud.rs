@@ -35,6 +35,8 @@ impl<'a> Cloud<'a> {
 
     /// Simulate the change of given initial condition within the system.
     #[allow(clippy::expect_used)]
+    #[allow(clippy::shadow_reuse)]
+    #[allow(clippy::shadow_unrelated)]
     #[inline]
     #[must_use]
     pub fn sim(&self, time: f64, mut data: Data) -> Data {
@@ -144,6 +146,7 @@ impl<'a> Cloud<'a> {
     }
 
     /// Calculate the diffusion rates for each cell.
+    #[allow(clippy::expect_used)]
     #[inline]
     #[must_use]
     fn diff_rate(

@@ -54,6 +54,10 @@ name = "cartograph"
 required-features = ["netcdf", "terminal_size"]
 
 [[bin]]
+name = "diffuse"
+required-features = ["netcdf", "terminal_size"]
+
+[[bin]]
 name = "mcrt"
 required-features = ["netcdf", "terminal_size"]
 
