@@ -68,7 +68,7 @@ pub fn sample(rng: &mut ThreadRng, uni: &Universe, data: &mut Data, mut phot: Ph
                 travel(data, index, &env, &mut phot, hit.dist());
 
                 if let Some(attr) = uni.attrs.map().get(*hit.tag()) {
-                    match attr {
+                    match *attr {
                         Attributes::Spectrometer => {
                             data.spec.collect_weight(phot.wavelength(), phot.weight());
                         }
@@ -76,7 +76,10 @@ pub fn sample(rng: &mut ThreadRng, uni: &Universe, data: &mut Data, mut phot: Ph
                             *phot.ray_mut().dir_mut() =
                                 Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
                         }
-                        Attributes::Refractive { inside, outside } => {
+                        Attributes::Refractive {
+                            ref inside,
+                            ref outside,
+                        } => {
                             // Determine far side material.
                             let next_mat = if hit.side().is_inside() {
                                 outside
