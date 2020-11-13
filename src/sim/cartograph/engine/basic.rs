@@ -5,11 +5,11 @@ use crate::{
     geom::{Ray, Trace},
     ord::{Key, X, Y, Z},
 };
-use rand::{prelude::SliceRandom, Rng};
+use rand::{prelude::SliceRandom, rngs::ThreadRng};
 
 /// Determine what a single ray will observe.
 #[inline]
-pub fn sample<R: Rng>(land: &Landscape, data: &mut Data, index: [usize; 3], mut rng: &mut R) {
+pub fn sample(land: &Landscape, data: &mut Data, index: [usize; 3], mut rng: &mut ThreadRng) {
     let bump_dist = land.sett.bump_dist();
     let num_pos_samples = land.sett.super_sampling().num_samples();
     let num_cast_samples = land.sett.caster().num_samples();
