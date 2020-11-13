@@ -2,17 +2,15 @@
 
 use super::Emitter;
 use crate::{
+    data::Table,
     err::Error,
-    file::Build,
+    file::{Build, Load},
     geom::{MeshBuilder, Ray},
     math::{Dir3, Pos3},
+    ord::{X, Y, Z},
 };
 use arctk_attr::load;
-use std::{
-    fs::File,
-    io::{BufRead, BufReader},
-    path::{Path, PathBuf},
-};
+use std::path::{Path, PathBuf};
 
 /// Ray emission structure.
 #[load]
@@ -21,6 +19,8 @@ pub enum EmitterBuilder {
     Beam(Pos3, Dir3),
     /// Point list.
     Points(PathBuf),
+    // /// Weighted point list.
+    // WeightedPoints(PathBuf, PathBuf),
     /// Surface mesh.
     Surface(MeshBuilder),
 }
@@ -33,35 +33,12 @@ impl Build for EmitterBuilder {
         Ok(match self {
             Self::Beam(pos, dir) => Self::Inst::Beam(Ray::new(pos, dir)),
             Self::Points(path) => {
-                let path = in_dir.join(path);
-                println!("loading: {}", path.display());
-
-                let lines: Vec<_> = BufReader::new(File::open(path)?)
-                    .lines()
-                    .map(Result::unwrap)
-                    .filter(|line| !line.starts_with("//"))
+                let table = Table::load(&in_dir.join(path))?;
+                let points = table
+                    .into_inner()
+                    .iter()
+                    .map(|row| Pos3::new(row[X], row[Y], row[Z]))
                     .collect();
-
-                let mut points = Vec::with_capacity(lines.len());
-                for mut line in lines {
-                    line.retain(|c| !c.is_whitespace());
-                    let mut words = line.split(',');
-
-                    let x = words
-                        .next()
-                        .ok_or("Missing position word x.")?
-                        .parse::<f64>()?;
-                    let y = words
-                        .next()
-                        .ok_or("Missing position word y.")?
-                        .parse::<f64>()?;
-                    let z = words
-                        .next()
-                        .ok_or("Missing position word z.")?
-                        .parse::<f64>()?;
-
-                    points.push(Pos3::new(x, y, z));
-                }
 
                 Self::Inst::Points(points)
             }
