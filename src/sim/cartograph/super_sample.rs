@@ -1,6 +1,10 @@
 //! Super sampling implementation.
 
-use crate::{geom::Cube, math::Pos3, tools::linear_to_three_dim, tools::Valid};
+use crate::{
+    geom::Cube,
+    math::Pos3,
+    tools::{linear_to_three_dim, Valid},
+};
 use arctk_attr::load;
 use rand::Rng;
 

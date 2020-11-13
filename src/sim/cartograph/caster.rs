@@ -2,8 +2,7 @@
 
 use crate::{
     geom::Ray,
-    math::{rand_circle_point, rand_sphere_point},
-    math::{Dir3, Pos3, Vec3},
+    math::{rand_circle_point, rand_sphere_point, Dir3, Pos3, Vec3},
 };
 use arctk_attr::load;
 
