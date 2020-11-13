@@ -10,7 +10,7 @@ keywords = ["physics", "mcrt", "ode", "diffusion", "rt"]
 categories = ["science", "simulation"]
 edition = "2018"
 documentation = "https://freddywordingham.github.io/arctk"
-exclude = ["docs/"]
+exclude = ["docs/", "input/", "output/"]
 
 
 [features]
