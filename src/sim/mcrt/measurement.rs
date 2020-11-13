@@ -14,7 +14,7 @@ const THRESHOLD: f64 = 1.0e-6;
 /// Perform a peel off event.
 #[inline]
 #[must_use]
-pub fn peel_off(env: Local, uni: &Universe, mut phot: Photon, pos: Pos3) -> Option<f64> {
+pub fn peel_off(env: &Local, uni: &Universe, mut phot: Photon, pos: Pos3) -> Option<f64> {
     let g = env.asym();
     let g_sq = g * g;
 

@@ -1,6 +1,6 @@
 //! Raman specialised photon-lifetime engine function.
 
-use super::super::{Attributes, Data, Event, Local, Photon, Sample, Universe};
+use super::super::{peel_off, Attributes, Data, Event, Local, Photon, Sample, Universe};
 use crate::{geom::Trace, math::sample_henyey_greenstein, phys::Crossing};
 use physical_constants::SPEED_OF_LIGHT_IN_VACUUM;
 use rand::{rngs::ThreadRng, Rng};
@@ -63,6 +63,13 @@ pub fn sample(rng: &mut ThreadRng, uni: &Universe, data: &mut Data, mut phot: Ph
             Event::Voxel(dist) => travel(data, index, &env, &mut phot, dist + bump_dist),
             Event::Scattering(dist) => {
                 scatter(rng, data, index, &env, &mut phot, dist);
+                if phot.wavelength() >= 900.0e-9 {
+                    if let Some(weight) =
+                        peel_off(&env, uni, phot.clone(), *uni.sett.detector_pos())
+                    {
+                        data.total_raman_weight += weight * phot.weight();
+                    }
+                }
             }
             Event::Surface(hit) => {
                 // Move to the collision point.

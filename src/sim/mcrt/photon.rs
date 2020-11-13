@@ -3,6 +3,7 @@
 use crate::{access, clone, geom::Ray};
 
 /// Photon.
+#[derive(Clone)]
 pub struct Photon {
     /// Ray of travel.
     ray: Ray,

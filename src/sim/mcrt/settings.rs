@@ -1,6 +1,6 @@
 //! MCRT settings.
 
-use crate::{access, clone, ord::Key};
+use crate::{access, clone, math::Pos3, ord::Key};
 use arctk_attr::load;
 
 /// MCRT settings structure.
@@ -20,6 +20,8 @@ pub struct Settings {
     roulette_barrels: u64,
     /// Initial emission material.
     init_mat: Key,
+    /// Peel-off detector position.
+    detector_pos: Pos3,
 }
 
 impl Settings {
@@ -30,6 +32,7 @@ impl Settings {
     clone!(roulette_weight, f64);
     clone!(roulette_barrels, u64);
     access!(init_mat, Key);
+    access!(detector_pos, Pos3);
 
     /// Construct a new instance.
     #[inline]
@@ -42,6 +45,7 @@ impl Settings {
         roulette_weight: f64,
         roulette_barrels: u64,
         init_mat: Key,
+        detector_pos: Pos3,
     ) -> Self {
         debug_assert!(block_size > 0);
         debug_assert!(num_phot > 0);
@@ -58,6 +62,7 @@ impl Settings {
             roulette_weight,
             roulette_barrels,
             init_mat,
+            detector_pos,
         }
     }
 }
