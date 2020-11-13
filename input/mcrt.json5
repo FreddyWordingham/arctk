@@ -19,6 +19,7 @@
         roulette_weight     : 1e-3,
         roulette_barrels    : 8,
         init_mat            : 'air',
+        detector_pos: [0.0,0.0,0.0],
     },
     surfs: {
         plane       : [['objs/plane.obj'],     null],
@@ -52,5 +53,5 @@
         emit        : { Points: "points.csv" },
         spec        : { Here: {Point: 6.3e-7}}
     },
-    engine: "Basic"
+    engine      : "Basic",
 }
