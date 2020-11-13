@@ -1,6 +1,6 @@
 (function() {var implementors = {};
 implementors["console"] = [{"text":"impl PartialOrd&lt;Attribute&gt; for Attribute","synthetic":false,"types":[]}];
-implementors["crossbeam_epoch"] = [{"text":"impl&lt;'g, T&gt; PartialOrd&lt;Shared&lt;'g, T&gt;&gt; for Shared&lt;'g, T&gt;","synthetic":false,"types":[]}];
+implementors["crossbeam_epoch"] = [{"text":"impl&lt;'g, T:&nbsp;?Sized + Pointable&gt; PartialOrd&lt;Shared&lt;'g, T&gt;&gt; for Shared&lt;'g, T&gt;","synthetic":false,"types":[]}];
 implementors["either"] = [{"text":"impl&lt;L:&nbsp;PartialOrd, R:&nbsp;PartialOrd&gt; PartialOrd&lt;Either&lt;L, R&gt;&gt; for Either&lt;L, R&gt;","synthetic":false,"types":[]}];
 implementors["generic_array"] = [{"text":"impl&lt;T:&nbsp;PartialOrd, N&gt; PartialOrd&lt;GenericArray&lt;T, N&gt;&gt; for GenericArray&lt;T, N&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;N: ArrayLength&lt;T&gt;,&nbsp;</span>","synthetic":false,"types":[]}];
 implementors["nalgebra"] = [{"text":"impl&lt;N, R:&nbsp;Dim, C:&nbsp;Dim, S&gt; PartialOrd&lt;Matrix&lt;N, R, C, S&gt;&gt; for Matrix&lt;N, R, C, S&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;N: Scalar + PartialOrd,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: Storage&lt;N, R, C&gt;,&nbsp;</span>","synthetic":false,"types":[]},{"text":"impl&lt;N:&nbsp;Scalar + PartialOrd, D:&nbsp;DimName&gt; PartialOrd&lt;Point&lt;N, D&gt;&gt; for Point&lt;N, D&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;DefaultAllocator: Allocator&lt;N, D&gt;,&nbsp;</span>","synthetic":false,"types":[]}];

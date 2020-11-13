@@ -158,7 +158,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">math</span>::{<span class="ident">distribution</span>, <span class="ident">Formula</span>};
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array1</span>;
-<span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">rngs</span>::<span class="ident">ThreadRng</span>, <span class="ident">Rng</span>};
+<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>, <span class="prelude-ty">Result</span>};
 
 <span class="doccomment">/// Probability distribution formulae.</span>
@@ -280,7 +280,7 @@
     <span class="doccomment">/// Sample a number from the described distribution.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sample</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ThreadRng</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Point</span> { <span class="kw-2">ref</span> <span class="ident">c</span> } <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">c</span>,
             <span class="self">Self</span>::<span class="ident">Points</span> { <span class="kw-2">ref</span> <span class="ident">cs</span> } <span class="op">=&gt;</span> <span class="ident">cs</span>[<span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="ident">cs</span>.<span class="ident">len</span>())],

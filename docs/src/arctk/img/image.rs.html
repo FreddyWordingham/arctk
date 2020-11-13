@@ -37,6 +37,13 @@
 <span id="36">36</span>
 <span id="37">37</span>
 <span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Image alias.</span>
 
@@ -60,7 +67,14 @@
     <span class="doccomment">/// Construct a new instance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">res</span>: [<span class="ident">usize</span>; <span class="number">2</span>], <span class="ident">base</span>: <span class="ident">LinSrgba</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">pixels</span>: <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">LinSrgba</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span> { <span class="ident">pixels</span> }
+    }
+
+    <span class="doccomment">/// Construct a new blank instance.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_blank</span>(<span class="ident">res</span>: [<span class="ident">usize</span>; <span class="number">2</span>], <span class="ident">base</span>: <span class="ident">LinSrgba</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">res</span>[<span class="ident">X</span>] <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">res</span>[<span class="ident">Y</span>] <span class="op">&gt;</span> <span class="number">0</span>);
 

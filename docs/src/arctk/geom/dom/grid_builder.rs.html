@@ -46,6 +46,7 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
+<span id="48">48</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Regular-Cartesian grid builder.</span>
 
@@ -58,6 +59,7 @@
 
 <span class="doccomment">/// Grid builder.</span>
 <span class="attribute">#[<span class="ident">load</span>]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GridBuilder</span> {
     <span class="doccomment">/// Boundary.</span>
     <span class="ident">boundary</span>: <span class="ident">Cube</span>,

@@ -50,7 +50,7 @@
         power       : 1.0,
         // emit        : { Surface: [['objs/circle.obj'], null] },
         // emit        : { Beam: [[0.0000213,0.0000233,0.0000052353],[1,0,0]] },
-        emit        : { Points: "points.csv" },
+        emit        : { WeightedPoints: ["points.csv", "weightings.csv"] },
         spec        : { Here: {Point: 6.3e-7}}
     },
     engine      : "Basic",

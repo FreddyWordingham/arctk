@@ -1,6 +1,6 @@
 (function() {var implementors = {};
 implementors["console"] = [{"text":"impl Ord for Attribute","synthetic":false,"types":[]}];
-implementors["crossbeam_epoch"] = [{"text":"impl&lt;'g, T&gt; Ord for Shared&lt;'g, T&gt;","synthetic":false,"types":[]}];
+implementors["crossbeam_epoch"] = [{"text":"impl&lt;T:&nbsp;?Sized + Pointable, '_&gt; Ord for Shared&lt;'_, T&gt;","synthetic":false,"types":[]}];
 implementors["either"] = [{"text":"impl&lt;L:&nbsp;Ord, R:&nbsp;Ord&gt; Ord for Either&lt;L, R&gt;","synthetic":false,"types":[]}];
 implementors["generic_array"] = [{"text":"impl&lt;T:&nbsp;Ord, N&gt; Ord for GenericArray&lt;T, N&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;N: ArrayLength&lt;T&gt;,&nbsp;</span>","synthetic":false,"types":[]}];
 implementors["ndarray"] = [{"text":"impl Ord for Axis","synthetic":false,"types":[]}];

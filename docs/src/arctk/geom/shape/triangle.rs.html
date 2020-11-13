@@ -285,7 +285,7 @@
     <span class="ident">math</span>::{<span class="ident">Dir3</span>, <span class="ident">Pos3</span>, <span class="ident">Trans3</span>, <span class="ident">Vec3</span>},
     <span class="ident">ord</span>::{<span class="ident">ALPHA</span>, <span class="ident">BETA</span>, <span class="ident">GAMMA</span>},
 };
-<span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">rngs</span>::<span class="ident">ThreadRng</span>, <span class="ident">Rng</span>};
+<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
 
 <span class="doccomment">/// Triangle.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Triangle</span> {
@@ -537,7 +537,7 @@
 <span class="kw">impl</span> <span class="ident">Emit</span> <span class="kw">for</span> <span class="ident">Triangle</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ThreadRng</span>) <span class="op">-&gt;</span> <span class="ident">Ray</span> {
+    <span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">Ray</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>();
 
