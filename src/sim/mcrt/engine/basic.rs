@@ -11,8 +11,8 @@ use std::f64::consts::PI;
 #[inline]
 #[must_use]
 pub fn sample(
-    uni: &Universe<Key>,
     rng: &mut ThreadRng,
+    uni: &Universe<Key>,
     data: &mut Data,
     mut phot: Photon,
 ) -> Sample {
@@ -134,7 +134,7 @@ fn travel(data: &mut Data, index: [usize; 3], env: &Local, phot: &mut Photon, di
     debug_assert!(dist > 0.0);
 
     let weight_power_dist = phot.weight() * phot.power() * dist;
-    data.energy[index] += weight_power_dist * (env.ref_index() / SPEED_OF_LIGHT_IN_VACUUM);
+    data.energy[index] += weight_power_dist * env.ref_index() / SPEED_OF_LIGHT_IN_VACUUM;
     data.absorptions[index] += weight_power_dist * env.abs_coeff();
     data.shifts[index] += weight_power_dist * env.shift_coeff();
 

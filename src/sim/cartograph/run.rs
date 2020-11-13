@@ -35,6 +35,8 @@ pub fn multi_thread(engine: Engine, land: &Landscape) -> Result<Data, Error> {
 }
 
 /// Run a cartography simulation using a single thread.
+/// # Errors
+/// none currently but behave act as multi-threaded option which requires error handling.
 #[allow(clippy::module_name_repetitions)]
 #[inline]
 pub fn single_thread(engine: Engine, land: &Landscape) -> Result<Data, Error> {
@@ -62,7 +64,7 @@ fn thread(engine: Engine, pb: &Arc<Mutex<ProgressBar>>, land: &Landscape) -> Dat
     } {
         for i in start as usize..end as usize {
             let index = linear_to_three_dim(i, &res);
-            engine(land, &mut data, index, &mut rng);
+            engine(&mut rng, land, &mut data, index);
         }
     }
 

@@ -9,7 +9,7 @@ use rand::{prelude::SliceRandom, rngs::ThreadRng};
 
 /// Determine what a single ray will observe.
 #[inline]
-pub fn sample(land: &Landscape, data: &mut Data, index: [usize; 3], mut rng: &mut ThreadRng) {
+pub fn sample(mut rng: &mut ThreadRng, land: &Landscape, data: &mut Data, index: [usize; 3]) {
     let bump_dist = land.sett.bump_dist();
     let num_pos_samples = land.sett.super_sampling().num_samples();
     let num_cast_samples = land.sett.caster().num_samples();
