@@ -1,6 +1,6 @@
 //! MCRT settings.
 
-use crate::clone;
+use crate::{access, clone, ord::Key};
 use arctk_attr::load;
 
 /// MCRT settings structure.
@@ -18,6 +18,8 @@ pub struct Settings {
     roulette_weight: f64,
     /// Number of roulette barrels.
     roulette_barrels: u64,
+    /// Initial emission material.
+    init_mat: Key,
 }
 
 impl Settings {
@@ -27,6 +29,7 @@ impl Settings {
     clone!(loop_limit, u64);
     clone!(roulette_weight, f64);
     clone!(roulette_barrels, u64);
+    access!(init_mat, Key);
 
     /// Construct a new instance.
     #[inline]
@@ -38,6 +41,7 @@ impl Settings {
         loop_limit: u64,
         roulette_weight: f64,
         roulette_barrels: u64,
+        init_mat: Key,
     ) -> Self {
         debug_assert!(block_size > 0);
         debug_assert!(num_phot > 0);
@@ -53,6 +57,7 @@ impl Settings {
             loop_limit,
             roulette_weight,
             roulette_barrels,
+            init_mat,
         }
     }
 }

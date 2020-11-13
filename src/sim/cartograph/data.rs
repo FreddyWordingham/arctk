@@ -1,4 +1,4 @@
-//! Output structure.
+//! Output data structure.
 
 use super::Interface;
 use crate::{

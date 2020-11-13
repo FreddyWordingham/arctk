@@ -1,7 +1,7 @@
 //! Photon-lifetime engine function.
 
-use super::{Attributes, Data, Event, Key, Local, Photon, Sample, Universe};
-use crate::{math::sample_henyey_greenstein, phys::Crossing};
+use super::super::{Attributes, Data, Event, Local, Photon, Sample, Universe};
+use crate::{geom::Trace, math::sample_henyey_greenstein, phys::Crossing};
 use physical_constants::SPEED_OF_LIGHT_IN_VACUUM;
 use rand::{rngs::ThreadRng, Rng};
 use std::f64::consts::PI;
@@ -10,12 +10,7 @@ use std::f64::consts::PI;
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-pub fn sample(
-    rng: &mut ThreadRng,
-    uni: &Universe<Key>,
-    data: &mut Data,
-    mut phot: Photon,
-) -> Sample {
+pub fn sample(rng: &mut ThreadRng, uni: &Universe, data: &mut Data, mut phot: Photon) -> Sample {
     // Check photon is within the grid.
     if let Some(index) = uni.grid.gen_index(phot.ray().pos()) {
         data.emission_power[index] += phot.power() * phot.weight();
@@ -24,14 +19,14 @@ pub fn sample(
     }
 
     // Common constants.
-    let bump_dist = uni.sett.bump_dist;
-    let loop_limit = uni.sett.loop_limit;
-    let roulette_weight = uni.sett.roulette_weight;
-    let roulette_barrels = uni.sett.roulette_barrels as f64;
+    let bump_dist = uni.sett.bump_dist();
+    let loop_limit = uni.sett.loop_limit();
+    let roulette_weight = uni.sett.roulette_weight();
+    let roulette_barrels = uni.sett.roulette_barrels() as f64;
     let roulette_survive_prob = 1.0 / roulette_barrels;
 
     // Initialisation.
-    let mat = &uni.mats.map()[&uni.sett.init_mat];
+    let mat = &uni.mats.map()[uni.sett.init_mat()];
     let mut env = mat.env(phot.wavelength());
 
     // Main loop.

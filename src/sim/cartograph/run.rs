@@ -56,9 +56,10 @@ fn thread(engine: Engine, pb: &Arc<Mutex<ProgressBar>>, land: &Landscape) -> Dat
     let mut data = Data::new(land.inters, res);
     let mut rng = thread_rng();
 
+    let block_size = land.sett.block_size();
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
-        let b = pb.block(land.sett.block_size());
+        let b = pb.block(block_size);
         std::mem::drop(pb);
         b
     } {

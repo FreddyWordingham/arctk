@@ -5,7 +5,10 @@ use arctk::{
     file::{Build, Load, Redirect, Save},
     geom::{Grid, GridBuilder, Mesh, MeshBuilder, Tree, TreeBuilder},
     ord::{Key, Set},
-    sim::mcrt::{Attributes, Light, LightBuilder, Material, MaterialBuilder, Settings, Universe},
+    sim::mcrt::{
+        run, Attributes, Data, Engine, EngineBuilder, Light, LightBuilder, Material,
+        MaterialBuilder, Settings, Universe,
+    },
     util::{banner, dir},
 };
 use arctk_attr::input;
@@ -31,6 +34,8 @@ struct Parameters {
     mats: Set<Key, Redirect<MaterialBuilder>>,
     /// Light form.
     light: LightBuilder,
+    /// Engine selection.
+    engine: EngineBuilder,
 }
 
 fn main() {
@@ -41,13 +46,13 @@ fn main() {
 
     let params = input(term_width, &in_dir, &params_path);
 
-    let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light) =
+    let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light, engine) =
         build(term_width, &in_dir, params);
 
     let (tree, grid) = grow(term_width, tree_sett, grid_sett, &surfs);
 
     let input = Universe::new(&tree, &grid, &mcrt_sett, &surfs, &attrs, &mats);
-    let output = simulate(term_width, &input);
+    let output = simulate(term_width, engine, &input, &light);
 
     banner::section("Saving", term_width);
     output.save(&out_dir).expect("Failed to save output data.");
@@ -98,6 +103,7 @@ fn build(
     Set<Key, Attributes>,
     Set<Key, Material>,
     Light,
+    Engine,
 ) {
     banner::section("Building", term_width);
     banner::sub_section("Adaptive Tree Settings", term_width);
@@ -129,7 +135,12 @@ fn build(
     banner::sub_section("Light", term_width);
     let light = params.light.build(in_dir).expect("Failed to build light.");
 
-    (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light)
+    banner::sub_section("Engine", term_width);
+    let engine = params.engine.build();
+
+    (
+        tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light, engine,
+    )
 }
 
 /// Grow domains.
@@ -151,7 +162,8 @@ fn grow(
 }
 
 /// Run the simulation.
-fn simulate(term_width: usize, uni: &Universe) -> Data {
+fn simulate(term_width: usize, engine: Engine, uni: &Universe, light: &Light) -> Data {
     banner::section("Simulating", term_width);
-    arctk::sim::mcrt::multi_thread(&uni, &light).expect("Failed to complete simulation.")
+    // run::single_thread(engine, &uni, &light).expect("Failed to complete simulation.")
+    run::multi_thread(engine, &uni, &light).expect("Failed to complete simulation.")
 }
