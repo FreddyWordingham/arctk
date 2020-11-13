@@ -1,7 +1,6 @@
 //! Event enumeration.
 
-use crate::geom::Hit;
-use crate::ord::Key;
+use crate::{geom::Hit, ord::Key};
 
 /// Event determination enumeration.
 pub enum Event<'a> {
