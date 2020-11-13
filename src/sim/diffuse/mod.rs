@@ -1,5 +1,8 @@
 //! Diffusion simulation module.
 
-// pub mod run;
+pub mod cloud;
+pub mod data;
+pub mod gradient;
+pub mod settings;
 
-// pub use self::{};
+pub use self::{cloud::*, data::*, gradient::*, settings::*};
