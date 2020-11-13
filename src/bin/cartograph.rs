@@ -5,7 +5,7 @@ use arctk::{
     file::{Build, Load, Redirect, Save},
     geom::{Grid, GridBuilder, Mesh, MeshBuilder, Tree, TreeBuilder},
     ord::{Key, Set},
-    sim::cartograph::{Data, Interface, Landscape, Settings},
+    sim::cartograph::{run, Data, Engine, EngineBuilder, Interface, Landscape, Settings},
     util::{banner, dir},
 };
 use arctk_attr::input;
@@ -27,6 +27,8 @@ struct Parameters {
     surfs: Redirect<Set<Key, MeshBuilder>>,
     /// Interfaces map. (Inside material, outside material).
     inters: Redirect<Set<Key, Interface>>,
+    /// Engine selection.
+    engine: EngineBuilder,
 }
 
 /// Main function.
@@ -38,12 +40,12 @@ pub fn main() {
 
     let params = input(term_width, &in_dir, &params_path);
 
-    let (tree_sett, grid_sett, sett, surfs, inters) = build(term_width, &in_dir, params);
+    let (tree_sett, grid_sett, sett, surfs, inters, engine) = build(term_width, &in_dir, params);
 
     let (tree, grid) = grow(term_width, tree_sett, grid_sett, &surfs);
 
     let input = Landscape::new(&tree, &grid, &sett, &surfs, &inters);
-    let output = mapping(term_width, &input);
+    let output = mapping(term_width, engine, &input);
 
     post_analysis(term_width, &output);
 
@@ -93,6 +95,7 @@ fn build(
     Settings,
     Set<Key, Mesh>,
     Set<Key, Interface>,
+    Engine,
 ) {
     banner::section("Building", term_width);
     banner::sub_section("Adaptive Tree Settings", term_width);
@@ -127,7 +130,10 @@ fn build(
         .build(in_dir)
         .expect("Failed to redirect interfaces set.");
 
-    (tree_sett, grid_sett, sett, surfs, inters)
+    banner::sub_section("Engine", term_width);
+    let engine = params.engine.build();
+
+    (tree_sett, grid_sett, sett, surfs, inters, engine)
 }
 
 /// Grow domains.
@@ -148,9 +154,10 @@ fn grow<'a>(
 }
 
 /// Perform the mapping.
-fn mapping(term_width: usize, input: &Landscape) -> Data {
+fn mapping(term_width: usize, engine: Engine, input: &Landscape) -> Data {
     banner::section("Mapping", term_width);
-    arctk::sim::cartograph::run::multi_thread(&input).expect("Failed to complete survey.")
+    // run::single_thread(engine::basic::sample, &input).expect("Failed to complete survey.")
+    run::multi_thread(engine, &input).expect("Failed to complete survey.")
 }
 
 /// Review the output data.
