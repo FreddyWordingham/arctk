@@ -2,10 +2,10 @@
 
 use arctk::{
     args,
-    file::{Build, Load, Redirect},
-    geom::{GridBuilder, Mesh, TreeBuilder},
+    file::{Build, Load, Redirect, Save},
+    geom::{Grid, GridBuilder, Mesh, MeshBuilder, Tree, TreeBuilder},
     ord::{Key, Set},
-    sim::cartograph::Settings,
+    sim::cartograph::{Data, Interface, Landscape, Settings},
     util::{banner, dir},
 };
 use arctk_attr::input;
@@ -23,6 +23,10 @@ struct Parameters {
     grid: Redirect<GridBuilder>,
     /// Runtime settings.
     sett: Redirect<Settings>,
+    /// Surfaces set.
+    surfs: Redirect<Set<Key, MeshBuilder>>,
+    /// Interfaces map. (Inside material, outside material).
+    inters: Redirect<Set<Key, Interface>>,
 }
 
 /// Main function.
@@ -30,21 +34,21 @@ pub fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     banner::title("CARTOGRAPHER", term_width);
 
-    let (params_path, in_dir, _out_dir) = init(term_width);
+    let (params_path, in_dir, out_dir) = init(term_width);
 
     let params = input(term_width, &in_dir, &params_path);
 
-    let (_tree_sett, _grid_sett, _sett) = build(term_width, &in_dir, params);
+    let (tree_sett, grid_sett, sett, surfs, inters) = build(term_width, &in_dir, params);
 
-    // let (tree, grid) = grow(term_width, tree_sett, grid_sett, &surfs);
+    let (tree, grid) = grow(term_width, tree_sett, grid_sett, &surfs);
 
-    // let input = Landscape::new(&tree, &grid, &map_sett, &surfs, &inters);
+    let input = Landscape::new(&tree, &grid, &sett, &surfs, &inters);
 
-    // let output = mapping(term_width, &input);
+    let output = mapping(term_width, &input);
 
-    // post_analysis(term_width, &output);
+    post_analysis(term_width, &output);
 
-    // save(term_width, &out_dir, &output);
+    save(term_width, &out_dir, &output);
 
     banner::section("Finished", term_width);
 }
@@ -84,7 +88,13 @@ fn build(
     term_width: usize,
     in_dir: &Path,
     params: Parameters,
-) -> (TreeBuilder, GridBuilder, Settings, Set<Key, Mesh>) {
+) -> (
+    TreeBuilder,
+    GridBuilder,
+    Settings,
+    Set<Key, Mesh>,
+    Set<Key, Interface>,
+) {
     banner::section("Building", term_width);
     banner::sub_section("Adaptive Tree Settings", term_width);
     let tree_sett = params
@@ -112,61 +122,60 @@ fn build(
         .build(in_dir)
         .expect("Failed to build surfaces set.");
 
-    // banner::sub_section("Interfaces", term_width);
-    // let inters = params
-    //     .inters
-    //     .build(in_dir)
-    //     .expect("Failed to redirect interfaces set.");
+    banner::sub_section("Interfaces", term_width);
+    let inters = params
+        .inters
+        .build(in_dir)
+        .expect("Failed to redirect interfaces set.");
 
-    // (tree_sett, grid_sett, map_sett, surfs, inters)
-    (tree_sett, grid_sett, sett, surfs)
+    (tree_sett, grid_sett, sett, surfs, inters)
 }
 
-// /// Grow domains.
-// fn grow<'a>(
-//     term_width: usize,
-//     tree_sett: TreeBuilder,
-//     grid_sett: GridBuilder,
-//     surfs: &'a Set<Key, Mesh>,
-// ) -> (Tree<'a, &Key>, Grid) {
-//     banner::section("Growing", term_width);
-//     banner::sub_section("Adaptive Tree", term_width);
-//     let tree = tree_sett.build(&surfs);
+/// Grow domains.
+fn grow<'a>(
+    term_width: usize,
+    tree_sett: TreeBuilder,
+    grid_sett: GridBuilder,
+    surfs: &'a Set<Key, Mesh>,
+) -> (Tree<'a, &Key>, Grid) {
+    banner::section("Growing", term_width);
+    banner::sub_section("Adaptive Tree", term_width);
+    let tree = tree_sett.build(&surfs);
 
-//     banner::sub_section("Regular Grid", term_width);
-//     let grid = grid_sett.build();
+    banner::sub_section("Regular Grid", term_width);
+    let grid = grid_sett.build();
 
-//     (tree, grid)
-// }
+    (tree, grid)
+}
 
-// /// Perform the mapping.
-// fn mapping(term_width: usize, input: &Landscape) -> Data {
-//     banner::section("Mapping", term_width);
-//     multi_thread(&input).expect("Failed to perform mapping.")
-// }
+/// Perform the mapping.
+fn mapping(term_width: usize, input: &Landscape) -> Data {
+    banner::section("Mapping", term_width);
+    arctk::sim::cartograph::run::multi_thread(&input).expect("Failed to perform mapping.")
+}
 
-// /// Review the output data.
-// fn post_analysis(term_width: usize, output: &Data) {
-//     banner::section("Post-Analysis", term_width);
+/// Review the output data.
+fn post_analysis(term_width: usize, output: &Data) {
+    banner::section("Post-Analysis", term_width);
 
-//     let mut total: f64 = output.maps.map().values().map(|m| m.sum()).sum();
-//     println!("{:>32} : {}", "total occupancy", total);
+    let mut total: f64 = output.maps.map().values().map(|m| m.sum()).sum();
+    println!("{:>32} : {}", "total occupancy", total);
 
-//     for (key, map) in output.maps.map() {
-//         let occupancy = map.sum();
-//         println!(
-//             "{:>32} : {} ({}%)",
-//             key,
-//             occupancy,
-//             occupancy / total * 100.0
-//         );
-//         total += occupancy;
-//     }
-// }
+    for (key, map) in output.maps.map() {
+        let occupancy = map.sum();
+        println!(
+            "{:>32} : {} ({}%)",
+            key,
+            occupancy,
+            occupancy / total * 100.0
+        );
+        total += occupancy;
+    }
+}
 
-// /// Save the output data.
-// fn save(term_width: usize, out_dir: &Path, output: &Data) {
-//     banner::section("Saving", term_width);
+/// Save the output data.
+fn save(term_width: usize, out_dir: &Path, output: &Data) {
+    banner::section("Saving", term_width);
 
-//     output.save(&out_dir).expect("Failed to save output data.");
-// }
+    output.save(&out_dir).expect("Failed to save output data.");
+}
