@@ -46,6 +46,10 @@ lazy_static = "1.4.*"
 name = "babbage"
 required-features = ["netcdf"]
 
+[[bin]]
+name = "cartograph"
+required-features = ["netcdf"]
+
 [profile.dev]
 # Development profile: "cargo build".
 opt-level = 0

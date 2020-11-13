@@ -1,4 +1,4 @@
-//! Babbage manipulation options.
+//! Babbage manipulation tool module.
 
 pub mod operation;
 pub mod operation_builder;
