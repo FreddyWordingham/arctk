@@ -6,18 +6,18 @@ use std::path::Path;
 
 /// Diffusion output data.
 pub struct Data {
-    /// Total simulated time.
-    pub time: f64,
-    /// Current values.
-    pub values: Array3<f64>,
+    /// Current rate values.
+    pub rates: Array3<f64>,
 }
 
 impl Data {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(values: Array3<f64>) -> Self {
-        Self { time: 0.0, values }
+    pub fn new(rates: Array3<f64>) -> Self {
+        debug_assert!(!rates.is_empty());
+
+        Self { rates }
     }
 }
 
@@ -26,6 +26,6 @@ impl Save for Data {
     fn save(&self, out_dir: &Path) -> Result<(), Error> {
         let p = out_dir.join(format!("{:06}ms.nc", (self.time * 1000.0) as u32));
         println!("Saving: {}", p.display());
-        self.values.save(&p)
+        self.rates.save(&p)
     }
 }

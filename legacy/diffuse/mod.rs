@@ -3,6 +3,7 @@
 pub mod cloud;
 pub mod data;
 pub mod gradient;
+pub mod run;
 pub mod settings;
 
 pub use self::{cloud::*, data::*, gradient::*, settings::*};
