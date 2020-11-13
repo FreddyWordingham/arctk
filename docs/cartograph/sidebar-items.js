@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["build","Build instances."],["grow","Grow domains."],["init","Initialise the command line arguments and directories."],["input","Load the input files."],["main","Main function."],["mapping","Perform the mapping."],["post_analysis","Review the output data."],["save","Save the output data."]],"struct":[["Parameters",""]]});

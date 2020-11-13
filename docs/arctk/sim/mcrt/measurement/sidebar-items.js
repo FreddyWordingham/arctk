@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["peel_off","Calculate the change in weight over a give flight towards a given point. Perform a peel off event."]]});

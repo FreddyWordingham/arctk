@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["build","Build instances."],["grow","Grow domains."],["init","Initialise the command line arguments and directories."],["input","Load the input files."],["main",""],["simulate","Run the simulation."]],"struct":[["Parameters","Input parameters."]]});

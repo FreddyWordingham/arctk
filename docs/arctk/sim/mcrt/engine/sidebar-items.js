@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["basic","Photon-lifetime engine function."],["raman","Raman specialised photon-lifetime engine function."]],"type":[["Engine","MCRT sampling engine function type."]]});

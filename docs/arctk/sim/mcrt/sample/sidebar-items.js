@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Sample","Scene sampling return information."]]});
