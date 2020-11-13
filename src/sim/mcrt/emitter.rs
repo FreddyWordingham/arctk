@@ -38,11 +38,19 @@ impl Emitter {
     /// Construct a new points instance.
     #[inline]
     #[must_use]
-    pub fn new_weighted_points(points: Vec<Pos3>, weights: Vec<f64>) -> Self {
+    pub fn new_weighted_points(points: Vec<Pos3>, weights: &[f64]) -> Self {
         debug_assert!(!points.is_empty());
         debug_assert!(points.len() == weights.len());
 
-        Self::WeightedPoints(points, weights)
+        let sum: f64 = weights.iter().sum();
+        let mut cumulative_weight = Vec::with_capacity(weights.len());
+        let mut total = 0.0;
+        for w in weights {
+            total += w;
+            cumulative_weight.push(total / sum);
+        }
+
+        Self::WeightedPoints(points, cumulative_weight)
     }
 
     /// Construct a new surface instance.
@@ -62,7 +70,13 @@ impl Emitter {
                 Ray::new(ps[rng.gen_range(0, ps.len())], rand_isotropic_dir(rng))
             }
             Self::WeightedPoints(ref ps, ref ws) => {
-                Ray::new(ps[rng.gen_range(0, ps.len())], rand_isotropic_dir(rng))
+                let r: f64 = rng.gen();
+                for (p, w) in ps.iter().zip(ws) {
+                    if r <= *w {
+                        return Ray::new(*p, rand_isotropic_dir(rng));
+                    }
+                }
+                unreachable!("Failed to determine weighted point to emit from.");
             }
             Self::Surface(ref mesh) => mesh.cast(rng),
         }

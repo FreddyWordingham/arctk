@@ -51,9 +51,9 @@ impl Build for EmitterBuilder {
                     .collect();
 
                 let weights_data = Table::load(&in_dir.join(weight_path))?;
-                let weights = weights_data.into_inner().iter().map(|row| row[X]).collect();
+                let weights: Vec<_> = weights_data.into_inner().iter().map(|row| row[X]).collect();
 
-                Self::Inst::new_weighted_points(points, weights)
+                Self::Inst::new_weighted_points(points, &weights)
             }
             Self::Surface(mesh) => Self::Inst::new_surface(mesh.build(in_dir)?),
         })
