@@ -19,7 +19,7 @@ impl<T: Display + Ord + PartialEq, S> Set<T, S> {
     #[inline]
     #[must_use]
     pub fn new(map: Map<T, S>) -> Self {
-        debug_assert!(!map.is_empty());
+        debug_assert!(!map.is_empty());x
 
         Self(map)
     }

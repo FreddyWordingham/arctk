@@ -1,5 +1,7 @@
 //! Register structure.
 
+use crate::access;
+
 /// Register used to convert between names and indices.
 pub struct Register {
     /// Known names.
@@ -7,6 +9,8 @@ pub struct Register {
 }
 
 impl Register {
+    access!(names, Vec<String>);
+
     /// Construct a new instance.
     #[inline]
     #[must_use]
@@ -24,19 +28,5 @@ impl Register {
     #[must_use]
     pub fn index(&self, name: &str) -> usize {
         self.names.iter().position(|n| n == name).unwrap()
-    }
-
-    /// Determine the name corresponding to a given index.
-    #[inline]
-    #[must_use]
-    pub fn name(&self, index: usize) -> &str {
-        &self.names[index]
-    }
-
-    /// Find the total number of species in the register.
-    #[inline]
-    #[must_use]
-    pub fn total(&self) -> usize {
-        self.names.len()
     }
 }
