@@ -6,15 +6,9 @@ use crate::math::Dir3;
 #[derive(Clone)]
 pub enum Side {
     /// Inside of surface hit. d.dot(n) > 0.0
-    Inside {
-        /// Facing surface normal vector.
-        norm: Dir3,
-    },
+    Inside(Dir3),
     /// Outside of surface hit. d.dot(n) < 0.0
-    Outside {
-        /// Facing surface normal vector.
-        norm: Dir3,
-    },
+    Outside(Dir3),
 }
 
 impl Side {
@@ -23,28 +17,9 @@ impl Side {
     #[must_use]
     pub fn new(dir: &Dir3, norm: Dir3) -> Self {
         if dir.dot(&norm) < 0.0 {
-            Self::Outside { norm }
+            Self::Outside(norm)
         } else {
-            Self::Inside { norm: -norm }
-        }
-    }
-
-    /// Reference the normal vector.
-    #[inline]
-    #[must_use]
-    pub const fn norm(&self) -> &Dir3 {
-        match *self {
-            Self::Inside { ref norm } | Self::Outside { ref norm } => norm,
-        }
-    }
-
-    /// Reverse the side.
-    #[inline]
-    #[must_use]
-    pub const fn flip(self) -> Self {
-        match self {
-            Self::Inside { norm } => Self::Outside { norm },
-            Self::Outside { norm } => Self::Inside { norm },
+            Self::Inside(-norm)
         }
     }
 
@@ -53,18 +28,19 @@ impl Side {
     #[must_use]
     pub const fn is_inside(&self) -> bool {
         match *self {
-            Self::Inside { .. } => true,
-            Self::Outside { .. } => false,
+            Self::Inside(..) => true,
+            Self::Outside(..) => false,
         }
     }
 
-    /// Check if the side is an outside.
+    /// Calculate the dot product with a direction.
+    /// Given the original direction the result is non-positive.
     #[inline]
     #[must_use]
-    pub const fn is_outside(&self) -> bool {
+    pub fn dot(&self, dir: &Dir3) -> f64 {
         match *self {
-            Self::Inside { .. } => false,
-            Self::Outside { .. } => true,
+            Self::Inside(ref norm) => dir.dot(norm),
+            Self::Outside(ref norm) => dir.dot(norm),
         }
     }
 }

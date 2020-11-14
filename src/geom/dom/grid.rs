@@ -75,26 +75,6 @@ impl Grid {
         }
     }
 
-    /// If the given position is contained within the grid,
-    /// generate the index and voxel for the given position within the grid.
-    #[inline]
-    #[must_use]
-    pub fn gen_index_voxel(&self, p: &Pos3) -> Option<([usize; 3], Cube)> {
-        if let Some(index) = self.gen_index(p) {
-            let mut min = *self.boundary.mins();
-            min.x += self.voxel_size[X] * index[X] as f64;
-            min.y += self.voxel_size[Y] * index[Y] as f64;
-            min.z += self.voxel_size[Z] * index[Z] as f64;
-
-            let boundary = Cube::new(min, min + self.voxel_size);
-            debug_assert!(boundary.contains(p));
-
-            Some((index, boundary))
-        } else {
-            None
-        }
-    }
-
     /// Generate the voxel for the given index.
     #[inline]
     #[must_use]
@@ -119,5 +99,25 @@ impl Grid {
         let mins = Pos3::new(x, y, z);
 
         Cube::new(mins, mins + self.voxel_size)
+    }
+
+    /// If the given position is contained within the grid,
+    /// generate the index and voxel for the given position within the grid.
+    #[inline]
+    #[must_use]
+    pub fn gen_index_voxel(&self, p: &Pos3) -> Option<([usize; 3], Cube)> {
+        if let Some(index) = self.gen_index(p) {
+            let mut min = *self.boundary.mins();
+            min.x += self.voxel_size[X] * index[X] as f64;
+            min.y += self.voxel_size[Y] * index[Y] as f64;
+            min.z += self.voxel_size[Z] * index[Z] as f64;
+
+            let boundary = Cube::new(min, min + self.voxel_size);
+            debug_assert!(boundary.contains(p));
+
+            Some((index, boundary))
+        } else {
+            None
+        }
     }
 }

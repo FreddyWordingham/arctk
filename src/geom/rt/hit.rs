@@ -26,11 +26,4 @@ impl Hit {
 
         Self { index, dist, side }
     }
-
-    /// Flip the contained side.
-    #[inline]
-    pub fn flip_side(&mut self) {
-        let s = self.side.clone().flip();
-        self.side = s;
-    }
 }

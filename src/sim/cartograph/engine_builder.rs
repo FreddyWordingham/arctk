@@ -1,7 +1,11 @@
 //! Engine selection.
 
-use crate::sim::cartograph::{engine, Engine};
+use crate::{
+    file::Build,
+    sim::cartograph::{engine, Engine},
+};
 use arctk_attr::load;
+use std::path::Path;
 
 /// Engine selection.
 #[load]
@@ -11,11 +15,11 @@ pub enum EngineBuilder {
     Basic,
 }
 
-impl EngineBuilder {
+impl Build for EngineBuilder {
     /// Retrieve a handle to the engine function.
     #[inline]
     #[must_use]
-    pub fn build(self) -> Engine {
+    pub fn build(self, _in_dir: &Path) -> Engine {
         match self {
             Self::Basic => engine::basic::sample,
         }
