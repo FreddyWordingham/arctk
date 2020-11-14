@@ -3,7 +3,7 @@
 use crate::err::Error;
 use std::path::Path;
 
-/// Types implementing this trait can be built at runtime from an input form structure.
+/// Types implementing this trait can be built into another type.
 pub trait Build {
     /// End type to be built.
     type Inst;

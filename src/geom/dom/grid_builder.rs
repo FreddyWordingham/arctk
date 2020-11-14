@@ -2,10 +2,13 @@
 
 use crate::{
     access,
+    err::Error,
+    file::Build,
     geom::{Cube, Grid},
     ord::{X, Y, Z},
 };
 use arctk_attr::load;
+use std::path::Path;
 
 /// Grid builder.
 #[load]
@@ -32,17 +35,19 @@ impl GridBuilder {
         Self { boundary, res }
     }
 
-    /// Build a Grid instance.
-    #[inline]
-    #[must_use]
-    pub fn build(self) -> Grid {
-        Grid::new(self.boundary, self.res)
-    }
-
     /// Determine the total number of cells.
     #[inline]
     #[must_use]
     pub const fn total_cells(&self) -> usize {
         self.res[X] * self.res[Y] * self.res[Z]
+    }
+}
+
+impl Build for GridBuilder {
+    type Inst = crate::geom::Grid;
+
+    #[inline]
+    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
+        Ok(Grid::new(self.boundary, self.res))
     }
 }

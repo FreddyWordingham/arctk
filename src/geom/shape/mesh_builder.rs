@@ -7,13 +7,13 @@ use crate::{
     math::Trans3Builder,
 };
 use arctk_attr::load;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 /// Loadable triangle mesh conglomerate structure.
 #[load]
 pub struct MeshBuilder(
     /// List of object files.
-    Vec<String>,
+    Vec<PathBuf>,
     /// Optional transformation.
     Option<Trans3Builder>,
 );
