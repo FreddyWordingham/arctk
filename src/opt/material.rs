@@ -1,7 +1,6 @@
 //! Optical material.
 
-use super::Local;
-use crate::{access, math::Formula};
+use crate::{access, math::Formula, opt::Local};
 
 /// Optical properties.
 pub struct Material {
@@ -46,7 +45,7 @@ impl Material {
     /// Generate an optical environment for a given wavelength.
     #[inline]
     #[must_use]
-    pub fn env(&self, w: f64) -> Local {
+    pub fn sample_environment(&self, w: f64) -> Local {
         let index = self.ref_index.y(w);
 
         let scat = self.scat_coeff.y(w);

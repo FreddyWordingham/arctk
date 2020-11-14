@@ -1,8 +1,8 @@
-//! Local optical environment implementation.
+//! Localised environment implementation.
 
 use crate::clone;
 
-/// Local optical environment structure.
+/// Localised environment structure.
 pub struct Local {
     /// Refractive index.
     ref_index: f64,
@@ -48,7 +48,7 @@ impl Local {
         }
     }
 
-    /// Determine the interaction coefficient.
+    /// Calculate the interaction coefficient.
     #[inline]
     #[must_use]
     pub fn inter_coeff(&self) -> f64 {

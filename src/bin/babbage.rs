@@ -66,6 +66,7 @@ fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
 }
 
 /// Load the input files.
+#[allow(clippy::let_and_return)]
 fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
     banner::section("Input", term_width);
     banner::sub_section("Parameters", term_width);
