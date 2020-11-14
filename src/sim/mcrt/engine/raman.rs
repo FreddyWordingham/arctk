@@ -131,7 +131,7 @@ pub fn sample(rng: &mut ThreadRng, uni: &Universe, data: &mut Data, mut phot: Ph
         }
     }
 
-    Sample::new(0.0)
+    Sample::new(phot.weight())
 }
 
 /// Move the photon forward and record the flight.
