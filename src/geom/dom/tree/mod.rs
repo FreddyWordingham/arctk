@@ -3,27 +3,27 @@
 use crate::geom::{Cube, SmoothTriangle};
 
 /// Tree cell enumeration.
-pub enum Tree<'a, T> {
+pub enum Tree<'a> {
     /// Root cell.
     Root {
         /// Boundary.
         boundary: Cube,
         /// Children.
-        children: [Box<Tree<'a, T>>; 8],
+        children: Box<[Tree<'a>; 8]>,
     },
     /// Branching cell.
     Branch {
         /// Boundary.
         boundary: Cube,
         /// Children.
-        children: [Box<Tree<'a, T>>; 8],
+        children: Box<[Tree<'a>; 8]>,
     },
     /// Terminal populated cell.
     Leaf {
         /// Boundary.
         boundary: Cube,
         /// Intersecting triangles.
-        tris: Vec<(T, &'a SmoothTriangle)>,
+        tris: Vec<(&'a SmoothTriangle, usize)>,
     },
     /// Terminal empty cell.
     Empty {
@@ -32,7 +32,7 @@ pub enum Tree<'a, T> {
     },
 }
 
-impl<'a, T> Tree<'a, T> {
+impl<'a> Tree<'a> {
     /// Reference the cell's boundary.
     #[allow(clippy::missing_const_for_fn)]
     #[inline]

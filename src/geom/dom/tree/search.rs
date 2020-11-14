@@ -2,7 +2,7 @@
 
 use crate::{geom::Tree, math::Pos3};
 
-impl<'a, T> Tree<'a, T> {
+impl<'a> Tree<'a> {
     /// Determine the terminal cell containing the given position.
     #[inline]
     #[must_use]

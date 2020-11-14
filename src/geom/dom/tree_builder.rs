@@ -4,11 +4,9 @@ use crate::{
     clone,
     geom::{Collide, Cube, Mesh, SmoothTriangle, Tree},
     math::Pos3,
-    ord::Set,
     tools::ProgressBar,
 };
 use arctk_attr::load;
-use std::fmt::Display;
 
 /// Tree builder.
 #[load]
@@ -30,15 +28,15 @@ impl TreeBuilder {
     /// Root cell has a depth of zero.
     #[inline]
     #[must_use]
-    pub fn build<'a, T: Display + Clone + Ord>(&self, surfs: &'a Set<T, Mesh>) -> Tree<'a, &'a T> {
+    pub fn build<'a>(&self, surfs: &'a [Mesh]) -> Tree<'a> {
         let mut boundary = Self::init_boundary(surfs);
         boundary.expand(self.padding);
 
         let mut tris = Vec::new();
-        for (key, mesh) in surfs.map() {
+        for (index, mesh) in surfs.iter().enumerate() {
             tris.reserve(mesh.tris().len());
             for tri in mesh.tris() {
-                tris.push((key, tri));
+                tris.push((tri, index));
             }
         }
 
@@ -46,17 +44,20 @@ impl TreeBuilder {
         let children = self.init_children(&boundary, 1, tris.as_slice(), &mut pb);
         pb.finish_with_message("Tree grown.");
 
-        Tree::Root { boundary, children }
+        Tree::Root {
+            boundary,
+            children: Box::new(children),
+        }
     }
 
     /// Initialise the boundary encompassing all of the mesh vertices.
     #[inline]
     #[must_use]
-    fn init_boundary<T: Display + Clone + Ord>(surfs: &Set<T, Mesh>) -> Cube {
+    fn init_boundary(surfs: &[Mesh]) -> Cube {
         let mut mins = None;
         let mut maxs = None;
 
-        for mesh in surfs.map().values() {
+        for mesh in surfs {
             let (mesh_mins, mesh_maxs) = mesh.boundary().mins_maxs();
 
             if mins.is_none() {
@@ -89,20 +90,20 @@ impl TreeBuilder {
     #[allow(clippy::similar_names)]
     #[inline]
     #[must_use]
-    fn init_children<'a, T: Clone>(
+    fn init_children<'a>(
         &self,
         parent_boundary: &Cube,
         depth: u32,
-        potential_tris: &[(&'a T, &'a SmoothTriangle)],
+        potential_tris: &[(&'a SmoothTriangle, usize)],
         mut pb: &mut ProgressBar,
-    ) -> [Box<Tree<'a, &'a T>>; 8] {
+    ) -> [Tree<'a>; 8] {
         debug_assert!(depth <= self.max_depth);
         debug_assert!(!potential_tris.is_empty());
 
         let hws = parent_boundary.half_widths();
         let mut make_child = |min_x: f64, min_y: f64, min_z: f64| {
             let min = Pos3::new(min_x, min_y, min_z);
-            Box::new(self.init_child(Cube::new(min, min + hws), depth, potential_tris, &mut pb))
+            self.init_child(Cube::new(min, min + hws), depth, potential_tris, &mut pb)
         };
 
         let mins = parent_boundary.mins();
@@ -125,22 +126,22 @@ impl TreeBuilder {
     /// Initialise a child cell.
     #[inline]
     #[must_use]
-    fn init_child<'a, T: Clone>(
+    fn init_child<'a>(
         &self,
         boundary: Cube,
         depth: u32,
-        potential_tris: &[(&'a T, &'a SmoothTriangle)],
+        potential_tris: &[(&'a SmoothTriangle, usize)],
         mut pb: &mut ProgressBar,
-    ) -> Tree<'a, &'a T> {
+    ) -> Tree<'a> {
         debug_assert!(depth <= self.max_depth);
 
         let mut detection_vol = boundary.clone();
         detection_vol.expand(self.padding);
 
         let mut tris = Vec::new();
-        for &(key, tri) in potential_tris {
+        for &(tri, index) in potential_tris {
             if tri.overlap(&detection_vol) {
-                tris.push((key, tri));
+                tris.push((tri, index));
             }
         }
 
@@ -156,6 +157,9 @@ impl TreeBuilder {
 
         let children = self.init_children(&boundary, depth + 1, &tris, &mut pb);
 
-        Tree::Branch { boundary, children }
+        Tree::Branch {
+            boundary,
+            children: Box::new(children),
+        }
     }
 }

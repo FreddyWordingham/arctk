@@ -2,11 +2,11 @@
 
 use crate::geom::{Hit, Ray, Scan, Trace, Tree};
 
-impl<'a, T: Clone> Tree<'a, T> {
+impl<'a> Tree<'a> {
     /// Determine what a ray would observe within the cell.
     #[inline]
     #[must_use]
-    pub fn observe(&self, mut ray: Ray, bump_dist: f64, max_dist: f64) -> Option<Hit<T>> {
+    pub fn observe(&self, mut ray: Ray, bump_dist: f64, max_dist: f64) -> Option<Hit> {
         debug_assert!(bump_dist > 0.0);
         debug_assert!(max_dist > 0.0);
 
@@ -45,9 +45,10 @@ impl<'a, T: Clone> Tree<'a, T> {
     }
 
     /// Scan for hits within the cell.
+    /// Surface scans take precedence over boundaries.
     #[inline]
     #[must_use]
-    pub fn hit_scan(&self, ray: &Ray, bump_dist: f64) -> Scan<T> {
+    pub fn hit_scan(&self, ray: &Ray, bump_dist: f64) -> Scan {
         debug_assert!(self.boundary().contains(ray.pos()));
         debug_assert!(bump_dist > 0.0);
 
@@ -56,11 +57,11 @@ impl<'a, T: Clone> Tree<'a, T> {
                 ref boundary,
                 ref tris,
             } => {
-                let mut nearest: Option<Hit<T>> = None;
-                for &(ref key, tri) in tris {
+                let mut nearest: Option<Hit> = None;
+                for &(tri, index) in tris {
                     if let Some((dist, side)) = tri.dist_side(ray) {
                         if nearest.is_none() || (dist < nearest.as_ref().unwrap().dist()) {
-                            nearest = Some(Hit::new(key.clone(), dist, side));
+                            nearest = Some(Hit::new(index, dist, side));
                         }
                     }
                 }

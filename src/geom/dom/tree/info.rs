@@ -2,7 +2,7 @@
 
 use crate::geom::Tree;
 
-impl<'a, T> Tree<'a, T> {
+impl<'a> Tree<'a> {
     /// Determine the number of cells contained within the cell.
     /// This cell is included in the count.
     #[inline]
