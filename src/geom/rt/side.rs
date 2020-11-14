@@ -39,8 +39,7 @@ impl Side {
     #[must_use]
     pub fn dot(&self, dir: &Dir3) -> f64 {
         match *self {
-            Self::Inside(ref norm) => dir.dot(norm),
-            Self::Outside(ref norm) => dir.dot(norm),
+            Self::Inside(ref norm) | Self::Outside(ref norm) => dir.dot(norm),
         }
     }
 }

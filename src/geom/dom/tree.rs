@@ -95,6 +95,7 @@ impl<'a> Tree<'a> {
     }
 
     /// Initialise the children of a branching cell.
+    #[allow(clippy::similar_names)]
     #[inline]
     #[must_use]
     fn init_children(
@@ -188,7 +189,7 @@ impl<'a> Tree<'a> {
     pub fn num_cells(&self) -> usize {
         match *self {
             Self::Branch { ref children, .. } => {
-                1 + children.iter().map(|ch| ch.num_cells()).sum::<usize>()
+                1 + children.iter().map(Self::num_cells).sum::<usize>()
             }
             Self::Leaf { .. } => 1,
         }
@@ -201,7 +202,7 @@ impl<'a> Tree<'a> {
     pub fn num_leaves(&self) -> usize {
         match *self {
             Self::Branch { ref children, .. } => {
-                children.iter().map(|ch| ch.num_leaves()).sum::<usize>()
+                children.iter().map(Self::num_leaves).sum::<usize>()
             }
             Self::Leaf { .. } => 1,
         }
@@ -212,7 +213,7 @@ impl<'a> Tree<'a> {
     #[must_use]
     pub fn num_tris(&self) -> usize {
         match *self {
-            Self::Branch { ref children, .. } => children.iter().map(|c| c.num_tris()).sum(),
+            Self::Branch { ref children, .. } => children.iter().map(Self::num_tris).sum(),
             Self::Leaf { ref tris, .. } => tris.len(),
         }
     }
@@ -223,7 +224,7 @@ impl<'a> Tree<'a> {
     pub fn depth(&self) -> usize {
         match *self {
             Self::Branch { ref children, .. } => {
-                1 + children.iter().map(|c| c.depth()).max().unwrap()
+                1 + children.iter().map(Self::depth).max().unwrap()
             }
             Self::Leaf { .. } => 1,
         }

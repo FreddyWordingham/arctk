@@ -28,6 +28,7 @@ impl Register {
 impl Index<usize> for Register {
     type Output = str;
 
+    #[inline]
     fn index(&self, index: usize) -> &Self::Output {
         debug_assert!(index < self.0.len());
         &self.0[index]

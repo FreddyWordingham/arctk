@@ -19,8 +19,9 @@ impl<T> Set<T> {
     }
 
     /// Construct an instance from a vector of pairs.
+    /// # Errors
+    /// if a the list contains a duplicate entry.
     #[inline]
-    #[must_use]
     pub fn from_vec(list: Vec<(String, T)>) -> Result<Self, Error> {
         let mut map = BTreeMap::new();
 
