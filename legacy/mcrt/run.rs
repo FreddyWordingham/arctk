@@ -1,7 +1,10 @@
 //! Simulation control functions.
 
-use crate::sim::mcrt::{engine::Engine, Input, Output};
-use crate::{err::Error, tools::ProgressBar};
+use super::{engine::Engine, Data, Light, Universe};
+use crate::{
+    err::Error,
+    tools::{ProgressBar, Range},
+};
 use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
@@ -12,14 +15,14 @@ use std::sync::{Arc, Mutex};
 #[allow(clippy::module_name_repetitions)]
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
-    let pb = ProgressBar::new("Multi-threaded", input.sett.num_phot());
+pub fn multi_thread(engine: Engine, uni: &Universe, light: &Light) -> Result<Data, Error> {
+    let pb = ProgressBar::new("Multi-threaded", uni.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
     let threads: Vec<_> = (0..num_cpus::get()).collect();
     let mut out: Vec<_> = threads
         .par_iter()
-        .map(|_id| thread(engine, input, &Arc::clone(&pb)))
+        .map(|_id| thread(engine, &Arc::clone(&pb), uni, light))
         .collect();
     pb.lock()?.finish_with_message("Simulation complete.");
 
@@ -35,11 +38,11 @@ pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 #[allow(clippy::module_name_repetitions)]
 #[inline]
 #[must_use]
-pub fn single_thread(engine: Engine, input: &Input) -> Output {
-    let pb = ProgressBar::new("Single-threaded", input.sett.num_phot());
+pub fn single_thread(engine: Engine, uni: &Universe, light: &Light) -> Data {
+    let pb = ProgressBar::new("Single-threaded", uni.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
-    thread(engine, input, &pb)
+    thread(engine, &pb, uni, light)
 }
 
 /// Thread control function.
@@ -47,14 +50,19 @@ pub fn single_thread(engine: Engine, input: &Input) -> Output {
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-pub fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output {
-    let res = *input.grid.res();
-    let mut data = Output::new(input.grid.boundary().clone(), res);
+pub fn thread(engine: Engine, pb: &Arc<Mutex<ProgressBar>>, uni: &Universe, light: &Light) -> Data {
+    let res = *uni.grid.res();
+    let mut data = Data::new(
+        uni.grid.boundary().clone(),
+        res,
+        Range::new(0.0, 1000.0e-9),
+        1000,
+    );
 
     let mut rng = thread_rng();
 
-    let phot_energy = input.light.power() / input.sett.num_phot() as f64;
-    let block_size = input.sett.block_size();
+    let phot_energy = light.power() / uni.sett.num_phot() as f64;
+    let block_size = uni.sett.block_size();
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
         let b = pb.block(block_size);
@@ -62,9 +70,10 @@ pub fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Ou
         b
     } {
         for _i in start..end {
-            let phot = input.light.emit(&mut rng, phot_energy);
+            let phot = light.emit(&mut rng, phot_energy);
 
-            data = engine(input, &mut rng, phot, data);
+            let sample = engine(&mut rng, uni, &mut data, phot);
+            data.escaped_weight += sample.remaining_weight;
         }
     }
 

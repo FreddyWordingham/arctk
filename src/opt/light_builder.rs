@@ -1,10 +1,11 @@
 //! Light surface structure.
 
-use super::{EmitterBuilder, Light};
 use crate::{
     err::Error,
     file::{Build, Redirect},
+    geom::EmitterBuilder,
     math::ProbabilityBuilder,
+    opt::Light,
 };
 use arctk_attr::load;
 use std::path::Path;

@@ -1,9 +1,13 @@
 //! Optics module.
 
+pub mod crossing;
+pub mod light;
+pub mod light_builder;
 pub mod local;
 pub mod material;
 pub mod material_builder;
+pub mod photon;
 
-pub use self::local::*;
-pub use self::material::*;
-pub use self::material_builder::*;
+pub use self::{
+    crossing::*, light::*, light_builder::*, local::*, material::*, material_builder::*, photon::*,
+};
