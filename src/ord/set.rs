@@ -1,9 +1,11 @@
 //! Data set.
 
 use crate::{err::Error, ord::Register};
+use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
 /// Data map.
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Set<T>(BTreeMap<String, T>);
 
 impl<T> Set<T> {
@@ -37,14 +39,14 @@ impl<T> Set<T> {
     #[inline]
     #[must_use]
     pub fn reg(self) -> (Register, Vec<T>) {
-        let mut keys = Vec::with_capacity(self.0.len());
+        let mut names = Vec::with_capacity(self.0.len());
         let mut values = Vec::with_capacity(self.0.len());
 
-        for (key, value) in self.0 {
-            keys.push(key);
+        for (name, value) in self.0 {
+            names.push(name);
             values.push(value);
         }
 
-        (Register::new(keys), values)
+        (Register::new(names), values)
     }
 }

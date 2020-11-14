@@ -17,7 +17,7 @@ pub fn max(vec: &[f64]) -> f64 {
 /// Determine if the list is sorted in ascending order.
 #[inline]
 #[must_use]
-pub fn is_ascending(vec: &[f64]) -> bool {
+pub fn is_ascending<T: PartialOrd>(vec: &[T]) -> bool {
     for (b, a) in vec.iter().zip(vec.iter().skip(1)) {
         if a < b {
             return false;
