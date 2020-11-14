@@ -1,6 +1,6 @@
 //! Material builder.
 
-use crate::{err::Error, file::Build, math::FormulaBuilder};
+use crate::{err::Error, file::Build, math::FormulaBuilder, opt::Material};
 use arctk_attr::load;
 use std::path::Path;
 
@@ -20,7 +20,7 @@ pub struct MaterialBuilder {
 }
 
 impl Build for MaterialBuilder {
-    type Inst = super::Material;
+    type Inst = Material;
 
     #[inline]
     fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {

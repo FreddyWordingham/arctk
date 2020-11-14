@@ -1,7 +1,10 @@
 //! Simulation control functions.
 
-use crate::sim::mcrt::{engine::Engine, Input, Output};
-use crate::{err::Error, tools::ProgressBar};
+use crate::{
+    err::Error,
+    sim::mcrt::{engine::Engine, Input, Output},
+    tools::ProgressBar,
+};
 use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};

@@ -1,11 +1,10 @@
 //! Optical material.
 
-use super::Emitter;
 use crate::{
     data::Table,
     err::Error,
     file::{Build, Load},
-    geom::{MeshBuilder, Ray},
+    geom::{Emitter, MeshBuilder, Ray},
     math::{Dir3, Pos3},
     ord::{X, Y, Z},
 };
