@@ -5,6 +5,7 @@ use arctk::{
     file::{Build, Load, Redirect, Save},
     geom::{Grid, GridBuilder, Mesh, MeshBuilder, Tree, TreeBuilder},
     ord::{Key, Set},
+    report,
     sim::cartograph::{run, Data, Engine, EngineBuilder, Interface, Landscape, Settings},
     util::{banner, dir},
 };
@@ -61,15 +62,15 @@ fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     args!(bin_path: PathBuf;
         params_path: PathBuf
     );
-    println!("{:>32} : {}", "binary path", bin_path.display());
-    println!("{:>32} : {}", "parameters path", params_path.display());
+    report!(bin_path.display(), "binary path");
+    report!(params_path.display(), "parameters path");
 
     banner::sub_section("Directories", term_width);
     let cwd = current_dir().expect("Failed to determine current working directory.");
     let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
-    println!("{:>32} : {}", "input directory", in_dir.display());
-    println!("{:>32} : {}", "output directory", out_dir.display());
+    report!(in_dir.display(), "input directory");
+    report!(out_dir.display(), "output directory");
 
     (params_path, in_dir, out_dir)
 }
@@ -165,15 +166,13 @@ fn post_analysis(term_width: usize, output: &Data) {
     banner::section("Post-Analysis", term_width);
 
     let mut total: f64 = output.maps.map().values().map(|m| m.sum()).sum();
-    println!("{:>32} : {}", "total occupancy", total);
+    report!(total, "total occupancy");
 
     for (key, map) in output.maps.map() {
         let occupancy = map.sum();
-        println!(
-            "{:>32} : {} ({}%)",
+        report!(
             key,
-            occupancy,
-            occupancy / total * 100.0
+            format!("({}%) {}", occupancy / total * 100.0, occupancy)
         );
         total += occupancy;
     }

@@ -43,8 +43,6 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     banner::title("MCRT", term_width);
 
-    let list = vec![1, 2, 3, 5, 4];
-    arctk::reports!(list);
     let (params_path, in_dir, out_dir) = init(term_width);
 
     let params = input(term_width, &in_dir, &params_path);
@@ -72,15 +70,14 @@ fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
         params_path: PathBuf
     );
     report!(bin_path.display(), "binary path");
-    // println!("{:>32} : {}", "binary path", bin_path.display());
-    println!("{:>32} : {}", "parameters path", params_path.display());
+    report!(params_path.display(), "parameters path");
 
     banner::sub_section("Directories", term_width);
     let cwd = current_dir().expect("Failed to determine current working directory.");
     let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
-    println!("{:>32} : {}", "input directory", in_dir.display());
-    println!("{:>32} : {}", "output directory", out_dir.display());
+    report!(in_dir.display(), "input directory");
+    report!(out_dir.display(), "output directory");
 
     (params_path, in_dir, out_dir)
 }
@@ -92,7 +89,6 @@ fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
     let path = in_dir.join(params_path);
 
     let params = Parameters::load(&path).expect("Failed to load parameters file.");
-    // // println!("{:>32} : {}", "parameters", params);
 
     params
 }
@@ -180,19 +176,19 @@ fn simulate(term_width: usize, engine: Engine, uni: &Universe, light: &Light) ->
 fn post_analysis(term_width: usize, output: &Data) {
     banner::section("Post-Analysis", term_width);
 
-    println!("{:>32} : {}", "escaped weight", output.escaped_weight);
+    report!(output.escaped_weight, "escaped weight");
 
     let total_emission: f64 = output.emission_power.sum();
-    println!("{:>32} : {}W", "total emission power", total_emission);
+    report!(total_emission, "total emission power");
 
     let total_energy: f64 = output.energy.sum();
-    println!("{:>32} : {}W", "total power", total_energy);
+    report!(total_energy, "total power");
 
     let total_emission: f64 = output.emission_power.sum();
-    println!("{:>32} : {}W", "total absorption power", total_emission);
+    report!(total_emission, "total absorption power");
 
     let total_shifts: f64 = output.shifts.sum();
-    println!("{:>32} : {}", "total shifts", total_shifts);
+    report!(total_shifts, "total shifts");
 }
 
 /// Save the output data.

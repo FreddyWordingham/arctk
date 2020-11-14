@@ -3,6 +3,7 @@
 use arctk::{
     args,
     file::{Build, Load},
+    report,
     sim::babbage::{Operation, OperationBuilder},
     util::{banner, dir},
 };
@@ -18,6 +19,13 @@ struct Parameters {
     /// Operation to perform.
     op: OperationBuilder,
 }
+
+// use std::fmt::Display;
+// impl std::fmt::Display for Parameters {
+//     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
+//         write_report!(Self::fmt, self.op, "operation")
+//     }
+// }
 
 /// Main function.
 pub fn main() {
@@ -44,15 +52,15 @@ fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     args!(bin_path: PathBuf;
         params_path: PathBuf
     );
-    println!("{:>32} : {}", "binary path", bin_path.display());
-    println!("{:>32} : {}", "parameters path", params_path.display());
+    report!(bin_path.display(), "binary path");
+    report!(params_path.display(), "parameters path");
 
     banner::sub_section("Directories", term_width);
     let cwd = current_dir().expect("Failed to determine current working directory.");
     let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
-    println!("{:>32} : {}", "input directory", in_dir.display());
-    println!("{:>32} : {}", "output directory", out_dir.display());
+    report!(in_dir.display(), "input directory");
+    report!(out_dir.display(), "output directory");
 
     (params_path, in_dir, out_dir)
 }
@@ -61,9 +69,10 @@ fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
 fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
     banner::section("Input", term_width);
     banner::sub_section("Parameters", term_width);
-    let path = in_dir.join(params_path);
+    let params =
+        Parameters::load(&in_dir.join(params_path)).expect("Failed to load parameters file.");
 
-    Parameters::load(&path).expect("Failed to load parameters file.")
+    params
 }
 
 /// Build instances.
