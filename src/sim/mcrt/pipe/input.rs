@@ -2,8 +2,9 @@
 
 use crate::{
     geom::{Grid, Tree},
-    opt::{Light, Material},
-    sim::mcrt::{Attribute, Settings},
+    opt::{Attribute, Light, Material},
+    ord::Set,
+    sim::mcrt::Settings,
 };
 
 /// MCRT simulation resources conglomerate.
@@ -17,9 +18,9 @@ pub struct Input<'a> {
     /// Materials.
     pub mats: &'a [Material],
     /// Attributes.
-    pub attrs: &'a [Attribute],
+    pub attrs: &'a Set<Attribute<'a>>,
     /// Emission light.
-    pub light: &'a Light,
+    pub light: &'a Light<'a>,
 }
 
 impl<'a> Input<'a> {

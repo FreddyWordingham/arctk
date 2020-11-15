@@ -4,7 +4,6 @@
 use arctk::{
     args,
     file::{Build, Load, Save},
-    sim::mcrt::*,
     util::{
         banner::{section, title},
         dir,
@@ -24,30 +23,31 @@ fn main() {
     let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
 
-    section(term_width, "Input");
-    let builder = ParametersBuilder::load(&in_dir.join(params_path))
-        .expect("Failed to load parameters file.");
+    // section(term_width, "Input");
+    // let builder = ParametersBuilder::load(&in_dir.join(params_path))
+    //     .expect("Failed to load parameters file.");
 
-    section(term_width, "Building");
-    let setup = builder
-        .build(&in_dir)
-        .expect("Failed to construct builder structure.");
+    // section(term_width, "Building");
+    // let setup = builder
+    //     .build(&in_dir)
+    //     .expect("Failed to construct builder structure.");
 
-    section(term_width, "Setup");
-    let (params, _cat) = setup.setup();
-    let tree = params.grow();
-    let input = Input::new(
-        &tree,
-        &params.grid,
-        &params.sett,
-        &params.mats,
-        &params.attrs,
-        &params.light,
-    );
+    // section(term_width, "Setup");
+    // let (params, _cat) = setup.setup();
+    // let tree = params.grow();
+    // let input = Input::new(
+    //     &tree,
+    //     &params.grid,
+    //     &params.sett,
+    //     &params.mats,
+    //     &params.attrs,
+    //     &params.light,
+    // );
 
-    section(term_width, "Simulation");
-    let output = multi_thread(params.engine, &input).expect("Failed to run simulation");
-    output.save(&out_dir).expect("Failed to save output data.");
+    // section(term_width, "Simulation");
+    // // let output = single_thread(params.engine, &input).expect("Failed to run simulation");
+    // let output = multi_thread(params.engine, &input).expect("Failed to run simulation");
+    // output.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }

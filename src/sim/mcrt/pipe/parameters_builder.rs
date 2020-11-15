@@ -4,9 +4,9 @@ use crate::{
     err::Error,
     file::{Build, Redirect},
     geom::{GridBuilder, MeshBuilder, TreeSettings},
-    opt::{LightBuilder, MaterialBuilder},
+    opt::{AttributeSetup, LightBuilder, MaterialBuilder},
     ord::Set,
-    sim::mcrt::{AttributeSetup, EngineBuilder, ParametersSetup, SettingsSetup},
+    sim::mcrt::{EngineBuilder, ParametersSetup, SettingsSetup},
 };
 use arctk_attr::load;
 use std::path::Path;

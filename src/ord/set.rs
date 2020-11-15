@@ -3,10 +3,13 @@
 use crate::{
     err::Error,
     file::{from_json, Build, Load},
-    ord::{Register, Setup},
 };
 use serde::{Deserialize, Serialize};
-use std::{collections::BTreeMap, path::Path};
+use std::{
+    collections::{btree_map::Values, BTreeMap},
+    ops::Index,
+    path::Path,
+};
 
 /// Data map.
 #[derive(Debug, Deserialize, Serialize)]
@@ -40,19 +43,20 @@ impl<T> Set<T> {
         Ok(Self::new(map))
     }
 
-    /// Construct a register and store the data in a vector.
+    /// Iterate over the values.
     #[inline]
     #[must_use]
-    pub fn reg(self) -> (Vec<T>, Register) {
-        let mut names = Vec::with_capacity(self.0.len());
-        let mut values = Vec::with_capacity(self.0.len());
+    pub fn values(&self) -> Values<String, T> {
+        self.0.values()
+    }
+}
 
-        for (name, value) in self.0 {
-            names.push(name);
-            values.push(value);
-        }
+impl<T> Index<&str> for Set<T> {
+    type Output = T;
 
-        (values, Register::new(names))
+    #[inline]
+    fn index(&self, name: &str) -> &Self::Output {
+        &self.0[name]
     }
 }
 
@@ -79,21 +83,5 @@ impl<T: Build> Build for Set<T> {
         }
 
         Ok(Self::Inst::new(map))
-    }
-}
-
-#[allow(clippy::use_self)]
-impl<T: Setup> Setup for Set<T> {
-    type Inst = Set<T::Inst>;
-
-    #[inline]
-    fn setup(self, reg: &Register) -> Self::Inst {
-        let mut map = BTreeMap::new();
-
-        for (key, item) in self.0 {
-            map.insert(key, item.setup(reg));
-        }
-
-        Self::Inst::new(map)
     }
 }

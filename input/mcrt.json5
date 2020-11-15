@@ -1,7 +1,6 @@
 {
-    tree    : { There   : 'tree/standard_5_6.json5' },
-    surfs   : { There   : 'scenes/surfs.json5' },
-    grid    : { There   : 'grid/10m_64.json5' },
+    tree    : { There   : 'tree/deep_5_8.json5' },
+    grid    : { There   : 'grid/20m_64.json5' },
     sett    : { Here    : {
         num_phot            : 1e6,
         block_size          : 1e2,
@@ -12,12 +11,21 @@
         init_mat            : 'air',
     }},
     engine  : "Basic",
-    light   : { There   : 'lights/test.json5' },
+    light   : { Here    : {
+        power       : 1.0,
+        emit        : { Surface: [['objs/circle.obj'], null] },
+        // emit        : { Beam: [[0.0000213,0.0000233,0.0000052353],[1,0,0]] },
+        spec        : { Here: {Point: 6.3e-7}}
+    } },
     mats    : { Here    : {
         air : { There   : 'mats/air.json5' },
         fog : { There   : 'mats/fog.json5' },
     }},
     attrs   : { Here    : {
         mirr : { Mirror: 0.5 },
-    }}
+    }},
+    surfs   : { Here    : {
+            centrepiece : [["objs/cube.obj"], { scale: 4.0 }],
+            mirror      : [["objs/plane.obj"], { scale: 4.0 }]
+    } },
 }

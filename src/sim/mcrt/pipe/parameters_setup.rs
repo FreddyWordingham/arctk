@@ -2,9 +2,9 @@
 
 use crate::{
     geom::{Grid, Mesh, TreeSettings},
-    opt::{Light, Material},
+    opt::{AttributeSetup, Light, Material},
     ord::{Set, Setup},
-    sim::mcrt::{AttributeSetup, Catalogue, Engine, Parameters, SettingsSetup},
+    sim::mcrt::{Catalogue, Engine, Parameters, SettingsSetup},
 };
 
 /// Named setup parameters.

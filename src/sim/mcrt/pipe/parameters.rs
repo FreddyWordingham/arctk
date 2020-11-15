@@ -2,8 +2,8 @@
 
 use crate::{
     geom::{Grid, Mesh, Tree, TreeSettings},
-    opt::{Light, Material},
-    sim::mcrt::{Attribute, Engine, Settings},
+    opt::{Attribute, Light, Material},
+    sim::mcrt::{Engine, Settings},
 };
 
 /// Functional input parameters.
@@ -15,14 +15,14 @@ pub struct Parameters {
     pub sett: Settings,
     /// Measurement grid.
     pub grid: Grid,
+    /// Materials.
+    pub mats: Set<Material>,
+    /// Attributes.
+    pub attrs: Set<Attribute<'a>>,
+    /// Surfaces.
+    pub surfs: Set<Surface<'a>>,
     /// Tree settings.
     pub tree: TreeSettings,
-    /// Surfaces.
-    pub surfs: Vec<Mesh>,
-    /// Materials.
-    pub mats: Vec<Material>,
-    /// Attributes.
-    pub attrs: Vec<Attribute>,
     /// Main light.
     pub light: Light,
 }

@@ -1,8 +1,10 @@
 //! Adaptive tree cell scheme.
 
 use crate::{
-    geom::{Collide, Cube, Hit, Mesh, Ray, Scan, SmoothTriangle, Trace, TreeSettings},
+    geom::{Collide, Cube, Hit, Ray, Scan, SmoothTriangle, Trace, TreeSettings},
     math::Pos3,
+    opt::{Attribute, Surface},
+    ord::Set,
     tools::ProgressBar,
 };
 
@@ -20,7 +22,7 @@ pub enum Tree<'a> {
         /// Boundary.
         boundary: Cube,
         /// Intersecting triangles and their corresponding mesh index.
-        tris: Vec<(&'a SmoothTriangle, usize)>,
+        tris: Vec<(&'a SmoothTriangle, &'a Attribute<'a>)>,
     },
 }
 
@@ -28,15 +30,15 @@ impl<'a> Tree<'a> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(sett: &TreeSettings, surfs: &'a [Mesh]) -> Self {
+    pub fn new(sett: &TreeSettings, surfs: &'a Set<Surface>) -> Self {
         let mut boundary = Self::init_boundary(surfs);
         boundary.expand(sett.padding());
 
         let mut tris = Vec::new();
-        for (index, mesh) in surfs.iter().enumerate() {
-            tris.reserve(mesh.tris().len());
-            for tri in mesh.tris() {
-                tris.push((tri, index));
+        for surf in surfs.values() {
+            tris.reserve(surf.mesh().tris().len());
+            for tri in surf.mesh().tris() {
+                tris.push((tri, surf.attr()));
             }
         }
 
@@ -61,12 +63,12 @@ impl<'a> Tree<'a> {
     /// Initialise the boundary encompassing all of the mesh vertices.
     #[inline]
     #[must_use]
-    fn init_boundary(surfs: &[Mesh]) -> Cube {
+    fn init_boundary(surfs: &Set<Surface>) -> Cube {
         let mut mins = None;
         let mut maxs = None;
 
-        for mesh in surfs {
-            let (mesh_mins, mesh_maxs) = mesh.boundary().mins_maxs();
+        for surf in surfs.values() {
+            let (mesh_mins, mesh_maxs) = surf.mesh().boundary().mins_maxs();
 
             if mins.is_none() {
                 mins = Some(mesh_mins);
@@ -103,7 +105,7 @@ impl<'a> Tree<'a> {
         sett: &TreeSettings,
         parent_boundary: &Cube,
         depth: u32,
-        potential_tris: &[(&'a SmoothTriangle, usize)],
+        potential_tris: &[(&'a SmoothTriangle, &'a Attribute<'a>)],
     ) -> [Self; 8] {
         debug_assert!(depth <= sett.max_depth());
         debug_assert!(!potential_tris.is_empty());
@@ -142,7 +144,7 @@ impl<'a> Tree<'a> {
         sett: &TreeSettings,
         boundary: Cube,
         depth: u32,
-        potential_tris: &[(&'a SmoothTriangle, usize)],
+        potential_tris: &[(&'a SmoothTriangle, &'a Attribute<'a>)],
     ) -> Tree<'a> {
         debug_assert!(depth <= sett.max_depth());
 
@@ -150,9 +152,9 @@ impl<'a> Tree<'a> {
         detection_vol.expand(sett.padding());
 
         let mut tris = Vec::new();
-        for &(tri, index) in potential_tris {
+        for &(tri, attr) in potential_tris {
             if tri.overlap(&detection_vol) {
-                tris.push((tri, index));
+                tris.push((tri, attr));
             }
         }
 
@@ -292,14 +294,14 @@ impl<'a> Tree<'a> {
                 }
 
                 let mut nearest: Option<Hit> = None;
-                for &(tri, index) in tris {
+                for &(tri, attr) in tris {
                     if let Some((dist, side)) = tri.dist_side(ray) {
                         if let Some(ref hit) = nearest {
                             if dist < hit.dist() {
-                                nearest = Some(Hit::new(index, dist, side));
+                                nearest = Some(Hit::new(attr, dist, side));
                             }
                         } else {
-                            nearest = Some(Hit::new(index, dist, side));
+                            nearest = Some(Hit::new(attr, dist, side));
                         }
                     }
                 }

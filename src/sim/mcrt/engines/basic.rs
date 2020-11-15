@@ -59,7 +59,7 @@ pub fn basic(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
 
         // Event handling.
         match Event::new(voxel_dist, scat_dist, surf_hit, bump_dist) {
-            Event::Voxel(dist) => travel(&mut data, &mut phot, &env, index, dist),
+            Event::Voxel(dist) => travel(&mut data, &mut phot, &env, index, dist + bump_dist),
             Event::Scattering(dist) => {
                 travel(&mut data, &mut phot, &env, index, dist);
                 scatter(&mut rng, &mut phot, &env)
