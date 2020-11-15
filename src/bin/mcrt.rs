@@ -36,7 +36,14 @@ fn main() {
     section(term_width, "Setup");
     let (params, _cat) = setup.setup();
     let tree = params.grow();
-    let input = Input::new(&tree, &params.grid, &params.sett, &params.light);
+    let input = Input::new(
+        &tree,
+        &params.grid,
+        &params.sett,
+        &params.mats,
+        &params.attrs,
+        &params.light,
+    );
 
     section(term_width, "Simulation");
     let output = multi_thread(params.engine, &input).expect("Failed to run simulation");
