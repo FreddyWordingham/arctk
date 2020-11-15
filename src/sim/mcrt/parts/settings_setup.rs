@@ -17,8 +17,8 @@ pub struct SettingsSetup {
     bump_dist: f64,
     /// Loop limit.
     loop_limit: u64,
-    /// Weight to perform roulette at.
-    roulette_weight: f64,
+    /// Minimum statistical weight to consider.
+    min_weight: f64,
     /// Number of roulette barrels.
     roulette_barrels: u64,
     /// Emission material.
@@ -37,7 +37,7 @@ impl Setup for SettingsSetup {
             self.block_size,
             self.bump_dist,
             self.loop_limit,
-            self.roulette_weight,
+            self.min_weight,
             self.roulette_barrels,
             init_mat_index,
         )

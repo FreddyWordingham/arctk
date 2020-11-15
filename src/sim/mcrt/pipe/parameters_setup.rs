@@ -4,7 +4,7 @@ use crate::{
     geom::{Grid, Mesh, TreeSettings},
     opt::{Light, Material},
     ord::{Set, Setup},
-    sim::mcrt::{AttributeSetup, Catalogue, Engine, Parameters, Settings},
+    sim::mcrt::{AttributeSetup, Catalogue, Engine, Parameters, SettingsSetup},
 };
 
 /// Named setup parameters.
@@ -13,7 +13,7 @@ pub struct ParametersSetup {
     /// Engine function.
     engine: Engine,
     /// Simulation specific settings.
-    sett: Settings,
+    sett: SettingsSetup,
     /// Measurement grid.
     grid: Grid,
     /// Tree settings.
@@ -35,7 +35,7 @@ impl ParametersSetup {
     #[must_use]
     pub fn new(
         engine: Engine,
-        sett: Settings,
+        sett: SettingsSetup,
         grid: Grid,
         tree: TreeSettings,
         surfs: Set<Mesh>,
@@ -60,12 +60,12 @@ impl ParametersSetup {
     #[must_use]
     pub fn setup(self) -> (Parameters, Catalogue) {
         let engine = self.engine;
-        let sett = self.sett;
         let grid = self.grid;
         let tree = self.tree;
         let (surfs, surf_reg) = self.surfs.reg();
         let (mats, mat_reg) = self.mats.reg();
         let (attrs, attr_reg) = self.attrs.setup(&mat_reg).reg();
+        let sett = self.sett.setup(&mat_reg);
         let light = self.light;
 
         let cat = Catalogue::new(surf_reg, mat_reg, attr_reg);

@@ -6,7 +6,7 @@ use crate::{
     geom::{GridBuilder, MeshBuilder, TreeSettings},
     opt::{LightBuilder, MaterialBuilder},
     ord::Set,
-    sim::mcrt::{AttributeSetup, EngineBuilder, ParametersSetup, Settings},
+    sim::mcrt::{AttributeSetup, EngineBuilder, ParametersSetup, SettingsSetup},
 };
 use arctk_attr::load;
 use std::path::Path;
@@ -18,7 +18,7 @@ pub struct ParametersBuilder {
     /// Engine selection.
     engine: EngineBuilder,
     /// Simulation specific settings.
-    sett: Redirect<Settings>,
+    sett: Redirect<SettingsSetup>,
     /// Measurement grid settings.
     grid: Redirect<GridBuilder>,
     /// Tree settings.
