@@ -12,17 +12,20 @@ pub struct Settings {
     block_size: u64,
     /// Bump distance [m].
     bump_dist: f64,
+    /// Emission material index.
+    init_mat_index: usize,
 }
 
 impl Settings {
     clone!(num_phot, u64);
     clone!(block_size, u64);
     clone!(bump_dist, f64);
+    clone!(init_mat_index, usize);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(num_phot: u64, block_size: u64, bump_dist: f64) -> Self {
+    pub fn new(num_phot: u64, block_size: u64, bump_dist: f64, init_mat_index: usize) -> Self {
         debug_assert!(num_phot > 0);
         debug_assert!(block_size > 0);
         debug_assert!(bump_dist > 0.0);
@@ -31,6 +34,7 @@ impl Settings {
             num_phot,
             block_size,
             bump_dist,
+            init_mat_index,
         }
     }
 }
