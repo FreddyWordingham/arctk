@@ -3,25 +3,18 @@
 
 use arctk::{
     args,
-    file::Load,
-    geom::MeshBuilder,
-    ord::Set,
+    file::{Build, Load},
     report,
+    sim::mcrt::*,
     util::{
         banner::{section, sub_section, title},
         dir,
     },
 };
-use arctk_attr::input;
-use std::env::current_dir;
-use std::path::{Path, PathBuf};
-
-/// Input parameters.
-#[input]
-struct Parameters {
-    /// Surfaces.
-    surfs: Set<MeshBuilder>,
-}
+use std::{
+    env::current_dir,
+    path::{Path, PathBuf},
+};
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
@@ -29,6 +22,7 @@ fn main() {
 
     let (params_path, in_dir, _out_dir) = init(term_width);
     let params = input(term_width, &in_dir, &params_path);
+    let _parts = params.build(&in_dir);
 }
 
 /// Initialise the command line arguments and directories.
@@ -53,11 +47,11 @@ fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
 }
 
 /// Load the input parameters file.
-fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
+fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> ParametersBuilder {
     section("Input", term_width);
     sub_section("Parameters", term_width);
-    let params =
-        Parameters::load(&in_dir.join(params_path)).expect("Failed to load parameters file.");
+    let params = ParametersBuilder::load(&in_dir.join(params_path))
+        .expect("Failed to load parameters file.");
     // report!(params, "parameters");
 
     params

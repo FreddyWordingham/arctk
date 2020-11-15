@@ -1,8 +1,8 @@
 //! Data set.
 
-use crate::{err::Error, ord::Register};
+use crate::{err::Error, file::Build, ord::Register};
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeMap;
+use std::{collections::BTreeMap, path::Path};
 
 /// Data map.
 #[derive(Debug, Deserialize, Serialize)]
@@ -39,7 +39,7 @@ impl<T> Set<T> {
     /// Construct a register and store the data in a vector.
     #[inline]
     #[must_use]
-    pub fn reg(self) -> (Register, Vec<T>) {
+    pub fn reg(self) -> (Vec<T>, Register) {
         let mut names = Vec::with_capacity(self.0.len());
         let mut values = Vec::with_capacity(self.0.len());
 
@@ -48,6 +48,31 @@ impl<T> Set<T> {
             values.push(value);
         }
 
-        (Register::new(names), values)
+        (values, Register::new(names))
+    }
+}
+
+// impl<T> Load for Set<T>
+// where
+//     for<'de> T: Deserialize<'de>,
+// {
+//     #[inline]
+//     fn load(path: &Path) -> Result<Self, Error> {
+//         from_json(path)
+//     }
+// }
+
+impl<T: Build> Build for Set<T> {
+    type Inst = Set<T::Inst>;
+
+    #[inline]
+    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
+        let mut map = BTreeMap::new();
+
+        for (key, item) in self.0 {
+            map.insert(key, item.build(in_dir)?);
+        }
+
+        Ok(Self::Inst::new(map))
     }
 }
