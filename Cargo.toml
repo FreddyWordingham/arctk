@@ -57,9 +57,9 @@ lazy_static = "1.4.*"
 # name = "diffuse"
 # required-features = ["netcdf", "terminal_size"]
 
-# [[bin]]
-# name = "mcrt"
-# required-features = ["netcdf", "terminal_size"]
+[[bin]]
+name = "mcrt"
+required-features = ["netcdf", "terminal_size"]
 
 [profile.dev]
 # Development profile: "cargo build".
