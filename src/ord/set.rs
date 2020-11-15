@@ -1,6 +1,10 @@
 //! Data set.
 
-use crate::{err::Error, file::Build, ord::Register};
+use crate::{
+    err::Error,
+    file::{from_json, Build, Load},
+    ord::Register,
+};
 use serde::{Deserialize, Serialize};
 use std::{collections::BTreeMap, path::Path};
 
@@ -52,15 +56,15 @@ impl<T> Set<T> {
     }
 }
 
-// impl<T> Load for Set<T>
-// where
-//     for<'de> T: Deserialize<'de>,
-// {
-//     #[inline]
-//     fn load(path: &Path) -> Result<Self, Error> {
-//         from_json(path)
-//     }
-// }
+impl<T> Load for Set<T>
+where
+    for<'de> T: Deserialize<'de>,
+{
+    #[inline]
+    fn load(path: &Path) -> Result<Self, Error> {
+        from_json(path)
+    }
+}
 
 impl<T: Build> Build for Set<T> {
     type Inst = Set<T::Inst>;

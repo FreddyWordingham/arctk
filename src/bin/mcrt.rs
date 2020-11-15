@@ -3,56 +3,44 @@
 
 use arctk::{
     args,
-    file::{Build, Load},
-    report,
+    file::{Build, Load, Save},
     sim::mcrt::*,
     util::{
-        banner::{section, sub_section, title},
+        banner::{section, title},
         dir,
     },
 };
-use std::{
-    env::current_dir,
-    path::{Path, PathBuf},
-};
+use std::{env::current_dir, path::PathBuf};
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
-    title("MCRT", term_width);
+    title(term_width, "MCRT");
 
-    let (params_path, in_dir, _out_dir) = init(term_width);
-    let params = input(term_width, &in_dir, &params_path);
-    let _parts = params.build(&in_dir);
-}
-
-/// Initialise the command line arguments and directories.
-fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
-    section("Initialisation", term_width);
-    sub_section("Command line arguments", term_width);
+    section(term_width, "Initialisation");
     args!(bin_path: PathBuf;
         params_path: PathBuf
     );
-    report!(bin_path.display(), "binary path");
-    report!(params_path.display(), "parameters path");
-
-    sub_section("Directories", term_width);
     let cwd = current_dir().expect("Failed to determine current working directory.");
-    // let (in_dir, out_dir) = dir::io_dirs(None, None)
     let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
-    report!(in_dir.display(), "input directory");
-    report!(out_dir.display(), "output directory");
 
-    (params_path, in_dir, out_dir)
-}
-
-/// Load the input parameters file.
-fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> ParametersBuilder {
-    section("Input", term_width);
-    sub_section("Parameters", term_width);
-    let params = ParametersBuilder::load(&in_dir.join(params_path))
+    section(term_width, "Input");
+    let builder = ParametersBuilder::load(&in_dir.join(params_path))
         .expect("Failed to load parameters file.");
-    // report!(params, "parameters");
 
-    params
+    section(term_width, "Building");
+    let setup = builder
+        .build(&in_dir)
+        .expect("Failed to construct builder structure.");
+
+    section(term_width, "Setup");
+    let (params, _cat) = setup.setup();
+    let tree = params.grow();
+    let input = Input::new(&tree, &params.grid, &params.sett, &params.light);
+
+    section(term_width, "Simulation");
+    let output = multi_thread(params.engine, &input).expect("Failed to run simulation");
+    output.save(&out_dir).expect("Failed to save output data.");
+
+    section(term_width, "Finished");
 }

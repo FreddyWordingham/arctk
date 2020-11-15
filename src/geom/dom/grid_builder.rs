@@ -38,7 +38,7 @@ impl GridBuilder {
     /// Determine the total number of cells.
     #[inline]
     #[must_use]
-    pub const fn total_cells(&self) -> usize {
+    pub const fn num_cells(&self) -> usize {
         self.res[X] * self.res[Y] * self.res[Z]
     }
 }

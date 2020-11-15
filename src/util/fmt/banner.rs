@@ -7,7 +7,7 @@ static mut SECTION: i32 = 0;
 
 /// Print a colourful title bar to the terminal.
 #[inline]
-pub fn title(title: &str, term_width: usize) {
+pub fn title(term_width: usize, title: &str) {
     let title = title.to_uppercase();
 
     let (left_bar, right_bar) = if term_width < ((title.len() * 2) + 11) {
@@ -36,7 +36,7 @@ pub fn title(title: &str, term_width: usize) {
 
 /// Print a section bar to the terminal.
 #[inline]
-pub fn section(title: &str, term_width: usize) {
+pub fn section(term_width: usize, title: &str) {
     let title = title.to_uppercase();
     unsafe {
         SECTION += 1;
@@ -63,7 +63,7 @@ pub fn section(title: &str, term_width: usize) {
 
 /// Print a sub-section message to the terminal.
 #[inline]
-pub fn sub_section(title: &str, term_width: usize) {
+pub fn sub_section(term_width: usize, title: &str) {
     println!(
         "---- {} {}",
         colour(title).bold(),
