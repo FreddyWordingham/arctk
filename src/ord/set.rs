@@ -66,6 +66,7 @@ where
     }
 }
 
+#[allow(clippy::use_self)]
 impl<T: Build> Build for Set<T> {
     type Inst = Set<T::Inst>;
 
@@ -81,6 +82,7 @@ impl<T: Build> Build for Set<T> {
     }
 }
 
+#[allow(clippy::use_self)]
 impl<T: Setup> Setup for Set<T> {
     type Inst = Set<T::Inst>;
 

@@ -30,6 +30,7 @@ pub struct ParametersSetup {
 
 impl ParametersSetup {
     /// Construct a new instance.
+    #[allow(clippy::too_many_arguments)]
     #[inline]
     #[must_use]
     pub fn new(
