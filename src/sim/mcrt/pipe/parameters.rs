@@ -2,8 +2,8 @@
 
 use crate::{
     geom::{Grid, Mesh, Tree, TreeSettings},
-    opt::Light,
-    sim::mcrt::{Engine, Settings},
+    opt::{Light, Material},
+    sim::mcrt::{Attribute, Engine, Settings},
 };
 
 /// Functional input parameters.
@@ -11,14 +11,18 @@ use crate::{
 pub struct Parameters {
     /// Engine function.
     pub engine: Engine,
-    /// Tree settings.
-    pub tree: TreeSettings,
-    /// Measurement grid.
-    pub grid: Grid,
-    /// Surfaces.
-    pub surfs: Vec<Mesh>,
     /// Simulation specific settings.
     pub sett: Settings,
+    /// Measurement grid.
+    pub grid: Grid,
+    /// Tree settings.
+    pub tree: TreeSettings,
+    /// Surfaces.
+    pub surfs: Vec<Mesh>,
+    /// Materials.
+    pub mats: Vec<Material>,
+    /// Attributes.
+    pub attrs: Vec<Attribute>,
     /// Main light.
     pub light: Light,
 }
@@ -29,14 +33,18 @@ impl Parameters {
     #[must_use]
     pub fn new(
         engine: Engine,
-        tree: TreeSettings,
-        grid: Grid,
-        surfs: Vec<Mesh>,
         sett: Settings,
+        grid: Grid,
+        tree: TreeSettings,
+        surfs: Vec<Mesh>,
+        mats: Vec<Material>,
+        attrs: Vec<Attribute>,
         light: Light,
     ) -> Self {
-        debug_assert!(!surfs.is_empty());
         debug_assert!(grid.num_cells() > 0);
+        debug_assert!(!surfs.is_empty());
+        debug_assert!(!attrs.is_empty());
+        debug_assert!(!mats.is_empty());
 
         Self {
             engine,
@@ -44,6 +52,8 @@ impl Parameters {
             grid,
             sett,
             surfs,
+            mats,
+            attrs,
             light,
         }
     }

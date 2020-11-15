@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     file::{from_json, Build, Load},
-    ord::Register,
+    ord::{Register, Setup},
 };
 use serde::{Deserialize, Serialize};
 use std::{collections::BTreeMap, path::Path};
@@ -78,5 +78,20 @@ impl<T: Build> Build for Set<T> {
         }
 
         Ok(Self::Inst::new(map))
+    }
+}
+
+impl<T: Setup> Setup for Set<T> {
+    type Inst = Set<T::Inst>;
+
+    #[inline]
+    fn setup(self, reg: &Register) -> Self::Inst {
+        let mut map = BTreeMap::new();
+
+        for (key, item) in self.0 {
+            map.insert(key, item.setup(reg));
+        }
+
+        Self::Inst::new(map)
     }
 }

@@ -2,9 +2,9 @@
 
 use crate::{
     geom::{Grid, Mesh, TreeSettings},
-    opt::Light,
-    ord::Set,
-    sim::mcrt::{Catalogue, Engine, Parameters, Settings},
+    opt::{Light, Material},
+    ord::{Set, Setup},
+    sim::mcrt::{AttributeSetup, Catalogue, Engine, Parameters, Settings},
 };
 
 /// Named setup parameters.
@@ -12,14 +12,18 @@ use crate::{
 pub struct ParametersSetup {
     /// Engine function.
     engine: Engine,
+    /// Simulation specific settings.
+    sett: Settings,
+    /// Measurement grid.
+    grid: Grid,
     /// Tree settings.
     tree: TreeSettings,
     /// Surfaces.
     surfs: Set<Mesh>,
-    /// Measurement grid.
-    grid: Grid,
-    /// Simulation specific settings.
-    sett: Settings,
+    /// Materials.
+    mats: Set<Material>,
+    /// Attributes.
+    attrs: Set<AttributeSetup>,
     /// Illumination light.
     light: Light,
 }
@@ -30,18 +34,22 @@ impl ParametersSetup {
     #[must_use]
     pub fn new(
         engine: Engine,
+        sett: Settings,
+        grid: Grid,
         tree: TreeSettings,
         surfs: Set<Mesh>,
-        grid: Grid,
-        sett: Settings,
+        mats: Set<Material>,
+        attrs: Set<AttributeSetup>,
         light: Light,
     ) -> Self {
         Self {
             engine,
+            sett,
+            grid,
             tree,
             surfs,
-            grid,
-            sett,
+            mats,
+            attrs,
             light,
         }
     }
@@ -51,14 +59,16 @@ impl ParametersSetup {
     #[must_use]
     pub fn setup(self) -> (Parameters, Catalogue) {
         let engine = self.engine;
-        let tree = self.tree;
-        let (surfs, surfs_reg) = self.surfs.reg();
-        let grid = self.grid;
         let sett = self.sett;
+        let grid = self.grid;
+        let tree = self.tree;
+        let (surfs, surf_reg) = self.surfs.reg();
+        let (mats, mat_reg) = self.mats.reg();
+        let (attrs, attr_reg) = self.attrs.setup(&mat_reg).reg();
         let light = self.light;
 
-        let cat = Catalogue::new(surfs_reg);
-        let params = Parameters::new(engine, tree, grid, surfs, sett, light);
+        let cat = Catalogue::new(surf_reg, mat_reg, attr_reg);
+        let params = Parameters::new(engine, sett, grid, tree, surfs, mats, attrs, light);
 
         (params, cat)
     }

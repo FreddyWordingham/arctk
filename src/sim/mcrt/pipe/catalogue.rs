@@ -1,18 +1,22 @@
 //! Known items.
 
-use crate::{access, ord::Register};
+use crate::ord::Register;
 
 /// Catalogue of relevant registers.
 pub struct Catalogue {
     /// Known surfaces.
-    surfs: Register,
+    pub surfs: Register,
+    /// Known materials.
+    pub mats: Register,
+    /// Known attributes.
+    pub attrs: Register,
 }
 
 impl Catalogue {
-    access!(surfs, Register);
-
     /// Construct a new instance.
-    pub fn new(surfs: Register) -> Self {
-        Self { surfs }
+    #[inline]
+    #[must_use]
+    pub const fn new(surfs: Register, mats: Register, attrs: Register) -> Self {
+        Self { surfs, mats, attrs }
     }
 }
