@@ -62,9 +62,8 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
         std::mem::drop(pb);
         b
     } {
-        for _i in start..end {
+        for _ in start..end {
             let phot = input.light.emit(&mut rng, phot_energy);
-
             data = engine(input, &mut rng, phot, data);
         }
     }

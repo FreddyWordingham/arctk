@@ -15,9 +15,9 @@ pub struct Input<'a> {
     /// General settings.
     pub sett: &'a Settings,
     /// Materials.
-    pub mats: &'a Vec<Material>,
+    pub mats: &'a [Material],
     /// Attributes.
-    pub attrs: &'a Vec<Attribute>,
+    pub attrs: &'a [Attribute],
     /// Emission light.
     pub light: &'a Light,
 }
@@ -30,8 +30,8 @@ impl<'a> Input<'a> {
         tree: &'a Tree,
         grid: &'a Grid,
         sett: &'a Settings,
-        mats: &'a Vec<Material>,
-        attrs: &'a Vec<Attribute>,
+        mats: &'a [Material],
+        attrs: &'a [Attribute],
         light: &'a Light,
     ) -> Self {
         Self {
