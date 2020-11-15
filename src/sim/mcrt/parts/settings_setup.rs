@@ -15,6 +15,12 @@ pub struct SettingsSetup {
     block_size: u64,
     /// Bump distance [m].
     bump_dist: f64,
+    /// Loop limit.
+    loop_limit: u64,
+    /// Weight to perform roulette at.
+    roulette_weight: f64,
+    /// Number of roulette barrels.
+    roulette_barrels: u64,
     /// Emission material.
     init_mat: String,
 }
@@ -30,6 +36,9 @@ impl Setup for SettingsSetup {
             self.num_phot,
             self.block_size,
             self.bump_dist,
+            self.loop_limit,
+            self.roulette_weight,
+            self.roulette_barrels,
             init_mat_index,
         )
     }
