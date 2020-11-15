@@ -12,5 +12,8 @@
     mats    : { Here    : {
         air : { There   : 'mats/air.json5' },
         fog : { There   : 'mats/fog.json5' },
+    }},
+    attrs   : { Here    : {
+        mirr : { Mirror: 0.5 },
     }}
 }
