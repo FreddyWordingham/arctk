@@ -1,8 +1,8 @@
-//! Simulation control functions.
+//! Simulation running functions.
 
 use crate::{
     err::Error,
-    sim::mcrt::{engine::Engine, Input, Output},
+    sim::mcrt::{Engine, Input, Output},
     tools::ProgressBar,
 };
 use rand::thread_rng;
@@ -11,8 +11,7 @@ use std::sync::{Arc, Mutex};
 
 /// Run a multi-threaded MCRT simulation.
 /// # Errors
-/// if the progress bad can not be locked.
-#[allow(clippy::module_name_repetitions)]
+/// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
@@ -35,22 +34,21 @@ pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 }
 
 /// Run a MCRT simulation using a single thread.
-#[allow(clippy::module_name_repetitions)]
+/// # Errors
+/// if the progress bar can not be locked.
 #[inline]
-#[must_use]
-pub fn single_thread(engine: Engine, input: &Input) -> Output {
+pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
     let pb = ProgressBar::new("Single-threaded", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
-    thread(engine, input, &pb)
+    Ok(thread(engine, input, &pb))
 }
 
 /// Thread control function.
-#[allow(clippy::module_name_repetitions)]
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-pub fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output {
+fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output {
     let res = *input.grid.res();
     let mut data = Output::new(input.grid.boundary().clone(), res);
 

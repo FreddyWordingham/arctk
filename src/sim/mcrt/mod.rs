@@ -1,9 +1,7 @@
 //! Monte-Carlo radiative transfer simulation module.
 
+pub mod control;
 pub mod engine;
-pub mod input;
-pub mod output;
-pub mod run;
-pub mod settings;
+pub mod parts;
 
-pub use self::{engine::*, input::*, output::*, settings::*};
+pub use self::{control::*, engine::*, parts::*};
