@@ -64,7 +64,7 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
     } {
         for _ in start..end {
             let phot = input.light.emit(&mut rng, phot_energy);
-            data = engine(input, &mut rng, phot, data);
+            engine(input, &mut rng, phot, &mut data);
         }
     }
 

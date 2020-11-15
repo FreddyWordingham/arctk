@@ -33,13 +33,14 @@ impl Side {
         }
     }
 
-    /// Calculate the dot product with a direction.
-    /// Given the original direction the result is non-positive.
+    /// Reference the surface-normal vector.
+    /// This points away from the constructing direction normal.
     #[inline]
     #[must_use]
-    pub fn dot(&self, dir: &Dir3) -> f64 {
+    pub const fn norm(&self) -> &Dir3 {
         match *self {
-            Self::Inside(ref norm) | Self::Outside(ref norm) => dir.dot(norm),
+            Self::Inside(ref dir) => dir,
+            Self::Outside(ref dir) => dir,
         }
     }
 }

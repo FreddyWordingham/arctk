@@ -18,6 +18,12 @@ pub struct Output {
     cell_vol: f64,
     /// Emission power.
     pub emission: Array3<f64>,
+    /// Photo-energy.
+    pub energy: Array3<f64>,
+    /// Absorptions.
+    pub absorptions: Array3<f64>,
+    /// Wavelength shifts.
+    pub shifts: Array3<f64>,
 }
 
 impl Output {
@@ -38,6 +44,9 @@ impl Output {
             boundary,
             cell_vol,
             emission: Array3::zeros(res),
+            energy: Array3::zeros(res),
+            absorptions: Array3::zeros(res),
+            shifts: Array3::zeros(res),
         }
     }
 }
@@ -46,6 +55,9 @@ impl AddAssign<&Self> for Output {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
         self.emission += &rhs.emission;
+        self.energy += &rhs.energy;
+        self.absorptions += &rhs.absorptions;
+        self.shifts += &rhs.shifts;
     }
 }
 
@@ -55,6 +67,18 @@ impl Save for Output {
         let path = out_dir.join("emission_density.nc");
         println!("Saving: {}", path.display());
         (&self.emission / self.cell_vol).save(&path)?;
+
+        let path = out_dir.join("energy_density.nc");
+        println!("Saving: {}", path.display());
+        (&self.energy / self.cell_vol).save(&path)?;
+
+        let path = out_dir.join("absorption_density.nc");
+        println!("Saving: {}", path.display());
+        (&self.absorptions / self.cell_vol).save(&path)?;
+
+        let path = out_dir.join("shift_density.nc");
+        println!("Saving: {}", path.display());
+        (&self.shifts / self.cell_vol).save(&path)?;
 
         Ok(())
     }

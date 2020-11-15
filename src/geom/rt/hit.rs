@@ -14,7 +14,7 @@ pub struct Hit {
 }
 
 impl Hit {
-    access!(index, usize);
+    clone!(index, usize);
     clone!(dist, dist_mut, f64);
     access!(side, Side);
 
