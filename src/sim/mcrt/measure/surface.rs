@@ -22,7 +22,7 @@ pub fn surface(
             *phot.weight_mut() *= abs;
             *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), side.norm());
         }
-        Attribute::Refractive(inside, outside) => {
+        Attribute::Interface(inside, outside) => {
             // Reference materials.
             let (curr_mat, next_mat) = if side.is_inside() {
                 (inside, outside)

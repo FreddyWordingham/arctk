@@ -12,8 +12,8 @@ use arctk_attr::load;
 pub enum AttributeLinker {
     /// Partially reflective mirror, absorption fraction.
     Mirror(f64),
-    /// Refractive interface, inside material name, outside material name.
-    Refractive(String, String),
+    /// Material interface, inside material name, outside material name.
+    Interface(String, String),
 }
 
 impl<'a> Link<'a, Material> for AttributeLinker {
@@ -23,8 +23,8 @@ impl<'a> Link<'a, Material> for AttributeLinker {
     fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Mirror(abs) => Attribute::Mirror(abs),
-            Self::Refractive(ref inside, ref outside) => {
-                Attribute::Refractive(&mats[inside], &mats[outside])
+            Self::Interface(ref inside, ref outside) => {
+                Attribute::Interface(&mats[inside], &mats[outside])
             }
         })
     }

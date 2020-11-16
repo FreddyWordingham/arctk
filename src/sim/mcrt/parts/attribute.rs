@@ -6,6 +6,6 @@ use crate::sim::mcrt::Material;
 pub enum Attribute<'a> {
     /// Partially reflective mirror, absorption fraction.
     Mirror(f64),
-    /// Refractive interface, inside material, outside material.
-    Refractive(&'a Material, &'a Material),
+    /// Material interface, inside material, outside material.
+    Interface(&'a Material, &'a Material),
 }
