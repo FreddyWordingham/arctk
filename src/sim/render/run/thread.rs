@@ -2,6 +2,7 @@
 
 use crate::{
     err::Error,
+    ord::X,
     sim::render::{Engine, Input, Output, Tracer},
     tools::ProgressBar,
 };
@@ -54,6 +55,8 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
 
     let mut rng = thread_rng();
 
+    let super_samples = input.cam.num_super_samples();
+
     let block_size = input.sett.block_size();
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
@@ -62,8 +65,12 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
         b
     } {
         for n in start..end {
-            let pixel = [0, 0];
-            let ss = [0, 0];
+            let p = n / super_samples;
+            let s = n - (p * super_samples);
+
+            let pixel = [p % res[X], p / res[X]];
+            let ss = [s % super_samples, s / super_samples];
+
             let tracer = Tracer::new(input.cam.emit(pixel, ss));
             engine(input, &mut rng, tracer, &mut data);
         }

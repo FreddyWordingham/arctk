@@ -12,7 +12,7 @@ use arctk_attr::load;
 #[load]
 pub struct SettingsLinker {
     /// Number of photons to simulate in each thread block.
-    block_size: u64,
+    block_size: usize,
     /// Bump distance [m].
     bump_dist: f64,
     /// Loop limit.

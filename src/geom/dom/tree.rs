@@ -41,7 +41,7 @@ impl<'a, T> Tree<'a, T> {
             }
         }
 
-        let mut pb = ProgressBar::new("Growing tree", 8_u64.pow(sett.max_depth()));
+        let mut pb = ProgressBar::new("Growing tree", 8_usize.pow(sett.max_depth()));
         if (sett.max_depth() == 0) || (tris.len() <= sett.tar_tris()) {
             pb.finish_with_message("Tree grown.");
             return Self::Leaf { boundary, tris };
@@ -158,7 +158,7 @@ impl<'a, T> Tree<'a, T> {
         }
 
         if (tris.len() <= sett.tar_tris()) || (depth >= sett.max_depth()) {
-            pb.block(8_u64.pow(sett.max_depth() - depth));
+            pb.block(8_usize.pow(sett.max_depth() - depth));
             return Tree::Leaf { boundary, tris };
         }
 

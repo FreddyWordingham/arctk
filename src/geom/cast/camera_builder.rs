@@ -21,7 +21,7 @@ pub struct CameraBuilder {
     /// Image resolution.
     res: [usize; 2],
     /// Optional super-sampling power.
-    super_sampling: Option<u64>,
+    super_sampling: Option<usize>,
 }
 
 impl Build for CameraBuilder {

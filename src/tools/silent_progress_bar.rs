@@ -3,16 +3,16 @@
 /// Silent progress-bar structure.
 pub struct SilentProgressBar {
     /// Current value.
-    count: u64,
+    count: usize,
     /// Total target value.
-    total: u64,
+    total: usize,
 }
 
 impl SilentProgressBar {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(total: u64) -> Self {
+    pub fn new(total: usize) -> Self {
         debug_assert!(total > 0);
 
         Self { count: 0, total }
@@ -23,7 +23,7 @@ impl SilentProgressBar {
     /// If there is not enough, return the remaining block.
     /// If there are none at all, return None.
     #[inline]
-    pub fn block(&mut self, size: u64) -> Option<(u64, u64)> {
+    pub fn block(&mut self, size: usize) -> Option<(usize, usize)> {
         debug_assert!(size > 0);
 
         if self.count >= self.total {

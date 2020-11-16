@@ -55,6 +55,7 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
     let mut rng = thread_rng();
 
     let phot_energy = input.light.power() / input.sett.num_phot() as f64;
+
     let block_size = input.sett.block_size();
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");

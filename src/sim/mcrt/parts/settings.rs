@@ -5,9 +5,9 @@ use crate::{access, clone, sim::mcrt::Material};
 /// General settings structure.
 pub struct Settings<'a> {
     /// Number of photons to simulate.
-    num_phot: u64,
+    num_phot: usize,
     /// Number of photons to simulate in each thread block.
-    block_size: u64,
+    block_size: usize,
     /// Bump distance [m].
     bump_dist: f64,
     /// Loop limit.
@@ -21,8 +21,8 @@ pub struct Settings<'a> {
 }
 
 impl<'a> Settings<'a> {
-    clone!(num_phot, u64);
-    clone!(block_size, u64);
+    clone!(num_phot, usize);
+    clone!(block_size, usize);
     clone!(bump_dist, f64);
     clone!(loop_limit, u64);
     clone!(min_weight, f64);
@@ -33,8 +33,8 @@ impl<'a> Settings<'a> {
     #[inline]
     #[must_use]
     pub fn new(
-        num_phot: u64,
-        block_size: u64,
+        num_phot: usize,
+        block_size: usize,
         bump_dist: f64,
         loop_limit: u64,
         min_weight: f64,

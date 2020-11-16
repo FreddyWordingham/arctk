@@ -16,7 +16,7 @@ pub struct Camera {
     /// Resolution.
     res: [usize; 2],
     /// Super sampling power.
-    super_sampling: u64,
+    super_sampling: usize,
 }
 
 impl Camera {
@@ -25,7 +25,7 @@ impl Camera {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(orient: Orient, fov: f64, res: [usize; 2], super_sampling: u64) -> Self {
+    pub fn new(orient: Orient, fov: f64, res: [usize; 2], super_sampling: usize) -> Self {
         debug_assert!(fov > 0.0);
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
@@ -51,21 +51,21 @@ impl Camera {
     /// Calculate the total number of super samples per pixel.
     #[inline]
     #[must_use]
-    pub fn num_super_samples(&self) -> u64 {
+    pub fn num_super_samples(&self) -> usize {
         self.super_sampling * self.super_sampling
     }
 
     /// Calculate the total number of samples.
     #[inline]
     #[must_use]
-    pub fn num_samples(&self) -> u64 {
-        self.num_super_samples() * self.num_pixels() as u64
+    pub fn num_samples(&self) -> usize {
+        self.num_super_samples() * self.num_pixels() as usize
     }
 
     /// Emit a ray for the given pixel and super-sample.
     #[inline]
     #[must_use]
-    pub fn emit(&self, pixel: [usize; 2], ss: [u64; 2]) -> Ray {
+    pub fn emit(&self, pixel: [usize; 2], ss: [usize; 2]) -> Ray {
         debug_assert!(pixel[X] < self.res[X]);
         debug_assert!(pixel[Y] < self.res[Y]);
         debug_assert!(ss[X] < self.super_sampling);
