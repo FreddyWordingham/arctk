@@ -47,13 +47,6 @@ impl<T> Set<T> {
         Ok(Self::new(map))
     }
 
-    /// Get the number of items.
-    #[inline]
-    #[must_use]
-    pub fn len(&self) -> usize {
-        self.0.len()
-    }
-
     /// Iterate over the values.
     #[inline]
     #[must_use]
@@ -75,6 +68,7 @@ impl<T> IntoIterator for Set<T> {
     type Item = (String, T);
     type IntoIter = IntoIter<String, T>;
 
+    #[inline]
     fn into_iter(self) -> Self::IntoIter {
         self.0.into_iter()
     }
@@ -106,6 +100,7 @@ impl<T: Build> Build for Set<T> {
     }
 }
 
+#[allow(clippy::use_self)]
 impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
     type Inst = Set<S::Inst>;
 
@@ -115,7 +110,6 @@ impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
         for (name, val) in self.0 {
             list.push((name, val.link(set)?));
         }
-        let x = Set::from_vec(list);
-        x
+        Self::Inst::from_vec(list)
     }
 }

@@ -39,8 +39,7 @@ impl Side {
     #[must_use]
     pub const fn norm(&self) -> &Dir3 {
         match *self {
-            Self::Inside(ref dir) => dir,
-            Self::Outside(ref dir) => dir,
+            Self::Inside(ref dir) | Self::Outside(ref dir) => dir,
         }
     }
 }
