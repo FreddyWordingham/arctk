@@ -25,9 +25,9 @@ pub fn surface(
         Attribute::Refractive(inside, outside) => {
             // Reference materials.
             let (curr_mat, next_mat) = if side.is_inside() {
-                (outside, inside)
-            } else {
                 (inside, outside)
+            } else {
+                (outside, inside)
             };
 
             // Find local optical environments.
