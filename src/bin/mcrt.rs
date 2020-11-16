@@ -37,12 +37,12 @@ fn main() {
 
     section(term_width, "Linking");
     let mats = setup.mats;
-    let attrs = setup.attrs.link(&mats).expect("Link failure.");
-    let surfs = setup.surfs.link(&attrs).expect("Link failure.");
+    let attrs = setup.attrs.link(&mats).expect("Material link failure.");
+    let surfs = setup.surfs.link(&attrs).expect("Surface link failure.");
     let light = setup.light;
     let tree = Tree::new(&setup.tree, &surfs);
     let grid = setup.grid;
-    let sett = setup.sett.link(&mats).expect("Link Failure.");
+    let sett = setup.sett.link(&mats).expect("Material link Failure.");
     let engine = setup.engine;
     let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);
 
