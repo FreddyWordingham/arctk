@@ -3,5 +3,5 @@
     bump_dist           : 1e-6,
     loop_limit          : 1e6,
     min_weight          : 5e-2,
-    sky_grad            : 'puddles',
+    sky_grad            : 'greyscale',
 }
