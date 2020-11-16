@@ -6,7 +6,6 @@ use arctk::{
     file::{Build, Load, Save},
     geom::Tree,
     ord::Link,
-    // sim::render::{multi_thread, Input, ParametersBuilder},
     sim::render::ParametersBuilder,
     util::{
         banner::{section, title},

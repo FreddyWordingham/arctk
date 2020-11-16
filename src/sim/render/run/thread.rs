@@ -15,7 +15,7 @@ use std::sync::{Arc, Mutex};
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
-    let pb = ProgressBar::new("Multi-threaded", input.sett.num_phot());
+    let pb = ProgressBar::new("Multi-threaded", input.cam.num_samples());
     let pb = Arc::new(Mutex::new(pb));
 
     let threads: Vec<_> = (0..num_cpus::get()).collect();
@@ -38,7 +38,7 @@ pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 /// if the progress bar can not be locked.
 #[inline]
 pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
-    let pb = ProgressBar::new("Single-threaded", input.sett.num_phot());
+    let pb = ProgressBar::new("Single-threaded", input.cam.num_samples());
     let pb = Arc::new(Mutex::new(pb));
 
     Ok(thread(engine, input, &pb))
@@ -49,7 +49,7 @@ pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 #[inline]
 #[must_use]
 fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output {
-    let res = *input.sett.res();
+    let res = *input.cam.res();
     let mut data = Output::new(res);
 
     let mut rng = thread_rng();

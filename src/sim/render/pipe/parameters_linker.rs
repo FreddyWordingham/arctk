@@ -1,10 +1,10 @@
 //! Parameters setup file.
 
 use crate::{
-    geom::{SurfaceLinker, TreeSettings},
+    geom::{Camera, SurfaceLinker, TreeSettings},
     img::Gradient,
     ord::Set,
-    sim::render::{AttributeLinker, Camera, Engine, SettingsLinker},
+    sim::render::{AttributeLinker, Engine, SettingsLinker},
 };
 
 /// Named setup parameters.

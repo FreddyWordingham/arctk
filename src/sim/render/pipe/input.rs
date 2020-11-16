@@ -1,10 +1,10 @@
 //! Render input.
 
 use crate::{
-    geom::Tree,
+    geom::{Camera, Tree},
     img::Gradient,
     ord::Set,
-    sim::render::{Attribute, Camera, Settings},
+    sim::render::{Attribute, Settings},
 };
 
 /// MCRT simulation resources conglomerate.
