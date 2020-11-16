@@ -1,6 +1,6 @@
 //! Optical surface structure.
 
-use crate::{err::Error, file::Build, geom::MeshBuilder, opt::SurfaceSetup};
+use crate::{err::Error, file::Build, geom::MeshBuilder, opt::SurfaceLinker};
 use arctk_attr::load;
 use std::path::Path;
 
@@ -14,7 +14,7 @@ pub struct SurfaceBuilder {
 }
 
 impl Build for SurfaceBuilder {
-    type Inst = SurfaceSetup;
+    type Inst = SurfaceLinker;
 
     #[inline]
     fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {

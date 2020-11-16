@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     file::{from_json, Build, Load},
-    ord::Setup,
+    ord::Link,
 };
 use serde::{Deserialize, Serialize};
 use std::{
@@ -106,14 +106,14 @@ impl<T: Build> Build for Set<T> {
     }
 }
 
-impl<'a, T, S: Setup<'a, T>> Setup<'a, T> for Set<S> {
+impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
     type Inst = Set<S::Inst>;
 
     #[inline]
-    fn setup(self, set: &'a Set<T>) -> Result<Self::Inst, Error> {
+    fn link(self, set: &'a Set<T>) -> Result<Self::Inst, Error> {
         let mut list = Vec::with_capacity(self.0.len());
         for (name, val) in self.0 {
-            list.push((name, val.setup(set)?));
+            list.push((name, val.link(set)?));
         }
         let x = Set::from_vec(list);
         x

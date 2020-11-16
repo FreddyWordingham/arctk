@@ -1,7 +1,7 @@
 //! Ordering module.
 
+pub mod link;
 pub mod list;
 pub mod set;
-pub mod setup;
 
-pub use self::{list::*, set::*, setup::*};
+pub use self::{link::*, list::*, set::*};

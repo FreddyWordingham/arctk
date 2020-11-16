@@ -5,7 +5,7 @@ use arctk::{
     args,
     file::{Build, Load, Save},
     geom::Tree,
-    ord::Setup,
+    ord::Link,
     sim::mcrt::{multi_thread, Input, ParametersBuilder},
     util::{
         banner::{section, title},
@@ -37,12 +37,12 @@ fn main() {
 
     section(term_width, "Linking");
     let mats = setup.mats;
-    let attrs = setup.attrs.setup(&mats).expect("Link failure.");
-    let surfs = setup.surfs.setup(&attrs).expect("Link failure.");
+    let attrs = setup.attrs.link(&mats).expect("Link failure.");
+    let surfs = setup.surfs.link(&attrs).expect("Link failure.");
     let light = setup.light;
     let tree = Tree::new(&setup.tree, &surfs);
     let grid = setup.grid;
-    let sett = setup.sett.setup(&mats).expect("Link Failure.");
+    let sett = setup.sett.link(&mats).expect("Link Failure.");
     let engine = setup.engine;
     let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);
 

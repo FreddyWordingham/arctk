@@ -1,34 +1,34 @@
-//! Optical surface structure.
+//! Optical surface linking structure.
 
 use crate::{
     err::Error,
     geom::Mesh,
     opt::{Attribute, Surface},
-    ord::{Set, Setup},
+    ord::{Link, Set},
 };
 
 /// Optical surface.
-pub struct SurfaceSetup {
+pub struct SurfaceLinker {
     /// Mesh.
     mesh: Mesh,
     /// Attribute name.
     attr: String,
 }
 
-impl SurfaceSetup {
+impl SurfaceLinker {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(mesh: Mesh, attr: String) -> Self {
+    pub const fn new(mesh: Mesh, attr: String) -> Self {
         Self { mesh, attr }
     }
 }
 
-impl<'a> Setup<'a, Attribute<'a>> for SurfaceSetup {
+impl<'a> Link<'a, Attribute<'a>> for SurfaceLinker {
     type Inst = Surface<'a>;
 
     #[inline]
-    fn setup(self, attrs: &'a Set<Attribute>) -> Result<Self::Inst, Error> {
+    fn link(self, attrs: &'a Set<Attribute>) -> Result<Self::Inst, Error> {
         Ok(Surface::new(self.mesh, &attrs[&self.attr]))
     }
 }

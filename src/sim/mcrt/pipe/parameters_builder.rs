@@ -4,9 +4,9 @@ use crate::{
     err::Error,
     file::{Build, Redirect},
     geom::{GridBuilder, TreeSettings},
-    opt::{AttributeSetup, LightBuilder, MaterialBuilder, SurfaceBuilder},
+    opt::{AttributeLinker, LightBuilder, MaterialBuilder, SurfaceBuilder},
     ord::Set,
-    sim::mcrt::{EngineBuilder, ParametersSetup, SettingsSetup},
+    sim::mcrt::{EngineBuilder, ParametersSetup, SettingsLinker},
 };
 use arctk_attr::load;
 use std::path::Path;
@@ -18,7 +18,7 @@ pub struct ParametersBuilder {
     /// Materials.
     mats: Redirect<Set<Redirect<MaterialBuilder>>>,
     /// Attributes.
-    attrs: Redirect<Set<AttributeSetup>>,
+    attrs: Redirect<Set<AttributeLinker>>,
     /// Surfaces.
     surfs: Redirect<Set<SurfaceBuilder>>,
     /// Main light.
@@ -28,7 +28,7 @@ pub struct ParametersBuilder {
     /// Measurement grid settings.
     grid: Redirect<GridBuilder>,
     /// Simulation specific settings.
-    sett: Redirect<SettingsSetup>,
+    sett: Redirect<SettingsLinker>,
     /// Engine selection.
     engine: EngineBuilder,
 }

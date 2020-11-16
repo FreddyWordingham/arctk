@@ -2,9 +2,9 @@
 
 use crate::{
     geom::{Grid, TreeSettings},
-    opt::{AttributeSetup, Light, Material, SurfaceSetup},
+    opt::{AttributeLinker, Light, Material, SurfaceLinker},
     ord::Set,
-    sim::mcrt::{Engine, SettingsSetup},
+    sim::mcrt::{Engine, SettingsLinker},
 };
 
 /// Named setup parameters.
@@ -13,9 +13,9 @@ pub struct ParametersSetup {
     /// Materials.
     pub mats: Set<Material>,
     /// Attributes.
-    pub attrs: Set<AttributeSetup>,
+    pub attrs: Set<AttributeLinker>,
     /// Surfaces.
-    pub surfs: Set<SurfaceSetup>,
+    pub surfs: Set<SurfaceLinker>,
     /// Illumination light.
     pub light: Light,
     /// Tree settings.
@@ -23,7 +23,7 @@ pub struct ParametersSetup {
     /// Measurement grid.
     pub grid: Grid,
     /// Simulation specific settings.
-    pub sett: SettingsSetup,
+    pub sett: SettingsLinker,
     /// Engine function.
     pub engine: Engine,
 }
@@ -35,12 +35,12 @@ impl ParametersSetup {
     #[must_use]
     pub fn new(
         mats: Set<Material>,
-        attrs: Set<AttributeSetup>,
-        surfs: Set<SurfaceSetup>,
+        attrs: Set<AttributeLinker>,
+        surfs: Set<SurfaceLinker>,
         light: Light,
         tree: TreeSettings,
         grid: Grid,
-        sett: SettingsSetup,
+        sett: SettingsLinker,
         engine: Engine,
     ) -> Self {
         Self {

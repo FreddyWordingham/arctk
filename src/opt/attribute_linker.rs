@@ -3,24 +3,24 @@
 use crate::{
     err::Error,
     opt::{Attribute, Material},
-    ord::{Set, Setup},
+    ord::{Link, Set},
 };
 use arctk_attr::load;
 
 /// Surface attribute setup.
 #[load]
-pub enum AttributeSetup {
+pub enum AttributeLinker {
     /// Partially reflective mirror, absorption fraction.
     Mirror(f64),
     /// Refractive interface, inside material name, outside material name.
     Refractive(String, String),
 }
 
-impl<'a> Setup<'a, Material> for AttributeSetup {
+impl<'a> Link<'a, Material> for AttributeLinker {
     type Inst = Attribute<'a>;
 
     #[inline]
-    fn setup(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
+    fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Mirror(abs) => Attribute::Mirror(abs),
             Self::Refractive(ref inside, ref outside) => {

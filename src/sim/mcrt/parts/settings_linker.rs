@@ -3,14 +3,14 @@
 use crate::{
     err::Error,
     opt::Material,
-    ord::{Set, Setup},
+    ord::{Link, Set},
     sim::mcrt::Settings,
 };
 use arctk_attr::load;
 
 /// General settings structure.
 #[load]
-pub struct SettingsSetup {
+pub struct SettingsLinker {
     /// Number of photons to simulate.
     num_phot: u64,
     /// Number of photons to simulate in each thread block.
@@ -27,11 +27,11 @@ pub struct SettingsSetup {
     init_mat: String,
 }
 
-impl<'a> Setup<'a, Material> for SettingsSetup {
+impl<'a> Link<'a, Material> for SettingsLinker {
     type Inst = Settings<'a>;
 
     #[inline]
-    fn setup(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
+    fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         Ok(Settings::new(
             self.num_phot,
             self.block_size,
