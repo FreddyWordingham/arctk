@@ -1,0 +1,5 @@
+{   // Map of colour gradients.
+    soil    : ['#bc8f8fff', '#cc8867ff', '#bbbbbbff'],
+    puddles : ['#4656ffff', '#4e9dffff', '#9ff9ffff'],
+    solar   : ['#ffe200ff', '#ff4700ff', '#ff000dff'],
+}

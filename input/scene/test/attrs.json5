@@ -1,0 +1,4 @@
+{
+    wood    : { Opaque: 'solar' },
+    mirror  : { Mirror: 0.9 },
+}

@@ -1,1 +1,9 @@
-{}
+{
+    tree    : { There   : 'settings/tree_5_8.json5' },
+    sett    : { There   : 'settings/render.json5' },
+    engine  : "Antler",
+    cam     : { There   : 'scene/test/cam.json5' },
+    grads   : { There   : 'scene/test/grads.json5' },
+    attrs   : { There   : 'scene/test/attrs.json5' },
+    surfs   : { There   : 'scene/test/surfs.json5' },
+}
