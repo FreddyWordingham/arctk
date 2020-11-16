@@ -62,7 +62,9 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
         b
     } {
         for n in start..end {
-            let tracer = Tracer::new(input.cam.emit(n));
+            let pixel = [0, 0];
+            let ss = [0, 0];
+            let tracer = Tracer::new(input.cam.emit(pixel, ss));
             engine(input, &mut rng, tracer, &mut data);
         }
     }
