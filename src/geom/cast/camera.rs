@@ -2,7 +2,7 @@
 
 use crate::{
     access,
-    geom::Orient,
+    geom::{Orient, Ray},
     ord::{X, Y},
 };
 
@@ -41,14 +41,14 @@ impl Camera {
     /// Calculate the total number of pixels.
     #[inline]
     #[must_use]
-    pub fn num_pixels(&self) -> usize {
+    pub const fn num_pixels(&self) -> usize {
         self.res[X] * self.res[Y]
     }
 
     /// Calculate the number of super-samples per pixel.
     #[inline]
     #[must_use]
-    pub fn super_samples(&self) -> u64 {
+    pub const fn super_samples(&self) -> u64 {
         self.super_sampling * self.super_sampling
     }
 
@@ -57,5 +57,12 @@ impl Camera {
     #[must_use]
     pub fn num_samples(&self) -> u64 {
         self.super_samples() * self.num_pixels() as u64
+    }
+
+    /// Emit the nth ray.
+    #[inline]
+    #[must_use]
+    pub fn emit(&self, n: u64) -> Ray {
+        self.orient.forward_ray()
     }
 }

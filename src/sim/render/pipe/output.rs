@@ -41,7 +41,7 @@ impl AddAssign<&Self> for Output {
 
 impl Save for Output {
     #[inline]
-    fn save(&self, out_dir: &Path) -> Result<(), Error> {
+    fn save(&self, _out_dir: &Path) -> Result<(), Error> {
         Ok(())
     }
 }

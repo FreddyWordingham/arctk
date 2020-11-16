@@ -6,4 +6,10 @@ use rand::rngs::ThreadRng;
 /// Calculate the colour of a single tracer.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn antler(input: &Input, mut rng: &mut ThreadRng, mut trace: Tracer, mut data: &mut Output) {}
+pub fn antler(
+    _input: &Input,
+    mut _rng: &mut ThreadRng,
+    mut _trace: Tracer,
+    mut _data: &mut Output,
+) {
+}

@@ -28,7 +28,7 @@ impl Build for CameraBuilder {
     type Inst = Camera;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
         let ss = if let Some(ss) = self.super_sampling {
             ss
         } else {

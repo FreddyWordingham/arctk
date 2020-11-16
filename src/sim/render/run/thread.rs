@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    sim::render::{Engine, Input, Output},
+    sim::render::{Engine, Input, Output, Tracer},
     tools::ProgressBar,
 };
 use rand::thread_rng;
@@ -62,7 +62,7 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
         b
     } {
         for n in start..end {
-            let tracer = input.cam.emit(n);
+            let tracer = Tracer::new(input.cam.emit(n));
             engine(input, &mut rng, tracer, &mut data);
         }
     }

@@ -11,7 +11,7 @@ use crate::{
 /// Holds all simulation data, in human optimised form.
 pub struct ParametersSetup {
     /// Colour gradients.
-    pub mats: Set<Gradient>,
+    pub grads: Set<Gradient>,
     /// Attributes.
     pub attrs: Set<AttributeLinker>,
     /// Surfaces.
@@ -32,7 +32,7 @@ impl ParametersSetup {
     #[inline]
     #[must_use]
     pub fn new(
-        mats: Set<Gradient>,
+        grads: Set<Gradient>,
         attrs: Set<AttributeLinker>,
         surfs: Set<SurfaceLinker>,
         cam: Camera,
@@ -41,7 +41,7 @@ impl ParametersSetup {
         engine: Engine,
     ) -> Self {
         Self {
-            mats,
+            grads,
             attrs,
             surfs,
             cam,
