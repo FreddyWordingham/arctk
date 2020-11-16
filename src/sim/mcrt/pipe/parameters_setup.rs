@@ -3,29 +3,29 @@
 use crate::{
     geom::{Grid, TreeSettings},
     opt::{AttributeSetup, Light, Material, SurfaceSetup},
-    ord::{Set, Setup},
-    sim::mcrt::{Engine, Parameters, SettingsSetup},
+    ord::Set,
+    sim::mcrt::{Engine, SettingsSetup},
 };
 
 /// Named setup parameters.
 /// Holds all simulation data, in human optimised form.
 pub struct ParametersSetup {
     /// Materials.
-    mats: Set<Material>,
+    pub mats: Set<Material>,
     /// Attributes.
-    attrs: Set<AttributeSetup>,
+    pub attrs: Set<AttributeSetup>,
     /// Surfaces.
-    surfs: Set<SurfaceSetup>,
+    pub surfs: Set<SurfaceSetup>,
     /// Illumination light.
-    light: Light,
+    pub light: Light,
     /// Tree settings.
-    tree: TreeSettings,
+    pub tree: TreeSettings,
     /// Measurement grid.
-    grid: Grid,
+    pub grid: Grid,
     /// Simulation specific settings.
-    sett: SettingsSetup,
+    pub sett: SettingsSetup,
     /// Engine function.
-    engine: Engine,
+    pub engine: Engine,
 }
 
 impl ParametersSetup {
@@ -53,34 +53,5 @@ impl ParametersSetup {
             sett,
             engine,
         }
-    }
-
-    /// Setup the final parameters structure.
-    #[inline]
-    #[must_use]
-    pub fn setup<'a>(self) -> Parameters<'a> {
-        let mats = self.mats;
-
-        let attrs = self
-            .attrs
-            .setup(&mats)
-            .expect("Failed to link attribute set.");
-
-        let surfs = self
-            .surfs
-            .setup(&attrs)
-            .expect("Failed to link surface set.");
-
-        let light = self.light;
-
-        let tree = self.tree;
-
-        let grid = self.grid;
-
-        let sett = self.sett.setup(&mats).expect("Failed to link settings.");
-
-        let engine = self.engine;
-
-        Parameters::new(mats, attrs, surfs, light, tree, grid, sett, engine)
     }
 }

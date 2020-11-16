@@ -9,18 +9,18 @@ use crate::{
 
 /// MCRT simulation resources conglomerate.
 pub struct Input<'a> {
-    /// Hit-scan tree.
-    pub tree: &'a Tree<'a>,
-    /// Measurement grid.
-    pub grid: &'a Grid,
-    /// General settings.
-    pub sett: &'a Settings<'a>,
     /// Materials.
     pub mats: &'a Set<Material>,
     /// Attributes.
     pub attrs: &'a Set<Attribute<'a>>,
     /// Emission light.
     pub light: &'a Light,
+    /// Hit-scan tree.
+    pub tree: &'a Tree<'a>,
+    /// Measurement grid.
+    pub grid: &'a Grid,
+    /// General settings.
+    pub sett: &'a Settings<'a>,
 }
 
 impl<'a> Input<'a> {
@@ -28,20 +28,20 @@ impl<'a> Input<'a> {
     #[inline]
     #[must_use]
     pub const fn new(
-        tree: &'a Tree,
-        grid: &'a Grid,
-        sett: &'a Settings,
         mats: &'a Set<Material>,
         attrs: &'a Set<Attribute>,
         light: &'a Light,
+        tree: &'a Tree,
+        grid: &'a Grid,
+        sett: &'a Settings,
     ) -> Self {
         Self {
-            tree,
-            grid,
-            sett,
             mats,
             attrs,
             light,
+            sett,
+            grid,
+            tree,
         }
     }
 }

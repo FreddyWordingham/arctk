@@ -5,7 +5,7 @@
         num_phot            : 1e6,
         block_size          : 1e2,
         bump_dist           : 1e-6,
-        loop_limit          : 1e3,
+        loop_limit          : 1e6,
         min_weight          : 5e-2,
         roulette_barrels    : 8,
         init_mat            : 'air',
@@ -13,7 +13,7 @@
     engine  : "Basic",
     light   : { Here    : {
         power       : 1.0,
-        emit        : { Surface: [['objs/circle.obj'], null] },
+        emit        : { Surface: [['objs/light.obj'], null] },
         // emit        : { Beam: [[0.0000213,0.0000233,0.0000052353],[1,0,0]] },
         spec        : { Here: {Point: 6.3e-7}}
     } },
@@ -22,10 +22,17 @@
         fog : { There   : 'mats/fog.json5' },
     }},
     attrs   : { Here    : {
-        mirr : { Mirror: 0.5 },
+        mirr    : { Mirror: 0.99 },
+        fog     : { Refractive: ['air', 'fog'] },
     }},
     surfs   : { Here    : {
-            centrepiece : [["objs/cube.obj"], { scale: 4.0 }],
-            mirror      : [["objs/plane.obj"], { scale: 4.0 }]
+            centrepiece : {
+                mesh    : [["objs/cube.obj"], null],
+                attr    : 'fog'
+            },
+            mirror      : {
+                mesh    : [["objs/mirrors.obj"], null],
+                attr    : 'mirr'
+            }
     } },
 }
