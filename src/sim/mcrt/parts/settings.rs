@@ -1,6 +1,6 @@
 //! MCRT settings.
 
-use crate::{access, clone, opt::Material};
+use crate::{access, clone, sim::mcrt::Material};
 
 /// General settings structure.
 pub struct Settings<'a> {

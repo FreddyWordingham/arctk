@@ -2,7 +2,7 @@
 
 use crate::{
     math::sample_henyey_greenstein,
-    opt::{Local, Photon},
+    sim::mcrt::{Local, Photon},
 };
 use rand::{rngs::ThreadRng, Rng};
 use std::f64::consts::PI;

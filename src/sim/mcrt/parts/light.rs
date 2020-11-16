@@ -1,6 +1,6 @@
 //! Light surface structure.
 
-use crate::{access, clone, geom::Emitter, math::Probability, opt::Photon};
+use crate::{access, clone, geom::Emitter, math::Probability, sim::mcrt::Photon};
 use rand::Rng;
 
 /// Photon emission structure.

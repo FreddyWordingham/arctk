@@ -1,6 +1,6 @@
 //! Peel-off function.
 
-use crate::{math::Pos3, opt::Photon};
+use crate::{math::Pos3, sim::mcrt::Photon};
 
 /// Calculate the change in weight over a give flight towards a given point.
 /// Perform a peel off event.

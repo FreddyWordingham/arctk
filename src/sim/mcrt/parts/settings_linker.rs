@@ -2,9 +2,8 @@
 
 use crate::{
     err::Error,
-    opt::Material,
     ord::{Link, Set},
-    sim::mcrt::Settings,
+    sim::mcrt::{Material, Settings},
 };
 use arctk_attr::load;
 

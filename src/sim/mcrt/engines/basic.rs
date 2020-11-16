@@ -2,8 +2,7 @@
 
 use crate::{
     geom::Trace,
-    opt::Photon,
-    sim::mcrt::{scatter, surface, travel, Event, Input, Output},
+    sim::mcrt::{scatter, surface, travel, Event, Input, Output, Photon},
 };
 use rand::{rngs::ThreadRng, Rng};
 
@@ -66,7 +65,7 @@ pub fn basic(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());
-                surface(&mut rng, hit.attr(), hit.side(), &mut phot, &mut env);
+                surface(&mut rng, hit.tag(), hit.side(), &mut phot, &mut env);
                 travel(&mut data, &mut phot, &env, index, bump_dist);
             }
         }

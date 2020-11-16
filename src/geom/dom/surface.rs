@@ -1,23 +1,23 @@
 //! Optical surface structure.
 
-use crate::{access, geom::Mesh, opt::Attribute};
+use crate::{access, geom::Mesh};
 
 /// Optical surface.
-pub struct Surface<'a> {
+pub struct Surface<'a, T> {
     /// Mesh.
     mesh: Mesh,
     /// Attribute.
-    attr: &'a Attribute<'a>,
+    attr: &'a T,
 }
 
-impl<'a> Surface<'a> {
+impl<'a, T> Surface<'a, T> {
     access!(mesh, Mesh);
-    access!(attr, Attribute);
+    access!(attr, T);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(mesh: Mesh, attr: &'a Attribute) -> Self {
+    pub const fn new(mesh: Mesh, attr: &'a T) -> Self {
         Self { mesh, attr }
     }
 }

@@ -2,8 +2,8 @@
 
 use crate::{
     err::Error,
-    opt::{Attribute, Material},
     ord::{Link, Set},
+    sim::mcrt::{Attribute, Material},
 };
 use arctk_attr::load;
 

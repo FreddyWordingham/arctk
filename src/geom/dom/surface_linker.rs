@@ -2,8 +2,7 @@
 
 use crate::{
     err::Error,
-    geom::Mesh,
-    opt::{Attribute, Surface},
+    geom::{Mesh, Surface},
     ord::{Link, Set},
 };
 
@@ -24,11 +23,11 @@ impl SurfaceLinker {
     }
 }
 
-impl<'a> Link<'a, Attribute<'a>> for SurfaceLinker {
-    type Inst = Surface<'a>;
+impl<'a, T: 'a> Link<'a, T> for SurfaceLinker {
+    type Inst = Surface<'a, T>;
 
     #[inline]
-    fn link(self, attrs: &'a Set<Attribute>) -> Result<Self::Inst, Error> {
+    fn link(self, attrs: &'a Set<T>) -> Result<Self::Inst, Error> {
         Ok(Surface::new(self.mesh, &attrs[&self.attr]))
     }
 }

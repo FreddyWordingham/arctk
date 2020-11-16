@@ -1,10 +1,9 @@
 //! Parameters setup file.
 
 use crate::{
-    geom::{Grid, TreeSettings},
-    opt::{AttributeLinker, Light, Material, SurfaceLinker},
+    geom::{Grid, SurfaceLinker, TreeSettings},
     ord::Set,
-    sim::mcrt::{Engine, SettingsLinker},
+    sim::mcrt::{AttributeLinker, Engine, Light, Material, SettingsLinker},
 };
 
 /// Named setup parameters.

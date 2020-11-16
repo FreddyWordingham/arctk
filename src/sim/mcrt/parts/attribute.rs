@@ -1,6 +1,6 @@
 //! Attributes implementation.
 
-use crate::opt::Material;
+use crate::sim::mcrt::Material;
 
 /// Surface attributes.
 pub enum Attribute<'a> {

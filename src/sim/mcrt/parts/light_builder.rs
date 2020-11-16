@@ -5,7 +5,7 @@ use crate::{
     file::{Build, Redirect},
     geom::EmitterBuilder,
     math::ProbabilityBuilder,
-    opt::Light,
+    sim::mcrt::Light,
 };
 use arctk_attr::load;
 use std::path::Path;

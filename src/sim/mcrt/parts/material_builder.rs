@@ -1,6 +1,6 @@
 //! Material builder.
 
-use crate::{err::Error, file::Build, math::FormulaBuilder, opt::Material};
+use crate::{err::Error, file::Build, math::FormulaBuilder, sim::mcrt::Material};
 use arctk_attr::load;
 use std::path::Path;
 

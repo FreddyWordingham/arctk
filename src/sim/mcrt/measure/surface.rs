@@ -2,7 +2,8 @@
 
 use crate::{
     geom::Side,
-    opt::{Attribute, Crossing, Local, Photon},
+    opt::Crossing,
+    sim::mcrt::{Attribute, Local, Photon},
 };
 use rand::{rngs::ThreadRng, Rng};
 

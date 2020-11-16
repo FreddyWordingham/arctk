@@ -1,9 +1,6 @@
 //! Engine function alias.
 
-use crate::{
-    opt::Photon,
-    sim::mcrt::{Input, Output},
-};
+use crate::sim::mcrt::{Input, Output, Photon};
 use rand::rngs::ThreadRng;
 
 /// MCRT sampling engine function type.

@@ -1,6 +1,10 @@
 //! Optical surface structure.
 
-use crate::{err::Error, file::Build, geom::MeshBuilder, opt::SurfaceLinker};
+use crate::{
+    err::Error,
+    file::Build,
+    geom::{MeshBuilder, SurfaceLinker},
+};
 use arctk_attr::load;
 use std::path::Path;
 

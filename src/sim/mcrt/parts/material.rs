@@ -1,6 +1,6 @@
 //! Optical material.
 
-use crate::{access, math::Formula, opt::Local};
+use crate::{access, math::Formula, sim::mcrt::Local};
 
 /// Optical properties.
 pub struct Material {

@@ -1,36 +1,35 @@
 //! Adaptive tree cell scheme.
 
 use crate::{
-    geom::{Collide, Cube, Hit, Ray, Scan, SmoothTriangle, Trace, TreeSettings},
+    geom::{Collide, Cube, Hit, Ray, Scan, SmoothTriangle, Surface, Trace, TreeSettings},
     math::Pos3,
-    opt::{Attribute, Surface},
     ord::Set,
     tools::ProgressBar,
 };
 
 /// Tree cell enumeration.
-pub enum Tree<'a> {
+pub enum Tree<'a, T> {
     /// Branching cell.
     Branch {
         /// Boundary.
         boundary: Cube,
         /// Children.
-        children: Box<[Tree<'a>; 8]>,
+        children: Box<[Tree<'a, T>; 8]>,
     },
     /// Terminal populated cell.
     Leaf {
         /// Boundary.
         boundary: Cube,
         /// Intersecting triangles and their corresponding mesh index.
-        tris: Vec<(&'a SmoothTriangle, &'a Attribute<'a>)>,
+        tris: Vec<(&'a SmoothTriangle, &'a T)>,
     },
 }
 
-impl<'a> Tree<'a> {
+impl<'a, T> Tree<'a, T> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(sett: &TreeSettings, surfs: &'a Set<Surface>) -> Self {
+    pub fn new(sett: &TreeSettings, surfs: &'a Set<Surface<T>>) -> Self {
         let mut boundary = Self::init_boundary(surfs);
         boundary.expand(sett.padding());
 
@@ -63,7 +62,7 @@ impl<'a> Tree<'a> {
     /// Initialise the boundary encompassing all of the mesh vertices.
     #[inline]
     #[must_use]
-    fn init_boundary(surfs: &Set<Surface>) -> Cube {
+    fn init_boundary(surfs: &Set<Surface<T>>) -> Cube {
         let mut mins = None;
         let mut maxs = None;
 
@@ -105,7 +104,7 @@ impl<'a> Tree<'a> {
         sett: &TreeSettings,
         parent_boundary: &Cube,
         depth: u32,
-        potential_tris: &[(&'a SmoothTriangle, &'a Attribute<'a>)],
+        potential_tris: &[(&'a SmoothTriangle, &'a T)],
     ) -> [Self; 8] {
         debug_assert!(depth <= sett.max_depth());
         debug_assert!(!potential_tris.is_empty());
@@ -144,8 +143,8 @@ impl<'a> Tree<'a> {
         sett: &TreeSettings,
         boundary: Cube,
         depth: u32,
-        potential_tris: &[(&'a SmoothTriangle, &'a Attribute<'a>)],
-    ) -> Tree<'a> {
+        potential_tris: &[(&'a SmoothTriangle, &'a T)],
+    ) -> Tree<'a, T> {
         debug_assert!(depth <= sett.max_depth());
 
         let mut detection_vol = boundary.clone();
@@ -276,7 +275,7 @@ impl<'a> Tree<'a> {
     /// Scan for what a given Ray, known to be within the cell, would observe.
     #[inline]
     #[must_use]
-    fn leaf_scan(&self, ray: &Ray, bump_dist: f64) -> Scan {
+    fn leaf_scan(&self, ray: &Ray, bump_dist: f64) -> Scan<T> {
         debug_assert!(self.boundary().contains(ray.pos()));
         debug_assert!(bump_dist > 0.0);
 
@@ -293,7 +292,7 @@ impl<'a> Tree<'a> {
                     return Scan::new_boundary(boundary_dist);
                 }
 
-                let mut nearest: Option<Hit> = None;
+                let mut nearest: Option<Hit<T>> = None;
                 for &(tri, attr) in tris {
                     if let Some((dist, side)) = tri.dist_side(ray) {
                         if let Some(ref hit) = nearest {
@@ -320,7 +319,7 @@ impl<'a> Tree<'a> {
     /// Determine what a given Ray would observe.
     #[inline]
     #[must_use]
-    pub fn scan(&self, mut ray: Ray, bump_dist: f64, max_dist: f64) -> Option<Hit> {
+    pub fn scan(&self, mut ray: Ray, bump_dist: f64, max_dist: f64) -> Option<Hit<T>> {
         debug_assert!(bump_dist > 0.0);
         debug_assert!(max_dist > 0.0);
 
