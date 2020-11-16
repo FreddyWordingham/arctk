@@ -1,61 +1,59 @@
 //! Startup parameters file.
 
 use crate::{
-    geom::{Grid, Mesh, Tree, TreeSettings},
-    opt::{Attribute, Light, Material},
+    geom::{Grid, Tree, TreeSettings},
+    opt::{Attribute, Light, Material, Surface},
+    ord::Set,
     sim::mcrt::{Engine, Settings},
 };
 
 /// Functional input parameters.
 /// Holds all simulation data, in ordered form.
-pub struct Parameters {
-    /// Engine function.
-    pub engine: Engine,
-    /// Simulation specific settings.
-    pub sett: Settings,
-    /// Measurement grid.
-    pub grid: Grid,
+pub struct Parameters<'a> {
     /// Materials.
     pub mats: Set<Material>,
     /// Attributes.
     pub attrs: Set<Attribute<'a>>,
     /// Surfaces.
     pub surfs: Set<Surface<'a>>,
-    /// Tree settings.
-    pub tree: TreeSettings,
     /// Main light.
     pub light: Light,
+    /// Tree settings.
+    pub tree: TreeSettings,
+    /// Measurement grid.
+    pub grid: Grid,
+    /// Simulation specific settings.
+    pub sett: Settings<'a>,
+    /// Engine function.
+    pub engine: Engine,
 }
 
-impl Parameters {
+impl<'a> Parameters<'a> {
     /// Construct a new instance.
     #[allow(clippy::too_many_arguments)]
     #[inline]
     #[must_use]
     pub fn new(
-        engine: Engine,
-        sett: Settings,
-        grid: Grid,
-        tree: TreeSettings,
-        surfs: Vec<Mesh>,
-        mats: Vec<Material>,
-        attrs: Vec<Attribute>,
+        mats: Set<Material>,
+        attrs: Set<Attribute<'a>>,
+        surfs: Set<Surface<'a>>,
         light: Light,
+        tree: TreeSettings,
+        grid: Grid,
+        sett: Settings<'a>,
+        engine: Engine,
     ) -> Self {
         debug_assert!(grid.num_cells() > 0);
-        debug_assert!(!surfs.is_empty());
-        debug_assert!(!attrs.is_empty());
-        debug_assert!(!mats.is_empty());
 
         Self {
-            engine,
+            mats,
+            attrs,
+            surfs,
+            light,
             tree,
             grid,
             sett,
-            surfs,
-            mats,
-            attrs,
-            light,
+            engine,
         }
     }
 

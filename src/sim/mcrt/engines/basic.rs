@@ -26,7 +26,7 @@ pub fn basic(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
     let roulette_survive_prob = 1.0 / roulette_barrels;
 
     // Initialisation.
-    let mat = &input.mats[input.sett.init_mat_index()];
+    let mat = input.sett.init_mat();
     let mut env = mat.sample_environment(phot.wavelength());
 
     // Main event loop.
@@ -66,14 +66,7 @@ pub fn basic(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());
-                surface(
-                    &mut rng,
-                    input.mats,
-                    &input.attrs[hit.index()],
-                    hit.side(),
-                    &mut phot,
-                    &mut env,
-                );
+                surface(&mut rng, hit.attr(), hit.side(), &mut phot, &mut env);
                 travel(&mut data, &mut phot, &env, index, bump_dist);
             }
         }

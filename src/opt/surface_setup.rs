@@ -15,6 +15,13 @@ pub struct SurfaceSetup {
 }
 
 impl SurfaceSetup {
+    /// Construct a new instance.
+    #[inline]
+    #[must_use]
+    pub fn new(mesh: Mesh, attr: String) -> Self {
+        Self { mesh, attr }
+    }
+
     /// Setup the attribute link.
     #[must_use]
     #[inline]

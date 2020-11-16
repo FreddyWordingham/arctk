@@ -10,9 +10,10 @@ pub mod material;
 pub mod material_builder;
 pub mod photon;
 pub mod surface;
+pub mod surface_builder;
 pub mod surface_setup;
 
 pub use self::{
     attribute::*, attribute_setup::*, crossing::*, light::*, light_builder::*, local::*,
-    material::*, material_builder::*, photon::*, surface::*, surface_setup::*,
+    material::*, material_builder::*, photon::*, surface::*, surface_builder::*, surface_setup::*,
 };

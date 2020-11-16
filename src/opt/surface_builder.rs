@@ -1,11 +1,8 @@
 //! Optical surface structure.
 
-use crate::{
-    geom::MeshBuilder,
-    opt::{Attribute, Surface},
-    ord::Set,
-};
+use crate::{err::Error, file::Build, geom::MeshBuilder, opt::SurfaceSetup};
 use arctk_attr::load;
+use std::path::Path;
 
 /// Optical surface.
 #[load]
@@ -21,7 +18,7 @@ impl Build for SurfaceBuilder {
 
     #[inline]
     fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        let mesh = self.mesh.build(in_dir);
+        let mesh = self.mesh.build(in_dir)?;
         Ok(Self::Inst::new(mesh, self.attr))
     }
 }

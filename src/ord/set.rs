@@ -3,10 +3,14 @@
 use crate::{
     err::Error,
     file::{from_json, Build, Load},
+    ord::Setup,
 };
 use serde::{Deserialize, Serialize};
 use std::{
-    collections::{btree_map::Values, BTreeMap},
+    collections::{
+        btree_map::{IntoIter, Values},
+        BTreeMap,
+    },
     ops::Index,
     path::Path,
 };
@@ -43,6 +47,13 @@ impl<T> Set<T> {
         Ok(Self::new(map))
     }
 
+    /// Get the number of items.
+    #[inline]
+    #[must_use]
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+
     /// Iterate over the values.
     #[inline]
     #[must_use]
@@ -57,6 +68,15 @@ impl<T> Index<&str> for Set<T> {
     #[inline]
     fn index(&self, name: &str) -> &Self::Output {
         &self.0[name]
+    }
+}
+
+impl<T> IntoIterator for Set<T> {
+    type Item = (String, T);
+    type IntoIter = IntoIter<String, T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.into_iter()
     }
 }
 
@@ -83,5 +103,19 @@ impl<T: Build> Build for Set<T> {
         }
 
         Ok(Self::Inst::new(map))
+    }
+}
+
+impl<'a, T, S: Setup<'a, T>> Setup<'a, T> for Set<S> {
+    type Inst = Set<S::Inst>;
+
+    #[inline]
+    fn setup(self, set: &'a Set<T>) -> Result<Self::Inst, Error> {
+        let mut list = Vec::with_capacity(self.0.len());
+        for (name, val) in self.0 {
+            list.push((name, val.setup(set)?));
+        }
+        let x = Set::from_vec(list);
+        x
     }
 }

@@ -1,31 +1,31 @@
 //! Parameters setup file.
 
 use crate::{
-    geom::{Grid, Mesh, TreeSettings},
-    opt::{AttributeSetup, Light, Material},
+    geom::{Grid, TreeSettings},
+    opt::{AttributeSetup, Light, Material, SurfaceSetup},
     ord::{Set, Setup},
-    sim::mcrt::{Catalogue, Engine, Parameters, SettingsSetup},
+    sim::mcrt::{Engine, Parameters, SettingsSetup},
 };
 
 /// Named setup parameters.
 /// Holds all simulation data, in human optimised form.
 pub struct ParametersSetup {
-    /// Engine function.
-    engine: Engine,
-    /// Simulation specific settings.
-    sett: SettingsSetup,
-    /// Measurement grid.
-    grid: Grid,
-    /// Tree settings.
-    tree: TreeSettings,
-    /// Surfaces.
-    surfs: Set<Mesh>,
     /// Materials.
     mats: Set<Material>,
     /// Attributes.
     attrs: Set<AttributeSetup>,
+    /// Surfaces.
+    surfs: Set<SurfaceSetup>,
     /// Illumination light.
     light: Light,
+    /// Tree settings.
+    tree: TreeSettings,
+    /// Measurement grid.
+    grid: Grid,
+    /// Simulation specific settings.
+    sett: SettingsSetup,
+    /// Engine function.
+    engine: Engine,
 }
 
 impl ParametersSetup {
@@ -34,43 +34,49 @@ impl ParametersSetup {
     #[inline]
     #[must_use]
     pub fn new(
-        engine: Engine,
-        sett: SettingsSetup,
-        grid: Grid,
-        tree: TreeSettings,
-        surfs: Set<Mesh>,
         mats: Set<Material>,
         attrs: Set<AttributeSetup>,
+        surfs: Set<SurfaceSetup>,
         light: Light,
+        tree: TreeSettings,
+        grid: Grid,
+        sett: SettingsSetup,
+        engine: Engine,
     ) -> Self {
         Self {
-            engine,
-            sett,
-            grid,
-            tree,
-            surfs,
             mats,
             attrs,
+            surfs,
             light,
+            tree,
+            grid,
+            sett,
+            engine,
         }
     }
 
     /// Setup the final parameters structure.
     #[inline]
     #[must_use]
-    pub fn setup(self) -> (Parameters, Catalogue) {
-        let engine = self.engine;
-        let grid = self.grid;
-        let tree = self.tree;
-        let (surfs, surf_reg) = self.surfs.reg();
-        let (mats, mat_reg) = self.mats.reg();
-        let (attrs, attr_reg) = self.attrs.setup(&mat_reg).reg();
-        let sett = self.sett.setup(&mat_reg);
+    pub fn setup<'a>(mut self) -> Parameters<'a> {
+        let mats = self.mats;
+
+        let attrs = self
+            .attrs
+            .setup(&mats)
+            .expect("Failed to construct attribute set.");
+
+        let surfs = self
+            .surfs
+            .setup(&attrs)
+            .expect("Failed to construct surface set.");
+
         let light = self.light;
+        let tree = self.tree;
+        let grid = self.grid;
+        let sett = self.sett;
+        let engine = self.engine;
 
-        let cat = Catalogue::new(surf_reg, mat_reg, attr_reg);
-        let params = Parameters::new(engine, sett, grid, tree, surfs, mats, attrs, light);
-
-        (params, cat)
+        Parameters::new(mats, attrs, surfs, light, tree, grid, sett, engine)
     }
 }

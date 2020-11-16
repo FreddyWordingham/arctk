@@ -14,13 +14,13 @@ pub struct Input<'a> {
     /// Measurement grid.
     pub grid: &'a Grid,
     /// General settings.
-    pub sett: &'a Settings,
+    pub sett: &'a Settings<'a>,
     /// Materials.
-    pub mats: &'a [Material],
+    pub mats: &'a Set<Material>,
     /// Attributes.
     pub attrs: &'a Set<Attribute<'a>>,
     /// Emission light.
-    pub light: &'a Light<'a>,
+    pub light: &'a Light,
 }
 
 impl<'a> Input<'a> {
@@ -31,8 +31,8 @@ impl<'a> Input<'a> {
         tree: &'a Tree,
         grid: &'a Grid,
         sett: &'a Settings,
-        mats: &'a [Material],
-        attrs: &'a [Attribute],
+        mats: &'a Set<Material>,
+        attrs: &'a Set<Attribute>,
         light: &'a Light,
     ) -> Self {
         Self {

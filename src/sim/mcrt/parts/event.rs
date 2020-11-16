@@ -3,21 +3,21 @@
 use crate::geom::Hit;
 
 /// Event determination enumeration.
-pub enum Event {
+pub enum Event<'a> {
     /// Voxel boundary collision.
     Voxel(f64),
     /// Scattering event.
     Scattering(f64),
     /// Surface hit.
-    Surface(Hit),
+    Surface(Hit<'a>),
 }
 
-impl Event {
+impl<'a> Event<'a> {
     /// Construct a new instance.
     /// Surface interactions are prioritised, then boundary collisions, and finally scattering events.
     #[inline]
     #[must_use]
-    pub fn new(voxel_dist: f64, scat_dist: f64, surf_hit: Option<Hit>, bump_dist: f64) -> Self {
+    pub fn new(voxel_dist: f64, scat_dist: f64, surf_hit: Option<Hit<'a>>, bump_dist: f64) -> Self {
         debug_assert!(voxel_dist > 0.0);
         debug_assert!(scat_dist > 0.0);
         debug_assert!(bump_dist > 0.0);

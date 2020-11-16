@@ -1,8 +1,9 @@
 //! Attributes implementation.
 
 use crate::{
+    err::Error,
     opt::{Attribute, Material},
-    ord::Set,
+    ord::{Set, Setup},
 };
 use arctk_attr::load;
 
@@ -15,16 +16,16 @@ pub enum AttributeSetup {
     Refractive(String, String),
 }
 
-impl AttributeSetup {
-    /// Setup the attribute links.
-    #[must_use]
+impl<'a> Setup<'a, Material> for AttributeSetup {
+    type Inst = Attribute<'a>;
+
     #[inline]
-    fn setup(self, mats: &Set<Material>) -> Attribute {
-        match self {
+    fn setup(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
+        Ok(match self {
             Self::Mirror(abs) => Attribute::Mirror(abs),
             Self::Refractive(ref inside, ref outside) => {
                 Attribute::Refractive(&mats[inside], &mats[outside])
             }
-        }
+        })
     }
 }

@@ -1,11 +1,9 @@
 //! MCRT settings.
 
-use crate::clone;
-use arctk_attr::load;
+use crate::{access, clone, opt::Material};
 
 /// General settings structure.
-#[load]
-pub struct Settings {
+pub struct Settings<'a> {
     /// Number of photons to simulate.
     num_phot: u64,
     /// Number of photons to simulate in each thread block.
@@ -18,18 +16,18 @@ pub struct Settings {
     min_weight: f64,
     /// Number of roulette barrels.
     roulette_barrels: u64,
-    /// Emission material index.
-    init_mat_index: usize,
+    /// Emission material.
+    init_mat: &'a Material,
 }
 
-impl Settings {
+impl<'a> Settings<'a> {
     clone!(num_phot, u64);
     clone!(block_size, u64);
     clone!(bump_dist, f64);
     clone!(loop_limit, u64);
     clone!(min_weight, f64);
     clone!(roulette_barrels, u64);
-    clone!(init_mat_index, usize);
+    access!(init_mat, Material);
 
     /// Construct a new instance.
     #[inline]
@@ -41,7 +39,7 @@ impl Settings {
         loop_limit: u64,
         min_weight: f64,
         roulette_barrels: u64,
-        init_mat_index: usize,
+        init_mat: &'a Material,
     ) -> Self {
         debug_assert!(num_phot > 0);
         debug_assert!(block_size > 0);
@@ -56,7 +54,7 @@ impl Settings {
             loop_limit,
             min_weight,
             roulette_barrels,
-            init_mat_index,
+            init_mat,
         }
     }
 }

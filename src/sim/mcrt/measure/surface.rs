@@ -2,7 +2,7 @@
 
 use crate::{
     geom::Side,
-    opt::{Attribute, Crossing, Local, Material, Photon},
+    opt::{Attribute, Crossing, Local, Photon},
 };
 use rand::{rngs::ThreadRng, Rng};
 
@@ -11,7 +11,6 @@ use rand::{rngs::ThreadRng, Rng};
 #[inline]
 pub fn surface(
     rng: &mut ThreadRng,
-    mats: &[Material],
     attr: &Attribute,
     side: &Side,
     phot: &mut Photon,
@@ -25,9 +24,9 @@ pub fn surface(
         Attribute::Refractive(inside, outside) => {
             // Reference materials.
             let (curr_mat, next_mat) = if side.is_inside() {
-                (&mats[outside], &mats[inside])
+                (outside, inside)
             } else {
-                (&mats[inside], &mats[outside])
+                (inside, outside)
             };
 
             // Find local optical environments.
