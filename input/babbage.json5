@@ -1,5 +1,0 @@
-{
-    op : {
-        Sample: ["points.csv", "scale.nc", {There: "grid/10m_64.json5"}]
-    }
-}

@@ -1,38 +1,10 @@
 {
-    tree    : { There   : 'tree/deep_5_8.json5' },
-    grid    : { There   : 'grid/20m_64.json5' },
-    sett    : { Here    : {
-        num_phot            : 1e6,
-        block_size          : 1e2,
-        bump_dist           : 1e-6,
-        loop_limit          : 1e6,
-        min_weight          : 5e-2,
-        roulette_barrels    : 8,
-        init_mat            : 'air',
-    }},
+    tree    : { There   : 'settings/tree_5_8.json5' },
+    grid    : { There   : 'settings/grid_20m_64.json5' },
+    sett    : { There   : 'settings/mcrt.json5' },
     engine  : "Basic",
-    light   : { Here    : {
-        power       : 1.0,
-        emit        : { Surface: [['objs/light.obj'], null] },
-        // emit        : { Beam: [[0.0000213,0.0000233,0.0000052353],[1,0,0]] },
-        spec        : { Here: {Point: 6.3e-7}}
-    } },
-    mats    : { Here    : {
-        air : { There   : 'mats/air.json5' },
-        fog : { There   : 'mats/fog.json5' },
-    }},
-    attrs   : { Here    : {
-        mirr    : { Mirror: 0.99 },
-        fog     : { Refractive: ['air', 'fog'] },
-    }},
-    surfs   : { Here    : {
-            centrepiece : {
-                mesh    : [["objs/cube.obj"], null],
-                attr    : 'fog'
-            },
-            mirror      : {
-                mesh    : [["objs/mirrors.obj"], null],
-                attr    : 'mirr'
-            }
-    } },
+    light   : { There   : 'lab/test/light.json5' },
+    mats    : { There   : 'lab/test/mats.json5' },
+    attrs   : { There   : 'lab/test/attrs.json5' },
+    surfs   : { There   : 'lab/test/surfs.json5' },
 }

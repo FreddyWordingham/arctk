@@ -1,0 +1,9 @@
+{
+    num_phot            : 1e6,
+    block_size          : 1e2,
+    bump_dist           : 1e-6,
+    loop_limit          : 1e6,
+    min_weight          : 5e-2,
+    roulette_barrels    : 8,
+    init_mat            : 'air',
+}

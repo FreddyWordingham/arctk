@@ -1,0 +1,5 @@
+{
+    power   : 1.0,
+    emit    : { Surface: [['res/objs/circle.obj'], null] },
+    spec    : { Here: {Point: 6.3e-7}}
+}
