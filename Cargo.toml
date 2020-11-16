@@ -61,6 +61,10 @@ terminal_size = { version = "0.1.*", optional = true }
 name = "mcrt"
 required-features = ["netcdf", "terminal_size"]
 
+[[bin]]
+name = "antler"
+required-features = ["png", "terminal_size"]
+
 [profile.dev]
 # Development profile: "cargo build".
 opt-level = 0
