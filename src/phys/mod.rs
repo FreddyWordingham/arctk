@@ -1,4 +1,4 @@
-//! Optics module.
+//! Physics module.
 
 pub mod crossing;
 
