@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["multi_thread","Run a multi-threaded cartography simulation. # Errors if the progress bad can not be locked."],["single_thread","Run a cartography simulation using a single thread. # Errors none currently but behave act as multi-threaded option which requires error handling."]]});

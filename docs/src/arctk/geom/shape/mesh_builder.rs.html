@@ -52,13 +52,13 @@
     <span class="ident">math</span>::<span class="ident">Trans3Builder</span>,
 };
 <span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">load</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
 
 <span class="doccomment">/// Loadable triangle mesh conglomerate structure.</span>
 <span class="attribute">#[<span class="ident">load</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MeshBuilder</span>(
     <span class="doccomment">/// List of object files.</span>
-    <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Optional transformation.</span>
     <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Trans3Builder</span><span class="op">&gt;</span>,
 );

@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["event","Event enumeration."],["peel_off","Peel-off function."],["scatter","Photon scattering function."],["surface","Photon scattering function."],["travel","Photon movement function."]]});

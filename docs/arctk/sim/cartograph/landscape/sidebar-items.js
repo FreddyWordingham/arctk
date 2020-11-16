@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Landscape","Rendering main input structure."]]});

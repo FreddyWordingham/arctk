@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SettingsLinker","General settings structure."]]});

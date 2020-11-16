@@ -1,1 +1,0 @@
-initSidebarItems({"type":[["Interface","Interface type."]]});

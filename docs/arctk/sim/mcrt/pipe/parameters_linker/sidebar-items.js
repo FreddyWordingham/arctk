@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ParametersSetup","Named setup parameters. Holds all simulation data, in human optimised form."]]});

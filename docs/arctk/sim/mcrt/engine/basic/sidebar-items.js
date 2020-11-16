@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["sample","Simulate the life of a single photon."]]});

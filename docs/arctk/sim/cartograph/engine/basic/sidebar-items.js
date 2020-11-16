@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["sample","Determine what a single ray will observe."],["scan","Determine what a single ray will observe."]]});
