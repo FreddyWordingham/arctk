@@ -1,6 +1,11 @@
 //! MCRT settings.
 
-use crate::{opt::Material, ord::Set, sim::mcrt::Settings};
+use crate::{
+    err::Error,
+    opt::Material,
+    ord::{Set, Setup},
+    sim::mcrt::Settings,
+};
 use arctk_attr::load;
 
 /// General settings structure.
@@ -22,12 +27,12 @@ pub struct SettingsSetup {
     init_mat: String,
 }
 
-impl SettingsSetup {
-    /// Setup the material link.
-    #[must_use]
+impl<'a> Setup<'a, Material> for SettingsSetup {
+    type Inst = Settings<'a>;
+
     #[inline]
-    fn setup<'a>(self, mats: &'a Set<Material>) -> Settings<'a> {
-        Settings::new(
+    fn setup(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
+        Ok(Settings::new(
             self.num_phot,
             self.block_size,
             self.bump_dist,
@@ -35,6 +40,6 @@ impl SettingsSetup {
             self.min_weight,
             self.roulette_barrels,
             &mats[&self.init_mat],
-        )
+        ))
     }
 }

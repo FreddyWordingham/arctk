@@ -58,23 +58,27 @@ impl ParametersSetup {
     /// Setup the final parameters structure.
     #[inline]
     #[must_use]
-    pub fn setup<'a>(mut self) -> Parameters<'a> {
+    pub fn setup<'a>(self) -> Parameters<'a> {
         let mats = self.mats;
 
         let attrs = self
             .attrs
             .setup(&mats)
-            .expect("Failed to construct attribute set.");
+            .expect("Failed to link attribute set.");
 
         let surfs = self
             .surfs
             .setup(&attrs)
-            .expect("Failed to construct surface set.");
+            .expect("Failed to link surface set.");
 
         let light = self.light;
+
         let tree = self.tree;
+
         let grid = self.grid;
-        let sett = self.sett;
+
+        let sett = self.sett.setup(&mats).expect("Failed to link settings.");
+
         let engine = self.engine;
 
         Parameters::new(mats, attrs, surfs, light, tree, grid, sett, engine)

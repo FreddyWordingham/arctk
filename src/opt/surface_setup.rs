@@ -1,9 +1,10 @@
 //! Optical surface structure.
 
 use crate::{
+    err::Error,
     geom::Mesh,
     opt::{Attribute, Surface},
-    ord::Set,
+    ord::{Set, Setup},
 };
 
 /// Optical surface.
@@ -21,11 +22,13 @@ impl SurfaceSetup {
     pub fn new(mesh: Mesh, attr: String) -> Self {
         Self { mesh, attr }
     }
+}
 
-    /// Setup the attribute link.
-    #[must_use]
+impl<'a> Setup<'a, Attribute<'a>> for SurfaceSetup {
+    type Inst = Surface<'a>;
+
     #[inline]
-    fn setup<'a>(self, attrs: &'a Set<Attribute>) -> Surface<'a> {
-        Surface::new(self.mesh, &attrs[&self.attr])
+    fn setup(self, attrs: &'a Set<Attribute>) -> Result<Self::Inst, Error> {
+        Ok(Surface::new(self.mesh, &attrs[&self.attr]))
     }
 }
