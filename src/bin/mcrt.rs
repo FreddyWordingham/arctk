@@ -12,7 +12,7 @@ use arctk::{
         dir,
     },
 };
-use std::{env::current_dir, path::PathBuf};
+use std::path::PathBuf;
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
@@ -22,9 +22,9 @@ fn main() {
     args!(bin_path: PathBuf;
         params_path: PathBuf
     );
-    let cwd = current_dir().expect("Failed to determine current working directory.");
-    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-        .expect("Failed to initialise directories.");
+    // let cwd = std::env::current_dir().expect("Failed to determine current working directory.");
+    // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
+    let (in_dir, out_dir) = dir::io_dirs(None, None).expect("Failed to initialise directories.");
 
     section(term_width, "Input");
     let builder = ParametersBuilder::load(&in_dir.join(params_path))
