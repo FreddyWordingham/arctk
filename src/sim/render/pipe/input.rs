@@ -1,23 +1,22 @@
-//! Simulation input.
+//! Render input.
 
 use crate::{
-    geom::{Grid, Tree},
+    geom::Tree,
+    img::Gradient,
     ord::Set,
-    sim::mcrt::{Attribute, Light, Material, Settings},
+    sim::render::{Attribute, Camera, Settings},
 };
 
 /// MCRT simulation resources conglomerate.
 pub struct Input<'a> {
-    /// Materials.
-    pub mats: &'a Set<Material>,
+    /// Gradients.
+    pub grads: &'a Set<Gradient>,
     /// Attributes.
     pub attrs: &'a Set<Attribute<'a>>,
-    /// Emission light.
-    pub light: &'a Light,
+    /// Capturing camera.
+    pub cam: &'a Camera,
     /// Hit-scan tree.
     pub tree: &'a Tree<'a, Attribute<'a>>,
-    /// Measurement grid.
-    pub grid: &'a Grid,
     /// General settings.
     pub sett: &'a Settings<'a>,
 }
@@ -27,19 +26,17 @@ impl<'a> Input<'a> {
     #[inline]
     #[must_use]
     pub const fn new(
-        mats: &'a Set<Material>,
+        grads: &'a Set<Gradient>,
         attrs: &'a Set<Attribute>,
-        light: &'a Light,
+        cam: &'a Camera,
         tree: &'a Tree<Attribute>,
-        grid: &'a Grid,
         sett: &'a Settings,
     ) -> Self {
         Self {
-            mats,
+            grads,
             attrs,
-            light,
+            cam,
             tree,
-            grid,
             sett,
         }
     }

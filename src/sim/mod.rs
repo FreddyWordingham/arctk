@@ -11,3 +11,6 @@
 
 #[cfg(feature = "netcdf")]
 pub mod mcrt;
+
+#[cfg(feature = "png")]
+pub mod render;

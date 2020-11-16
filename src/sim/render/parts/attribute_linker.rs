@@ -10,10 +10,10 @@ use arctk_attr::load;
 /// Surface attribute setup.
 #[load]
 pub enum AttributeLinker {
+    /// Partially reflective mirror, absorption fraction.
+    Mirror(f64),
     /// Material interface, inside material name, outside material name.
     Interface(String, String),
-    /// Partially reflective mirror, reflection fraction.
-    Mirror(f64),
 }
 
 impl<'a> Link<'a, Material> for AttributeLinker {
@@ -22,10 +22,10 @@ impl<'a> Link<'a, Material> for AttributeLinker {
     #[inline]
     fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         Ok(match self {
+            Self::Mirror(abs) => Attribute::Mirror(abs),
             Self::Interface(ref inside, ref outside) => {
                 Attribute::Interface(&mats[inside], &mats[outside])
             }
-            Self::Mirror(r) => Attribute::Mirror(r),
         })
     }
 }

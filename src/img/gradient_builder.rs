@@ -1,8 +1,11 @@
 //! Gradient builder implementation.
 
-use crate::{err::Error, file::Build};
+use crate::{
+    err::Error,
+    file::Build,
+    img::{Colour, Gradient},
+};
 use arctk_attr::load;
-use palette::{Gradient, LinSrgba};
 use std::path::Path;
 
 /// Loadable colour gradient structure.
@@ -13,7 +16,7 @@ pub struct GradientBuilder(
 );
 
 impl Build for GradientBuilder {
-    type Inst = Gradient<LinSrgba>;
+    type Inst = Gradient;
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
@@ -27,7 +30,7 @@ impl Build for GradientBuilder {
             let b = f32::from(col_arr[2]) / 255.0;
             let a = f32::from(col_arr[3]) / 255.0;
 
-            cols.push(LinSrgba::new(r, g, b, a));
+            cols.push(Colour::new(r, g, b, a));
         }
 
         Ok(Self::Inst::new(cols))

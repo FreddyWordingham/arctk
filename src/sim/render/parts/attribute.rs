@@ -1,11 +1,11 @@
 //! Attributes implementation.
 
-use crate::sim::mcrt::Material;
+use crate::img::Gradient;
 
 /// Surface attributes.
 pub enum Attribute<'a> {
-    /// Material interface, inside material, outside material.
-    Interface(&'a Material, &'a Material),
+    /// Opaque surface.
+    Opaque(&'a Gradient),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
 }

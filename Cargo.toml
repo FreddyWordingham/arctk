@@ -62,7 +62,7 @@ name = "mcrt"
 required-features = ["netcdf", "terminal_size"]
 
 [[bin]]
-name = "antler"
+name = "render"
 required-features = ["png", "terminal_size"]
 
 [profile.dev]

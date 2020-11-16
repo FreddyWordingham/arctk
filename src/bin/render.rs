@@ -1,39 +1,36 @@
 //! Antler rendering engine binary.
 //! Produce image data from a given setup and camera.
 
-use arctk::util::{
-    banner::{section, title},
-    dir,
+use arctk::{
+    args,
+    file::{Build, Load, Save},
+    geom::Tree,
+    ord::Link,
+    // sim::render::{multi_thread, Input, ParametersBuilder},
+    sim::render::ParametersBuilder,
+    util::{
+        banner::{section, title},
+        dir,
+    },
 };
-// use arctk::{
-//     args,
-//     file::{Build, Load, Save},
-//     geom::Tree,
-//     ord::Link,
-//     // sim::antler::{multi_thread, Input, ParametersBuilder},
-//     util::{
-//         banner::{section, title},
-//         dir,
-//     },
-// };
-// use std::{env::current_dir, path::PathBuf};
+use std::{env::current_dir, path::PathBuf};
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
-    title(term_width, "Antler");
+    title(term_width, "Render");
 
-    // section(term_width, "Initialisation");
-    // args!(bin_path: PathBuf;
-    //     params_path: PathBuf
-    // );
-    // let cwd = current_dir().expect("Failed to determine current working directory.");
-    // // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-    // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
-    //     .expect("Failed to initialise directories.");
+    section(term_width, "Initialisation");
+    args!(bin_path: PathBuf;
+        params_path: PathBuf
+    );
+    let cwd = current_dir().expect("Failed to determine current working directory.");
+    // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
+    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
+        .expect("Failed to initialise directories.");
 
-    // section(term_width, "Input");
-    // let builder = ParametersBuilder::load(&in_dir.join(params_path))
-    //     .expect("Failed to load parameters file.");
+    section(term_width, "Input");
+    let builder = ParametersBuilder::load(&in_dir.join(params_path))
+        .expect("Failed to load parameters file.");
 
     // section(term_width, "Building");
     // let setup = builder
