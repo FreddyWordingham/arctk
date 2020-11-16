@@ -10,6 +10,8 @@ pub fn antler(
     _input: &Input,
     mut _rng: &mut ThreadRng,
     mut _trace: Tracer,
-    mut _data: &mut Output,
+    data: &mut Output,
+    pixel: [usize; 2],
 ) {
+    data.time[pixel] += 1.0;
 }

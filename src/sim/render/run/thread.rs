@@ -15,7 +15,7 @@ use std::sync::{Arc, Mutex};
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
+pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, Error> {
     let pb = ProgressBar::new("Multi-threaded", input.cam.num_samples());
     let pb = Arc::new(Mutex::new(pb));
 
@@ -38,7 +38,7 @@ pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]
-pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
+pub fn single_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, Error> {
     let pb = ProgressBar::new("Single-threaded", input.cam.num_samples());
     let pb = Arc::new(Mutex::new(pb));
 
@@ -49,9 +49,9 @@ pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output {
+fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) -> Output<'a> {
     let res = *input.cam.res();
-    let mut data = Output::new(res);
+    let mut data = Output::new(res, input.sett.sky_grad());
 
     let mut rng = thread_rng();
 
@@ -72,7 +72,7 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
             let ss = [s % super_samples, s / super_samples];
 
             let tracer = Tracer::new(input.cam.emit(pixel, ss));
-            engine(input, &mut rng, tracer, &mut data);
+            engine(input, &mut rng, tracer, &mut data, pixel);
         }
     }
 
