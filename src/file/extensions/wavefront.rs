@@ -14,7 +14,7 @@ use std::{
 
 impl Load for Mesh {
     #[inline]
-    fn load(path: &Path) -> Result<Self, Error> {
+    fn load_data(path: &Path) -> Result<Self, Error> {
         println!("loading: {}", path.display());
         let vertex_lines: Vec<_> = BufReader::new(File::open(path)?)
             .lines()

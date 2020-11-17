@@ -11,7 +11,7 @@ use std::path::Path;
 #[allow(clippy::use_self)]
 impl<T: netcdf::Numeric> Load for ArrayD<T> {
     #[inline]
-    fn load(path: &Path) -> Result<ArrayD<T>, Error> {
+    fn load_data(path: &Path) -> Result<ArrayD<T>, Error> {
         let file = netcdf::open(path)?;
         let var = &file.variable("data").ok_or("Missing variable 'data'.")?;
         let arr = var.values::<T>(None, None)?;
@@ -22,7 +22,7 @@ impl<T: netcdf::Numeric> Load for ArrayD<T> {
 #[allow(clippy::use_self)]
 impl<T: netcdf::Numeric> Load for Array2<T> {
     #[inline]
-    fn load(path: &Path) -> Result<Array2<T>, Error> {
+    fn load_data(path: &Path) -> Result<Array2<T>, Error> {
         let arr_d = ArrayD::load(path)?;
 
         let xi = arr_d.shape()[X];
@@ -36,7 +36,7 @@ impl<T: netcdf::Numeric> Load for Array2<T> {
 #[allow(clippy::use_self)]
 impl<T: netcdf::Numeric> Load for Array3<T> {
     #[inline]
-    fn load(path: &Path) -> Result<Array3<T>, Error> {
+    fn load_data(path: &Path) -> Result<Array3<T>, Error> {
         let arr_d = ArrayD::load(path)?;
 
         let xi = arr_d.shape()[X];

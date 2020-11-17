@@ -24,7 +24,7 @@ where
     for<'de> T: Deserialize<'de>,
 {
     #[inline]
-    fn load(path: &Path) -> Result<Self, Error> {
+    fn load_data(path: &Path) -> Result<Self, Error> {
         println!("loading: {}", path.display());
         from_json(path)
     }
