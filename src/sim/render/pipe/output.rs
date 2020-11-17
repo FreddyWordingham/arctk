@@ -11,7 +11,7 @@ use ndarray::Array2;
 use ndarray_stats::QuantileExt;
 use std::{ops::AddAssign, path::Path};
 
-/// MCRT output data.
+/// Rendering output data.
 pub struct Output<'a> {
     /// Flight distances.
     pub dist: Array2<f64>,

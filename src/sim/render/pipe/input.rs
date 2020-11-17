@@ -7,7 +7,7 @@ use crate::{
     sim::render::{Attribute, Settings},
 };
 
-/// MCRT simulation resources conglomerate.
+/// Rendering simulation resources conglomerate.
 pub struct Input<'a> {
     /// Gradients.
     pub grads: &'a Set<Gradient>,
