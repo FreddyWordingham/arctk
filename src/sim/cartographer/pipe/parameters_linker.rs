@@ -8,7 +8,7 @@ use crate::{
 };
 
 /// Parameter linker structure.
-/// Holds references to data loaded in memory.
+/// Holds setup links to data loaded in memory.
 pub struct ParametersLinker {
     /// Attributes.
     pub attrs: Set<Attribute>,

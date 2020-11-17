@@ -6,7 +6,7 @@ use crate::{
     geom::{GridBuilder, SurfaceBuilder, TreeSettings},
     ord::Set,
     sim::mcrt::{
-        AttributeLinker, EngineBuilder, LightBuilder, MaterialBuilder, ParametersSetup,
+        AttributeLinker, EngineBuilder, LightBuilder, MaterialBuilder, ParametersLinker,
         SettingsLinker,
     },
 };
@@ -36,10 +36,10 @@ pub struct ParametersBuilder {
 }
 
 impl Build for ParametersBuilder {
-    type Inst = ParametersSetup;
+    type Inst = ParametersLinker;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<ParametersSetup, Error> {
+    fn build(self, in_dir: &Path) -> Result<ParametersLinker, Error> {
         let mats = self.mats.build(in_dir)?.build(in_dir)?.build(in_dir)?;
         let attrs = self.attrs.build(in_dir)?;
         let surfs = self.surfs.build(in_dir)?.build(in_dir)?;
@@ -49,7 +49,7 @@ impl Build for ParametersBuilder {
         let sett = self.sett.build(in_dir)?;
         let engine = self.engine.build(in_dir)?;
 
-        Ok(ParametersSetup::new(
+        Ok(ParametersLinker::new(
             mats, attrs, surfs, light, tree, grid, sett, engine,
         ))
     }
