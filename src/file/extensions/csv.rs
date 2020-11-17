@@ -11,8 +11,6 @@ use std::{
 impl<T: FromStr> Load for Table<T> {
     #[inline]
     fn load_data(path: &Path) -> Result<Self, Error> {
-        println!("loading: {}", path.display());
-
         let lines: Vec<_> = BufReader::new(File::open(path)?)
             .lines()
             .map(Result::unwrap)

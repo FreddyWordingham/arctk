@@ -12,7 +12,6 @@ pub fn from_json<T>(path: &Path) -> Result<T, Error>
 where
     for<'de> T: Deserialize<'de>,
 {
-    println!("loading: {}", path.display());
     let s = read_to_string(path)?;
     Ok(json5::from_str(&s)?)
 }

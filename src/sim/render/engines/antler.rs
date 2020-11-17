@@ -27,7 +27,7 @@ pub fn antler(
     while let Some(hit) = input.tree.scan(trace.ray().clone(), bump_dist, 1000.0) {
         // Loop limit check.
         if num_loops >= loop_limit {
-            println!("[WARN] : Terminating photon: loop limit reached.");
+            println!("[WARN] : Terminating tracer: loop limit reached.");
             break;
         }
         num_loops += 1;
