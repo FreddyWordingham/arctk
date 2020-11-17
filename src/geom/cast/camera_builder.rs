@@ -21,7 +21,7 @@ pub struct CameraBuilder {
     /// Image resolution.
     res: [usize; 2],
     /// Optional super-sampling power.
-    super_sampling: Option<usize>,
+    ss_power: Option<usize>,
 }
 
 impl Build for CameraBuilder {
@@ -29,11 +29,7 @@ impl Build for CameraBuilder {
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
-        let ss = if let Some(ss) = self.super_sampling {
-            ss
-        } else {
-            1
-        };
+        let ss = if let Some(ss) = self.ss_power { ss } else { 1 };
 
         Ok(Self::Inst::new(
             Orient::new_tar(self.pos, &self.tar),

@@ -1,12 +1,11 @@
-//! Antler rendering engine binary.
-//! Produce image data from a given setup and camera.
+//! Volumetric mapping binary.
 
 use arctk::{
     args,
     file::{Build, Load, Save},
     geom::Tree,
     ord::Link,
-    sim::render::{single_thread, Input, ParametersBuilder},
+    sim::cartographer::{multi_thread, Input, ParametersBuilder},
     util::{
         banner::{section, title},
         dir,
@@ -16,7 +15,7 @@ use std::{env::current_dir, path::PathBuf};
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
-    title(term_width, "Render");
+    title(term_width, "Cartographer");
 
     section(term_width, "Initialisation");
     args!(bin_path: PathBuf;
@@ -37,18 +36,19 @@ fn main() {
         .expect("Failed to construct builder structure.");
 
     section(term_width, "Linking");
-    let grads = setup.grads;
-    let attrs = setup.attrs.link(&grads).expect("Gradient link failure.");
-    let surfs = setup.surfs.link(&attrs).expect("Surface link failure.");
-    let cam = setup.cam;
-    let tree = Tree::new(&setup.tree, &surfs);
-    let sett = setup.sett.link(&grads).expect("Gradient link Failure.");
-    let engine = setup.engine;
-    let input = Input::new(&grads, &attrs, &cam, &tree, &sett);
+    // let mats = setup.mats;
+    // let attrs = setup.attrs.link(&mats).expect("Material link failure.");
+    // let surfs = setup.surfs.link(&attrs).expect("Surface link failure.");
+    // let light = setup.light;
+    // let tree = Tree::new(&setup.tree, &surfs);
+    // let grid = setup.grid;
+    // let sett = setup.sett.link(&mats).expect("Material link Failure.");
+    // let engine = setup.engine;
+    // let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);
 
-    section(term_width, "Simulation");
-    let output = single_thread(engine, &input).expect("Failed to run simulation");
-    // let output = multi_thread(engine, &input).expect("Failed to run simulation");
+    section(term_width, "Mapping");
+    // let output = single_thread(engine, &input).expect("Failed to run mapping");
+    let output = multi_thread(engine, &input).expect("Failed to run mapping");
     output.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");

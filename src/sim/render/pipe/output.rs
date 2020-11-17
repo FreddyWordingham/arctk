@@ -5,6 +5,7 @@ use crate::{
     file::Save,
     img::{Gradient, Image},
     ord::{X, Y},
+    report,
 };
 use ndarray::Array2;
 use ndarray_stats::QuantileExt;
@@ -48,10 +49,12 @@ impl<'a> Save for Output<'a> {
     #[inline]
     fn save(&self, out_dir: &Path) -> Result<(), Error> {
         let max_dist = self.dist.max()?;
+        report!("Maximum distance", max_dist, "m");
         Image::new(self.dist.map(|x| self.grad.get((*x / max_dist) as f32)))
             .save(&out_dir.join("distance.png"))?;
 
         let max_time = self.time.max()?;
+        report!("Maximum time", max_time, "ms");
         Image::new(self.time.map(|x| self.grad.get((*x / max_time) as f32)))
             .save(&out_dir.join("time.png"))?;
 
