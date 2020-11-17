@@ -12,11 +12,15 @@ pub trait Save {
     /// if the instance can not be serialised or if the file can't be written to.
     fn save_data(&self, path: &Path) -> Result<(), Error>;
 
-    /// Report the saving of a file and save the data.
+    /// Report the saving of a file (if it is a filepath) and save the data.
     /// # Errors
     /// if the instance can not be serialised or if the file can't be written to.
+    #[inline]
     fn save(&self, path: &Path) -> Result<(), Error> {
-        println!("Saving file: {}", path.display());
+        if path.is_file() {
+            println!("Saving file: {}", path.display());
+        }
+
         self.save_data(path)
     }
 }
