@@ -28,7 +28,7 @@ pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, 
 
     let mut data = out.pop().expect("No data received.");
     while let Some(o) = out.pop() {
-        // data += &o;
+        data += &o;
     }
 
     Ok(data)
@@ -51,7 +51,7 @@ pub fn single_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>,
 #[must_use]
 fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) -> Output<'a> {
     let res = *input.grid.res();
-    let mut data = Output::new(res);
+    let mut data = Output::new(&input.mat_reg, res);
 
     let mut rng = thread_rng();
 

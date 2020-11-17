@@ -6,4 +6,5 @@ use rand::rngs::ThreadRng;
 /// Determine what a single ray observes.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn basic(input: &Input, mut rng: &mut ThreadRng, index: [usize; 3], mut data: &mut Output) {}
+pub fn basic(_input: &Input, mut _rng: &mut ThreadRng, _index: [usize; 3], mut _data: &mut Output) {
+}

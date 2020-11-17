@@ -1,55 +1,64 @@
 //! Output data structure.
 
-use crate::ord::{X, Y, Z};
+use crate::{
+    err::Error,
+    file::Save,
+    ord::{Register, X, Y, Z},
+};
 use ndarray::Array3;
+use std::ops::AddAssign;
+use std::path::Path;
 
 /// Cartographer output data.
 pub struct Output<'a> {
-    /// Occupying material.
-    pub mat: Array3<&'a str>,
+    /// Material name register.
+    pub mat_reg: &'a Register,
+    /// Occupying materials.
+    pub mats: Vec<Array3<f64>>,
+    /// Missing materials.
+    pub void: Array3<f64>,
 }
 
 impl<'a> Output<'a> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(res: [usize; 3]) -> Self {
+    pub fn new(mat_reg: &'a Register, res: [usize; 3]) -> Self {
+        debug_assert!(mat_reg.len() > 0);
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
         debug_assert!(res[Z] > 0);
 
+        let num_mats = mat_reg.len();
+        let mut mats = Vec::with_capacity(num_mats);
+        for _ in 0..num_mats {
+            mats.push(Array3::zeros(res));
+        }
+
         Self {
-            mat: Array3::default(res),
+            mat_reg,
+            mats,
+            void: Array3::zeros(res),
         }
     }
 }
 
-// impl<'a> AddAssign<&Self> for Output<'a> {
-//     #[inline]
-//     fn add_assign(&mut self, rhs: &Self) {
-//         self.mat += &rhs.mat;
-//     }
-// }
+impl<'a> AddAssign<&Self> for Output<'a> {
+    #[inline]
+    fn add_assign(&mut self, rhs: &Self) {
+        debug_assert!(self.mat_reg == rhs.mat_reg);
 
-// impl<'a> Save for Output<'a> {
-//     #[inline]
-//     fn save(&self, out_dir: &Path) -> Result<(), Error> {
-//         let path = out_dir.join("emission_density.nc");
-//         println!("Saving: {}", path.display());
-//         (&self.emission / self.cell_vol).save(&path)?;
+        self.void += &rhs.void;
 
-//         let path = out_dir.join("energy_density.nc");
-//         println!("Saving: {}", path.display());
-//         (&self.energy / self.cell_vol).save(&path)?;
+        for (l, r) in self.mats.iter_mut().zip(&rhs.mats) {
+            *l += r;
+        }
+    }
+}
 
-//         let path = out_dir.join("absorption_density.nc");
-//         println!("Saving: {}", path.display());
-//         (&self.absorptions / self.cell_vol).save(&path)?;
-
-//         let path = out_dir.join("shift_density.nc");
-//         println!("Saving: {}", path.display());
-//         (&self.shifts / self.cell_vol).save(&path)?;
-
-//         Ok(())
-//     }
-// }
+impl<'a> Save for Output<'a> {
+    #[inline]
+    fn save(&self, out_dir: &Path) -> Result<(), Error> {
+        Ok(())
+    }
+}

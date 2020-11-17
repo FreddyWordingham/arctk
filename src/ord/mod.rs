@@ -2,6 +2,7 @@
 
 pub mod link;
 pub mod list;
+pub mod register;
 pub mod set;
 
-pub use self::{link::*, list::*, set::*};
+pub use self::{link::*, list::*, register::*, set::*};

@@ -2,7 +2,7 @@
 
 use crate::{
     geom::Grid,
-    geom::{GridBuilder, SurfaceLinker, TreeSettings},
+    geom::{SurfaceLinker, TreeSettings},
     ord::Set,
     sim::cartographer::{Attribute, Engine, Settings},
 };

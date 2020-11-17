@@ -43,7 +43,7 @@ fn main() {
     let grid = setup.grid;
     let sett = setup.sett;
     let engine = setup.engine;
-    let input = Input::new(&attrs, &tree, &grid, &sett);
+    let input = Input::new(&mat_reg, &attrs, &tree, &grid, &sett);
 
     section(term_width, "Mapping");
     // let output = single_thread(engine, &input).expect("Failed to run mapping");
