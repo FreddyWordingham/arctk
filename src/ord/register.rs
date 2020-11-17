@@ -17,11 +17,11 @@ impl Register {
         Self(names)
     }
 
-    /// Get the number of entries.
+    /// Reference the internal list.
     #[inline]
     #[must_use]
-    pub fn len(&self) -> usize {
-        self.0.len()
+    pub fn list(&self) -> &Vec<String> {
+        &self.0
     }
 
     /// Determine the index of a given name.

@@ -23,12 +23,11 @@ impl<'a> Output<'a> {
     #[inline]
     #[must_use]
     pub fn new(mat_reg: &'a Register, res: [usize; 3]) -> Self {
-        debug_assert!(mat_reg.len() > 0);
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
         debug_assert!(res[Z] > 0);
 
-        let num_mats = mat_reg.len();
+        let num_mats = mat_reg.list().len();
         let mut mats = Vec::with_capacity(num_mats);
         for _ in 0..num_mats {
             mats.push(Array3::zeros(res));
@@ -58,6 +57,10 @@ impl<'a> AddAssign<&Self> for Output<'a> {
 impl<'a> Save for Output<'a> {
     #[inline]
     fn save(&self, out_dir: &Path) -> Result<(), Error> {
-        Ok(())
+        for (name, map) in self.mat_reg.list().iter().zip(&self.mats) {
+            map.save(&out_dir.join(&format!("map_{}.nc", name)))?;
+        }
+
+        self.void.save(&out_dir.join("map_void.nc"))
     }
 }
