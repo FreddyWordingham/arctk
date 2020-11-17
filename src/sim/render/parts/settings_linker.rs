@@ -27,6 +27,11 @@ impl<'a> Link<'a, Gradient> for SettingsLinker {
     type Inst = Settings<'a>;
 
     #[inline]
+    fn requires(&self) -> Vec<String> {
+        vec![self.sky_grad.clone()]
+    }
+
+    #[inline]
     fn link(self, grads: &'a Set<Gradient>) -> Result<Self::Inst, Error> {
         Ok(Settings::new(
             self.block_size,

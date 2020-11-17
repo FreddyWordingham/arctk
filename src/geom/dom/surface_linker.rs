@@ -27,6 +27,11 @@ impl<'a, T: 'a> Link<'a, T> for SurfaceLinker {
     type Inst = Surface<'a, T>;
 
     #[inline]
+    fn requires(&self) -> Vec<String> {
+        vec![self.attr.clone()]
+    }
+
+    #[inline]
     fn link(self, attrs: &'a Set<T>) -> Result<Self::Inst, Error> {
         Ok(Surface::new(self.mesh, &attrs[&self.attr]))
     }

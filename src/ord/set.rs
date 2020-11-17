@@ -105,6 +105,17 @@ impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
     type Inst = Set<S::Inst>;
 
     #[inline]
+    fn requires(&self) -> Vec<String> {
+        self.0
+            .values()
+            .map(|v| v.requires())
+            .collect::<Vec<_>>()
+            .into_iter()
+            .flatten()
+            .collect()
+    }
+
+    #[inline]
     fn link(self, set: &'a Set<T>) -> Result<Self::Inst, Error> {
         let mut list = Vec::with_capacity(self.0.len());
         for (name, val) in self.0 {

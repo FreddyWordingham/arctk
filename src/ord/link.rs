@@ -8,7 +8,7 @@ pub trait Link<'a, T> {
     type Inst;
 
     /// Get a list of all required resource keys.
-    fn requires(self) -> Vec<String>;
+    fn requires(&self) -> Vec<String>;
 
     /// Link the instance type.
     /// # Errors

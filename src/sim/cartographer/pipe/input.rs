@@ -3,7 +3,7 @@
 use crate::{
     geom::{Grid, Tree},
     ord::{Register, Set},
-    sim::cartographer::{Attribute, Settings},
+    sim::{cartographer::Settings, mcrt::AttributeLinker},
 };
 
 /// Cartographer simulation resources conglomerate.
@@ -11,9 +11,9 @@ pub struct Input<'a> {
     /// Material register.
     pub mat_reg: &'a Register,
     /// Attributes.
-    pub attrs: &'a Set<Attribute>,
+    pub attrs: &'a Set<AttributeLinker>,
     /// Hit-scan tree.
-    pub tree: &'a Tree<'a, Attribute>,
+    pub tree: &'a Tree<'a, AttributeLinker>,
     /// Measurement grid.
     pub grid: &'a Grid,
     /// General settings.
@@ -26,8 +26,8 @@ impl<'a> Input<'a> {
     #[must_use]
     pub const fn new(
         mat_reg: &'a Register,
-        attrs: &'a Set<Attribute>,
-        tree: &'a Tree<Attribute>,
+        attrs: &'a Set<AttributeLinker>,
+        tree: &'a Tree<AttributeLinker>,
         grid: &'a Grid,
         sett: &'a Settings,
     ) -> Self {

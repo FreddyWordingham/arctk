@@ -3,8 +3,7 @@
 use crate::{
     err::Error,
     sim::cartographer::{Engine, Input, Output},
-    tools::linear_to_three_dim,
-    tools::ProgressBar,
+    tools::{linear_to_three_dim, ProgressBar},
 };
 use rand::thread_rng;
 use rayon::prelude::*;

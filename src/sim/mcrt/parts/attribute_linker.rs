@@ -20,6 +20,14 @@ impl<'a> Link<'a, Material> for AttributeLinker {
     type Inst = Attribute<'a>;
 
     #[inline]
+    fn requires(&self) -> Vec<String> {
+        match self {
+            Self::Interface(inside, outside) => vec![inside.clone(), outside.clone()],
+            Self::Mirror(..) => vec![],
+        }
+    }
+
+    #[inline]
     fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Interface(ref inside, ref outside) => {

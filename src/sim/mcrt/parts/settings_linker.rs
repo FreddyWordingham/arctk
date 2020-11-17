@@ -30,6 +30,11 @@ impl<'a> Link<'a, Material> for SettingsLinker {
     type Inst = Settings<'a>;
 
     #[inline]
+    fn requires(&self) -> Vec<String> {
+        vec![self.init_mat.clone()]
+    }
+
+    #[inline]
     fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         Ok(Settings::new(
             self.num_phot,

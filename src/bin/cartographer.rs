@@ -4,7 +4,7 @@ use arctk::{
     args,
     file::{Build, Load, Save},
     geom::Tree,
-    ord::Link,
+    ord::{Link, Register},
     sim::cartographer::{multi_thread, Input, ParametersBuilder},
     util::{
         banner::{section, title},
@@ -36,8 +36,8 @@ fn main() {
         .expect("Failed to construct builder structure.");
 
     section(term_width, "Linking");
-    // let mats = setup.mats;
     let attrs = setup.attrs;
+    let mat_reg = Register::new(attrs.requires());
     let surfs = setup.surfs.link(&attrs).expect("Surface link failure.");
     let tree = Tree::new(&setup.tree, &surfs);
     let grid = setup.grid;

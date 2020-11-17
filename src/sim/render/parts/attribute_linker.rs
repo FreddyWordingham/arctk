@@ -21,6 +21,14 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
     type Inst = Attribute<'a>;
 
     #[inline]
+    fn requires(&self) -> Vec<String> {
+        match self {
+            Self::Opaque(grad) => vec![grad.clone()],
+            Self::Mirror(..) => vec![],
+        }
+    }
+
+    #[inline]
     fn link(self, grads: &'a Set<Gradient>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Opaque(ref grad) => Attribute::Opaque(&grads[grad]),

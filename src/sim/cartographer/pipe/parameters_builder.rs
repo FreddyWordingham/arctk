@@ -5,7 +5,8 @@ use crate::{
     file::{Build, Redirect},
     geom::{GridBuilder, SurfaceBuilder, TreeSettings},
     ord::Set,
-    sim::cartographer::{Attribute, EngineBuilder, ParametersLinker, Settings},
+    sim::cartographer::{EngineBuilder, ParametersLinker, Settings},
+    sim::mcrt::AttributeLinker,
 };
 use arctk_attr::load;
 use std::path::Path;
@@ -15,7 +16,7 @@ use std::path::Path;
 #[load]
 pub struct ParametersBuilder {
     /// Attributes.
-    attrs: Redirect<Set<Attribute>>,
+    attrs: Redirect<Set<AttributeLinker>>,
     /// Surfaces.
     surfs: Redirect<Set<SurfaceBuilder>>,
     /// Tree settings.

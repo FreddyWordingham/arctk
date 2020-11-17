@@ -6,8 +6,7 @@ use crate::{
     ord::{Register, X, Y, Z},
 };
 use ndarray::Array3;
-use std::ops::AddAssign;
-use std::path::Path;
+use std::{ops::AddAssign, path::Path};
 
 /// Cartographer output data.
 pub struct Output<'a> {

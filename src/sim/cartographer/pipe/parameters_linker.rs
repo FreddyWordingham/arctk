@@ -1,17 +1,19 @@
 //! Startup parameters file.
 
 use crate::{
-    geom::Grid,
-    geom::{SurfaceLinker, TreeSettings},
+    geom::{Grid, SurfaceLinker, TreeSettings},
     ord::Set,
-    sim::cartographer::{Attribute, Engine, Settings},
+    sim::{
+        cartographer::{Engine, Settings},
+        mcrt::AttributeLinker,
+    },
 };
 
 /// Parameter linker structure.
 /// Holds setup links to data loaded in memory.
 pub struct ParametersLinker {
     /// Attributes.
-    pub attrs: Set<Attribute>,
+    pub attrs: Set<AttributeLinker>,
     /// Surfaces.
     pub surfs: Set<SurfaceLinker>,
     /// Tree settings.
@@ -30,7 +32,7 @@ impl ParametersLinker {
     #[inline]
     #[must_use]
     pub fn new(
-        attrs: Set<Attribute>,
+        attrs: Set<AttributeLinker>,
         surfs: Set<SurfaceLinker>,
         tree: TreeSettings,
         grid: Grid,
