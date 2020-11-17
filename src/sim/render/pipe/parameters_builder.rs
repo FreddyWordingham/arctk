@@ -6,7 +6,7 @@ use crate::{
     geom::{CameraBuilder, SurfaceBuilder, TreeSettings},
     img::GradientBuilder,
     ord::Set,
-    sim::render::{AttributeLinker, EngineBuilder, ParametersSetup, SettingsLinker},
+    sim::render::{AttributeLinker, EngineBuilder, ParametersLinker, SettingsLinker},
 };
 use arctk_attr::load;
 use std::path::Path;
@@ -32,10 +32,10 @@ pub struct ParametersBuilder {
 }
 
 impl Build for ParametersBuilder {
-    type Inst = ParametersSetup;
+    type Inst = ParametersLinker;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<ParametersSetup, Error> {
+    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let grads = self.grads.build(in_dir)?.build(in_dir)?;
         let attrs = self.attrs.build(in_dir)?;
         let surfs = self.surfs.build(in_dir)?.build(in_dir)?;
@@ -44,7 +44,7 @@ impl Build for ParametersBuilder {
         let sett = self.sett.build(in_dir)?;
         let engine = self.engine.build(in_dir)?;
 
-        Ok(ParametersSetup::new(
+        Ok(Self::Inst::new(
             grads, attrs, surfs, cam, tree, sett, engine,
         ))
     }

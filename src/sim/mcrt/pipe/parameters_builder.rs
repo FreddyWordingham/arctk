@@ -39,7 +39,7 @@ impl Build for ParametersBuilder {
     type Inst = ParametersLinker;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<ParametersLinker, Error> {
+    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let mats = self.mats.build(in_dir)?.build(in_dir)?.build(in_dir)?;
         let attrs = self.attrs.build(in_dir)?;
         let surfs = self.surfs.build(in_dir)?.build(in_dir)?;
@@ -49,7 +49,7 @@ impl Build for ParametersBuilder {
         let sett = self.sett.build(in_dir)?;
         let engine = self.engine.build(in_dir)?;
 
-        Ok(ParametersLinker::new(
+        Ok(Self::Inst::new(
             mats, attrs, surfs, light, tree, grid, sett, engine,
         ))
     }

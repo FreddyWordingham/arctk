@@ -7,9 +7,9 @@ use crate::{
     sim::render::{AttributeLinker, Engine, SettingsLinker},
 };
 
-/// Named setup parameters.
-/// Holds all simulation data, in human optimised form.
-pub struct ParametersSetup {
+/// Parameter linker structure.
+/// Holds setup links to data loaded in memory.
+pub struct ParametersLinker {
     /// Colour gradients.
     pub grads: Set<Gradient>,
     /// Attributes.
@@ -26,7 +26,7 @@ pub struct ParametersSetup {
     pub engine: Engine,
 }
 
-impl ParametersSetup {
+impl ParametersLinker {
     /// Construct a new instance.
     #[allow(clippy::too_many_arguments)]
     #[inline]
