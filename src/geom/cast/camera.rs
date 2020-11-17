@@ -59,7 +59,7 @@ impl Camera {
     /// Calculate the total number of samples.
     #[inline]
     #[must_use]
-    pub fn num_samples(&self) -> usize {
+    pub const fn num_samples(&self) -> usize {
         self.num_super_samples() * self.num_pixels() as usize
     }
 

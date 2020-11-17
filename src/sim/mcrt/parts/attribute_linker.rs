@@ -21,8 +21,8 @@ impl<'a> Link<'a, Material> for AttributeLinker {
 
     #[inline]
     fn requires(&self) -> Vec<String> {
-        match self {
-            Self::Interface(inside, outside) => vec![inside.clone(), outside.clone()],
+        match *self {
+            Self::Interface(ref inside, ref outside) => vec![inside.clone(), outside.clone()],
             Self::Mirror(..) => vec![],
         }
     }

@@ -29,7 +29,7 @@ impl Build for CameraBuilder {
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
-        let ss = if let Some(ss) = self.ss_power { ss } else { 1 };
+        let ss = self.ss_power.map_or(1, |ss| ss);
 
         Ok(Self::Inst::new(
             Orient::new_tar(self.pos, &self.tar),

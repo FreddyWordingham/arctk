@@ -1,6 +1,6 @@
 //! Pixel-sampling engine function.
 
-use crate::sim::render::{Attribute, Input, Output, Tracer};
+use crate::sim::render::{Input, Output, Tracer};
 use rand::rngs::ThreadRng;
 use std::time::Instant;
 
@@ -32,10 +32,10 @@ pub fn antler(
         }
         num_loops += 1;
 
-        match hit.tag() {
-            Attribute::Opaque(_grad) => {}
-            Attribute::Mirror(_r) => {}
-        }
+        // match *hit.tag() {
+        //     Attribute::Opaque(..) => {}
+        //     Attribute::Mirror(..) => {}
+        // }
 
         travel(&mut trace, &mut data, pixel, hit.dist() + bump_dist);
     }

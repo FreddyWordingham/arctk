@@ -20,16 +20,17 @@ impl Register {
     /// Reference the internal list.
     #[inline]
     #[must_use]
-    pub fn list(&self) -> &Vec<String> {
+    pub const fn list(&self) -> &Vec<String> {
         &self.0
     }
 
     /// Determine the index of a given name.
+    #[allow(clippy::ptr_arg)]
     #[inline]
     #[must_use]
     pub fn index_of(&self, name: &String) -> usize {
         self.0
             .binary_search(name)
-            .expect(&format!("Name {} not found in register", name))
+            .unwrap_or_else(|_| panic!("Name {} not found in register", name))
     }
 }
