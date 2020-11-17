@@ -65,7 +65,7 @@ pub fn basic(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());
-                surface(&mut rng, hit.tag(), hit.side(), &mut phot, &mut env);
+                surface(&mut rng, &hit, &mut phot, &mut env);
                 travel(&mut data, &mut phot, &env, index, bump_dist);
             }
         }

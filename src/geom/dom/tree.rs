@@ -317,6 +317,7 @@ impl<'a, T> Tree<'a, T> {
     }
 
     /// Determine what a given Ray would observe.
+    /// The maximum distance provided does not guarantee that any hit retrieved is less than the given distance.
     #[inline]
     #[must_use]
     pub fn scan(&self, mut ray: Ray, bump_dist: f64, max_dist: f64) -> Option<Hit<T>> {

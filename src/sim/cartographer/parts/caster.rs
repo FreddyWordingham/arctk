@@ -43,10 +43,10 @@ impl Caster {
         }
     }
 
-    /// Retrieve the number of potential samples.
+    /// Retrieve the number of potential casts.
     #[inline]
     #[must_use]
-    pub const fn num_samples(&self) -> i32 {
+    pub const fn num_casts(&self) -> i32 {
         match *self {
             Self::Direction(..) | Self::Target(..) => 1,
             Self::Soft(samples, ..) | Self::Radiant(samples) => samples,

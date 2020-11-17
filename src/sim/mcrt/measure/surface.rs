@@ -1,7 +1,7 @@
 //! Photon scattering function.
 
 use crate::{
-    geom::Side,
+    geom::Hit,
     phys::Crossing,
     sim::mcrt::{Attribute, Local, Photon},
 };
@@ -10,17 +10,11 @@ use rand::{rngs::ThreadRng, Rng};
 /// Handle a surface collision.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn surface(
-    rng: &mut ThreadRng,
-    attr: &Attribute,
-    side: &Side,
-    phot: &mut Photon,
-    env: &mut Local,
-) {
-    match *attr {
+pub fn surface(rng: &mut ThreadRng, hit: &Hit<Attribute>, phot: &mut Photon, env: &mut Local) {
+    match hit.tag() {
         Attribute::Interface(inside, outside) => {
             // Reference materials.
-            let (curr_mat, next_mat) = if side.is_inside() {
+            let (curr_mat, next_mat) = if hit.side().is_inside() {
                 (inside, outside)
             } else {
                 (outside, inside)
@@ -37,7 +31,7 @@ pub fn surface(
             // Calculate the crossing normal vectors.
             let crossing = Crossing::new(
                 phot.ray().dir(),
-                side.norm(),
+                hit.side().norm(),
                 curr_ref_index,
                 next_ref_index,
             );
@@ -55,7 +49,7 @@ pub fn surface(
         }
         Attribute::Mirror(abs) => {
             *phot.weight_mut() *= abs;
-            *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), side.norm());
+            *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
         }
     }
 }
