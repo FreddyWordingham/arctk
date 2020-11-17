@@ -49,9 +49,9 @@ terminal_size = { version = "0.1.*", optional = true }
 # name = "babbage"
 # required-features = ["netcdf", "terminal_size"]
 
-# [[bin]]
-# name = "cartograph"
-# required-features = ["netcdf", "terminal_size"]
+[[bin]]
+name = "cartographer"
+required-features = ["netcdf", "terminal_size"]
 
 # [[bin]]
 # name = "diffuse"
