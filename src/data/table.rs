@@ -53,7 +53,7 @@ impl<T: AddAssign + Clone> AddAssign<&Self> for Table<T> {
 
 impl<T: Display> Save for Table<T> {
     #[inline]
-    fn save(&self, path: &Path) -> Result<(), Error> {
+    fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = File::create(path)?;
 
         for row in &self.rows {

@@ -32,7 +32,7 @@ where
 
 impl<T: Serialize> Save for Redirect<T> {
     #[inline]
-    fn save(&self, path: &Path) -> Result<(), Error> {
+    fn save_data(&self, path: &Path) -> Result<(), Error> {
         as_json(self, path)
     }
 }

@@ -47,7 +47,7 @@ impl<'a> AddAssign<&Self> for Output<'a> {
 
 impl<'a> Save for Output<'a> {
     #[inline]
-    fn save(&self, out_dir: &Path) -> Result<(), Error> {
+    fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
         let max_dist = self.dist.max()?;
         report!("Maximum distance", max_dist, "m");
         Image::new(self.dist.map(|x| self.grad.get((*x / max_dist) as f32)))

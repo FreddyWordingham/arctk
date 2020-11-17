@@ -50,7 +50,7 @@ impl<T: netcdf::Numeric> Load for Array3<T> {
 
 impl<T: netcdf::Numeric> Save for Array2<T> {
     #[inline]
-    fn save(&self, path: &Path) -> Result<(), Error> {
+    fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = netcdf::create(path)?;
 
         let shape = self.shape();
@@ -69,7 +69,7 @@ impl<T: netcdf::Numeric> Save for Array2<T> {
 
 impl<T: netcdf::Numeric> Save for Array3<T> {
     #[inline]
-    fn save(&self, path: &Path) -> Result<(), Error> {
+    fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = netcdf::create(path)?;
 
         let shape = self.shape();

@@ -92,7 +92,7 @@ impl AddAssign<&Self> for Histogram {
 
 impl Save for Histogram {
     #[inline]
-    fn save(&self, path: &Path) -> Result<(), Error> {
+    fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = File::create(path)?;
 
         let mut center = self.binner.range().min();

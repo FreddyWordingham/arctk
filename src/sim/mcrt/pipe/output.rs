@@ -63,21 +63,17 @@ impl AddAssign<&Self> for Output {
 
 impl Save for Output {
     #[inline]
-    fn save(&self, out_dir: &Path) -> Result<(), Error> {
+    fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
         let path = out_dir.join("emission_density.nc");
-        println!("Saving: {}", path.display());
         (&self.emission / self.cell_vol).save(&path)?;
 
         let path = out_dir.join("energy_density.nc");
-        println!("Saving: {}", path.display());
         (&self.energy / self.cell_vol).save(&path)?;
 
         let path = out_dir.join("absorption_density.nc");
-        println!("Saving: {}", path.display());
         (&self.absorptions / self.cell_vol).save(&path)?;
 
         let path = out_dir.join("shift_density.nc");
-        println!("Saving: {}", path.display());
         (&self.shifts / self.cell_vol).save(&path)?;
 
         Ok(())

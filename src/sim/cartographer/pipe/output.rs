@@ -56,7 +56,7 @@ impl<'a> AddAssign<&Self> for Output<'a> {
 
 impl<'a> Save for Output<'a> {
     #[inline]
-    fn save(&self, out_dir: &Path) -> Result<(), Error> {
+    fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
         for (name, map) in self.mat_reg.list().iter().zip(&self.mats) {
             map.save(&out_dir.join(&format!("map_{}.nc", name)))?;
         }

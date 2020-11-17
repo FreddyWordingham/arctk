@@ -10,7 +10,15 @@ pub trait Save {
     /// Serialise the type to a given file
     /// # Errors
     /// if the instance can not be serialised or if the file can't be written to.
-    fn save(&self, path: &Path) -> Result<(), Error>;
+    fn save_data(&self, path: &Path) -> Result<(), Error>;
+
+    /// Report the saving of a file and save the data.
+    /// # Errors
+    /// if the instance can not be serialised or if the file can't be written to.
+    fn save(&self, path: &Path) -> Result<(), Error> {
+        println!("Saving file: {}", path.display());
+        self.save_data(path)
+    }
 }
 
 /// Serialise the type in json format.
