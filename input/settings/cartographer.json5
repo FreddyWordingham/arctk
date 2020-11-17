@@ -1,0 +1,4 @@
+{
+    block_size          : 1e3,
+    bump_dist           : 1e-6,
+}

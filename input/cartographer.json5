@@ -1,0 +1,8 @@
+{
+    tree    : { There   : 'settings/tree_5_8.json5' },
+    grid    : { There   : 'settings/grid_20m_64.json5' },
+    sett    : { There   : 'settings/cartographer.json5' },
+    engine  : "Basic",
+    attrs   : { There   : 'lab/test/attrs.json5' },
+    surfs   : { There   : 'lab/test/surfs.json5' },
+}
