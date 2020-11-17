@@ -1,4 +1,4 @@
 {
-    fog     : { Refractive: ['fog', 'air'] },
-    mirror  : { Mirror: 0.99 },
+    fog     : { Interface   : ['fog', 'air'] },
+    mirror  : { Mirror      : 0.99 },
 }
