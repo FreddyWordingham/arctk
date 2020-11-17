@@ -12,6 +12,7 @@ where
     /// # Errors
     /// if the target file can not be found,
     /// or the read string can not be serialised into an instance of the required type.
+    #[inline]
     fn load(path: &Path) -> Result<Self, Error> {
         if path.is_file() {
             println!("Loading file: {}", path.display());
