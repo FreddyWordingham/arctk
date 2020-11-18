@@ -43,8 +43,9 @@ fn main() {
     let cam = setup.cam;
     let tree = Tree::new(&setup.tree, &surfs);
     let sett = setup.sett.link(&grads).expect("Gradient link Failure.");
+    let shader = setup.shader;
     let engine = setup.engine;
-    let input = Input::new(&grads, &attrs, &cam, &tree, &sett);
+    let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader);
 
     section(term_width, "Simulation");
     // let output = single_thread(engine, &input).expect("Failed to run simulation");

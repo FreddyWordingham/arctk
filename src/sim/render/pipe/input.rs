@@ -4,7 +4,7 @@ use crate::{
     geom::{Camera, Tree},
     img::Gradient,
     ord::Set,
-    sim::render::{Attribute, Settings},
+    sim::render::{Attribute, Settings, Shader},
 };
 
 /// Rendering simulation resources conglomerate.
@@ -19,6 +19,8 @@ pub struct Input<'a> {
     pub tree: &'a Tree<'a, Attribute<'a>>,
     /// General settings.
     pub sett: &'a Settings<'a>,
+    /// Shader settings.
+    pub shader: &'a Shader,
 }
 
 impl<'a> Input<'a> {
@@ -31,6 +33,7 @@ impl<'a> Input<'a> {
         cam: &'a Camera,
         tree: &'a Tree<Attribute>,
         sett: &'a Settings,
+        shader: &'a Shader,
     ) -> Self {
         Self {
             grads,
@@ -38,6 +41,7 @@ impl<'a> Input<'a> {
             cam,
             tree,
             sett,
+            shader,
         }
     }
 }
