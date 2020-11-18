@@ -167,10 +167,10 @@
     //     mesh    : [["res/get_in_loser/shatter_1.obj"], null],
     //     attr    : 'plastic'
     // },
-    // shatter_2   : {
-    //     mesh    : [["res/get_in_loser/shatter_2.obj"], null],
-    //     attr    : 'plastic'
-    // },
+    shatter_2   : {
+        mesh    : [["res/get_in_loser/shatter_2.obj"], null],
+        attr    : 'plastic'
+    },
     // shatter_3   : {
     //     mesh    : [["res/get_in_loser/shatter_3.obj"], null],
     //     attr    : 'plastic'
