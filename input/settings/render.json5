@@ -1,6 +1,7 @@
 {
     block_size          : 1e4,
-    bump_dist           : 1e-6,
+    // bump_dist           : 1e-6,
+    bump_dist           : 1e-3,
     loop_limit          : 1e6,
     min_weight          : 5e-2,
     sky_grad            : 'greyscale',
