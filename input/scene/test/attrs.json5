@@ -1,4 +1,4 @@
 {
-    wood    : { Opaque: 'solar' },
+    plastic : { Opaque: 'greyscale' },
     mirror  : { Mirror: 0.9 },
 }
