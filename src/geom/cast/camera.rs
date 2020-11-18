@@ -45,7 +45,7 @@ impl Camera {
     /// Reference the camera's position.
     #[inline]
     #[must_use]
-    pub fn pos(&self) -> &Pos3 {
+    pub const fn pos(&self) -> &Pos3 {
         self.orient.pos()
     }
 

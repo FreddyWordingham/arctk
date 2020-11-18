@@ -2,5 +2,6 @@
     sun_pos     : [18, 54, 45],
     light       : [0.4, 0.4, 0.2],
     shadow      : [0.4, 0.4, 0.2],
-    spec_pow    : 4
+    spec_pow    : 4,
+    occ_dist    : [1000, 1000],
 }

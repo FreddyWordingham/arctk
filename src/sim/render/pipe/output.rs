@@ -81,16 +81,14 @@ impl<'a> Save for Output<'a> {
                 .map(|n| Colour::new(n.x.abs() as f32, n.y.abs() as f32, n.z.abs() as f32, 1.0)),
         )
         .save(&out_dir.join("normals.png"))?;
-        // Image::new(self.map(|x| self.grad.get((*x / max_time) as f32)))
-        //     .save(&out_dir.join("time.png"))?;
 
         let max_light = self.light.max()?;
-        report!("Maximum time", max_light, "ms");
+        report!("Maximum light value", max_light);
         Image::new(self.light.map(|x| self.grad.get((*x / max_light) as f32)))
             .save(&out_dir.join("light.png"))?;
 
         let max_shadow = self.shadow.max()?;
-        report!("Maximum time", max_shadow, "ms");
+        report!("Maximum shadow value", max_shadow);
         Image::new(self.shadow.map(|x| self.grad.get((*x / max_shadow) as f32)))
             .save(&out_dir.join("shadow.png"))?;
 

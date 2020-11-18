@@ -21,6 +21,8 @@ pub struct ShaderBuilder {
     shadow: [f64; 3],
     /// Ambient lighting fraction.
     spec_pow: i32,
+    /// Lighting and shadowing occlusion testing distances.
+    occ_dist: [f64; 2],
 }
 
 impl Build for ShaderBuilder {
@@ -33,6 +35,7 @@ impl Build for ShaderBuilder {
             self.light,
             self.shadow,
             self.spec_pow,
+            self.occ_dist,
         ))
     }
 }

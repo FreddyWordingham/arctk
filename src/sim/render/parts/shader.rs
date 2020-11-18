@@ -12,6 +12,8 @@ pub struct Shader {
     shadow: [f64; 3],
     /// Ambient lighting fraction.
     spec_pow: i32,
+    /// Lighting and shadowing occlusion testing distances.
+    occ_dist: [f64; 2],
 }
 
 impl Shader {
@@ -19,11 +21,18 @@ impl Shader {
     access!(light, [f64; 3]);
     access!(shadow, [f64; 3]);
     clone!(spec_pow, i32);
+    access!(occ_dist, [f64; 2]);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(sun_pos: Pos3, light: [f64; 3], shadow: [f64; 3], spec_pow: i32) -> Self {
+    pub fn new(
+        sun_pos: Pos3,
+        light: [f64; 3],
+        shadow: [f64; 3],
+        spec_pow: i32,
+        occ_dist: [f64; 2],
+    ) -> Self {
         debug_assert!(light[0] > 0.0);
         debug_assert!(light[1] > 0.0);
         debug_assert!(light[2] > 0.0);
@@ -31,6 +40,8 @@ impl Shader {
         debug_assert!(shadow[1] > 0.0);
         debug_assert!(shadow[2] > 0.0);
         debug_assert!(spec_pow > 0);
+        debug_assert!(occ_dist[0] > 0.0);
+        debug_assert!(occ_dist[1] > 0.0);
 
         let light_total = light[0] + light[1] + light[2];
         let shadow_total = shadow[0] + shadow[1] + shadow[2];
@@ -48,6 +59,7 @@ impl Shader {
                 shadow[2] / shadow_total,
             ],
             spec_pow,
+            occ_dist,
         }
     }
 }

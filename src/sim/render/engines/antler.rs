@@ -36,12 +36,14 @@ pub fn antler(
         match *hit.tag() {
             Attribute::Opaque(grad) => {
                 travel(&mut trace, &mut data, pixel, hit.dist());
-                let light = lighting(input, trace.ray(), hit.side().norm());
                 let shadow = shadowing(input, trace.ray(), hit.side().norm());
+                let light = lighting(input, trace.ray(), hit.side().norm());
                 data.light[pixel] += light;
                 data.shadow[pixel] += shadow;
                 data.final_norm[pixel] += hit.side().norm().as_ref();
-                data.block_colour.pixels_mut()[pixel] += grad.get(1.0) * *trace.weight() as f32;
+                data.block_colour.pixels_mut()[pixel] +=
+                    grad.get(light as f32) * (shadow * *trace.weight()) as f32;
+                // data.block_colour.pixels_mut()[pixel] += grad.get(0.5) * *trace.weight() as f32;
                 break;
             }
             Attribute::Mirror(..) => {}

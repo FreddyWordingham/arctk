@@ -4,6 +4,8 @@ use crate::sim::render::{occlusion, Input};
 use crate::{geom::Ray, math::Dir3, phys::Crossing};
 
 /// Calculate the lighting factor.
+/// Zero indicates darkness.
+/// Unity indicates fully lit.
 #[inline]
 #[must_use]
 pub fn lighting(input: &Input, ray: &Ray, norm: &Dir3) -> f64 {
@@ -17,7 +19,10 @@ pub fn lighting(input: &Input, ray: &Ray, norm: &Dir3) -> f64 {
         .dot(&ref_dir)
         .max(0.0)
         .powi(input.shader.spec_pow());
-    specular *= occlusion(input, ray.clone(), 100.0); // TODO: Review.
+
+    let mut ref_ray = Ray::new(*ray.pos(), ref_dir);
+    ref_ray.travel(input.sett.bump_dist());
+    specular *= occlusion(input, ref_ray, input.shader.occ_dist()[0]); // TODO: Review
 
     ambient + diffuse + specular
 }
