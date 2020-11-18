@@ -1,6 +1,6 @@
 //! Pixel-sampling engine function.
 
-use crate::sim::render::{Attribute, Input, Output, Tracer};
+use crate::sim::render::{travel, Attribute, Input, Output, Tracer};
 use rand::rngs::ThreadRng;
 use std::time::Instant;
 
@@ -48,13 +48,4 @@ pub fn antler(
 
     // Record time.
     data.time[pixel] += start_time.elapsed().as_micros() as f64;
-}
-
-/// Travel the tracer forward and record the flight.
-#[inline]
-pub fn travel(trace: &mut Tracer, data: &mut Output, pixel: [usize; 2], dist: f64) {
-    debug_assert!(dist > 0.0);
-
-    trace.ray_mut().travel(dist);
-    data.dist[pixel] += dist;
 }

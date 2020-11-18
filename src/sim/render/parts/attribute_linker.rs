@@ -36,7 +36,7 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
                     .get(grad)
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
             ),
-            Self::Mirror(abs) => Attribute::Mirror(abs),
+            Self::Mirror(ref_frac) => Attribute::Mirror(ref_frac),
         })
     }
 }
