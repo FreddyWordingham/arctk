@@ -43,10 +43,9 @@ impl<'a> Link<'a, Material> for SettingsLinker {
             self.loop_limit,
             self.min_weight,
             self.roulette_barrels,
-            &mats.get(&self.init_mat).expect(&format!(
-                "Failed to link settings-material key: {}",
-                self.init_mat
-            )),
+            mats.get(&self.init_mat).unwrap_or_else(|| {
+                panic!("Failed to link settings-material key: {}", self.init_mat)
+            }),
         ))
     }
 }

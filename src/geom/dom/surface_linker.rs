@@ -33,12 +33,12 @@ impl<'a, T: 'a> Link<'a, T> for SurfaceLinker {
 
     #[inline]
     fn link(self, attrs: &'a Set<T>) -> Result<Self::Inst, Error> {
+        let attr = self.attr;
         Ok(Surface::new(
             self.mesh,
-            &attrs.get(&self.attr).expect(&format!(
-                "Failed to link surface-attribute key: {}",
-                self.attr
-            )),
+            attrs
+                .get(&attr)
+                .unwrap_or_else(|| panic!("Failed to link surface-attribute key: {}", attr)),
         ))
     }
 }

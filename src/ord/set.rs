@@ -11,7 +11,6 @@ use std::{
         btree_map::{IntoIter, Values},
         BTreeMap,
     },
-    ops::Index,
     path::Path,
 };
 
@@ -61,15 +60,6 @@ impl<T> Set<T> {
         self.0.get(name)
     }
 }
-
-// impl<T> Index<&str> for Set<T> {
-//     type Output = T;
-
-//     #[inline]
-//     fn index(&self, name: &str) -> &Self::Output {
-//         &self.0[name]
-//     }
-// }
 
 impl<T> IntoIterator for Set<T> {
     type Item = (String, T);

@@ -11,7 +11,7 @@ use rand::{rngs::ThreadRng, Rng};
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn surface(rng: &mut ThreadRng, hit: &Hit<Attribute>, phot: &mut Photon, env: &mut Local) {
-    match hit.tag() {
+    match *hit.tag() {
         Attribute::Interface(inside, outside) => {
             // Reference materials.
             let (curr_mat, next_mat) = if hit.side().is_inside() {

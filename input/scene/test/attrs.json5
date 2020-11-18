@@ -1,10 +1,13 @@
 {
-    greyscale           : { Opaque: 'greyscale' },
+    plastic             : { Opaque: 'greyscale' },
 
     buildings           : { Opaque: 'expresso' },
     bulbs               : { Opaque: 'citrus_peel' },
     bushes              : { Opaque: 'sel' },
-    // megatron            : { Opaque: 'megatron' },
+
+    solar               : { Opaque: 'wiretap' },
+
+
     // evening_sunshine    : { Opaque: 'evening_sunshine' },
     // dark_ocean          : { Opaque: 'dark_ocean' },
     // harvey              : { Opaque: 'harvey' },

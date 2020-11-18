@@ -59,11 +59,11 @@ impl<'a> Save for Output<'a> {
     fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
         let max = self.void.len() as f64;
         for (name, map) in self.mat_reg.list().iter().zip(&self.mats) {
-            println!("{}\t{}%", name, map.sum() / map.len() as f64);
+            println!("{}\t{}%", name, map.sum() / map.len() as f64 * 100.0);
             map.save(&out_dir.join(&format!("map_{}.nc", name)))?;
         }
 
-        println!("{}\t{}", "void", self.void.sum() / max);
+        println!("void\t{}%", self.void.sum() / max * 100.0);
         self.void.save(&out_dir.join("map_void.nc"))
     }
 }

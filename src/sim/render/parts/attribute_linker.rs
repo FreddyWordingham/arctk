@@ -32,9 +32,9 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
     fn link(self, grads: &'a Set<Gradient>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Opaque(ref grad) => Attribute::Opaque(
-                &grads
-                    .get(&grad)
-                    .expect(&format!("Failed to link attribute-gradient key: {}", grad)),
+                grads
+                    .get(grad)
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
             ),
             Self::Mirror(abs) => Attribute::Mirror(abs),
         })

@@ -69,7 +69,7 @@ impl<'a> Save for Output<'a> {
 
         Image::new(
             self.final_norm
-                .map(|n| n.normalize())
+                .map(Vec3::normalize)
                 .map(|n| Colour::new(n.x.abs() as f32, n.y.abs() as f32, n.z.abs() as f32, 1.0)),
         )
         .save(&out_dir.join("normals.png"))?;
