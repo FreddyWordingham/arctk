@@ -5,7 +5,7 @@ use arctk::{
     file::{Build, Load, Save},
     geom::Tree,
     ord::{Link, Register},
-    sim::cartographer::{multi_thread, Input, ParametersBuilder},
+    sim::cartographer::{single_thread, Input, ParametersBuilder},
     util::{
         banner::{section, title},
         dir,
@@ -46,8 +46,8 @@ fn main() {
     let input = Input::new(&mat_reg, &attrs, &tree, &grid, &sett);
 
     section(term_width, "Mapping");
-    // let output = single_thread(engine, &input).expect("Failed to run mapping");
-    let output = multi_thread(engine, &input).expect("Failed to run mapping");
+    let output = single_thread(engine, &input).expect("Failed to run mapping");
+    // let output = multi_thread(engine, &input).expect("Failed to run mapping");
     output.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");

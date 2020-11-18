@@ -57,10 +57,13 @@ impl<'a> AddAssign<&Self> for Output<'a> {
 impl<'a> Save for Output<'a> {
     #[inline]
     fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
+        let max = self.void.len() as f64;
         for (name, map) in self.mat_reg.list().iter().zip(&self.mats) {
+            println!("{}\t{}%", name, map.sum() / map.len() as f64);
             map.save(&out_dir.join(&format!("map_{}.nc", name)))?;
         }
 
+        println!("{}\t{}", "void", self.void.sum() / max);
         self.void.save(&out_dir.join("map_void.nc"))
     }
 }

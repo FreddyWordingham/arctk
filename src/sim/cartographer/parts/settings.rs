@@ -13,6 +13,8 @@ pub struct Settings {
     block_size: usize,
     /// Bump distance [m].
     bump_dist: f64,
+    /// Loop limit.
+    loop_limit: u64,
     /// Caster settings.
     caster: Caster,
     /// Super sampling.
@@ -22,6 +24,7 @@ pub struct Settings {
 impl Settings {
     clone!(block_size, usize);
     clone!(bump_dist, f64);
+    clone!(loop_limit, u64);
     access!(caster, Caster);
     access!(super_sampling, SuperSample);
 
@@ -31,6 +34,7 @@ impl Settings {
     pub fn new(
         block_size: usize,
         bump_dist: f64,
+        loop_limit: u64,
         caster: Caster,
         super_sampling: SuperSample,
     ) -> Self {
@@ -40,6 +44,7 @@ impl Settings {
         Self {
             block_size,
             bump_dist,
+            loop_limit,
             caster,
             super_sampling,
         }

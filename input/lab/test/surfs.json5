@@ -3,8 +3,8 @@
         mesh    : [["res/objs/cube.obj"], null],
         attr    : 'fog'
     },
-    // mirror      : {
-    //     mesh    : [["res/objs/mirrors.obj"], null],
-    //     attr    : 'mirror'
-    // }
+    mirror      : {
+        mesh    : [["res/objs/mirrors.obj"], null],
+        attr    : 'mirror'
+    }
 }
