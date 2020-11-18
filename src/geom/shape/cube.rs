@@ -3,8 +3,9 @@
 use crate::{
     access,
     geom::{Collide, Mesh, Ray, Side, Trace},
-    math::{Pos3, Vec3},
+    math::{Dir3, Pos3, Vec3},
     ord::{X, Y, Z},
+    tools::Range,
 };
 use arctk_attr::load;
 use rand::Rng;
@@ -280,8 +281,26 @@ impl Trace for Cube {
 
     #[inline]
     #[must_use]
-    fn dist_side(&self, _ray: &Ray) -> Option<(f64, Side)> {
-        // TODO: Think of an efficient way to do this.
-        unimplemented!("Tell me (Freddy) if you need this.");
+    fn dist_side(&self, ray: &Ray) -> Option<(f64, Side)> {
+        if let Some(dist) = self.dist(ray) {
+            let hit = ray.pos() + (dist * ray.dir().as_ref());
+            let relative = hit - self.centre();
+
+            let xy = relative.y / relative.x;
+            let zy = relative.z / relative.y;
+
+            let unit_range = Range::new(-1.0, 1.0);
+            let norm = Dir3::new_normalize(if unit_range.contains(xy) {
+                Vec3::new(1.0_f64.copysign(relative.x), 0.0, 0.0)
+            } else if unit_range.contains(zy) {
+                Vec3::new(0.0, 1.0_f64.copysign(relative.y), 0.0)
+            } else {
+                Vec3::new(0.0, 0.0, 1.0_f64.copysign(relative.z))
+            });
+
+            return Some((dist, Side::new(ray.dir(), norm)));
+        }
+
+        None
     }
 }

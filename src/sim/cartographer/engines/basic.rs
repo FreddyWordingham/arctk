@@ -77,7 +77,25 @@ fn find_mat(input: &Input, pos: &Pos3) -> Option<String> {
             match Event::new(grid_dist, surf_hit, bump_dist) {
                 Event::Grid(dist) => {
                     ray.travel(dist);
+                    println!(
+                        "<-\t{}\t{}\t{}\t:\t{}\t{}\t{}",
+                        ray.dir().x,
+                        ray.dir().y,
+                        ray.dir().z,
+                        ray.pos().x,
+                        ray.pos().y,
+                        ray.pos().z
+                    );
                     *ray.dir_mut() = Crossing::calc_ref_dir(ray.dir(), grid_side.norm());
+                    println!(
+                        "->\t{}\t{}\t{}\t:\t{}\t{}\t{}",
+                        ray.dir().x,
+                        ray.dir().y,
+                        ray.dir().z,
+                        ray.pos().x,
+                        ray.pos().y,
+                        ray.pos().z
+                    );
                     ray.travel(bump_dist);
                 }
                 Event::Surface(ref hit) => match *hit.tag() {
