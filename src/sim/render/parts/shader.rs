@@ -3,18 +3,18 @@
 use crate::{access, math::Vec3};
 
 /// Colouring settings.
-pub struct Settings<'a> {
-    /// Sun position used for lighting calculations.
+pub struct Shader {
+    /// Sun position used for lighting calculations [m].
     sun_pos: Vec3,
 }
 
-impl<'a> Settings<'a> {
+impl Shader {
     access!(sun_pos, Vec3);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(sun_pos: Vec3) -> Self {
+    pub const fn new(sun_pos: Vec3) -> Self {
         Self { sun_pos }
     }
 }

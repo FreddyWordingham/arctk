@@ -5,8 +5,10 @@ pub mod attribute_linker;
 pub mod settings;
 pub mod settings_linker;
 pub mod shader;
+pub mod shader_builder;
 pub mod tracer;
 
 pub use self::{
-    attribute::*, attribute_linker::*, settings::*, settings_linker::*, shader::*, tracer::*,
+    attribute::*, attribute_linker::*, settings::*, settings_linker::*, shader::*,
+    shader_builder::*, tracer::*,
 };
