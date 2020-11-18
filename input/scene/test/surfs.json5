@@ -1,15 +1,15 @@
 {
     buildings   : {
         mesh    : [["res/get_in_loser/buildings.obj"], null],
-        attr    : 'plastic'
+        attr    : 'buildings'
     },
     bulbs       : {
         mesh    : [["res/get_in_loser/bulbs.obj"], null],
-        attr    : 'plastic'
+        attr    : 'bulbs'
     },
     bushes      : {
         mesh    : [["res/get_in_loser/bushes.obj"], null],
-        attr    : 'plastic'
+        attr    : 'bushes'
     },
     car_body    : {
         mesh    : [["res/get_in_loser/car_body.obj"], null],
@@ -193,7 +193,7 @@
     // },
     solar_l     : {
         mesh    : [["res/get_in_loser/solar_l.obj"], null],
-        attr    : 'plastic'
+        attr    : 'solar'
     },
     solar_m     : {
         mesh    : [["res/get_in_loser/solar_m.obj"], null],

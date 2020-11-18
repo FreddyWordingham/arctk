@@ -53,16 +53,23 @@ impl<T> Set<T> {
     pub fn values(&self) -> Values<String, T> {
         self.0.values()
     }
-}
 
-impl<T> Index<&str> for Set<T> {
-    type Output = T;
-
+    /// Get a value from the map.
     #[inline]
-    fn index(&self, name: &str) -> &Self::Output {
-        &self.0[name]
+    #[must_use]
+    pub fn get(&self, name: &str) -> Option<&T> {
+        self.0.get(name)
     }
 }
+
+// impl<T> Index<&str> for Set<T> {
+//     type Output = T;
+
+//     #[inline]
+//     fn index(&self, name: &str) -> &Self::Output {
+//         &self.0[name]
+//     }
+// }
 
 impl<T> IntoIterator for Set<T> {
     type Item = (String, T);

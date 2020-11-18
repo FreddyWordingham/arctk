@@ -36,7 +36,8 @@ pub fn antler(
         match *hit.tag() {
             Attribute::Opaque(ref grad) => {
                 travel(&mut trace, &mut data, pixel, hit.dist());
-                data.colour.pixels_mut()[pixel] += grad.get(1.0) * *trace.weight() as f32;
+                data.final_norm[pixel] += hit.side().norm().as_ref();
+                data.block_colour.pixels_mut()[pixel] += grad.get(1.0) * *trace.weight() as f32;
                 break;
             }
             Attribute::Mirror(..) => {}

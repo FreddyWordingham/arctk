@@ -30,9 +30,16 @@ impl<'a> Link<'a, Material> for AttributeLinker {
     #[inline]
     fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         Ok(match self {
-            Self::Interface(ref inside, ref outside) => {
-                Attribute::Interface(&mats[inside], &mats[outside])
-            }
+            Self::Interface(ref inside, ref outside) => Attribute::Interface(
+                &mats.get(inside).expect(&format!(
+                    "Failed to link attribute-interface key: {}",
+                    inside
+                )),
+                &mats.get(outside).expect(&format!(
+                    "Failed to link attribute-interface key: {}",
+                    outside
+                )),
+            ),
             Self::Mirror(r) => Attribute::Mirror(r),
         })
     }

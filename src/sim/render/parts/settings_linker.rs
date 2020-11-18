@@ -38,7 +38,10 @@ impl<'a> Link<'a, Gradient> for SettingsLinker {
             self.bump_dist,
             self.loop_limit,
             self.min_weight,
-            &grads[&self.sky_grad],
+            &grads.get(&self.sky_grad).expect(&format!(
+                "Failed to link settings-gradient key: {}",
+                self.sky_grad
+            )),
         ))
     }
 }

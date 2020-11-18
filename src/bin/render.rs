@@ -6,7 +6,7 @@ use arctk::{
     file::{Build, Load, Save},
     geom::Tree,
     ord::Link,
-    sim::render::{single_thread, Input, ParametersBuilder},
+    sim::render::{multi_thread, Input, ParametersBuilder},
     util::{
         banner::{section, title},
         dir,
@@ -47,8 +47,8 @@ fn main() {
     let input = Input::new(&grads, &attrs, &cam, &tree, &sett);
 
     section(term_width, "Simulation");
-    let output = single_thread(engine, &input).expect("Failed to run simulation");
-    // let output = multi_thread(engine, &input).expect("Failed to run simulation");
+    // let output = single_thread(engine, &input).expect("Failed to run simulation");
+    let output = multi_thread(engine, &input).expect("Failed to run simulation");
     output.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");
