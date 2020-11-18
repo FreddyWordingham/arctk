@@ -5,8 +5,10 @@ use crate::{
     math::Pos3,
     ord::{X, Y, Z},
     phys::Crossing,
-    sim::cartographer::{Event, Input, Output},
-    sim::mcrt::AttributeLinker,
+    sim::{
+        cartographer::{Event, Input, Output},
+        mcrt::AttributeLinker,
+    },
 };
 use rand::rngs::ThreadRng;
 

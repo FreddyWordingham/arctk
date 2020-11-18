@@ -5,8 +5,10 @@ use crate::{
     file::{Build, Redirect},
     geom::{GridBuilder, SurfaceBuilder, TreeSettings},
     ord::Set,
-    sim::cartographer::{EngineBuilder, ParametersLinker, Settings},
-    sim::mcrt::AttributeLinker,
+    sim::{
+        cartographer::{EngineBuilder, ParametersLinker, Settings},
+        mcrt::AttributeLinker,
+    },
 };
 use arctk_attr::load;
 use std::path::Path;
