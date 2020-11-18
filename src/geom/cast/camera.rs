@@ -3,7 +3,7 @@
 use crate::{
     access, clone,
     geom::{Orient, Ray},
-    math::Rot3,
+    math::{Pos3, Rot3},
     ord::{X, Y},
 };
 
@@ -40,6 +40,13 @@ impl Camera {
             res,
             ss_power,
         }
+    }
+
+    /// Reference the camera's position.
+    #[inline]
+    #[must_use]
+    pub fn pos(&self) -> &Pos3 {
+        self.orient.pos()
     }
 
     /// Calculate the total number of samples.
