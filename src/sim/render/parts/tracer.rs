@@ -7,15 +7,18 @@ use crate::{access, geom::Ray};
 pub struct Tracer {
     /// Ray of travel.
     ray: Ray,
+    /// Statistical weighting.
+    weight: f64,
 }
 
 impl Tracer {
     access!(ray, ray_mut, Ray);
+    access!(weight, f64);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
     pub const fn new(ray: Ray) -> Self {
-        Self { ray }
+        Self { ray, weight: 1.0 }
     }
 }

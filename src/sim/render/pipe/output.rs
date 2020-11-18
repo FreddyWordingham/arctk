@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     file::Save,
-    img::{Gradient, Image},
+    img::{Colour, Gradient, Image},
     ord::{X, Y},
     report,
 };
@@ -17,6 +17,8 @@ pub struct Output<'a> {
     pub dist: Array2<f64>,
     /// Render time.
     pub time: Array2<f64>,
+    /// Colour.
+    pub colour: Image,
     /// Colouring gradient.
     grad: &'a Gradient,
 }
@@ -32,6 +34,7 @@ impl<'a> Output<'a> {
         Self {
             dist: Array2::zeros(res),
             time: Array2::zeros(res),
+            colour: Image::new_blank(res, Colour::default()),
             grad,
         }
     }
@@ -42,6 +45,7 @@ impl<'a> AddAssign<&Self> for Output<'a> {
     fn add_assign(&mut self, rhs: &Self) {
         self.dist += &rhs.dist;
         self.time += &rhs.time;
+        self.colour += &rhs.colour;
     }
 }
 
@@ -58,6 +62,6 @@ impl<'a> Save for Output<'a> {
         Image::new(self.time.map(|x| self.grad.get((*x / max_time) as f32)))
             .save(&out_dir.join("time.png"))?;
 
-        Ok(())
+        self.colour.save(&out_dir.join("colour.png"))
     }
 }
