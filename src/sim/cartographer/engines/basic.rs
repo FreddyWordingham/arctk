@@ -78,7 +78,7 @@ fn find_mat(input: &Input, pos: &Pos3) -> Option<String> {
                     *ray.dir_mut() = Crossing::calc_ref_dir(ray.dir(), grid_side.norm());
                     ray.travel(bump_dist);
                 }
-                Event::Surface(ref hit) => match hit.tag() {
+                Event::Surface(ref hit) => match *hit.tag() {
                     AttributeLinker::Interface(ref inside, ref outside) => {
                         return Some(if hit.side().is_inside() {
                             inside.clone()
