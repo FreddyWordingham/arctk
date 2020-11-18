@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     file::Build,
-    math::Vec3,
+    math::Pos3,
     ord::{X, Y, Z},
     sim::render::Shader,
 };
@@ -15,6 +15,14 @@ use std::path::Path;
 pub struct ShaderBuilder {
     /// Sun position used for lighting calculations [m].
     sun_pos: [f64; 3],
+    // Ambient lighting fraction.
+    light_ambient_frac: f64,
+    // Ambient lighting fraction.
+    light_diffuse_frac: f64,
+    // Ambient lighting fraction.
+    light_specular_frac: f64,
+    // Ambient lighting fraction.
+    spec_pow: i32,
 }
 
 impl Build for ShaderBuilder {
@@ -22,10 +30,12 @@ impl Build for ShaderBuilder {
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
-        Ok(Self::Inst::new(Vec3::new(
-            self.sun_pos[X],
-            self.sun_pos[Y],
-            self.sun_pos[Z],
-        )))
+        Ok(Self::Inst::new(
+            Pos3::new(self.sun_pos[X], self.sun_pos[Y], self.sun_pos[Z]),
+            self.light_ambient_frac,
+            self.light_diffuse_frac,
+            self.light_specular_frac,
+            self.spec_pow,
+        ))
     }
 }
