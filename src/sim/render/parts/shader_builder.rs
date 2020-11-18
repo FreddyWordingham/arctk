@@ -15,13 +15,11 @@ use std::path::Path;
 pub struct ShaderBuilder {
     /// Sun position used for lighting calculations [m].
     sun_pos: [f64; 3],
-    // Ambient lighting fraction.
-    light_ambient_frac: f64,
-    // Ambient lighting fraction.
-    light_diffuse_frac: f64,
-    // Ambient lighting fraction.
-    light_specular_frac: f64,
-    // Ambient lighting fraction.
+    /// Relative ambient, diffuse, and occlusion lighting powers.
+    light: [f64; 3],
+    /// Relative ambient, diffuse, and occlusion shadowing powers.
+    shadow: [f64; 3],
+    /// Ambient lighting fraction.
     spec_pow: i32,
 }
 
@@ -32,9 +30,8 @@ impl Build for ShaderBuilder {
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
         Ok(Self::Inst::new(
             Pos3::new(self.sun_pos[X], self.sun_pos[Y], self.sun_pos[Z]),
-            self.light_ambient_frac,
-            self.light_diffuse_frac,
-            self.light_specular_frac,
+            self.light,
+            self.shadow,
             self.spec_pow,
         ))
     }

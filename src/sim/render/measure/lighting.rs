@@ -17,10 +17,9 @@ pub fn lighting(input: &Input, cam_pos: &Pos3, ray: &Ray, norm: &Dir3) -> f64 {
 
     let shader = input.shader;
 
-    let ambient = shader.light_ambient_frac();
-    let diffuse = norm.dot(&light_dir).max(0.0) * shader.light_diffuse_frac();
-    let specular =
-        view_dir.dot(&ref_dir).max(0.0).powi(shader.spec_pow()) * shader.light_specular_frac();
+    let [ambient, mut diffuse, mut specular] = shader.light();
+    diffuse *= norm.dot(&light_dir).max(0.0);
+    specular *= view_dir.dot(&ref_dir).max(0.0).powi(shader.spec_pow());
 
     ambient + diffuse + specular
 }

@@ -6,48 +6,47 @@ use crate::{access, clone, math::Pos3};
 pub struct Shader {
     /// Sun position used for lighting calculations [m].
     sun_pos: Pos3,
-    // Ambient lighting fraction.
-    light_ambient_frac: f64,
-    // Ambient lighting fraction.
-    light_diffuse_frac: f64,
-    // Ambient lighting fraction.
-    light_specular_frac: f64,
-    // Ambient lighting fraction.
+    /// Ambient, diffuse, and occlusion lighting fractions.
+    light: [f64; 3],
+    /// Ambient, diffuse, and occlusion shadowing fractions.
+    shadow: [f64; 3],
+    /// Ambient lighting fraction.
     spec_pow: i32,
 }
 
 impl Shader {
     access!(sun_pos, Pos3);
-    clone!(light_ambient_frac, f64);
-    clone!(light_diffuse_frac, f64);
-    clone!(light_specular_frac, f64);
+    access!(light, [f64; 3]);
+    access!(shadow, [f64; 3]);
     clone!(spec_pow, i32);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(
-        sun_pos: Pos3,
-        light_ambient_frac: f64,
-        light_diffuse_frac: f64,
-        light_specular_frac: f64,
-        spec_pow: i32,
-    ) -> Self {
-        debug_assert!(light_ambient_frac > 0.0);
-        debug_assert!(light_diffuse_frac > 0.0);
-        debug_assert!(light_specular_frac > 0.0);
+    pub fn new(sun_pos: Pos3, light: [f64; 3], shadow: [f64; 3], spec_pow: i32) -> Self {
+        debug_assert!(light[0] > 0.0);
+        debug_assert!(light[1] > 0.0);
+        debug_assert!(light[2] > 0.0);
+        debug_assert!(shadow[0] > 0.0);
+        debug_assert!(shadow[1] > 0.0);
+        debug_assert!(shadow[2] > 0.0);
         debug_assert!(spec_pow > 0);
 
-        let total_light = light_ambient_frac + light_diffuse_frac + light_specular_frac;
-        let light_ambient_frac = light_ambient_frac / total_light;
-        let light_diffuse_frac = light_diffuse_frac / total_light;
-        let light_specular_frac = light_specular_frac / total_light;
+        let light_total = light[0] + light[1] + light[2];
+        let shadow_total = shadow[0] + shadow[1] + shadow[2];
 
         Self {
             sun_pos,
-            light_ambient_frac,
-            light_diffuse_frac,
-            light_specular_frac,
+            light: [
+                light[0] / light_total,
+                light[1] / light_total,
+                light[2] / light_total,
+            ],
+            shadow: [
+                shadow[0] / shadow_total,
+                shadow[1] / shadow_total,
+                shadow[2] / shadow_total,
+            ],
             spec_pow,
         }
     }
