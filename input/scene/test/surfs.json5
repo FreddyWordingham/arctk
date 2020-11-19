@@ -159,6 +159,14 @@
         mesh    : [["res/get_in_loser/road.obj"], null],
         attr    : 'plastic'
     },
+    // cube        : {
+    //     mesh    : [["res/get_in_loser/cube.obj"], null],
+    //     attr    : 'plastic'
+    // },
+    // sphere        : {
+    //     mesh    : [["res/get_in_loser/sphere.obj"], null],
+    //     attr    : 'plastic'
+    // },
     // shatter_0   : {
     //     mesh    : [["res/get_in_loser/shatter_0.obj"], null],
     //     attr    : 'plastic'
@@ -223,12 +231,12 @@
         mesh    : [["res/get_in_loser/text_horizontal_1.obj"], null],
         attr    : 'plastic'
     },
-    text_vertical_0     : {
-        mesh    : [["res/get_in_loser/text_vertical_0.obj"], null],
-        attr    : 'plastic'
-    },
-    text_vertical_1     : {
-        mesh    : [["res/get_in_loser/text_vertical_0.obj"], null],
-        attr    : 'plastic'
-    }
+    // text_vertical_0     : {
+    //     mesh    : [["res/get_in_loser/text_vertical_0.obj"], null],
+    //     attr    : 'plastic'
+    // },
+    // text_vertical_1     : {
+    //     mesh    : [["res/get_in_loser/text_vertical_1.obj"], null],
+    //     attr    : 'plastic'
+    // }
 }
