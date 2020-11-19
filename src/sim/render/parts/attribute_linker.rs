@@ -15,6 +15,8 @@ pub enum AttributeLinker {
     Opaque(String),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
+    /// Partially transparent, transmission fraction.
+    Transparent(f64),
 }
 
 impl<'a> Link<'a, Gradient> for AttributeLinker {
@@ -37,6 +39,7 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
             ),
             Self::Mirror(ref_frac) => Attribute::Mirror(ref_frac),
+            Self::Transparent(trans_frac) => Attribute::Transparent(trans_frac),
         })
     }
 }
