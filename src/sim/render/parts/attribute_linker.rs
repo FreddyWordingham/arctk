@@ -13,9 +13,9 @@ use arctk_attr::load;
 pub enum AttributeLinker {
     /// Opaque coloured surface.
     Opaque(String),
-    /// Partially reflective mirror, reflection fraction.
+    /// Partially reflective mirror, absorption fraction.
     Mirror(String, f64),
-    /// Partially transparent, transmission fraction.
+    /// Partially transparent, absorption fraction.
     Transparent(String, f64),
 }
 
@@ -39,17 +39,17 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
                     .get(grad)
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
             ),
-            Self::Mirror(ref grad, ref_frac) => Attribute::Mirror(
+            Self::Mirror(ref grad, abs_frac) => Attribute::Mirror(
                 grads
                     .get(grad)
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
-                ref_frac,
+                abs_frac,
             ),
-            Self::Transparent(ref grad, trans_frac) => Attribute::Transparent(
+            Self::Transparent(ref grad, abs_frac) => Attribute::Transparent(
                 grads
                     .get(grad)
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
-                trans_frac,
+                abs_frac,
             ),
         })
     }
