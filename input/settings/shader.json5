@@ -1,8 +1,8 @@
 {
     sun_pos     : [18, 54, 45],
-    light       : [0.2, 0.6, 0.2],
+    light       : [0.1, 0.4, 0.6],
     shadow      : [0.4, 0.4, 0.2],
     spec_pow    : 4,
     occ_dist    : [1e2, 1e2],
-    fall_off    : 1e-1,
+    fall_off    : 1e1,
 }

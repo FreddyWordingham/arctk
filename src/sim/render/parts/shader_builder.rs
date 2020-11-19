@@ -25,6 +25,8 @@ pub struct ShaderBuilder {
     occ_dist: [f64; 2],
     /// Effect fall-off rate.
     fall_off: f64,
+    /// Optional soft and ambient shadowing.
+    shadowing_samples: Option<[i32; 2]>,
 }
 
 impl Build for ShaderBuilder {
@@ -39,6 +41,7 @@ impl Build for ShaderBuilder {
             self.spec_pow,
             self.occ_dist,
             self.fall_off,
+            self.shadowing_samples,
         ))
     }
 }

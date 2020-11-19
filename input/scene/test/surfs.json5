@@ -77,7 +77,7 @@
     },
     flow        : {
         mesh    : [["res/get_in_loser/flow.obj"], null],
-        attr    : 'water'
+        attr    : 'flow'
     },
     glass       : {
         mesh    : [["res/get_in_loser/glass.obj"], null],
@@ -137,11 +137,11 @@
     },
     planet_land     : {
         mesh    : [["res/get_in_loser/planet_land.obj"], null],
-        attr    : 'plastic'
+        attr    : 'ground'
     },
     planet_sea  : {
         mesh    : [["res/get_in_loser/planet_sea.obj"], null],
-        attr    : 'plastic'
+        attr    : 'water'
     },
     portal      : {
         mesh    : [["res/get_in_loser/portal.obj"], null],

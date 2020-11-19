@@ -5,12 +5,13 @@
     bulbs               : { Opaque: 'citrus_peel' },
     bushes              : { Opaque: 'sel' },
 
-    solar               : { Refractive: ['wiretap', 0.2, [1.0, 1.3]] },
+    solar               : { Refractive: ['wiretap', 0.6, [1.0, 1.3]] },
 
-    water               : { Refractive: ['amin', 0.6, [1.0, 1.3]] },
+    flow                : { Refractive: ['amin', 0.01, [1.0, 1.3]] },
+    water               : { Refractive: ['amin', 0.3, [1.0, 1.3]] },
     ocean               : { Mirror: ['dark_ocean', 0.6] },
 
-    cloud               : { Transparent: ['evening_night', 0.5] },
+    cloud               : { Transparent: ['evening_night', 0.25] },
     ground              : { Opaque: 'harvey' },
 
     metal               : { Opaque: 'rainbow_blue' },
@@ -28,7 +29,7 @@
 
     dino_skin           : { Opaque: 'wiretap' },
 
-    text                : { Mirror: ['jshine', 0.9] },
+    text                : { Refractive: ['wiretap', 0.8, [1.0, 1.5]] },
 
     // harvey              : { Opaque: 'harvey' },
     // witching_hour       : { Opaque: 'witching_hour' },
@@ -41,7 +42,7 @@
     // evening_night       : { Opaque: 'evening_night' },
     // magic               : { Opaque: 'magic' },
     // by_design           : { Opaque: 'by_design' },
-    dimension   : { Opaque: 'wedding_day_blues' },
+    dimension   : { Refractive: ['wedding_day_blues', 0.3, [1.0, 1.5]] },
     // pure_lust           : { Opaque: 'pure_lust' },
     // rastafari           : { Opaque: 'rastafari' },
     // rainbow_blue        : { Opaque: 'rainbow_blue' },
