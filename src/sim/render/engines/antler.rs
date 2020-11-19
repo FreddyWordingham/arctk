@@ -25,7 +25,7 @@ pub fn antler(
     // Common constants.
     let bump_dist = input.sett.bump_dist();
     let loop_limit = input.sett.loop_limit();
-    let _min_weight = input.sett.min_weight();
+    let min_weight = input.sett.min_weight();
 
     // Main event loop.
     let mut num_loops = 0;
@@ -36,6 +36,11 @@ pub fn antler(
             break;
         }
         num_loops += 1;
+
+        // Weight pruning.
+        if trace.weight() < min_weight {
+            break;
+        }
 
         // Handle collision.
         let norm = hit.side().norm();

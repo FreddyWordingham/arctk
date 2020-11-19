@@ -77,11 +77,11 @@
     },
     flow        : {
         mesh    : [["res/get_in_loser/flow.obj"], null],
-        attr    : 'plastic'
+        attr    : 'water'
     },
     glass       : {
         mesh    : [["res/get_in_loser/glass.obj"], null],
-        attr    : 'plastic'
+        attr    : 'glass'
     },
     hills       : {
         mesh    : [["res/get_in_loser/hills.obj"], null],
@@ -101,7 +101,7 @@
     },
     lamps       : {
         mesh    : [["res/get_in_loser/lamps.obj"], null],
-        attr    : 'plastic'
+        attr    : 'metal'
     },
     moon_0      : {
         mesh    : [["res/get_in_loser/moon_0.obj"], null],

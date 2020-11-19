@@ -5,12 +5,15 @@
     bulbs               : { Opaque: 'citrus_peel' },
     bushes              : { Opaque: 'sel' },
 
-    solar               : { Opaque: 'wiretap' },
+    solar               : { Refractive: ['wiretap', 0.2, [1.0, 1.3]] },
 
     water               : { Mirror: ['amin', 0.6] },
+    ocean               : { Mirror: ['dark_ocean', 0.6] },
 
     cloud               : { Transparent: ['evening_night', 0.5] },
-    ground              : { Opaque: 'rainbow_blue' },
+    ground              : { Opaque: 'harvey' },
+
+    metal               : { Opaque: 'rainbow_blue' },
 
     car                 : { Opaque: 'pure_lust' },
     chrome              : { Mirror: ['expresso', 0.3] },
