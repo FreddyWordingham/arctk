@@ -8,4 +8,6 @@ pub enum Attribute<'a> {
     Opaque(&'a Gradient),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
+    /// Partially transparent, transmission fraction.
+    Transparent(f64),
 }
