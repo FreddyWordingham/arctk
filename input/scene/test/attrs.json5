@@ -7,6 +7,7 @@
 
     solar               : { Opaque: 'wiretap' },
 
+    water               : { Mirror: 0.9 },
 
     // evening_sunshine    : { Opaque: 'evening_sunshine' },
     // dark_ocean          : { Opaque: 'dark_ocean' },
@@ -28,5 +29,4 @@
     // king_yna            : { Opaque: 'king_yna' },
 
     // solar   : { Opaque: 'sunset' },
-    // mirror  : { Mirror: 0.9 },
 }

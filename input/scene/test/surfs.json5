@@ -149,7 +149,7 @@
     },
     puddle      : {
         mesh    : [["res/get_in_loser/puddle.obj"], null],
-        attr    : 'plastic'
+        attr    : 'water'
     },
     rails       : {
         mesh    : [["res/get_in_loser/rails.obj"], null],
