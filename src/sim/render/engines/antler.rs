@@ -4,7 +4,7 @@ use crate::{
     img::{Colour, Gradient},
     math::Dir3,
     phys::Crossing,
-    sim::render::{lighting, shadowing, travel, Attribute, Input, Output, Tracer},
+    sim::render::{lighting, shadowing, Attribute, Input, Output, Tracer},
 };
 use rand::rngs::ThreadRng;
 use std::time::Instant;
@@ -16,7 +16,7 @@ pub fn antler(
     input: &Input,
     mut _rng: &mut ThreadRng,
     mut trace: Tracer,
-    mut data: &mut Output,
+    data: &mut Output,
     pixel: [usize; 2],
 ) {
     // Watch time.
@@ -41,22 +41,20 @@ pub fn antler(
         let norm = hit.side().norm();
         match *hit.tag() {
             Attribute::Opaque(grad) => {
-                travel(&mut trace, &mut data, pixel, hit.dist() - bump_dist);
-                colour(input, &trace, norm, grad, data, pixel);
+                trace.ray_mut().travel(hit.dist());
+                colour(input, &mut trace, norm, grad, data, pixel, 1.0);
                 break;
             }
-            Attribute::Mirror(_grad, ref_frac) => {
-                travel(&mut trace, &mut data, pixel, hit.dist() = bump_dist);
-                *trace.weight_mut() *= ref_frac;
-                colour(input, &trace, norm, grad, data, pixel);
+            Attribute::Mirror(grad, abs_frac) => {
+                trace.ray_mut().travel(hit.dist());
+                colour(input, &mut trace, norm, grad, data, pixel, abs_frac);
                 *trace.ray_mut().dir_mut() = Crossing::calc_ref_dir(trace.ray().dir(), norm);
-                travel(&mut trace, &mut data, pixel, 2.0 * bump_dist);
+                trace.ray_mut().travel(bump_dist);
             }
-            Attribute::Transparent(_grad, trans_frac) => {
-                travel(&mut trace, &mut data, pixel, hit.dist() - bump_dist);
-                *trace.weight_mut() *= trans_frac;
-                colour(input, &trace, norm, grad, data, pixel);
-                travel(&mut trace, &mut data, pixel, 2.0 * bump_dist);
+            Attribute::Transparent(grad, abs_frac) => {
+                trace.ray_mut().travel(hit.dist());
+                colour(input, &mut trace, norm, grad, data, pixel, abs_frac);
+                trace.ray_mut().travel(bump_dist);
             }
         }
     }
@@ -70,12 +68,16 @@ pub fn antler(
 #[inline]
 fn colour(
     input: &Input,
-    trace: &Tracer,
+    trace: &mut Tracer,
     norm: &Dir3,
     grad: &Gradient,
     data: &mut Output,
     pixel: [usize; 2],
+    abs_frac: f64,
 ) {
+    debug_assert!(abs_frac > 0.0);
+    debug_assert!(abs_frac < 1.0);
+
     // Colour calculation.
     let shadow = shadowing(input, trace.ray(), norm);
     let light = lighting(input, trace.ray(), norm);
@@ -84,8 +86,9 @@ fn colour(
     // let col = Gradient::new(vec![Colour::new(0.0, 0.0, 0.0, 1.0), base_col]).get(shadow as f32);
     let col = Gradient::new(vec![Colour::default(), base_col]).get(shadow as f32);
 
-    // Data recording.
-    let weight = trace.weight();
+    // Weighting.
+    let weight = trace.weight() * abs_frac;
+    *trace.weight_mut() *= 1.0 - abs_frac;
 
     // Data recording.
     data.light[pixel] += light * weight;
