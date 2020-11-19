@@ -14,6 +14,8 @@ pub struct Shader {
     spec_pow: i32,
     /// Lighting and shadowing occlusion testing distances.
     occ_dist: [f64; 2],
+    /// Effect fall-off rate.
+    fall_off: f64,
 }
 
 impl Shader {
@@ -22,6 +24,7 @@ impl Shader {
     access!(shadow, [f64; 3]);
     clone!(spec_pow, i32);
     access!(occ_dist, [f64; 2]);
+    clone!(fall_off, f64);
 
     /// Construct a new instance.
     #[inline]
@@ -32,6 +35,7 @@ impl Shader {
         shadow: [f64; 3],
         spec_pow: i32,
         occ_dist: [f64; 2],
+        fall_off: f64,
     ) -> Self {
         debug_assert!(light[0] > 0.0);
         debug_assert!(light[1] > 0.0);
@@ -42,6 +46,7 @@ impl Shader {
         debug_assert!(spec_pow > 0);
         debug_assert!(occ_dist[0] > 0.0);
         debug_assert!(occ_dist[1] > 0.0);
+        debug_assert!(fall_off > 0.0);
 
         let light_total = light[0] + light[1] + light[2];
         let shadow_total = shadow[0] + shadow[1] + shadow[2];
@@ -60,6 +65,7 @@ impl Shader {
             ],
             spec_pow,
             occ_dist,
+            fall_off,
         }
     }
 }

@@ -57,6 +57,7 @@ fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) ->
 
     let super_samples = input.cam.num_super_samples();
     let ss_power = input.cam.ss_power();
+    let init_weight = 1.0 / super_samples as f64;
 
     let block_size = input.sett.block_size();
     while let Some((start, end)) = {
@@ -72,7 +73,7 @@ fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) ->
             let pixel = [p % res[X], p / res[X]];
             let ss = [s % ss_power, s / ss_power];
 
-            let tracer = Tracer::new(input.cam.emit(pixel, ss));
+            let tracer = Tracer::new(input.cam.emit(pixel, ss), init_weight);
             engine(input, &mut rng, tracer, &mut data, pixel);
         }
     }

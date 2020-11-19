@@ -23,6 +23,8 @@ pub struct ShaderBuilder {
     spec_pow: i32,
     /// Lighting and shadowing occlusion testing distances.
     occ_dist: [f64; 2],
+    /// Effect fall-off rate.
+    fall_off: f64,
 }
 
 impl Build for ShaderBuilder {
@@ -36,6 +38,7 @@ impl Build for ShaderBuilder {
             self.shadow,
             self.spec_pow,
             self.occ_dist,
+            self.fall_off,
         ))
     }
 }

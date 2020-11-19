@@ -24,8 +24,8 @@ pub struct Output<'a> {
     pub light: Array2<f64>,
     /// Shadowing factors.
     pub shadow: Array2<f64>,
-    /// Block colouring.
-    pub block_colour: Image,
+    /// Colouring.
+    pub colour: Image,
     /// Colouring gradient.
     grad: &'a Gradient,
 }
@@ -44,7 +44,7 @@ impl<'a> Output<'a> {
             final_norm: Array2::default(res),
             light: Array2::zeros(res),
             shadow: Array2::zeros(res),
-            block_colour: Image::new_blank(res, Colour::default()),
+            colour: Image::new_blank(res, Colour::default()),
             grad,
         }
     }
@@ -58,7 +58,7 @@ impl<'a> AddAssign<&Self> for Output<'a> {
         self.final_norm += &rhs.final_norm;
         self.light += &rhs.light;
         self.shadow += &rhs.shadow;
-        self.block_colour += &rhs.block_colour;
+        self.colour += &rhs.colour;
     }
 }
 
@@ -92,6 +92,6 @@ impl<'a> Save for Output<'a> {
         Image::new(self.shadow.map(|x| self.grad.get((*x / max_shadow) as f32)))
             .save(&out_dir.join("shadow.png"))?;
 
-        self.block_colour.save(&out_dir.join("block_colour.png"))
+        self.colour.save(&out_dir.join("colour.png"))
     }
 }

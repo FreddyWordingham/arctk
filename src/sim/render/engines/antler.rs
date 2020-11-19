@@ -40,13 +40,13 @@ pub fn antler(
         let norm = hit.side().norm();
         match *hit.tag() {
             Attribute::Opaque(grad) => {
-                travel(&mut trace, &mut data, pixel, hit.dist());
+                travel(&mut trace, &mut data, pixel, hit.dist() - bump_dist);
                 let shadow = shadowing(input, trace.ray(), norm);
                 let light = lighting(input, trace.ray(), norm);
                 data.light[pixel] += light;
                 data.shadow[pixel] += shadow;
-                data.final_norm[pixel] += hit.side().norm().as_ref();
-                data.block_colour.pixels_mut()[pixel] += Gradient::new(vec![
+                data.final_norm[pixel] += norm.as_ref();
+                data.colour.pixels_mut()[pixel] += Gradient::new(vec![
                     Colour::new(0.0, 0.0, 0.0, 0.0),
                     grad.get(light as f32),
                 ])

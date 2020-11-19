@@ -18,7 +18,8 @@ pub fn lighting(input: &Input, ray: &Ray, norm: &Dir3) -> f64 {
     let ref_dir = Crossing::calc_ref_dir(ray.dir(), norm);
 
     let [ambient, mut diffuse, mut specular] = input.shader.light();
-    diffuse *= norm.dot(&light_dir).max(0.0);
+    // diffuse *= norm.dot(&light_dir).max(0.0);
+    diffuse *= norm.dot(&light_dir).abs();
     specular *= view_dir
         .dot(&ref_dir)
         .max(0.0)

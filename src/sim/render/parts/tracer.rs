@@ -18,7 +18,10 @@ impl Tracer {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(ray: Ray) -> Self {
-        Self { ray, weight: 1.0 }
+    pub const fn new(ray: Ray, weight: f64) -> Self {
+        debug_assert!(weight > 0.0);
+        debug_assert!(weight <= 1.0);
+
+        Self { ray, weight }
     }
 }
