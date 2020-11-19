@@ -9,6 +9,8 @@
 
     water               : { Mirror: 0.9 },
 
+    cloud               : { Transparent: 0.5 },
+
     // evening_sunshine    : { Opaque: 'evening_sunshine' },
     // dark_ocean          : { Opaque: 'dark_ocean' },
     // harvey              : { Opaque: 'harvey' },

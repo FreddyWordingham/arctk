@@ -129,11 +129,11 @@
     },
     planet_clouds_0     : {
         mesh    : [["res/get_in_loser/planet_clouds_0.obj"], null],
-        attr    : 'plastic'
+        attr    : 'cloud'
     },
     planet_clouds_1     : {
         mesh    : [["res/get_in_loser/planet_clouds_1.obj"], null],
-        attr    : 'plastic'
+        attr    : 'cloud'
     },
     planet_land     : {
         mesh    : [["res/get_in_loser/planet_land.obj"], null],

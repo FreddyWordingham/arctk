@@ -3,5 +3,5 @@
     light       : [0.4, 0.4, 0.2],
     shadow      : [0.4, 0.4, 0.2],
     spec_pow    : 4,
-    occ_dist    : [100, 100],
+    occ_dist    : [400, 400],
 }
