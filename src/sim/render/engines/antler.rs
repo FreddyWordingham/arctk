@@ -1,6 +1,10 @@
 //! Pixel-sampling engine function.
 
-use crate::sim::render::{lighting, shadowing, travel, Attribute, Input, Output, Tracer};
+use crate::{
+    img::{Colour, Gradient},
+    phys::Crossing,
+    sim::render::{lighting, shadowing, travel, Attribute, Input, Output, Tracer},
+};
 use rand::rngs::ThreadRng;
 use std::time::Instant;
 
@@ -33,23 +37,30 @@ pub fn antler(
         num_loops += 1;
 
         // Handle collision.
+        let norm = hit.side().norm();
         match *hit.tag() {
             Attribute::Opaque(grad) => {
                 travel(&mut trace, &mut data, pixel, hit.dist());
-                let shadow = shadowing(input, trace.ray(), hit.side().norm());
-                let light = lighting(input, trace.ray(), hit.side().norm());
+                let shadow = shadowing(input, trace.ray(), norm);
+                let light = lighting(input, trace.ray(), norm);
                 data.light[pixel] += light;
                 data.shadow[pixel] += shadow;
                 data.final_norm[pixel] += hit.side().norm().as_ref();
-                data.block_colour.pixels_mut()[pixel] +=
-                    grad.get(light as f32) * (shadow * *trace.weight()) as f32;
-                // data.block_colour.pixels_mut()[pixel] += grad.get(0.5) * *trace.weight() as f32;
+                data.block_colour.pixels_mut()[pixel] += Gradient::new(vec![
+                    Colour::new(0.0, 0.0, 0.0, 0.0),
+                    grad.get(light as f32),
+                ])
+                .get(shadow as f32)
+                    * *trace.weight() as f32;
                 break;
             }
-            Attribute::Mirror(..) => {}
+            Attribute::Mirror(ref_frac) => {
+                travel(&mut trace, &mut data, pixel, hit.dist());
+                *trace.weight_mut() *= ref_frac;
+                *trace.ray_mut().dir_mut() = Crossing::calc_ref_dir(trace.ray().dir(), norm);
+                travel(&mut trace, &mut data, pixel, bump_dist);
+            }
         }
-
-        travel(&mut trace, &mut data, pixel, bump_dist);
     }
 
     // Record time.

@@ -1,7 +1,10 @@
 //! Visibility calculation.
 
-use crate::sim::render::{Attribute, Input};
-use crate::{geom::Ray, phys::Crossing};
+use crate::{
+    geom::Ray,
+    phys::Crossing,
+    sim::render::{Attribute, Input},
+};
 
 /// Calculate the occlusion experienced over a distance along ray.
 /// Zero indicates full occlusion.
@@ -9,8 +12,6 @@ use crate::{geom::Ray, phys::Crossing};
 #[inline]
 #[must_use]
 pub fn occlusion(input: &Input, mut ray: Ray, mut dist: f64) -> f64 {
-    // debug_assert!(vis > 0.0);
-    // debug_assert!(vis <= 1.0);
     debug_assert!(dist > 0.0);
 
     let bump_dist = input.sett.bump_dist();
@@ -41,7 +42,7 @@ pub fn occlusion(input: &Input, mut ray: Ray, mut dist: f64) -> f64 {
         // Handle collision.
         match *hit.tag() {
             Attribute::Opaque(..) => {
-                return 0.0;
+                return 1.0 / (vis + 1.0);
             }
             Attribute::Mirror(ref_frac) => {
                 ray.travel(dist);

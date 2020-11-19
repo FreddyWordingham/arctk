@@ -13,7 +13,7 @@ pub struct Tracer {
 
 impl Tracer {
     access!(ray, ray_mut, Ray);
-    access!(weight, f64);
+    access!(weight, weight_mut, f64);
 
     /// Construct a new instance.
     #[inline]

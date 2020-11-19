@@ -1,7 +1,10 @@
 //! Shadowing calculation.
 
-use crate::sim::render::{occlusion, Input};
-use crate::{geom::Ray, math::Dir3};
+use crate::{
+    geom::Ray,
+    math::Dir3,
+    sim::render::{occlusion, Input},
+};
 
 /// Calculate the shadowing factor.
 /// Zero completely enshrouded.
