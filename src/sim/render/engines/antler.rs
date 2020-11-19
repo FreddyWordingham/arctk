@@ -60,6 +60,11 @@ pub fn antler(
                 *trace.ray_mut().dir_mut() = Crossing::calc_ref_dir(trace.ray().dir(), norm);
                 travel(&mut trace, &mut data, pixel, bump_dist);
             }
+            Attribute::Transparent(trans_frac) => {
+                travel(&mut trace, &mut data, pixel, hit.dist());
+                *trace.weight_mut() *= trans_frac;
+                travel(&mut trace, &mut data, pixel, bump_dist);
+            }
         }
     }
 

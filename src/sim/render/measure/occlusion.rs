@@ -50,6 +50,11 @@ pub fn occlusion(input: &Input, mut ray: Ray, mut dist: f64) -> f64 {
                 *ray.dir_mut() = Crossing::calc_ref_dir(ray.dir(), hit.side().norm());
                 ray.travel(bump_dist);
             }
+            Attribute::Transparent(trans_frac) => {
+                ray.travel(dist);
+                vis *= trans_frac;
+                ray.travel(bump_dist);
+            }
         }
     }
 
