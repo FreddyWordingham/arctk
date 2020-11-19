@@ -25,8 +25,10 @@ pub struct ShaderBuilder {
     occ_dist: [f64; 2],
     /// Effect fall-off rate.
     fall_off: f64,
-    /// Optional soft and ambient shadowing.
-    shadowing_samples: Option<[i32; 2]>,
+    /// Optional number of soft shadowing samples, and angular radius [deg].
+    soft_shadow_samples: Option<(i32, f64)>,
+    /// Optional number of soft shadowing samples.
+    ambient_shadow_samples: Option<i32>,
 }
 
 impl Build for ShaderBuilder {
@@ -34,6 +36,12 @@ impl Build for ShaderBuilder {
 
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
+        let soft_shadow_samples = if let Some((samples, rad)) = self.soft_shadow_samples {
+            Some((samples, rad.to_radians()))
+        } else {
+            None
+        };
+
         Ok(Self::Inst::new(
             Pos3::new(self.sun_pos[X], self.sun_pos[Y], self.sun_pos[Z]),
             self.light,
@@ -41,7 +49,8 @@ impl Build for ShaderBuilder {
             self.spec_pow,
             self.occ_dist,
             self.fall_off,
-            self.shadowing_samples,
+            soft_shadow_samples,
+            self.ambient_shadow_samples,
         ))
     }
 }

@@ -2,9 +2,10 @@
 
 use crate::{
     geom::Ray,
-    math::Dir3,
+    math::{rand_circle_point, Dir3},
     sim::render::{occlusion, Input},
 };
+// use std::f64::consts::PI;
 
 /// Calculate the shadowing factor.
 /// Zero completely enshrouded.
@@ -19,5 +20,20 @@ pub fn shadowing(input: &Input, ray: &Ray, norm: &Dir3) -> f64 {
     light_ray.travel(bump_dist);
     *light_ray.dir_mut() = sun_dir;
 
-    occlusion(input, light_ray, input.shader.occ_dist()[1])
+    let solar = if let Some((samples, rad)) = *input.shader.soft_shadow_samples() {
+        // let offset = rng.gen_range(0.0, 2.0 * PI); TODO
+        let offset = 0.0;
+        let mut total = 0.0;
+        for n in 0..samples {
+            let (r, theta) = rand_circle_point(n, samples);
+            let mut soft_ray = light_ray.clone();
+            soft_ray.rotate(r * rad, theta + offset);
+            total += occlusion(input, soft_ray, input.shader.occ_dist()[1]);
+        }
+        total / samples as f64
+    } else {
+        occlusion(input, light_ray, input.shader.occ_dist()[1])
+    };
+
+    solar
 }

@@ -16,8 +16,10 @@ pub struct Shader {
     occ_dist: [f64; 2],
     /// Effect fall-off rate.
     fall_off: f64,
-    /// Optional soft and ambient shadowing.
-    shadowing_samples: Option<[i32; 2]>,
+    /// Optional number of soft shadowing samples, and angular radius [rad].
+    soft_shadow_samples: Option<(i32, f64)>,
+    /// Optional number of soft shadowing samples.
+    ambient_shadow_samples: Option<i32>,
 }
 
 impl Shader {
@@ -27,7 +29,8 @@ impl Shader {
     clone!(spec_pow, i32);
     access!(occ_dist, [f64; 2]);
     clone!(fall_off, f64);
-    access!(shadowing_samples, Option<[i32; 2]>);
+    access!(soft_shadow_samples, Option<(i32, f64)>);
+    access!(ambient_shadow_samples, Option<i32>);
 
     /// Construct a new instance.
     #[inline]
@@ -39,7 +42,8 @@ impl Shader {
         spec_pow: i32,
         occ_dist: [f64; 2],
         fall_off: f64,
-        shadowing_samples: Option<[i32; 2]>,
+        soft_shadow_samples: Option<(i32, f64)>,
+        ambient_shadow_samples: Option<i32>,
     ) -> Self {
         debug_assert!(light[0] > 0.0);
         debug_assert!(light[1] > 0.0);
@@ -51,6 +55,9 @@ impl Shader {
         debug_assert!(occ_dist[0] > 0.0);
         debug_assert!(occ_dist[1] > 0.0);
         debug_assert!(fall_off > 0.0);
+        debug_assert!(soft_shadow_samples.is_none() || soft_shadow_samples.unwrap().0 > 1);
+        debug_assert!(soft_shadow_samples.is_none() || soft_shadow_samples.unwrap().1 > 0.0);
+        debug_assert!(ambient_shadow_samples.is_none() || ambient_shadow_samples.unwrap() > 1);
 
         let light_total = light[0] + light[1] + light[2];
         let shadow_total = shadow[0] + shadow[1] + shadow[2];
@@ -70,7 +77,8 @@ impl Shader {
             spec_pow,
             occ_dist,
             fall_off,
-            shadowing_samples,
+            soft_shadow_samples,
+            ambient_shadow_samples,
         }
     }
 }
