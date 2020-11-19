@@ -47,23 +47,23 @@ pub fn antler(
         match *hit.tag() {
             Attribute::Opaque(grad) => {
                 trace.ray_mut().travel(hit.dist());
-                colour(input, &mut trace, norm, grad, data, pixel, 1.0);
+                colour(input, rng, &mut trace, norm, grad, data, pixel, 1.0);
                 break;
             }
             Attribute::Mirror(grad, abs_frac) => {
                 trace.ray_mut().travel(hit.dist());
-                colour(input, &mut trace, norm, grad, data, pixel, abs_frac);
+                colour(input, rng, &mut trace, norm, grad, data, pixel, abs_frac);
                 *trace.ray_mut().dir_mut() = Crossing::calc_ref_dir(trace.ray().dir(), norm);
                 trace.ray_mut().travel(bump_dist);
             }
             Attribute::Transparent(grad, abs_frac) => {
                 trace.ray_mut().travel(hit.dist());
-                colour(input, &mut trace, norm, grad, data, pixel, abs_frac);
+                colour(input, rng, &mut trace, norm, grad, data, pixel, abs_frac);
                 trace.ray_mut().travel(bump_dist);
             }
             Attribute::Refractive(grad, abs_frac, [inside, outside]) => {
                 trace.ray_mut().travel(hit.dist());
-                colour(input, &mut trace, norm, grad, data, pixel, abs_frac);
+                colour(input, rng, &mut trace, norm, grad, data, pixel, abs_frac);
 
                 let [curr, next] = if hit.side().is_inside() {
                     [inside, outside]
@@ -100,6 +100,7 @@ pub fn antler(
 #[inline]
 fn colour(
     input: &Input,
+    rng: &mut ThreadRng,
     trace: &mut Tracer,
     norm: &Dir3,
     grad: &Gradient,
@@ -111,7 +112,7 @@ fn colour(
     debug_assert!(abs_frac <= 1.0);
 
     // Colour calculation.
-    let shadow = shadowing(input, trace.ray(), norm);
+    let shadow = shadowing(input, rng, trace.ray(), norm);
     let light = lighting(input, trace.ray(), norm);
     let base_col = grad.get(light as f32);
     // let col = Gradient::new(vec![Colour::new(0.0, 0.0, 0.0, 0.0), base_col]).get(shadow as f32);

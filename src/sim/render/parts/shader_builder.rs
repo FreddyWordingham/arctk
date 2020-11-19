@@ -17,8 +17,8 @@ pub struct ShaderBuilder {
     sun_pos: [f64; 3],
     /// Relative ambient, diffuse, and occlusion lighting powers.
     light: [f64; 3],
-    /// Relative ambient, diffuse, and occlusion shadowing powers.
-    shadow: [f64; 3],
+    /// Relative ambient and direct shadowing powers.
+    shadow: [f64; 2],
     /// Ambient lighting fraction.
     spec_pow: i32,
     /// Lighting and shadowing occlusion testing distances.
@@ -27,8 +27,8 @@ pub struct ShaderBuilder {
     fall_off: f64,
     /// Optional number of soft shadowing samples, and angular radius [deg].
     soft_shadow_samples: Option<(i32, f64)>,
-    /// Optional number of soft shadowing samples.
-    ambient_shadow_samples: Option<i32>,
+    /// Optional number of ambient shadowing samples and the scaling power.
+    ambient_shadow_samples: Option<(i32, i32)>,
 }
 
 impl Build for ShaderBuilder {
