@@ -27,7 +27,7 @@ impl Shader {
     clone!(spec_pow, i32);
     access!(occ_dist, [f64; 2]);
     clone!(fall_off, f64);
-    access!(shadowing_samples, Option<[f64; 2]>);
+    access!(shadowing_samples, Option<[i32; 2]>);
 
     /// Construct a new instance.
     #[inline]
@@ -39,7 +39,7 @@ impl Shader {
         spec_pow: i32,
         occ_dist: [f64; 2],
         fall_off: f64,
-        shadowing_samples: Option<[f64; 2]>,
+        shadowing_samples: Option<[i32; 2]>,
     ) -> Self {
         debug_assert!(light[0] > 0.0);
         debug_assert!(light[1] > 0.0);
