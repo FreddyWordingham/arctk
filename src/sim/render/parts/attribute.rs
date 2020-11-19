@@ -10,4 +10,6 @@ pub enum Attribute<'a> {
     Mirror(&'a Gradient, f64),
     /// Partially transparent, absorption fraction.
     Transparent(&'a Gradient, f64),
+    /// Refractive, absorption fraction, inside and outside refractive indices.
+    Refractive(&'a Gradient, f64, [f64; 2]),
 }
