@@ -76,7 +76,7 @@ fn colour(
     abs_frac: f64,
 ) {
     debug_assert!(abs_frac > 0.0);
-    debug_assert!(abs_frac < 1.0);
+    debug_assert!(abs_frac <= 1.0);
 
     // Colour calculation.
     let shadow = shadowing(input, trace.ray(), norm);
