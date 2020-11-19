@@ -14,7 +14,7 @@ use std::time::Instant;
 #[inline]
 pub fn antler(
     input: &Input,
-    mut _rng: &mut ThreadRng,
+    rng: &mut ThreadRng,
     mut trace: Tracer,
     data: &mut Output,
     pixel: [usize; 2],
@@ -54,6 +54,31 @@ pub fn antler(
             Attribute::Transparent(grad, abs_frac) => {
                 trace.ray_mut().travel(hit.dist());
                 colour(input, &mut trace, norm, grad, data, pixel, abs_frac);
+                trace.ray_mut().travel(bump_dist);
+            }
+            Attribute::Refractive(grad, abs_frac, [inside, outside]) => {
+                trace.ray_mut().travel(hit.dist());
+                colour(input, &mut trace, norm, grad, data, pixel, abs_frac);
+
+                let [curr, next] = if hit.side().is_inside() {
+                    [inside, outside]
+                } else {
+                    [outside, inside]
+                };
+                let crossing = Crossing::new(trace.ray().dir(), norm, curr, next);
+
+                // Transmission ray.
+                if let Some(trans_dir) = *crossing.trans_dir() {
+                    let mut trans_trace = trace.clone();
+                    *trans_trace.ray_mut().dir_mut() = trans_dir;
+                    trace.ray_mut().travel(bump_dist);
+
+                    *trans_trace.weight_mut() *= crossing.trans_prob();
+                    antler(input, rng, trans_trace, data, pixel);
+                }
+
+                // Continuing reflection ray.
+                *trace.weight_mut() *= crossing.ref_prob();
                 trace.ray_mut().travel(bump_dist);
             }
         }

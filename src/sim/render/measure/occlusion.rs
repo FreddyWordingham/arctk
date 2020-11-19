@@ -55,6 +55,10 @@ pub fn occlusion(input: &Input, mut ray: Ray, mut dist: f64) -> f64 {
                 ray.travel(dist + bump_dist);
                 vis *= 1.0 - abs_frac;
             }
+            Attribute::Refractive(.., abs_frac, [_inside, _outside]) => {
+                ray.travel(dist + bump_dist);
+                vis *= 1.0 - abs_frac;
+            }
         }
     }
 
