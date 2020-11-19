@@ -7,15 +7,15 @@
 
     solar               : { Opaque: 'wiretap' },
 
-    water               : { Mirror: 0.6 },
+    water               : { Mirror: ['amin', 0.6] },
 
-    cloud               : { Transparent: 0.5 },
+    cloud               : { Transparent: ['evening_night', 0.5] },
     ground              : { Opaque: 'rainbow_blue' },
 
     car                 : { Opaque: 'pure_lust' },
-    chrome              : { Mirror: 0.3 },
-    glass               : { Transparent: 0.2 },
-    mirror              : { Mirror: 0.8 },
+    chrome              : { Mirror: ['expresso', 0.3] },
+    glass               : { Transparent: ['magic', 0.2] },
+    mirror              : { Mirror: ['expresso', 0.8] },
 
     seeds               : { Opaque: 'evening_sunshine' },
     greens              : { Opaque: 'misty_meadow' },
@@ -25,7 +25,7 @@
 
     dino_skin           : { Opaque: 'wiretap' },
 
-    text                : { Mirror: 0.9 },
+    text                : { Mirror: ['jshine', 0.9] },
 
     // harvey              : { Opaque: 'harvey' },
     // witching_hour       : { Opaque: 'witching_hour' },
