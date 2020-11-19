@@ -22,6 +22,7 @@ pub fn antler(
     let start_time = Instant::now();
 
     // Common constants.
+    let contribution = 1.0 / input.cam.num_super_samples() as f64;
     let bump_dist = input.sett.bump_dist();
     let loop_limit = input.sett.loop_limit();
     let _min_weight = input.sett.min_weight();
@@ -51,7 +52,7 @@ pub fn antler(
                     grad.get(light as f32),
                 ])
                 .get(shadow as f32)
-                    * *trace.weight() as f32;
+                    * (contribution * *trace.weight()) as f32;
                 break;
             }
             Attribute::Mirror(ref_frac) => {
