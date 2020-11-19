@@ -6,8 +6,8 @@ use crate::img::Gradient;
 pub enum Attribute<'a> {
     /// Opaque coloured surface.
     Opaque(&'a Gradient),
-    /// Partially reflective mirror, reflection fraction.
+    /// Partially reflective mirror, absorption fraction.
     Mirror(&'a Gradient, f64),
-    /// Partially transparent, transmission fraction.
+    /// Partially transparent, absorption fraction.
     Transparent(&'a Gradient, f64),
 }
