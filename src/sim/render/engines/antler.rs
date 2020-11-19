@@ -76,14 +76,16 @@ pub fn antler(
                 if let Some(trans_dir) = *crossing.trans_dir() {
                     let mut trans_trace = trace.clone();
                     *trans_trace.ray_mut().dir_mut() = trans_dir;
-                    trace.ray_mut().travel(bump_dist);
+                    trans_trace.ray_mut().travel(bump_dist);
 
                     *trans_trace.weight_mut() *= crossing.trans_prob();
                     antler(input, rng, trans_trace, data, pixel);
+                    break;
                 }
 
                 // Continuing reflection ray.
                 *trace.weight_mut() *= crossing.ref_prob();
+                *trace.ray_mut().dir_mut() = *crossing.ref_dir();
                 trace.ray_mut().travel(bump_dist);
             }
         }
