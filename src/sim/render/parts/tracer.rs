@@ -1,6 +1,6 @@
 //! Colour particle.
 
-use crate::{access, geom::Ray};
+use crate::{access, clone, geom::Ray};
 
 /// Colour particle.
 #[derive(Clone)]
@@ -13,12 +13,18 @@ pub struct Tracer {
 
 impl Tracer {
     access!(ray, ray_mut, Ray);
-    access!(weight, weight_mut, f64);
+    clone!(weight, weight_mut, f64);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(ray: Ray) -> Self {
-        Self { ray, weight: 1.0 }
+    pub fn new(ray: Ray, init_weight: f64) -> Self {
+        debug_assert!(init_weight > 0.0);
+        debug_assert!(init_weight <= 1.0);
+
+        Self {
+            ray,
+            weight: init_weight,
+        }
     }
 }
