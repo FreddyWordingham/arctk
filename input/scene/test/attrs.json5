@@ -7,12 +7,26 @@
 
     solar               : { Opaque: 'wiretap' },
 
-    water               : { Mirror: 0.9 },
+    water               : { Mirror: 0.6 },
 
     cloud               : { Transparent: 0.5 },
+    ground              : { Opaque: 'rainbow_blue' },
 
-    // evening_sunshine    : { Opaque: 'evening_sunshine' },
-    // dark_ocean          : { Opaque: 'dark_ocean' },
+    car                 : { Opaque: 'pure_lust' },
+    chrome              : { Mirror: 0.3 },
+    glass               : { Transparent: 0.2 },
+    mirror              : { Mirror: 0.8 },
+
+    seeds               : { Opaque: 'evening_sunshine' },
+    greens              : { Opaque: 'misty_meadow' },
+    petals              : { Opaque: 'king_yna' },
+
+    candy               : { Opaque: 'by_design' },
+
+    dino_skin           : { Opaque: 'wiretap' },
+
+    text                : { Mirror: 0.9 },
+
     // harvey              : { Opaque: 'harvey' },
     // witching_hour       : { Opaque: 'witching_hour' },
     // jshine              : { Opaque: 'jshine' },
@@ -24,7 +38,7 @@
     // evening_night       : { Opaque: 'evening_night' },
     // magic               : { Opaque: 'magic' },
     // by_design           : { Opaque: 'by_design' },
-    // wedding_day_blues   : { Opaque: 'wedding_day_blues' },
+    dimension   : { Opaque: 'wedding_day_blues' },
     // pure_lust           : { Opaque: 'pure_lust' },
     // rastafari           : { Opaque: 'rastafari' },
     // rainbow_blue        : { Opaque: 'rainbow_blue' },

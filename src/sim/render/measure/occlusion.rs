@@ -45,13 +45,13 @@ pub fn occlusion(input: &Input, mut ray: Ray, mut dist: f64) -> f64 {
                 return vis / dist.mul_add(input.shader.fall_off(), 1.0);
                 // return 0.0;
             }
-            Attribute::Mirror(ref_frac) => {
+            Attribute::Mirror(.., ref_frac) => {
                 ray.travel(dist);
                 vis *= ref_frac;
                 *ray.dir_mut() = Crossing::calc_ref_dir(ray.dir(), hit.side().norm());
                 ray.travel(bump_dist);
             }
-            Attribute::Transparent(trans_frac) => {
+            Attribute::Transparent(.., trans_frac) => {
                 ray.travel(dist + bump_dist);
                 vis *= trans_frac;
             }

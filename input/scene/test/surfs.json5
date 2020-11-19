@@ -13,15 +13,15 @@
     },
     car_body    : {
         mesh    : [["res/get_in_loser/car_body.obj"], null],
-        attr    : 'plastic'
+        attr    : 'car'
     },
     car_details : {
         mesh    : [["res/get_in_loser/car_details.obj"], null],
-        attr    : 'plastic'
+        attr    : 'chrome'
     },
     car_glass   : {
         mesh    : [["res/get_in_loser/car_glass.obj"], null],
-        attr    : 'plastic'
+        attr    : 'glass'
     },
     car_mirror  : {
         mesh    : [["res/get_in_loser/car_mirror.obj"], null],
@@ -33,15 +33,15 @@
     // },
     chunks      : {
         mesh    : [["res/get_in_loser/chunks.obj"], null],
-        attr    : 'plastic'
+        attr    : 'candy'
     },
     dino_body_m : {
         mesh    : [["res/get_in_loser/dino_body_m.obj"], null],
-        attr    : 'plastic'
+        attr    : 'dino_skin'
     },
     dino_body_s : {
         mesh    : [["res/get_in_loser/dino_body_s.obj"], null],
-        attr    : 'plastic'
+        attr    : 'dino_skin'
     },
     dino_eyes_m : {
         mesh    : [["res/get_in_loser/dino_eyes_m.obj"], null],
@@ -85,7 +85,7 @@
     },
     hills       : {
         mesh    : [["res/get_in_loser/hills.obj"], null],
-        attr    : 'plastic'
+        attr    : 'ground'
     },
     joe_bottom  : {
         mesh    : [["res/get_in_loser/joe_bottom.obj"], null],
@@ -177,7 +177,7 @@
     // },
     shatter_2   : {
         mesh    : [["res/get_in_loser/shatter_2.obj"], null],
-        attr    : 'plastic'
+        attr    : 'dimension'
     },
     // shatter_3   : {
     //     mesh    : [["res/get_in_loser/shatter_3.obj"], null],
@@ -209,34 +209,34 @@
     },
     sunflower_heads     : {
         mesh    : [["res/get_in_loser/sunflower_heads.obj"], null],
-        attr    : 'plastic'
+        attr    : 'seeds'
     },
     sunflower_leaves    : {
         mesh    : [["res/get_in_loser/sunflower_leaves.obj"], null],
-        attr    : 'plastic'
+        attr    : 'greens'
     },
     sunflower_petals    : {
         mesh    : [["res/get_in_loser/sunflower_petals.obj"], null],
-        attr    : 'plastic'
+        attr    : 'petals'
     },
     sunflower_stems     : {
         mesh    : [["res/get_in_loser/sunflower_stems.obj"], null],
-        attr    : 'plastic'
+        attr    : 'greens'
     },
     text_horizontal_0   : {
         mesh    : [["res/get_in_loser/text_horizontal_0.obj"], null],
-        attr    : 'plastic'
+        attr    : 'text'
     },
     text_horizontal_1   : {
         mesh    : [["res/get_in_loser/text_horizontal_1.obj"], null],
-        attr    : 'plastic'
+        attr    : 'text'
     },
-    // text_vertical_0     : {
-    //     mesh    : [["res/get_in_loser/text_vertical_0.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // text_vertical_1     : {
-    //     mesh    : [["res/get_in_loser/text_vertical_1.obj"], null],
-    //     attr    : 'plastic'
-    // }
+    text_vertical_0     : {
+        mesh    : [["res/get_in_loser/text_vertical_0.obj"], null],
+        attr    : 'text'
+    },
+    text_vertical_1     : {
+        mesh    : [["res/get_in_loser/text_vertical_1.obj"], null],
+        attr    : 'text'
+    }
 }

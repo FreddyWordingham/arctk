@@ -20,4 +20,5 @@
     rainbow_blue        : ['#00F260FF', '#0575E6FF'],
     king_yna            : ['#1a2a6cFF', '#b21f1fFF', '#fdbb2dFF'],
     sel                 : ['#00467FFF', '#A5CC82FF'],
+    misty_meadow        : ['#215f00FF', '#e4e4d9FF'],
 }

@@ -7,7 +7,7 @@ pub enum Attribute<'a> {
     /// Opaque coloured surface.
     Opaque(&'a Gradient),
     /// Partially reflective mirror, reflection fraction.
-    Mirror(f64),
+    Mirror(&'a Gradient, f64),
     /// Partially transparent, transmission fraction.
-    Transparent(f64),
+    Transparent(&'a Gradient, f64),
 }

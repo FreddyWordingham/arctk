@@ -14,9 +14,9 @@ pub enum AttributeLinker {
     /// Opaque coloured surface.
     Opaque(String),
     /// Partially reflective mirror, reflection fraction.
-    Mirror(f64),
+    Mirror(String, f64),
     /// Partially transparent, transmission fraction.
-    Transparent(f64),
+    Transparent(String, f64),
 }
 
 impl<'a> Link<'a, Gradient> for AttributeLinker {
@@ -26,8 +26,8 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
     fn requires(&self) -> Vec<String> {
         match *self {
             Self::Opaque(ref grad) => vec![grad.clone()],
-            Self::Mirror(..) => vec![],
-            Self::Transparent(..) => vec![],
+            Self::Mirror(ref grad) => vec![grad.clone()],
+            Self::Transparent(ref grad) => vec![grad.clone()],
         }
     }
 
@@ -39,8 +39,18 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
                     .get(grad)
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
             ),
-            Self::Mirror(ref_frac) => Attribute::Mirror(ref_frac),
-            Self::Transparent(trans_frac) => Attribute::Transparent(trans_frac),
+            Self::Mirror(ref grad, ref_frac) => Attribute::Mirror(
+                grads
+                    .get(grad)
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
+                ref_frac,
+            ),
+            Self::Transparent(ref grad, trans_frac) => Attribute::Transparent(
+                grads
+                    .get(grad)
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
+                trans_frac,
+            ),
         })
     }
 }
