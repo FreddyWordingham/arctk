@@ -16,6 +16,8 @@ pub struct Shader {
     occ_dist: [f64; 2],
     /// Effect fall-off rate.
     fall_off: f64,
+    /// Optional soft and ambient shadowing.
+    shadowing_samples: Option<[i32; 2]>,
 }
 
 impl Shader {
@@ -25,6 +27,7 @@ impl Shader {
     clone!(spec_pow, i32);
     access!(occ_dist, [f64; 2]);
     clone!(fall_off, f64);
+    access!(shadowing_samples, Option<[f64; 2]>);
 
     /// Construct a new instance.
     #[inline]
@@ -36,6 +39,7 @@ impl Shader {
         spec_pow: i32,
         occ_dist: [f64; 2],
         fall_off: f64,
+        shadowing_samples: Option<[f64; 2]>,
     ) -> Self {
         debug_assert!(light[0] > 0.0);
         debug_assert!(light[1] > 0.0);
@@ -66,6 +70,7 @@ impl Shader {
             spec_pow,
             occ_dist,
             fall_off,
+            shadowing_samples,
         }
     }
 }
