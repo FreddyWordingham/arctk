@@ -1,5 +1,5 @@
 {
-    block_size          : 1e4,
+    block_size          : 1e3,
     bump_dist           : 1e-6,
     // bump_dist           : 1e-3,
     loop_limit          : 1e6,

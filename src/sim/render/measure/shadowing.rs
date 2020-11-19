@@ -48,7 +48,7 @@ pub fn shadowing(input: &Input, rng: &mut ThreadRng, ray: &Ray, norm: &Dir3) -> 
             ambient_ray.rotate(phi, theta + offset);
             total += occlusion(input, ambient_ray, input.shader.occ_dist()[1]);
         }
-        let ambient = total / f64::from(samples).powi(power);
+        let ambient = (total / f64::from(samples)).powi(power);
 
         return ambient.mul_add(input.shader.shadow()[0], solar * input.shader.shadow()[1]);
     };
