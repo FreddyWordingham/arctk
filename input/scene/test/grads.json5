@@ -21,4 +21,13 @@
     wedding_day_blues   : ['#40E0D0FF', '#FF8C00FF', '#FF0080FF'],
     wiretap             : ['#8A2387FF', '#E94057FF', '#F27121FF'],
     witching_hour       : ['#c31432FF', '#240b36FF'],
+    copper              : ['#B79891FF', '#94716BFF'],
+    cool_brown          : ['#603813FF', '#b29f94FF'],
+    red_ocean          : ['#A43931ff', '#603813FF'],
+    // red_ocean          : ['#1D4350ff', '#A43931ff'],
+    namn                : ['#a73737FF', '#7a2828FF'],
+    starfall            : ['#F0C27BFF', '#4B1248FF'],
+    firewatch           : ['#cb2d3eFF', '#ef473aff'],
+    dania               : ['#BE93C5ff', '#7BC6CCff'],
+    atlas               : ['#FEAC5EFF', '#C779D0FF', '#4BC0C8FF'],
 }

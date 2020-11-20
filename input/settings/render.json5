@@ -4,5 +4,5 @@
     // bump_dist           : 1e-3,
     loop_limit          : 1e6,
     min_weight          : 1e-2,
-    sky_grad            : 'greyscale',
+    sky_grad            : 'amin',
 }

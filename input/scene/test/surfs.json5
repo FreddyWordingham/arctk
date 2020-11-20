@@ -1,7 +1,35 @@
 {
+    planet_sea   : {
+        mesh    : [["res/escape/planet_sea.obj"], {trans:[30,0,0]}],
+        attr    : 'sea'
+    },
+    planet_land  : {
+        mesh    : [["res/escape/planet_land.obj"], {trans:[30,0,0]}],
+        attr    : 'earth'
+    },
+    planet_clouds: {
+        mesh    : [["res/escape/planet_clouds.obj"], {trans:[30,0,0]}],
+        attr    : 'cloud'
+    },
+    starfield: {
+        mesh    : [["res/escape/starfield.obj"], null],
+        attr    : 'stars'
+    },
+    bang   : {
+        mesh    : [["res/escape/bang.obj"], null],
+        attr    : 'plasma'
+    },
+    // basin   : {
+    //     mesh    : [["res/escape/basin.obj", "res/escape/sky_city.obj"], null],
+    //     attr    : 'concrete'
+    // },
     basin   : {
-        mesh    : [["res/escape/basin.obj", "res/escape/sky_city.obj", "res/escape/building.obj"], null],
+        mesh    : [["res/escape/sky_city.obj"], null],
         attr    : 'concrete'
+    },
+    buildings   : {
+        mesh    : [["res/escape/building.obj"], null],
+        attr    : 'brick'
     },
     portal   : {
         mesh    : [["res/escape/shatter.obj"], null],
@@ -46,5 +74,21 @@
     joe_head   : {
         mesh    : [["res/escape/joe_head.obj", "res/escape/joe_top.obj", "res/escape/joe_bottom.obj"], null],
         attr    : 'joe'
+    },
+    // core   : {
+    //     mesh    : [["res/escape/core.obj"], null],
+    //     attr    : 'core'
+    // },
+    reflector   : {
+        mesh    : [["res/escape/mirror.obj"], {trans:[-30,0,0]}],
+        attr    : 'reflector'
+    },
+    metal   : {
+        mesh    : [["res/escape/dish.obj"], {trans:[-30,0,0]}],
+        attr    : 'metal'
+    },
+    foil   : {
+        mesh    : [["res/escape/panels.obj"], {trans:[-30,0,0]}],
+        attr    : 'foil'
     },
 }
