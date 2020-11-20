@@ -28,14 +28,28 @@ pub fn antler(
     let loop_limit = input.sett.loop_limit();
     let min_weight = input.sett.min_weight();
 
-    // First hit.
-    if let Some(hit) = input.tree.scan(trace.ray().clone(), bump_dist, 1000.0) {
+    // Main event loop.
+    let mut num_loops = 0;
+    while let Some(hit) = input.tree.scan(trace.ray().clone(), bump_dist, 1000.0) {
+        // Loop limit check.
+        if num_loops >= loop_limit {
+            println!("[WARN] : Terminating tracer: loop limit reached.");
+            break;
+        }
+        num_loops += 1;
+
+        // Weight pruning.
+        if trace.weight() < min_weight {
+            break;
+        }
+
         // Handle collision.
         let norm = hit.side().norm();
         match *hit.tag() {
             Attribute::Opaque(grad) => {
                 trace.ray_mut().travel(hit.dist());
                 colour(input, rng, &mut trace, norm, grad, data, pixel, 1.0);
+                break;
             }
             Attribute::Mirror(grad, abs_frac) => {
                 trace.ray_mut().travel(hit.dist());
@@ -67,6 +81,7 @@ pub fn antler(
 
                     *trans_trace.weight_mut() *= crossing.trans_prob();
                     antler(input, rng, trans_trace, data, pixel);
+                    break;
                 }
 
                 // Continuing reflection ray.
@@ -77,79 +92,9 @@ pub fn antler(
             Attribute::Luminous(grad, bright_mult) => {
                 trace.ray_mut().travel(hit.dist());
                 colour(input, rng, &mut trace, norm, grad, data, pixel, bright_mult);
-            }
-        }
-
-        // Main event loop.
-        let mut num_loops = 0;
-        while let Some(hit) = input.tree.scan(trace.ray().clone(), bump_dist, 1000.0) {
-            // Loop limit check.
-            if num_loops >= loop_limit {
-                println!("[WARN] : Terminating tracer: loop limit reached.");
                 break;
             }
-            num_loops += 1;
-
-            // Weight pruning.
-            if trace.weight() < min_weight {
-                break;
-            }
-
-            // Handle collision.
-            let norm = hit.side().norm();
-            match *hit.tag() {
-                Attribute::Opaque(grad) => {
-                    trace.ray_mut().travel(hit.dist());
-                    colour(input, rng, &mut trace, norm, grad, data, pixel, 1.0);
-                    break;
-                }
-                Attribute::Mirror(grad, abs_frac) => {
-                    trace.ray_mut().travel(hit.dist());
-                    colour(input, rng, &mut trace, norm, grad, data, pixel, abs_frac);
-                    *trace.ray_mut().dir_mut() = Crossing::calc_ref_dir(trace.ray().dir(), norm);
-                    trace.ray_mut().travel(bump_dist);
-                }
-                Attribute::Transparent(grad, abs_frac) => {
-                    trace.ray_mut().travel(hit.dist());
-                    colour(input, rng, &mut trace, norm, grad, data, pixel, abs_frac);
-                    trace.ray_mut().travel(bump_dist);
-                }
-                Attribute::Refractive(grad, abs_frac, [inside, outside]) => {
-                    trace.ray_mut().travel(hit.dist());
-                    colour(input, rng, &mut trace, norm, grad, data, pixel, abs_frac);
-
-                    let [curr, next] = if hit.side().is_inside() {
-                        [inside, outside]
-                    } else {
-                        [outside, inside]
-                    };
-                    let crossing = Crossing::new(trace.ray().dir(), norm, curr, next);
-
-                    // Transmission ray.
-                    if let Some(trans_dir) = *crossing.trans_dir() {
-                        let mut trans_trace = trace.clone();
-                        *trans_trace.ray_mut().dir_mut() = trans_dir;
-                        trans_trace.ray_mut().travel(bump_dist);
-
-                        *trans_trace.weight_mut() *= crossing.trans_prob();
-                        antler(input, rng, trans_trace, data, pixel);
-                        break;
-                    }
-
-                    // Continuing reflection ray.
-                    *trace.weight_mut() *= crossing.ref_prob();
-                    *trace.ray_mut().dir_mut() = *crossing.ref_dir();
-                    trace.ray_mut().travel(bump_dist);
-                }
-                Attribute::Luminous(grad, bright_mult) => {
-                    trace.ray_mut().travel(hit.dist());
-                    colour(input, rng, &mut trace, norm, grad, data, pixel, bright_mult);
-                    break;
-                }
-            }
         }
-    } else {
-        sky_colour(input, trace.ray(), data, pixel);
     }
 
     // Record time.
@@ -161,7 +106,7 @@ pub fn antler(
 #[inline]
 fn sky_colour(input: &Input, ray: &Ray, data: &mut Output, pixel: [usize; 2]) {
     // Colour calculation.
-    let u = 1.0 - ray.dir().z.abs();
+    let u = ray.dir().z.abs();
     let col = input.sett.sky_grad().get(u as f32);
 
     // Data recording.
