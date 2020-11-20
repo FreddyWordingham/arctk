@@ -51,7 +51,7 @@ pub fn single_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>,
 #[must_use]
 fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) -> Output<'a> {
     let res = *input.cam.res();
-    let mut data = Output::new(res, input.sett.sky_grad());
+    let mut data = Output::new(res, input.shader.data_grad());
 
     let mut rng = thread_rng();
 

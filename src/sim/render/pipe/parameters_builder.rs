@@ -6,9 +6,7 @@ use crate::{
     geom::{CameraBuilder, SurfaceBuilder, TreeSettings},
     img::GradientBuilder,
     ord::Set,
-    sim::render::{
-        AttributeLinker, EngineBuilder, ParametersLinker, SettingsLinker, ShaderBuilder,
-    },
+    sim::render::{AttributeLinker, EngineBuilder, ParametersLinker, Settings, ShaderLinker},
 };
 use arctk_attr::load;
 use std::path::Path;
@@ -28,9 +26,9 @@ pub struct ParametersBuilder {
     /// Tree settings.
     tree: Redirect<TreeSettings>,
     /// Rendering specific settings.
-    sett: Redirect<SettingsLinker>,
+    sett: Redirect<Settings>,
     /// Shader settings.
-    shader: Redirect<ShaderBuilder>,
+    shader: Redirect<ShaderLinker>,
     /// Engine selection.
     engine: EngineBuilder,
 }
@@ -46,7 +44,7 @@ impl Build for ParametersBuilder {
         let cam = self.cam.build(in_dir)?.build(in_dir)?;
         let tree = self.tree.build(in_dir)?;
         let sett = self.sett.build(in_dir)?;
-        let shader = self.shader.build(in_dir)?.build(in_dir)?;
+        let shader = self.shader.build(in_dir)?;
         let engine = self.engine.build(in_dir)?;
 
         Ok(Self::Inst::new(

@@ -18,9 +18,9 @@ pub struct Input<'a> {
     /// Hit-scan tree.
     pub tree: &'a Tree<'a, Attribute<'a>>,
     /// General settings.
-    pub sett: &'a Settings<'a>,
+    pub sett: &'a Settings,
     /// Shader settings.
-    pub shader: &'a Shader,
+    pub shader: &'a Shader<'a>,
 }
 
 impl<'a> Input<'a> {

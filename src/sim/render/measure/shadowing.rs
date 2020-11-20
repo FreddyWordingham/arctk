@@ -2,9 +2,7 @@
 
 use crate::{
     geom::Ray,
-    math::{
-        Dir3, {rand_circle_point, rand_hemisphere_point},
-    },
+    math::{rand_circle_point, rand_hemisphere_point, Dir3},
     sim::render::{occlusion, Input},
 };
 use rand::{rngs::ThreadRng, Rng};

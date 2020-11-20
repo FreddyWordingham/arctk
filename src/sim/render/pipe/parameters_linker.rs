@@ -4,7 +4,7 @@ use crate::{
     geom::{Camera, SurfaceLinker, TreeSettings},
     img::Gradient,
     ord::Set,
-    sim::render::{AttributeLinker, Engine, SettingsLinker, Shader},
+    sim::render::{AttributeLinker, Engine, Settings, ShaderLinker},
 };
 
 /// Parameter linker structure.
@@ -21,9 +21,9 @@ pub struct ParametersLinker {
     /// Tree settings.
     pub tree: TreeSettings,
     /// Rendering specific settings.
-    pub sett: SettingsLinker,
+    pub sett: Settings,
     /// Shader settings.
-    pub shader: Shader,
+    pub shader: ShaderLinker,
     /// Engine function.
     pub engine: Engine,
 }
@@ -39,8 +39,8 @@ impl ParametersLinker {
         surfs: Set<SurfaceLinker>,
         cam: Camera,
         tree: TreeSettings,
-        sett: SettingsLinker,
-        shader: Shader,
+        sett: Settings,
+        shader: ShaderLinker,
         engine: Engine,
     ) -> Self {
         Self {

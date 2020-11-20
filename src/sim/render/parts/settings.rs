@@ -1,9 +1,11 @@
 //! Rendering settings.
 
-use crate::{access, clone, img::Gradient};
+use crate::clone;
+use arctk_attr::load;
 
 /// General settings structure.
-pub struct Settings<'a> {
+#[load]
+pub struct Settings {
     /// Number of tracers to simulate in each thread block.
     block_size: usize,
     /// Bump distance [m].
@@ -12,27 +14,18 @@ pub struct Settings<'a> {
     loop_limit: u64,
     /// Minimum statistical weight to consider.
     min_weight: f64,
-    /// Sky colour gradient.
-    sky_grad: &'a Gradient,
 }
 
-impl<'a> Settings<'a> {
+impl Settings {
     clone!(block_size, usize);
     clone!(bump_dist, f64);
     clone!(loop_limit, u64);
     clone!(min_weight, f64);
-    access!(sky_grad, Gradient);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(
-        block_size: usize,
-        bump_dist: f64,
-        loop_limit: u64,
-        min_weight: f64,
-        sky_grad: &'a Gradient,
-    ) -> Self {
+    pub fn new(block_size: usize, bump_dist: f64, loop_limit: u64, min_weight: f64) -> Self {
         debug_assert!(block_size > 0);
         debug_assert!(bump_dist > 0.0);
         debug_assert!(min_weight >= 0.0);
@@ -42,7 +35,6 @@ impl<'a> Settings<'a> {
             bump_dist,
             loop_limit,
             min_weight,
-            sky_grad,
         }
     }
 }

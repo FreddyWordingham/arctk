@@ -107,7 +107,7 @@ pub fn antler(
 fn sky_colour(input: &Input, ray: &Ray, data: &mut Output, pixel: [usize; 2]) {
     // Colour calculation.
     let u = ray.dir().z.abs();
-    let col = input.sett.sky_grad().get(u as f32);
+    let col = input.shader.sky_grad().get(u as f32);
 
     // Data recording.
     data.shadow[pixel] += 1.0;

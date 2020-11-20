@@ -42,8 +42,8 @@ fn main() {
     let surfs = setup.surfs.link(&attrs).expect("Surface link failure.");
     let cam = setup.cam;
     let tree = Tree::new(&setup.tree, &surfs);
-    let sett = setup.sett.link(&grads).expect("Gradient link Failure.");
-    let shader = setup.shader;
+    let sett = setup.sett;
+    let shader = setup.shader.link(&grads).expect("Gradient link Failure.");
     let engine = setup.engine;
     let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader);
 

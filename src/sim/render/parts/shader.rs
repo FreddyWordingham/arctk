@@ -1,9 +1,9 @@
 //! Shader settings.
 
-use crate::{access, clone, math::Pos3};
+use crate::{access, clone, img::Gradient, math::Pos3};
 
 /// Colouring settings.
-pub struct Shader {
+pub struct Shader<'a> {
     /// Sun position used for lighting calculations [m].
     sun_pos: Pos3,
     /// Ambient, diffuse, and occlusion lighting fractions.
@@ -20,9 +20,13 @@ pub struct Shader {
     soft_shadow_samples: Option<(i32, f64)>,
     /// Optional number of ambient shadowing samples and the scaling power.
     ambient_shadow_samples: Option<(i32, i32)>,
+    /// Sky colour gradient.
+    sky_grad: &'a Gradient,
+    /// Data colouring gradient.
+    data_grad: &'a Gradient,
 }
 
-impl Shader {
+impl<'a> Shader<'a> {
     access!(sun_pos, Pos3);
     access!(light, [f64; 3]);
     access!(shadow, [f64; 2]);
@@ -31,6 +35,8 @@ impl Shader {
     clone!(fall_off, f64);
     clone!(soft_shadow_samples, Option<(i32, f64)>);
     clone!(ambient_shadow_samples, Option<(i32, i32)>);
+    access!(sky_grad, Gradient);
+    access!(data_grad, Gradient);
 
     /// Construct a new instance.
     #[inline]
@@ -44,6 +50,8 @@ impl Shader {
         fall_off: f64,
         soft_shadow_samples: Option<(i32, f64)>,
         ambient_shadow_samples: Option<(i32, i32)>,
+        sky_grad: &'a Gradient,
+        data_grad: &'a Gradient,
     ) -> Self {
         debug_assert!(light[0] > 0.0);
         debug_assert!(light[1] > 0.0);
@@ -75,6 +83,8 @@ impl Shader {
             fall_off,
             soft_shadow_samples,
             ambient_shadow_samples,
+            sky_grad,
+            data_grad,
         }
     }
 }
