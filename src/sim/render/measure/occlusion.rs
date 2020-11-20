@@ -43,7 +43,6 @@ pub fn occlusion(input: &Input, mut ray: Ray, mut dist: f64) -> f64 {
         match *hit.tag() {
             Attribute::Opaque(..) => {
                 return vis / dist.mul_add(input.shader.fall_off(), 1.0);
-                // return 0.0;
             }
             Attribute::Mirror(.., abs_frac) => {
                 ray.travel(dist);
@@ -58,6 +57,9 @@ pub fn occlusion(input: &Input, mut ray: Ray, mut dist: f64) -> f64 {
             Attribute::Refractive(.., abs_frac, [_inside, _outside]) => {
                 ray.travel(dist + bump_dist);
                 vis *= 1.0 - abs_frac;
+            }
+            Attribute::Luminous(.., bright_mult) => {
+                return (vis * bright_mult) / dist.mul_add(input.shader.fall_off(), 1.0);
             }
         }
     }

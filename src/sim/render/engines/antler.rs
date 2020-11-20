@@ -88,6 +88,11 @@ pub fn antler(
                 *trace.ray_mut().dir_mut() = *crossing.ref_dir();
                 trace.ray_mut().travel(bump_dist);
             }
+            Attribute::Luminous(grad, bright_mult) => {
+                trace.ray_mut().travel(hit.dist());
+                colour(input, rng, &mut trace, norm, grad, data, pixel, bright_mult);
+                break;
+            }
         }
     }
 
