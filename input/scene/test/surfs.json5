@@ -1,94 +1,35 @@
 {
-    planet_sea   : {
-        mesh    : [["res/escape/planet_sea.obj"], {trans:[30,0,0]}],
-        attr    : 'sea'
-    },
-    planet_land  : {
-        mesh    : [["res/escape/planet_land.obj"], {trans:[30,0,0]}],
-        attr    : 'earth'
-    },
-    planet_clouds: {
-        mesh    : [["res/escape/planet_clouds.obj"], {trans:[30,0,0]}],
-        attr    : 'cloud'
-    },
-    starfield: {
-        mesh    : [["res/escape/starfield.obj"], null],
-        attr    : 'stars'
-    },
-    bang   : {
-        mesh    : [["res/escape/bang.obj"], null],
-        attr    : 'plasma'
-    },
-    basin   : {
-        mesh    : [["res/escape/basin.obj", "res/escape/sky_city.obj"], null],
-        attr    : 'concrete'
-    },
-    basin   : {
-        mesh    : [["res/escape/sky_city.obj"], null],
-        attr    : 'concrete'
-    },
-    buildings   : {
-        mesh    : [["res/escape/building.obj"], null],
-        attr    : 'brick'
-    },
-    portal   : {
-        mesh    : [["res/escape/shatter.obj"], null],
-        attr    : 'portal'
-    },
-    glass   : {
-        mesh    : [["res/escape/glass.obj"], null],
-        attr    : 'glass'
-    },
-    window   : {
-        mesh    : [["res/escape/windows.obj"], null],
-        attr    : 'window'
-    },
-    blimp   : {
-        mesh    : [["res/escape/blimp.obj"], null],
-        attr    : 'canvas'
-    },
-    ship   : {
-        mesh    : [["res/escape/ship.obj"], null],
-        attr    : 'wood'
-    },
-    text   : {
-        mesh    : [["res/escape/text_top.obj", "res/escape/text_bottom.obj", "res/escape/ancor.obj"], null],
-        attr    : 'chrome'
-    },
-    flow   : {
-        mesh    : [["res/escape/flow.obj"], null],
-        attr    : 'water'
-    },
-    rocks   : {
-        mesh    : [["res/escape/rocks_s.obj", "res/escape/rocks_m.obj", "res/escape/rocks_l.obj"], null],
-        attr    : 'rock'
-    },
-    gold   : {
-        mesh    : [["res/escape/gold.obj"], null],
-        attr    : 'gold'
-    },
-    moons   : {
-        mesh    : [["res/escape/moon_s.obj", "res/escape/moon_l.obj"], null],
-        attr    : 'dust'
-    },
-    joe_head   : {
-        mesh    : [["res/escape/joe_head.obj", "res/escape/joe_top.obj", "res/escape/joe_bottom.obj"], null],
-        attr    : 'joe'
-    },
-    // core   : {
-    //     mesh    : [["res/escape/core.obj"], null],
-    //     attr    : 'core'
-    // },
-    reflector   : {
-        mesh    : [["res/escape/mirror.obj"], {trans:[-30,0,0]}],
-        attr    : 'reflector'
-    },
-    metal   : {
-        mesh    : [["res/escape/dish.obj"], {trans:[-30,0,0]}],
-        attr    : 'metal'
-    },
-    foil   : {
-        mesh    : [["res/escape/panels.obj"], {trans:[-30,0,0]}],
-        attr    : 'foil'
-    },
+    ancor       : { attr: 'plastic', mesh: [["res/objs/ancor.obj"], null]},
+    basin       : { attr: 'plastic', mesh: [["res/objs/basin.obj"], null]},
+    blimp       : { attr: 'plastic', mesh: [["res/objs/blimp.obj"], null]},
+    brick       : { attr: 'plastic', mesh: [["res/objs/brick.obj"], null]},
+    circle      : { attr: 'plastic', mesh: [["res/objs/circle.obj"], null]},
+    clouds      : { attr: 'plastic', mesh: [["res/objs/clouds.obj"], null]},
+    cube        : { attr: 'plastic', mesh: [["res/objs/cube.obj"], null]},
+    details     : { attr: 'plastic', mesh: [["res/objs/details.obj"], null]},
+    dish        : { attr: 'plastic', mesh: [["res/objs/dish.obj"], null]},
+    dog         : { attr: 'plastic', mesh: [["res/objs/dog.obj"], null]},
+    glass       : { attr: 'plastic', mesh: [["res/objs/glass.obj"], null]},
+    gold        : { attr: 'plastic', mesh: [["res/objs/gold.obj"], null]},
+    joe_bottom  : { attr: 'plastic', mesh: [["res/objs/joe_bottom.obj"], null]},
+    joe_head    : { attr: 'plastic', mesh: [["res/objs/joe_head.obj"], null]},
+    joe_top     : { attr: 'plastic', mesh: [["res/objs/joe_top.obj"], null]},
+    land        : { attr: 'plastic', mesh: [["res/objs/land.obj"], null]},
+    mirror      : { attr: 'plastic', mesh: [["res/objs/mirror.obj"], null]},
+    mirrors     : { attr: 'plastic', mesh: [["res/objs/mirrors.obj"], null]},
+    moon_l      : { attr: 'plastic', mesh: [["res/objs/moon_l.obj"], null]},
+    moon_s      : { attr: 'plastic', mesh: [["res/objs/moon_s.obj"], null]},
+    panels      : { attr: 'plastic', mesh: [["res/objs/panels.obj"], null]},
+    portal      : { attr: 'plastic', mesh: [["res/objs/portal.obj"], null]},
+    rocks_l     : { attr: 'plastic', mesh: [["res/objs/rocks_l.obj"], null]},
+    rocks_m     : { attr: 'plastic', mesh: [["res/objs/rocks_m.obj"], null]},
+    rocks_s     : { attr: 'plastic', mesh: [["res/objs/rocks_s.obj"], null]},
+    ropes       : { attr: 'plastic', mesh: [["res/objs/ropes.obj"], null]},
+    sea         : { attr: 'plastic', mesh: [["res/objs/sea.obj"], null]},
+    ship        : { attr: 'plastic', mesh: [["res/objs/ship.obj"], null]},
+    solar       : { attr: 'plastic', mesh: [["res/objs/solar.obj"], null]},
+    starfield   : { attr: 'plastic', mesh: [["res/objs/starfield.obj"], null]},
+    text        : { attr: 'plastic', mesh: [["res/objs/text.obj"], null]},
+    water       : { attr: 'plastic', mesh: [["res/objs/water.obj"], null]},
+    windows     : { attr: 'plastic', mesh: [["res/objs/windows.obj"], null]},
 }
