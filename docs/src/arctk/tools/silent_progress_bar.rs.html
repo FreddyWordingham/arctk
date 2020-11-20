@@ -55,16 +55,16 @@
 <span class="doccomment">/// Silent progress-bar structure.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SilentProgressBar</span> {
     <span class="doccomment">/// Current value.</span>
-    <span class="ident">count</span>: <span class="ident">u64</span>,
+    <span class="ident">count</span>: <span class="ident">usize</span>,
     <span class="doccomment">/// Total target value.</span>
-    <span class="ident">total</span>: <span class="ident">u64</span>,
+    <span class="ident">total</span>: <span class="ident">usize</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">SilentProgressBar</span> {
     <span class="doccomment">/// Construct a new instance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">total</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">total</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">total</span> <span class="op">&gt;</span> <span class="number">0</span>);
 
         <span class="self">Self</span> { <span class="ident">count</span>: <span class="number">0</span>, <span class="ident">total</span> }
@@ -75,7 +75,7 @@
     <span class="doccomment">/// If there is not enough, return the remaining block.</span>
     <span class="doccomment">/// If there are none at all, return None.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">block</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">u64</span>, <span class="ident">u64</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">block</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">size</span> <span class="op">&gt;</span> <span class="number">0</span>);
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">count</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">total</span> {

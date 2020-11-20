@@ -1,6 +1,6 @@
 (function() {var implementors = {};
 implementors["aho_corasick"] = [{"text":"impl StructuralPartialEq for MatchKind","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for MatchKind","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for Match","synthetic":false,"types":[]}];
-implementors["arctk"] = [{"text":"impl StructuralPartialEq for Binner","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for Range","synthetic":false,"types":[]}];
+implementors["arctk"] = [{"text":"impl StructuralPartialEq for Register","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for Binner","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for Range","synthetic":false,"types":[]}];
 implementors["bytemuck"] = [{"text":"impl StructuralPartialEq for PodCastError","synthetic":false,"types":[]}];
 implementors["byteorder"] = [{"text":"impl StructuralPartialEq for BigEndian","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for LittleEndian","synthetic":false,"types":[]}];
 implementors["colored"] = [{"text":"impl StructuralPartialEq for Color","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for Style","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for Styles","synthetic":false,"types":[]},{"text":"impl StructuralPartialEq for ColoredString","synthetic":false,"types":[]}];

@@ -43,6 +43,13 @@
 <span id="42">42</span>
 <span id="43">43</span>
 <span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! MCRT settings.</span>
 
@@ -57,9 +64,9 @@
 <span class="attribute">#[<span class="ident">load</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SettingsLinker</span> {
     <span class="doccomment">/// Number of photons to simulate.</span>
-    <span class="ident">num_phot</span>: <span class="ident">u64</span>,
+    <span class="ident">num_phot</span>: <span class="ident">usize</span>,
     <span class="doccomment">/// Number of photons to simulate in each thread block.</span>
-    <span class="ident">block_size</span>: <span class="ident">u64</span>,
+    <span class="ident">block_size</span>: <span class="ident">usize</span>,
     <span class="doccomment">/// Bump distance [m].</span>
     <span class="ident">bump_dist</span>: <span class="ident">f64</span>,
     <span class="doccomment">/// Loop limit.</span>
@@ -76,6 +83,11 @@
     <span class="kw">type</span> <span class="ident">Inst</span> <span class="op">=</span> <span class="ident">Settings</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">requires</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="macro">vec</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">init_mat</span>.<span class="ident">clone</span>()]
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">link</span>(<span class="self">self</span>, <span class="ident">mats</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Material</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Inst</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">Settings</span>::<span class="ident">new</span>(
             <span class="self">self</span>.<span class="ident">num_phot</span>,
@@ -84,7 +96,9 @@
             <span class="self">self</span>.<span class="ident">loop_limit</span>,
             <span class="self">self</span>.<span class="ident">min_weight</span>,
             <span class="self">self</span>.<span class="ident">roulette_barrels</span>,
-            <span class="kw-2">&amp;</span><span class="ident">mats</span>[<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">init_mat</span>],
+            <span class="ident">mats</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">init_mat</span>).<span class="ident">unwrap_or_else</span>(<span class="op">||</span> {
+                <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Failed to link settings-material key: {}&quot;</span>, <span class="self">self</span>.<span class="ident">init_mat</span>)
+            }),
         ))
     }
 }

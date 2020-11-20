@@ -49,32 +49,32 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">access</span>,
+    <span class="ident">img</span>::<span class="ident">Colour</span>,
     <span class="ident">ord</span>::{<span class="ident">X</span>, <span class="ident">Y</span>},
 };
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array2</span>;
-<span class="kw">use</span> <span class="ident">palette</span>::<span class="ident">LinSrgba</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">AddAssign</span>;
 
 <span class="doccomment">/// Image builder.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Image</span> {
     <span class="doccomment">/// Pixel data.</span>
-    <span class="ident">pixels</span>: <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">LinSrgba</span><span class="op">&gt;</span>,
+    <span class="ident">pixels</span>: <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">Colour</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Image</span> {
-    <span class="macro">access</span><span class="macro">!</span>(<span class="ident">pixels</span>, <span class="ident">pixels_mut</span>, <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">LinSrgba</span><span class="op">&gt;</span>);
+    <span class="macro">access</span><span class="macro">!</span>(<span class="ident">pixels</span>, <span class="ident">pixels_mut</span>, <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">Colour</span><span class="op">&gt;</span>);
 
     <span class="doccomment">/// Construct a new instance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">pixels</span>: <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">LinSrgba</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">pixels</span>: <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">Colour</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">pixels</span> }
     }
 
     <span class="doccomment">/// Construct a new blank instance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_blank</span>(<span class="ident">res</span>: [<span class="ident">usize</span>; <span class="number">2</span>], <span class="ident">base</span>: <span class="ident">LinSrgba</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_blank</span>(<span class="ident">res</span>: [<span class="ident">usize</span>; <span class="number">2</span>], <span class="ident">base</span>: <span class="ident">Colour</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">res</span>[<span class="ident">X</span>] <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">res</span>[<span class="ident">Y</span>] <span class="op">&gt;</span> <span class="number">0</span>);
 

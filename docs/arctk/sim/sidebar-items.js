@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["mcrt","Monte-Carlo radiative transfer simulation module."]]});
+initSidebarItems({"mod":[["cartographer","Cartographer mapping module."],["mcrt","Monte-Carlo radiative transfer simulation module."],["render","Render simulation module."]]});

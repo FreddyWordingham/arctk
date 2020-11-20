@@ -358,6 +358,7 @@
 <span id="357">357</span>
 <span id="358">358</span>
 <span id="359">359</span>
+<span id="360">360</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Adaptive tree cell scheme.</span>
 
@@ -402,7 +403,7 @@
             }
         }
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pb</span> <span class="op">=</span> <span class="ident">ProgressBar</span>::<span class="ident">new</span>(<span class="string">&quot;Growing tree&quot;</span>, <span class="number">8_u64</span>.<span class="ident">pow</span>(<span class="ident">sett</span>.<span class="ident">max_depth</span>()));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pb</span> <span class="op">=</span> <span class="ident">ProgressBar</span>::<span class="ident">new</span>(<span class="string">&quot;Growing tree&quot;</span>, <span class="number">8_usize</span>.<span class="ident">pow</span>(<span class="ident">sett</span>.<span class="ident">max_depth</span>()));
         <span class="kw">if</span> (<span class="ident">sett</span>.<span class="ident">max_depth</span>() <span class="op">==</span> <span class="number">0</span>) <span class="op">||</span> (<span class="ident">tris</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">sett</span>.<span class="ident">tar_tris</span>()) {
             <span class="ident">pb</span>.<span class="ident">finish_with_message</span>(<span class="string">&quot;Tree grown.&quot;</span>);
             <span class="kw">return</span> <span class="self">Self</span>::<span class="ident">Leaf</span> { <span class="ident">boundary</span>, <span class="ident">tris</span> };
@@ -519,7 +520,7 @@
         }
 
         <span class="kw">if</span> (<span class="ident">tris</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">sett</span>.<span class="ident">tar_tris</span>()) <span class="op">||</span> (<span class="ident">depth</span> <span class="op">&gt;=</span> <span class="ident">sett</span>.<span class="ident">max_depth</span>()) {
-            <span class="ident">pb</span>.<span class="ident">block</span>(<span class="number">8_u64</span>.<span class="ident">pow</span>(<span class="ident">sett</span>.<span class="ident">max_depth</span>() <span class="op">-</span> <span class="ident">depth</span>));
+            <span class="ident">pb</span>.<span class="ident">block</span>(<span class="number">8_usize</span>.<span class="ident">pow</span>(<span class="ident">sett</span>.<span class="ident">max_depth</span>() <span class="op">-</span> <span class="ident">depth</span>));
             <span class="kw">return</span> <span class="ident">Tree</span>::<span class="ident">Leaf</span> { <span class="ident">boundary</span>, <span class="ident">tris</span> };
         }
 
@@ -678,6 +679,7 @@
     }
 
     <span class="doccomment">/// Determine what a given Ray would observe.</span>
+    <span class="doccomment">/// The maximum distance provided does not guarantee that any hit retrieved is less than the given distance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scan</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">ray</span>: <span class="ident">Ray</span>, <span class="ident">bump_dist</span>: <span class="ident">f64</span>, <span class="ident">max_dist</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hit</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> {

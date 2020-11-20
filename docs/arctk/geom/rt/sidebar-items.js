@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["emitter","Optical material."],["emitter_builder","Optical material."],["hit","Hit implementation."],["orient","Orientation implementation."],["ray","Ray implementation."],["scan","Hit-scan result enumeration."],["side","Hit side enumeration."]]});
+initSidebarItems({"mod":[["hit","Hit implementation."],["orient","Orientation implementation."],["ray","Ray implementation."],["scan","Hit-scan result enumeration."],["side","Hit side enumeration."]]});

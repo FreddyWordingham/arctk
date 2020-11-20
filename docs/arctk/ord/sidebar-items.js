@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["link","Setup trait."],["list","Enumerated lists."],["set","Data set."]]});
+initSidebarItems({"mod":[["link","Setup trait."],["list","Enumerated lists."],["register","Name register set."],["set","Data set."]]});

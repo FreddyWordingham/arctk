@@ -67,9 +67,9 @@
 <span class="doccomment">/// General settings structure.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Settings</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Number of photons to simulate.</span>
-    <span class="ident">num_phot</span>: <span class="ident">u64</span>,
+    <span class="ident">num_phot</span>: <span class="ident">usize</span>,
     <span class="doccomment">/// Number of photons to simulate in each thread block.</span>
-    <span class="ident">block_size</span>: <span class="ident">u64</span>,
+    <span class="ident">block_size</span>: <span class="ident">usize</span>,
     <span class="doccomment">/// Bump distance [m].</span>
     <span class="ident">bump_dist</span>: <span class="ident">f64</span>,
     <span class="doccomment">/// Loop limit.</span>
@@ -83,8 +83,8 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Settings</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">num_phot</span>, <span class="ident">u64</span>);
-    <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">block_size</span>, <span class="ident">u64</span>);
+    <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">num_phot</span>, <span class="ident">usize</span>);
+    <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">block_size</span>, <span class="ident">usize</span>);
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">bump_dist</span>, <span class="ident">f64</span>);
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">loop_limit</span>, <span class="ident">u64</span>);
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">min_weight</span>, <span class="ident">f64</span>);
@@ -95,8 +95,8 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">num_phot</span>: <span class="ident">u64</span>,
-        <span class="ident">block_size</span>: <span class="ident">u64</span>,
+        <span class="ident">num_phot</span>: <span class="ident">usize</span>,
+        <span class="ident">block_size</span>: <span class="ident">usize</span>,
         <span class="ident">bump_dist</span>: <span class="ident">f64</span>,
         <span class="ident">loop_limit</span>: <span class="ident">u64</span>,
         <span class="ident">min_weight</span>: <span class="ident">f64</span>,

@@ -1,6 +1,6 @@
 (function() {var implementors = {};
 implementors["aho_corasick"] = [{"text":"impl PartialEq&lt;MatchKind&gt; for MatchKind","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;MatchKind&gt; for MatchKind","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;Match&gt; for Match","synthetic":false,"types":[]}];
-implementors["arctk"] = [{"text":"impl PartialEq&lt;Binner&gt; for Binner","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;Range&gt; for Range","synthetic":false,"types":[]}];
+implementors["arctk"] = [{"text":"impl PartialEq&lt;Register&gt; for Register","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;Binner&gt; for Binner","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;Range&gt; for Range","synthetic":false,"types":[]}];
 implementors["bytemuck"] = [{"text":"impl PartialEq&lt;PodCastError&gt; for PodCastError","synthetic":false,"types":[]}];
 implementors["byteorder"] = [{"text":"impl PartialEq&lt;BigEndian&gt; for BigEndian","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;LittleEndian&gt; for LittleEndian","synthetic":false,"types":[]}];
 implementors["colored"] = [{"text":"impl PartialEq&lt;Color&gt; for Color","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;Style&gt; for Style","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;Styles&gt; for Styles","synthetic":false,"types":[]},{"text":"impl PartialEq&lt;ColoredString&gt; for ColoredString","synthetic":false,"types":[]}];
