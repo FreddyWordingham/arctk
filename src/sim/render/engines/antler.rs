@@ -91,13 +91,16 @@ pub fn antler(
             Attribute::Luminous(grad, bright_mult) => {
                 trace.ray_mut().travel(hit.dist());
                 colour(input, rng, &mut trace, norm, grad, data, pixel, bright_mult);
+                *trace.weight_mut() = 0.0;
                 break;
             }
         }
     }
 
     // Remaining weight sky colour.
-    sky_colour(input, &trace, data, pixel);
+    if trace.weight() >= min_weight {
+        sky_colour(input, &trace, data, pixel);
+    }
 
     // Record time.
     data.time[pixel] += start_time.elapsed().as_micros() as f64;
