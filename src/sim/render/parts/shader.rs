@@ -39,6 +39,8 @@ impl<'a> Shader<'a> {
     access!(data_grad, Gradient);
 
     /// Construct a new instance.
+    #[allow(clippy::cognitive_complexity)]
+    #[allow(clippy::too_many_arguments)]
     #[inline]
     #[must_use]
     pub fn new(

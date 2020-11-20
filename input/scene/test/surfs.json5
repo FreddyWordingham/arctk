@@ -1,4 +1,4 @@
-{
+{   // Map of surface attributes.
     ancor       : { attr: 'metal',      mesh: [["res/objs/ancor.obj"], null]},
     basin       : { attr: 'basin',      mesh: [["res/objs/basin.obj"], null]},
     blimp       : { attr: 'canvas',     mesh: [["res/objs/blimp.obj"], null]},

@@ -29,11 +29,11 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
     #[inline]
     fn requires(&self) -> Vec<String> {
         match *self {
-            Self::Opaque(ref grad) => vec![grad.clone()],
-            Self::Mirror(ref grad, ..) => vec![grad.clone()],
-            Self::Transparent(ref grad, ..) => vec![grad.clone()],
-            Self::Refractive(ref grad, ..) => vec![grad.clone()],
-            Self::Luminous(ref grad, ..) => vec![grad.clone()],
+            Self::Opaque(ref grad)
+            | Self::Mirror(ref grad, ..)
+            | Self::Transparent(ref grad, ..)
+            | Self::Refractive(ref grad, ..)
+            | Self::Luminous(ref grad, ..) => vec![grad.clone()],
         }
     }
 
