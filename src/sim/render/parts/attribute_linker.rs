@@ -19,6 +19,8 @@ pub enum AttributeLinker {
     Transparent(String, f64),
     /// Refractive, absorption fraction, inside and outside refractive indices.
     Refractive(String, f64, [f64; 2]),
+    /// Luminous surface, brightness multiplier.
+    Luminous(String, f64),
 }
 
 impl<'a> Link<'a, Gradient> for AttributeLinker {
@@ -31,6 +33,7 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
             Self::Mirror(ref grad, ..) => vec![grad.clone()],
             Self::Transparent(ref grad, ..) => vec![grad.clone()],
             Self::Refractive(ref grad, ..) => vec![grad.clone()],
+            Self::Luminous(ref grad, ..) => vec![grad.clone()],
         }
     }
 
@@ -60,6 +63,12 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
                 abs_frac,
                 ref_indices,
+            ),
+            Self::Luminous(ref grad, bright_mult) => Attribute::Luminous(
+                grads
+                    .get(grad)
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
+                bright_mult,
             ),
         })
     }

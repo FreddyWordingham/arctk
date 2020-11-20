@@ -1,242 +1,50 @@
 {
-    buildings   : {
-        mesh    : [["res/get_in_loser/buildings.obj"], null],
-        attr    : 'buildings'
+    basin   : {
+        mesh    : [["res/escape/basin.obj", "res/escape/sky_city.obj", "res/escape/building.obj"], null],
+        attr    : 'concrete'
     },
-    bulbs       : {
-        mesh    : [["res/get_in_loser/bulbs.obj"], null],
-        attr    : 'bulbs'
+    portal   : {
+        mesh    : [["res/escape/shatter.obj"], null],
+        attr    : 'portal'
     },
-    bushes      : {
-        mesh    : [["res/get_in_loser/bushes.obj"], null],
-        attr    : 'bushes'
+    glass   : {
+        mesh    : [["res/escape/glass.obj"], null],
+        attr    : 'glass'
     },
-    car_body    : {
-        mesh    : [["res/get_in_loser/car_body.obj"], null],
-        attr    : 'car'
+    window   : {
+        mesh    : [["res/escape/windows.obj"], null],
+        attr    : 'window'
     },
-    car_details : {
-        mesh    : [["res/get_in_loser/car_details.obj"], null],
+    blimp   : {
+        mesh    : [["res/escape/blimp.obj"], null],
+        attr    : 'canvas'
+    },
+    ship   : {
+        mesh    : [["res/escape/ship.obj"], null],
+        attr    : 'wood'
+    },
+    text   : {
+        mesh    : [["res/escape/text.obj", "res/escape/ancor.obj"], null],
         attr    : 'chrome'
     },
-    car_glass   : {
-        mesh    : [["res/get_in_loser/car_glass.obj"], null],
-        attr    : 'glass'
-    },
-    car_mirror  : {
-        mesh    : [["res/get_in_loser/car_mirror.obj"], null],
-        attr    : 'plastic'
-    },
-    // car_wheels  : {
-    //     mesh    : [["res/get_in_loser/car_wheels.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    chunks      : {
-        mesh    : [["res/get_in_loser/chunks.obj"], null],
-        attr    : 'candy'
-    },
-    dino_body_m : {
-        mesh    : [["res/get_in_loser/dino_body_m.obj"], null],
-        attr    : 'dino_skin'
-    },
-    dino_body_s : {
-        mesh    : [["res/get_in_loser/dino_body_s.obj"], null],
-        attr    : 'dino_skin'
-    },
-    dino_eyes_m : {
-        mesh    : [["res/get_in_loser/dino_eyes_m.obj"], null],
-        attr    : 'plastic'
-    },
-    dino_eyes_s : {
-        mesh    : [["res/get_in_loser/dino_eyes_s.obj"], null],
-        attr    : 'plastic'
-    },
-    dino_fans_m : {
-        mesh    : [["res/get_in_loser/dino_fans_m.obj"], null],
-        attr    : 'plastic'
-    },
-    dino_fans_s : {
-        mesh    : [["res/get_in_loser/dino_fans_s.obj"], null],
-        attr    : 'plastic'
-    },
-    // dino_hair_m : {
-    //     mesh    : [["res/get_in_loser/dino_hair_m.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // dino_hair_s : {
-    //     mesh    : [["res/get_in_loser/dino_hair_s.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    dino_tail_m : {
-        mesh    : [["res/get_in_loser/dino_tail_m.obj"], null],
-        attr    : 'plastic'
-    },
-    dino_tail_s : {
-        mesh    : [["res/get_in_loser/dino_tail_s.obj"], null],
-        attr    : 'plastic'
-    },
-    // flow        : {
-    //     mesh    : [["res/get_in_loser/flow.obj"], null],
-    //     attr    : 'flow'
-    // },
-    glass       : {
-        mesh    : [["res/get_in_loser/glass.obj"], null],
-        attr    : 'glass'
-    },
-    hills       : {
-        mesh    : [["res/get_in_loser/hills.obj"], null],
-        attr    : 'ground'
-    },
-    joe_bottom  : {
-        mesh    : [["res/get_in_loser/joe_bottom.obj"], null],
-        attr    : 'plastic'
-    },
-    joe_head    : {
-        mesh    : [["res/get_in_loser/joe_head.obj"], null],
-        attr    : 'plastic'
-    },
-    joe_top     : {
-        mesh    : [["res/get_in_loser/joe_top.obj"], null],
-        attr    : 'plastic'
-    },
-    lamps       : {
-        mesh    : [["res/get_in_loser/lamps.obj"], null],
-        attr    : 'metal'
-    },
-    moon_0      : {
-        mesh    : [["res/get_in_loser/moon_0.obj"], null],
-        attr    : 'plastic'
-    },
-    moon_1      : {
-        mesh    : [["res/get_in_loser/moon_1.obj"], null],
-        attr    : 'plastic'
-    },
-    moon_2      : {
-        mesh    : [["res/get_in_loser/moon_2.obj"], null],
-        attr    : 'plastic'
-    },
-    moon_3      : {
-        mesh    : [["res/get_in_loser/moon_3.obj"], null],
-        attr    : 'plastic'
-    },
-    moon_4      : {
-        mesh    : [["res/get_in_loser/moon_4.obj"], null],
-        attr    : 'plastic'
-    },
-    path        : {
-        mesh    : [["res/get_in_loser/path.obj"], null],
-        attr    : 'plastic'
-    },
-    planet_clouds_0     : {
-        mesh    : [["res/get_in_loser/planet_clouds_0.obj"], null],
-        attr    : 'cloud'
-    },
-    planet_clouds_1     : {
-        mesh    : [["res/get_in_loser/planet_clouds_1.obj"], null],
-        attr    : 'cloud'
-    },
-    planet_land     : {
-        mesh    : [["res/get_in_loser/planet_land.obj"], null],
-        attr    : 'ground'
-    },
-    planet_sea  : {
-        mesh    : [["res/get_in_loser/planet_sea.obj"], null],
+    flow   : {
+        mesh    : [["res/escape/flow.obj"], null],
         attr    : 'water'
     },
-    portal      : {
-        mesh    : [["res/get_in_loser/portal.obj"], null],
-        attr    : 'plastic'
+    rocks   : {
+        mesh    : [["res/escape/rocks_s.obj", "res/escape/rocks_m.obj", "res/escape/rocks_l.obj"], null],
+        attr    : 'rock'
     },
-    puddle      : {
-        mesh    : [["res/get_in_loser/puddle.obj"], null],
-        attr    : 'water'
+    gold   : {
+        mesh    : [["res/escape/gold.obj"], null],
+        attr    : 'gold'
     },
-    rails       : {
-        mesh    : [["res/get_in_loser/rails.obj"], null],
-        attr    : 'plastic'
+    moons   : {
+        mesh    : [["res/escape/moon_s.obj", "res/escape/moon_l.obj"], null],
+        attr    : 'dust'
     },
-    road        : {
-        mesh    : [["res/get_in_loser/road.obj"], null],
-        attr    : 'plastic'
+    joe_head   : {
+        mesh    : [["res/escape/joe_head.obj", "res/escape/joe_top.obj", "res/escape/joe_bottom.obj"], null],
+        attr    : 'joe'
     },
-    // cube        : {
-    //     mesh    : [["res/get_in_loser/cube.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // sphere        : {
-    //     mesh    : [["res/get_in_loser/sphere.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // shatter_0   : {
-    //     mesh    : [["res/get_in_loser/shatter_0.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // shatter_1   : {
-    //     mesh    : [["res/get_in_loser/shatter_1.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    shatter_2   : {
-        mesh    : [["res/get_in_loser/shatter_2.obj"], null],
-        attr    : 'dimension'
-    },
-    // shatter_3   : {
-    //     mesh    : [["res/get_in_loser/shatter_3.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // shatter_4   : {
-    //     mesh    : [["res/get_in_loser/shatter_4.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // shatter_5   : {
-    //     mesh    : [["res/get_in_loser/shatter_5.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // shatter_6   : {
-    //     mesh    : [["res/get_in_loser/shatter_6.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    // shatter_7   : {
-    //     mesh    : [["res/get_in_loser/shatter_7.obj"], null],
-    //     attr    : 'plastic'
-    // },
-    solar_l     : {
-        mesh    : [["res/get_in_loser/solar_l.obj"], null],
-        attr    : 'solar'
-    },
-    solar_m     : {
-        mesh    : [["res/get_in_loser/solar_m.obj"], null],
-        attr    : 'plastic'
-    },
-    sunflower_heads     : {
-        mesh    : [["res/get_in_loser/sunflower_heads.obj"], null],
-        attr    : 'seeds'
-    },
-    sunflower_leaves    : {
-        mesh    : [["res/get_in_loser/sunflower_leaves.obj"], null],
-        attr    : 'greens'
-    },
-    sunflower_petals    : {
-        mesh    : [["res/get_in_loser/sunflower_petals.obj"], null],
-        attr    : 'petals'
-    },
-    sunflower_stems     : {
-        mesh    : [["res/get_in_loser/sunflower_stems.obj"], null],
-        attr    : 'greens'
-    },
-    text_horizontal_0   : {
-        mesh    : [["res/get_in_loser/text_horizontal_0.obj"], null],
-        attr    : 'text'
-    },
-    text_horizontal_1   : {
-        mesh    : [["res/get_in_loser/text_horizontal_1.obj"], null],
-        attr    : 'text'
-    },
-    text_vertical_0     : {
-        mesh    : [["res/get_in_loser/text_vertical_0.obj"], null],
-        attr    : 'text'
-    },
-    text_vertical_1     : {
-        mesh    : [["res/get_in_loser/text_vertical_1.obj"], null],
-        attr    : 'text'
-    }
 }

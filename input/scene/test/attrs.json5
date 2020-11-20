@@ -1,52 +1,17 @@
 {
-    plastic             : { Opaque: 'greyscale' },
+    concrete    : { Opaque: 'evening_night' },
+    canvas      : { Opaque: 'sel' },
+    portal      : { Refractive: ['wedding_day_blues', 0.6, [1.0, 1.5]] },
+    wood        : { Opaque: 'king_yna' },
+    chrome      : { Mirror: ['expresso', 0.8] },
+    water       : { Refractive: ['dark_ocean', 0.3, [1.3, 1.0]] },
+    rock        : { Opaque: 'wiretap' },
+    gold        : { Mirror: ['citrus_peel', 0.4] },
+    dust        : { Opaque: 'witching_hour' },
 
-    buildings           : { Opaque: 'expresso' },
-    bulbs               : { Opaque: 'citrus_peel' },
-    bushes              : { Opaque: 'sel' },
+    glass       : { Mirror: ['evening_night', 0.3] },
+    window      : { Luminous: ['citrus_peel', 2.0] },
+    joe         : { Opaque: 'kyoo_pal' },
 
-    solar               : { Refractive: ['wiretap', 0.6, [1.0, 1.3]] },
-
-    flow                : { Refractive: ['amin', 0.01, [1.0, 1.3]] },
-    water               : { Refractive: ['amin', 0.3, [1.0, 1.3]] },
-    ocean               : { Mirror: ['dark_ocean', 0.6] },
-
-    cloud               : { Transparent: ['evening_night', 0.25] },
-    ground              : { Opaque: 'harvey' },
-
-    metal               : { Opaque: 'rainbow_blue' },
-
-    car                 : { Opaque: 'pure_lust' },
-    chrome              : { Mirror: ['expresso', 0.3] },
-    glass               : { Transparent: ['magic', 0.2] },
-    mirror              : { Mirror: ['expresso', 0.8] },
-
-    seeds               : { Opaque: 'evening_sunshine' },
-    greens              : { Opaque: 'misty_meadow' },
-    petals              : { Opaque: 'king_yna' },
-
-    candy               : { Opaque: 'by_design' },
-
-    dino_skin           : { Opaque: 'wiretap' },
-
-    text                : { Refractive: ['wiretap', 0.8, [1.0, 1.5]] },
-
-    // harvey              : { Opaque: 'harvey' },
-    // witching_hour       : { Opaque: 'witching_hour' },
-    // jshine              : { Opaque: 'jshine' },
-    // kyoo_pal            : { Opaque: 'kyoo_pal' },
-    // amin                : { Opaque: 'amin' },
-    // wiretap             : { Opaque: 'wiretap' },
-    // citrus_peel         : { Opaque: 'citrus_peel' },
-    // expresso            : { Opaque: 'expresso' },
-    // evening_night       : { Opaque: 'evening_night' },
-    // magic               : { Opaque: 'magic' },
-    // by_design           : { Opaque: 'by_design' },
-    dimension   : { Refractive: ['wedding_day_blues', 0.3, [1.0, 1.5]] },
-    // pure_lust           : { Opaque: 'pure_lust' },
-    // rastafari           : { Opaque: 'rastafari' },
-    // rainbow_blue        : { Opaque: 'rainbow_blue' },
-    // king_yna            : { Opaque: 'king_yna' },
-
-    // solar   : { Opaque: 'sunset' },
+    // glass               : { Transparent: ['magic', 0.2] },
 }
