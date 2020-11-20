@@ -1,7 +1,6 @@
 //! Pixel-sampling engine function.
 
 use crate::{
-    geom::Ray,
     img::{Colour, Gradient},
     math::Dir3,
     phys::Crossing,
@@ -97,6 +96,9 @@ pub fn antler(
         }
     }
 
+    // Remaining weight sky colour.
+    sky_colour(input, &trace, data, pixel);
+
     // Record time.
     data.time[pixel] += start_time.elapsed().as_micros() as f64;
 }
@@ -104,21 +106,25 @@ pub fn antler(
 /// Determine the colour of the sky.
 /// Record the data.
 #[inline]
-fn sky_colour(input: &Input, ray: &Ray, data: &mut Output, pixel: [usize; 2]) {
+fn sky_colour(input: &Input, trace: &Tracer, data: &mut Output, pixel: [usize; 2]) {
     // Colour calculation.
-    let u = ray.dir().z.abs();
+    let u = trace.ray().dir().z.abs();
     let col = input.shader.sky_grad().get(u as f32);
 
+    // Get remaining weight.
+    let weight = trace.weight();
+
     // Data recording.
-    data.shadow[pixel] += 1.0;
-    data.light[pixel] += 1.0;
+    data.shadow[pixel] += weight;
+    data.light[pixel] += weight;
 
     // Colouring.
-    data.colour.pixels_mut()[pixel] += col;
+    data.colour.pixels_mut()[pixel] += col * weight as f32;
 }
 
 /// Determine the colour of a ray-surface collision.
 /// Record the data.
+#[allow(clippy::too_many_arguments)]
 #[inline]
 fn colour(
     input: &Input,
@@ -137,8 +143,6 @@ fn colour(
     let shadow = shadowing(input, rng, trace.ray(), norm);
     let light = lighting(input, trace.ray(), norm);
     let base_col = grad.get(light as f32);
-    // let col = Gradient::new(vec![Colour::new(0.0, 0.0, 0.0, 0.0), base_col]).get(shadow as f32);
-    // let col = Gradient::new(vec![Colour::new(0.0, 0.0, 0.0, 1.0), base_col]).get(shadow as f32);
     let col = Gradient::new(vec![Colour::default(), base_col]).get(shadow as f32);
 
     // Weighting.

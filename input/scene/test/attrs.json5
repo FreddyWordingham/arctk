@@ -1,5 +1,5 @@
 {
-    // brick       : { Opaque      : 'copper' },
+    basin       : { Opaque      : 'rainbow_blue' },
     brick       : { Opaque      : 'greyscale' },
     canvas      : { Opaque      : 'copper' },
     cloud       : { Transparent : ['dania', 0.1] },
@@ -7,7 +7,6 @@
     glass       : { Mirror      : ['evening_night', 0.4] },
     gold        : { Mirror      : ['megatron', 0.3] },
     land        : { Opaque      : 'misty_meadow' },
-    // metal       : { Mirror      : ['dark_ocean', 0.8] },
     moon        : { Opaque      : 'dark_ocean' },
     metal       : { Opaque      : 'dark_ocean' },
     portal      : { Refractive  : ['rastafari', 0.1, [1.0, 1.05]] },
