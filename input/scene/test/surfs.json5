@@ -5,7 +5,7 @@
     brick       : { attr: 'brick',      mesh: [["res/objs/brick.obj"], null]},
     clouds      : { attr: 'cloud',      mesh: [["res/objs/clouds.obj"], null]},
     details     : { attr: 'details',    mesh: [["res/objs/details.obj"], null]},
-    dish        : { attr: 'reflector',  mesh: [["res/objs/dish.obj"], null]},
+    dish        : { attr: 'metal',      mesh: [["res/objs/dish.obj"], null]},
     dog         : { attr: 'fur',        mesh: [["res/objs/dog.obj"], null]},
     glass       : { attr: 'glass',      mesh: [["res/objs/glass.obj"], null]},
     gold        : { attr: 'gold',       mesh: [["res/objs/gold.obj"], null]},
