@@ -61,9 +61,9 @@ impl<'a> AddAssign<&Self> for Output<'a> {
 impl<'a> Save for Output<'a> {
     #[inline]
     fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
-        let max_time = self.time.max()?;
+        let max_time = *self.time.max()?;
         report!("Maximum time", max_time, "ms");
-        Image::new(self.time.map(|x| self.grad.get((*x / max_time) as f32)))
+        Image::new(self.time.map(|x| self.grad.get(x.log(max_time) as f32)))
             .save(&out_dir.join("time.png"))?;
 
         // Image::new(
