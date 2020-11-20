@@ -14,6 +14,7 @@
     joe_top     : { attr: 'plastic',    mesh: [["res/objs/joe_top.obj"], null]},
     land        : { attr: 'land',       mesh: [["res/objs/land.obj"], null]},
     mirror      : { attr: 'reflector',  mesh: [["res/objs/mirror.obj"], null]},
+    moon        : { attr: 'moon',       mesh: [["res/objs/moon.obj"], null]},
     moon_l      : { attr: 'stone',      mesh: [["res/objs/moon_l.obj"], null]},
     moon_s      : { attr: 'stone',      mesh: [["res/objs/moon_s.obj"], null]},
     panels      : { attr: 'metal',      mesh: [["res/objs/panels.obj"], null]},
