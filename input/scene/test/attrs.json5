@@ -1,5 +1,5 @@
 {
-    basin       : { Opaque      : 'rainbow_blue' },
+    basin       : { Opaque      : 'red_ocean' },
     brick       : { Opaque      : 'greyscale' },
     canvas      : { Opaque      : 'copper' },
     cloud       : { Transparent : ['dania', 0.1] },

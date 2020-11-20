@@ -29,4 +29,5 @@
     wedding_day_blues   : ['#40E0D0FF', '#FF8C00FF', '#FF0080FF'],
     wiretap             : ['#8A2387FF', '#E94057FF', '#F27121FF'],
     witching_hour       : ['#c31432FF', '#240b36FF'],
+    crystal_clear       : ['#159957ff', '#155799ff'],
 }
