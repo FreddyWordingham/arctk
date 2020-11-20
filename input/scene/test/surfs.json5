@@ -19,10 +19,10 @@
         mesh    : [["res/escape/bang.obj"], null],
         attr    : 'plasma'
     },
-    // basin   : {
-    //     mesh    : [["res/escape/basin.obj", "res/escape/sky_city.obj"], null],
-    //     attr    : 'concrete'
-    // },
+    basin   : {
+        mesh    : [["res/escape/basin.obj", "res/escape/sky_city.obj"], null],
+        attr    : 'concrete'
+    },
     basin   : {
         mesh    : [["res/escape/sky_city.obj"], null],
         attr    : 'concrete'
@@ -52,7 +52,7 @@
         attr    : 'wood'
     },
     text   : {
-        mesh    : [["res/escape/text.obj", "res/escape/ancor.obj"], null],
+        mesh    : [["res/escape/text_top.obj", "res/escape/text_bottom.obj", "res/escape/ancor.obj"], null],
         attr    : 'chrome'
     },
     flow   : {
