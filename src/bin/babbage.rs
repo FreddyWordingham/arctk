@@ -22,9 +22,9 @@ fn main() {
     let (_in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
 
-    // section(term_width, "Input");
-    // let builder = ParametersBuilder::load(&in_dir.join(params_path))
-    //     .expect("Failed to load parameters file.");
+    section(term_width, "Input");
+    let builder = ParametersBuilder::load(&in_dir.join(params_path))
+        .expect("Failed to load parameters file.");
 
     // section(term_width, "Building");
     // let setup = builder
