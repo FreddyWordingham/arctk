@@ -24,9 +24,9 @@ pub fn lighting(input: &Input, ray: &Ray, norm: &Dir3) -> f64 {
         .max(0.0)
         .powi(input.shader.spec_pow());
 
-    let mut ref_ray = Ray::new(*ray.pos(), ref_dir);
-    ref_ray.travel(input.sett.bump_dist());
-    specular *= occlusion(input, ref_ray, input.shader.occ_dist()[0]); // TODO: Review
+    // let mut ref_ray = Ray::new(*ray.pos(), ref_dir); // TODO: Review.
+    // ref_ray.travel(input.sett.bump_dist());
+    // specular *= occlusion(input, ref_ray, input.shader.occ_dist()[0]);
 
     ambient + diffuse + specular
 }
