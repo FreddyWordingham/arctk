@@ -2,7 +2,7 @@
 
 use arctk::{
     args,
-    file::Load,
+    file::{Build, Load},
     sim::babbage::OperationBuilder,
     util::{
         banner::{section, title},
@@ -29,32 +29,22 @@ fn main() {
     );
     let cwd = current_dir().expect("Failed to determine current working directory.");
     // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-    let (in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
+    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
 
     section(term_width, "Input");
-    let builder =
+    let params =
         Parameters::load(&in_dir.join(params_path)).expect("Failed to load parameters file.");
 
-    // section(term_width, "Building");
-    // let setup = builder
-    //     .build(&in_dir)
-    //     .expect("Failed to construct builder structure.");
+    section(term_width, "Building");
+    let op = params
+        .op
+        .build(&in_dir)
+        .expect("Failed to build operation.");
 
-    // section(term_width, "Linking");
-    // let grads = setup.grads;
-    // let attrs = setup.attrs.link(&grads).expect("Gradient link failure.");
-    // let surfs = setup.surfs.link(&attrs).expect("Surface link failure.");
-    // let cam = setup.cam;
-    // let tree = Tree::new(&setup.tree, &surfs);
-    // let sett = setup.sett.link(&grads).expect("Gradient link Failure.");
-    // let engine = setup.engine;
-    // let input = Input::new(&grads, &attrs, &cam, &tree, &sett);
-
-    // section(term_width, "Simulation");
-    // let output = single_thread(engine, &input).expect("Failed to run simulation");
-    // // let output = multi_thread(engine, &input).expect("Failed to run simulation");
-    // output.save(&out_dir).expect("Failed to save output data.");
+    section(term_width, "Operation");
+    op.run(&out_dir)
+        .expect("Operation failed... we'll get 'em next time.");
 
     section(term_width, "Finished");
 }
