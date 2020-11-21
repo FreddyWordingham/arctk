@@ -2,13 +2,11 @@
 
 use arctk::{
     args,
-    file::{Build, Load},
     util::{
         banner::{section, title},
         dir,
     },
 };
-use arctk_attr::input;
 use std::{env::current_dir, path::PathBuf};
 
 fn main() {
@@ -19,7 +17,7 @@ fn main() {
     args!(bin_path: PathBuf);
     let cwd = current_dir().expect("Failed to determine current working directory.");
     // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
+    let (_in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
 
     section(term_width, "Running");
