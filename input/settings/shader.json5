@@ -1,5 +1,5 @@
 {
-    sky_grad    : 'crystal_clear',
+    sky_grad    : 'sky',
     data_grad   : 'greyscale',
     sun_pos     : [32, -38, 54],
     light       : [0.1, 0.4, 0.6],

@@ -30,4 +30,5 @@
     wiretap             : ['#8A2387FF', '#E94057FF', '#F27121FF'],
     witching_hour       : ['#c31432FF', '#240b36FF'],
     crystal_clear       : ['#159957ff', '#155799ff'],
+    sky                 : ['#04301aff', '#031b34ff'],
 }
