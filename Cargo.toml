@@ -14,7 +14,7 @@ exclude = ["docs/", "input/", "output/"]
 
 
 [features]
-# default = ["netcdf", "png", "terminal_size"]
+# default = ["netcdf", "png", "terminal_size", "wonder"]
 
 [dependencies]
 # arctk-attr = { path = "../arctk-attr" }
@@ -64,6 +64,10 @@ required-features = ["netcdf", "terminal_size"]
 [[bin]]
 name = "render"
 required-features = ["png", "terminal_size"]
+
+[[bin]]
+name = "wonder"
+required-features = ["terminal_size"]
 
 [profile.dev]
 # Development profile: "cargo build".
