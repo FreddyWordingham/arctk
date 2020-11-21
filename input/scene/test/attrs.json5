@@ -11,7 +11,7 @@
     metal       : { Opaque      : 'dark_ocean' },
     portal      : { Refractive  : ['rastafari', 0.1, [1.0, 1.05]] },
     plasma      : { Refractive  : ['wiretap', 0.4, [1.0, 1.4]] },
-    reflector   : { Mirror      : ['citrus_peel', 0.3] },
+    reflector   : { Mirror      : ['citrus_peel', 0.6] },
     rope        : { Opaque      : 'cool_brown' },
     sea         : { Refractive  : ['magic', 0.4, [1.0, 1.3]] },
     star        : { Luminous    : ['citrus_peel', 1.3] },
