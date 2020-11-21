@@ -17,10 +17,10 @@ exclude = ["docs/", "input/", "output/"]
 # default = ["netcdf", "png", "terminal_size"]
 
 [dependencies]
-# arctk-attr = { path = "../arctk-attr" }
-# arctk-proc = { path = "../arctk-proc" }
-arctk-attr = "0.2.*"
-arctk-proc = "0.3.*"
+arctk-attr = { path = "../arctk-attr" }
+arctk-proc = { path = "../arctk-proc" }
+# arctk-attr = "0.2.*"
+# arctk-proc = "0.3.*"
 
 ansi_rgb = "0.2.*"
 colored = "2.0.*"

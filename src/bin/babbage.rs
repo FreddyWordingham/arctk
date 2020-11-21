@@ -2,12 +2,22 @@
 
 use arctk::{
     args,
+    file::Load,
+    sim::babbage::OperationBuilder,
     util::{
         banner::{section, title},
         dir,
     },
 };
+use arctk_attr::input;
 use std::{env::current_dir, path::PathBuf};
+
+// Input parameters.
+#[input]
+struct Parameters {
+    /// Operation to perform.
+    op: OperationBuilder,
+}
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
@@ -19,12 +29,12 @@ fn main() {
     );
     let cwd = current_dir().expect("Failed to determine current working directory.");
     // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-    let (_in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
+    let (in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
 
     section(term_width, "Input");
-    let builder = ParametersBuilder::load(&in_dir.join(params_path))
-        .expect("Failed to load parameters file.");
+    let builder =
+        Parameters::load(&in_dir.join(params_path)).expect("Failed to load parameters file.");
 
     // section(term_width, "Building");
     // let setup = builder

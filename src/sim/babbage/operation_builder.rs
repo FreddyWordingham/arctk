@@ -83,7 +83,7 @@ impl Build for OperationBuilder {
 
                 let data_cube = Array3::load(&in_dir.join(data_path))?;
 
-                let grid = grid.build(in_dir)?.build();
+                let grid = grid.build(in_dir)?.build(in_dir)?;
 
                 Self::Inst::Sample(points, data_cube, grid)
             }
