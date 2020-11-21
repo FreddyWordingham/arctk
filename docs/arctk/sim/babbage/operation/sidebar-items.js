@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Operation","Possible operation enumeration."]]});

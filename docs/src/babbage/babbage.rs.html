@@ -54,12 +54,22 @@
 
 <span class="kw">use</span> <span class="ident">arctk</span>::{
     <span class="ident">args</span>,
+    <span class="ident">file</span>::{<span class="ident">Build</span>, <span class="ident">Load</span>},
+    <span class="ident">sim</span>::<span class="ident">babbage</span>::<span class="ident">OperationBuilder</span>,
     <span class="ident">util</span>::{
         <span class="ident">banner</span>::{<span class="ident">section</span>, <span class="ident">title</span>},
         <span class="ident">dir</span>,
     },
 };
+<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">input</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">env</span>::<span class="ident">current_dir</span>, <span class="ident">path</span>::<span class="ident">PathBuf</span>};
+
+<span class="comment">// Input parameters.</span>
+<span class="attribute">#[<span class="ident">input</span>]</span>
+<span class="kw">struct</span> <span class="ident">Parameters</span> {
+    <span class="doccomment">/// Operation to perform.</span>
+    <span class="ident">op</span>: <span class="ident">OperationBuilder</span>,
+}
 
 <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">term_width</span> <span class="op">=</span> <span class="ident">arctk</span>::<span class="ident">util</span>::<span class="ident">term</span>::<span class="ident">width</span>().<span class="ident">unwrap_or</span>(<span class="number">80</span>);
@@ -71,32 +81,22 @@
     );
     <span class="kw">let</span> <span class="ident">cwd</span> <span class="op">=</span> <span class="ident">current_dir</span>().<span class="ident">expect</span>(<span class="string">&quot;Failed to determine current working directory.&quot;</span>);
     <span class="comment">// let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join(&quot;input&quot;)), Some(cwd.join(&quot;output&quot;)))</span>
-    <span class="kw">let</span> (<span class="ident">_in_dir</span>, <span class="ident">_out_dir</span>) <span class="op">=</span> <span class="ident">dir</span>::<span class="ident">io_dirs</span>(<span class="prelude-val">Some</span>(<span class="ident">cwd</span>.<span class="ident">clone</span>()), <span class="prelude-val">Some</span>(<span class="ident">cwd</span>.<span class="ident">join</span>(<span class="string">&quot;output&quot;</span>)))
+    <span class="kw">let</span> (<span class="ident">in_dir</span>, <span class="ident">out_dir</span>) <span class="op">=</span> <span class="ident">dir</span>::<span class="ident">io_dirs</span>(<span class="prelude-val">Some</span>(<span class="ident">cwd</span>.<span class="ident">clone</span>()), <span class="prelude-val">Some</span>(<span class="ident">cwd</span>.<span class="ident">join</span>(<span class="string">&quot;output&quot;</span>)))
         .<span class="ident">expect</span>(<span class="string">&quot;Failed to initialise directories.&quot;</span>);
 
-    <span class="comment">// section(term_width, &quot;Input&quot;);</span>
-    <span class="comment">// let builder = ParametersBuilder::load(&amp;in_dir.join(params_path))</span>
-    <span class="comment">//     .expect(&quot;Failed to load parameters file.&quot;);</span>
+    <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Input&quot;</span>);
+    <span class="kw">let</span> <span class="ident">params</span> <span class="op">=</span>
+        <span class="ident">Parameters</span>::<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">params_path</span>)).<span class="ident">expect</span>(<span class="string">&quot;Failed to load parameters file.&quot;</span>);
 
-    <span class="comment">// section(term_width, &quot;Building&quot;);</span>
-    <span class="comment">// let setup = builder</span>
-    <span class="comment">//     .build(&amp;in_dir)</span>
-    <span class="comment">//     .expect(&quot;Failed to construct builder structure.&quot;);</span>
+    <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Building&quot;</span>);
+    <span class="kw">let</span> <span class="ident">op</span> <span class="op">=</span> <span class="ident">params</span>
+        .<span class="ident">op</span>
+        .<span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>)
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to build operation.&quot;</span>);
 
-    <span class="comment">// section(term_width, &quot;Linking&quot;);</span>
-    <span class="comment">// let grads = setup.grads;</span>
-    <span class="comment">// let attrs = setup.attrs.link(&amp;grads).expect(&quot;Gradient link failure.&quot;);</span>
-    <span class="comment">// let surfs = setup.surfs.link(&amp;attrs).expect(&quot;Surface link failure.&quot;);</span>
-    <span class="comment">// let cam = setup.cam;</span>
-    <span class="comment">// let tree = Tree::new(&amp;setup.tree, &amp;surfs);</span>
-    <span class="comment">// let sett = setup.sett.link(&amp;grads).expect(&quot;Gradient link Failure.&quot;);</span>
-    <span class="comment">// let engine = setup.engine;</span>
-    <span class="comment">// let input = Input::new(&amp;grads, &amp;attrs, &amp;cam, &amp;tree, &amp;sett);</span>
-
-    <span class="comment">// section(term_width, &quot;Simulation&quot;);</span>
-    <span class="comment">// let output = single_thread(engine, &amp;input).expect(&quot;Failed to run simulation&quot;);</span>
-    <span class="comment">// // let output = multi_thread(engine, &amp;input).expect(&quot;Failed to run simulation&quot;);</span>
-    <span class="comment">// output.save(&amp;out_dir).expect(&quot;Failed to save output data.&quot;);</span>
+    <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Operation&quot;</span>);
+    <span class="ident">op</span>.<span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>)
+        .<span class="ident">expect</span>(<span class="string">&quot;Operation failed... we&#39;ll get &#39;em next time.&quot;</span>);
 
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Finished&quot;</span>);
 }
