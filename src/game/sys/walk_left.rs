@@ -1,6 +1,6 @@
 //! Walk-movement system
 
-use crate::component::{LeftWalker, Position};
+use crate::game::{LeftWalker, Position};
 use specs::{Join, ReadStorage, System, WriteStorage};
 
 /// left walking system.

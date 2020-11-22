@@ -43,5 +43,7 @@ pub mod sim;
 pub mod tools;
 pub mod util;
 
-#[cfg(feature = "rltk, specs, specs-derive")]
+#[cfg(feature = "rltk")]
+#[cfg(feature = "specs")]
+#[cfg(feature = "specs-derive")]
 pub mod game;
