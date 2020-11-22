@@ -2,11 +2,13 @@
 
 use arctk::{
     args,
+    game::State,
     util::{
         banner::{section, title},
         dir,
     },
 };
+use rltk::{main_loop, RltkBuilder};
 use std::{env::current_dir, path::PathBuf};
 
 fn main() {
@@ -21,7 +23,23 @@ fn main() {
         .expect("Failed to initialise directories.");
 
     section(term_width, "Running");
-    // game();
+    game();
 
     section(term_width, "Finished");
+}
+
+/// Run the main game loop.
+fn game() {
+    let context = RltkBuilder::simple80x50()
+        .with_title("Roguelike - Wonder")
+        .build()
+        .expect("Failed to build RLTK window.");
+    let mut gs = State::new();
+
+    gs.add_player(40, 25);
+    for i in 0..10 {
+        gs.add_enemy(i * 7, 20);
+    }
+
+    main_loop(context, gs).expect("Failed to run the main game loop.")
 }
