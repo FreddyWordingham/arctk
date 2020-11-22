@@ -3,6 +3,7 @@
 use crate::{
     game::Tile,
     ord::{X, Y},
+    tools::two_dim_to_linear,
 };
 use ndarray::Array2;
 
@@ -17,11 +18,20 @@ impl Map {
     #[inline]
     #[must_use]
     pub fn new(res: [usize; 2]) -> Self {
-        let tiles = Vec::with_capacity(res[X] * res[Y]);
+        let mut tiles = Array2::default(res);
 
-        Self {
-            tiles: Array2::from_shape_vec(res, tiles)
-                .expect("Failed to create tile data from vec."),
+        let [widht, height] = res;
+
+        // Boundaries walls
+        for x in 0..res[X] {
+            tiles[[x, 0]] = Tile::Wall;
+            tiles[[x, height - 1]] = Tile::Wall;
         }
+        for y in 0..res[Y] {
+            tiles[[0, y]] = Tile::Wall;
+            tiles[[widht - 1, y]] = Tile::Wall;
+        }
+
+        Self { tiles }
     }
 }

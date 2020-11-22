@@ -8,3 +8,11 @@ pub enum Tile {
     /// Open floor.
     Floor,
 }
+
+impl Default for Tile {
+    #[inline]
+    #[must_use]
+    fn default() -> Self {
+        Self::Floor
+    }
+}
