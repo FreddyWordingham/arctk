@@ -1,13 +1,14 @@
 //! Game state.
 
 use crate::{
+    clone,
     game::*,
     ord::{X, Y},
 };
 use rltk::{GameState, Rltk, VirtualKeyCode, RGB};
 use specs::{Builder, Join, RunNow, World, WorldExt};
 
-// Minium window resolution in all dimensions.
+// Minimum window resolution in all dimensions.
 const MIN_WINDOW_RES: i32 = 32;
 
 /// Game state.
@@ -19,6 +20,8 @@ pub struct State {
 }
 
 impl State {
+    clone!(res, [i32; 2]);
+
     /// Construct a new instance.
     #[inline]
     #[must_use]
@@ -81,8 +84,8 @@ impl State {
         let mut players = self.ecs.write_storage::<Player>();
 
         for (_player, pos) in (&mut players, &mut positions).join() {
-            pos.x = (pos.x + dx).max(0).min(79);
-            pos.y = (pos.y + dy).max(0).min(49);
+            pos.x = (pos.x + dx).max(0).min(self.res[X]);
+            pos.y = (pos.y + dy).max(0).min(self.res[Y]);
         }
     }
 
