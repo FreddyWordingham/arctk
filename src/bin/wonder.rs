@@ -47,19 +47,16 @@ fn main() {
 
 /// Run the main game loop.
 fn game(params: &Parameters) {
-    debug_assert!(params.res[X] > 32);
-    debug_assert!(params.res[Y] > 32);
-
     let context = RltkBuilder::simple(params.res[X], params.res[Y])
-        .expect("Failed to build console of the given dimesnions.")
+        .expect("Failed to build console of the given dimensions.")
         .with_title("Roguelike - Wonder")
         .build()
         .expect("Failed to build RLTK window.");
     let mut gs = State::new(params.res);
 
-    gs.add_player(params.res[X] / 2, params.res[Y] / 2);
+    gs.add_player(params.res[X] / 2, params.res[Y] / 3);
     for i in 0..10 {
-        gs.add_enemy(i * 7, 20);
+        gs.add_enemy(i * 3, (2 * params.res[Y]) / 3);
     }
 
     main_loop(context, gs).expect("Failed to run the main game loop.")

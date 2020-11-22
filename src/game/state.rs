@@ -8,7 +8,7 @@ use crate::{
 use rltk::{GameState, Rltk, VirtualKeyCode, RGB};
 use specs::{Builder, Join, RunNow, World, WorldExt};
 
-// Minimum window resolution in all dimensions.
+/// Minimum window resolution in all dimensions.
 const MIN_WINDOW_RES: i32 = 32;
 
 /// Game state.
@@ -26,8 +26,8 @@ impl State {
     #[inline]
     #[must_use]
     pub fn new(res: [i32; 2]) -> Self {
-        debug_assert!(res[X] > MIN_WINDOW_RES);
-        debug_assert!(res[Y] > MIN_WINDOW_RES);
+        debug_assert!(res[X] >= MIN_WINDOW_RES);
+        debug_assert!(res[Y] >= MIN_WINDOW_RES);
 
         let mut ecs = World::new();
         ecs.register::<Position>();
