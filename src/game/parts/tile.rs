@@ -1,10 +1,10 @@
-//1 Landscape enumeration.
+//! Landscape enumeration.
 
 /// Tile kinds
 #[derive(PartialEq, Copy, Clone)]
-enum TileType {
+pub enum Tile {
     /// Inaccessible.
     Wall,
-    /// Open flior.
+    /// Open floor.
     Floor,
 }
