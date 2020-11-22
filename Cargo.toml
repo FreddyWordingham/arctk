@@ -65,9 +65,6 @@ required-features = ["netcdf", "terminal_size"]
 name = "render"
 required-features = ["png", "terminal_size"]
 
-[[bin]]
-name = "wonder"
-required-features = ["terminal_size"]
 
 [profile.dev]
 # Development profile: "cargo build".
