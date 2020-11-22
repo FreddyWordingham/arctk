@@ -1,0 +1,1 @@
+initSidebarItems({"macro":[["add_wasm_support",""],["embedded_resource",""],["gl_error_wrap",""],["link_resource",""]],"mod":[["console",""],["embedding",""],["prelude",""],["rex",""]],"type":[["FontCharType",""]]});

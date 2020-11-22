@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["CellularDistanceFunction","Cellular noise distance function to use"],["CellularReturnType","What type of cellular noise result do you want"],["FractalType","Fractal function to use"],["Interp","Interpolation function to use"],["NoiseType","Type of noise to generate"]],"struct":[["FastNoise",""]]});

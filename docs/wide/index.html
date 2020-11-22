@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `wide` crate."><meta name="keywords" content="rust, rustlang, rust-lang, wide"><title>wide - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../wide/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate wide</p><div class='block version'><p>Version 0.4.6</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all wide's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li><li><a href="#unions">Unions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'wide', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/wide/lib.rs.html#1-182' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>wide</a></span></h1><div class='docblock'><p>A crate to help you go wide.</p>
+<p>Specifically, this crate has data types for blocks of primitives packed
+together and used as a single unit. This works very well with SIMD/vector
+hardware of various targets. Both in terms of explicit SIMD usage and also
+in terms of allowing LLVM's auto-vectorizer to do its job.</p>
+<p>All SIMD usage is on a <em>best effort</em> basis. Results will vary based on
+target, optimization level, method, and if you're using a Nightly compiler
+or not. Otherwise you get a &quot;fallback&quot; implementation, which will just do
+the normal computation on each lane individually.</p>
+<ul>
+<li><strong>Note:</strong> The crate will auto-detect if you're using Nightly and take
+advantage of it. You don't do anything on your part. Activate the
+<code>always_use_stable</code> feature if you'd like to suppress this effect such as
+for testing purposes.</li>
+</ul>
+<h3 id="what-about-packed_simd" class="section-header"><a href="#what-about-packed_simd">What About <code>packed_simd</code>?</a></h3>
+<p>Compared to the
+<a href="https://github.com/rust-lang-nursery/packed_simd">packed_simd</a> RFC efforts,
+this crate is less concerned with complete coverage of all possible
+intrinsics and being totally generic across all widths. Instead, I focus on
+having a very simple, easy to understand setup that avoids generics and
+tries to just be plain and obvious at all times. The goal is that using a
+wide type should be as close as possible to using the scalar version of the
+same type. Some function designed for <code>f32</code> inputs and outputs should &quot;just
+work&quot; when you change it to <code>f32x4</code> inputs and outputs.</p>
+<p>Also, <code>packed_simd</code> is Nightly-only, whereas this crate works on Stable.
+Even on Stable this crate will give you <em>reasonable</em> levels of SIMD just
+from LLVM's auto-vectorizer being pretty good at its job when you give it
+code that it recognizes.</p>
+<p>When <code>packed_simd</code> eventually makes it into Stable it <em>might</em> make this
+crate obsolete. However, in September of 2019 I asked the <code>packed_simd</code>
+folks if there was any kind of ETA, 6 months, 12 months, or more, and they
+just said &quot;no ETA&quot;. So I'm not gonna wait around for <code>packed_simd</code>.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr class='module-item'><td><a class="mod" href="arch/index.html" title='wide::arch mod'>arch</a></td><td class='docblock-short'><p>Architecture specific functionality.</p>
+</td></tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
+<table><tr class='module-item'><td><a class="macro" href="macro.const_f32_as_f32x4.html" title='wide::const_f32_as_f32x4 macro'>const_f32_as_f32x4</a></td><td class='docblock-short'><p>Declares an <code>f32x4</code> const identifier.</p>
+</td></tr><tr class='module-item'><td><a class="macro" href="macro.const_i32_as_i32x4.html" title='wide::const_i32_as_i32x4 macro'>const_i32_as_i32x4</a></td><td class='docblock-short'><p>Declares an <code>i32x4</code> const identifier.</p>
+</td></tr><tr class='module-item'><td><a class="macro" href="macro.shuffle128.html" title='wide::shuffle128 macro'>shuffle128</a></td><td class='docblock-short'><p>Shuffles around some <code>f32</code> lanes into a new <code>m128</code></p>
+</td></tr><tr class='module-item'><td><a class="macro" href="macro.shuffle128d.html" title='wide::shuffle128d macro'>shuffle128d</a></td><td class='docblock-short'><p>Shuffles around some <code>f64</code> lanes into a new <code>m128d</code></p>
+</td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.f32x4.html" title='wide::f32x4 struct'>f32x4</a></td><td class='docblock-short'><p>Four <code>f32</code> values packed together.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.i32x4.html" title='wide::i32x4 struct'>i32x4</a></td><td class='docblock-short'><p>Four <code>i32</code> values packed together.</p>
+</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table><tr class='module-item'><td><a class="fn" href="fn.cos_f32.html" title='wide::cos_f32 fn'>cos_f32</a></td><td class='docblock-short'><p>A <code>cos</code> for just one <code>f32</code>.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.sin_f32.html" title='wide::sin_f32 fn'>sin_f32</a></td><td class='docblock-short'><p>A <code>sin</code> for just one <code>f32</code>.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.sqrt_f32.html" title='wide::sqrt_f32 fn'>sqrt_f32</a></td><td class='docblock-short'><p>A <code>sqrt</code> for just one <code>f32</code>.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.tan_f32.html" title='wide::tan_f32 fn'>tan_f32</a></td><td class='docblock-short'><p>A <code>tan</code> for just one <code>f32</code>.</p>
+</td></tr></table><h2 id='unions' class='section-header'><a href="#unions">Unions</a></h2>
+<table><tr class='module-item'><td><a class="union" href="union.ConstUnionHack_f32x4.html" title='wide::ConstUnionHack_f32x4 union'>ConstUnionHack_f32x4</a></td><td class='docblock-short'><p>Lets us declare <code>f32x4</code> values in a <code>const</code> context. Otherwise useless.</p>
+</td></tr><tr class='module-item'><td><a class="union" href="union.ConstUnionHack_i32x4.html" title='wide::ConstUnionHack_i32x4 union'>ConstUnionHack_i32x4</a></td><td class='docblock-short'><p>Allows us to declare <code>i32x4</code> values in a <code>const</code> context. Uninteresting otherwise.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "wide";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

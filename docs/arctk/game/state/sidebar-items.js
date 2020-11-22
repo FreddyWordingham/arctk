@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["State","Game state."]]});

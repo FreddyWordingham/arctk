@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["hibitset"] = [{"text":"impl&lt;'a, T:&nbsp;'a + Send + Sync&gt; UnindexedProducer for BitProducer&lt;'a, T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: BitSetLike,&nbsp;</span>","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Mat2","A 2x2 square matrix."],["Mat3","A 3x3 square matrix."],["Mat4","A 4x4 square matrix."],["Wat2",""],["Wat3",""],["Wat4",""]]});

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.8.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../itertools/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/itertools-0.7.11/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../itertools/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -2120,309 +2120,17 @@
 <span id="2119">2119</span>
 <span id="2120">2120</span>
 <span id="2121">2121</span>
-<span id="2122">2122</span>
-<span id="2123">2123</span>
-<span id="2124">2124</span>
-<span id="2125">2125</span>
-<span id="2126">2126</span>
-<span id="2127">2127</span>
-<span id="2128">2128</span>
-<span id="2129">2129</span>
-<span id="2130">2130</span>
-<span id="2131">2131</span>
-<span id="2132">2132</span>
-<span id="2133">2133</span>
-<span id="2134">2134</span>
-<span id="2135">2135</span>
-<span id="2136">2136</span>
-<span id="2137">2137</span>
-<span id="2138">2138</span>
-<span id="2139">2139</span>
-<span id="2140">2140</span>
-<span id="2141">2141</span>
-<span id="2142">2142</span>
-<span id="2143">2143</span>
-<span id="2144">2144</span>
-<span id="2145">2145</span>
-<span id="2146">2146</span>
-<span id="2147">2147</span>
-<span id="2148">2148</span>
-<span id="2149">2149</span>
-<span id="2150">2150</span>
-<span id="2151">2151</span>
-<span id="2152">2152</span>
-<span id="2153">2153</span>
-<span id="2154">2154</span>
-<span id="2155">2155</span>
-<span id="2156">2156</span>
-<span id="2157">2157</span>
-<span id="2158">2158</span>
-<span id="2159">2159</span>
-<span id="2160">2160</span>
-<span id="2161">2161</span>
-<span id="2162">2162</span>
-<span id="2163">2163</span>
-<span id="2164">2164</span>
-<span id="2165">2165</span>
-<span id="2166">2166</span>
-<span id="2167">2167</span>
-<span id="2168">2168</span>
-<span id="2169">2169</span>
-<span id="2170">2170</span>
-<span id="2171">2171</span>
-<span id="2172">2172</span>
-<span id="2173">2173</span>
-<span id="2174">2174</span>
-<span id="2175">2175</span>
-<span id="2176">2176</span>
-<span id="2177">2177</span>
-<span id="2178">2178</span>
-<span id="2179">2179</span>
-<span id="2180">2180</span>
-<span id="2181">2181</span>
-<span id="2182">2182</span>
-<span id="2183">2183</span>
-<span id="2184">2184</span>
-<span id="2185">2185</span>
-<span id="2186">2186</span>
-<span id="2187">2187</span>
-<span id="2188">2188</span>
-<span id="2189">2189</span>
-<span id="2190">2190</span>
-<span id="2191">2191</span>
-<span id="2192">2192</span>
-<span id="2193">2193</span>
-<span id="2194">2194</span>
-<span id="2195">2195</span>
-<span id="2196">2196</span>
-<span id="2197">2197</span>
-<span id="2198">2198</span>
-<span id="2199">2199</span>
-<span id="2200">2200</span>
-<span id="2201">2201</span>
-<span id="2202">2202</span>
-<span id="2203">2203</span>
-<span id="2204">2204</span>
-<span id="2205">2205</span>
-<span id="2206">2206</span>
-<span id="2207">2207</span>
-<span id="2208">2208</span>
-<span id="2209">2209</span>
-<span id="2210">2210</span>
-<span id="2211">2211</span>
-<span id="2212">2212</span>
-<span id="2213">2213</span>
-<span id="2214">2214</span>
-<span id="2215">2215</span>
-<span id="2216">2216</span>
-<span id="2217">2217</span>
-<span id="2218">2218</span>
-<span id="2219">2219</span>
-<span id="2220">2220</span>
-<span id="2221">2221</span>
-<span id="2222">2222</span>
-<span id="2223">2223</span>
-<span id="2224">2224</span>
-<span id="2225">2225</span>
-<span id="2226">2226</span>
-<span id="2227">2227</span>
-<span id="2228">2228</span>
-<span id="2229">2229</span>
-<span id="2230">2230</span>
-<span id="2231">2231</span>
-<span id="2232">2232</span>
-<span id="2233">2233</span>
-<span id="2234">2234</span>
-<span id="2235">2235</span>
-<span id="2236">2236</span>
-<span id="2237">2237</span>
-<span id="2238">2238</span>
-<span id="2239">2239</span>
-<span id="2240">2240</span>
-<span id="2241">2241</span>
-<span id="2242">2242</span>
-<span id="2243">2243</span>
-<span id="2244">2244</span>
-<span id="2245">2245</span>
-<span id="2246">2246</span>
-<span id="2247">2247</span>
-<span id="2248">2248</span>
-<span id="2249">2249</span>
-<span id="2250">2250</span>
-<span id="2251">2251</span>
-<span id="2252">2252</span>
-<span id="2253">2253</span>
-<span id="2254">2254</span>
-<span id="2255">2255</span>
-<span id="2256">2256</span>
-<span id="2257">2257</span>
-<span id="2258">2258</span>
-<span id="2259">2259</span>
-<span id="2260">2260</span>
-<span id="2261">2261</span>
-<span id="2262">2262</span>
-<span id="2263">2263</span>
-<span id="2264">2264</span>
-<span id="2265">2265</span>
-<span id="2266">2266</span>
-<span id="2267">2267</span>
-<span id="2268">2268</span>
-<span id="2269">2269</span>
-<span id="2270">2270</span>
-<span id="2271">2271</span>
-<span id="2272">2272</span>
-<span id="2273">2273</span>
-<span id="2274">2274</span>
-<span id="2275">2275</span>
-<span id="2276">2276</span>
-<span id="2277">2277</span>
-<span id="2278">2278</span>
-<span id="2279">2279</span>
-<span id="2280">2280</span>
-<span id="2281">2281</span>
-<span id="2282">2282</span>
-<span id="2283">2283</span>
-<span id="2284">2284</span>
-<span id="2285">2285</span>
-<span id="2286">2286</span>
-<span id="2287">2287</span>
-<span id="2288">2288</span>
-<span id="2289">2289</span>
-<span id="2290">2290</span>
-<span id="2291">2291</span>
-<span id="2292">2292</span>
-<span id="2293">2293</span>
-<span id="2294">2294</span>
-<span id="2295">2295</span>
-<span id="2296">2296</span>
-<span id="2297">2297</span>
-<span id="2298">2298</span>
-<span id="2299">2299</span>
-<span id="2300">2300</span>
-<span id="2301">2301</span>
-<span id="2302">2302</span>
-<span id="2303">2303</span>
-<span id="2304">2304</span>
-<span id="2305">2305</span>
-<span id="2306">2306</span>
-<span id="2307">2307</span>
-<span id="2308">2308</span>
-<span id="2309">2309</span>
-<span id="2310">2310</span>
-<span id="2311">2311</span>
-<span id="2312">2312</span>
-<span id="2313">2313</span>
-<span id="2314">2314</span>
-<span id="2315">2315</span>
-<span id="2316">2316</span>
-<span id="2317">2317</span>
-<span id="2318">2318</span>
-<span id="2319">2319</span>
-<span id="2320">2320</span>
-<span id="2321">2321</span>
-<span id="2322">2322</span>
-<span id="2323">2323</span>
-<span id="2324">2324</span>
-<span id="2325">2325</span>
-<span id="2326">2326</span>
-<span id="2327">2327</span>
-<span id="2328">2328</span>
-<span id="2329">2329</span>
-<span id="2330">2330</span>
-<span id="2331">2331</span>
-<span id="2332">2332</span>
-<span id="2333">2333</span>
-<span id="2334">2334</span>
-<span id="2335">2335</span>
-<span id="2336">2336</span>
-<span id="2337">2337</span>
-<span id="2338">2338</span>
-<span id="2339">2339</span>
-<span id="2340">2340</span>
-<span id="2341">2341</span>
-<span id="2342">2342</span>
-<span id="2343">2343</span>
-<span id="2344">2344</span>
-<span id="2345">2345</span>
-<span id="2346">2346</span>
-<span id="2347">2347</span>
-<span id="2348">2348</span>
-<span id="2349">2349</span>
-<span id="2350">2350</span>
-<span id="2351">2351</span>
-<span id="2352">2352</span>
-<span id="2353">2353</span>
-<span id="2354">2354</span>
-<span id="2355">2355</span>
-<span id="2356">2356</span>
-<span id="2357">2357</span>
-<span id="2358">2358</span>
-<span id="2359">2359</span>
-<span id="2360">2360</span>
-<span id="2361">2361</span>
-<span id="2362">2362</span>
-<span id="2363">2363</span>
-<span id="2364">2364</span>
-<span id="2365">2365</span>
-<span id="2366">2366</span>
-<span id="2367">2367</span>
-<span id="2368">2368</span>
-<span id="2369">2369</span>
-<span id="2370">2370</span>
-<span id="2371">2371</span>
-<span id="2372">2372</span>
-<span id="2373">2373</span>
-<span id="2374">2374</span>
-<span id="2375">2375</span>
-<span id="2376">2376</span>
-<span id="2377">2377</span>
-<span id="2378">2378</span>
-<span id="2379">2379</span>
-<span id="2380">2380</span>
-<span id="2381">2381</span>
-<span id="2382">2382</span>
-<span id="2383">2383</span>
-<span id="2384">2384</span>
-<span id="2385">2385</span>
-<span id="2386">2386</span>
-<span id="2387">2387</span>
-<span id="2388">2388</span>
-<span id="2389">2389</span>
-<span id="2390">2390</span>
-<span id="2391">2391</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="attribute">#![<span class="ident">crate_name</span><span class="op">=</span><span class="string">&quot;itertools&quot;</span>]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>), <span class="ident">no_std</span>)]</span>
 
-<span class="doccomment">//! Extra iterator adaptors, functions and macros.</span>
+<span class="doccomment">//! Itertools — extra iterator adaptors, functions and macros.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! To extend [`Iterator`] with methods in this crate, import</span>
-<span class="doccomment">//! the [`Itertools` trait](./trait.Itertools.html):</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//! use itertools::Itertools;</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Now, new methods like [`interleave`](./trait.Itertools.html#method.interleave)</span>
-<span class="doccomment">//! are available on all iterators:</span>
+<span class="doccomment">//! To use the iterator methods in this crate, import the [`Itertools` trait](./trait.Itertools.html):</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! use itertools::Itertools;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! let it = (1..3).interleave(vec![-1, -2]);</span>
-<span class="doccomment">//! itertools::assert_equal(it, vec![1, -1, 2, -2]);</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Most iterator methods are also provided as functions (with the benefit</span>
-<span class="doccomment">//! that they convert parameters using [`IntoIterator`]):</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! ```</span>
-<span class="doccomment">//! use itertools::interleave;</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! for elt in interleave(&amp;[1, 2, 3], &amp;[2, 3, 4]) {</span>
-<span class="doccomment">//!     /* loop body */</span>
-<span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Crate Features</span>
@@ -2435,10 +2143,9 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Rust Version</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! This version of itertools requires Rust 1.24 or later.</span>
+<span class="doccomment">//! This version of itertools requires Rust 1.12 or later.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! [`Iterator`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html</span>
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span><span class="op">=</span><span class="string">&quot;https://docs.rs/itertools/0.8/&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span><span class="op">=</span><span class="string">&quot;https://docs.rs/itertools/0.7/&quot;</span>)]</span>
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">either</span>;
 
@@ -2449,17 +2156,13 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::{<span class="ident">IntoIterator</span>, <span class="ident">once</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::{<span class="ident">IntoIterator</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::<span class="ident">Hash</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Write</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-<span class="kw">type</span> <span class="ident">VecIntoIter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">vec</span>::<span class="ident">IntoIter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">mod</span> <span class="ident">impl_macros</span>;
@@ -2472,13 +2175,12 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">structs</span> {
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">adaptors</span>::{
         <span class="ident">Dedup</span>,
-        <span class="ident">DedupBy</span>,
         <span class="ident">Interleave</span>,
         <span class="ident">InterleaveShortest</span>,
         <span class="ident">Product</span>,
         <span class="ident">PutBack</span>,
         <span class="ident">Batching</span>,
-        <span class="ident">MapInto</span>,
+        <span class="ident">Step</span>,
         <span class="ident">MapResults</span>,
         <span class="ident">Merge</span>,
         <span class="ident">MergeBy</span>,
@@ -2486,19 +2188,15 @@
         <span class="ident">WhileSome</span>,
         <span class="ident">Coalesce</span>,
         <span class="ident">TupleCombinations</span>,
+        <span class="ident">Flatten</span>,
         <span class="ident">Positions</span>,
         <span class="ident">Update</span>,
     };
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">adaptors</span>::<span class="ident">Step</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">adaptors</span>::<span class="ident">MultiProduct</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">combinations</span>::<span class="ident">Combinations</span>;
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">combinations_with_replacement</span>::<span class="ident">CombinationsWithReplacement</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cons_tuples_impl</span>::<span class="ident">ConsTuples</span>;
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">exactly_one_err</span>::<span class="ident">ExactlyOneError</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">format</span>::{<span class="ident">Format</span>, <span class="ident">FormatWith</span>};
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">groupbylazy</span>::{<span class="ident">IntoChunks</span>, <span class="ident">Chunk</span>, <span class="ident">Chunks</span>, <span class="ident">GroupBy</span>, <span class="ident">Group</span>, <span class="ident">Groups</span>};
@@ -2510,15 +2208,12 @@
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">multipeek_impl</span>::<span class="ident">MultiPeek</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pad_tail</span>::<span class="ident">PadUsing</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">peeking_take_while</span>::<span class="ident">PeekingTakeWhile</span>;
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">permutations</span>::<span class="ident">Permutations</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">process_results_impl</span>::<span class="ident">ProcessResults</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">put_back_n_impl</span>::<span class="ident">PutBackN</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rciter_impl</span>::<span class="ident">RcIter</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">repeatn</span>::<span class="ident">RepeatN</span>;
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sources</span>::{<span class="ident">RepeatCall</span>, <span class="ident">Unfold</span>, <span class="ident">Iterate</span>};
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">tee</span>::<span class="ident">Tee</span>;
@@ -2530,8 +2225,8 @@
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">zip_longest</span>::<span class="ident">ZipLongest</span>;
     <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ziptuple</span>::<span class="ident">Zip</span>;
 }
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">structs</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">adaptors</span>::<span class="ident">flatten</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concat_impl</span>::<span class="ident">concat</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cons_tuples_impl</span>::<span class="ident">cons_tuples</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">diff</span>::<span class="ident">diff_with</span>;
@@ -2542,7 +2237,6 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">peeking_take_while</span>::<span class="ident">PeekingNext</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">process_results_impl</span>::<span class="ident">process_results</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">repeatn</span>::<span class="ident">repeat_n</span>;
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sources</span>::{<span class="ident">repeat_call</span>, <span class="ident">unfold</span>, <span class="ident">iterate</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">with_position</span>::<span class="ident">Position</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ziptuple</span>::<span class="ident">multizip</span>;
@@ -2557,9 +2251,6 @@
 <span class="kw">mod</span> <span class="ident">cons_tuples_impl</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">combinations</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-<span class="kw">mod</span> <span class="ident">combinations_with_replacement</span>;
-<span class="kw">mod</span> <span class="ident">exactly_one_err</span>;
 <span class="kw">mod</span> <span class="ident">diff</span>;
 <span class="kw">mod</span> <span class="ident">format</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
@@ -2569,16 +2260,12 @@
 <span class="kw">mod</span> <span class="ident">intersperse</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">kmerge_impl</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-<span class="kw">mod</span> <span class="ident">lazy_buffer</span>;
 <span class="kw">mod</span> <span class="ident">merge_join</span>;
 <span class="kw">mod</span> <span class="ident">minmax</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">multipeek_impl</span>;
 <span class="kw">mod</span> <span class="ident">pad_tail</span>;
 <span class="kw">mod</span> <span class="ident">peeking_take_while</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-<span class="kw">mod</span> <span class="ident">permutations</span>;
 <span class="kw">mod</span> <span class="ident">process_results_impl</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">put_back_n_impl</span>;
@@ -2646,15 +2333,12 @@
 <span class="doccomment">/// returns `None`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This is a version of the standard ``.zip()`` that&#39;s supporting more than</span>
-<span class="doccomment">/// two iterators. The iterator element type is a tuple with one element</span>
+<span class="doccomment">/// two iterators. The iterator elment type is a tuple with one element</span>
 <span class="doccomment">/// from each of the input iterators. Just like ``.zip()``, the iteration stops</span>
 <span class="doccomment">/// when the shortest of the inputs reaches its end.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// **Note:** The result of this macro is in the general case an iterator</span>
-<span class="doccomment">/// composed of repeated `.zip()` and a `.map()`; it has an anonymous type.</span>
-<span class="doccomment">/// The special cases of one and two arguments produce the equivalent of</span>
-<span class="doccomment">/// `$a.into_iter()` and `$a.into_iter().zip($b)` respectively.</span>
-<span class="doccomment">///</span>
+<span class="doccomment">/// **Note:** The result of this macro is an iterator composed of</span>
+<span class="doccomment">/// repeated `.zip()` and a `.map()`; it has an anonymous type.</span>
 <span class="doccomment">/// Prefer this macro `izip!()` over [`multizip`] for the performance benefits</span>
 <span class="doccomment">/// of using the standard library `.zip()`.</span>
 <span class="doccomment">///</span>
@@ -2696,20 +2380,8 @@
         <span class="macro">izip</span><span class="macro">!</span>(@<span class="ident">closure</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">p</span>, <span class="ident">b</span>) <span class="op">=&gt;</span> ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tup</span>)<span class="kw-2">*</span>, <span class="ident">b</span> ) $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span> )<span class="kw-2">*</span>)
     };
 
-    <span class="comment">// unary</span>
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>:<span class="ident">expr</span> $(,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
-        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">__std_iter</span>::<span class="ident">IntoIterator</span>::<span class="ident">into_iter</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>)
-    };
-
-    <span class="comment">// binary</span>
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">second</span>:<span class="ident">expr</span> $(,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
-        <span class="macro">izip</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>)
-            .<span class="ident">zip</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">second</span>)
-    };
-
-    <span class="comment">// n-ary where n &gt; 2</span>
     ( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>:<span class="ident">expr</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">expr</span> )<span class="op">*</span> $(,)<span class="op">*</span> ) <span class="op">=&gt;</span> {
-        <span class="macro">izip</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>)
+        <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">__std_iter</span>::<span class="ident">IntoIterator</span>::<span class="ident">into_iter</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first</span>)
             $(
                 .<span class="ident">zip</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>)
             )<span class="op">*</span>
@@ -2719,8 +2391,7 @@
     };
 }
 
-<span class="doccomment">/// An [`Iterator`] blanket implementation that provides extra adaptors and</span>
-<span class="doccomment">/// methods.</span>
+<span class="doccomment">/// The trait `Itertools`: extra iterator adaptors and methods for iterators.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This trait defines a number of methods. They are divided into two groups:</span>
 <span class="doccomment">///</span>
@@ -2732,8 +2403,6 @@
 <span class="doccomment">/// return a regular value of some other kind.</span>
 <span class="doccomment">/// [`.next_tuple()`](#method.next_tuple) is an example and the first regular</span>
 <span class="doccomment">/// method in the list.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [`Iterator`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Itertools</span> : <span class="ident">Iterator</span> {
     <span class="comment">// adaptors</span>
 
@@ -3065,26 +2734,10 @@
     <span class="doccomment">/// let it = (0..8).step(3);</span>
     <span class="doccomment">/// itertools::assert_equal(it, vec![0, 3, 6]);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;Use std .step_by() instead&quot;</span>, <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
     <span class="kw">fn</span> <span class="ident">step</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Step</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>
     {
         <span class="ident">adaptors</span>::<span class="ident">step</span>(<span class="self">self</span>, <span class="ident">n</span>)
-    }
-
-    <span class="doccomment">/// Convert each item of the iterator using the `Into` trait.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```rust</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// (1i32..42i32).map_into::&lt;f64&gt;().collect_vec();</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">map_into</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MapInto</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">R</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
-              <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
-    {
-        <span class="ident">adaptors</span>::<span class="ident">map_into</span>(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Return an iterator adaptor that applies the provided closure</span>
@@ -3360,28 +3013,6 @@
         <span class="ident">adaptors</span>::<span class="ident">dedup</span>(<span class="self">self</span>)
     }
 
-    <span class="doccomment">/// Remove duplicates from sections of consecutive identical elements,</span>
-    <span class="doccomment">/// determining equality using a comparison function.</span>
-    <span class="doccomment">/// If the iterator is sorted, all elements will be unique.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Iterator element type is `Self::Item`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This iterator is *fused*.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let data = vec![(0, 1.), (1, 1.), (0, 2.), (0, 3.), (1, 3.), (1, 2.), (2, 2.)];</span>
-    <span class="doccomment">/// itertools::assert_equal(data.into_iter().dedup_by(|x, y| x.1==y.1),</span>
-    <span class="doccomment">///                         vec![(0, 1.), (0, 2.), (0, 3.), (1, 2.)]);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">dedup_by</span><span class="op">&lt;</span><span class="ident">Cmp</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">cmp</span>: <span class="ident">Cmp</span>) <span class="op">-&gt;</span> <span class="ident">DedupBy</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Cmp</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
-              <span class="ident">Cmp</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Item</span>, <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Item</span>)<span class="op">-&gt;</span><span class="ident">bool</span>,
-    {
-        <span class="ident">adaptors</span>::<span class="ident">dedup_by</span>(<span class="self">self</span>, <span class="ident">cmp</span>)
-    }
-
     <span class="doccomment">/// Return an iterator adaptor that filters out elements that have</span>
     <span class="doccomment">/// already been produced once during the iteration. Duplicates</span>
     <span class="doccomment">/// are detected using hash and equality.</span>
@@ -3532,7 +3163,7 @@
         <span class="ident">adaptors</span>::<span class="ident">tuple_combinations</span>(<span class="self">self</span>)
     }
 
-    <span class="doccomment">/// Return an iterator adaptor that iterates over the `k`-length combinations of</span>
+    <span class="doccomment">/// Return an iterator adaptor that iterates over the `n`-length combinations of</span>
     <span class="doccomment">/// the elements from an iterator.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element type is `Vec&lt;Self::Item&gt;`. The iterator produces a new Vec per iteration,</span>
@@ -3547,99 +3178,14 @@
     <span class="doccomment">///     vec![1, 2, 4],</span>
     <span class="doccomment">///     vec![1, 3, 4],</span>
     <span class="doccomment">///     vec![2, 3, 4],</span>
-    <span class="doccomment">/// ]);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note: Combinations does not take into account the equality of the iterated values.</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let it = vec![1, 2, 2].into_iter().combinations(2);</span>
-    <span class="doccomment">/// itertools::assert_equal(it, vec![</span>
-    <span class="doccomment">///     vec![1, 2], // Note: these are the same</span>
-    <span class="doccomment">///     vec![1, 2], // Note: these are the same</span>
-    <span class="doccomment">///     vec![2, 2],</span>
-    <span class="doccomment">/// ]);</span>
+    <span class="doccomment">///     ]);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">combinations</span>(<span class="self">self</span>, <span class="ident">k</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Combinations</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">combinations</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Combinations</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
               <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">Clone</span>
     {
-        <span class="ident">combinations</span>::<span class="ident">combinations</span>(<span class="self">self</span>, <span class="ident">k</span>)
-    }
-
-    <span class="doccomment">/// Return an iterator that iterates over the `k`-length combinations of</span>
-    <span class="doccomment">/// the elements from an iterator, with replacement.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Iterator element type is `Vec&lt;Self::Item&gt;`. The iterator produces a new Vec per iteration,</span>
-    <span class="doccomment">/// and clones the iterator elements.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let it = (1..4).combinations_with_replacement(2);</span>
-    <span class="doccomment">/// itertools::assert_equal(it, vec![</span>
-    <span class="doccomment">///     vec![1, 1],</span>
-    <span class="doccomment">///     vec![1, 2],</span>
-    <span class="doccomment">///     vec![1, 3],</span>
-    <span class="doccomment">///     vec![2, 2],</span>
-    <span class="doccomment">///     vec![2, 3],</span>
-    <span class="doccomment">///     vec![3, 3],</span>
-    <span class="doccomment">/// ]);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">combinations_with_replacement</span>(<span class="self">self</span>, <span class="ident">k</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">CombinationsWithReplacement</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="self">Self</span>: <span class="ident">Sized</span>,
-        <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">Clone</span>,
-    {
-        <span class="ident">combinations_with_replacement</span>::<span class="ident">combinations_with_replacement</span>(<span class="self">self</span>, <span class="ident">k</span>)
-    }
-
-    <span class="doccomment">/// Return an iterator adaptor that iterates over all k-permutations of the</span>
-    <span class="doccomment">/// elements from an iterator.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Iterator element type is `Vec&lt;Self::Item&gt;` with length `k`. The iterator</span>
-    <span class="doccomment">/// produces a new Vec per iteration, and clones the iterator elements.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If `k` is greater than the length of the input iterator, the resultant</span>
-    <span class="doccomment">/// iterator adaptor will be empty.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let perms = (5..8).permutations(2);</span>
-    <span class="doccomment">/// itertools::assert_equal(perms, vec![</span>
-    <span class="doccomment">///     vec![5, 6],</span>
-    <span class="doccomment">///     vec![5, 7],</span>
-    <span class="doccomment">///     vec![6, 5],</span>
-    <span class="doccomment">///     vec![6, 7],</span>
-    <span class="doccomment">///     vec![7, 5],</span>
-    <span class="doccomment">///     vec![7, 6],</span>
-    <span class="doccomment">/// ]);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note: Permutations does not take into account the equality of the iterated values.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let it = vec![2, 2].into_iter().permutations(2);</span>
-    <span class="doccomment">/// itertools::assert_equal(it, vec![</span>
-    <span class="doccomment">///     vec![2, 2], // Note: these are the same</span>
-    <span class="doccomment">///     vec![2, 2], // Note: these are the same</span>
-    <span class="doccomment">/// ]);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Note: The source iterator is collected lazily, and will not be</span>
-    <span class="doccomment">/// re-iterated if the permutations adaptor is completed and re-iterated.</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">permutations</span>(<span class="self">self</span>, <span class="ident">k</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Permutations</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
-              <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">Clone</span>
-    {
-        <span class="ident">permutations</span>::<span class="ident">permutations</span>(<span class="self">self</span>, <span class="ident">k</span>)
+        <span class="ident">combinations</span>::<span class="ident">combinations</span>(<span class="self">self</span>, <span class="ident">n</span>)
     }
 
     <span class="doccomment">/// Return an iterator adaptor that pads the sequence to a minimum length of</span>
@@ -3664,6 +3210,29 @@
               <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Item</span>
     {
         <span class="ident">pad_tail</span>::<span class="ident">pad_using</span>(<span class="self">self</span>, <span class="ident">min</span>, <span class="ident">f</span>)
+    }
+
+    <span class="doccomment">/// Flatten an iterator of iterables into a single combined sequence of all</span>
+    <span class="doccomment">/// the elements in the iterables.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is more or less equivalent to `.flat_map` with an identity</span>
+    <span class="doccomment">/// function.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See also the [`flatten`](fn.flatten.html) function.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```ignore</span>
+    <span class="doccomment">/// use itertools::Itertools;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let data = vec![vec![1, 2, 3], vec![4, 5, 6]];</span>
+    <span class="doccomment">/// let flattened = data.iter().flatten();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// itertools::assert_equal(flattened, &amp;[1, 2, 3, 4, 5, 6]);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">fn</span> <span class="ident">flatten</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Flatten</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span> <span class="kw">as</span> <span class="ident">IntoIterator</span><span class="op">&gt;</span>::<span class="ident">IntoIter</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
+              <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">IntoIterator</span>
+    {
+        <span class="ident">adaptors</span>::<span class="ident">flatten</span>(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Return an iterator adaptor that wraps each element in a `Position` to</span>
@@ -3821,13 +3390,9 @@
     <span class="doccomment">/// assert!(data.into_iter().all_equal());</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">all_equal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
-        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
-              <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">PartialEq</span>,
+        <span class="kw">where</span> <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">PartialEq</span>,
     {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next</span>() {
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">a</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">all</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">a</span> <span class="op">==</span> <span class="ident">x</span>),
-        }
+        <span class="self">self</span>.<span class="ident">dedup</span>().<span class="ident">nth</span>(<span class="number">1</span>).<span class="ident">is_none</span>()
     }
 
     <span class="doccomment">/// Consume the first `n` elements from the iterator eagerly,</span>
@@ -3896,12 +3461,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// itertools::assert_equal(rx.iter(), vec![1, 3, 5, 7, 9]);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;Use .for_each() instead&quot;</span>, <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">foreach</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
+    <span class="kw">fn</span> <span class="ident">foreach</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>)
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Item</span>),
               <span class="self">Self</span>: <span class="ident">Sized</span>,
     {
-        <span class="self">self</span>.<span class="ident">for_each</span>(<span class="ident">f</span>)
+        <span class="self">self</span>.<span class="ident">fold</span>((), <span class="kw">move</span> <span class="op">|</span>(), <span class="ident">element</span><span class="op">|</span> <span class="ident">f</span>(<span class="ident">element</span>))
     }
 
     <span class="doccomment">/// Combine all an iterator&#39;s elements into one element by using `Extend`.</span>
@@ -3964,7 +3528,7 @@
         <span class="ident">count</span>
     }
 
-    <span class="doccomment">/// Combine all iterator elements into one String, separated by `sep`.</span>
+    <span class="doccomment">/// Combine all iterator elements into one String, seperated by `sep`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Use the `Display` implementation of each element.</span>
     <span class="doccomment">///</span>
@@ -4076,7 +3640,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// With a `start` value of 0 and an addition as folding function,</span>
-    <span class="doccomment">/// this effectively results in *((0 + 1) + 2) + 3*</span>
+    <span class="doccomment">/// this effetively results in *((0 + 1) + 2) + 3*</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use std::ops::Add;</span>
@@ -4205,9 +3769,10 @@
     <span class="doccomment">/// assert_eq!((0..10).tree_fold1(|x, y| x + y),</span>
     <span class="doccomment">///     (0..10).fold1(|x, y| x + y));</span>
     <span class="doccomment">/// // ...but not for non-associative ones</span>
-    <span class="doccomment">/// assert_ne!((0..10).tree_fold1(|x, y| x - y),</span>
-    <span class="doccomment">///     (0..10).fold1(|x, y| x - y));</span>
+    <span class="doccomment">/// assert!((0..10).tree_fold1(|x, y| x - y)</span>
+    <span class="doccomment">///     != (0..10).fold1(|x, y| x - y));</span>
     <span class="doccomment">/// ```</span>
+    <span class="comment">// FIXME: If minver changes to &gt;= 1.13, use `assert_ne!` in the doctest.</span>
     <span class="kw">fn</span> <span class="ident">tree_fold1</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Item</span>, <span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Item</span>,
               <span class="self">Self</span>: <span class="ident">Sized</span>,
@@ -4306,7 +3871,6 @@
     <span class="doccomment">/// The big difference between the computations of `result2` and `result3` is that while</span>
     <span class="doccomment">/// `fold()` called the provided closure for every item of the callee iterator,</span>
     <span class="doccomment">/// `fold_while()` actually stopped iterating as soon as it encountered `Fold::Done(_)`.</span>
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;Use .try_fold() instead&quot;</span>, <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.8&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">fold_while</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">init</span>: <span class="ident">B</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">FoldWhile</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
               <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">B</span>, <span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">FoldWhile</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>
@@ -4321,72 +3885,10 @@
         <span class="ident">FoldWhile</span>::<span class="ident">Continue</span>(<span class="ident">acc</span>)
     }
 
-    <span class="doccomment">/// Iterate over the entire iterator and add all the elements.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// An empty iterator returns `None`, otherwise `Some(sum)`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// When calling `sum1()` and a primitive integer type is being returned, this</span>
-    <span class="doccomment">/// method will panic if the computation overflows and debug assertions are</span>
-    <span class="doccomment">/// enabled.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let empty_sum = (1..1).sum1::&lt;i32&gt;();</span>
-    <span class="doccomment">/// assert_eq!(empty_sum, None);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let nonempty_sum = (1..11).sum1::&lt;i32&gt;();</span>
-    <span class="doccomment">/// assert_eq!(nonempty_sum, Some(55));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">sum1</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
-              <span class="ident">S</span>: <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">Sum</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>,
-    {
-        <span class="self">self</span>.<span class="ident">next</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">first</span><span class="op">|</span> <span class="ident">once</span>(<span class="ident">first</span>).<span class="ident">chain</span>(<span class="self">self</span>).<span class="ident">sum</span>())
-    }
-
-    <span class="doccomment">/// Iterate over the entire iterator and multiply all the elements.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// An empty iterator returns `None`, otherwise `Some(product)`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// When calling `product1()` and a primitive integer type is being returned,</span>
-    <span class="doccomment">/// method will panic if the computation overflows and debug assertions are</span>
-    <span class="doccomment">/// enabled.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let empty_product = (1..1).product1::&lt;i32&gt;();</span>
-    <span class="doccomment">/// assert_eq!(empty_product, None);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let nonempty_product = (1..11).product1::&lt;i32&gt;();</span>
-    <span class="doccomment">/// assert_eq!(nonempty_product, Some(3628800));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">product1</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
-              <span class="ident">P</span>: <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">Product</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>,
-    {
-        <span class="self">self</span>.<span class="ident">next</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">first</span><span class="op">|</span> <span class="ident">once</span>(<span class="ident">first</span>).<span class="ident">chain</span>(<span class="self">self</span>).<span class="ident">product</span>())
-    }
-
-
-    <span class="doccomment">/// Sort all iterator elements into a new iterator in ascending order.</span>
+    <span class="doccomment">/// Collect all iterator elements into a sorted vector in ascending order.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note:** This consumes the entire iterator, uses the</span>
-    <span class="doccomment">/// `slice::sort()` method and returns the result as a new</span>
-    <span class="doccomment">/// iterator that owns its elements.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The sorted iterator, if directly collected to a `Vec`, is converted</span>
-    <span class="doccomment">/// without any extra copying or allocation cost.</span>
+    <span class="doccomment">/// `slice::sort_by()` method and returns the sorted vector.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use itertools::Itertools;</span>
@@ -4397,25 +3899,17 @@
     <span class="doccomment">///                         &quot;abcdef&quot;.chars());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">sorted</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">VecIntoIter</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">sorted</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
               <span class="self">Self</span>::<span class="ident">Item</span>: <span class="ident">Ord</span>
     {
-        <span class="comment">// Use .sort() directly since it is not quite identical with</span>
-        <span class="comment">// .sort_by(Ord::cmp)</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">from_iter</span>(<span class="self">self</span>);
-        <span class="ident">v</span>.<span class="ident">sort</span>();
-        <span class="ident">v</span>.<span class="ident">into_iter</span>()
+        <span class="self">self</span>.<span class="ident">sorted_by</span>(<span class="ident">Ord</span>::<span class="ident">cmp</span>)
     }
 
-    <span class="doccomment">/// Sort all iterator elements into a new iterator in ascending order.</span>
+    <span class="doccomment">/// Collect all iterator elements into a sorted vector.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note:** This consumes the entire iterator, uses the</span>
-    <span class="doccomment">/// `slice::sort_by()` method and returns the result as a new</span>
-    <span class="doccomment">/// iterator that owns its elements.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The sorted iterator, if directly collected to a `Vec`, is converted</span>
-    <span class="doccomment">/// without any extra copying or allocation cost.</span>
+    <span class="doccomment">/// `slice::sort_by()` method and returns the sorted vector.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use itertools::Itertools;</span>
@@ -4426,29 +3920,27 @@
     <span class="doccomment">/// let oldest_people_first = people</span>
     <span class="doccomment">///     .into_iter()</span>
     <span class="doccomment">///     .sorted_by(|a, b| Ord::cmp(&amp;b.1, &amp;a.1))</span>
+    <span class="doccomment">///     .into_iter()</span>
     <span class="doccomment">///     .map(|(person, _age)| person);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// itertools::assert_equal(oldest_people_first,</span>
     <span class="doccomment">///                         vec![&quot;Jill&quot;, &quot;Jack&quot;, &quot;Jane&quot;, &quot;John&quot;]);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">sorted_by</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">cmp</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">VecIntoIter</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">sorted_by</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">cmp</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
               <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Item</span>, <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">Ordering</span>,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">from_iter</span>(<span class="self">self</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">collect</span>();
+
         <span class="ident">v</span>.<span class="ident">sort_by</span>(<span class="ident">cmp</span>);
-        <span class="ident">v</span>.<span class="ident">into_iter</span>()
+        <span class="ident">v</span>
     }
 
-    <span class="doccomment">/// Sort all iterator elements into a new iterator in ascending order.</span>
+    <span class="doccomment">/// Collect all iterator elements into a sorted vector.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note:** This consumes the entire iterator, uses the</span>
-    <span class="doccomment">/// `slice::sort_by_key()` method and returns the result as a new</span>
-    <span class="doccomment">/// iterator that owns its elements.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The sorted iterator, if directly collected to a `Vec`, is converted</span>
-    <span class="doccomment">/// without any extra copying or allocation cost.</span>
+    <span class="doccomment">/// `slice::sort_by_key()` method and returns the sorted vector.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use itertools::Itertools;</span>
@@ -4459,20 +3951,22 @@
     <span class="doccomment">/// let oldest_people_first = people</span>
     <span class="doccomment">///     .into_iter()</span>
     <span class="doccomment">///     .sorted_by_key(|x| -x.1)</span>
+    <span class="doccomment">///     .into_iter()</span>
     <span class="doccomment">///     .map(|(person, _age)| person);</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// itertools::assert_equal(oldest_people_first,</span>
     <span class="doccomment">///                         vec![&quot;Jill&quot;, &quot;Jack&quot;, &quot;Jane&quot;, &quot;John&quot;]);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_std&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">sorted_by_key</span><span class="op">&lt;</span><span class="ident">K</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">VecIntoIter</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">sorted_by_key</span><span class="op">&lt;</span><span class="ident">K</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
               <span class="ident">K</span>: <span class="ident">Ord</span>,
               <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">K</span>,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">from_iter</span>(<span class="self">self</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">collect</span>();
+
         <span class="ident">v</span>.<span class="ident">sort_by_key</span>(<span class="ident">f</span>);
-        <span class="ident">v</span>.<span class="ident">into_iter</span>()
+        <span class="ident">v</span>
     }
 
     <span class="doccomment">/// Collect all iterator elements into one of two</span>
@@ -4496,32 +3990,34 @@
     <span class="doccomment">/// assert_eq!(successes, [1, 2]);</span>
     <span class="doccomment">/// assert_eq!(failures, [false, true]);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">partition_map</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">B</span>, <span class="ident">F</span>, <span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">predicate</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> (<span class="ident">A</span>, <span class="ident">B</span>)
+    <span class="kw">fn</span> <span class="ident">partition_map</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">B</span>, <span class="ident">F</span>, <span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">predicate</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> (<span class="ident">A</span>, <span class="ident">B</span>)
         <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Sized</span>,
-              <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">Either</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span>,
+              <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="self">Self</span>::<span class="ident">Item</span>) <span class="op">-&gt;</span> <span class="ident">Either</span><span class="op">&lt;</span><span class="ident">L</span>, <span class="ident">R</span><span class="op">&gt;</span>,
               <span class="ident">A</span>: <span class="ident">Default</span> <span class="op">+</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">L</span><span class="op">&gt;</span>,
               <span class="ident">B</span>: <span class="ident">Default</span> <span class="op">+</span> <span class="ident">Extend</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">default</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">B</span>::<span class="ident">default</span>();
 
-        <span class="self">self</span>.<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">val</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">predicate</span>(<span class="ident">val</span>) {
-            <span class="ident">Either</span>::<span class="ident">Left</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">left</span>.<span class="ident">extend</span>(<span class="prelude-val">Some</span>(<span class="ident">v</span>)),
-            <span class="ident">Either</span>::<span class="ident">Right</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">right</span>.<span class="ident">extend</span>(<span class="prelude-val">Some</span>(<span class="ident">v</span>)),
-        });
+        <span class="kw">for</span> <span class="ident">val</span> <span class="kw">in</span> <span class="self">self</span> {
+            <span class="kw">match</span> <span class="ident">predicate</span>(<span class="ident">val</span>) {
+                <span class="ident">Either</span>::<span class="ident">Left</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">left</span>.<span class="ident">extend</span>(<span class="prelude-val">Some</span>(<span class="ident">v</span>)),
+                <span class="ident">Either</span>::<span class="ident">Right</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">right</span>.<span class="ident">extend</span>(<span class="prelude-val">Some</span>(<span class="ident">v</span>)),
+            }
+        }
 
         (<span class="ident">left</span>, <span class="ident">right</span>)
     }
 
     <span class="doccomment">/// Return a `HashMap` of keys mapped to `Vec`s of values. Keys and values</span>
     <span class="doccomment">/// are taken from `(Key, Value)` tuple pairs yielded by the input iterator.</span>
-    <span class="doccomment">///</span>
+    <span class="doccomment">/// </span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
+    <span class="doccomment">/// </span>
     <span class="doccomment">/// let data = vec![(0, 10), (2, 12), (3, 13), (0, 20), (3, 33), (2, 42)];</span>
     <span class="doccomment">/// let lookup = data.into_iter().into_group_map();</span>
-    <span class="doccomment">///</span>
+    <span class="doccomment">/// </span>
     <span class="doccomment">/// assert_eq!(lookup[&amp;0], vec![10, 20]);</span>
     <span class="doccomment">/// assert_eq!(lookup.get(&amp;1), None);</span>
     <span class="doccomment">/// assert_eq!(lookup[&amp;2], vec![12, 42]);</span>
@@ -4609,42 +4105,6 @@
             <span class="op">|</span><span class="kw">_</span><span class="op">|</span> (),
             <span class="op">|</span><span class="ident">x</span>, <span class="ident">y</span>, <span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> <span class="ident">Ordering</span>::<span class="ident">Less</span> <span class="op">==</span> <span class="ident">compare</span>(<span class="ident">x</span>, <span class="ident">y</span>)
         )
-    }
-
-    <span class="doccomment">/// If the iterator yields exactly one element, that element will be returned, otherwise</span>
-    <span class="doccomment">/// an error will be returned containing an iterator that has the same output as the input</span>
-    <span class="doccomment">/// iterator.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This provides an additional layer of validation over just calling `Iterator::next()`.</span>
-    <span class="doccomment">/// If your assumption that there should only be one element yielded is false this provides</span>
-    <span class="doccomment">/// the opportunity to detect and handle that, preventing errors at a distance.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use itertools::Itertools;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!((0..10).filter(|&amp;x| x == 2).exactly_one().unwrap(), 2);</span>
-    <span class="doccomment">/// assert!((0..10).filter(|&amp;x| x &gt; 1 &amp;&amp; x &lt; 4).exactly_one().unwrap_err().eq(2..4));</span>
-    <span class="doccomment">/// assert!((0..10).filter(|&amp;x| x &gt; 1 &amp;&amp; x &lt; 5).exactly_one().unwrap_err().eq(2..5));</span>
-    <span class="doccomment">/// assert!((0..10).filter(|&amp;_| false).exactly_one().unwrap_err().eq(0..0));</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">exactly_one</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span>, <span class="ident">ExactlyOneError</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;&gt;</span>
-    <span class="kw">where</span>
-        <span class="self">Self</span>: <span class="ident">Sized</span>,
-    {
-        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">first</span>) <span class="op">=&gt;</span> {
-                <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next</span>() {
-                    <span class="prelude-val">Some</span>(<span class="ident">second</span>) <span class="op">=&gt;</span> {
-                        <span class="prelude-val">Err</span>(<span class="ident">ExactlyOneError</span>::<span class="ident">new</span>((<span class="prelude-val">Some</span>(<span class="ident">first</span>), <span class="prelude-val">Some</span>(<span class="ident">second</span>)), <span class="self">self</span>))
-                    }
-                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
-                        <span class="prelude-val">Ok</span>(<span class="ident">first</span>)
-                    }
-                }
-            }
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ExactlyOneError</span>::<span class="ident">new</span>((<span class="prelude-val">None</span>, <span class="prelude-val">None</span>), <span class="self">self</span>)),
-        }
     }
 }
 

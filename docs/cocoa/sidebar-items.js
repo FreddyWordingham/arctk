@@ -1,0 +1,1 @@
+initSidebarItems({"macro":[["delegate","Creates a Cocoa delegate to use e.g. with `NSWindow.setDelegate_`. Adds instance variables and methods to the definition."]],"mod":[["appkit",""],["base",""],["foundation",""],["quartzcore",""]]});

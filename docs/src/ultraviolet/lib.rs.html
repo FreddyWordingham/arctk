@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ultraviolet-0.4.6/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ultraviolet/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
+<span id="2"> 2</span>
+<span id="3"> 3</span>
+<span id="4"> 4</span>
+<span id="5"> 5</span>
+<span id="6"> 6</span>
+<span id="7"> 7</span>
+<span id="8"> 8</span>
+<span id="9"> 9</span>
+<span id="10">10</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+</pre><div class="example-wrap"><pre class="rust ">
+<span class="doccomment">//! ## `ultraviolet`</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! This is a crate to computer-graphics and games-related linear algebra, but *fast*, both in terms</span>
+<span class="doccomment">//! of productivity and in terms of runtime performance.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! In terms of productivity, ultraviolet uses no generics and is designed to be as straightforward</span>
+<span class="doccomment">//! of an interface as possible, resulting in fast compilation times and clear code. In addition, the</span>
+<span class="doccomment">//! lack of generics and Rust type-system &quot;hacks&quot; result in clear and concise errors that are easy to</span>
+<span class="doccomment">//! parse and fix for the user.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! In terms of runtime performance, ultraviolet was designed from the start with performance in mind.</span>
+<span class="doccomment">//! To do so, we provide two separate kinds of each type, each with nearly identical functionality,</span>
+<span class="doccomment">//! one with usual scalar f32 values, and the other a &#39;wide&#39; type which uses SIMD f32x4 vectors for</span>
+<span class="doccomment">//! each value. This design is clear and explicit in intent, and it also allows code to</span>
+<span class="doccomment">//! take full advantage of SIMD.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! The &#39;wide&#39; types use an &quot;SoA&quot; (Structure of Arrays) architecture</span>
+<span class="doccomment">//! such that each `Wec` (wide-Vec) actually contains the data for 4 `Vec`s and will do any operation</span>
+<span class="doccomment">//! on all 4 of the vector &#39;lanes&#39; at the same time (the same concept applies to a `Wat`, or &#39;wide-Mat&#39;).</span>
+<span class="doccomment">//! Doing this is potentially *much* (factor of 10)</span>
+<span class="doccomment">//! faster than an &quot;AoS&quot; (Array of Structs) layout, as all current Rust linear algebra libraries do,</span>
+<span class="doccomment">//! though it does depend on your workload. Algorithms must be carefully architected to take full advantage</span>
+<span class="doccomment">//! of this, and doing so can be easier said than done, especially if your algorithm involves significant</span>
+<span class="doccomment">//! branching.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! ### Benchmarks</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! Benchmarks done using my own fork of [mathbench-rs](https://github.com/bitshifter/mathbench-rs) with support for</span>
+<span class="doccomment">//! ultraviolet added to some benchmarks.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! For the euler 2d and 3d benchmarks, the work being done is exactly equivalent. For the rest of the benchmarks,</span>
+<span class="doccomment">//! the work being done is *made equivalent* by performing 4 of the benchmarked operation per iteration instead of just</span>
+<span class="doccomment">//! one for all of the other libraries, since `ultraviolet` is computing that operation on four Vec/Mats at a time.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! | benchmark              |        glam   |       cgmath   |     nalgebra   |       euclid   |   ultraviolet   |</span>
+<span class="doccomment">//! |------------------------|---------------|----------------|----------------|----------------|-----------------|</span>
+<span class="doccomment">//! | euler 2d               |    9.911 us   |     9.583 us   |     21.99 us   |     15.22 us   |    __6.675 us__ |</span>
+<span class="doccomment">//! | euler 3d               |    15.11 us   |     32.88 us   |     237.2 us   |     32.62 us   |    __9.928 us__ |</span>
+<span class="doccomment">//! | mat3 transform vector3 |   6.1533 ns   |   15.2933 ns   |   15.6202 ns   |      N/A       |   __4.4778 ns__ |</span>
+<span class="doccomment">//! | vec3 cross             |   7.6824 ns   |   16.9919 ns   |   12.3683 ns   |   12.4657 ns   |   __3.3286 ns__ |</span>
+<span class="doccomment">//! | vec3 dot               |   5.6354 ns   |   10.4704 ns   |    8.7803 ns   |    7.4304 ns   |   __2.4937 ns__ |</span>
+<span class="doccomment">//! | vec3 length            |   5.8759 ns   |    4.2015 ns   |    4.5598 ns   |    4.2083 ns   |   __1.9067 ns__ |</span>
+<span class="doccomment">//! | vec3 normalize         |   8.7861 ns   |    8.1677 ns   |   33.2839 ns   |    7.6300 ns   |   __4.4362 ns__ |</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! ### Features</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! This crate is currently being dogfooded in my ray tracer [`rayn`](https://github.com/termhn/rayn),</span>
+<span class="doccomment">//! and is being used by some Amethyst developers in experimental projects while it is considered for adoption</span>
+<span class="doccomment">//! into Amethyst. It does what those users have currently needed it to do.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! There are a couple relatively unique/novel features in this lib, the most important being the use of the Geometric Algebra</span>
+<span class="doccomment">//! concepts of Bivectors and Rotors to represent 2d and 3d rotations, rather than implementing complex number algebra</span>
+<span class="doccomment">//! and Quaternion algebra.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! What this means for the programmer is that you will be using the `Rotor3` type in place of</span>
+<span class="doccomment">//! a Quaternion, though you can expect it to do basically all the same things that a Quaternion does. In fact, Quaternions</span>
+<span class="doccomment">//! are essentially just a special case of Rotors. The reason this decision was made was twofold: first, the derivation of</span>
+<span class="doccomment">//! the math is actually quite simple to understand. All the derivations for the code implemented in the Rotor structs in this</span>
+<span class="doccomment">//! library are written out in the `docs` folder of the GitHub repo; I derived them manually as part of the implementation.</span>
+<span class="doccomment">//! On the other hand, Quaternions are often basically just seen as black boxes that we programmers use to do rotations because</span>
+<span class="doccomment">//! they have some nice properties, but that we don&#39;t really understand. You can use Rotors this same way, but you can also easily</span>
+<span class="doccomment">//! understand them. Second is that in some sense they can be seen as &#39;more correct&#39; than Quaternions, and especially they</span>
+<span class="doccomment">//! facilitate a more proper understanding of rotation as being something that occurs *within a plane* rather than something</span>
+<span class="doccomment">//! that occurs *around an axis*, as it is generally thought. Finally, Rotors also generalize do 4 and even higher dimensions,</span>
+<span class="doccomment">//! and if someone wants to they could implement a Rotor4 which retains all the properties of a Rotor3/Quaternion but does rotation</span>
+<span class="doccomment">//! in 4 dimensions instead, something which simply is not possible to do with Quaternions.</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! If it&#39;s missing something you need it to do, bug me on the [GitHub issue tracker](https://github.com/termhn/ultraviolet/issues) and/or Rust community discord server</span>
+<span class="doccomment">//! (I&#39;m Fusha there) and I&#39;ll try to add it for you, if I believe it fits with the vision of the lib :)</span>
+
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
+
+<span class="kw">mod</span> <span class="ident">util</span>;
+
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">bivec</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">lerp</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">mat</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">projection</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">rotor</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">transform</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">vec</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">int</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">geometry</span>;
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">bivec</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">lerp</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mat</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rotor</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">transform</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">vec</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">int</span>::<span class="kw-2">*</span>;
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">wide</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">wide</span>::<span class="ident">f32x4</span>;
+</pre></div>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "ultraviolet";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

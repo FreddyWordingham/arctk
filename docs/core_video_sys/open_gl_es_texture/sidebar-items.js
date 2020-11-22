@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["CVOpenGLESTextureGetName",""],["CVOpenGLESTextureGetTarget",""],["CVOpenGLESTextureGetTypeID",""],["CVOpenGLESTextureIsFlipped",""]],"type":[["CVOpenGLESTextureRef",""]]});

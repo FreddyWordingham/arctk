@@ -1,3 +1,5 @@
 (function() {var implementors = {};
+implementors["arrayvec"] = [{"text":"impl&lt;A:&nbsp;Array, '_&gt; TryFrom&lt;&amp;'_ [&lt;A as Array&gt;::Item]&gt; for ArrayVec&lt;A&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;A::Item: Clone,&nbsp;</span>","synthetic":false,"types":[]}];
 implementors["noisy_float"] = [{"text":"impl&lt;C:&nbsp;FloatChecker&lt;f64&gt;&gt; TryFrom&lt;f64&gt; for NoisyFloat&lt;f64, C&gt;","synthetic":false,"types":[]},{"text":"impl&lt;C:&nbsp;FloatChecker&lt;f32&gt;&gt; TryFrom&lt;f32&gt; for NoisyFloat&lt;f32, C&gt;","synthetic":false,"types":[]}];
+implementors["ultraviolet"] = [{"text":"impl TryFrom&lt;Vec3u&gt; for Vec3i","synthetic":false,"types":[]},{"text":"impl TryFrom&lt;Vec3i&gt; for Vec3u","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
