@@ -1,11 +1,19 @@
 //! Game state.
 
-use crate::game::*;
+use crate::{
+    game::*,
+    ord::{X, Y},
+};
 use rltk::{GameState, Rltk, VirtualKeyCode, RGB};
 use specs::{Builder, Join, RunNow, World, WorldExt};
 
+// Minium window resolution in all dimensions.
+const MIN_WINDOW_RES: i32 = 32;
+
 /// Game state.
 pub struct State {
+    /// Window resolution.
+    res: [i32; 2],
     /// Entity-Component-System
     ecs: World,
 }
@@ -14,14 +22,17 @@ impl State {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new() -> Self {
+    pub fn new(res: [i32; 2]) -> Self {
+        debug_assert!(res[X] > MIN_WINDOW_RES);
+        debug_assert!(res[Y] > MIN_WINDOW_RES);
+
         let mut ecs = World::new();
         ecs.register::<Position>();
         ecs.register::<Renderable>();
         ecs.register::<LeftWalker>();
         ecs.register::<Player>();
 
-        Self { ecs }
+        Self { res, ecs }
     }
 
     /// Run the systems.
@@ -89,14 +100,6 @@ impl State {
                 _ => {}
             },
         }
-    }
-}
-
-impl Default for State {
-    #[inline]
-    #[must_use]
-    fn default() -> Self {
-        Self::new()
     }
 }
 

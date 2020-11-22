@@ -2,41 +2,62 @@
 
 use arctk::{
     args,
+    file::Load,
     game::State,
+    ord::{X, Y},
     util::{
         banner::{section, title},
         dir,
     },
 };
+use arctk_attr::input;
 use rltk::{main_loop, RltkBuilder};
 use std::{env::current_dir, path::PathBuf};
+
+// Input parameters.
+#[input]
+struct Parameters {
+    /// Window resolution.
+    res: [i32; 2],
+}
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Wonder");
 
     section(term_width, "Initialisation");
-    args!(bin_path: PathBuf);
+    args!(
+        bin_path: PathBuf;
+        params_path: PathBuf
+    );
     let cwd = current_dir().expect("Failed to determine current working directory.");
     // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-    let (_in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
+    let (in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
 
+    section(term_width, "Input");
+    let params =
+        Parameters::load(&in_dir.join(params_path)).expect("Failed to load parameters file.");
+
     section(term_width, "Running");
-    game();
+    game(&params);
 
     section(term_width, "Finished");
 }
 
 /// Run the main game loop.
-fn game() {
-    let context = RltkBuilder::simple80x50()
+fn game(params: &Parameters) {
+    debug_assert!(params.res[X] > 32);
+    debug_assert!(params.res[Y] > 32);
+
+    let context = RltkBuilder::simple(params.res[X], params.res[Y])
+        .expect("Failed to build console of the given dimesnions.")
         .with_title("Roguelike - Wonder")
         .build()
         .expect("Failed to build RLTK window.");
-    let mut gs = State::new();
+    let mut gs = State::new(params.res);
 
-    gs.add_player(40, 25);
+    gs.add_player(params.res[X] / 2, params.res[Y] / 2);
     for i in 0..10 {
         gs.add_enemy(i * 7, 20);
     }
