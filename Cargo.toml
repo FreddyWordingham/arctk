@@ -12,7 +12,6 @@ edition = "2018"
 documentation = "https://freddywordingham.github.io/arctk"
 exclude = ["docs/", "input/", "output/"]
 
-
 [features]
 # default = ["netcdf", "png", "terminal_size", "wonder"]
 
@@ -64,7 +63,6 @@ required-features = ["netcdf", "terminal_size"]
 [[bin]]
 name = "render"
 required-features = ["png", "terminal_size"]
-
 
 [profile.dev]
 # Development profile: "cargo build".
