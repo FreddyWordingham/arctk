@@ -33,7 +33,6 @@
 pub mod data;
 pub mod err;
 pub mod file;
-pub mod game;
 pub mod geom;
 pub mod img;
 pub mod math;
@@ -43,3 +42,6 @@ pub mod phys;
 pub mod sim;
 pub mod tools;
 pub mod util;
+
+#[cfg(feature = "rltk, specs, specs-derive")]
+pub mod game;
