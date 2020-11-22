@@ -33,6 +33,7 @@
 pub mod data;
 pub mod err;
 pub mod file;
+pub mod game;
 pub mod geom;
 pub mod img;
 pub mod math;

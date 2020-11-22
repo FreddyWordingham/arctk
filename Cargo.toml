@@ -13,7 +13,7 @@ documentation = "https://freddywordingham.github.io/arctk"
 exclude = ["docs/", "input/", "output/"]
 
 [features]
-# default = ["netcdf", "png", "terminal_size", "wonder"]
+# default = ["netcdf", "png", "terminal_size", "game"]
 
 [dependencies]
 # arctk-attr = { path = "../arctk-attr" }
@@ -39,9 +39,12 @@ png = { version = "0.16.*", optional = true }
 rand = "0.7.*"
 rayon = "1.5.*"
 rgb = "0.8.*"
+rltk = { version = "0.8.*", optional = true }
 serde = { version = "1.0.*", features = ["derive"] }
 serde_json = "1.0.*"
 slice-of-array = "0.2.*"
+specs = { version = "0.16.*", optional = true }
+specs-derive = { version = "0.4.*", optional = true }
 terminal_size = { version = "0.1.*", optional = true }
 
 [[bin]]
@@ -66,7 +69,7 @@ required-features = ["png", "terminal_size"]
 
 [[bin]]
 name = "wonder"
-required-features = ["terminal_size"]
+required-features = ["rltk", "specs", "specs-derive", "terminal_size"]
 
 [profile.dev]
 # Development profile: "cargo build".
