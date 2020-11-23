@@ -22,7 +22,7 @@ impl Default for Tile {
 impl Tile {
     /// Draw the tile to the given position.
     #[inline]
-    pub fn draw(&self, ctx: &mut Rltk, x: i32, y: i32) {
+    pub fn draw(self, ctx: &mut Rltk, x: i32, y: i32) {
         match self {
             Self::Wall => {
                 ctx.set(

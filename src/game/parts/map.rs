@@ -58,7 +58,7 @@ impl Map {
 
     /// Draw the map.
     #[inline]
-    fn draw(&self, ctx: &mut Rltk) {
+    pub fn draw(&self, ctx: &mut Rltk) {
         let [width, height] = self.res();
         for x in 0..width {
             for y in 0..width {
