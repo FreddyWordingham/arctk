@@ -1,48 +1,35 @@
 //! Game state.
 
-use crate::{
-    clone,
-    game::*,
-    ord::{X, Y},
-};
+use crate::game::*;
 use rltk::{GameState, Rltk, VirtualKeyCode, RGB};
 use specs::{Builder, Join, RunNow, World, WorldExt};
 
-/// Minimum window resolution in all dimensions.
-const MIN_WINDOW_RES: i32 = 32;
-
 /// Game state.
 pub struct State {
-    /// Window resolution.
-    res: [i32; 2],
+    /// Map.
+    map: Map,
     /// Entity-Component-System
     ecs: World,
 }
 
 impl State {
-    clone!(res, [i32; 2]);
-
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(res: [i32; 2]) -> Self {
-        debug_assert!(res[X] >= MIN_WINDOW_RES);
-        debug_assert!(res[Y] >= MIN_WINDOW_RES);
-
+    pub fn new(map: Map) -> Self {
         let mut ecs = World::new();
         ecs.register::<Position>();
         ecs.register::<Renderable>();
         ecs.register::<LeftWalker>();
         ecs.register::<Player>();
 
-        Self { res, ecs }
+        Self { map, ecs }
     }
 
     /// Run the systems.
     #[inline]
     pub fn run_systems(&mut self) {
-        let mut walk = WalkLeft::new();
-        walk.run_now(&self.ecs);
+        WalkLeft::new().run_now(&self.ecs);
 
         self.ecs.maintain();
     }
@@ -84,8 +71,8 @@ impl State {
         let mut players = self.ecs.write_storage::<Player>();
 
         for (_player, pos) in (&mut players, &mut positions).join() {
-            pos.x = (pos.x + dx).max(0).min(self.res[X]);
-            pos.y = (pos.y + dy).max(0).min(self.res[Y]);
+            pos.x = (pos.x + dx).max(0).min(self.map.width() as i32);
+            pos.y = (pos.y + dy).max(0).min(self.map.height() as i32);
         }
     }
 
@@ -98,8 +85,8 @@ impl State {
             Some(key) => match key {
                 VirtualKeyCode::A => self.try_move_player(-1, 0),
                 VirtualKeyCode::D => self.try_move_player(1, 0),
-                VirtualKeyCode::W => self.try_move_player(0, -1),
-                VirtualKeyCode::S => self.try_move_player(0, 1),
+                VirtualKeyCode::W => self.try_move_player(0, 1),
+                VirtualKeyCode::S => self.try_move_player(0, -1),
                 _ => {}
             },
         }
@@ -119,8 +106,9 @@ impl GameState for State {
         let positions = self.ecs.read_storage::<Position>();
         let renderables = self.ecs.read_storage::<Renderable>();
 
+        let height = self.map.height() as i32;
         for (pos, render) in (&positions, &renderables).join() {
-            ctx.set(pos.x, pos.y, render.fg, render.bg, render.glyph);
+            ctx.set(pos.x, height - pos.y, render.fg, render.bg, render.glyph);
         }
     }
 }

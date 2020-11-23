@@ -3,7 +3,7 @@
 use arctk::{
     args,
     file::Load,
-    game::State,
+    game::{Map, State},
     ord::{X, Y},
     util::{
         banner::{section, title},
@@ -17,8 +17,8 @@ use std::{env::current_dir, path::PathBuf};
 // Input parameters.
 #[input]
 struct Parameters {
-    /// Window resolution.
-    res: [i32; 2],
+    /// Map size.
+    res: [usize; 2],
 }
 
 fn main() {
@@ -52,11 +52,11 @@ fn game(params: &Parameters) {
         .with_title("Roguelike - Wonder")
         .build()
         .expect("Failed to build RLTK window.");
-    let mut gs = State::new(params.res);
+    let mut gs = State::new(Map::new(params.res));
 
-    gs.add_player(params.res[X] / 2, params.res[Y] / 3);
+    gs.add_player((params.res[X] / 2) as i32, (params.res[Y] / 3) as i32);
     for i in 0..10 {
-        gs.add_enemy(i * 3, (2 * params.res[Y]) / 3);
+        gs.add_enemy(i as i32 * 3, (2 * params.res[Y] as i32) / 3);
     }
 
     main_loop(context, gs).expect("Failed to run the main game loop.")
