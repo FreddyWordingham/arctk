@@ -29,7 +29,8 @@ impl State {
     /// Run the systems.
     #[inline]
     pub fn run_systems(&mut self) {
-        WalkLeft::new().run_now(&self.ecs);
+        let [width, height] = self.map.res();
+        WalkLeft::new(width as i32, height as i32).run_now(&self.ecs);
 
         self.ecs.maintain();
     }

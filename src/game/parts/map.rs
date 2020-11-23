@@ -47,4 +47,11 @@ impl Map {
     pub fn width(&self) -> usize {
         self.tiles.ncols()
     }
+
+    /// Get the map resolution.
+    #[inline]
+    #[must_use]
+    pub fn res(&self) -> [usize; 2] {
+        [self.width(), self.height()]
+    }
 }
