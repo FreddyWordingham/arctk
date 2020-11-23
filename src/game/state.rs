@@ -72,8 +72,12 @@ impl State {
         let mut players = self.ecs.write_storage::<Player>();
 
         for (_player, pos) in (&mut players, &mut positions).join() {
-            pos.x = (pos.x + dx).max(0).min(self.map.width() as i32);
-            pos.y = (pos.y + dy).max(0).min(self.map.height() as i32);
+            let destination = [(pos.x + dx) as usize, (pos.y + dy) as usize];
+
+            if self.map.tiles[destination].is_passable() {
+                pos.x = (pos.x + dx).max(0).min(self.map.width() as i32);
+                pos.y = (pos.y + dy).max(0).min(self.map.height() as i32);
+            }
         }
     }
 
@@ -110,7 +114,13 @@ impl GameState for State {
 
         let height = self.map.height() as i32;
         for (pos, render) in (&positions, &renderables).join() {
-            ctx.set(pos.x, height - pos.y, render.fg, render.bg, render.glyph);
+            ctx.set(
+                pos.x,
+                height - pos.y - 1,
+                render.fg,
+                render.bg,
+                render.glyph,
+            );
         }
     }
 }

@@ -30,7 +30,7 @@ impl Tile {
                     y,
                     RGB::from_f32(0.5, 0.5, 0.5),
                     RGB::from_f32(0.0, 0.0, 0.0),
-                    rltk::to_cp437('.'),
+                    rltk::to_cp437('X'),
                 );
             }
             Self::Floor => {
@@ -39,9 +39,18 @@ impl Tile {
                     y,
                     RGB::from_f32(0.0, 1.0, 0.0),
                     RGB::from_f32(0.0, 0.0, 0.0),
-                    rltk::to_cp437('#'),
+                    rltk::to_cp437(' '),
                 );
             }
+        }
+    }
+
+    /// Check if a tile is passable.
+    #[inline]
+    pub fn is_passable(self) -> bool {
+        match self {
+            Self::Wall => false,
+            Self::Floor => true,
         }
     }
 }

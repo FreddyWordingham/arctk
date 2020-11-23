@@ -5,12 +5,12 @@ use crate::{
     ord::{X, Y},
 };
 use ndarray::Array2;
-use rltk::Rltk;
+use rltk::{RandomNumberGenerator, Rltk};
 
 /// Landscape data
 pub struct Map {
     /// Tile data.
-    tiles: Array2<Tile>,
+    pub tiles: Array2<Tile>,
 }
 
 impl Map {
@@ -30,6 +30,15 @@ impl Map {
         for y in 0..res[Y] {
             tiles[[0, y]] = Tile::Wall;
             tiles[[width - 1, y]] = Tile::Wall;
+        }
+
+        // Random walls.
+        let mut rng = RandomNumberGenerator::new();
+        let n = tiles.len() / 8;
+        for _ in 0..n {
+            let x = rng.roll_dice(1, width as i32 - 2);
+            let y = rng.roll_dice(1, height as i32 - 2);
+            tiles[[x as usize, y as usize]] = Tile::Wall;
         }
 
         Self { tiles }
@@ -62,7 +71,7 @@ impl Map {
         let [width, height] = self.res();
         for x in 0..width {
             for y in 0..width {
-                self.tiles[[x, y]].draw(ctx, x as i32, y as i32);
+                self.tiles[[x, y]].draw(ctx, x as i32, (height - y - 1) as i32);
             }
         }
     }
