@@ -5,6 +5,7 @@ use crate::{
     ord::{X, Y},
 };
 use ndarray::Array2;
+use rltk::Rltk;
 
 /// Landscape data
 pub struct Map {
@@ -53,5 +54,16 @@ impl Map {
     #[must_use]
     pub fn res(&self) -> [usize; 2] {
         [self.width(), self.height()]
+    }
+
+    /// Draw the map.
+    #[inline]
+    fn draw(&self, ctx: &mut Rltk) {
+        let [width, height] = self.res();
+        for x in 0..width {
+            for y in 0..width {
+                self.tiles[[x, y]].draw(ctx, x as i32, y as i32);
+            }
+        }
     }
 }
