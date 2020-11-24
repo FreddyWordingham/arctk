@@ -18,16 +18,19 @@ impl Map {
     #[inline]
     #[must_use]
     pub fn new(res: [usize; 2]) -> Self {
-        let mut tiles = Array2::default(res);
+        debug_assert!(res[X] > 0);
+        debug_assert!(res[Y] > 0);
 
+        // Blank map.
+        let mut tiles = Array2::default(res);
         let [width, height] = res;
 
         // Boundaries walls
-        for x in 0..res[X] {
+        for x in 0..width {
             tiles[[x, 0]] = Tile::Wall;
             tiles[[x, height - 1]] = Tile::Wall;
         }
-        for y in 0..res[Y] {
+        for y in 0..height {
             tiles[[0, y]] = Tile::Wall;
             tiles[[width - 1, y]] = Tile::Wall;
         }
@@ -48,14 +51,14 @@ impl Map {
     #[inline]
     #[must_use]
     pub fn height(&self) -> usize {
-        self.tiles.nrows()
+        self.tiles.ncols()
     }
 
     /// Get the map width.
     #[inline]
     #[must_use]
     pub fn width(&self) -> usize {
-        self.tiles.ncols()
+        self.tiles.nrows()
     }
 
     /// Get the map resolution.

@@ -1,6 +1,5 @@
 //! Operation implementation.
 
-use crate::sim::babbage::Operation;
 use crate::{
     data::Table,
     err::Error,
@@ -8,6 +7,7 @@ use crate::{
     geom::GridBuilder,
     math::Pos3,
     ord::{X, Y, Z},
+    sim::babbage::Operation,
 };
 use arctk_attr::load;
 use ndarray::Array3;
