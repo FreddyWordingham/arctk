@@ -52,7 +52,7 @@ fn game(params: &Parameters) {
         .with_title("Roguelike - Wonder")
         .build()
         .expect("Failed to build RLTK window.");
-    let mut gs = State::new(Map::new(params.res));
+    let mut gs = State::new(Map::new_random(params.res));
 
     gs.add_player((params.res[X] / 2) as i32, (params.res[Y] / 3) as i32);
     for i in 0..10 {

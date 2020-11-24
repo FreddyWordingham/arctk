@@ -14,16 +14,12 @@ pub struct Map {
 }
 
 impl Map {
+    /// Place boundary walls.
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(res: [usize; 2]) -> Self {
-        debug_assert!(res[X] > 0);
-        debug_assert!(res[Y] > 0);
-
-        // Blank map.
-        let mut tiles = Array2::default(res);
-        let [width, height] = res;
+    fn new(mut tiles: Array2<Tile>) -> Self {
+        let (width, height) = (tiles.nrows(), tiles.ncols());
 
         // Boundaries walls
         for x in 0..width {
@@ -35,6 +31,20 @@ impl Map {
             tiles[[width - 1, y]] = Tile::Wall;
         }
 
+        Self { tiles }
+    }
+
+    /// Construct a new instance.
+    #[inline]
+    #[must_use]
+    pub fn new_random(res: [usize; 2]) -> Self {
+        debug_assert!(res[X] > 0);
+        debug_assert!(res[Y] > 0);
+
+        // Blank map.
+        let mut tiles = Array2::default(res);
+        let [width, height] = res;
+
         // Random walls.
         let mut rng = RandomNumberGenerator::new();
         let n = tiles.len() / 8;
@@ -44,7 +54,7 @@ impl Map {
             tiles[[x as usize, y as usize]] = Tile::Wall;
         }
 
-        Self { tiles }
+        Self::new(tiles)
     }
 
     /// Get the map height.
