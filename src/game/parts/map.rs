@@ -70,7 +70,7 @@ impl Map {
     pub fn draw(&self, ctx: &mut Rltk) {
         let [width, height] = self.res();
         for x in 0..width {
-            for y in 0..width {
+            for y in 0..height {
                 self.tiles[[x, y]].draw(ctx, x as i32, (height - y - 1) as i32);
             }
         }
