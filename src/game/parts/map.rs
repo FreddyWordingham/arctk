@@ -37,7 +37,7 @@ impl Map {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new_random(res: [usize; 2]) -> Self {
+    pub fn new_forest(res: [usize; 2]) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
 
@@ -51,7 +51,7 @@ impl Map {
         for _ in 0..n {
             let x = rng.roll_dice(1, width as i32 - 2);
             let y = rng.roll_dice(1, height as i32 - 2);
-            tiles[[x as usize, y as usize]] = Tile::Wall;
+            tiles[[x as usize, y as usize]] = Tile::Tree;
         }
 
         Self::new(tiles)
@@ -59,7 +59,6 @@ impl Map {
 
     /// Get the map height.
     #[inline]
-    #[must_use]
     fn set_area(&mut self, area: &Area, tile: Tile) {
         for x in area.min_x..=area.max_x {
             for y in area.min_y..=area.max_y {

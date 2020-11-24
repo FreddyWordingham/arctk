@@ -9,6 +9,8 @@ pub enum Tile {
     Wall,
     /// Open floor.
     Floor,
+    /// Tree.
+    Tree,
 }
 
 impl Default for Tile {
@@ -42,6 +44,15 @@ impl Tile {
                     rltk::to_cp437(' '),
                 );
             }
+            Self::Tree => {
+                ctx.set(
+                    x,
+                    y,
+                    RGB::from_f32(0.0, 1.0, 0.0),
+                    RGB::from_f32(0.0, 0.0, 0.0),
+                    rltk::to_cp437('^'),
+                );
+            }
         }
     }
 
@@ -49,7 +60,7 @@ impl Tile {
     #[inline]
     pub fn is_passable(self) -> bool {
         match self {
-            Self::Wall => false,
+            Self::Wall | Self::Tree => false,
             Self::Floor => true,
         }
     }
