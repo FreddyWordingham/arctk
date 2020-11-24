@@ -1,7 +1,7 @@
 //! Landscape structure.
 
 use crate::{
-    game::Tile,
+    game::{Area, Tile},
     ord::{X, Y},
 };
 use ndarray::Array2;
@@ -55,6 +55,17 @@ impl Map {
         }
 
         Self::new(tiles)
+    }
+
+    /// Get the map height.
+    #[inline]
+    #[must_use]
+    fn set_area(&mut self, area: &Area, tile: Tile) {
+        for x in area.min_x..=area.max_x {
+            for y in area.min_y..=area.max_y {
+                self.tiles[[x as usize, y as usize]] = tile;
+            }
+        }
     }
 
     /// Get the map height.
