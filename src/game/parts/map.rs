@@ -1,7 +1,7 @@
 //! Landscape structure.
 
 use crate::{
-    game::{Area, Tile},
+    game::{Tile, Zone},
     ord::{X, Y},
 };
 use ndarray::Array2;
@@ -34,7 +34,7 @@ impl Map {
         Self { tiles }
     }
 
-    /// Construct a new instance.
+    /// Construct a new forest map.
     #[inline]
     #[must_use]
     pub fn new_forest(res: [usize; 2]) -> Self {
@@ -57,11 +57,34 @@ impl Map {
         Self::new(tiles)
     }
 
-    /// Get the map height.
+    /// Construct a new caves instance.
     #[inline]
-    fn set_area(&mut self, area: &Area, tile: Tile) {
-        for x in area.min_x..=area.max_x {
-            for y in area.min_y..=area.max_y {
+    #[must_use]
+    pub fn new_caves(res: [usize; 2]) -> Self {
+        debug_assert!(res[X] > 0);
+        debug_assert!(res[Y] > 0);
+
+        // Filled map.
+        let mut tiles = Array2::from_elem(res, Tile::Wall);
+        let [width, height] = res;
+
+        let mut map = Self::new(tiles);
+
+        // Make rooms.
+        let room_a = Zone::new(20, 15, 10, 15);
+        map.set_zone(&room_a, Tile::Floor);
+
+        let room_b = Zone::new(35, 15, 10, 15);
+        map.set_zone(&room_b, Tile::Floor);
+
+        map
+    }
+
+    /// Get the tile type for a given zone.
+    #[inline]
+    fn set_zone(&mut self, zone: &Zone, tile: Tile) {
+        for x in zone.min_x..=zone.max_x {
+            for y in zone.min_y..=zone.max_y {
                 self.tiles[[x as usize, y as usize]] = tile;
             }
         }

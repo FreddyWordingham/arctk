@@ -1,7 +1,7 @@
 //! Game paths module.
 
-pub mod area;
 pub mod map;
 pub mod tile;
+pub mod zone;
 
-pub use self::{area::*, map::*, tile::*};
+pub use self::{map::*, tile::*, zone::*};
