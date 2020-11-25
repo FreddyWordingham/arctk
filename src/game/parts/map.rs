@@ -70,7 +70,7 @@ impl Map {
         let mut map = Self::new(tiles);
 
         // Settings.
-        const MAX_ROOMS: usize = 30;
+        const MAX_ROOMS: usize = 60;
         const MIN_SIZE: usize = 6;
         const MAX_SIZE: usize = 10;
 
@@ -84,7 +84,14 @@ impl Map {
 
             let room = Zone::new(x as i32, (x + w) as i32, y as i32, (y + h) as i32);
             if rooms.iter().all(|r| !r.intersect(&room)) {
-                map.set_zone(&room, Tile::Floor);
+                let interior = Zone::new(
+                    (x + 1) as i32,
+                    (x + w - 1) as i32,
+                    (y + 1) as i32,
+                    (y + h - 1) as i32,
+                );
+
+                map.set_zone(&interior, Tile::Floor);
                 rooms.push(room);
             }
         }
