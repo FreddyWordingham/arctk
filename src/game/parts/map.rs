@@ -92,7 +92,20 @@ impl Map {
                     (y + h - 1) as i32,
                 );
 
+                // Apply zone.
                 map.set_zone(&interior, Tile::Floor);
+
+                if !rooms.is_empty() {
+                    let start = room.center();
+                    let end = rooms.last().unwrap().center();
+                    if rng.range(0, 2) == 1 {
+                        map.set_path(start, end, Tile::Floor);
+                    } else {
+                        map.set_path_inv(start, end, Tile::Floor);
+                    }
+                }
+
+                // Push room to list.
                 rooms.push(room);
             }
         }
