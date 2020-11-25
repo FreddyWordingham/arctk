@@ -31,7 +31,7 @@ impl Zone {
     /// Returns true if this overlaps with another zone.
     #[inline]
     #[must_use]
-    pub const fn intersect(&self, rhs: &Zone) -> bool {
+    pub const fn intersect(&self, rhs: &Self) -> bool {
         self.min_x <= rhs.max_x
             && self.max_x >= rhs.min_x
             && self.min_y <= rhs.max_y

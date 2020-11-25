@@ -65,17 +65,25 @@ impl Map {
         debug_assert!(res[Y] > 0);
 
         // Filled map.
-        let mut tiles = Array2::from_elem(res, Tile::Wall);
+        let tiles = Array2::from_elem(res, Tile::Wall);
         let [width, height] = res;
-
         let mut map = Self::new(tiles);
 
-        // Make rooms.
-        let room_a = Zone::new(20, 15, 10, 15);
-        map.set_zone(&room_a, Tile::Floor);
+        // Settings.
+        const MAX_ROOMS: usize = 30;
+        const MIN_SIZE: usize = 6;
+        const MAX_SIZE: usize = 10;
 
-        let room_b = Zone::new(35, 15, 10, 15);
-        map.set_zone(&room_b, Tile::Floor);
+        let mut rng = RandomNumberGenerator::new();
+        for _ in 0..MAX_ROOMS {
+            let w = rng.range(MIN_SIZE, MAX_SIZE);
+            let h = rng.range(MIN_SIZE, MAX_SIZE);
+            let x = rng.range(1, width - w - 2);
+            let y = rng.range(1, height - h - 2);
+
+            let room = Zone::new(x as i32, (x + w) as i32, y as i32, (y + h) as i32);
+            map.set_zone(&room, Tile::Floor);
+        }
 
         map
     }
