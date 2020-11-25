@@ -113,10 +113,13 @@ impl Map {
     /// Join two points with a path, using the given tile.
     #[inline]
     fn set_path(&mut self, start: Pos2I, end: Pos2I, tile: Tile) {
+        let y = start.y as usize;
         for x in start.x..=end.x {
-            for y in start.y..=end.y {
-                self.tiles[[x as usize, y as usize]] = tile;
-            }
+            self.tiles[[x as usize, y]] = tile;
+        }
+        let x = end.x as usize;
+        for y in start.y..=end.y {
+            self.tiles[[x, y as usize]] = tile;
         }
     }
 
