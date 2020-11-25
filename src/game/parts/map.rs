@@ -112,7 +112,13 @@ impl Map {
 
     /// Join two points with a path, using the given tile.
     #[inline]
-    fn set_path(&mut self, start: PosI2, end: PosI2, tile: Tile) {}
+    fn set_path(&mut self, start: Pos2I, end: Pos2I, tile: Tile) {
+        for x in start.x..=end.x {
+            for y in start.y..=end.y {
+                self.tiles[[x as usize, y as usize]] = tile;
+            }
+        }
+    }
 
     /// Get the map height.
     #[inline]
