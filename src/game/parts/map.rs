@@ -75,6 +75,7 @@ impl Map {
         const MAX_SIZE: usize = 10;
 
         let mut rng = RandomNumberGenerator::new();
+        let mut rooms: Vec<Zone> = Vec::with_capacity(MAX_ROOMS);
         for _ in 0..MAX_ROOMS {
             let w = rng.range(MIN_SIZE, MAX_SIZE);
             let h = rng.range(MIN_SIZE, MAX_SIZE);
@@ -82,7 +83,10 @@ impl Map {
             let y = rng.range(1, height - h - 2);
 
             let room = Zone::new(x as i32, (x + w) as i32, y as i32, (y + h) as i32);
-            map.set_zone(&room, Tile::Floor);
+            if rooms.iter().all(|r| !r.intersect(&room)) {
+                map.set_zone(&room, Tile::Floor);
+                rooms.push(room);
+            }
         }
 
         map
