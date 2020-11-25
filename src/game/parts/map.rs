@@ -83,13 +83,14 @@ impl Map {
             let x = rng.range(1, width - w - 2);
             let y = rng.range(1, height - h - 2);
 
-            let room = Zone::new(x as i32, (x + w) as i32, y as i32, (y + h) as i32);
+            let room = Zone::new(
+                Pos2I::new(x as i32, (x + w) as i32),
+                Pos2I::new(y as i32, (y + h) as i32),
+            );
             if rooms.iter().all(|r| !r.intersect(&room)) {
                 let interior = Zone::new(
-                    (x + 1) as i32,
-                    (x + w - 1) as i32,
-                    (y + 1) as i32,
-                    (y + h - 1) as i32,
+                    Pos2I::new((x + 1) as i32, (x + w - 1) as i32),
+                    Pos2I::new((y + 1) as i32, (y + h - 1) as i32),
                 );
 
                 // Apply zone.
@@ -116,8 +117,8 @@ impl Map {
     /// Get the tile type for a given zone.
     #[inline]
     fn set_zone(&mut self, zone: &Zone, tile: Tile) {
-        for x in zone.min_x..=zone.max_x {
-            for y in zone.min_y..=zone.max_y {
+        for x in zone.mins.x..=zone.maxs.x {
+            for y in zone.mins.y..=zone.maxs.y {
                 self.tiles[[x as usize, y as usize]] = tile;
             }
         }
