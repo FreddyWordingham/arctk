@@ -1,5 +1,7 @@
 //! Zone structure.
 
+use crate::math::Pos2I;
+
 /// Zone of the map.
 pub struct Zone {
     /// Minimum inclusive horizontal bound.
@@ -41,7 +43,7 @@ impl Zone {
     /// Get the center position of the room.
     #[inline]
     #[must_use]
-    pub const fn center(&self) -> (i32, i32) {
-        ((self.min_x + self.max_x) / 2, (self.min_y + self.max_y) / 2)
+    pub fn center(&self) -> Pos2I {
+        Pos2I::new((self.min_x + self.max_x) / 2, (self.min_y + self.max_y) / 2)
     }
 }

@@ -74,11 +74,11 @@ impl State {
         let [width, height] = self.map.res();
 
         for (_player, pos) in (&mut players, &mut positions).join() {
-            let destination = [(pos.x + dx) as usize, (pos.y + dy) as usize];
+            let destination = [(pos.p.x + dx) as usize, (pos.p.y + dy) as usize];
 
             if self.map.tiles[destination].is_passable() {
-                pos.x = (pos.x + dx).max(0).min(width as i32);
-                pos.y = (pos.y + dy).max(0).min(height as i32);
+                pos.p.x = (pos.p.x + dx).max(0).min(width as i32);
+                pos.p.y = (pos.p.y + dy).max(0).min(height as i32);
             }
         }
     }
@@ -117,8 +117,8 @@ impl GameState for State {
         let [_width, height] = self.map.res();
         for (pos, render) in (&positions, &renderables).join() {
             ctx.set(
-                pos.x,
-                height as i32 - pos.y - 1,
+                pos.p.x,
+                height as i32 - pos.p.y - 1,
                 render.fg,
                 render.bg,
                 render.glyph,

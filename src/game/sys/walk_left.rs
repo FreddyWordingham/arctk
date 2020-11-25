@@ -29,10 +29,10 @@ impl<'a> System<'a> for WalkLeft {
     #[inline]
     fn run(&mut self, (lefty, mut pos): Self::SystemData) {
         for (_lefty, pos) in (&lefty, &mut pos).join() {
-            if pos.x == 0 {
-                pos.x = self.width - 1;
+            if pos.p.x == 0 {
+                pos.p.x = self.width - 1;
             } else {
-                pos.x -= 1;
+                pos.p.x -= 1;
             }
         }
     }
