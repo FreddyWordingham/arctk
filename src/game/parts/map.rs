@@ -71,7 +71,7 @@ impl Map {
         let mut map = Self::new(tiles);
 
         // Settings.
-        const MAX_ROOMS: usize = 60;
+        const MAX_ROOMS: usize = 40;
         const MIN_SIZE: usize = 6;
         const MAX_SIZE: usize = 10;
 
@@ -84,13 +84,13 @@ impl Map {
             let y = rng.range(1, height - h - 2);
 
             let room = Zone::new(
-                Pos2I::new(x as i32, (x + w) as i32),
-                Pos2I::new(y as i32, (y + h) as i32),
+                Pos2I::new(x as i32, y as i32),
+                Pos2I::new((x + w) as i32, (y + h) as i32),
             );
             if rooms.iter().all(|r| !r.intersect(&room)) {
                 let interior = Zone::new(
-                    Pos2I::new((x + 1) as i32, (x + w - 1) as i32),
-                    Pos2I::new((y + 1) as i32, (y + h - 1) as i32),
+                    Pos2I::new(x as i32 + 1, y as i32 + 1),
+                    Pos2I::new((x + w) as i32 - 1, (y + h) as i32 - 1),
                 );
 
                 // Apply zone.
@@ -128,11 +128,16 @@ impl Map {
     #[inline]
     fn set_path(&mut self, start: Pos2I, end: Pos2I, tile: Tile) {
         let y = start.y as usize;
-        for x in start.x..=end.x {
+        let x0 = start.x.min(end.x);
+        let x1 = start.x.max(end.x);
+        for x in x0..=x1 {
             self.tiles[[x as usize, y]] = tile;
         }
+
         let x = end.x as usize;
-        for y in start.y..=end.y {
+        let y0 = start.y.min(end.y);
+        let y1 = start.y.max(end.y);
+        for y in y0..=y1 {
             self.tiles[[x, y as usize]] = tile;
         }
     }
@@ -142,11 +147,16 @@ impl Map {
     #[inline]
     fn set_path_inv(&mut self, start: Pos2I, end: Pos2I, tile: Tile) {
         let x = end.x as usize;
-        for y in start.y..=end.y {
+        let y0 = start.y.min(end.y);
+        let y1 = start.y.max(end.y);
+        for y in y0..=y1 {
             self.tiles[[x, y as usize]] = tile;
         }
+
         let y = start.y as usize;
-        for x in start.x..=end.x {
+        let x0 = start.x.min(end.x);
+        let x1 = start.x.max(end.x);
+        for x in x0..=x1 {
             self.tiles[[x as usize, y]] = tile;
         }
     }
