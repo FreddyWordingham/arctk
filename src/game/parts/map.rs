@@ -2,6 +2,7 @@
 
 use crate::{
     game::{Tile, Zone},
+    math::Pos2I,
     ord::{X, Y},
 };
 use ndarray::Array2;
@@ -108,6 +109,10 @@ impl Map {
             }
         }
     }
+
+    /// Join two points with a path, using the given tile.
+    #[inline]
+    fn set_path(&mut self, start: PosI2, end: PosI2, tile: Tile) {}
 
     /// Get the map height.
     #[inline]

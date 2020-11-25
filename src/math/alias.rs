@@ -13,11 +13,11 @@ pub type Vec3 = Vector3<f64>;
 pub type Vec4 = Vector4<f64>;
 
 /// Two-dimensional discrete-number vector alias.
-pub type Vec2I = Vector2<f64>;
+pub type Vec2I = Vector2<i32>;
 /// Three-dimensional discrete-number vector alias.
-pub type Vec3I = Vector3<f64>;
+pub type Vec3I = Vector3<i32>;
 /// Four-dimensional discrete-number vector alias.
-pub type Vec4I = Vector4<f64>;
+pub type Vec4I = Vector4<i32>;
 
 /// Normalised two-dimensional vector alias.
 pub type Dir2 = Unit<Vector2<f64>>;
