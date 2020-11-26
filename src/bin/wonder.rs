@@ -3,7 +3,7 @@
 use arctk::{
     args,
     file::Load,
-    game::{Map, State},
+    game::{Cartographer, State},
     ord::{X, Y},
     util::{
         banner::{section, title},
@@ -11,7 +11,7 @@ use arctk::{
     },
 };
 use arctk_attr::input;
-use rltk::{main_loop, RltkBuilder};
+use rltk::{main_loop, RandomNumberGenerator, RltkBuilder};
 use std::{env::current_dir, path::PathBuf};
 
 // Input parameters.
@@ -47,12 +47,20 @@ fn main() {
 
 /// Run the main game loop.
 fn game(params: &Parameters) {
+    // Rendering.
     let context = RltkBuilder::simple(params.res[X], params.res[Y])
         .expect("Failed to build console of the given dimensions.")
         .with_title("Roguelike - Wonder")
         .build()
         .expect("Failed to build RLTK window.");
-    let mut gs = State::new(Map::new_forest(params.res));
+
+    // Resources.
+    let mut rng = RandomNumberGenerator::new();
+
+    // Map generation.
+    let forest = Cartographer::forest(&mut rng).build();
+    // let caves = Cartographer::caves(params.res).build();
+    let mut gs = State::new(forest);
 
     gs.add_player((params.res[X] / 2) as i32, (params.res[Y] / 3) as i32);
     for i in 0..10 {
