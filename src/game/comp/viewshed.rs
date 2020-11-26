@@ -14,7 +14,7 @@ impl Viewshed {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(range: i32) -> Self {
+    pub fn new(range: i32) -> Self {
         debug_assert!(range > 0);
 
         Self { range }
