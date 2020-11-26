@@ -53,9 +53,9 @@ impl Cartographer {
             let end = room_b.center();
 
             if rng.range(0, 2) == 0 {
-                Self::set_path(&mut tiles, &start, &end, Tile::Floor);
+                Self::set_path(&mut tiles, start, end, Tile::Floor);
             } else {
-                Self::set_path_inv(&mut tiles, &start, &end, Tile::Floor);
+                Self::set_path_inv(&mut tiles, start, end, Tile::Floor);
             }
         }
 

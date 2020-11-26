@@ -40,7 +40,7 @@ impl Cartographer {
 
     /// Join two points with a path, using the given tile.
     #[inline]
-    fn set_path(tiles: &mut Array2<Tile>, start: &Pos2I, end: &Pos2I, tile: Tile) {
+    fn set_path(tiles: &mut Array2<Tile>, start: Pos2I, end: Pos2I, tile: Tile) {
         let y = start.y as usize;
         let x0 = start.x.min(end.x);
         let x1 = start.x.max(end.x);
@@ -59,7 +59,7 @@ impl Cartographer {
     /// Join two points with a path, using the given tile.
     /// Inverted creation order to the standard set_path method.
     #[inline]
-    fn set_path_inv(tiles: &mut Array2<Tile>, start: &Pos2I, end: &Pos2I, tile: Tile) {
+    fn set_path_inv(tiles: &mut Array2<Tile>, start: Pos2I, end: Pos2I, tile: Tile) {
         let x = end.x as usize;
         let y0 = start.y.min(end.y);
         let y1 = start.y.max(end.y);

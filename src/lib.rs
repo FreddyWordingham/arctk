@@ -23,6 +23,7 @@
     clippy::integer_division,
     clippy::module_name_repetitions,
     clippy::modulo_arithmetic,
+    clippy::multiple_inherent_impl,
     clippy::panic,
     clippy::print_stdout,
     clippy::unreachable,
