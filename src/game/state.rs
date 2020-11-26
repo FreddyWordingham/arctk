@@ -90,10 +90,10 @@ impl State {
         match ctx.key {
             None => {}
             Some(key) => match key {
-                VirtualKeyCode::A => self.try_move_player(-1, 0),
-                VirtualKeyCode::D => self.try_move_player(1, 0),
-                VirtualKeyCode::W => self.try_move_player(0, 1),
-                VirtualKeyCode::S => self.try_move_player(0, -1),
+                VirtualKeyCode::A | VirtualKeyCode::Left => self.try_move_player(-1, 0),
+                VirtualKeyCode::D | VirtualKeyCode::Right => self.try_move_player(1, 0),
+                VirtualKeyCode::W | VirtualKeyCode::Up => self.try_move_player(0, 1),
+                VirtualKeyCode::S | VirtualKeyCode::Down => self.try_move_player(0, -1),
                 _ => {}
             },
         }
