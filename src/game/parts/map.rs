@@ -1,6 +1,10 @@
 //! Landscape structure.
 
-use crate::game::Tile;
+use crate::{
+    game::Tile,
+    math::Pos2I,
+    ord::{X, Y},
+};
 use ndarray::Array2;
 use rltk::Rltk;
 
@@ -8,6 +12,8 @@ use rltk::Rltk;
 pub struct Map {
     /// Tile data.
     pub tiles: Array2<Tile>,
+    /// Player spawn index.
+    pub player_spawn: Pos2I,
 }
 
 impl Map {
@@ -15,8 +21,11 @@ impl Map {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(mut tiles: Array2<Tile>) -> Self {
+    pub fn new(mut tiles: Array2<Tile>, player_spawn: Pos2I) -> Self {
         let (width, height) = (tiles.nrows(), tiles.ncols());
+
+        debug_assert!(player_spawn.x < width as i32);
+        debug_assert!(player_spawn.y < height as i32);
 
         // Boundaries walls
         for x in 0..width {
@@ -28,7 +37,10 @@ impl Map {
             tiles[[width - 1, y]] = Tile::Wall;
         }
 
-        Self { tiles }
+        Self {
+            tiles,
+            player_spawn,
+        }
     }
 
     /// Get the map height.

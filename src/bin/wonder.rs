@@ -3,7 +3,7 @@
 use arctk::{
     args,
     file::Load,
-    game::{Cartographer, State},
+    game::{cartographer, State},
     ord::{X, Y},
     util::{
         banner::{section, title},
@@ -58,9 +58,10 @@ fn game(params: &Parameters) {
     let mut rng = RandomNumberGenerator::new();
 
     // Map generation.
-    // let forest = Cartographer::forest(&mut rng).build();
-    let caves = Cartographer::caves(&mut rng).build();
-    let mut gs = State::new(caves);
+    let forest = cartographer::forest(&mut rng);
+    let mut gs = State::new(forest);
+    // let caves = cartographer::caves(&mut rng);
+    // let mut gs = State::new(caves);
 
     gs.add_player((params.res[X] / 2) as i32, (params.res[Y] / 3) as i32);
     for i in 0..10 {
