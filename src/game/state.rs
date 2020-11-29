@@ -20,7 +20,6 @@ impl State {
         // Systems.
         ecs.register::<Position>();
         ecs.register::<Renderable>();
-        ecs.register::<LeftWalker>();
         ecs.register::<Player>();
         ecs.register::<Viewshed>();
 
@@ -66,7 +65,6 @@ impl State {
                 RGB::named(rltk::RED),
                 RGB::named(rltk::BLACK),
             ))
-            .with(LeftWalker::new())
             .build();
     }
 
