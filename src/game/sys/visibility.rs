@@ -1,6 +1,7 @@
 //! Visibility system
 
 use crate::game::{Map, Position, Viewshed};
+use rltk::{field_of_view, Point};
 use specs::{Join, ReadExpect, ReadStorage, System, WriteStorage};
 
 /// Visibility system.
@@ -24,6 +25,16 @@ impl<'a> System<'a> for Visibility {
 
     #[inline]
     fn run(&mut self, (map, mut viewshed, mut pos): Self::SystemData) {
-        for (viewshed, pos) in (&viewshed, &mut pos).join() {}
+        let w = map.width() as i32;
+        let h = map.height() as i32;
+
+        for (viewshed, pos) in (&mut viewshed, &mut pos).join() {
+            viewshed.visible_tiles.clear();
+            viewshed.visible_tiles =
+                field_of_view(Point::new(pos.p.x, pos.p.y), viewshed.range, &*map);
+            viewshed
+                .visible_tiles
+                .retain(|p| p.x >= 0 && p.x < w && p.y >= 0 && p.y < h);
+        }
     }
 }
