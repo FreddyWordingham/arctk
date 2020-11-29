@@ -64,4 +64,13 @@ impl Tile {
             Self::Floor => true,
         }
     }
+
+    /// Check if a tile is visibly blocking.
+    #[inline]
+    pub fn is_opaque(self) -> bool {
+        match self {
+            Self::Wall | Self::Tree => true,
+            Self::Floor => false,
+        }
+    }
 }
