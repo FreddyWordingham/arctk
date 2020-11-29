@@ -1,7 +1,7 @@
 //! Visibility system
 
-use crate::game::{Position, Viewshed};
-use specs::{Join, ReadStorage, System, WriteStorage};
+use crate::game::{Map, Position, Viewshed};
+use specs::{Join, ReadExpect, ReadStorage, System, WriteStorage};
 
 /// Visibility system.
 pub struct Visibility {}
@@ -16,10 +16,14 @@ impl Visibility {
 }
 
 impl<'a> System<'a> for Visibility {
-    type SystemData = (WriteStorage<'a, Viewshed>, WriteStorage<'a, Position>);
+    type SystemData = (
+        ReadExpect<'a, Map>,
+        WriteStorage<'a, Viewshed>,
+        WriteStorage<'a, Position>,
+    );
 
     #[inline]
-    fn run(&mut self, (mut viewshed, mut pos): Self::SystemData) {
+    fn run(&mut self, (map, mut viewshed, mut pos): Self::SystemData) {
         for (viewshed, pos) in (&viewshed, &mut pos).join() {}
     }
 }
