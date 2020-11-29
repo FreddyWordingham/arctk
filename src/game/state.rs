@@ -22,6 +22,7 @@ impl State {
         ecs.register::<Renderable>();
         ecs.register::<LeftWalker>();
         ecs.register::<Player>();
+        ecs.register::<Viewshed>();
 
         Self { map, ecs }
     }
