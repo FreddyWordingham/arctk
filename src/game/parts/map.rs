@@ -7,6 +7,7 @@ use crate::{
 };
 use ndarray::Array2;
 use rltk::Rltk;
+use rltk::{Algorithm2D, BaseMap, Point};
 
 /// Landscape data
 pub struct Map {
@@ -73,5 +74,19 @@ impl Map {
                 self.tiles[[x, y]].draw(ctx, x as i32, (height - y - 1) as i32);
             }
         }
+    }
+}
+
+impl BaseMap for Map {
+    fn is_opaque(&self, idx: usize) -> bool {
+        let x = idx / self.width();
+        let y = idx % self.width();
+        self.tiles[[x, y]].is_opaque()
+    }
+}
+
+impl Algorithm2D for Map {
+    fn dimensions(&self) -> Point {
+        Point::new(self.width(), self.height())
     }
 }
