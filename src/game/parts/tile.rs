@@ -58,6 +58,7 @@ impl Tile {
 
     /// Check if a tile is passable.
     #[inline]
+    #[must_use]
     pub fn is_passable(self) -> bool {
         match self {
             Self::Wall | Self::Tree => false,
@@ -67,6 +68,7 @@ impl Tile {
 
     /// Check if a tile is visibly blocking.
     #[inline]
+    #[must_use]
     pub fn is_opaque(self) -> bool {
         match self {
             Self::Wall | Self::Tree => true,
