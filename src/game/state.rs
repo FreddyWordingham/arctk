@@ -48,6 +48,7 @@ impl State {
                 RGB::named(rltk::BLACK),
             ))
             .with(Player::new())
+            .with(Viewshed::new(8))
             .build();
     }
 
