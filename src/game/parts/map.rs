@@ -71,15 +71,10 @@ impl Map {
         let mut viewsheds = ecs.write_storage::<Viewshed>();
         let mut players = ecs.write_storage::<Player>();
 
-        let [width, height] = self.res();
+        let height = self.height() as i32;
         for (_player, viewshed) in (&mut players, &mut viewsheds).join() {
-            for x in 0..width {
-                for y in 0..height {
-                    let pt = Point::new(x, y);
-                    if viewshed.visible_tiles.contains(&pt) {
-                        self.tiles[[x, y]].draw(ctx, x as i32, (height - y - 1) as i32);
-                    }
-                }
+            for p in &viewshed.visible_tiles {
+                self.tiles[[p.x as usize, p.y as usize]].draw(ctx, p.x, height - p.y - 1);
             }
         }
     }
