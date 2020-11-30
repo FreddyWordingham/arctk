@@ -2,7 +2,7 @@
 
 use crate::game::{Map, Position, Viewshed};
 use rltk::{field_of_view, Point};
-use specs::{Join, ReadExpect, ReadStorage, System, WriteStorage};
+use specs::{Join, ReadExpect, System, WriteStorage};
 
 /// Visibility system.
 pub struct Visibility {}
@@ -11,7 +11,7 @@ impl Visibility {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self {}
     }
 }

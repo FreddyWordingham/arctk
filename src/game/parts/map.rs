@@ -1,13 +1,10 @@
 //! Landscape structure.
 
-use crate::{
-    game::Tile,
-    math::Pos2I,
-    ord::{X, Y},
-};
+use crate::{game::Tile, math::Pos2I};
 use ndarray::Array2;
 use rltk::Rltk;
 use rltk::{Algorithm2D, BaseMap, Point};
+use specs::World;
 
 /// Landscape data
 pub struct Map {
@@ -67,7 +64,7 @@ impl Map {
 
     /// Draw the map.
     #[inline]
-    pub fn draw(&self, ctx: &mut Rltk) {
+    pub fn draw(&self, ecs: &World, ctx: &mut Rltk) {
         let [width, height] = self.res();
         for x in 0..width {
             for y in 0..height {
@@ -78,14 +75,18 @@ impl Map {
 }
 
 impl BaseMap for Map {
+    #[inline]
+    #[must_use]
     fn is_opaque(&self, idx: usize) -> bool {
-        let x = idx / self.width();
-        let y = idx % self.width();
+        let x = idx % self.width();
+        let y = idx / self.width();
         self.tiles[[x, y]].is_opaque()
     }
 }
 
 impl Algorithm2D for Map {
+    #[inline]
+    #[must_use]
     fn dimensions(&self) -> Point {
         Point::new(self.width(), self.height())
     }

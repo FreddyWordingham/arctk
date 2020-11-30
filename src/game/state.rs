@@ -115,7 +115,7 @@ impl GameState for State {
         let map = self.ecs.fetch::<Map>();
 
         ctx.cls();
-        map.draw(ctx);
+        map.draw(&self.ecs, ctx);
 
         let positions = self.ecs.read_storage::<Position>();
         let renderables = self.ecs.read_storage::<Renderable>();

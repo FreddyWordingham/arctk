@@ -8,7 +8,7 @@ use ndarray::Array2;
 use rltk::RandomNumberGenerator;
 
 /// Forest width.
-const WIDTH: i32 = 64;
+const WIDTH: i32 = 128;
 /// Forest height.
 const HEIGHT: i32 = 64;
 

@@ -1,7 +1,7 @@
 //! Map producing structure.
 
 use crate::{
-    game::{Map, Tile, Zone},
+    game::{Tile, Zone},
     math::Pos2I,
 };
 use ndarray::Array2;
