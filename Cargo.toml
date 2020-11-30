@@ -25,7 +25,7 @@ ansi_rgb = "0.2.*"
 colored = "2.0.*"
 hex = "0.4.*"
 indicatif = "0.15.*"
-json5 = "0.2.*"
+json5 = "0.3.*"
 lazy_static = "1.4.*"
 nalgebra = { version = "0.23.*", features = ["serde-serialize"] }
 ndarray = { version = "0.13.*", features = ["rayon", "serde-1"] }
