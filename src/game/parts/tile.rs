@@ -1,6 +1,6 @@
 //! Landscape enumeration.
 
-use rltk::{Rltk, RGB};
+use rltk::RGB;
 
 /// Tile kinds
 #[derive(PartialEq, Copy, Clone)]
@@ -22,38 +22,37 @@ impl Default for Tile {
 }
 
 impl Tile {
-    /// Draw the tile to the given position.
+    /// Get the foreground colour.
     #[inline]
-    pub fn draw(self, ctx: &mut Rltk, x: i32, y: i32) {
+    #[must_use]
+    pub fn fg_col(self) -> RGB {
         match self {
-            Self::Wall => {
-                ctx.set(
-                    x,
-                    y,
-                    RGB::from_f32(0.5, 0.5, 0.5),
-                    RGB::from_f32(0.0, 0.0, 0.0),
-                    rltk::to_cp437('X'),
-                );
-            }
-            Self::Floor => {
-                ctx.set(
-                    x,
-                    y,
-                    RGB::from_f32(0.0, 1.0, 0.0),
-                    RGB::from_f32(0.0, 0.0, 0.0),
-                    rltk::to_cp437(' '),
-                );
-            }
-            Self::Tree => {
-                ctx.set(
-                    x,
-                    y,
-                    RGB::from_f32(0.0, 1.0, 0.0),
-                    RGB::from_f32(0.0, 0.0, 0.0),
-                    rltk::to_cp437('^'),
-                );
-            }
+            Self::Wall => RGB::from_f32(0.4, 0.4, 0.6),
+            Self::Floor => RGB::from_f32(0.0, 1.0, 0.0),
+            Self::Tree => RGB::from_f32(0.0, 1.0, 0.0),
         }
+    }
+
+    /// Get the background colour.
+    #[inline]
+    #[must_use]
+    pub fn bg_col(self) -> RGB {
+        match self {
+            Self::Wall => RGB::from_f32(0.0, 0.0, 0.0),
+            Self::Floor => RGB::from_f32(0.0, 0.0, 0.0),
+            Self::Tree => RGB::from_f32(0.0, 0.0, 0.0),
+        }
+    }
+
+    /// Get the background colour.
+    #[inline]
+    #[must_use]
+    pub fn char(self) -> u16 {
+        rltk::to_cp437(match self {
+            Self::Wall => 'X',
+            Self::Floor => ' ',
+            Self::Tree => '^',
+        })
     }
 
     /// Check if a tile is passable.
