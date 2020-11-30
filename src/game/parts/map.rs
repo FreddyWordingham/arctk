@@ -71,6 +71,20 @@ impl Map {
         let mut viewsheds = ecs.write_storage::<Viewshed>();
         let mut players = ecs.write_storage::<Player>();
 
+        let [width, height] = self.res();
+        for x in 0..width {
+            for y in 0..height {
+                let tile = self.tiles[[x, y]];
+                ctx.set(
+                    p.x,
+                    h - p.y - 1,
+                    RGB::from_f32(0.3, 0.3, 0.3),
+                    tile.bg_col(),
+                    tile.char(),
+                );
+            }
+        }
+
         let h = self.height() as i32;
         for (_player, viewshed) in (&mut players, &mut viewsheds).join() {
             for p in &viewshed.visible_tiles {
@@ -78,13 +92,6 @@ impl Map {
                 ctx.set(p.x, h - p.y - 1, tile.fg_col(), tile.bg_col(), tile.char());
             }
         }
-
-        // let [width, height] = self.res();
-        // for x in 0..width {
-        //     for y in 0..height {
-        //         self.tiles[[x, y]].draw_faded(ctx, x as i32, (height - y - 1) as i32);
-        //     }
-        // }
     }
 }
 
