@@ -11,6 +11,8 @@ pub struct Viewshed {
     pub range: i32,
     /// List of visible tiles.
     pub visible_tiles: Vec<Point>,
+    /// Update requirement.
+    pub dirty: bool,
 }
 
 impl Viewshed {
@@ -23,6 +25,7 @@ impl Viewshed {
         Self {
             range,
             visible_tiles: vec![],
+            dirty: true,
         }
     }
 }
