@@ -73,16 +73,19 @@ impl State {
     fn try_move_player(&mut self, dx: i32, dy: i32) {
         let mut positions = self.ecs.write_storage::<Position>();
         let mut players = self.ecs.write_storage::<Player>();
+        let mut viewsheds = self.ecs.write_storage::<Viewshed>();
 
         let map = self.ecs.fetch::<Map>();
         let [width, height] = map.res();
 
-        for (_player, pos) in (&mut players, &mut positions).join() {
+        for (_player, pos, viewshed) in (&mut players, &mut positions, &mut viewsheds).join() {
             let destination = [(pos.p.x + dx) as usize, (pos.p.y + dy) as usize];
 
             if map.tiles[destination].is_passable() {
                 pos.p.x = (pos.p.x + dx).max(0).min(width as i32);
                 pos.p.y = (pos.p.y + dy).max(0).min(height as i32);
+
+                viewshed.dirty = true;
             }
         }
     }
