@@ -1,10 +1,13 @@
 //! Landscape structure.
 
-use crate::{game::Tile, math::Pos2I};
+use crate::{
+    game::{Player, Tile, Viewshed},
+    math::Pos2I,
+};
 use ndarray::Array2;
 use rltk::Rltk;
 use rltk::{Algorithm2D, BaseMap, Point};
-use specs::World;
+use specs::{Join, World, WorldExt};
 
 /// Landscape data
 pub struct Map {
@@ -65,10 +68,18 @@ impl Map {
     /// Draw the map.
     #[inline]
     pub fn draw(&self, ecs: &World, ctx: &mut Rltk) {
+        let mut viewsheds = ecs.write_storage::<Viewshed>();
+        let mut players = ecs.write_storage::<Player>();
+
         let [width, height] = self.res();
-        for x in 0..width {
-            for y in 0..height {
-                self.tiles[[x, y]].draw(ctx, x as i32, (height - y - 1) as i32);
+        for (_player, viewshed) in (&mut players, &mut viewsheds).join() {
+            for x in 0..width {
+                for y in 0..height {
+                    let pt = Point::new(x, y);
+                    if viewshed.visible_tiles.contains(&pt) {
+                        self.tiles[[x, y]].draw(ctx, x as i32, (height - y - 1) as i32);
+                    }
+                }
             }
         }
     }
