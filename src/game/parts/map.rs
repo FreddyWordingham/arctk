@@ -13,6 +13,8 @@ use specs::{Join, World, WorldExt};
 pub struct Map {
     /// Tile data.
     pub tiles: Array2<Tile>,
+    /// Revealed tiles.
+    pub revealed: Array2<bool>,
     /// Player spawn index.
     pub player_spawn: Pos2I,
 }
@@ -38,8 +40,11 @@ impl Map {
             tiles[[width - 1, y]] = Tile::Wall;
         }
 
+        let revealed = Array2::from_elem(tiles.raw_dim(), false);
+
         Self {
             tiles,
+            revealed,
             player_spawn,
         }
     }
@@ -77,14 +82,16 @@ impl Map {
         // Greyed tiles.
         for x in 0..width {
             for y in 0..height {
-                let tile = self.tiles[[x, y]];
-                ctx.set(
-                    x as i32,
-                    h - y as i32 - 1,
-                    RGB::from_f32(0.3, 0.3, 0.3),
-                    tile.bg_col(),
-                    tile.char(),
-                );
+                if self.revealed[[x, y]] {
+                    let tile = self.tiles[[x, y]];
+                    ctx.set(
+                        x as i32,
+                        h - y as i32 - 1,
+                        RGB::from_f32(0.3, 0.3, 0.3),
+                        tile.bg_col(),
+                        tile.char(),
+                    );
+                }
             }
         }
 
