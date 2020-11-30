@@ -1,6 +1,6 @@
 //! Game state.
 
-use crate::game::*;
+use crate::game::{Map, Player, Position, Renderable, Viewshed, Visibility};
 use rltk::{GameState, Rltk, VirtualKeyCode, RGB};
 use specs::{Builder, Join, RunNow, World, WorldExt};
 
