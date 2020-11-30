@@ -50,7 +50,7 @@ impl Tile {
     pub fn char(self) -> u16 {
         rltk::to_cp437(match self {
             Self::Wall => 'X',
-            Self::Floor => ' ',
+            Self::Floor => '.',
             Self::Tree => '^',
         })
     }
