@@ -5,8 +5,8 @@ use crate::{
     math::Pos2I,
 };
 use ndarray::Array2;
-use rltk::Rltk;
 use rltk::{Algorithm2D, BaseMap, Point};
+use rltk::{Rltk, RGB};
 use specs::{Join, World, WorldExt};
 
 /// Landscape data
@@ -72,12 +72,15 @@ impl Map {
         let mut players = ecs.write_storage::<Player>();
 
         let [width, height] = self.res();
+        let h = height as i32;
+
+        // Greyed tiles.
         for x in 0..width {
             for y in 0..height {
                 let tile = self.tiles[[x, y]];
                 ctx.set(
-                    p.x,
-                    h - p.y - 1,
+                    x as i32,
+                    h - y as i32 - 1,
                     RGB::from_f32(0.3, 0.3, 0.3),
                     tile.bg_col(),
                     tile.char(),
@@ -85,7 +88,7 @@ impl Map {
             }
         }
 
-        let h = self.height() as i32;
+        // Viewshed.
         for (_player, viewshed) in (&mut players, &mut viewsheds).join() {
             for p in &viewshed.visible_tiles {
                 let tile = self.tiles[[p.x as usize, p.y as usize]];
