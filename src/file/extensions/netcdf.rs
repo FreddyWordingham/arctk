@@ -6,10 +6,11 @@ use crate::{
     ord::{X, Y, Z},
 };
 use ndarray::{Array2, Array3, ArrayD};
+use netcdf::Numeric;
 use std::path::Path;
 
 #[allow(clippy::use_self)]
-impl<T: netcdf::Numeric> Load for ArrayD<T> {
+impl<T: Numeric> Load for ArrayD<T> {
     #[inline]
     fn load_data(path: &Path) -> Result<ArrayD<T>, Error> {
         let file = netcdf::open(path)?;
@@ -20,7 +21,7 @@ impl<T: netcdf::Numeric> Load for ArrayD<T> {
 }
 
 #[allow(clippy::use_self)]
-impl<T: netcdf::Numeric> Load for Array2<T> {
+impl<T: Numeric> Load for Array2<T> {
     #[inline]
     fn load_data(path: &Path) -> Result<Array2<T>, Error> {
         let arr_d = ArrayD::load(path)?;
@@ -34,7 +35,7 @@ impl<T: netcdf::Numeric> Load for Array2<T> {
 }
 
 #[allow(clippy::use_self)]
-impl<T: netcdf::Numeric> Load for Array3<T> {
+impl<T: Numeric> Load for Array3<T> {
     #[inline]
     fn load_data(path: &Path) -> Result<Array3<T>, Error> {
         let arr_d = ArrayD::load(path)?;
@@ -48,7 +49,7 @@ impl<T: netcdf::Numeric> Load for Array3<T> {
     }
 }
 
-impl<T: netcdf::Numeric> Save for Array2<T> {
+impl<T: Numeric> Save for Array2<T> {
     #[inline]
     fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = netcdf::create(path)?;
@@ -67,7 +68,7 @@ impl<T: netcdf::Numeric> Save for Array2<T> {
     }
 }
 
-impl<T: netcdf::Numeric> Save for Array3<T> {
+impl<T: Numeric> Save for Array3<T> {
     #[inline]
     fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = netcdf::create(path)?;
