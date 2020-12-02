@@ -18,25 +18,6 @@ use std::{
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Set<T>(BTreeMap<Name, T>);
 
-impl Set<usize> {
-    /// Construct an indexing set from a list of names.
-    #[inline]
-    #[must_use]
-    pub fn from_vec(mut names: Vec<Name>) -> Self {
-        debug_assert!(!names.is_empty());
-
-        names.sort();
-        names.dedup();
-
-        let mut map = BTreeMap::new();
-        for (i, name) in names.iter().enumerate() {
-            map.insert(name.clone(), i);
-        }
-
-        Self::new(map)
-    }
-}
-
 impl<T> Set<T> {
     /// Construct a new instance.
     #[inline]
