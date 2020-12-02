@@ -3,9 +3,8 @@
 
 use arctk::{
     args,
-    file::{Build, Load, Save},
-    ord::Link,
-    // sim::flask::{Input, ParametersBuilder},
+    file::Load,
+    sim::flask::ParametersBuilder,
     util::{
         banner::{section, title},
         dir,
@@ -23,11 +22,11 @@ fn main() {
     );
     let cwd = current_dir().expect("Failed to determine current working directory.");
     // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
+    let (in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
 
     section(term_width, "Input");
-    let builder = ParametersBuilder::load(&in_dir.join(params_path))
+    let _builder = ParametersBuilder::load(&in_dir.join(params_path))
         .expect("Failed to load parameters file.");
 
     // section(term_width, "Building");

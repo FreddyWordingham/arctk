@@ -1,11 +1,6 @@
 //! Concentration builder structure.
 
-use crate::{
-    chem::Species,
-    err::Error,
-    ord::{Link, Set},
-};
-use ndarray::Array1;
+// use ndarray::Array1;
 
 /// Loadable concentration structure.
 pub type ConcBuilder = Vec<(String, f64)>;
