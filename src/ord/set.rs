@@ -18,6 +18,25 @@ use std::{
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Set<T>(BTreeMap<Name, T>);
 
+impl Set<usize> {
+    /// Construct an indexing set from a list of names.
+    #[inline]
+    #[must_use]
+    pub fn from_vec(mut names: Vec<Name>) -> Self {
+        debug_assert!(!names.is_empty());
+
+        names.sort();
+        names.dedup();
+
+        let mut map = BTreeMap::new();
+        for (i, name) in names.iter().enumerate() {
+            map.insert(name.clone(), i);
+        }
+
+        Self::new(map)
+    }
+}
+
 impl<T> Set<T> {
     /// Construct a new instance.
     #[inline]
@@ -32,7 +51,7 @@ impl<T> Set<T> {
     /// # Errors
     /// if a the list contains a duplicate entry.
     #[inline]
-    pub fn from_vec(list: Vec<(Name, T)>) -> Result<Self, Error> {
+    pub fn from_pairs(list: Vec<(Name, T)>) -> Result<Self, Error> {
         let mut map = BTreeMap::new();
 
         for (key, item) in list {
@@ -132,6 +151,6 @@ impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
         for (name, val) in self.0 {
             list.push((name, val.link(set)?));
         }
-        Self::Inst::from_vec(list)
+        Self::Inst::from_pairs(list)
     }
 }
