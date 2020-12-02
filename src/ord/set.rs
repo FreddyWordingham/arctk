@@ -3,26 +3,23 @@
 use crate::{
     err::Error,
     file::{from_json, Build, Load},
-    ord::{Link, Name},
+    ord::{Link, Map, Name},
 };
 use serde::{Deserialize, Serialize};
 use std::{
-    collections::{
-        btree_map::{IntoIter, Values},
-        BTreeMap,
-    },
+    collections::btree_map::{IntoIter, Values},
     path::Path,
 };
 
 /// Data map.
 #[derive(Debug, Deserialize, Serialize)]
-pub struct Set<T>(BTreeMap<Name, T>);
+pub struct Set<T>(Map<Name, T>);
 
 impl<T> Set<T> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(map: BTreeMap<Name, T>) -> Self {
+    pub fn new(map: Map<Name, T>) -> Self {
         debug_assert!(!map.is_empty());
 
         Self(map)
@@ -33,7 +30,7 @@ impl<T> Set<T> {
     /// if a the list contains a duplicate entry.
     #[inline]
     pub fn from_pairs(list: Vec<(Name, T)>) -> Result<Self, Error> {
-        let mut map = BTreeMap::new();
+        let mut map = Map::new();
 
         for (key, item) in list {
             if map.contains_key(&key) {
@@ -101,7 +98,7 @@ impl<T: Build> Build for Set<T> {
 
     #[inline]
     fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        let mut map = BTreeMap::new();
+        let mut map = Map::new();
 
         for (key, item) in self.0 {
             map.insert(key, item.build(in_dir)?);
