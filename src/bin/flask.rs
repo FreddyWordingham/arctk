@@ -26,8 +26,9 @@ fn main() {
         .expect("Failed to initialise directories.");
 
     section(term_width, "Input");
-    let _builder = ParametersBuilder::load(&in_dir.join(params_path))
+    let builder = ParametersBuilder::load(&in_dir.join(params_path))
         .expect("Failed to load parameters file.");
+    let concs = builder.concs;
 
     // section(term_width, "Building");
     // let setup = builder
