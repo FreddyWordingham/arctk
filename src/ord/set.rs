@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     file::{from_json, Build, Load},
-    ord::Link,
+    ord::{Link, Name},
 };
 use serde::{Deserialize, Serialize};
 use std::{
@@ -16,7 +16,7 @@ use std::{
 
 /// Data map.
 #[derive(Debug, Deserialize, Serialize)]
-pub struct Set<T>(BTreeMap<String, T>);
+pub struct Set<T>(BTreeMap<Name, T>);
 
 impl<T> Set<T> {
     /// Construct a new instance.
