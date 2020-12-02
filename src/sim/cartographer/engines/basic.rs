@@ -3,7 +3,7 @@
 use crate::{
     geom::Trace,
     math::Pos3,
-    ord::{X, Y, Z},
+    ord::{Name, X, Y, Z},
     phys::Crossing,
     sim::{
         cartographer::{Event, Input, Output},
@@ -41,7 +41,7 @@ pub fn basic(input: &Input, rng: &mut ThreadRng, index: [usize; 3], data: &mut O
 /// Determine the material at this point.
 #[allow(clippy::expect_used)]
 #[inline]
-fn find_mat(input: &Input, pos: &Pos3) -> Option<String> {
+fn find_mat(input: &Input, pos: &Pos3) -> Option<Name> {
     let bump_dist = input.sett.bump_dist();
     let loop_limit = input.sett.loop_limit();
 
