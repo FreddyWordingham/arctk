@@ -59,9 +59,9 @@ terminal_size = { version = "0.1.*", optional = true }
 # # name = "diffuse"
 # # required-features = ["netcdf", "terminal_size"]
 
-# [[bin]]
-# name = "flask"
-# required-features = ["terminal_size"]
+[[bin]]
+name = "flask"
+required-features = ["terminal_size"]
 
 # [[bin]]
 # name = "mcrt"
