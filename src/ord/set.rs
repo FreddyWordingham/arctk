@@ -46,6 +46,13 @@ impl<T> Set<T> {
         Ok(Self::new(map))
     }
 
+    /// Find if the number of entries is zero.
+    #[inline]
+    #[must_use]
+    pub fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
+
     /// Get the number of entries.
     #[inline]
     #[must_use]
