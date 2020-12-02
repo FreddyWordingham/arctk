@@ -20,6 +20,6 @@ impl Register {
             map.insert(name.clone(), i);
         }
 
-        Self { 0: Set::new(map) }
+        Self(Set::new(map))
     }
 }
