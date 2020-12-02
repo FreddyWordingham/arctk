@@ -1,11 +1,15 @@
 //! Startup parameters file.
 
+use crate::chem::Concentrations;
 use arctk_attr::load;
 
 /// Parameter builder structure.
 /// Holds paths to data still on the disk.
 #[load]
-pub struct ParametersBuilder {}
+pub struct ParametersBuilder {
+    /// Initial concentrations.
+    concs: Concentrations,
+}
 
 // impl Build for ParametersBuilder {
 //     type Inst = ParametersLinker;
