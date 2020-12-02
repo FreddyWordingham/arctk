@@ -46,6 +46,13 @@ impl<T> Set<T> {
         Ok(Self::new(map))
     }
 
+    /// Get the number of entries.
+    #[inline]
+    #[must_use]
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+
     /// Iterate over the values.
     #[inline]
     #[must_use]
