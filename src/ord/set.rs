@@ -22,7 +22,7 @@ impl<T> Set<T> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(map: BTreeMap<String, T>) -> Self {
+    pub fn new(map: BTreeMap<Name, T>) -> Self {
         debug_assert!(!map.is_empty());
 
         Self(map)
@@ -32,7 +32,7 @@ impl<T> Set<T> {
     /// # Errors
     /// if a the list contains a duplicate entry.
     #[inline]
-    pub fn from_vec(list: Vec<(String, T)>) -> Result<Self, Error> {
+    pub fn from_vec(list: Vec<(Name, T)>) -> Result<Self, Error> {
         let mut map = BTreeMap::new();
 
         for (key, item) in list {
@@ -63,21 +63,21 @@ impl<T> Set<T> {
     /// Iterate over the values.
     #[inline]
     #[must_use]
-    pub fn values(&self) -> Values<String, T> {
+    pub fn values(&self) -> Values<Name, T> {
         self.0.values()
     }
 
     /// Get a value from the map.
     #[inline]
     #[must_use]
-    pub fn get(&self, name: &str) -> Option<&T> {
+    pub fn get(&self, name: &Name) -> Option<&T> {
         self.0.get(name)
     }
 }
 
 impl<T> IntoIterator for Set<T> {
-    type Item = (String, T);
-    type IntoIter = IntoIter<String, T>;
+    type Item = (Name, T);
+    type IntoIter = IntoIter<Name, T>;
 
     #[inline]
     fn into_iter(self) -> Self::IntoIter {
@@ -116,7 +116,7 @@ impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
     type Inst = Set<S::Inst>;
 
     #[inline]
-    fn requires(&self) -> Vec<String> {
+    fn requires(&self) -> Vec<Name> {
         self.0
             .values()
             .map(|v| v.requires())

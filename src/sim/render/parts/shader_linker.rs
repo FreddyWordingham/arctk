@@ -4,7 +4,7 @@ use crate::{
     err::Error,
     img::Gradient,
     math::Pos3,
-    ord::{Link, Set, X, Y, Z},
+    ord::{Link, Name, Set, X, Y, Z},
     sim::render::Shader,
 };
 use arctk_attr::load;
@@ -29,16 +29,16 @@ pub struct ShaderLinker {
     /// Optional number of ambient shadowing samples and the scaling power.
     ambient_shadow_samples: Option<(i32, i32)>,
     /// Sky gradient.
-    sky_grad: String,
+    sky_grad: Name,
     /// Data plotting gradient.
-    data_grad: String,
+    data_grad: Name,
 }
 
 impl<'a> Link<'a, Gradient> for ShaderLinker {
     type Inst = Shader<'a>;
 
     #[inline]
-    fn requires(&self) -> Vec<String> {
+    fn requires(&self) -> Vec<Name> {
         vec![self.sky_grad.clone(), self.data_grad.clone()]
     }
 

@@ -1,6 +1,9 @@
 //! Setup trait.
 
-use crate::{err::Error, ord::Set};
+use crate::{
+    err::Error,
+    ord::{Name, Set},
+};
 
 /// Types implementing this trait can be linked to a set to produce a referenced type.
 pub trait Link<'a, T> {
@@ -8,7 +11,7 @@ pub trait Link<'a, T> {
     type Inst;
 
     /// Get a list of all required resource keys.
-    fn requires(&self) -> Vec<String>;
+    fn requires(&self) -> Vec<Name>;
 
     /// Link the instance type.
     /// # Errors

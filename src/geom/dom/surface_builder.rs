@@ -4,6 +4,7 @@ use crate::{
     err::Error,
     file::Build,
     geom::{MeshBuilder, SurfaceLinker},
+    ord::Name,
 };
 use arctk_attr::load;
 use std::path::Path;
@@ -14,7 +15,7 @@ pub struct SurfaceBuilder {
     /// Mesh.
     mesh: MeshBuilder,
     /// Attribute name.
-    attr: String,
+    attr: Name,
 }
 
 impl Build for SurfaceBuilder {

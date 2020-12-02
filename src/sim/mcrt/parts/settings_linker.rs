@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    ord::{Link, Set},
+    ord::{Link, Name, Set},
     sim::mcrt::{Material, Settings},
 };
 use arctk_attr::load;
@@ -23,14 +23,14 @@ pub struct SettingsLinker {
     /// Number of roulette barrels.
     roulette_barrels: u64,
     /// Emission material.
-    init_mat: String,
+    init_mat: Name,
 }
 
 impl<'a> Link<'a, Material> for SettingsLinker {
     type Inst = Settings<'a>;
 
     #[inline]
-    fn requires(&self) -> Vec<String> {
+    fn requires(&self) -> Vec<Name> {
         vec![self.init_mat.clone()]
     }
 

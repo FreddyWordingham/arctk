@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     geom::{Mesh, Surface},
-    ord::{Link, Set},
+    ord::{Link, Name, Set},
 };
 
 /// Optical surface.
@@ -11,14 +11,14 @@ pub struct SurfaceLinker {
     /// Mesh.
     mesh: Mesh,
     /// Attribute name.
-    attr: String,
+    attr: Name,
 }
 
 impl SurfaceLinker {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(mesh: Mesh, attr: String) -> Self {
+    pub const fn new(mesh: Mesh, attr: Name) -> Self {
         Self { mesh, attr }
     }
 }
@@ -27,7 +27,7 @@ impl<'a, T: 'a> Link<'a, T> for SurfaceLinker {
     type Inst = Surface<'a, T>;
 
     #[inline]
-    fn requires(&self) -> Vec<String> {
+    fn requires(&self) -> Vec<Name> {
         vec![self.attr.clone()]
     }
 

@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     img::Gradient,
-    ord::{Link, Set},
+    ord::{Link, Name, Set},
     sim::render::Attribute,
 };
 use arctk_attr::load;
@@ -12,22 +12,22 @@ use arctk_attr::load;
 #[load]
 pub enum AttributeLinker {
     /// Opaque coloured surface.
-    Opaque(String),
+    Opaque(Name),
     /// Partially reflective mirror, absorption fraction.
-    Mirror(String, f64),
+    Mirror(Name, f64),
     /// Partially transparent, absorption fraction.
-    Transparent(String, f64),
+    Transparent(Name, f64),
     /// Refractive, absorption fraction, inside and outside refractive indices.
-    Refractive(String, f64, [f64; 2]),
+    Refractive(Name, f64, [f64; 2]),
     /// Luminous surface, brightness multiplier.
-    Luminous(String, f64),
+    Luminous(Name, f64),
 }
 
 impl<'a> Link<'a, Gradient> for AttributeLinker {
     type Inst = Attribute<'a>;
 
     #[inline]
-    fn requires(&self) -> Vec<String> {
+    fn requires(&self) -> Vec<Name> {
         match *self {
             Self::Opaque(ref grad)
             | Self::Mirror(ref grad, ..)

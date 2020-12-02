@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    ord::{Link, Set},
+    ord::{Link, Name, Set},
     sim::mcrt::{Attribute, Material},
 };
 use arctk_attr::load;
@@ -11,7 +11,7 @@ use arctk_attr::load;
 #[load]
 pub enum AttributeLinker {
     /// Material interface, inside material name, outside material name.
-    Interface(String, String),
+    Interface(Name, Name),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
 }
@@ -20,7 +20,7 @@ impl<'a> Link<'a, Material> for AttributeLinker {
     type Inst = Attribute<'a>;
 
     #[inline]
-    fn requires(&self) -> Vec<String> {
+    fn requires(&self) -> Vec<Name> {
         match *self {
             Self::Interface(ref inside, ref outside) => vec![inside.clone(), outside.clone()],
             Self::Mirror(..) => vec![],
