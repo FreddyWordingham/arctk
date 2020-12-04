@@ -4,6 +4,7 @@
 use arctk::{
     args,
     file::Load,
+    ord::Link,
     sim::flask::ParametersBuilder,
     util::{
         banner::{section, title},
@@ -28,7 +29,8 @@ fn main() {
     section(term_width, "Input");
     let builder = ParametersBuilder::load(&in_dir.join(params_path))
         .expect("Failed to load parameters file.");
-    let concs = builder.concs;
+    let names = builder.concs.requires();
+    // let concs = builder.concs.;
 
     // section(term_width, "Building");
     // let setup = builder

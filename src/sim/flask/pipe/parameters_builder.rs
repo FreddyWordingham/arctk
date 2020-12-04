@@ -8,7 +8,7 @@ use arctk_attr::load;
 #[load]
 pub struct ParametersBuilder {
     /// Initial concentrations.
-    concs: Concentrations,
+    pub concs: Concentrations,
     // /// Reactions.
     // reacts: Vec<Reaction>,
 }
