@@ -1,6 +1,6 @@
 //! Reaction structure.
 
-use crate::{access, chem::Rate};
+use crate::access;
 use ndarray::Array1;
 
 /// Reaction.

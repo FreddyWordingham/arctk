@@ -49,13 +49,13 @@ impl<'a> Link<'a, usize> for ReactionLinker {
         for (name, s) in self.reactants {
             coeffs[*reg
                 .get(&name)
-                .unwrap_or_else(|| panic!("Failed to link concentration-index: {}", name))] -= s;
+                .unwrap_or_else(|| panic!("Failed to link reaction-index: {}", name))] -= s;
         }
 
         for (name, s) in self.products {
             coeffs[*reg
                 .get(&name)
-                .unwrap_or_else(|| panic!("Failed to link concentration-index: {}", name))] += s;
+                .unwrap_or_else(|| panic!("Failed to link reaction-index: {}", name))] += s;
         }
 
         Ok(Reaction::new(coeffs))
