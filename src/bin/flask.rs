@@ -3,15 +3,25 @@
 
 use arctk::{
     args,
+    chem::{Concentrations, ReactionLinker},
     file::Load,
-    ord::{Link, Register},
-    sim::flask::ParametersBuilder,
+    ord::{Link, Register, Set},
     util::{
         banner::{section, title},
         dir,
     },
 };
+use arctk_attr::input;
 use std::{env::current_dir, path::PathBuf};
+
+/// Parameter builder structure.
+#[input]
+pub struct Parameters {
+    /// Initial concentrations.
+    pub concs: Concentrations,
+    /// Reactions.
+    pub reacts: Set<ReactionLinker>,
+}
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
@@ -27,8 +37,8 @@ fn main() {
         .expect("Failed to initialise directories.");
 
     section(term_width, "Input");
-    let params = ParametersBuilder::load(&in_dir.join(params_path))
-        .expect("Failed to load parameters file.");
+    let params =
+        Parameters::load(&in_dir.join(params_path)).expect("Failed to load parameters file.");
 
     section(term_width, "Registration");
     let mut names = params.concs.requires();
