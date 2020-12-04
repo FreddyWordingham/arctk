@@ -36,6 +36,10 @@ fn main() {
     let specs = Register::new(names);
 
     section(term_width, "Linking");
+    let mut concs = params
+        .concs
+        .link(specs.set())
+        .expect("Species link failure.");
     let reactions = params
         .reacts
         .link(specs.set())
