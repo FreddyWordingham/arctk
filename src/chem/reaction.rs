@@ -1,13 +1,13 @@
 //! Reaction structure.
 
-use crate::access;
+use crate::{access, chem::Rate};
 use ndarray::Array1;
 
 /// Reaction.
 #[derive(Clone)]
 pub struct Reaction {
-    // /// Reaction rate.
-    // rate: Rate,
+    /// Reaction rate.
+    rate: Rate,
     /// Stoichiometric coefficient map.
     coeffs: Array1<f64>,
 }
@@ -18,16 +18,10 @@ impl Reaction {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(
-        // rate: Rate,
-        coeffs: Array1<f64>,
-    ) -> Self {
+    pub fn new(rate: Rate, coeffs: Array1<f64>) -> Self {
         debug_assert!(!coeffs.is_empty());
 
-        Self {
-            //  rate,
-            coeffs,
-        }
+        Self { rate, coeffs }
     }
 
     // /// Determine the rate of change for each chemical within the system.
