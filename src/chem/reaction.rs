@@ -24,12 +24,12 @@ impl Reaction {
         Self { rate, coeffs }
     }
 
-    // /// Determine the rate of change for each chemical within the system.
-    // #[inline]
-    // #[must_use]
-    // pub fn rate(&self, concs: &Array1<f64>) -> Array1<f64> {
-    //     self.rate.rate(concs) * &self.coeffs
-    // }
+    /// Determine the rate of change for each chemical within the system.
+    #[inline]
+    #[must_use]
+    pub fn rate(&self, concs: &Array1<f64>) -> Array1<f64> {
+        self.rate.rate(concs) * &self.coeffs
+    }
 
     // /// Separate into components.
     // #[allow(clippy::missing_const_for_fn)]
