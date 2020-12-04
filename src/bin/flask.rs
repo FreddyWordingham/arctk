@@ -32,6 +32,8 @@ fn main() {
     let names = builder.concs.requires();
     // let concs = builder.concs.;
 
+    println!("NAMES: {:?}", names);
+
     // section(term_width, "Building");
     // let setup = builder
     //     .build(&in_dir)
