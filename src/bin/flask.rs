@@ -4,7 +4,7 @@
 use arctk::{
     args,
     file::Load,
-    ord::Link,
+    ord::{Link, Register},
     sim::flask::ParametersBuilder,
     util::{
         banner::{section, title},
@@ -27,20 +27,19 @@ fn main() {
         .expect("Failed to initialise directories.");
 
     section(term_width, "Input");
-    let builder = ParametersBuilder::load(&in_dir.join(params_path))
+    let params = ParametersBuilder::load(&in_dir.join(params_path))
         .expect("Failed to load parameters file.");
-    let mut names = builder.concs.requires();
-    names.append(&mut builder.reacts.requires());
-    // let concs = builder.concs.;
 
-    println!("NAMES: {:?}", names);
+    section(term_width, "Registration");
+    let mut names = params.concs.requires();
+    names.append(&mut params.reacts.requires());
+    let specs = Register::new(names);
 
-    // section(term_width, "Building");
-    // let setup = builder
-    //     .build(&in_dir)
-    //     .expect("Failed to construct builder structure.");
-
-    // section(term_width, "Linking");
+    section(term_width, "Linking");
+    let reactions = params
+        .reacts
+        .link(specs.set())
+        .expect("Species link failure.");
     // let mats = setup.mats;
     // let attrs = setup.attrs.link(&mats).expect("Material link failure.");
     // let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);

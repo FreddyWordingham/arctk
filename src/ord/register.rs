@@ -22,4 +22,11 @@ impl Register {
 
         Self(Set::new(map))
     }
+
+    /// Access the internal set.
+    #[inline]
+    #[must_use]
+    pub fn set(&self) -> &Set<usize> {
+        &self.0
+    }
 }
