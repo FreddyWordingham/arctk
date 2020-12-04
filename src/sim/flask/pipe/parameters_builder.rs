@@ -1,6 +1,6 @@
 //! Startup parameters file.
 
-use crate::chem::Concentrations;
+use crate::chem::{Concentrations, Reaction};
 use arctk_attr::load;
 
 /// Parameter builder structure.
@@ -9,8 +9,8 @@ use arctk_attr::load;
 pub struct ParametersBuilder {
     /// Initial concentrations.
     pub concs: Concentrations,
-    // /// Reactions.
-    // reacts: Vec<Reaction>,
+    /// Reactions.
+    reacts: Vec<Reaction>,
 }
 
 // impl Build for ParametersBuilder {

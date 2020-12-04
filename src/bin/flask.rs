@@ -29,7 +29,8 @@ fn main() {
     section(term_width, "Input");
     let builder = ParametersBuilder::load(&in_dir.join(params_path))
         .expect("Failed to load parameters file.");
-    let names = builder.concs.requires();
+    let mut names = builder.concs.requires();
+    names.append(&mut builder.reacts.requires());
     // let concs = builder.concs.;
 
     println!("NAMES: {:?}", names);
