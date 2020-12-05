@@ -4,6 +4,7 @@
 use arctk::{
     args,
     chem::{Concentrations, Reactor, ReactorLinker},
+    data::Table,
     file::Load,
     ord::{Link, Register},
     util::{
@@ -25,7 +26,7 @@ pub struct Parameters {
     /// Total integration time [s].
     pub time: f64,
     /// Number of intermediate dumps.
-    pub dumps: u32,
+    pub dumps: usize,
 }
 
 fn main() {
@@ -66,22 +67,26 @@ fn main() {
 
     section(term_width, "Simulation");
     println!("{:?}", concs);
-    simulation(&reactor, concs, time, dumps);
+    let data = simulation(&reactor, concs, time, dumps);
 
     section(term_width, "Finished");
 }
 
 /// Run the simulation.
 #[inline]
-fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64, dumps: u32) {
+fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64, dumps: usize) -> Table<f64> {
     debug_assert!(time > 0.0);
 
     let steps = dumps + 1;
     let dt = time / steps as f64;
+
+    let mut data = Vec::with_capacity(dumps + 1);
     for _ in 0..steps {
         concs = evolve_rk4(&reactor, concs, dt);
-        println!("{:?}", concs);
+        data.push(concs.to_vec());
     }
+
+    Table::new(data)
 }
 
 /// Evolve forward the given amount of time.
