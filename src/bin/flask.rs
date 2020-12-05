@@ -22,6 +22,10 @@ pub struct Parameters {
     pub concs: Concentrations,
     /// Reactions.
     pub reactor: ReactorLinker,
+    /// Total integration time [s].
+    pub time: f64,
+    /// Number of intermediate dumps.
+    pub dumps: u32,
 }
 
 fn main() {
@@ -41,6 +45,10 @@ fn main() {
     let params =
         Parameters::load(&in_dir.join(params_path)).expect("Failed to load parameters file.");
 
+    section(term_width, "Building");
+    let time = params.time;
+    let dumps = params.dumps;
+
     section(term_width, "Registration");
     let mut names = params.concs.requires();
     names.append(&mut params.reactor.requires());
@@ -58,14 +66,14 @@ fn main() {
 
     section(term_width, "Simulation");
     println!("{:?}", concs);
-    simulation(&reactor, concs, 1.0, 4);
+    simulation(&reactor, concs, time, dumps);
 
     section(term_width, "Finished");
 }
 
 /// Run the simulation.
 #[inline]
-fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64, dumps: usize) {
+fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64, dumps: u32) {
     debug_assert!(time > 0.0);
 
     let steps = dumps + 1;
