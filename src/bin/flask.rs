@@ -3,7 +3,7 @@
 
 use arctk::{
     args,
-    chem::{Concentrations, ReactionLinker, ReactorLinker},
+    chem::{Concentrations, ReactionLinker, Reactor, ReactorLinker},
     file::Load,
     ord::{Link, Register, Set},
     util::{
@@ -12,6 +12,7 @@ use arctk::{
     },
 };
 use arctk_attr::input;
+use ndarray::Array1;
 use std::{env::current_dir, path::PathBuf};
 
 /// Parameter builder structure.
@@ -58,11 +59,38 @@ fn main() {
     section(term_width, "Simulation");
     println!("{:?}", concs);
     let mut deltas = reactor.deltas(&concs);
-    for _ in 0..1000 {
-        concs += &(&deltas * 0.01);
-        deltas = reactor.deltas(&concs);
+
+    let time = 1.0;
+    let steps = 10;
+    let dt = time / steps as f64;
+
+    println!("{:?}", concs);
+    for _ in 0..steps {
+        concs = simulation(&reactor, concs, dt);
         println!("{:?}", concs);
     }
 
     section(term_width, "Finished");
+}
+
+/// Run the simulation.
+#[inline]
+#[must_use]
+fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
+    debug_assert!(time > 0.0);
+
+    let n = 100;
+    let dt = time / n as f64;
+    let half_dt = dt * 0.5;
+
+    for _ in 0..n {
+        let k1 = reactor.deltas(&concs);
+        let k2 = reactor.deltas(&(&concs + &(k1 * half_dt)));
+        let k3 = reactor.deltas(&(&concs + &(k2 * half_dt)));
+        let k4 = reactor.deltas(&(&concs + &(k3 * dt)));
+
+        concs += &(&k4 * dt);
+    }
+
+    concs
 }
