@@ -47,7 +47,7 @@ fn main() {
     let specs = Register::new(names);
 
     section(term_width, "Linking");
-    let mut concs = params
+    let concs = params
         .concs
         .link(specs.set())
         .expect("Species link failure.");
@@ -64,7 +64,6 @@ fn main() {
 
 /// Run the simulation.
 #[inline]
-#[must_use]
 fn simulation(reactor: &Reactor, mut concs: Array1<f64>) {
     let time = 1.0;
     let steps = 10;
