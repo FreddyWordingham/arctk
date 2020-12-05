@@ -50,6 +50,10 @@ fn main() {
         .concs
         .link(specs.set())
         .expect("Species link failure.");
+    let reactor = params
+        .reactor
+        .link(specs.set())
+        .expect("Species link failure.");
     // let reactor = Reactor::new(
     //     &specs,
     //     params
