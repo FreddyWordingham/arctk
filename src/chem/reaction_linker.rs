@@ -26,10 +26,10 @@ impl<'a> Link<'a, usize> for ReactionLinker {
     #[must_use]
     fn requires(&self) -> Vec<Name> {
         let mut names = Vec::with_capacity(self.reactants.len() + self.products.len());
-        for (name, _x) in &self.reactants {
+        for &(ref name, ref _x) in &self.reactants {
             names.push(name.clone());
         }
-        for (name, _x) in &self.products {
+        for &(ref name, ref _x) in &self.products {
             names.push(name.clone());
         }
 

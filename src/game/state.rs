@@ -91,6 +91,7 @@ impl State {
     }
 
     /// Handle keypresses.
+    #[allow(clippy::wildcard_enum_match_arm)]
     #[inline]
     fn handle_input(&mut self, ctx: &mut Rltk) {
         // Player movement.

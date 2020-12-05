@@ -17,7 +17,7 @@ impl<'a> Link<'a, usize> for Concentrations {
     #[must_use]
     fn requires(&self) -> Vec<Name> {
         let mut names = Vec::with_capacity(self.len());
-        for (name, _x) in self {
+        for &(ref name, ref _x) in self {
             names.push(name.clone());
         }
 

@@ -40,7 +40,7 @@ fn set_path(tiles: &mut Array2<Tile>, start: Pos2I, end: Pos2I, tile: Tile) {
 }
 
 /// Join two points with a path, using the given tile.
-/// Inverted creation order to the standard set_path method.
+/// Inverted creation order to the standard set path method.
 #[inline]
 fn set_path_inv(tiles: &mut Array2<Tile>, start: Pos2I, end: Pos2I, tile: Tile) {
     let x = end.x as usize;

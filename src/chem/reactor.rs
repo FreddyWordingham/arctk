@@ -1,9 +1,6 @@
 //! Reactor structure.
 
-use crate::{
-    chem::{Rate, Reaction},
-    ord::Register,
-};
+use crate::chem::Rate;
 use ndarray::{Array1, Array2};
 
 /// Complete reactor structure.

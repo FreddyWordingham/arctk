@@ -28,8 +28,7 @@ impl Tile {
     pub fn fg_col(self) -> RGB {
         match self {
             Self::Wall => RGB::from_f32(0.4, 0.4, 0.6),
-            Self::Floor => RGB::from_f32(0.0, 1.0, 0.0),
-            Self::Tree => RGB::from_f32(0.0, 1.0, 0.0),
+            Self::Floor | Self::Tree => RGB::from_f32(0.0, 1.0, 0.0),
         }
     }
 
@@ -38,9 +37,7 @@ impl Tile {
     #[must_use]
     pub fn bg_col(self) -> RGB {
         match self {
-            Self::Wall => RGB::from_f32(0.0, 0.0, 0.0),
-            Self::Floor => RGB::from_f32(0.0, 0.0, 0.0),
-            Self::Tree => RGB::from_f32(0.0, 0.0, 0.0),
+            Self::Wall | Self::Floor | Self::Tree => RGB::from_f32(0.0, 0.0, 0.0),
         }
     }
 

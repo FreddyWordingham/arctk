@@ -18,7 +18,7 @@ impl<'a> Link<'a, usize> for RateLinker {
     #[must_use]
     fn requires(&self) -> Vec<Name> {
         let mut names = Vec::with_capacity(self.1.len());
-        for (name, _x) in &self.1 {
+        for &(ref name, ref _x) in &self.1 {
             names.push(name.clone());
         }
 

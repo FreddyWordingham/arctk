@@ -40,7 +40,7 @@ impl Register {
     /// Access the internal set.
     #[inline]
     #[must_use]
-    pub fn set(&self) -> &Set<usize> {
+    pub const fn set(&self) -> &Set<usize> {
         &self.0
     }
 }

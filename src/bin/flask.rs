@@ -3,9 +3,9 @@
 
 use arctk::{
     args,
-    chem::{Concentrations, ReactionLinker, Reactor, ReactorLinker},
+    chem::{Concentrations, Reactor, ReactorLinker},
     file::Load,
-    ord::{Link, Register, Set},
+    ord::{Link, Register},
     util::{
         banner::{section, title},
         dir,
