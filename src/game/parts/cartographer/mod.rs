@@ -9,8 +9,7 @@ use ndarray::Array2;
 pub mod caves;
 pub mod forest;
 
-pub use self::caves::*;
-pub use self::forest::*;
+pub use self::{caves::*, forest::*};
 
 /// Get the tile type for a given zone.
 #[inline]

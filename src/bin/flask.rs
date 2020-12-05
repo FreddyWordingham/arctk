@@ -3,7 +3,7 @@
 
 use arctk::{
     args,
-    chem::{Concentrations, ReactionLinker},
+    chem::{Concentrations, ReactionLinker, Reactor},
     file::Load,
     ord::{Link, Register, Set},
     util::{
@@ -50,10 +50,13 @@ fn main() {
         .concs
         .link(specs.set())
         .expect("Species link failure.");
-    let reactions = params
-        .reacts
-        .link(specs.set())
-        .expect("Species link failure.");
+    // let reactor = Reactor::new(
+    //     &specs,
+    //     params
+    //         .reacts
+    //         .link(specs.set())
+    //         .expect("Species link failure."),
+    // );
     // let mats = setup.mats;
     // let attrs = setup.attrs.link(&mats).expect("Material link failure.");
     // let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);

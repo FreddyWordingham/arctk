@@ -1,6 +1,9 @@
 //! Reactor structure.
 
-use crate::chem::Rate;
+use crate::{
+    chem::{Rate, Reaction},
+    ord::Register,
+};
 use ndarray::{Array1, Array2};
 
 /// Complete reactor structure.
@@ -16,11 +19,21 @@ impl Reactor {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(rates: Array1<Rate>, coeffs: Array2<f64>) -> Self {
-        debug_assert!(!rates.is_empty());
-        debug_assert!(rates.len() == coeffs.nrows());
+    pub fn new(reg: &Register, reacts: Vec<Reaction>) -> Self {
+        debug_assert!(!reacts.is_empty());
 
-        Self { rates, coeffs }
+        let mut rates = Vec::with_capacity(reacts.len());
+        let mut coeffs = Array2::zeros([reacts.len(), reg.len()]);
+        for (mut coeff_set, react) in coeffs.outer_iter_mut().zip(reacts) {
+            let (r, cs) = react.components();
+            rates.push(r);
+            coeff_set += &cs;
+        }
+
+        Self {
+            rates: Array1::from(rates),
+            coeffs,
+        }
     }
 
     /// Calculate the reaction rates.

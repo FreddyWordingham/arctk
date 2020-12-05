@@ -5,8 +5,7 @@ use crate::{
     math::Pos2I,
 };
 use ndarray::Array2;
-use rltk::{Algorithm2D, BaseMap, Point};
-use rltk::{Rltk, RGB};
+use rltk::{Algorithm2D, BaseMap, Point, Rltk, RGB};
 use specs::{Join, World, WorldExt};
 
 /// Landscape data

@@ -31,11 +31,11 @@ impl Reaction {
         self.rate.rate(concs) * &self.coeffs
     }
 
-    // /// Separate into components.
-    // #[allow(clippy::missing_const_for_fn)]
-    // #[inline]
-    // #[must_use]
-    // pub fn components(self) -> (Rate, Array1<f64>) {
-    //     (self.rate, self.coeffs)
-    // }
+    /// Separate into components.
+    #[allow(clippy::missing_const_for_fn)]
+    #[inline]
+    #[must_use]
+    pub fn components(self) -> (Rate, Array1<f64>) {
+        (self.rate, self.coeffs)
+    }
 }

@@ -23,6 +23,20 @@ impl Register {
         Self(Set::new(map))
     }
 
+    /// Find if the number of entries is zero.
+    #[inline]
+    #[must_use]
+    pub fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
+
+    /// Get the number of entries.
+    #[inline]
+    #[must_use]
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+
     /// Access the internal set.
     #[inline]
     #[must_use]
