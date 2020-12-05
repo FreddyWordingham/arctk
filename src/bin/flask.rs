@@ -54,21 +54,15 @@ fn main() {
         .reactor
         .link(specs.set())
         .expect("Species link failure.");
-    // let reactor = Reactor::new(
-    //     &specs,
-    //     params
-    //         .reacts
-    //         .link(specs.set())
-    //         .expect("Species link failure."),
-    // );
-    // let mats = setup.mats;
-    // let attrs = setup.attrs.link(&mats).expect("Material link failure.");
-    // let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);
 
-    // section(term_width, "Simulation");
-    // let output = single_thread(engine, &input).expect("Failed to run simulation");
-    // // let output = multi_thread(engine, &input).expect("Failed to run simulation");
-    // output.save(&out_dir).expect("Failed to save output data.");
+    section(term_width, "Simulation");
+    println!("{:?}", concs);
+    let mut deltas = reactor.deltas(&concs);
+    for _ in 0..1000 {
+        concs += &(&deltas * 0.01);
+        deltas = reactor.deltas(&concs);
+        println!("{:?}", concs);
+    }
 
     section(term_width, "Finished");
 }
