@@ -12,5 +12,7 @@
             products    : [["E", 2]],
         }
         ]
-    }
+    },
+    time    : 1.0e2,
+    dumps   : 99
 }

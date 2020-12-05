@@ -79,15 +79,61 @@ fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64, dumps: u32) 
     let steps = dumps + 1;
     let dt = time / steps as f64;
     for _ in 0..steps {
-        concs = evolve(&reactor, concs, dt);
+        concs = evolve_rk4(&reactor, concs, dt);
         println!("{:?}", concs);
     }
 }
 
 /// Evolve forward the given amount of time.
+#[allow(dead_code)]
 #[inline]
 #[must_use]
-fn evolve(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
+fn evolve_euler(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
+    debug_assert!(time > 0.0);
+
+    let n = 100;
+    let dt = time / n as f64;
+
+    for _ in 0..n {
+        concs += &(&reactor.deltas(&concs) * dt);
+    }
+
+    concs
+}
+
+/// Evolve forward the given amount of time.
+#[inline]
+#[must_use]
+fn evolve_rk4(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
+    debug_assert!(time > 0.0);
+
+    let n = 100;
+    let dt = time / n as f64;
+    let half_dt = dt * 0.5;
+    let sixth_dt = dt / 6.0;
+
+    let mut k1;
+    let mut k2;
+    let mut k3;
+    let mut k4;
+    for _ in 0..n {
+        k1 = reactor.deltas(&concs);
+        k2 = reactor.deltas(&(&concs + &(&k1 * half_dt)));
+        k3 = reactor.deltas(&(&concs + &(&k2 * half_dt)));
+        k4 = reactor.deltas(&(&concs + &(&k3 * dt)));
+
+        concs += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
+    }
+
+    concs
+}
+
+/// Evolve forward the given amount of time.
+/// But this is broken version.
+#[allow(dead_code)]
+#[inline]
+#[must_use]
+fn evolve_rk4_broken(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
     debug_assert!(time > 0.0);
 
     let n = 100;
