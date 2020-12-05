@@ -14,7 +14,6 @@ pub struct RateLinker(f64, Vec<(Name, f64)>);
 impl<'a> Link<'a, usize> for RateLinker {
     type Inst = Rate;
 
-    /// Get a list of all required resource keys.
     #[inline]
     #[must_use]
     fn requires(&self) -> Vec<Name> {
@@ -26,9 +25,6 @@ impl<'a> Link<'a, usize> for RateLinker {
         names
     }
 
-    /// Link the instance type.
-    /// # Errors
-    /// if a field could not be referenced.
     #[inline]
     fn link(self, reg: &'a Set<usize>) -> Result<Self::Inst, Error> {
         let mut orders = Vec::with_capacity(self.1.len());

@@ -22,7 +22,6 @@ pub struct ReactionLinker {
 impl<'a> Link<'a, usize> for ReactionLinker {
     type Inst = Reaction;
 
-    /// Get a list of all required resource keys.
     #[inline]
     #[must_use]
     fn requires(&self) -> Vec<Name> {
@@ -39,9 +38,6 @@ impl<'a> Link<'a, usize> for ReactionLinker {
         names
     }
 
-    /// Link the instance type.
-    /// # Errors
-    /// if a field could not be referenced.
     #[inline]
     fn link(self, reg: &'a Set<usize>) -> Result<Self::Inst, Error> {
         let mut coeffs = Array1::zeros(reg.len());

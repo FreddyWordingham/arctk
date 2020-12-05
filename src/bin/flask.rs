@@ -3,7 +3,7 @@
 
 use arctk::{
     args,
-    chem::{Concentrations, ReactionLinker, Reactor},
+    chem::{Concentrations, ReactionLinker, ReactorLinker},
     file::Load,
     ord::{Link, Register, Set},
     util::{
@@ -20,7 +20,7 @@ pub struct Parameters {
     /// Initial concentrations.
     pub concs: Concentrations,
     /// Reactions.
-    pub reacts: Set<ReactionLinker>,
+    pub reactor: ReactorLinker,
 }
 
 fn main() {
@@ -42,7 +42,7 @@ fn main() {
 
     section(term_width, "Registration");
     let mut names = params.concs.requires();
-    names.append(&mut params.reacts.requires());
+    names.append(&mut params.reactor.requires());
     let specs = Register::new(names);
 
     section(term_width, "Linking");

@@ -18,3 +18,29 @@ pub trait Link<'a, T> {
     /// if a field could not be referenced.
     fn link(self, set: &'a Set<T>) -> Result<Self::Inst, Error>;
 }
+
+#[allow(clippy::use_self)]
+impl<'a, T: Link<'a, T>> Link<'a, T> for Vec<T> {
+    type Inst = Vec<T::Inst>;
+
+    #[inline]
+    fn requires(&self) -> Vec<Name> {
+        self.iter()
+            .map(|v| v.requires())
+            .collect::<Vec<_>>()
+            .into_iter()
+            .flatten()
+            .collect()
+    }
+
+    #[inline]
+    fn link(self, set: &'a Set<T>) -> Result<Self::Inst, Error> {
+        let mut list = Vec::with_capacity(self.len());
+
+        for x in self {
+            list.push(x.link(set)?);
+        }
+
+        Ok(list)
+    }
+}
