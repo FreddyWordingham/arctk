@@ -21,7 +21,14 @@ impl<'a> Link<'a, usize> for ReactorLinker {
     #[inline]
     #[must_use]
     fn requires(&self) -> Vec<Name> {
-        self.reacts.requires()
+        // self.reacts.requires()
+        self.reacts
+            .iter()
+            .map(|v| v.requires())
+            .collect::<Vec<_>>()
+            .into_iter()
+            .flatten()
+            .collect()
     }
 
     #[inline]

@@ -20,8 +20,8 @@ pub trait Link<'a, T> {
 }
 
 #[allow(clippy::use_self)]
-impl<'a, T: Link<'a, T>> Link<'a, T> for Vec<T> {
-    type Inst = Vec<T::Inst>;
+impl<'a, T, S: Link<'a, T>> Link<'a, T> for Vec<S> {
+    type Inst = Vec<S::Inst>;
 
     #[inline]
     fn requires(&self) -> Vec<Name> {
