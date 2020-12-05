@@ -57,18 +57,7 @@ fn main() {
         .expect("Species link failure.");
 
     section(term_width, "Simulation");
-    println!("{:?}", concs);
-    let mut deltas = reactor.deltas(&concs);
-
-    let time = 1.0;
-    let steps = 10;
-    let dt = time / steps as f64;
-
-    println!("{:?}", concs);
-    for _ in 0..steps {
-        concs = simulation(&reactor, concs, dt);
-        println!("{:?}", concs);
-    }
+    simulation(&reactor, concs);
 
     section(term_width, "Finished");
 }
@@ -76,7 +65,22 @@ fn main() {
 /// Run the simulation.
 #[inline]
 #[must_use]
-fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
+fn simulation(reactor: &Reactor, mut concs: Array1<f64>) {
+    let time = 1.0;
+    let steps = 10;
+    let dt = time / steps as f64;
+
+    println!("{:?}", concs);
+    for _ in 0..steps {
+        concs = evolve(&reactor, concs, dt);
+        println!("{:?}", concs);
+    }
+}
+
+/// Evolve forward the given amount of time.
+#[inline]
+#[must_use]
+fn evolve(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
     debug_assert!(time > 0.0);
 
     let n = 100;
