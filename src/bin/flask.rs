@@ -5,7 +5,7 @@ use arctk::{
     args,
     chem::{Concentrations, Reactor, ReactorLinker},
     data::Table,
-    file::Load,
+    file::{Load, Save},
     ord::{Link, Register},
     util::{
         banner::{section, title},
@@ -39,7 +39,7 @@ fn main() {
     );
     let cwd = current_dir().expect("Failed to determine current working directory.");
     // let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-    let (in_dir, _out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
+    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.clone()), Some(cwd.join("output")))
         .expect("Failed to initialise directories.");
 
     section(term_width, "Input");
@@ -66,8 +66,11 @@ fn main() {
         .expect("Species link failure.");
 
     section(term_width, "Simulation");
-    println!("{:?}", concs);
     let data = simulation(&reactor, concs, time, dumps);
+
+    section(term_width, "Output");
+    data.save(&out_dir.join("concs.csv"))
+        .expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }
