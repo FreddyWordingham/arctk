@@ -57,19 +57,19 @@ fn main() {
         .expect("Species link failure.");
 
     section(term_width, "Simulation");
-    simulation(&reactor, concs);
+    println!("{:?}", concs);
+    simulation(&reactor, concs, 1.0, 4);
 
     section(term_width, "Finished");
 }
 
 /// Run the simulation.
 #[inline]
-fn simulation(reactor: &Reactor, mut concs: Array1<f64>) {
-    let time = 1.0;
-    let steps = 10;
-    let dt = time / steps as f64;
+fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64, dumps: usize) {
+    debug_assert!(time > 0.0);
 
-    println!("{:?}", concs);
+    let steps = dumps + 1;
+    let dt = time / steps as f64;
     for _ in 0..steps {
         concs = evolve(&reactor, concs, dt);
         println!("{:?}", concs);
