@@ -1,0 +1,4 @@
+{   // Surface attributes.
+    fog     : { Interface   : ['fog', 'air'] }, // Inside is fog material, outside of air material.
+    mirror  : { Mirror      : 0.99 },           // Mirror reflecting 99% of incident light.
+}
