@@ -66,7 +66,7 @@ fn main() {
         .expect("Species link failure.");
 
     section(term_width, "Simulation");
-    let data = simulation(&reactor, concs, time, dumps);
+    let data = simulation(&specs, &reactor, concs, time, dumps);
 
     section(term_width, "Output");
     data.save(&out_dir.join("concs.csv"))
@@ -77,7 +77,13 @@ fn main() {
 
 /// Run the simulation.
 #[inline]
-fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64, dumps: usize) -> Table<f64> {
+fn simulation(
+    specs: &Register,
+    reactor: &Reactor,
+    mut concs: Array1<f64>,
+    time: f64,
+    dumps: usize,
+) -> Table<f64> {
     debug_assert!(time > 0.0);
 
     let steps = dumps + 1;
@@ -89,7 +95,7 @@ fn simulation(reactor: &Reactor, mut concs: Array1<f64>, time: f64, dumps: usize
         data.push(concs.to_vec());
     }
 
-    Table::new(data)
+    Table::new(specs.names(), data)
 }
 
 /// Evolve forward the given amount of time.

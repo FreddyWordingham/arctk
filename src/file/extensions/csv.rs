@@ -11,13 +11,18 @@ use std::{
 impl<T: FromStr> Load for Table<T> {
     #[inline]
     fn load_data(path: &Path) -> Result<Self, Error> {
-        let lines: Vec<_> = BufReader::new(File::open(path)?)
+        let mut lines: Vec<_> = BufReader::new(File::open(path)?)
             .lines()
             .map(Result::unwrap)
             .filter(|line| !line.starts_with("//"))
             .collect();
 
         let mut rows = Vec::with_capacity(lines.len());
+        let headings = lines
+            .remove(0)
+            .split(',')
+            .map(|s| (*s).to_string())
+            .collect();
         for mut line in lines {
             line.retain(|c| !c.is_whitespace());
             let row = line
@@ -28,6 +33,6 @@ impl<T: FromStr> Load for Table<T> {
             rows.push(row);
         }
 
-        Ok(Self::new(rows))
+        Ok(Self::new(headings, rows))
     }
 }

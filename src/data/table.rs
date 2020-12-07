@@ -1,31 +1,32 @@
 //! Data table implementation.
 
-use crate::{access, clone, err::Error, file::Save};
+use crate::{access, err::Error, file::Save};
 use std::{fmt::Display, fs::File, io::Write, ops::AddAssign, path::Path};
 
 /// Table of row data.
 pub struct Table<T> {
+    /// Data headings.
+    headings: Vec<String>,
     /// Count data.
     rows: Vec<Vec<T>>,
-    /// Number of columns.
-    num_cols: usize,
 }
 
 impl<T> Table<T> {
     access!(rows, Vec<Vec<T>>);
-    clone!(num_cols, usize);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(rows: Vec<Vec<T>>) -> Self {
+    pub fn new(headings: Vec<String>, rows: Vec<Vec<T>>) -> Self {
+        debug_assert!(!headings.is_empty());
         debug_assert!(!rows.is_empty());
-        let num_cols = rows[0].len();
+
+        let num_cols = headings.len();
         for row in &rows {
             debug_assert!(row.len() == num_cols);
         }
 
-        Self { rows, num_cols }
+        Self { headings, rows }
     }
 
     /// Deconstruct the table and yield the inner rows vector.
@@ -40,8 +41,8 @@ impl<T> Table<T> {
 impl<T: AddAssign + Clone> AddAssign<&Self> for Table<T> {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
+        debug_assert!(self.headings == rhs.headings);
         debug_assert!(self.rows.len() == rhs.rows.len());
-        debug_assert!(self.num_cols == rhs.num_cols);
 
         for (lhs, rhs) in self.rows.iter_mut().zip(&rhs.rows) {
             for (l, r) in lhs.iter_mut().zip(rhs) {
