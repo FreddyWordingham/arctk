@@ -57,6 +57,13 @@ impl<T> Set<T> {
         self.0.len()
     }
 
+    /// Get a list of the names.
+    #[inline]
+    #[must_use]
+    pub fn names_list(&self) -> Vec<Name> {
+        self.0.keys().cloned().collect()
+    }
+
     /// Iterate over the values.
     #[inline]
     #[must_use]

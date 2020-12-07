@@ -43,4 +43,11 @@ impl Register {
     pub const fn set(&self) -> &Set<usize> {
         &self.0
     }
+
+    /// Get a list of the names.
+    #[inline]
+    #[must_use]
+    pub fn names_list(&self) -> Vec<Name> {
+        self.0.names_list()
+    }
 }
