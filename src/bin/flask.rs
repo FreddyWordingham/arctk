@@ -95,7 +95,14 @@ fn simulation(
         data.push(concs.to_vec());
     }
 
-    Table::new(specs.names_list().into_iter().map(|x| x.as_string()), data)
+    Table::new(
+        specs
+            .names_list()
+            .into_iter()
+            .map(|x| format!("{}", x))
+            .collect(),
+        data,
+    )
 }
 
 /// Evolve forward the given amount of time.
