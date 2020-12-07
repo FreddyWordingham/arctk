@@ -1,5 +1,6 @@
 /target/
 /input/output/
+/examples/output/
 /output/
 /.vscode/
 **/*.rs.bk

@@ -1,0 +1,10 @@
+{
+    tree    : { There   : 'settings/tree_5_8.json5' },
+    grid    : { There   : 'settings/grid_20mm_64.json5' },
+    sett    : { There   : 'settings/mcrt.json5' },
+    engine  : "Standard",
+    light   : { There   : 'data/single_light.json5' },
+    mats    : { There   : 'data/materials.json5' },
+    attrs   : { There   : 'data/attributes.json5' },
+    surfs   : { There   : 'data/surfaces.json5' },
+}
