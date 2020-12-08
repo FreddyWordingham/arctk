@@ -1,0 +1,10 @@
+{
+    centrepiece : {
+        mesh    : [["objs/cube.obj"], null],
+        attr    : 'fog'
+    },
+    mirror      : {
+        mesh    : [["objs/mirrors.obj"], null],
+        attr    : 'mirror'
+    }
+}

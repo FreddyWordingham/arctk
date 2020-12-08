@@ -1,5 +1,5 @@
 {   // List of material resources used.
-    air     : { There   : 'res/mats/air.json5' },
-    fog     : { There   : 'res/mats/fog.json5' },
-    flesh   : { There   : 'res/mats/flesh.json5' },
+    air     : { There   : 'mats/air.json5' },
+    fog     : { There   : 'mats/fog.json5' },
+    flesh   : { There   : 'mats/flesh.json5' },
 }
