@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/dispatch-0.2.0/src/sem.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sem.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../dispatch/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/dispatch-0.2.0/src/sem.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sem.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../dispatch/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -157,7 +159,7 @@
     <span class="doccomment">/// it has been decremented below its original value. If there are more</span>
     <span class="doccomment">/// successful calls to `wait` than `signal`, the system assumes the</span>
     <span class="doccomment">/// `Semaphore` is still in use and will abort if it is disposed.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">value</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">value</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> {
             <span class="ident">dispatch_semaphore_create</span>(<span class="ident">value</span> <span class="kw">as</span> <span class="ident">c_long</span>)
         };
@@ -169,16 +171,16 @@
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
             <span class="ident">dispatch_semaphore_wait</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="ident">DISPATCH_TIME_FOREVER</span>)
         };
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span> <span class="op">==</span> <span class="number">0</span>, <span class="string">&quot;Dispatch semaphore wait errored&quot;</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>, <span class="string">&quot;Dispatch semaphore wait errored&quot;</span>);
     }
 
     <span class="doccomment">/// Wait for (decrement) self until the specified timeout has elapsed.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wait_timeout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">timeout</span>: <span class="ident">Duration</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">WaitTimeout</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wait_timeout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">timeout</span>: <span class="ident">Duration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">WaitTimeout</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">when</span> <span class="op">=</span> <span class="ident">time_after_delay</span>(<span class="ident">timeout</span>);
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
             <span class="ident">dispatch_semaphore_wait</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="ident">when</span>)
         };
-        <span class="kw">if</span> <span class="ident">result</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">result</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="prelude-val">Ok</span>(())
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">WaitTimeout</span> { <span class="ident">duration</span>: <span class="ident">timeout</span> })
@@ -189,15 +191,15 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the previous value was less than zero, this method wakes a waiting thread.</span>
     <span class="doccomment">/// Returns `true` if a thread is woken or `false` otherwise.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">signal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
-            <span class="ident">dispatch_semaphore_signal</span>(<span class="self">self</span>.<span class="ident">ptr</span>) <span class="op">!=</span> <span class="number">0</span>
+            <span class="ident">dispatch_semaphore_signal</span>(<span class="self">self</span>.<span class="ident">ptr</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
         }
     }
 
     <span class="doccomment">/// Wait to access a resource protected by self.</span>
     <span class="doccomment">/// This decrements self and returns a guard that increments when dropped.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">access</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SemaphoreGuard</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">access</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SemaphoreGuard</span> {
         <span class="self">self</span>.<span class="ident">wait</span>();
         <span class="ident">SemaphoreGuard</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">clone</span>())
     }
@@ -205,7 +207,7 @@
     <span class="doccomment">/// Wait until the specified timeout to access a resource protected by self.</span>
     <span class="doccomment">/// This decrements self and returns a guard that increments when dropped.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">access_timeout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">timeout</span>: <span class="ident">Duration</span>)
-    <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SemaphoreGuard</span>, <span class="ident">WaitTimeout</span><span class="op">&gt;</span> {
+    <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SemaphoreGuard</span>, <span class="ident">WaitTimeout</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">wait_timeout</span>(<span class="ident">timeout</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">SemaphoreGuard</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">clone</span>()))
     }
@@ -215,7 +217,7 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">Semaphore</span> {}
 
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Semaphore</span> {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">dispatch_retain</span>(<span class="self">self</span>.<span class="ident">ptr</span>);
         }
@@ -238,7 +240,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SemaphoreGuard</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">sem</span>: <span class="ident">Semaphore</span>) <span class="op">-&gt;</span> <span class="ident">SemaphoreGuard</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">sem</span>: <span class="ident">Semaphore</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SemaphoreGuard</span> {
         <span class="ident">SemaphoreGuard</span> { <span class="ident">sem</span> }
     }
 

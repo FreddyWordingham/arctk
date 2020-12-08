@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/wide-0.4.6/src/arch/sse.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sse.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../wide/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/wide-0.4.6/src/arch/sse.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sse.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../wide/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1039,7 +1041,7 @@
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">m128</span> {
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>::<span class="ident">zeroed</span>()
   }
 }
@@ -1047,7 +1049,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">serde</span>::<span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">m128</span> {
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-  <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+  <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
   <span class="kw">where</span>
     <span class="ident">S</span>: <span class="ident">serde</span>::<span class="ident">Serializer</span>,
   {
@@ -1059,7 +1061,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">m128</span> {
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-  <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+  <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
   <span class="kw">where</span>
     <span class="ident">D</span>: <span class="ident">serde</span>::<span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
   {
@@ -1073,7 +1075,7 @@
   <span class="doccomment">///</span>
   <span class="doccomment">/// All `Formatter` information is passed directly to each individual `f32`</span>
   <span class="doccomment">/// lane being formatted.</span>
-  <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+  <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
     <span class="kw">let</span> <span class="ident">a</span>: [<span class="ident">f32</span>; <span class="number">4</span>] <span class="op">=</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="number">0</span>);
     <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;m128(&quot;</span>)<span class="question-mark">?</span>;
     <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>[<span class="number">0</span>], <span class="ident">f</span>)<span class="question-mark">?</span>;
@@ -1092,7 +1094,7 @@
   <span class="doccomment">///</span>
   <span class="doccomment">/// All `Formatter` information is passed directly to each individual `f32`</span>
   <span class="doccomment">/// lane being formatted.</span>
-  <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+  <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
     <span class="kw">let</span> <span class="ident">a</span>: [<span class="ident">f32</span>; <span class="number">4</span>] <span class="op">=</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="number">0</span>);
     <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;m128(&quot;</span>)<span class="question-mark">?</span>;
     <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Display</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>[<span class="number">0</span>], <span class="ident">f</span>)<span class="question-mark">?</span>;
@@ -1111,7 +1113,7 @@
   <span class="doccomment">///</span>
   <span class="doccomment">/// All `Formatter` information is passed directly to each individual `f32`</span>
   <span class="doccomment">/// lane being formatted.</span>
-  <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+  <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
     <span class="kw">let</span> <span class="ident">a</span>: [<span class="ident">f32</span>; <span class="number">4</span>] <span class="op">=</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="number">0</span>);
     <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;m128(&quot;</span>)<span class="question-mark">?</span>;
     <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">LowerExp</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>[<span class="number">0</span>], <span class="ident">f</span>)<span class="question-mark">?</span>;
@@ -1130,7 +1132,7 @@
   <span class="doccomment">///</span>
   <span class="doccomment">/// All `Formatter` information is passed directly to each individual `f32`</span>
   <span class="doccomment">/// lane being formatted.</span>
-  <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+  <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
     <span class="kw">let</span> <span class="ident">a</span>: [<span class="ident">f32</span>; <span class="number">4</span>] <span class="op">=</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="number">0</span>);
     <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;m128(&quot;</span>)<span class="question-mark">?</span>;
     <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">UpperExp</span>::<span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>[<span class="number">0</span>], <span class="ident">f</span>)<span class="question-mark">?</span>;
@@ -1149,7 +1151,7 @@
   <span class="doccomment">/// Lanewise addition.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_add_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 }
@@ -1166,7 +1168,7 @@
   <span class="doccomment">/// Bitwise AND.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitand</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitand</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_and_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 }
@@ -1183,7 +1185,7 @@
   <span class="doccomment">/// Lanewise division.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_div_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 }
@@ -1200,7 +1202,7 @@
   <span class="doccomment">/// Lanewise multiplication.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_mul_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 }
@@ -1217,7 +1219,7 @@
   <span class="doccomment">/// Lanewise subtraction.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_sub_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 }
@@ -1234,7 +1236,7 @@
   <span class="doccomment">/// Bitwise OR.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_or_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 }
@@ -1251,7 +1253,7 @@
   <span class="doccomment">/// Bitwise XOR.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitxor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitxor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_xor_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 }
@@ -1268,7 +1270,7 @@
   <span class="doccomment">/// Lanewise `0.0 - self`</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_sub_ps</span>(<span class="ident">_mm_setzero_ps</span>(), <span class="self">self</span>.<span class="number">0</span>) })
   }
 }
@@ -1278,7 +1280,7 @@
   <span class="doccomment">/// Bitwise negation</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">not</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">not</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="ident">f</span>: <span class="ident">f32</span> <span class="op">=</span> <span class="ident">cast</span>(<span class="op">-</span><span class="number">1_i32</span>);
     <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">splat</span>(<span class="ident">f</span>);
     <span class="self">self</span> <span class="op">^</span> <span class="ident">b</span>
@@ -1290,98 +1292,98 @@
   <span class="doccomment">/// Adds the 0th lanes without affecting the other lanes of `self.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_add_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Bitwise `(!self) &amp; rhs`</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">andnot</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">andnot</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_andnot_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `self == rhs` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_eq</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_eq</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpeq_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self == rhs`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_eq0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_eq0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpeq_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `self &gt;= rhs` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ge</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ge</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpge_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self &gt;= rhs`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ge0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ge0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpge_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `self &gt; rhs` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_gt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_gt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpgt_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self &gt; rhs`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_gt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_gt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpgt_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `self &lt;= rhs` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_le</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_le</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmple_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self &lt;= rhs`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_le0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_le0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmple_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `self &lt; rhs` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_lt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_lt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmplt_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self &lt; rhs`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_lt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_lt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmplt_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `self != rhs` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ne</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ne</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpneq_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self != rhs`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ne0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ne0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpneq_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
@@ -1390,126 +1392,126 @@
   <span class="doccomment">/// Also, this triggers 3rd Impact.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nge</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nge</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpnge_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `!(self &gt;= rhs)`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nge0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nge0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpnge_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `!(self &gt; rhs)` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ngt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ngt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpngt_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `!(self &gt; rhs)`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ngt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ngt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpngt_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `!(self &lt;= rhs)` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nle</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nle</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpnle_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `!(self &lt;= rhs)`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nle0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nle0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpnle_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `!(self &lt; rhs)` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nlt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nlt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpnlt_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `!(self &lt; rhs)`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nlt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nlt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpnlt_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `self.not_nan() &amp; rhs.not_nan()` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ordinary</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ordinary</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpord_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self.not_nan() &amp; rhs.not_nan()`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ordinary0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ordinary0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpord_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise `self.is_nan() | rhs.is_nan()` check, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nan</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nan</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpunord_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self.is_nan() | rhs.is_nan()`, bool-ish output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nan0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nan0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cmpunord_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0: `self == rhs`, 0 or 1 `i32` output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_eq0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_eq0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_comieq_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) }
   }
 
   <span class="doccomment">/// Lane 0: `self &gt;= rhs`, 0 or 1 `i32` output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_ge0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_ge0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_comige_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) }
   }
 
   <span class="doccomment">/// Lane 0: `self &gt; rhs`, 0 or 1 `i32` output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_gt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_gt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_comigt_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) }
   }
 
   <span class="doccomment">/// Lane 0: `self &lt;= rhs`, 0 or 1 `i32` output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_le0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_le0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_comile_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) }
   }
 
   <span class="doccomment">/// Lane 0: `self &lt; rhs`, 0 or 1 `i32` output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_lt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_lt0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_comilt_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) }
   }
 
   <span class="doccomment">/// Lane 0: `self != rhs`, 0 or 1 `i32` output.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_ne0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmpi_ne0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_comineq_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) }
   }
 
@@ -1519,7 +1521,7 @@
   <span class="doccomment">/// mode](https://doc.rust-lang.org/core/arch/x86_64/fn._mm_setcsr.html#rounding-mode)</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_replace0_i32</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_replace0_i32</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cvt_si2ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>) })
   }
 
@@ -1529,7 +1531,7 @@
   <span class="doccomment">/// mode](https://doc.rust-lang.org/core/arch/x86_64/fn._mm_setcsr.html#rounding-mode)</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_extract0_i32</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_extract0_i32</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_cvt_ss2si</span>(<span class="self">self</span>.<span class="number">0</span>) }
   }
 
@@ -1542,14 +1544,14 @@
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_replace0_i64</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i64</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_replace0_i64</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">i64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_cvtsi64_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>) })
   }
 
   <span class="doccomment">/// Directly extracts lane 0 as `f32`.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extract0</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extract0</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_cvtss_f32</span>(<span class="self">self</span>.<span class="number">0</span>) }
   }
 
@@ -1560,14 +1562,14 @@
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_extract0_i64</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i64</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_extract0_i64</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i64</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_cvtss_si64</span>(<span class="self">self</span>.<span class="number">0</span>) }
   }
 
   <span class="doccomment">/// Truncate lane 0 to `i32` and return.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">truncate_extract0_i32</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">truncate_extract0_i32</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_cvtt_ss2si</span>(<span class="self">self</span>.<span class="number">0</span>) }
   }
 
@@ -1575,14 +1577,14 @@
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
   <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">truncate_extract0_i64</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i64</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">truncate_extract0_i64</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i64</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_cvttss_si64</span>(<span class="self">self</span>.<span class="number">0</span>) }
   }
 
   <span class="doccomment">/// Divides the 0th lanes without affecting the other lanes of `self.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">div0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">div0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_div_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
@@ -1592,7 +1594,7 @@
   <span class="doccomment">/// pointed to array and then used `transmute`.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">Align16</span><span class="op">&lt;</span>[<span class="ident">f32</span>; <span class="number">4</span>]<span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">Align16</span><span class="op">&lt;</span>[<span class="ident">f32</span>; <span class="number">4</span>]<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">f32</span> <span class="op">=</span> <span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Align16</span><span class="op">&lt;</span>[<span class="ident">f32</span>; <span class="number">4</span>]<span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">f32</span>;
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_load_ps</span>(<span class="ident">ptr</span>) })
   }
@@ -1601,7 +1603,7 @@
   <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">trivially_copy_pass_by_ref</span>)]</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_splat</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_splat</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_load_ps1</span>(<span class="ident">addr</span>) })
   }
 
@@ -1609,7 +1611,7 @@
   <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">trivially_copy_pass_by_ref</span>)]</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load0</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load0</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_load_ss</span>(<span class="ident">addr</span>) })
   }
 
@@ -1619,7 +1621,7 @@
   <span class="doccomment">/// `transmute` on the pointed to array.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_reverse</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">Align16</span><span class="op">&lt;</span>[<span class="ident">f32</span>; <span class="number">4</span>]<span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_reverse</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">Align16</span><span class="op">&lt;</span>[<span class="ident">f32</span>; <span class="number">4</span>]<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">f32</span> <span class="op">=</span> <span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Align16</span><span class="op">&lt;</span>[<span class="ident">f32</span>; <span class="number">4</span>]<span class="op">&gt;</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">f32</span>;
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_loadr_ps</span>(<span class="ident">ptr</span>) })
   }
@@ -1630,7 +1632,7 @@
   <span class="doccomment">/// the lane ordering is the same.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_unaligned</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span>[<span class="ident">f32</span>; <span class="number">4</span>]) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_unaligned</span>(<span class="ident">addr</span>: <span class="kw-2">&amp;</span>[<span class="ident">f32</span>; <span class="number">4</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">f32</span> <span class="op">=</span> <span class="ident">addr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> [<span class="ident">f32</span>; <span class="number">4</span>] <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">f32</span>;
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_loadu_ps</span>(<span class="ident">ptr</span>) })
   }
@@ -1638,35 +1640,35 @@
   <span class="doccomment">/// Lanewise maximum.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_max_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0 maximum, other lanes are `self`.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_max_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lanewise minimum.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_min_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0 minimum, other lanes are `self`.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_min_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Copies lane 0 from `rhs`, other lanes are `self`.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_move_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
@@ -1681,7 +1683,7 @@
   <span class="doccomment">/// ```</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_high_low</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_high_low</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_movehl_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
@@ -1696,7 +1698,7 @@
   <span class="doccomment">/// ```</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_low_high</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_low_high</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_movelh_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
@@ -1709,7 +1711,7 @@
   <span class="doccomment">/// to rename it to, oh well.)</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">move_mask</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">move_mask</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">unsafe</span> { <span class="ident">_mm_movemask_ps</span>(<span class="self">self</span>.<span class="number">0</span>) }
   }
 
@@ -1719,7 +1721,7 @@
   <span class="doccomment">/// 1.5*2.0e-12.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reciprocal</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reciprocal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_rcp_ps</span>(<span class="self">self</span>.<span class="number">0</span>) })
   }
 
@@ -1729,7 +1731,7 @@
   <span class="doccomment">/// 1.5*2.0e-12.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reciprocal0</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reciprocal0</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_rcp_ss</span>(<span class="self">self</span>.<span class="number">0</span>) })
   }
 
@@ -1739,7 +1741,7 @@
   <span class="doccomment">/// 1.5*2.0e-12.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reciprocal_sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reciprocal_sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_rsqrt_ps</span>(<span class="self">self</span>.<span class="number">0</span>) })
   }
 
@@ -1749,7 +1751,7 @@
   <span class="doccomment">/// 1.5*2.0e-12.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reciprocal_sqrt0</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reciprocal_sqrt0</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_rsqrt_ss</span>(<span class="self">self</span>.<span class="number">0</span>) })
   }
 
@@ -1761,21 +1763,21 @@
   <span class="doccomment">/// or similar.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="ident">a</span>: <span class="ident">f32</span>, <span class="ident">b</span>: <span class="ident">f32</span>, <span class="ident">c</span>: <span class="ident">f32</span>, <span class="ident">d</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="ident">a</span>: <span class="ident">f32</span>, <span class="ident">b</span>: <span class="ident">f32</span>, <span class="ident">c</span>: <span class="ident">f32</span>, <span class="ident">d</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_set_ps</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">c</span>, <span class="ident">d</span>) })
   }
 
   <span class="doccomment">/// Set the `f32` into all lanes.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">splat</span>(<span class="ident">a</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">splat</span>(<span class="ident">a</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_set1_ps</span>(<span class="ident">a</span>) })
   }
 
   <span class="doccomment">/// Set the value into lane 0, other lanes `0.0`.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set0</span>(<span class="ident">a</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set0</span>(<span class="ident">a</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_set_ss</span>(<span class="ident">a</span>) })
   }
 
@@ -1783,21 +1785,21 @@
   <span class="doccomment">/// [`set`](m128::set).</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_reverse</span>(<span class="ident">a</span>: <span class="ident">f32</span>, <span class="ident">b</span>: <span class="ident">f32</span>, <span class="ident">c</span>: <span class="ident">f32</span>, <span class="ident">d</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_reverse</span>(<span class="ident">a</span>: <span class="ident">f32</span>, <span class="ident">b</span>: <span class="ident">f32</span>, <span class="ident">c</span>: <span class="ident">f32</span>, <span class="ident">d</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_setr_ps</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">c</span>, <span class="ident">d</span>) })
   }
 
   <span class="doccomment">/// Lanewise square root.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_sqrt_ps</span>(<span class="self">self</span>.<span class="number">0</span>) })
   }
 
   <span class="doccomment">/// Lane 0 square root, other lanes are `self`.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sqrt0</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sqrt0</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_sqrt_ss</span>(<span class="self">self</span>.<span class="number">0</span>) })
   }
 
@@ -1845,7 +1847,7 @@
   <span class="doccomment">/// Subtracts the 0th lanes without affecting the other lanes of `self.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sub0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sub0</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_sub_ss</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
@@ -1859,7 +1861,7 @@
   <span class="doccomment">/// ```</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unpack_high</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unpack_high</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_unpackhi_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 
@@ -1873,7 +1875,7 @@
   <span class="doccomment">/// ```</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unpack_low</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unpack_low</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>(<span class="kw">unsafe</span> { <span class="ident">_mm_unpacklo_ps</span>(<span class="self">self</span>.<span class="number">0</span>, <span class="ident">rhs</span>.<span class="number">0</span>) })
   }
 }
@@ -1973,14 +1975,14 @@
 <span class="doccomment">/// Would give an output of: `a[0], a[2], b[1], b[3]`</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">shuffle128</span> {
-  (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>:<span class="ident">expr</span>, [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">i0a</span>:<span class="ident">literal</span>,<span class="macro-nonterminal">$</span><span class="macro-nonterminal">i1a</span>:<span class="ident">literal</span>,<span class="macro-nonterminal">$</span><span class="macro-nonterminal">i2b</span>:<span class="ident">literal</span>,<span class="macro-nonterminal">$</span><span class="macro-nonterminal">i3b</span>:<span class="ident">literal</span>]) <span class="op">=&gt;</span> {{
+  (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>:<span class="ident">expr</span>, [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">i0a</span>:<span class="ident">literal</span>,<span class="macro-nonterminal">$</span><span class="macro-nonterminal">i1a</span>:<span class="ident">literal</span>,<span class="macro-nonterminal">$</span><span class="macro-nonterminal">i2b</span>:<span class="ident">literal</span>,<span class="macro-nonterminal">$</span><span class="macro-nonterminal">i3b</span>:<span class="ident">literal</span>]) <span class="op">=</span><span class="op">&gt;</span> {{
     <span class="comment">// Keep only 2 bits per index</span>
     <span class="kw">const</span> <span class="ident">I0A</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">i0a</span> <span class="op">&amp;</span> <span class="number">0b11</span>;
     <span class="kw">const</span> <span class="ident">I1A</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">i1a</span> <span class="op">&amp;</span> <span class="number">0b11</span>;
     <span class="kw">const</span> <span class="ident">I2B</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">i2b</span> <span class="op">&amp;</span> <span class="number">0b11</span>;
     <span class="kw">const</span> <span class="ident">I3B</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">i3b</span> <span class="op">&amp;</span> <span class="number">0b11</span>;
     <span class="comment">// pack it up little-endian</span>
-    <span class="kw">const</span> <span class="ident">IMM</span>: <span class="ident">i32</span> <span class="op">=</span> (<span class="ident">I0A</span> <span class="op">|</span> <span class="ident">I1A</span> <span class="op">&lt;&lt;</span> <span class="number">2</span> <span class="op">|</span> <span class="ident">I2B</span> <span class="op">&lt;&lt;</span> <span class="number">4</span> <span class="op">|</span> <span class="ident">I3B</span> <span class="op">&lt;&lt;</span> <span class="number">6</span>) <span class="kw">as</span> <span class="ident">i32</span>;
+    <span class="kw">const</span> <span class="ident">IMM</span>: <span class="ident">i32</span> <span class="op">=</span> (<span class="ident">I0A</span> <span class="op">|</span> <span class="ident">I1A</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">2</span> <span class="op">|</span> <span class="ident">I2B</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">4</span> <span class="op">|</span> <span class="ident">I3B</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>) <span class="kw">as</span> <span class="ident">i32</span>;
     <span class="comment">//</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>)]</span>
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">arch</span>::<span class="ident">x86</span>::<span class="ident">_mm_shuffle_ps</span>;
@@ -2008,7 +2010,7 @@
   <span class="doccomment">/// with a mask so that the sign bit is cleared in all lanes.</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span> <span class="op">&amp;</span> <span class="self">Self</span>::<span class="ident">splat</span>(<span class="ident">cast</span>(<span class="ident">i32</span>::<span class="ident">max_value</span>()))
   }
 }

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/ffi.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ffi.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/ffi.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ffi.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -236,13 +238,13 @@
 
 <span class="kw">impl</span> <span class="ident">NSRange</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">location</span>: <span class="ident">NSUInteger</span>, <span class="ident">length</span>: <span class="ident">NSUInteger</span>) <span class="op">-&gt;</span> <span class="ident">NSRange</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">location</span>: <span class="ident">NSUInteger</span>, <span class="ident">length</span>: <span class="ident">NSUInteger</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSRange</span> {
         <span class="ident">NSRange</span> { <span class="ident">location</span>, <span class="ident">length</span> }
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">objc</span>::<span class="ident">Encode</span> <span class="kw">for</span> <span class="ident">NSRange</span> {
-    <span class="kw">fn</span> <span class="ident">encode</span>() <span class="op">-&gt;</span> <span class="ident">objc</span>::<span class="ident">Encoding</span> {
+    <span class="kw">fn</span> <span class="ident">encode</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">objc</span>::<span class="ident">Encoding</span> {
         <span class="kw">let</span> <span class="ident">encoding</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="comment">// TODO: Verify that this is correct</span>
             <span class="string">&quot;{{NSRange={}{}}}&quot;</span>,
@@ -254,41 +256,41 @@
 }
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">NSMutableAttributedString</span>: <span class="ident">Sized</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">alloc</span>(<span class="kw">_</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">alloc</span>(<span class="kw">_</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">NSMutableAttributedString</span>), <span class="ident">alloc</span>]
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span>; <span class="comment">// *mut NSMutableAttributedString</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">initWithString</span>(<span class="self">self</span>, <span class="ident">string</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">id</span>;
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">initWithAttributedString</span>(<span class="self">self</span>, <span class="ident">string</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">id</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>; <span class="comment">// *mut NSMutableAttributedString</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">initWithString</span>(<span class="self">self</span>, <span class="ident">string</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">initWithAttributedString</span>(<span class="self">self</span>, <span class="ident">string</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">string</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span>; <span class="comment">// *mut NSString</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">mutableString</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span>; <span class="comment">// *mut NSMutableString</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">length</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">NSUInteger</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">string</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>; <span class="comment">// *mut NSString</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">mutableString</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>; <span class="comment">// *mut NSMutableString</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">length</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSUInteger</span>;
 }
 
 <span class="kw">impl</span> <span class="ident">NSMutableAttributedString</span> <span class="kw">for</span> <span class="ident">id</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>, <span class="ident">init</span>]
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">initWithString</span>(<span class="self">self</span>, <span class="ident">string</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">initWithString</span>(<span class="self">self</span>, <span class="ident">string</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>, <span class="ident">initWithString</span>: <span class="ident">string</span>]
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">initWithAttributedString</span>(<span class="self">self</span>, <span class="ident">string</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">initWithAttributedString</span>(<span class="self">self</span>, <span class="ident">string</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>, <span class="ident">initWithAttributedString</span>: <span class="ident">string</span>]
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">string</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">string</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>, <span class="ident">string</span>]
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">mutableString</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">mutableString</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>, <span class="ident">mutableString</span>]
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">length</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">NSUInteger</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">length</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSUInteger</span> {
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>, <span class="ident">length</span>]
     }
 }
@@ -375,8 +377,8 @@
 <span class="attribute">#[<span class="ident">link</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;CoreGraphics&quot;</span>, <span class="ident">kind</span> <span class="op">=</span> <span class="string">&quot;framework&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGRestorePermanentDisplayConfiguration</span>();
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayCapture</span>(<span class="ident">display</span>: <span class="ident">CGDirectDisplayID</span>) <span class="op">-&gt;</span> <span class="ident">CGError</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayRelease</span>(<span class="ident">display</span>: <span class="ident">CGDirectDisplayID</span>) <span class="op">-&gt;</span> <span class="ident">CGError</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayCapture</span>(<span class="ident">display</span>: <span class="ident">CGDirectDisplayID</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGError</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayRelease</span>(<span class="ident">display</span>: <span class="ident">CGDirectDisplayID</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGError</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGConfigureDisplayFadeEffect</span>(
         <span class="ident">config</span>: <span class="ident">CGDisplayConfigRef</span>,
         <span class="ident">fadeOutSeconds</span>: <span class="ident">CGDisplayFadeInterval</span>,
@@ -384,11 +386,11 @@
         <span class="ident">fadeRed</span>: <span class="ident">f32</span>,
         <span class="ident">fadeGreen</span>: <span class="ident">f32</span>,
         <span class="ident">fadeBlue</span>: <span class="ident">f32</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">CGError</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGError</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGAcquireDisplayFadeReservation</span>(
         <span class="ident">seconds</span>: <span class="ident">CGDisplayReservationInterval</span>,
         <span class="ident">token</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">CGDisplayFadeReservationToken</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">CGError</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGError</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayFade</span>(
         <span class="ident">token</span>: <span class="ident">CGDisplayFadeReservationToken</span>,
         <span class="ident">duration</span>: <span class="ident">CGDisplayFadeInterval</span>,
@@ -398,23 +400,23 @@
         <span class="ident">greenBlend</span>: <span class="ident">f32</span>,
         <span class="ident">blueBlend</span>: <span class="ident">f32</span>,
         <span class="ident">synchronous</span>: <span class="ident">Boolean</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">CGError</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGReleaseDisplayFadeReservation</span>(<span class="ident">token</span>: <span class="ident">CGDisplayFadeReservationToken</span>) <span class="op">-&gt;</span> <span class="ident">CGError</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayCreateUUIDFromDisplayID</span>(<span class="ident">display</span>: <span class="ident">CGDirectDisplayID</span>) <span class="op">-&gt;</span> <span class="ident">CFUUIDRef</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGShieldingWindowLevel</span>() <span class="op">-&gt;</span> <span class="ident">CGWindowLevel</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGError</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGReleaseDisplayFadeReservation</span>(<span class="ident">token</span>: <span class="ident">CGDisplayFadeReservationToken</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGError</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayCreateUUIDFromDisplayID</span>(<span class="ident">display</span>: <span class="ident">CGDirectDisplayID</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFUUIDRef</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGShieldingWindowLevel</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGWindowLevel</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplaySetDisplayMode</span>(
         <span class="ident">display</span>: <span class="ident">CGDirectDisplayID</span>,
         <span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>,
         <span class="ident">options</span>: <span class="ident">CFDictionaryRef</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">CGError</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGError</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayCopyAllDisplayModes</span>(
         <span class="ident">display</span>: <span class="ident">CGDirectDisplayID</span>,
         <span class="ident">options</span>: <span class="ident">CFDictionaryRef</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">CFArrayRef</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeGetPixelWidth</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeGetPixelHeight</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeGetRefreshRate</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>) <span class="op">-&gt;</span> <span class="ident">f64</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeCopyPixelEncoding</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>) <span class="op">-&gt;</span> <span class="ident">CFStringRef</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFArrayRef</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeGetPixelWidth</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeGetPixelHeight</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeGetRefreshRate</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeCopyPixelEncoding</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFStringRef</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeRetain</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>);
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CGDisplayModeRelease</span>(<span class="ident">mode</span>: <span class="ident">CGDisplayModeRef</span>);
 }

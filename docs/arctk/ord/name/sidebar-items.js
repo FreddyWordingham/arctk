@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Name","Human-readable identifier type."]]});

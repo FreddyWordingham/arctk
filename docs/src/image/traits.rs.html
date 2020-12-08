@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/image-0.23.12/./src/traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>traits.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../image/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/image-0.23.12/./src/traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>traits.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../image/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -276,17 +278,17 @@
 <span class="doccomment">/// for image encoding.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">EncodableLayout</span>: <span class="ident">seals</span>::<span class="ident">EncodableLayout</span> {
     <span class="doccomment">/// Get the bytes of this value.</span>
-    <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>];
+    <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>];
 }
 
 <span class="kw">impl</span> <span class="ident">EncodableLayout</span> <span class="kw">for</span> [<span class="ident">u8</span>] {
-    <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="ident">bytemuck</span>::<span class="ident">cast_slice</span>(<span class="self">self</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">EncodableLayout</span> <span class="kw">for</span> [<span class="ident">u16</span>] {
-    <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="ident">bytemuck</span>::<span class="ident">cast_slice</span>(<span class="self">self</span>)
     }
 }
@@ -312,7 +314,7 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Enlargeable</span>: <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Bounded</span> <span class="op">+</span> <span class="ident">NumCast</span> {
     <span class="kw">type</span> <span class="ident">Larger</span>: <span class="ident">Primitive</span> <span class="op">+</span> <span class="ident">AddAssign</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>;
 
-    <span class="kw">fn</span> <span class="ident">clamp_from</span>(<span class="ident">n</span>: <span class="self">Self</span>::<span class="ident">Larger</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clamp_from</span>(<span class="ident">n</span>: <span class="self">Self</span>::<span class="ident">Larger</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="comment">// Note: Only unsigned value types supported.</span>
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="ident">NumCast</span>::<span class="ident">from</span>(<span class="self">Self</span>::<span class="ident">max_value</span>()).<span class="ident">unwrap</span>() {
             <span class="self">Self</span>::<span class="ident">max_value</span>()
@@ -336,7 +338,7 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Lerp</span>: <span class="ident">Bounded</span> <span class="op">+</span> <span class="ident">NumCast</span> {
     <span class="kw">type</span> <span class="ident">Ratio</span>: <span class="ident">Primitive</span>;
 
-    <span class="kw">fn</span> <span class="ident">lerp</span>(<span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>, <span class="ident">ratio</span>: <span class="self">Self</span>::<span class="ident">Ratio</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">lerp</span>(<span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>, <span class="ident">ratio</span>: <span class="self">Self</span>::<span class="ident">Ratio</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Ratio</span> <span class="kw">as</span> <span class="ident">NumCast</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">a</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Ratio</span> <span class="kw">as</span> <span class="ident">NumCast</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">b</span>).<span class="ident">unwrap</span>();
 
@@ -375,15 +377,15 @@
     <span class="kw">const</span> <span class="ident">CHANNEL_COUNT</span>: <span class="ident">u8</span>;
     <span class="doccomment">/// Returns the number of channels of this pixel type.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;please use CHANNEL_COUNT associated constant&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">channel_count</span>() <span class="op">-&gt;</span> <span class="ident">u8</span> {
+    <span class="kw">fn</span> <span class="ident">channel_count</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u8</span> {
         <span class="self">Self</span>::<span class="ident">CHANNEL_COUNT</span>
     }
 
     <span class="doccomment">/// Returns the components as a slice.</span>
-    <span class="kw">fn</span> <span class="ident">channels</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="self">Self</span>::<span class="ident">Subpixel</span>];
+    <span class="kw">fn</span> <span class="ident">channels</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="self">Self</span>::<span class="ident">Subpixel</span>];
 
     <span class="doccomment">/// Returns the components as a mutable slice</span>
-    <span class="kw">fn</span> <span class="ident">channels_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="self">Self</span>::<span class="ident">Subpixel</span>];
+    <span class="kw">fn</span> <span class="ident">channels_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="self">Self</span>::<span class="ident">Subpixel</span>];
 
     <span class="doccomment">/// A string that can help to interpret the meaning each channel</span>
     <span class="doccomment">/// See [gimp babl](http://gegl.org/babl/).</span>
@@ -391,7 +393,7 @@
     <span class="doccomment">/// Returns a string that can help to interpret the meaning each channel</span>
     <span class="doccomment">/// See [gimp babl](http://gegl.org/babl/).</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;please use COLOR_MODEL associated constant&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">color_model</span>() <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">color_model</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
         <span class="self">Self</span>::<span class="ident">COLOR_MODEL</span>
     }
 
@@ -399,7 +401,7 @@
     <span class="kw">const</span> <span class="ident">COLOR_TYPE</span>: <span class="ident">ColorType</span>;
     <span class="doccomment">/// Returns the ColorType for this pixel format</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;please use COLOR_TYPE associated constant&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">color_type</span>() <span class="op">-&gt;</span> <span class="ident">ColorType</span> {
+    <span class="kw">fn</span> <span class="ident">color_type</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColorType</span> {
         <span class="self">Self</span>::<span class="ident">COLOR_TYPE</span>
     }
 
@@ -409,7 +411,7 @@
     <span class="doccomment">/// TODO deprecate</span>
     <span class="kw">fn</span> <span class="ident">channels4</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-    ) <span class="op">-&gt;</span> (
+    ) <span class="op">-</span><span class="op">&gt;</span> (
         <span class="self">Self</span>::<span class="ident">Subpixel</span>,
         <span class="self">Self</span>::<span class="ident">Subpixel</span>,
         <span class="self">Self</span>::<span class="ident">Subpixel</span>,
@@ -425,66 +427,66 @@
         <span class="ident">b</span>: <span class="self">Self</span>::<span class="ident">Subpixel</span>,
         <span class="ident">c</span>: <span class="self">Self</span>::<span class="ident">Subpixel</span>,
         <span class="ident">d</span>: <span class="self">Self</span>::<span class="ident">Subpixel</span>,
-    ) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns a view into a slice.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note: The slice length is not checked on creation. Thus the caller has to ensure</span>
     <span class="doccomment">/// that the slice is long enough to prevent panics if the pixel is used later on.</span>
-    <span class="kw">fn</span> <span class="ident">from_slice</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="self">Self</span>::<span class="ident">Subpixel</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">from_slice</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="self">Self</span>::<span class="ident">Subpixel</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>;
 
     <span class="doccomment">/// Returns mutable view into a mutable slice.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note: The slice length is not checked on creation. Thus the caller has to ensure</span>
     <span class="doccomment">/// that the slice is long enough to prevent panics if the pixel is used later on.</span>
-    <span class="kw">fn</span> <span class="ident">from_slice_mut</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="self">Self</span>::<span class="ident">Subpixel</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">from_slice_mut</span>(<span class="ident">slice</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="self">Self</span>::<span class="ident">Subpixel</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>;
 
     <span class="doccomment">/// Convert this pixel to RGB</span>
-    <span class="kw">fn</span> <span class="ident">to_rgb</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">to_rgb</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Convert this pixel to RGB with an alpha channel</span>
-    <span class="kw">fn</span> <span class="ident">to_rgba</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rgba</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">to_rgba</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rgba</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Convert this pixel to luma</span>
-    <span class="kw">fn</span> <span class="ident">to_luma</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">to_luma</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Convert this pixel to luma with an alpha channel</span>
-    <span class="kw">fn</span> <span class="ident">to_luma_alpha</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">LumaA</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">to_luma_alpha</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LumaA</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Convert this pixel to BGR</span>
-    <span class="kw">fn</span> <span class="ident">to_bgr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Bgr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">to_bgr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bgr</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Convert this pixel to BGR with an alpha channel</span>
-    <span class="kw">fn</span> <span class="ident">to_bgra</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Bgra</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">to_bgra</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bgra</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Subpixel</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Apply the function ```f``` to each channel of this pixel.</span>
-    <span class="kw">fn</span> <span class="ident">map</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+    <span class="kw">fn</span> <span class="ident">map</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
 
     <span class="doccomment">/// Apply the function ```f``` to each channel of this pixel.</span>
     <span class="kw">fn</span> <span class="ident">apply</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
 
     <span class="doccomment">/// Apply the function ```f``` to each channel except the alpha channel.</span>
     <span class="doccomment">/// Apply the function ```g``` to the alpha channel.</span>
-    <span class="kw">fn</span> <span class="ident">map_with_alpha</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>, <span class="ident">g</span>: <span class="ident">G</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+    <span class="kw">fn</span> <span class="ident">map_with_alpha</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>, <span class="ident">g</span>: <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>,
-        <span class="ident">G</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>,
+        <span class="ident">G</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
 
     <span class="doccomment">/// Apply the function ```f``` to each channel except the alpha channel.</span>
     <span class="doccomment">/// Apply the function ```g``` to the alpha channel. Works in-place.</span>
     <span class="kw">fn</span> <span class="ident">apply_with_alpha</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>, <span class="ident">g</span>: <span class="ident">G</span>)
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>,
-        <span class="ident">G</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>,
+        <span class="ident">G</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
 
     <span class="doccomment">/// Apply the function ```f``` to each channel except the alpha channel.</span>
-    <span class="kw">fn</span> <span class="ident">map_without_alpha</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+    <span class="kw">fn</span> <span class="ident">map_without_alpha</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>,
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">this</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
         <span class="ident">this</span>.<span class="ident">apply_with_alpha</span>(<span class="ident">f</span>, <span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>);
@@ -495,22 +497,22 @@
     <span class="doccomment">/// Works in place.</span>
     <span class="kw">fn</span> <span class="ident">apply_without_alpha</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>,
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>,
     {
         <span class="self">self</span>.<span class="ident">apply_with_alpha</span>(<span class="ident">f</span>, <span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>);
     }
 
     <span class="doccomment">/// Apply the function ```f``` to each channel of this pixel and</span>
     <span class="doccomment">/// ```other``` pairwise.</span>
-    <span class="kw">fn</span> <span class="ident">map2</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+    <span class="kw">fn</span> <span class="ident">map2</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>, <span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>, <span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
 
     <span class="doccomment">/// Apply the function ```f``` to each channel of this pixel and</span>
     <span class="doccomment">/// ```other``` pairwise. Works in-place.</span>
     <span class="kw">fn</span> <span class="ident">apply2</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>, <span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>::<span class="ident">Subpixel</span>, <span class="self">Self</span>::<span class="ident">Subpixel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Subpixel</span>;
 
     <span class="doccomment">/// Invert this pixel</span>
     <span class="kw">fn</span> <span class="ident">invert</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>);

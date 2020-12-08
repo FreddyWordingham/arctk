@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/bracket-terminal-0.8.1/src/bterm.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>bterm.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bracket_terminal/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/bracket-terminal-0.8.1/src/bterm.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>bterm.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bracket_terminal/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1129,7 +1131,7 @@
 <span class="doccomment">/// A display console, used internally to provide console render support.</span>
 <span class="doccomment">/// Public in case you want to play with it, or access it directly.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DisplayConsole</span> {
-    <span class="kw">pub</span> <span class="ident">console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">shader_index</span>: <span class="ident">usize</span>,
     <span class="kw">pub</span> <span class="ident">font_index</span>: <span class="ident">usize</span>,
 }
@@ -1142,7 +1144,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">BTermInternal</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">fonts</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
             <span class="ident">shaders</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
@@ -1153,7 +1155,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">BTermInternal</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">fonts</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
             <span class="ident">shaders</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
@@ -1199,7 +1201,7 @@
         <span class="ident">height_pixels</span>: <span class="ident">T</span>,
         <span class="ident">window_title</span>: <span class="ident">S</span>,
         <span class="ident">platform_hints</span>: <span class="ident">InitHints</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BTerm</span><span class="op">&gt;</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BTerm</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
     {
@@ -1223,7 +1225,7 @@
         <span class="ident">height_chars</span>: <span class="ident">T</span>,
         <span class="ident">window_title</span>: <span class="ident">S</span>,
         <span class="ident">path_to_shaders</span>: <span class="ident">S</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">BTerm</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BTerm</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
     {
@@ -1246,7 +1248,7 @@
         <span class="ident">height_chars</span>: <span class="ident">T</span>,
         <span class="ident">window_title</span>: <span class="ident">S</span>,
         <span class="ident">path_to_shaders</span>: <span class="ident">S</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">BTerm</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BTerm</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>,
     {
@@ -1260,14 +1262,14 @@
     }
 
     <span class="doccomment">/// Registers a font, and returns its handle number. Do not use after initialization!</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">register_font</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font</span>: <span class="ident">Font</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">register_font</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font</span>: <span class="ident">Font</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="ident">bi</span>.<span class="ident">fonts</span>.<span class="ident">push</span>(<span class="ident">font</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">bi</span>.<span class="ident">fonts</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>)
     }
 
     <span class="doccomment">/// Registers a new console terminal for output, and returns its handle number.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_console</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">new_console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>, <span class="ident">font_index</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_console</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">new_console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>, <span class="ident">font_index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="ident">bi</span>.<span class="ident">consoles</span>.<span class="ident">push</span>(<span class="ident">DisplayConsole</span> {
             <span class="ident">console</span>: <span class="ident">new_console</span>,
@@ -1281,9 +1283,9 @@
     <span class="doccomment">/// that the new console not render background colors, so it can be layered on top of other consoles.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_console_no_bg</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">new_console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>,
+        <span class="ident">new_console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>,
         <span class="ident">font_index</span>: <span class="ident">usize</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="ident">bi</span>.<span class="ident">consoles</span>.<span class="ident">push</span>(<span class="ident">DisplayConsole</span> {
             <span class="ident">console</span>: <span class="ident">new_console</span>,
@@ -1297,9 +1299,9 @@
     <span class="doccomment">/// that the new console not render background colors, so it can be layered on top of other consoles.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_fancy_console</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">new_console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>,
+        <span class="ident">new_console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>,
         <span class="ident">font_index</span>: <span class="ident">usize</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="ident">bi</span>.<span class="ident">consoles</span>.<span class="ident">push</span>(<span class="ident">DisplayConsole</span> {
             <span class="ident">console</span>: <span class="ident">new_console</span>,
@@ -1310,7 +1312,7 @@
     }
 
     <span class="doccomment">/// Registers a new Sprite-based console</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_sprite_console</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">new_console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_sprite_console</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">new_console</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="ident">bi</span>.<span class="ident">consoles</span>.<span class="ident">push</span>(<span class="ident">DisplayConsole</span> {
             <span class="ident">console</span>: <span class="ident">new_console</span>,
@@ -1335,18 +1337,18 @@
 
     <span class="doccomment">/// Applies the current physical mouse position to the active console, and translates the coordinates into that console&#39;s coordinate space.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;curses&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
         (<span class="self">self</span>.<span class="ident">mouse_pos</span>.<span class="number">0</span>, <span class="self">self</span>.<span class="ident">mouse_pos</span>.<span class="number">1</span>)
     }
 
     <span class="doccomment">///</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;curses&quot;</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">pixel_to_char_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: (<span class="ident">i32</span>, <span class="ident">i32</span>), <span class="ident">_console</span>: <span class="kw-2">&amp;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
+    <span class="kw">fn</span> <span class="ident">pixel_to_char_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: (<span class="ident">i32</span>, <span class="ident">i32</span>), <span class="ident">_console</span>: <span class="kw-2">&amp;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
         <span class="ident">pos</span>
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;curses&quot;</span>))]</span>
-    <span class="kw">fn</span> <span class="ident">pixel_to_char_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: (<span class="ident">i32</span>, <span class="ident">i32</span>), <span class="ident">console</span>: <span class="kw-2">&amp;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
+    <span class="kw">fn</span> <span class="ident">pixel_to_char_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pos</span>: (<span class="ident">i32</span>, <span class="ident">i32</span>), <span class="ident">console</span>: <span class="kw-2">&amp;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Console</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
         <span class="kw">let</span> <span class="ident">max_sizes</span> <span class="op">=</span> <span class="ident">console</span>.<span class="ident">get_char_size</span>();
         <span class="kw">let</span> (<span class="ident">scale</span>, <span class="ident">center_x</span>, <span class="ident">center_y</span>) <span class="op">=</span> <span class="ident">console</span>.<span class="ident">get_scale</span>();
         <span class="kw">let</span> <span class="ident">font_size</span> <span class="op">=</span> (
@@ -1375,7 +1377,7 @@
 
     <span class="doccomment">/// Applies the current physical mouse position to the active console, and translates the coordinates into that console&#39;s coordinate space.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;curses&quot;</span>))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">i32</span>, <span class="ident">i32</span>) {
         <span class="kw">let</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="kw">let</span> <span class="ident">active_console</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">bi</span>.<span class="ident">consoles</span>[<span class="self">self</span>.<span class="ident">active_console</span>].<span class="ident">console</span>;
 
@@ -1383,7 +1385,7 @@
     }
 
     <span class="doccomment">/// Applies the current physical mouse position to the active console, and translates the coordinates into that console&#39;s coordinate space.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Point</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Point</span> {
         <span class="kw">let</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="kw">let</span> <span class="ident">active_console</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">bi</span>.<span class="ident">consoles</span>[<span class="self">self</span>.<span class="ident">active_console</span>].<span class="ident">console</span>;
         <span class="kw">let</span> <span class="ident">char_pos</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pixel_to_char_pos</span>(<span class="self">self</span>.<span class="ident">mouse_pos</span>, <span class="ident">active_console</span>);
@@ -1407,7 +1409,7 @@
     <span class="doccomment">/// Saves the entire console stack to a REX Paint XP file. If your consoles are of</span>
     <span class="doccomment">/// varying sizes, the file format supports it - but REX doesn&#39;t. So you may want to</span>
     <span class="doccomment">/// avoid that. You can also get individual layers with `to_xp_layer`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_xp_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">XpFile</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_xp_file</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">width</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">XpFile</span> {
         <span class="kw">let</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">xp</span> <span class="op">=</span> <span class="ident">XpFile</span>::<span class="ident">new</span>(<span class="ident">width</span>, <span class="ident">height</span>);
 
@@ -1448,7 +1450,7 @@
 
     <span class="doccomment">/// Internal: mark a mouse press</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">on_mouse_button</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">button_num</span>: <span class="ident">usize</span>, <span class="ident">pressed</span>: <span class="ident">bool</span>) {
-        <span class="kw">if</span> <span class="ident">button_num</span> <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">button_num</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="self">self</span>.<span class="ident">left_click</span> <span class="op">=</span> <span class="bool-val">true</span>;
         }
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">INPUT</span>.<span class="ident">lock</span>();
@@ -1488,7 +1490,7 @@
 <span class="doccomment">/// due to the need for helper generics.</span>
 <span class="kw">impl</span> <span class="ident">BTerm</span> {
     <span class="doccomment">/// Gets the active console&#39;s size, in characters.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_char_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">u32</span>, <span class="ident">u32</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_char_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u32</span>, <span class="ident">u32</span>) {
         <span class="kw">let</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="ident">bi</span>.<span class="ident">consoles</span>[<span class="self">self</span>.<span class="ident">active_console</span>].<span class="ident">console</span>.<span class="ident">get_char_size</span>()
     }
@@ -2017,7 +2019,7 @@
     }
 
     <span class="doccomment">/// Exports the current layer to a REX Paint file</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_xp_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">XpLayer</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_xp_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">XpLayer</span> {
         <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>().<span class="ident">consoles</span>[<span class="self">self</span>.<span class="ident">active_console</span>]
             .<span class="ident">console</span>
             .<span class="ident">to_xp_layer</span>()
@@ -2038,7 +2040,7 @@
     }
 
     <span class="doccomment">/// Gets the active scale for the current layer</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">f32</span>, <span class="ident">i32</span>, <span class="ident">i32</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">f32</span>, <span class="ident">i32</span>, <span class="ident">i32</span>) {
         <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>().<span class="ident">consoles</span>[<span class="self">self</span>.<span class="ident">active_console</span>]
             .<span class="ident">console</span>
             .<span class="ident">get_scale</span>()
@@ -2053,7 +2055,7 @@
     }
 
     <span class="doccomment">/// Returns the current arbitrary clipping rectangle, None if there isn&#39;t one.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_clipping</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rect</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_clipping</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rect</span><span class="op">&gt;</span> {
         <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>().<span class="ident">consoles</span>[<span class="self">self</span>.<span class="ident">active_console</span>]
             .<span class="ident">console</span>
             .<span class="ident">get_clipping</span>()
@@ -2098,7 +2100,7 @@
         <span class="kw">let</span> <span class="ident">new_font_size</span> <span class="op">=</span> <span class="ident">be</span>.<span class="ident">fonts</span>[<span class="ident">font_index</span>].<span class="ident">tile_size</span>;
         <span class="ident">be</span>.<span class="ident">consoles</span>[<span class="self">self</span>.<span class="ident">active_console</span>].<span class="ident">font_index</span> <span class="op">=</span> <span class="ident">font_index</span>;
 
-        <span class="kw">if</span> <span class="ident">old_font_size</span> <span class="op">!=</span> <span class="ident">new_font_size</span> <span class="op">&amp;&amp;</span> <span class="ident">resize_to_natural_dimensions</span> {
+        <span class="kw">if</span> <span class="ident">old_font_size</span> <span class="op">!</span><span class="op">=</span> <span class="ident">new_font_size</span> <span class="op">&amp;&amp;</span> <span class="ident">resize_to_natural_dimensions</span> {
             <span class="kw">let</span> <span class="ident">x_size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">original_width_pixels</span> <span class="op">/</span> <span class="ident">new_font_size</span>.<span class="number">0</span>;
             <span class="kw">let</span> <span class="ident">y_size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">original_height_pixels</span> <span class="op">/</span> <span class="ident">new_font_size</span>.<span class="number">1</span>;
 
@@ -2143,7 +2145,7 @@
 
     <span class="doccomment">/// Register a sprite sheet (OpenGL - native or WASM - only)</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;opengl&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_spritesheet</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ss</span>: <span class="ident">SpriteSheet</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_spritesheet</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ss</span>: <span class="ident">SpriteSheet</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bi</span> <span class="op">=</span> <span class="ident">BACKEND_INTERNAL</span>.<span class="ident">lock</span>();
         <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="ident">bi</span>.<span class="ident">sprite_sheets</span>.<span class="ident">len</span>();
         <span class="ident">bi</span>.<span class="ident">sprite_sheets</span>.<span class="ident">push</span>(<span class="ident">ss</span>);
@@ -2167,46 +2169,46 @@
 }
 
 <span class="doccomment">/// Runs the BTerm application, calling into the provided gamestate handler every tick.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">main_loop</span><span class="op">&lt;</span><span class="ident">GS</span>: <span class="ident">GameState</span><span class="op">&gt;</span>(<span class="ident">bterm</span>: <span class="ident">BTerm</span>, <span class="ident">gamestate</span>: <span class="ident">GS</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">main_loop</span><span class="op">&lt;</span><span class="ident">GS</span>: <span class="ident">GameState</span><span class="op">&gt;</span>(<span class="ident">bterm</span>: <span class="ident">BTerm</span>, <span class="ident">gamestate</span>: <span class="ident">GS</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">super</span>::<span class="ident">hal</span>::<span class="ident">main_loop</span>(<span class="ident">bterm</span>, <span class="ident">gamestate</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 
 <span class="doccomment">/// For A-Z menus, translates the keys A through Z into 0..25</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">letter_to_option</span>(<span class="ident">key</span>: <span class="ident">VirtualKeyCode</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">letter_to_option</span>(<span class="ident">key</span>: <span class="ident">VirtualKeyCode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">match</span> <span class="ident">key</span> {
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">A</span> <span class="op">=&gt;</span> <span class="number">0</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">B</span> <span class="op">=&gt;</span> <span class="number">1</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">C</span> <span class="op">=&gt;</span> <span class="number">2</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">D</span> <span class="op">=&gt;</span> <span class="number">3</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">E</span> <span class="op">=&gt;</span> <span class="number">4</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">F</span> <span class="op">=&gt;</span> <span class="number">5</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">G</span> <span class="op">=&gt;</span> <span class="number">6</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">H</span> <span class="op">=&gt;</span> <span class="number">7</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">I</span> <span class="op">=&gt;</span> <span class="number">8</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">J</span> <span class="op">=&gt;</span> <span class="number">9</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">K</span> <span class="op">=&gt;</span> <span class="number">10</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">L</span> <span class="op">=&gt;</span> <span class="number">11</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">M</span> <span class="op">=&gt;</span> <span class="number">12</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">N</span> <span class="op">=&gt;</span> <span class="number">13</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">O</span> <span class="op">=&gt;</span> <span class="number">14</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">P</span> <span class="op">=&gt;</span> <span class="number">15</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">Q</span> <span class="op">=&gt;</span> <span class="number">16</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">R</span> <span class="op">=&gt;</span> <span class="number">17</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">S</span> <span class="op">=&gt;</span> <span class="number">18</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">T</span> <span class="op">=&gt;</span> <span class="number">19</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">U</span> <span class="op">=&gt;</span> <span class="number">20</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">V</span> <span class="op">=&gt;</span> <span class="number">21</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">W</span> <span class="op">=&gt;</span> <span class="number">22</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">X</span> <span class="op">=&gt;</span> <span class="number">23</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">Y</span> <span class="op">=&gt;</span> <span class="number">24</span>,
-        <span class="ident">VirtualKeyCode</span>::<span class="ident">Z</span> <span class="op">=&gt;</span> <span class="number">25</span>,
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="op">-</span><span class="number">1</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">A</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">B</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">C</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">2</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">D</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">3</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">E</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">4</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">F</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">5</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">G</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">6</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">H</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">7</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">I</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">8</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">J</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">9</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">K</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">10</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">L</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">11</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">M</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">12</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">N</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">13</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">O</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">14</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">P</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">15</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">Q</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">16</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">R</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">17</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">S</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">18</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">T</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">19</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">U</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">20</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">V</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">21</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">W</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">22</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">X</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">23</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">Y</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">24</span>,
+        <span class="ident">VirtualKeyCode</span>::<span class="ident">Z</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">25</span>,
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="op">-</span><span class="number">1</span>,
     }
 }
 
 <span class="comment">// Since num::clamp is still experimental, this is a simple integer clamper.</span>
-<span class="kw">fn</span> <span class="ident">iclamp</span>(<span class="ident">val</span>: <span class="ident">i32</span>, <span class="ident">min</span>: <span class="ident">i32</span>, <span class="ident">max</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+<span class="kw">fn</span> <span class="ident">iclamp</span>(<span class="ident">val</span>: <span class="ident">i32</span>, <span class="ident">min</span>: <span class="ident">i32</span>, <span class="ident">max</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="ident">i32</span>::<span class="ident">max</span>(<span class="ident">min</span>, <span class="ident">i32</span>::<span class="ident">min</span>(<span class="ident">val</span>, <span class="ident">max</span>))
 }
 
@@ -2217,9 +2219,9 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="comment">// Tests that we make an RGB triplet at defaults and it is black.</span>
     <span class="kw">fn</span> <span class="ident">test_iclamp</span>() {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iclamp</span>(<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>) <span class="op">==</span> <span class="number">1</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iclamp</span>(<span class="number">5</span>, <span class="number">0</span>, <span class="number">2</span>) <span class="op">==</span> <span class="number">2</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iclamp</span>(<span class="op">-</span><span class="number">5</span>, <span class="number">0</span>, <span class="number">2</span>) <span class="op">==</span> <span class="number">0</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iclamp</span>(<span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>) <span class="op">=</span><span class="op">=</span> <span class="number">1</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iclamp</span>(<span class="number">5</span>, <span class="number">0</span>, <span class="number">2</span>) <span class="op">=</span><span class="op">=</span> <span class="number">2</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iclamp</span>(<span class="op">-</span><span class="number">5</span>, <span class="number">0</span>, <span class="number">2</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span>);
     }
 }
 </pre></div>

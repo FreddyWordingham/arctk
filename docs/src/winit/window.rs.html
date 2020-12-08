@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/window.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>window.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../winit/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/window.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>window.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../winit/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -914,7 +916,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Window</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">fmtr</span>.<span class="ident">pad</span>(<span class="string">&quot;Window { .. }&quot;</span>)
     }
 }
@@ -946,7 +948,7 @@
     <span class="doccomment">/// by this function.  No other guarantees are made. This may be equal to a real `WindowId`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Passing this into a winit function will result in undefined behavior.**</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">dummy</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">dummy</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">WindowId</span>(<span class="ident">platform_impl</span>::<span class="ident">WindowId</span>::<span class="ident">dummy</span>())
     }
 }
@@ -962,7 +964,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">WindowBuilder</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmtr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">fmtr</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;WindowBuilder&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;window&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">window</span>)
             .<span class="ident">finish</span>()
@@ -1037,7 +1039,7 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">WindowAttributes</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">WindowAttributes</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WindowAttributes</span> {
         <span class="ident">WindowAttributes</span> {
             <span class="ident">inner_size</span>: <span class="prelude-val">None</span>,
             <span class="ident">min_inner_size</span>: <span class="prelude-val">None</span>,
@@ -1058,7 +1060,7 @@
 <span class="kw">impl</span> <span class="ident">WindowBuilder</span> {
     <span class="doccomment">/// Initializes a new `WindowBuilder` with default values.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Default</span>::<span class="ident">default</span>()
     }
 
@@ -1068,7 +1070,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_inner_size`]: crate::window::Window::set_inner_size</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">inner_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">size</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
@@ -1079,7 +1081,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_min_inner_size`]: crate::window::Window::set_min_inner_size</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_min_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">min_size</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_min_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">min_size</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">min_inner_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">min_size</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
@@ -1090,7 +1092,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_max_inner_size`]: crate::window::Window::set_max_inner_size</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_max_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">max_size</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_max_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">max_size</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">max_inner_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">max_size</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
@@ -1101,7 +1103,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_resizable`]: crate::window::Window::set_resizable</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_resizable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resizable</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_resizable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">resizable</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">resizable</span> <span class="op">=</span> <span class="ident">resizable</span>;
         <span class="self">self</span>
     }
@@ -1112,7 +1114,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_title`]: crate::window::Window::set_title</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_title</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_title</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">title</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">title</span> <span class="op">=</span> <span class="ident">title</span>.<span class="ident">into</span>();
         <span class="self">self</span>
     }
@@ -1123,7 +1125,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_fullscreen`]: crate::window::Window::set_fullscreen</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_fullscreen</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">monitor</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Fullscreen</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_fullscreen</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">monitor</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Fullscreen</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">fullscreen</span> <span class="op">=</span> <span class="ident">monitor</span>;
         <span class="self">self</span>
     }
@@ -1134,7 +1136,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_maximized`]: crate::window::Window::set_maximized</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_maximized</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">maximized</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_maximized</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">maximized</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">maximized</span> <span class="op">=</span> <span class="ident">maximized</span>;
         <span class="self">self</span>
     }
@@ -1145,14 +1147,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_visible`]: crate::window::Window::set_visible</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_visible</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">visible</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_visible</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">visible</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">visible</span> <span class="op">=</span> <span class="ident">visible</span>;
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets whether the background of the window should be transparent.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_transparent</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">transparent</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_transparent</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">transparent</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">transparent</span> <span class="op">=</span> <span class="ident">transparent</span>;
         <span class="self">self</span>
     }
@@ -1163,7 +1165,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_decorations`]: crate::window::Window::set_decorations</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_decorations</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">decorations</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_decorations</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">decorations</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">decorations</span> <span class="op">=</span> <span class="ident">decorations</span>;
         <span class="self">self</span>
     }
@@ -1174,7 +1176,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_always_on_top`]: crate::window::Window::set_always_on_top</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_always_on_top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">always_on_top</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_always_on_top</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">always_on_top</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">always_on_top</span> <span class="op">=</span> <span class="ident">always_on_top</span>;
         <span class="self">self</span>
     }
@@ -1185,7 +1187,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Window::set_window_icon`]: crate::window::Window::set_window_icon</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_window_icon</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">window_icon</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Icon</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_window_icon</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">window_icon</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Icon</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">window_icon</span> <span class="op">=</span> <span class="ident">window_icon</span>;
         <span class="self">self</span>
     }
@@ -1201,7 +1203,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">window_target</span>: <span class="kw-2">&amp;</span><span class="ident">EventLoopWindowTarget</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Window</span>, <span class="ident">OsError</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Window</span>, <span class="ident">OsError</span><span class="op">&gt;</span> {
         <span class="ident">platform_impl</span>::<span class="ident">Window</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">window_target</span>.<span class="ident">p</span>, <span class="self">self</span>.<span class="ident">window</span>, <span class="self">self</span>.<span class="ident">platform_specific</span>).<span class="ident">map</span>(
             <span class="op">|</span><span class="ident">window</span><span class="op">|</span> {
                 <span class="ident">window</span>.<span class="ident">request_redraw</span>();
@@ -1226,14 +1228,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`WindowBuilder::new().build(event_loop)`]: crate::window::WindowBuilder::build</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">event_loop</span>: <span class="kw-2">&amp;</span><span class="ident">EventLoopWindowTarget</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Window</span>, <span class="ident">OsError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="ident">event_loop</span>: <span class="kw-2">&amp;</span><span class="ident">EventLoopWindowTarget</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Window</span>, <span class="ident">OsError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">WindowBuilder</span>::<span class="ident">new</span>();
         <span class="ident">builder</span>.<span class="ident">build</span>(<span class="ident">event_loop</span>)
     }
 
     <span class="doccomment">/// Returns an identifier unique to the window.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">WindowId</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WindowId</span> {
         <span class="ident">WindowId</span>(<span class="self">self</span>.<span class="ident">window</span>.<span class="ident">id</span>())
     }
 
@@ -1254,7 +1256,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`contentScaleFactor`]: https://developer.apple.com/documentation/uikit/uiview/1622657-contentscalefactor?language=objc</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale_factor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale_factor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">scale_factor</span>()
     }
 
@@ -1295,7 +1297,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [safe area]: https://developer.apple.com/documentation/uikit/uiview/2891103-safeareainsets?language=objc</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PhysicalPosition</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">NotSupportedError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PhysicalPosition</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">NotSupportedError</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">inner_position</span>()
     }
 
@@ -1315,7 +1317,7 @@
     <span class="doccomment">///   window in the screen space coordinate system.</span>
     <span class="doccomment">/// - **Web:** Returns the top-left coordinates relative to the viewport.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PhysicalPosition</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">NotSupportedError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PhysicalPosition</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">NotSupportedError</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">outer_position</span>()
     }
 
@@ -1330,7 +1332,7 @@
     <span class="doccomment">///   window in the screen space coordinate system.</span>
     <span class="doccomment">/// - **Web:** Sets the top-left coordinates relative to the viewport.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_outer_position</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="ident">P</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_outer_position</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="ident">P</span>) {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">set_outer_position</span>(<span class="ident">position</span>.<span class="ident">into</span>())
     }
 
@@ -1346,7 +1348,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [safe area]: https://developer.apple.com/documentation/uikit/uiview/2891103-safeareainsets?language=objc</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">inner_size</span>()
     }
 
@@ -1361,7 +1363,7 @@
     <span class="doccomment">///   would mean for iOS.</span>
     <span class="doccomment">/// - **Web:** Sets the size of the canvas element.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">size</span>: <span class="ident">S</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">size</span>: <span class="ident">S</span>) {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">set_inner_size</span>(<span class="ident">size</span>.<span class="ident">into</span>())
     }
 
@@ -1377,7 +1379,7 @@
     <span class="doccomment">/// - **Web:** Returns the size of the canvas element. _Note: this returns the same value as</span>
     <span class="doccomment">///   `inner_size`._</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">outer_size</span>()
     }
 
@@ -1388,7 +1390,7 @@
     <span class="doccomment">/// - **iOS:** Has no effect.</span>
     <span class="doccomment">/// - **Web:** Has no effect.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_min_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">min_size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_min_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">min_size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">set_min_inner_size</span>(<span class="ident">min_size</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">into</span>()))
     }
 
@@ -1399,7 +1401,7 @@
     <span class="doccomment">/// - **iOS:** Has no effect.</span>
     <span class="doccomment">/// - **Web:** Has no effect.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_max_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">max_size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_max_inner_size</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Size</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">max_size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">set_max_inner_size</span>(<span class="ident">max_size</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">into</span>()))
     }
 }
@@ -1500,7 +1502,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// - **iOS:** Can only be called on the main thread.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fullscreen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Fullscreen</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fullscreen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Fullscreen</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">fullscreen</span>()
     }
 
@@ -1552,7 +1554,7 @@
     <span class="doccomment">/// **iOS:** Has no effect.</span>
     <span class="doccomment">/// - **Web:** Has no effect.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ime_position</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="ident">P</span>) {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ime_position</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="ident">P</span>) {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">set_ime_position</span>(<span class="ident">position</span>.<span class="ident">into</span>())
     }
 }
@@ -1577,7 +1579,7 @@
     <span class="doccomment">/// - **iOS:** Always returns an `Err`.</span>
     <span class="doccomment">/// - **Web:** Has no effect.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_position</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExternalError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_position</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">position</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExternalError</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">set_cursor_position</span>(<span class="ident">position</span>.<span class="ident">into</span>())
     }
 
@@ -1593,7 +1595,7 @@
     <span class="doccomment">/// - **iOS:** Always returns an Err.</span>
     <span class="doccomment">/// - **Web:** Has no effect.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_grab</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">grab</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExternalError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_grab</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">grab</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExternalError</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">set_cursor_grab</span>(<span class="ident">grab</span>)
     }
 
@@ -1624,7 +1626,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **iOS:** Can only be called on the main thread.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MonitorHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MonitorHandle</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">current_monitor</span>()
     }
 
@@ -1636,7 +1638,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **iOS:** Can only be called on the main thread.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">available_monitors</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">MonitorHandle</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">available_monitors</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">MonitorHandle</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">window</span>
             .<span class="ident">available_monitors</span>()
             .<span class="ident">into_iter</span>()
@@ -1651,7 +1653,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **iOS:** Can only be called on the main thread.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">primary_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MonitorHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">primary_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MonitorHandle</span> {
         <span class="ident">MonitorHandle</span> {
             <span class="ident">inner</span>: <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">primary_monitor</span>(),
         }
@@ -1659,7 +1661,7 @@
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">raw_window_handle</span>::<span class="ident">HasRawWindowHandle</span> <span class="kw">for</span> <span class="ident">Window</span> {
-    <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">raw_window_handle</span>::<span class="ident">RawWindowHandle</span> {
+    <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">raw_window_handle</span>::<span class="ident">RawWindowHandle</span> {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">raw_window_handle</span>()
     }
 }
@@ -1724,7 +1726,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">CursorIcon</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">CursorIcon</span>::<span class="ident">Default</span>
     }
 }

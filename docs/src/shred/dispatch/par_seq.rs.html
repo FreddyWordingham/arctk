@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shred-0.10.2/src/dispatch/par_seq.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>par_seq.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../shred/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shred-0.10.2/src/dispatch/par_seq.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>par_seq.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../shred/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -496,7 +498,7 @@
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">par</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">head</span>:<span class="ident">expr</span>, $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">expr</span> ,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">head</span>:<span class="ident">expr</span>, $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">expr</span> ,)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {
         {
             <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Par</span>::<span class="ident">new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">head</span>)
                 $( .<span class="ident">with</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>) )<span class="op">*</span>
@@ -522,7 +524,7 @@
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">seq</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">head</span>:<span class="ident">expr</span>, $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">expr</span> ,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">head</span>:<span class="ident">expr</span>, $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">expr</span> ,)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {
         {
             <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">Seq</span>::<span class="ident">new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">head</span>)
                 $( .<span class="ident">with</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>) )<span class="op">*</span>
@@ -546,13 +548,13 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> <span class="ident">Par</span><span class="op">&lt;</span><span class="ident">H</span>, <span class="ident">Nil</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a new `Par` struct, with the tail being a no-op.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">head</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">head</span>: <span class="ident">H</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Par</span> { <span class="ident">head</span>, <span class="ident">tail</span>: <span class="ident">Nil</span> }
     }
 
     <span class="doccomment">/// Adds `sys` as the second job and returns a new `Par` struct</span>
     <span class="doccomment">/// with the previous struct as head and a no-op tail.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">sys</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Par</span><span class="op">&lt;</span><span class="ident">Par</span><span class="op">&lt;</span><span class="ident">H</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Nil</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">sys</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Par</span><span class="op">&lt;</span><span class="ident">Par</span><span class="op">&lt;</span><span class="ident">H</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Nil</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">H</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">RunWithPool</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
         <span class="ident">T</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">RunWithPool</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
@@ -570,8 +572,8 @@
 
             <span class="kw">let</span> <span class="ident">read_write_intersections_safe</span> <span class="op">=</span>
                 <span class="op">!</span>(<span class="ident">check_intersection</span>(<span class="ident">writes</span>.<span class="ident">iter</span>(), <span class="ident">sys_reads</span>.<span class="ident">iter</span>())
-                    <span class="op">||</span> <span class="ident">check_intersection</span>(<span class="ident">writes</span>.<span class="ident">iter</span>(), <span class="ident">sys_writes</span>.<span class="ident">iter</span>())
-                    <span class="op">||</span> <span class="ident">check_intersection</span>(<span class="ident">reads</span>.<span class="ident">iter</span>(), <span class="ident">sys_writes</span>.<span class="ident">iter</span>()));
+                    <span class="op">|</span><span class="op">|</span> <span class="ident">check_intersection</span>(<span class="ident">writes</span>.<span class="ident">iter</span>(), <span class="ident">sys_writes</span>.<span class="ident">iter</span>())
+                    <span class="op">|</span><span class="op">|</span> <span class="ident">check_intersection</span>(<span class="ident">reads</span>.<span class="ident">iter</span>(), <span class="ident">sys_writes</span>.<span class="ident">iter</span>()));
 
             <span class="macro">debug_assert</span><span class="macro">!</span>(
                 <span class="ident">read_write_intersections_safe</span>,
@@ -677,7 +679,7 @@
     <span class="doccomment">/// Creates a new `ParSeq` dispatcher.</span>
     <span class="doccomment">/// `run` is usually created by using the `par!` / `seq!`</span>
     <span class="doccomment">/// macros.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">run</span>: <span class="ident">T</span>, <span class="ident">pool</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">run</span>: <span class="ident">T</span>, <span class="ident">pool</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">ParSeq</span> { <span class="ident">run</span>, <span class="ident">pool</span> }
     }
 
@@ -776,8 +778,8 @@
         <span class="kw">let</span> <span class="ident">head</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">head</span>;
         <span class="kw">let</span> <span class="ident">tail</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">tail</span>;
 
-        <span class="kw">let</span> <span class="ident">head</span> <span class="op">=</span> <span class="kw">move</span> <span class="op">||</span> <span class="ident">head</span>.<span class="ident">run</span>(<span class="ident">world</span>, <span class="ident">pool</span>);
-        <span class="kw">let</span> <span class="ident">tail</span> <span class="op">=</span> <span class="kw">move</span> <span class="op">||</span> <span class="ident">tail</span>.<span class="ident">run</span>(<span class="ident">world</span>, <span class="ident">pool</span>);
+        <span class="kw">let</span> <span class="ident">head</span> <span class="op">=</span> <span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="ident">head</span>.<span class="ident">run</span>(<span class="ident">world</span>, <span class="ident">pool</span>);
+        <span class="kw">let</span> <span class="ident">tail</span> <span class="op">=</span> <span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="ident">tail</span>.<span class="ident">run</span>(<span class="ident">world</span>, <span class="ident">pool</span>);
 
         <span class="kw">if</span> <span class="ident">pool</span>.<span class="ident">current_thread_index</span>().<span class="ident">is_none</span>() {
             <span class="ident">pool</span>.<span class="ident">join</span>(<span class="ident">head</span>, <span class="ident">tail</span>);
@@ -807,13 +809,13 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> <span class="ident">Seq</span><span class="op">&lt;</span><span class="ident">H</span>, <span class="ident">Nil</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a new `Seq` struct, with the tail being a no-op.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">head</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">head</span>: <span class="ident">H</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Seq</span> { <span class="ident">head</span>, <span class="ident">tail</span>: <span class="ident">Nil</span> }
     }
 
     <span class="doccomment">/// Adds `sys` as the second job and returns a new `Seq` struct</span>
     <span class="doccomment">/// with the previous struct as head and a no-op tail.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">sys</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Seq</span><span class="op">&lt;</span><span class="ident">Seq</span><span class="op">&lt;</span><span class="ident">H</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Nil</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">sys</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Seq</span><span class="op">&lt;</span><span class="ident">Seq</span><span class="op">&lt;</span><span class="ident">H</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Nil</span><span class="op">&gt;</span> {
         <span class="ident">Seq</span> {
             <span class="ident">head</span>: <span class="ident">Seq</span> {
                 <span class="ident">head</span>: <span class="self">self</span>.<span class="ident">head</span>,
@@ -855,7 +857,7 @@
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::{<span class="ident">atomic</span>::<span class="kw-2">*</span>, <span class="ident">Arc</span>};
 
-    <span class="kw">fn</span> <span class="ident">new_tp</span>() <span class="op">-&gt;</span> <span class="ident">ThreadPool</span> {
+    <span class="kw">fn</span> <span class="ident">new_tp</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ThreadPool</span> {
         <span class="kw">use</span> <span class="ident">rayon</span>::<span class="ident">ThreadPoolBuilder</span>;
 
         <span class="ident">ThreadPoolBuilder</span>::<span class="ident">new</span>().<span class="ident">build</span>().<span class="ident">unwrap</span>()
@@ -865,7 +867,7 @@
     <span class="kw">fn</span> <span class="ident">nested_joins</span>() {
         <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="ident">new_tp</span>();
 
-        <span class="ident">pool</span>.<span class="ident">join</span>(<span class="op">||</span> <span class="ident">join</span>(<span class="op">||</span> <span class="ident">join</span>(<span class="op">||</span> <span class="ident">join</span>(<span class="op">||</span> (), <span class="op">||</span> ()), <span class="op">||</span> ()), <span class="op">||</span> ()), <span class="op">||</span> ());
+        <span class="ident">pool</span>.<span class="ident">join</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">join</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">join</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">join</span>(<span class="op">|</span><span class="op">|</span> (), <span class="op">|</span><span class="op">|</span> ()), <span class="op">|</span><span class="op">|</span> ()), <span class="op">|</span><span class="op">|</span> ()), <span class="op">|</span><span class="op">|</span> ());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

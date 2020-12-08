@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shrev-1.1.1/src/storage.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>storage.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../shrev/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shrev-1.1.1/src/storage.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>storage.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../shrev/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -787,11 +789,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">CircularIndex</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">index</span>: <span class="ident">usize</span>, <span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">index</span>: <span class="ident">usize</span>, <span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">CircularIndex</span> { <span class="ident">index</span>, <span class="ident">size</span> }
     }
 
-    <span class="kw">fn</span> <span class="ident">at_end</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">at_end</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">CircularIndex</span> {
             <span class="ident">index</span>: <span class="ident">size</span> <span class="op">-</span> <span class="number">1</span>,
             <span class="ident">size</span>,
@@ -801,26 +803,26 @@
     <span class="doccomment">/// A magic value (!0).</span>
     <span class="doccomment">/// This value gets set when calling `step` and we reached</span>
     <span class="doccomment">/// the end.</span>
-    <span class="kw">fn</span> <span class="ident">magic</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">magic</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">CircularIndex</span>::<span class="ident">new</span>(<span class="op">!</span><span class="number">0</span>, <span class="ident">size</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">is_magic</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">index</span> <span class="op">==</span> <span class="op">!</span><span class="number">0</span>
+    <span class="kw">fn</span> <span class="ident">is_magic</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">index</span> <span class="op">=</span><span class="op">=</span> <span class="op">!</span><span class="number">0</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">step</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">inclusive_end</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">step</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">inclusive_end</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">index</span> {
-            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">==</span> <span class="op">!</span><span class="number">0</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">==</span> <span class="ident">inclusive_end</span> <span class="op">=&gt;</span> {
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="op">!</span><span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+            <span class="ident">x</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">inclusive_end</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">x</span>);
                 <span class="self">self</span>.<span class="ident">index</span> <span class="op">=</span> <span class="op">!</span><span class="number">0</span>;
 
                 <span class="ident">r</span>
             }
-            <span class="ident">x</span> <span class="op">=&gt;</span> {
+            <span class="ident">x</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">x</span>);
-                <span class="kw-2">*</span><span class="self">self</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="kw-2">*</span><span class="self">self</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
 
                 <span class="ident">r</span>
             }
@@ -831,7 +833,7 @@
 <span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CircularIndex</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">usize</span>;
 
-    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         (<span class="self">self</span>.<span class="ident">index</span> <span class="op">+</span> <span class="ident">rhs</span>) <span class="op">%</span> <span class="self">self</span>.<span class="ident">size</span>
     }
 }
@@ -845,7 +847,7 @@
 <span class="kw">impl</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CircularIndex</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">usize</span>;
 
-    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         (<span class="self">self</span>.<span class="ident">size</span> <span class="op">-</span> <span class="ident">rhs</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">index</span>) <span class="op">%</span> <span class="self">self</span>.<span class="ident">size</span>
     }
 }
@@ -862,7 +864,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Data</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">Data</span> {
             <span class="ident">data</span>: <span class="macro">vec</span><span class="macro">!</span>[],
             <span class="ident">uninitialized</span>: <span class="number">0</span>,
@@ -877,7 +879,7 @@
         <span class="ident">data</span>
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
         <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked</span>(<span class="ident">index</span>)
     }
 
@@ -886,7 +888,7 @@
             <span class="comment">// There is no element stored under `cursor`</span>
             <span class="comment">// -&gt; do not drop anything!</span>
             <span class="ident">ptr</span>::<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">cursor</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">elem</span>);
-            <span class="self">self</span>.<span class="ident">uninitialized</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="self">self</span>.<span class="ident">uninitialized</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         } <span class="kw">else</span> {
             <span class="comment">// We can safely drop this, it&#39;s initialized.</span>
             <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">cursor</span>) <span class="op">=</span> <span class="ident">elem</span>;
@@ -896,7 +898,7 @@
     <span class="doccomment">/// `cursor` is the first position that gets moved to the back,</span>
     <span class="doccomment">/// free memory will be created between `cursor - 1` and `cursor`.</span>
     <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">grow</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cursor</span>: <span class="ident">usize</span>, <span class="ident">by</span>: <span class="ident">usize</span>) {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">by</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">by</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>());
 
         <span class="comment">// Calculate how many elements we need to move</span>
         <span class="kw">let</span> <span class="ident">to_move</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">cursor</span>;
@@ -913,7 +915,7 @@
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>().<span class="ident">offset</span>((<span class="ident">cursor</span> <span class="op">+</span> <span class="ident">by</span>) <span class="kw">as</span> <span class="ident">isize</span>);
         <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">src</span>, <span class="ident">dst</span>, <span class="ident">to_move</span>);
 
-        <span class="self">self</span>.<span class="ident">uninitialized</span> <span class="op">+=</span> <span class="ident">by</span>;
+        <span class="self">self</span>.<span class="ident">uninitialized</span> <span class="op">+</span><span class="op">=</span> <span class="ident">by</span>;
     }
 
     <span class="doccomment">/// Called when dropping the ring buffer.</span>
@@ -923,7 +925,7 @@
 
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">cursor</span>.<span class="ident">step</span>(<span class="ident">end</span>) {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">uninitialized</span> <span class="op">&gt;</span> <span class="number">0</span> {
-                <span class="self">self</span>.<span class="ident">uninitialized</span> <span class="op">-=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">uninitialized</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
             } <span class="kw">else</span> {
                 <span class="ident">ptr</span>::<span class="ident">drop_in_place</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>);
             }
@@ -932,13 +934,13 @@
         <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">set_len</span>(<span class="number">0</span>);
     }
 
-    <span class="kw">fn</span> <span class="ident">num_initialized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">num_initialized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">uninitialized</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Debug</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Data</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Data&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;num_initialized&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">num_initialized</span>())
             .<span class="ident">field</span>(<span class="string">&quot;num_uninitialized&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">uninitialized</span>)
@@ -957,25 +959,25 @@
         <span class="self">self</span>.<span class="ident">last_index</span> <span class="op">=</span> <span class="op">!</span><span class="number">0</span>;
     }
 
-    <span class="kw">fn</span> <span class="ident">active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">last_index</span> <span class="op">!=</span> <span class="op">!</span><span class="number">0</span>
+    <span class="kw">fn</span> <span class="ident">active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">last_index</span> <span class="op">!</span><span class="op">=</span> <span class="op">!</span><span class="number">0</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">distance_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">last</span>: <span class="ident">CircularIndex</span>, <span class="ident">current_gen</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">distance_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">last</span>: <span class="ident">CircularIndex</span>, <span class="ident">current_gen</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="ident">CircularIndex</span> {
             <span class="ident">index</span>: <span class="self">self</span>.<span class="ident">last_index</span>,
             <span class="ident">size</span>: <span class="ident">last</span>.<span class="ident">size</span>,
         };
 
         <span class="kw">match</span> <span class="ident">this</span> <span class="op">-</span> <span class="ident">last</span>.<span class="ident">index</span> {
-            <span class="number">0</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">generation</span> <span class="op">==</span> <span class="ident">current_gen</span> <span class="op">=&gt;</span> <span class="ident">last</span>.<span class="ident">size</span>,
-            <span class="ident">x</span> <span class="op">=&gt;</span> <span class="ident">x</span>,
+            <span class="number">0</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">generation</span> <span class="op">=</span><span class="op">=</span> <span class="ident">current_gen</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">last</span>.<span class="ident">size</span>,
+            <span class="ident">x</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">x</span>,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">needs_shift</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">last_index</span>: <span class="ident">usize</span>, <span class="ident">current_gen</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">needs_shift</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">last_index</span>: <span class="ident">usize</span>, <span class="ident">current_gen</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">last_index</span> <span class="op">&gt;</span> <span class="ident">last_index</span>
-            <span class="op">||</span> (<span class="self">self</span>.<span class="ident">last_index</span> <span class="op">==</span> <span class="ident">last_index</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">generation</span> <span class="op">!=</span> <span class="ident">current_gen</span>)
+            <span class="op">|</span><span class="op">|</span> (<span class="self">self</span>.<span class="ident">last_index</span> <span class="op">=</span><span class="op">=</span> <span class="ident">last_index</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">generation</span> <span class="op">!</span><span class="op">=</span> <span class="ident">current_gen</span>)
     }
 }
 
@@ -997,7 +999,7 @@
     <span class="ident">marker</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">T</span>]<span class="op">&gt;</span>,
     <span class="ident">reference</span>: <span class="ident">Reference</span>,
     <span class="comment">// stupid way to make this `Sync`</span>
-    <span class="ident">drop_notifier</span>: <span class="ident">NoSharedAccess</span><span class="op">&lt;</span><span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">drop_notifier</span>: <span class="ident">NoSharedAccess</span><span class="op">&lt;</span><span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
@@ -1010,38 +1012,38 @@
 <span class="kw">struct</span> <span class="ident">ReaderMeta</span> {
     <span class="doccomment">/// Free ids</span>
     <span class="ident">free</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
-    <span class="ident">readers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">readers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">Reader</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ReaderMeta</span> {
-    <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Default</span>::<span class="ident">default</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">reader</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">reader</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">readers</span>.<span class="ident">get</span>(<span class="ident">id</span>.<span class="ident">id</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">r</span>.<span class="ident">get</span>() })
     }
 
-    <span class="kw">fn</span> <span class="ident">reader_exclusive</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span> {
+    <span class="kw">fn</span> <span class="ident">reader_exclusive</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Reader</span> {
         <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">readers</span>[<span class="ident">id</span>].<span class="ident">get</span>() }
     }
 
-    <span class="kw">fn</span> <span class="ident">has_reader</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">has_reader</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">readers</span>
             .<span class="ident">iter</span>()
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">r</span>.<span class="ident">get</span>() })
             .<span class="ident">any</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">active</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">alloc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">last_index</span>: <span class="ident">usize</span>, <span class="ident">generation</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">alloc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">last_index</span>: <span class="ident">usize</span>, <span class="ident">generation</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">free</span>.<span class="ident">pop</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">id</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">id</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="self">self</span>.<span class="ident">reader_exclusive</span>(<span class="ident">id</span>).<span class="ident">last_index</span> <span class="op">=</span> <span class="ident">last_index</span>;
                 <span class="self">self</span>.<span class="ident">reader_exclusive</span>(<span class="ident">id</span>).<span class="ident">generation</span> <span class="op">=</span> <span class="ident">generation</span>;
 
                 <span class="ident">id</span>
             }
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">readers</span>.<span class="ident">len</span>();
                 <span class="self">self</span>.<span class="ident">readers</span>.<span class="ident">push</span>(<span class="ident">UnsafeCell</span>::<span class="ident">new</span>(<span class="ident">Reader</span> {
                     <span class="ident">generation</span>,
@@ -1059,7 +1061,7 @@
     }
 
     <span class="comment">// This needs to be mutable since `readers` might be borrowed in `reader`!</span>
-    <span class="kw">fn</span> <span class="ident">nearest_index</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">last</span>: <span class="ident">CircularIndex</span>, <span class="ident">current_gen</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">nearest_index</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">last</span>: <span class="ident">CircularIndex</span>, <span class="ident">current_gen</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Reader</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">readers</span>
             .<span class="ident">iter</span>()
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">reader</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">reader</span>.<span class="ident">get</span>() })
@@ -1075,7 +1077,7 @@
             }
 
             <span class="kw">if</span> <span class="ident">reader</span>.<span class="ident">needs_shift</span>(<span class="ident">last_index</span>, <span class="ident">current_gen</span>) {
-                <span class="ident">reader</span>.<span class="ident">last_index</span> <span class="op">+=</span> <span class="ident">grow_by</span>;
+                <span class="ident">reader</span>.<span class="ident">last_index</span> <span class="op">+</span><span class="op">=</span> <span class="ident">grow_by</span>;
             }
         }
     }
@@ -1089,8 +1091,8 @@
     <span class="ident">available</span>: <span class="ident">usize</span>,
     <span class="ident">last_index</span>: <span class="ident">CircularIndex</span>,
     <span class="ident">data</span>: <span class="ident">Data</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
-    <span class="ident">free_rx</span>: <span class="ident">NoSharedAccess</span><span class="op">&lt;</span><span class="ident">Receiver</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;&gt;</span>,
-    <span class="ident">free_tx</span>: <span class="ident">NoSharedAccess</span><span class="op">&lt;</span><span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">free_rx</span>: <span class="ident">NoSharedAccess</span><span class="op">&lt;</span><span class="ident">Receiver</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">free_tx</span>: <span class="ident">NoSharedAccess</span><span class="op">&lt;</span><span class="ident">Sender</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">generation</span>: <span class="ident">Wrapping</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
     <span class="ident">instance_id</span>: <span class="ident">InstanceId</span>,
     <span class="ident">meta</span>: <span class="ident">ReaderMeta</span>,
@@ -1098,7 +1100,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">RingBuffer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new ring buffer with the given max size.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">size</span> <span class="op">&gt;</span> <span class="number">1</span>);
 
         <span class="kw">let</span> (<span class="ident">free_tx</span>, <span class="ident">free_rx</span>) <span class="op">=</span> <span class="ident">mpsc</span>::<span class="ident">channel</span>();
@@ -1131,10 +1133,10 @@
                 <span class="kw">unsafe</span> {
                     <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">put</span>(<span class="self">self</span>.<span class="ident">last_index</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">element</span>);
                 }
-                <span class="self">self</span>.<span class="ident">last_index</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="self">self</span>.<span class="ident">last_index</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
-            <span class="self">self</span>.<span class="ident">available</span> <span class="op">-=</span> <span class="ident">len</span>;
-            <span class="self">self</span>.<span class="ident">generation</span> <span class="op">+=</span> <span class="ident">Wrapping</span>(<span class="number">1</span>);
+            <span class="self">self</span>.<span class="ident">available</span> <span class="op">-</span><span class="op">=</span> <span class="ident">len</span>;
+            <span class="self">self</span>.<span class="ident">generation</span> <span class="op">+</span><span class="op">=</span> <span class="ident">Wrapping</span>(<span class="number">1</span>);
         }
     }
 
@@ -1144,7 +1146,7 @@
     }
 
     <span class="comment">// Checks if any reader would observe an additional event.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">would_write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">would_write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">maintain</span>();
 
         <span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">has_reader</span>()
@@ -1154,7 +1156,7 @@
     <span class="doccomment">/// Does nothing if there&#39;s enough space, grows the buffer otherwise.</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ensure_additional</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">num</span>: <span class="ident">usize</span>) {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">available</span> <span class="op">&gt;=</span> <span class="ident">num</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">available</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">num</span> {
             <span class="kw">return</span>;
         }
 
@@ -1165,17 +1167,17 @@
     <span class="kw">fn</span> <span class="ident">ensure_additional_slow</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">num</span>: <span class="ident">usize</span>) {
         <span class="self">self</span>.<span class="ident">maintain</span>();
         <span class="kw">let</span> <span class="ident">left</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">nearest_index</span>(<span class="self">self</span>.<span class="ident">last_index</span>, <span class="self">self</span>.<span class="ident">generation</span>.<span class="number">0</span>) {
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="self">self</span>.<span class="ident">available</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">last_index</span>.<span class="ident">size</span>;
 
                 <span class="kw">return</span>;
             }
-            <span class="prelude-val">Some</span>(<span class="ident">reader</span>) <span class="op">=&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">reader</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">reader</span>.<span class="ident">distance_from</span>(<span class="self">self</span>.<span class="ident">last_index</span>, <span class="self">self</span>.<span class="ident">generation</span>.<span class="number">0</span>);
 
                 <span class="self">self</span>.<span class="ident">available</span> <span class="op">=</span> <span class="ident">left</span>;
 
-                <span class="kw">if</span> <span class="ident">left</span> <span class="op">&gt;=</span> <span class="ident">num</span> {
+                <span class="kw">if</span> <span class="ident">left</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">num</span> {
                     <span class="kw">return</span>;
                 } <span class="kw">else</span> {
                     <span class="ident">left</span>
@@ -1188,7 +1190,7 @@
         <span class="comment">// Make sure size&#39; = 2^n * size</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">size</span> <span class="op">=</span> <span class="number">2</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">last_index</span>.<span class="ident">size</span>;
         <span class="kw">while</span> <span class="ident">size</span> <span class="op">&lt;</span> <span class="ident">min_target_size</span> {
-            <span class="ident">size</span> <span class="op">*=</span> <span class="number">2</span>;
+            <span class="ident">size</span> <span class="kw-2">*</span><span class="op">=</span> <span class="number">2</span>;
         }
 
         <span class="comment">// Calculate adjusted growth</span>
@@ -1219,7 +1221,7 @@
     }
 
     <span class="doccomment">/// Create a new reader id for this ring buffer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_reader_id</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_reader_id</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">maintain</span>();
         <span class="kw">let</span> <span class="ident">last_index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">last_index</span>.<span class="ident">index</span>;
         <span class="kw">let</span> <span class="ident">generation</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">generation</span>.<span class="number">0</span>;
@@ -1235,14 +1237,14 @@
 
     <span class="doccomment">/// Read data from the ring buffer, starting where the last read ended, and</span>
     <span class="doccomment">/// up to where the last element was written.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader_id</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">StorageIterator</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader_id</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">StorageIterator</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="comment">// Check if `reader_id` was actually created for this buffer.</span>
         <span class="comment">// This is very important as `reader_id` is a token allowing memory access,</span>
         <span class="comment">// and without this check a race could be caused by duplicate IDs.</span>
         <span class="self">self</span>.<span class="ident">instance_id</span>.<span class="ident">assert_eq</span>(<span class="kw-2">&amp;</span><span class="ident">reader_id</span>.<span class="ident">reference</span>);
 
         <span class="kw">let</span> (<span class="ident">last_read_index</span>, <span class="ident">gen</span>) <span class="op">=</span> {
-            <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">reader</span>(<span class="ident">reader_id</span>).<span class="ident">unwrap_or_else</span>(<span class="op">||</span> {
+            <span class="kw">let</span> <span class="ident">reader</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">meta</span>.<span class="ident">reader</span>(<span class="ident">reader_id</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> {
                 <span class="macro">panic</span><span class="macro">!</span>(
                     <span class="string">&quot;ReaderId not registered: {}\n\
                      This usually means that this ReaderId \
@@ -1258,8 +1260,8 @@
             (<span class="ident">old</span>, <span class="ident">old_gen</span>)
         };
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">CircularIndex</span>::<span class="ident">new</span>(<span class="ident">last_read_index</span>, <span class="self">self</span>.<span class="ident">last_index</span>.<span class="ident">size</span>);
-        <span class="ident">index</span> <span class="op">+=</span> <span class="number">1</span>;
-        <span class="kw">if</span> <span class="ident">gen</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">generation</span>.<span class="number">0</span> {
+        <span class="ident">index</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">if</span> <span class="ident">gen</span> <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">generation</span>.<span class="number">0</span> {
             <span class="comment">// It is empty</span>
             <span class="ident">index</span> <span class="op">=</span> <span class="ident">CircularIndex</span>::<span class="ident">magic</span>(<span class="ident">index</span>.<span class="ident">size</span>);
         }
@@ -1275,7 +1277,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Debug</span><span class="op">&gt;</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">RingBuffer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;RingBuffer&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;available&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">available</span>)
             .<span class="ident">field</span>(<span class="string">&quot;instance_id&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">instance_id</span>)
@@ -1305,14 +1307,14 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">StorageIterator</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">index</span>
             .<span class="ident">step</span>(<span class="self">self</span>.<span class="ident">end</span>)
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get</span>(<span class="ident">i</span>) })
     }
 
     <span class="comment">// Needed to fulfill contract of `ExactSizeIterator`</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>();
 
         (<span class="ident">len</span>, <span class="prelude-val">Some</span>(<span class="ident">len</span>))
@@ -1320,10 +1322,10 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span> <span class="kw">for</span> <span class="ident">StorageIterator</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">index</span>.<span class="ident">is_magic</span>() {
-            <span class="bool-val">true</span> <span class="op">=&gt;</span> <span class="number">0</span>,
-            <span class="bool-val">false</span> <span class="op">=&gt;</span> (<span class="ident">CircularIndex</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">end</span>, <span class="self">self</span>.<span class="ident">index</span>.<span class="ident">size</span>) <span class="op">-</span> <span class="self">self</span>.<span class="ident">index</span>.<span class="ident">index</span>) <span class="op">+</span> <span class="number">1</span>,
+            <span class="bool-val">true</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
+            <span class="bool-val">false</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">CircularIndex</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">end</span>, <span class="self">self</span>.<span class="ident">index</span>.<span class="ident">size</span>) <span class="op">-</span> <span class="self">self</span>.<span class="ident">index</span>.<span class="ident">index</span>) <span class="op">+</span> <span class="number">1</span>,
         }
     }
 }
@@ -1367,7 +1369,7 @@
 
         <span class="ident">buffer</span>.<span class="ident">iter_write</span>(<span class="number">0</span>..<span class="number">4</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>(),
+            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>(),
             <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]
         );
     }
@@ -1393,7 +1395,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="ident">RingBuffer</span>::<span class="op">&lt;</span><span class="ident">Test</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="number">10</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reader_id</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">new_reader_id</span>();
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec</span>::<span class="op">&lt;</span><span class="ident">Test</span><span class="op">&gt;</span>::<span class="ident">default</span>(), <span class="ident">data</span>.<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>())
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec</span>::<span class="op">&lt;</span><span class="ident">Test</span><span class="op">&gt;</span>::<span class="ident">default</span>(), <span class="ident">data</span>.<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>())
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1402,7 +1404,7 @@
         <span class="ident">buffer</span>.<span class="ident">drain_vec_write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>(<span class="number">2</span>));
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reader_id</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">new_reader_id</span>();
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec</span>::<span class="op">&lt;</span><span class="ident">Test</span><span class="op">&gt;</span>::<span class="ident">default</span>(), <span class="ident">data</span>.<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>())
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Vec</span>::<span class="op">&lt;</span><span class="ident">Test</span><span class="op">&gt;</span>::<span class="ident">default</span>(), <span class="ident">data</span>.<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>())
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1412,12 +1414,12 @@
         <span class="ident">buffer</span>.<span class="ident">drain_vec_write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>(<span class="number">2</span>));
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">0</span> }, <span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">1</span> }],
-            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">Vec</span>::<span class="op">&lt;</span><span class="ident">Test</span><span class="op">&gt;</span>::<span class="ident">new</span>(),
-            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
     }
 
@@ -1434,7 +1436,7 @@
                 <span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">2</span> },
                 <span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">3</span> },
             ],
-            <span class="ident">data</span>.<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">data</span>.<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
     }
 
@@ -1442,14 +1444,14 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_send_sync</span>() {
         <span class="kw">trait</span> <span class="ident">SendSync</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> {
-            <span class="kw">fn</span> <span class="ident">is_send_sync</span>() <span class="op">-&gt;</span> <span class="ident">bool</span>;
+            <span class="kw">fn</span> <span class="ident">is_send_sync</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
         }
 
         <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SendSync</span> <span class="kw">for</span> <span class="ident">T</span>
         <span class="kw">where</span>
             <span class="ident">T</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>,
         {
-            <span class="kw">fn</span> <span class="ident">is_send_sync</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_send_sync</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
                 <span class="bool-val">true</span>
             }
         }
@@ -1487,7 +1489,7 @@
                 <span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">0</span> },
                 <span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">1</span> },
             ],
-            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
 
         <span class="ident">buffer</span>.<span class="ident">drain_vec_write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">events</span>(<span class="number">4</span>));
@@ -1501,7 +1503,7 @@
                 <span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">2</span> },
                 <span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">3</span> },
             ],
-            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
     }
 
@@ -1513,7 +1515,7 @@
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">0</span> }, <span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">1</span> }],
-            <span class="ident">data</span>.<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">data</span>.<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
     }
 
@@ -1526,8 +1528,8 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">None</span>, <span class="ident">data</span>.<span class="ident">next</span>());
     }
 
-    <span class="kw">fn</span> <span class="ident">events</span>(<span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Test</span><span class="op">&gt;</span> {
-        (<span class="number">0</span>..<span class="ident">n</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">Test</span> { <span class="ident">id</span>: <span class="ident">i</span> }).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+    <span class="kw">fn</span> <span class="ident">events</span>(<span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Test</span><span class="op">&gt;</span> {
+        (<span class="number">0</span>..<span class="ident">n</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">Test</span> { <span class="ident">id</span>: <span class="ident">i</span> }).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
     }
 }
 </pre></div>

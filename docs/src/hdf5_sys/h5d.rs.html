@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/hdf5-sys-0.7.0/src/h5d.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>h5d.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../hdf5_sys/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/hdf5-sys-0.7.0/src/h5d.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>h5d.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../hdf5_sys/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -306,7 +308,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5D_layout_t</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">H5D_layout_t</span>::<span class="ident">H5D_CONTIGUOUS</span>
     }
 }
@@ -327,7 +329,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5D_alloc_time_t</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">H5D_alloc_time_t</span>::<span class="ident">H5D_ALLOC_TIME_DEFAULT</span>
     }
 }
@@ -351,7 +353,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5D_fill_time_t</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">H5D_fill_time_t</span>::<span class="ident">H5D_FILL_TIME_IFSET</span>
     }
 }
@@ -366,7 +368,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5D_fill_value_t</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">H5D_fill_value_t</span>::<span class="ident">H5D_FILL_VALUE_DEFAULT</span>
     }
 }
@@ -409,7 +411,7 @@
         <span class="ident">ndim</span>: <span class="ident">c_uint</span>,
         <span class="ident">point</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">hsize_t</span>,
         <span class="ident">operator_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_8_11</span>)]</span>
@@ -418,7 +420,7 @@
         <span class="ident">src_buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
         <span class="ident">src_buf_bytes_used</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">size_t</span>,
         <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_8_11</span>)]</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">H5D_gather_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
@@ -426,49 +428,49 @@
         <span class="ident">dst_buf</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
         <span class="ident">dst_buf_bytes_used</span>: <span class="ident">size_t</span>,
         <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dcreate2</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">type_id</span>: <span class="ident">hid_t</span>, <span class="ident">space_id</span>: <span class="ident">hid_t</span>, <span class="ident">lcpl_id</span>: <span class="ident">hid_t</span>,
         <span class="ident">dcpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">dapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">hid_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hid_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dcreate_anon</span>(
         <span class="ident">file_id</span>: <span class="ident">hid_t</span>, <span class="ident">type_id</span>: <span class="ident">hid_t</span>, <span class="ident">space_id</span>: <span class="ident">hid_t</span>, <span class="ident">plist_id</span>: <span class="ident">hid_t</span>, <span class="ident">dapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">hid_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dopen2</span>(<span class="ident">file_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">dapl_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">hid_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dclose</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_space</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">hid_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_space_status</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">allocation</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">H5D_space_status_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_type</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">hid_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_create_plist</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">hid_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_access_plist</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">hid_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_storage_size</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">hsize_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_offset</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">haddr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hid_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dopen2</span>(<span class="ident">file_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">dapl_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hid_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dclose</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_space</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hid_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_space_status</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">allocation</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">H5D_space_status_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_type</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hid_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_create_plist</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hid_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_access_plist</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hid_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_storage_size</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hsize_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_offset</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">haddr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dread</span>(
         <span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">mem_type_id</span>: <span class="ident">hid_t</span>, <span class="ident">mem_space_id</span>: <span class="ident">hid_t</span>, <span class="ident">file_space_id</span>: <span class="ident">hid_t</span>,
         <span class="ident">plist_id</span>: <span class="ident">hid_t</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dwrite</span>(
         <span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">mem_type_id</span>: <span class="ident">hid_t</span>, <span class="ident">mem_space_id</span>: <span class="ident">hid_t</span>, <span class="ident">file_space_id</span>: <span class="ident">hid_t</span>,
         <span class="ident">plist_id</span>: <span class="ident">hid_t</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Diterate</span>(
         <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">type_id</span>: <span class="ident">hid_t</span>, <span class="ident">space_id</span>: <span class="ident">hid_t</span>, <span class="ident">op</span>: <span class="ident">H5D_operator_t</span>,
         <span class="ident">operator_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dvlen_reclaim</span>(
         <span class="ident">type_id</span>: <span class="ident">hid_t</span>, <span class="ident">space_id</span>: <span class="ident">hid_t</span>, <span class="ident">plist_id</span>: <span class="ident">hid_t</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dvlen_get_buf_size</span>(
         <span class="ident">dataset_id</span>: <span class="ident">hid_t</span>, <span class="ident">type_id</span>: <span class="ident">hid_t</span>, <span class="ident">space_id</span>: <span class="ident">hid_t</span>, <span class="ident">size</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dfill</span>(
         <span class="ident">fill</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>, <span class="ident">fill_type</span>: <span class="ident">hid_t</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">buf_type</span>: <span class="ident">hid_t</span>, <span class="ident">space</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dset_extent</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">size</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">hsize_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Ddebug</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dset_extent</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">size</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">hsize_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Ddebug</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_8_11</span>)]</span>
@@ -476,11 +478,11 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dscatter</span>(
         <span class="ident">op</span>: <span class="ident">H5D_scatter_func_t</span>, <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">type_id</span>: <span class="ident">hid_t</span>, <span class="ident">dst_space_id</span>: <span class="ident">hid_t</span>,
         <span class="ident">dst_buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dgather</span>(
         <span class="ident">src_space_id</span>: <span class="ident">hid_t</span>, <span class="ident">src_buf</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>, <span class="ident">type_id</span>: <span class="ident">hid_t</span>, <span class="ident">dst_buf_size</span>: <span class="ident">size_t</span>,
         <span class="ident">dst_buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">op</span>: <span class="ident">H5D_gather_func_t</span>, <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_10_0</span>)]</span>
@@ -507,7 +509,7 @@
     }
 
     <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5D_vds_view_t</span> {
-        <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="ident">H5D_vds_view_t</span>::<span class="ident">H5D_VDS_LAST_AVAILABLE</span>
         }
     }
@@ -519,14 +521,14 @@
             <span class="ident">dataset_id</span>: <span class="ident">hid_t</span>,
             <span class="ident">cur_dims</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>,
             <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-        ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+        ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
     <span class="op">&gt;</span>;
 
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dflush</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Drefresh</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dformat_convert</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_chunk_index_type</span>(<span class="ident">did</span>: <span class="ident">hid_t</span>, <span class="ident">idx_type</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">H5D_chunk_index_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dflush</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Drefresh</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dformat_convert</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_chunk_index_type</span>(<span class="ident">did</span>: <span class="ident">hid_t</span>, <span class="ident">idx_type</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">H5D_chunk_index_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     }
 }
 
@@ -537,11 +539,11 @@
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dread_chunk</span>(
         <span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">dxpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">offset</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">hsize_t</span>, <span class="ident">filters</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u32</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dwrite_chunk</span>(
         <span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">dxpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">filters</span>: <span class="ident">u32</span>, <span class="ident">offset</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">hsize_t</span>, <span class="ident">data_size</span>: <span class="ident">size_t</span>,
         <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_10_5</span>)]</span>
@@ -549,12 +551,12 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_chunk_info</span>(
         <span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">fspace_id</span>: <span class="ident">hid_t</span>, <span class="ident">index</span>: <span class="ident">hsize_t</span>, <span class="ident">offset</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>,
         <span class="ident">filter_mask</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uint</span>, <span class="ident">addr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">haddr_t</span>, <span class="ident">size</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_chunk_info_by_coord</span>(
         <span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">offset</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">hsize_t</span>, <span class="ident">filter_mask</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uint</span>, <span class="ident">addr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">haddr_t</span>,
         <span class="ident">size</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_num_chunks</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">fspace_id</span>: <span class="ident">hid_t</span>, <span class="ident">nchunks</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Dget_num_chunks</span>(<span class="ident">dset_id</span>: <span class="ident">hid_t</span>, <span class="ident">fspace_id</span>: <span class="ident">hid_t</span>, <span class="ident">nchunks</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "hdf5_sys";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/parking_lot-0.9.0/src/condvar.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>condvar.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../parking_lot/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/parking_lot-0.9.0/src/condvar.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>condvar.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../parking_lot/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -709,7 +711,7 @@
 <span class="kw">impl</span> <span class="ident">WaitTimeoutResult</span> {
     <span class="doccomment">/// Returns whether the wait was known to have timed out.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timed_out</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timed_out</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -775,7 +777,7 @@
     <span class="doccomment">/// Creates a new condition variable which is ready to be waited on and</span>
     <span class="doccomment">/// notified.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">Condvar</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Condvar</span> {
         <span class="ident">Condvar</span> { <span class="ident">state</span>: <span class="ident">AtomicPtr</span>::<span class="ident">new</span>(<span class="ident">ptr</span>::<span class="ident">null_mut</span>()) }
     }
 
@@ -803,7 +805,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">notify_one</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">notify_one</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="comment">// Nothing to do if there are no waiting threads</span>
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
         <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_null</span>() {
@@ -814,18 +816,18 @@
     }
 
     <span class="attribute">#[<span class="ident">cold</span>]</span>
-    <span class="kw">fn</span> <span class="ident">notify_one_slow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mutex</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RawMutex</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">notify_one_slow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mutex</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RawMutex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="comment">// Unpark one thread and requeue the rest onto the mutex</span>
             <span class="kw">let</span> <span class="ident">from</span> <span class="op">=</span> <span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>;
             <span class="kw">let</span> <span class="ident">to</span> <span class="op">=</span> <span class="ident">mutex</span> <span class="kw">as</span> <span class="ident">usize</span>;
-            <span class="kw">let</span> <span class="ident">validate</span> <span class="op">=</span> <span class="op">||</span> {
+            <span class="kw">let</span> <span class="ident">validate</span> <span class="op">=</span> <span class="op">|</span><span class="op">|</span> {
                 <span class="comment">// Make sure that our atomic state still points to the same</span>
                 <span class="comment">// mutex. If not then it means that all threads on the current</span>
                 <span class="comment">// mutex were woken up and a new waiting thread switched to a</span>
                 <span class="comment">// different mutex. In that case we can get away with doing</span>
                 <span class="comment">// nothing.</span>
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>) <span class="op">!=</span> <span class="ident">mutex</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>) <span class="op">!</span><span class="op">=</span> <span class="ident">mutex</span> {
                     <span class="kw">return</span> <span class="ident">RequeueOp</span>::<span class="ident">Abort</span>;
                 }
 
@@ -850,7 +852,7 @@
             };
             <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">parking_lot_core</span>::<span class="ident">unpark_requeue</span>(<span class="ident">from</span>, <span class="ident">to</span>, <span class="ident">validate</span>, <span class="ident">callback</span>);
 
-            <span class="ident">res</span>.<span class="ident">unparked_threads</span> <span class="op">+</span> <span class="ident">res</span>.<span class="ident">requeued_threads</span> <span class="op">!=</span> <span class="number">0</span>
+            <span class="ident">res</span>.<span class="ident">unparked_threads</span> <span class="op">+</span> <span class="ident">res</span>.<span class="ident">requeued_threads</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
         }
     }
 
@@ -864,7 +866,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// To wake up only one thread, see `notify_one()`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">notify_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">notify_all</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="comment">// Nothing to do if there are no waiting threads</span>
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
         <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_null</span>() {
@@ -875,18 +877,18 @@
     }
 
     <span class="attribute">#[<span class="ident">cold</span>]</span>
-    <span class="kw">fn</span> <span class="ident">notify_all_slow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mutex</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RawMutex</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">notify_all_slow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mutex</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">RawMutex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">unsafe</span> {
             <span class="comment">// Unpark one thread and requeue the rest onto the mutex</span>
             <span class="kw">let</span> <span class="ident">from</span> <span class="op">=</span> <span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>;
             <span class="kw">let</span> <span class="ident">to</span> <span class="op">=</span> <span class="ident">mutex</span> <span class="kw">as</span> <span class="ident">usize</span>;
-            <span class="kw">let</span> <span class="ident">validate</span> <span class="op">=</span> <span class="op">||</span> {
+            <span class="kw">let</span> <span class="ident">validate</span> <span class="op">=</span> <span class="op">|</span><span class="op">|</span> {
                 <span class="comment">// Make sure that our atomic state still points to the same</span>
                 <span class="comment">// mutex. If not then it means that all threads on the current</span>
                 <span class="comment">// mutex were woken up and a new waiting thread switched to a</span>
                 <span class="comment">// different mutex. In that case we can get away with doing</span>
                 <span class="comment">// nothing.</span>
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>) <span class="op">!=</span> <span class="ident">mutex</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>) <span class="op">!</span><span class="op">=</span> <span class="ident">mutex</span> {
                     <span class="kw">return</span> <span class="ident">RequeueOp</span>::<span class="ident">Abort</span>;
                 }
 
@@ -909,7 +911,7 @@
             <span class="kw">let</span> <span class="ident">callback</span> <span class="op">=</span> <span class="op">|</span><span class="ident">op</span>, <span class="ident">result</span>: <span class="ident">UnparkResult</span><span class="op">|</span> {
                 <span class="comment">// If we requeued threads to the mutex, mark it as having</span>
                 <span class="comment">// parked threads. The RequeueAll case is already handled above.</span>
-                <span class="kw">if</span> <span class="ident">op</span> <span class="op">==</span> <span class="ident">RequeueOp</span>::<span class="ident">UnparkOneRequeueRest</span> <span class="op">&amp;&amp;</span> <span class="ident">result</span>.<span class="ident">requeued_threads</span> <span class="op">!=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">op</span> <span class="op">=</span><span class="op">=</span> <span class="ident">RequeueOp</span>::<span class="ident">UnparkOneRequeueRest</span> <span class="op">&amp;&amp;</span> <span class="ident">result</span>.<span class="ident">requeued_threads</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                     (<span class="kw-2">*</span><span class="ident">mutex</span>).<span class="ident">mark_parked</span>();
                 }
                 <span class="ident">TOKEN_NORMAL</span>
@@ -966,13 +968,13 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">mutex_guard</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">MutexGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>,
         <span class="ident">timeout</span>: <span class="ident">Instant</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">WaitTimeoutResult</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WaitTimeoutResult</span> {
         <span class="self">self</span>.<span class="ident">wait_until_internal</span>(<span class="kw">unsafe</span> { <span class="ident">MutexGuard</span>::<span class="ident">mutex</span>(<span class="ident">mutex_guard</span>).<span class="ident">raw</span>() }, <span class="prelude-val">Some</span>(<span class="ident">timeout</span>))
     }
 
     <span class="comment">// This is a non-generic function to reduce the monomorphization cost of</span>
     <span class="comment">// using `wait_until`.</span>
-    <span class="kw">fn</span> <span class="ident">wait_until_internal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mutex</span>: <span class="kw-2">&amp;</span><span class="ident">RawMutex</span>, <span class="ident">timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Instant</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">WaitTimeoutResult</span> {
+    <span class="kw">fn</span> <span class="ident">wait_until_internal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mutex</span>: <span class="kw-2">&amp;</span><span class="ident">RawMutex</span>, <span class="ident">timeout</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Instant</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WaitTimeoutResult</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">result</span>;
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bad_mutex</span> <span class="op">=</span> <span class="bool-val">false</span>;
@@ -980,20 +982,20 @@
             {
                 <span class="kw">let</span> <span class="ident">addr</span> <span class="op">=</span> <span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>;
                 <span class="kw">let</span> <span class="ident">lock_addr</span> <span class="op">=</span> <span class="ident">mutex</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
-                <span class="kw">let</span> <span class="ident">validate</span> <span class="op">=</span> <span class="op">||</span> {
+                <span class="kw">let</span> <span class="ident">validate</span> <span class="op">=</span> <span class="op">|</span><span class="op">|</span> {
                     <span class="comment">// Ensure we don&#39;t use two different mutexes with the same</span>
                     <span class="comment">// Condvar at the same time. This is done while locked to</span>
                     <span class="comment">// avoid races with notify_one</span>
                     <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
                     <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">is_null</span>() {
                         <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">store</span>(<span class="ident">lock_addr</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
-                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">!=</span> <span class="ident">lock_addr</span> {
+                    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">state</span> <span class="op">!</span><span class="op">=</span> <span class="ident">lock_addr</span> {
                         <span class="ident">bad_mutex</span> <span class="op">=</span> <span class="bool-val">true</span>;
                         <span class="kw">return</span> <span class="bool-val">false</span>;
                     }
                     <span class="bool-val">true</span>
                 };
-                <span class="kw">let</span> <span class="ident">before_sleep</span> <span class="op">=</span> <span class="op">||</span> {
+                <span class="kw">let</span> <span class="ident">before_sleep</span> <span class="op">=</span> <span class="op">|</span><span class="op">|</span> {
                     <span class="comment">// Unlock the mutex before sleeping...</span>
                     <span class="ident">mutex</span>.<span class="ident">unlock</span>();
                 };
@@ -1001,7 +1003,7 @@
                     <span class="comment">// If we were requeued to a mutex, then we did not time out.</span>
                     <span class="comment">// We&#39;ll just park ourselves on the mutex again when we try</span>
                     <span class="comment">// to lock it later.</span>
-                    <span class="ident">requeued</span> <span class="op">=</span> <span class="ident">k</span> <span class="op">!=</span> <span class="ident">addr</span>;
+                    <span class="ident">requeued</span> <span class="op">=</span> <span class="ident">k</span> <span class="op">!</span><span class="op">=</span> <span class="ident">addr</span>;
 
                     <span class="comment">// If we were the last thread on the queue then we need to</span>
                     <span class="comment">// clear our state. This is normally done by the</span>
@@ -1028,13 +1030,13 @@
             }
 
             <span class="comment">// ... and re-lock it once we are done sleeping</span>
-            <span class="kw">if</span> <span class="ident">result</span> <span class="op">==</span> <span class="ident">ParkResult</span>::<span class="ident">Unparked</span>(<span class="ident">TOKEN_HANDOFF</span>) {
+            <span class="kw">if</span> <span class="ident">result</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ParkResult</span>::<span class="ident">Unparked</span>(<span class="ident">TOKEN_HANDOFF</span>) {
                 <span class="ident">deadlock</span>::<span class="ident">acquire_resource</span>(<span class="ident">mutex</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="ident">usize</span>);
             } <span class="kw">else</span> {
                 <span class="ident">mutex</span>.<span class="ident">lock</span>();
             }
 
-            <span class="ident">WaitTimeoutResult</span>(<span class="op">!</span>(<span class="ident">result</span>.<span class="ident">is_unparked</span>() <span class="op">||</span> <span class="ident">requeued</span>))
+            <span class="ident">WaitTimeoutResult</span>(<span class="op">!</span>(<span class="ident">result</span>.<span class="ident">is_unparked</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">requeued</span>))
         }
     }
 
@@ -1067,7 +1069,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">mutex_guard</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">MutexGuard</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>,
         <span class="ident">timeout</span>: <span class="ident">Duration</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">WaitTimeoutResult</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">WaitTimeoutResult</span> {
         <span class="kw">let</span> <span class="ident">deadline</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">to_deadline</span>(<span class="ident">timeout</span>);
         <span class="self">self</span>.<span class="ident">wait_until_internal</span>(<span class="kw">unsafe</span> { <span class="ident">MutexGuard</span>::<span class="ident">mutex</span>(<span class="ident">mutex_guard</span>).<span class="ident">raw</span>() }, <span class="ident">deadline</span>)
     }
@@ -1075,13 +1077,13 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Condvar</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Condvar</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Condvar</span> {
         <span class="ident">Condvar</span>::<span class="ident">new</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Condvar</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">pad</span>(<span class="string">&quot;Condvar { .. }&quot;</span>)
     }
 }
@@ -1109,7 +1111,7 @@
         <span class="kw">let</span> <span class="ident">c2</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">clone</span>();
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">lock</span>();
-        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">_g</span> <span class="op">=</span> <span class="ident">m2</span>.<span class="ident">lock</span>();
             <span class="ident">c2</span>.<span class="ident">notify_one</span>();
         });
@@ -1125,14 +1127,14 @@
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">N</span> {
             <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">clone</span>();
             <span class="kw">let</span> <span class="ident">tx</span> <span class="op">=</span> <span class="ident">tx</span>.<span class="ident">clone</span>();
-            <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+            <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
                 <span class="kw">let</span> <span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">lock</span>, <span class="kw-2">ref</span> <span class="ident">cond</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">data</span>;
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cnt</span> <span class="op">=</span> <span class="ident">lock</span>.<span class="ident">lock</span>();
-                <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">+=</span> <span class="number">1</span>;
-                <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">==</span> <span class="ident">N</span> {
+                <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+                <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">=</span><span class="op">=</span> <span class="ident">N</span> {
                     <span class="ident">tx</span>.<span class="ident">send</span>(()).<span class="ident">unwrap</span>();
                 }
-                <span class="kw">while</span> <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">!=</span> <span class="number">0</span> {
+                <span class="kw">while</span> <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                     <span class="ident">cond</span>.<span class="ident">wait</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cnt</span>);
                 }
                 <span class="ident">tx</span>.<span class="ident">send</span>(()).<span class="ident">unwrap</span>();
@@ -1160,7 +1162,7 @@
         <span class="kw">let</span> <span class="ident">c2</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">clone</span>();
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">lock</span>();
-        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">_g</span> <span class="op">=</span> <span class="ident">m2</span>.<span class="ident">lock</span>();
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">c2</span>.<span class="ident">notify_one</span>());
         });
@@ -1172,7 +1174,7 @@
         <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Mutex</span>::<span class="ident">new</span>(()));
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Condvar</span>::<span class="ident">new</span>());
 
-        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">_g</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">lock</span>();
             <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">c</span>.<span class="ident">notify_one</span>());
         });
@@ -1187,14 +1189,14 @@
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">N</span> {
             <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">clone</span>();
             <span class="kw">let</span> <span class="ident">tx</span> <span class="op">=</span> <span class="ident">tx</span>.<span class="ident">clone</span>();
-            <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+            <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
                 <span class="kw">let</span> <span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">lock</span>, <span class="kw-2">ref</span> <span class="ident">cond</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">data</span>;
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cnt</span> <span class="op">=</span> <span class="ident">lock</span>.<span class="ident">lock</span>();
-                <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">+=</span> <span class="number">1</span>;
-                <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">==</span> <span class="ident">N</span> {
+                <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+                <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">=</span><span class="op">=</span> <span class="ident">N</span> {
                     <span class="ident">tx</span>.<span class="ident">send</span>(()).<span class="ident">unwrap</span>();
                 }
-                <span class="kw">while</span> <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">!=</span> <span class="number">0</span> {
+                <span class="kw">while</span> <span class="kw-2">*</span><span class="ident">cnt</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
                     <span class="ident">cond</span>.<span class="ident">wait</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cnt</span>);
                 }
                 <span class="ident">tx</span>.<span class="ident">send</span>(()).<span class="ident">unwrap</span>();
@@ -1227,7 +1229,7 @@
         <span class="kw">let</span> <span class="ident">no_timeout</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">wait_for</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">g</span>, <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">1</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">no_timeout</span>.<span class="ident">timed_out</span>());
 
-        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">_g</span> <span class="op">=</span> <span class="ident">m2</span>.<span class="ident">lock</span>();
             <span class="ident">c2</span>.<span class="ident">notify_one</span>();
         });
@@ -1254,7 +1256,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">lock</span>();
         <span class="kw">let</span> <span class="ident">no_timeout</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">wait_until</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">g</span>, <span class="ident">Instant</span>::<span class="ident">now</span>() <span class="op">+</span> <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">1</span>));
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">no_timeout</span>.<span class="ident">timed_out</span>());
-        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">_g</span> <span class="op">=</span> <span class="ident">m2</span>.<span class="ident">lock</span>();
             <span class="ident">c2</span>.<span class="ident">notify_one</span>();
         });
@@ -1283,7 +1285,7 @@
 
         <span class="kw">let</span> (<span class="ident">tx</span>, <span class="ident">rx</span>) <span class="op">=</span> <span class="ident">channel</span>();
         <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">lock</span>();
-        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">m2</span>.<span class="ident">lock</span>();
             <span class="ident">tx</span>.<span class="ident">send</span>(()).<span class="ident">unwrap</span>();
             <span class="ident">c2</span>.<span class="ident">wait</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">g</span>);
@@ -1304,7 +1306,7 @@
         <span class="kw">let</span> <span class="ident">c2</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">clone</span>();
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">lock</span>();
-        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">_t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">_g</span> <span class="op">=</span> <span class="ident">m2</span>.<span class="ident">lock</span>();
             <span class="ident">c2</span>.<span class="ident">notify_one</span>();
         });
@@ -1326,7 +1328,7 @@
         <span class="kw">let</span> <span class="ident">m2</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">clone</span>();
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Condvar</span>::<span class="ident">new</span>());
         <span class="kw">let</span> <span class="ident">c2</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">clone</span>();
-        <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">m2</span>.<span class="ident">lock</span>();
             <span class="ident">c2</span>.<span class="ident">wait</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">g</span>);
         });
@@ -1349,7 +1351,7 @@
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">4</span> {
             <span class="kw">let</span> <span class="ident">locks</span> <span class="op">=</span> <span class="ident">locks</span>.<span class="ident">clone</span>();
             <span class="kw">let</span> <span class="ident">tx</span> <span class="op">=</span> <span class="ident">tx</span>.<span class="ident">clone</span>();
-            <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+            <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">guard</span> <span class="op">=</span> <span class="ident">locks</span>.<span class="number">0</span>.<span class="ident">lock</span>();
                 <span class="ident">locks</span>.<span class="number">1</span>.<span class="ident">wait</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>);
                 <span class="ident">locks</span>.<span class="number">1</span>.<span class="ident">wait_for</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">guard</span>, <span class="ident">Duration</span>::<span class="ident">from_millis</span>(<span class="number">1</span>));

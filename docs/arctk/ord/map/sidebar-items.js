@@ -1,0 +1,1 @@
+initSidebarItems({"type":[["Map","Map alias type."]]});

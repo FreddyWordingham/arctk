@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["ParametersBuilder","Parameter builder structure. Holds paths to data still on the disk."]]});

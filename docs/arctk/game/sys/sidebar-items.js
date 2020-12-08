@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["walk_left","Walk-movement system"]]});
+initSidebarItems({"mod":[["visibility","Visibility system"]]});

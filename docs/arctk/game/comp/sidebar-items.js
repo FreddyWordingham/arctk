@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["left_walker","Left-walking component."],["player","Player controllable component."],["position","Position component."],["renderable","Position component."]]});
+initSidebarItems({"mod":[["player","Player controllable component."],["position","Position component."],["renderable","Position component."],["viewshed","Observable area."]]});

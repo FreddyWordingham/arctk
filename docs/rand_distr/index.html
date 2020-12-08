@@ -1,14 +1,14 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `rand_distr` crate."><meta name="keywords" content="rust, rustlang, rust-lang, rand_distr"><title>rand_distr - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../rand_distr/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk.png' alt='logo'></div></a><p class='location'>Crate rand_distr</p><div class='block version'><p>Version 0.3.0</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all rand_distr's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'rand_distr', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/rand_distr/lib.rs.html#9-168' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>rand_distr</a></span></h1><div class='docblock'><p>Generating random samples from probability distributions.</p>
 <h2 id="re-exports" class="section-header"><a href="#re-exports">Re-exports</a></h2>
-<p>This crate is a super-set of the [<code>rand::distributions</code>] module. See the
-[<code>rand::distributions</code>] module documentation for an overview of the core
-[<code>Distribution</code>] trait and implementations.</p>
+<p>This crate is a super-set of the <a href="../rand/distributions/index.html" title="rand::distributions"><code>rand::distributions</code></a> module. See the
+<a href="../rand/distributions/index.html" title="rand::distributions"><code>rand::distributions</code></a> module documentation for an overview of the core
+<a href="../rand_distr/trait.Distribution.html" title="Distribution"><code>Distribution</code></a> trait and implementations.</p>
 <p>The following are re-exported:</p>
 <ul>
-<li>The [<code>Distribution</code>] trait and [<code>DistIter</code>] helper type</li>
-<li>The [<code>Standard</code>], [<code>Alphanumeric</code>], [<code>Uniform</code>], [<code>OpenClosed01</code>],
-[<code>Open01</code>], [<code>Bernoulli</code>], and [<code>WeightedIndex</code>] distributions</li>
+<li>The <a href="../rand_distr/trait.Distribution.html" title="Distribution"><code>Distribution</code></a> trait and <a href="../rand_distr/struct.DistIter.html" title="DistIter"><code>DistIter</code></a> helper type</li>
+<li>The <a href="../rand_distr/struct.Standard.html" title="Standard"><code>Standard</code></a>, <a href="../rand_distr/struct.Alphanumeric.html" title="Alphanumeric"><code>Alphanumeric</code></a>, <a href="../rand_distr/struct.Uniform.html" title="Uniform"><code>Uniform</code></a>, <a href="../rand_distr/struct.OpenClosed01.html" title="OpenClosed01"><code>OpenClosed01</code></a>,
+<a href="../rand_distr/struct.Open01.html" title="Open01"><code>Open01</code></a>, <a href="../rand_distr/struct.Bernoulli.html" title="Bernoulli"><code>Bernoulli</code></a>, and <a href="../rand_distr/struct.WeightedIndex.html" title="WeightedIndex"><code>WeightedIndex</code></a> distributions</li>
 </ul>
 <h2 id="distributions" class="section-header"><a href="#distributions">Distributions</a></h2>
 <p>This crate provides the following probability distributions:</p>
@@ -16,56 +16,56 @@
 <li>Related to real-valued quantities that grow linearly
 (e.g. errors, offsets):
 <ul>
-<li>[<code>Normal</code>] distribution, and [<code>StandardNormal</code>] as a primitive</li>
-<li>[<code>Cauchy</code>] distribution</li>
+<li><a href="../rand_distr/struct.Normal.html" title="Normal"><code>Normal</code></a> distribution, and <a href="../rand_distr/struct.StandardNormal.html" title="StandardNormal"><code>StandardNormal</code></a> as a primitive</li>
+<li><a href="../rand_distr/struct.Cauchy.html" title="Cauchy"><code>Cauchy</code></a> distribution</li>
 </ul>
 </li>
 <li>Related to Bernoulli trials (yes/no events, with a given probability):
 <ul>
-<li>[<code>Binomial</code>] distribution</li>
+<li><a href="../rand_distr/struct.Binomial.html" title="Binomial"><code>Binomial</code></a> distribution</li>
 </ul>
 </li>
 <li>Related to positive real-valued quantities that grow exponentially
 (e.g. prices, incomes, populations):
 <ul>
-<li>[<code>LogNormal</code>] distribution</li>
+<li><a href="../rand_distr/struct.LogNormal.html" title="LogNormal"><code>LogNormal</code></a> distribution</li>
 </ul>
 </li>
 <li>Related to the occurrence of independent events at a given rate:
 <ul>
-<li>[<code>Pareto</code>] distribution</li>
-<li>[<code>Poisson</code>] distribution</li>
-<li>[<code>Exp</code>]onential distribution, and [<code>Exp1</code>] as a primitive</li>
-<li>[<code>Weibull</code>] distribution</li>
+<li><a href="../rand_distr/struct.Pareto.html" title="Pareto"><code>Pareto</code></a> distribution</li>
+<li><a href="../rand_distr/struct.Poisson.html" title="Poisson"><code>Poisson</code></a> distribution</li>
+<li><a href="../rand_distr/struct.Exp.html" title="Exp"><code>Exp</code></a>onential distribution, and <a href="../rand_distr/struct.Exp1.html" title="Exp1"><code>Exp1</code></a> as a primitive</li>
+<li><a href="../rand_distr/struct.Weibull.html" title="Weibull"><code>Weibull</code></a> distribution</li>
 </ul>
 </li>
 <li>Gamma and derived distributions:
 <ul>
-<li>[<code>Gamma</code>] distribution</li>
-<li>[<code>ChiSquared</code>] distribution</li>
-<li>[<code>StudentT</code>] distribution</li>
-<li>[<code>FisherF</code>] distribution</li>
+<li><a href="../rand_distr/struct.Gamma.html" title="Gamma"><code>Gamma</code></a> distribution</li>
+<li><a href="../rand_distr/struct.ChiSquared.html" title="ChiSquared"><code>ChiSquared</code></a> distribution</li>
+<li><a href="../rand_distr/struct.StudentT.html" title="StudentT"><code>StudentT</code></a> distribution</li>
+<li><a href="../rand_distr/struct.FisherF.html" title="FisherF"><code>FisherF</code></a> distribution</li>
 </ul>
 </li>
 <li>Triangular distribution:
 <ul>
-<li>[<code>Beta</code>] distribution</li>
-<li>[<code>Triangular</code>] distribution</li>
+<li><a href="../rand_distr/struct.Beta.html" title="Beta"><code>Beta</code></a> distribution</li>
+<li><a href="../rand_distr/struct.Triangular.html" title="Triangular"><code>Triangular</code></a> distribution</li>
 </ul>
 </li>
 <li>Multivariate probability distributions
 <ul>
-<li>[<code>Dirichlet</code>] distribution</li>
-<li>[<code>UnitSphere</code>] distribution</li>
-<li>[<code>UnitBall</code>] distribution</li>
-<li>[<code>UnitCircle</code>] distribution</li>
-<li>[<code>UnitDisc</code>] distribution</li>
+<li><a href="../rand_distr/struct.Dirichlet.html" title="Dirichlet"><code>Dirichlet</code></a> distribution</li>
+<li><a href="../rand_distr/struct.UnitSphere.html" title="UnitSphere"><code>UnitSphere</code></a> distribution</li>
+<li><a href="../rand_distr/struct.UnitBall.html" title="UnitBall"><code>UnitBall</code></a> distribution</li>
+<li><a href="../rand_distr/struct.UnitCircle.html" title="UnitCircle"><code>UnitCircle</code></a> distribution</li>
+<li><a href="../rand_distr/struct.UnitDisc.html" title="UnitDisc"><code>UnitDisc</code></a> distribution</li>
 </ul>
 </li>
 <li>Misc. distributions
 <ul>
-<li>[<code>InverseGaussian</code>] distribution</li>
-<li>[<code>NormalInverseGaussian</code>] distribution</li>
+<li><a href="../rand_distr/struct.InverseGaussian.html" title="InverseGaussian"><code>InverseGaussian</code></a> distribution</li>
+<li><a href="../rand_distr/struct.NormalInverseGaussian.html" title="NormalInverseGaussian"><code>NormalInverseGaussian</code></a> distribution</li>
 </ul>
 </li>
 </ul>
@@ -135,9 +135,9 @@ item.</p>
 </td></tr><tr class='module-item'><td><a class="enum" href="enum.NormalError.html" title='rand_distr::NormalError enum'>NormalError</a></td><td class='docblock-short'><p>Error type returned from <code>Normal::new</code> and <code>LogNormal::new</code>.</p>
 </td></tr><tr class='module-item'><td><a class="enum" href="enum.NormalInverseGaussianError.html" title='rand_distr::NormalInverseGaussianError enum'>NormalInverseGaussianError</a></td><td class='docblock-short'><p>Error type returned from <code>NormalInverseGaussian::new</code></p>
 </td></tr><tr class='module-item'><td><a class="enum" href="enum.ParetoError.html" title='rand_distr::ParetoError enum'>ParetoError</a></td><td class='docblock-short'><p>Error type returned from <code>Pareto::new</code>.</p>
-</td></tr><tr class='module-item'><td><a class="enum" href="enum.PertError.html" title='rand_distr::PertError enum'>PertError</a></td><td class='docblock-short'><p>Error type returned from [<code>Pert</code>] constructors.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.PertError.html" title='rand_distr::PertError enum'>PertError</a></td><td class='docblock-short'><p>Error type returned from <a href="../rand_distr/struct.Pert.html" title="Pert"><code>Pert</code></a> constructors.</p>
 </td></tr><tr class='module-item'><td><a class="enum" href="enum.PoissonError.html" title='rand_distr::PoissonError enum'>PoissonError</a></td><td class='docblock-short'><p>Error type returned from <code>Poisson::new</code>.</p>
-</td></tr><tr class='module-item'><td><a class="enum" href="enum.TriangularError.html" title='rand_distr::TriangularError enum'>TriangularError</a></td><td class='docblock-short'><p>Error type returned from [<code>Triangular::new</code>].</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.TriangularError.html" title='rand_distr::TriangularError enum'>TriangularError</a></td><td class='docblock-short'><p>Error type returned from <a href="../rand_distr/struct.Triangular.html#method.new" title="Triangular::new"><code>Triangular::new</code></a>.</p>
 </td></tr><tr class='module-item'><td><a class="enum" href="enum.WeibullError.html" title='rand_distr::WeibullError enum'>WeibullError</a></td><td class='docblock-short'><p>Error type returned from <code>Weibull::new</code>.</p>
 </td></tr><tr class='module-item'><td><a class="enum" href="enum.WeightedError.html" title='rand_distr::WeightedError enum'>WeightedError</a></td><td class='docblock-short'><p>Error type returned from <code>WeightedIndex::new</code>.</p>
 </td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>

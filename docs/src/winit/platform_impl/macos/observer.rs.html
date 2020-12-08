@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/observer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>observer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/observer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>observer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -250,7 +252,7 @@
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">static</span> <span class="ident">kCFRunLoopCommonModes</span>: <span class="ident">CFRunLoopMode</span>;
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopGetMain</span>() <span class="op">-&gt;</span> <span class="ident">CFRunLoopRef</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopGetMain</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFRunLoopRef</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopWakeUp</span>(<span class="ident">rl</span>: <span class="ident">CFRunLoopRef</span>);
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopObserverCreate</span>(
@@ -260,7 +262,7 @@
         <span class="ident">order</span>: <span class="ident">CFIndex</span>,
         <span class="ident">callout</span>: <span class="ident">CFRunLoopObserverCallBack</span>,
         <span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">CFRunLoopObserverContext</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">CFRunLoopObserverRef</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFRunLoopObserverRef</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopAddObserver</span>(
         <span class="ident">rl</span>: <span class="ident">CFRunLoopRef</span>,
         <span class="ident">observer</span>: <span class="ident">CFRunLoopObserverRef</span>,
@@ -275,7 +277,7 @@
         <span class="ident">order</span>: <span class="ident">CFIndex</span>,
         <span class="ident">callout</span>: <span class="ident">CFRunLoopTimerCallBack</span>,
         <span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">CFRunLoopTimerContext</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">CFRunLoopTimerRef</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFRunLoopTimerRef</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopAddTimer</span>(<span class="ident">rl</span>: <span class="ident">CFRunLoopRef</span>, <span class="ident">timer</span>: <span class="ident">CFRunLoopTimerRef</span>, <span class="ident">mode</span>: <span class="ident">CFRunLoopMode</span>);
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopTimerSetNextFireDate</span>(<span class="ident">timer</span>: <span class="ident">CFRunLoopTimerRef</span>, <span class="ident">fireDate</span>: <span class="ident">CFAbsoluteTime</span>);
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopTimerInvalidate</span>(<span class="ident">time</span>: <span class="ident">CFRunLoopTimerRef</span>);
@@ -284,13 +286,13 @@
         <span class="ident">allocator</span>: <span class="ident">CFAllocatorRef</span>,
         <span class="ident">order</span>: <span class="ident">CFIndex</span>,
         <span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">CFRunLoopSourceContext</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">CFRunLoopSourceRef</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFRunLoopSourceRef</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopAddSource</span>(<span class="ident">rl</span>: <span class="ident">CFRunLoopRef</span>, <span class="ident">source</span>: <span class="ident">CFRunLoopSourceRef</span>, <span class="ident">mode</span>: <span class="ident">CFRunLoopMode</span>);
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopSourceInvalidate</span>(<span class="ident">source</span>: <span class="ident">CFRunLoopSourceRef</span>);
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRunLoopSourceSignal</span>(<span class="ident">source</span>: <span class="ident">CFRunLoopSourceRef</span>);
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFAbsoluteTimeGetCurrent</span>() <span class="op">-&gt;</span> <span class="ident">CFAbsoluteTime</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFAbsoluteTimeGetCurrent</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFAbsoluteTime</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">CFRelease</span>(<span class="ident">cftype</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>);
 }
 
@@ -319,11 +321,11 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_upper_case_globals</span>)]</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCFRunLoopEntry</span>: <span class="ident">CFRunLoopActivity</span> <span class="op">=</span> <span class="number">0</span>;
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_upper_case_globals</span>)]</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCFRunLoopBeforeWaiting</span>: <span class="ident">CFRunLoopActivity</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCFRunLoopBeforeWaiting</span>: <span class="ident">CFRunLoopActivity</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">5</span>;
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_upper_case_globals</span>)]</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCFRunLoopAfterWaiting</span>: <span class="ident">CFRunLoopActivity</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCFRunLoopAfterWaiting</span>: <span class="ident">CFRunLoopActivity</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>;
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_upper_case_globals</span>)]</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCFRunLoopExit</span>: <span class="ident">CFRunLoopActivity</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">7</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCFRunLoopExit</span>: <span class="ident">CFRunLoopActivity</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">7</span>;
 
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">CFRunLoopObserverCallBack</span> <span class="op">=</span>
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">observer</span>: <span class="ident">CFRunLoopObserverRef</span>, <span class="ident">activity</span>: <span class="ident">CFRunLoopActivity</span>, <span class="ident">info</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
@@ -337,11 +339,11 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CFRunLoopSourceContext</span> {
     <span class="kw">pub</span> <span class="ident">version</span>: <span class="ident">CFIndex</span>,
     <span class="kw">pub</span> <span class="ident">info</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    <span class="kw">pub</span> <span class="ident">retain</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">retain</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">release</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>)<span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">copyDescription</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">CFStringRef</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">equal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>, <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">ffi</span>::<span class="ident">Boolean</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">hash</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">CFHashCode</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">copyDescription</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFStringRef</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">equal</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>, <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">Boolean</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">hash</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFHashCode</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">schedule</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">CFRunLoopRef</span>, <span class="ident">CFRunLoopMode</span>)<span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">cancel</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">CFRunLoopRef</span>, <span class="ident">CFRunLoopMode</span>)<span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">perform</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)<span class="op">&gt;</span>,
@@ -355,13 +357,13 @@
 ) {
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_upper_case_globals</span>)]</span>
     <span class="kw">match</span> <span class="ident">activity</span> {
-        <span class="ident">kCFRunLoopAfterWaiting</span> <span class="op">=&gt;</span> {
+        <span class="ident">kCFRunLoopAfterWaiting</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="comment">//trace!(&quot;Triggered `CFRunLoopAfterWaiting`&quot;);</span>
             <span class="ident">AppState</span>::<span class="ident">wakeup</span>();
             <span class="comment">//trace!(&quot;Completed `CFRunLoopAfterWaiting`&quot;);</span>
         }
-        <span class="ident">kCFRunLoopEntry</span> <span class="op">=&gt;</span> <span class="macro">unimplemented</span><span class="macro">!</span>(), <span class="comment">// not expected to ever happen</span>
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+        <span class="ident">kCFRunLoopEntry</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unimplemented</span><span class="macro">!</span>(), <span class="comment">// not expected to ever happen</span>
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
     }
 }
 
@@ -374,20 +376,20 @@
 ) {
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_upper_case_globals</span>)]</span>
     <span class="kw">match</span> <span class="ident">activity</span> {
-        <span class="ident">kCFRunLoopBeforeWaiting</span> <span class="op">=&gt;</span> {
+        <span class="ident">kCFRunLoopBeforeWaiting</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="comment">//trace!(&quot;Triggered `CFRunLoopBeforeWaiting`&quot;);</span>
             <span class="ident">AppState</span>::<span class="ident">cleared</span>();
             <span class="comment">//trace!(&quot;Completed `CFRunLoopBeforeWaiting`&quot;);</span>
         }
-        <span class="ident">kCFRunLoopExit</span> <span class="op">=&gt;</span> (), <span class="comment">//unimplemented!(), // not expected to ever happen</span>
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+        <span class="ident">kCFRunLoopExit</span> <span class="op">=</span><span class="op">&gt;</span> (), <span class="comment">//unimplemented!(), // not expected to ever happen</span>
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
     }
 }
 
 <span class="kw">struct</span> <span class="ident">RunLoop</span>(<span class="ident">CFRunLoopRef</span>);
 
 <span class="kw">impl</span> <span class="ident">RunLoop</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">RunLoop</span>(<span class="ident">CFRunLoopGetMain</span>())
     }
 
@@ -439,7 +441,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">EventLoopWaker</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">EventLoopWaker</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EventLoopWaker</span> {
         <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">wakeup_main_loop</span>(<span class="ident">_timer</span>: <span class="ident">CFRunLoopTimerRef</span>, <span class="ident">_info</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) {}
         <span class="kw">unsafe</span> {
             <span class="comment">// Create a timer with a 0.1µs interval (1ns does not work) to mimic polling.</span>
@@ -471,7 +473,7 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">start_at</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">instant</span>: <span class="ident">Instant</span>) {
         <span class="kw">let</span> <span class="ident">now</span> <span class="op">=</span> <span class="ident">Instant</span>::<span class="ident">now</span>();
-        <span class="kw">if</span> <span class="ident">now</span> <span class="op">&gt;=</span> <span class="ident">instant</span> {
+        <span class="kw">if</span> <span class="ident">now</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">instant</span> {
             <span class="self">self</span>.<span class="ident">start</span>();
         } <span class="kw">else</span> {
             <span class="kw">unsafe</span> {

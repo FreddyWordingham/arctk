@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["basic","Determine the material contents of a given voxel."]]});

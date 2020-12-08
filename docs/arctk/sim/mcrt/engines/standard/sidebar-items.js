@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["standard","Simulate the life of a single photon."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ReactionLinker","Reaction linker."]]});

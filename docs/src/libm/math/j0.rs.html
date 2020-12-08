@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/libm-0.2.1/src/math/j0.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>j0.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../libm/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/libm-0.2.1/src/math/j0.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>j0.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../libm/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -483,7 +485,7 @@
 <span class="kw">const</span> <span class="ident">TPI</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">6.36619772367581382433e-01</span>; <span class="comment">/* 0x3FE45F30, 0x6DC9C883 */</span>
 
 <span class="comment">/* common method when |x|&gt;=2 */</span>
-<span class="kw">fn</span> <span class="ident">common</span>(<span class="ident">ix</span>: <span class="ident">u32</span>, <span class="ident">x</span>: <span class="ident">f64</span>, <span class="ident">y0</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">fn</span> <span class="ident">common</span>(<span class="ident">ix</span>: <span class="ident">u32</span>, <span class="ident">x</span>: <span class="ident">f64</span>, <span class="ident">y0</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="ident">s</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ss</span>: <span class="ident">f64</span>;
@@ -533,7 +535,7 @@
 <span class="kw">const</span> <span class="ident">S03</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">5.13546550207318111446e-07</span>; <span class="comment">/* 0x3EA13B54, 0xCE84D5A9 */</span>
 <span class="kw">const</span> <span class="ident">S04</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1.16614003333790000205e-09</span>; <span class="comment">/* 0x3E1408BC, 0xF4745D8F */</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">j0</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">j0</span>(<span class="kw-2">mut</span> <span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="ident">z</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="ident">s</span>: <span class="ident">f64</span>;
@@ -543,19 +545,19 @@
     <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
 
     <span class="comment">/* j0(+-inf)=0, j0(nan)=nan */</span>
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x7ff00000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x7ff00000</span> {
         <span class="kw">return</span> <span class="number">1.0</span> <span class="op">/</span> (<span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>);
     }
     <span class="ident">x</span> <span class="op">=</span> <span class="ident">fabs</span>(<span class="ident">x</span>);
 
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x40000000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x40000000</span> {
         <span class="comment">/* |x| &gt;= 2 */</span>
         <span class="comment">/* large ulp error near zeros: 2.4, 5.52, 8.6537,.. */</span>
         <span class="kw">return</span> <span class="ident">common</span>(<span class="ident">ix</span>, <span class="ident">x</span>, <span class="bool-val">false</span>);
     }
 
     <span class="comment">/* 1 - x*x/4 + x*x*R(x^2)/S(x^2) */</span>
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x3f200000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x3f200000</span> {
         <span class="comment">/* |x| &gt;= 2**-13 */</span>
         <span class="comment">/* up to 4ulp error close to 2 */</span>
         <span class="ident">z</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
@@ -567,7 +569,7 @@
     <span class="comment">/* 1 - x*x/4 */</span>
     <span class="comment">/* prevent underflow */</span>
     <span class="comment">/* inexact should be raised when x!=0, this is not done correctly */</span>
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x38000000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x38000000</span> {
         <span class="comment">/* |x| &gt;= 2**-127 */</span>
         <span class="ident">x</span> <span class="op">=</span> <span class="number">0.25</span> <span class="op">*</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
     }
@@ -586,7 +588,7 @@
 <span class="kw">const</span> <span class="ident">V03</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">2.59150851840457805467e-07</span>; <span class="comment">/* 0x3E91642D, 0x7FF202FD */</span>
 <span class="kw">const</span> <span class="ident">V04</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">4.41110311332675467403e-10</span>; <span class="comment">/* 0x3DFE5018, 0x3BD6D9EF */</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">y0</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">y0</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="ident">z</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="ident">u</span>: <span class="ident">f64</span>;
     <span class="kw">let</span> <span class="ident">v</span>: <span class="ident">f64</span>;
@@ -597,24 +599,24 @@
     <span class="ident">lx</span> <span class="op">=</span> <span class="ident">get_low_word</span>(<span class="ident">x</span>);
 
     <span class="comment">/* y0(nan)=nan, y0(&lt;0)=nan, y0(0)=-inf, y0(inf)=0 */</span>
-    <span class="kw">if</span> ((<span class="ident">ix</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>) <span class="op">|</span> <span class="ident">lx</span>) <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> ((<span class="ident">ix</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>) <span class="op">|</span> <span class="ident">lx</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
         <span class="kw">return</span> <span class="op">-</span><span class="number">1.0</span> <span class="op">/</span> <span class="number">0.0</span>;
     }
-    <span class="kw">if</span> (<span class="ident">ix</span> <span class="op">&gt;&gt;</span> <span class="number">31</span>) <span class="op">!=</span> <span class="number">0</span> {
+    <span class="kw">if</span> (<span class="ident">ix</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
         <span class="kw">return</span> <span class="number">0.0</span> <span class="op">/</span> <span class="number">0.0</span>;
     }
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x7ff00000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x7ff00000</span> {
         <span class="kw">return</span> <span class="number">1.0</span> <span class="op">/</span> <span class="ident">x</span>;
     }
 
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x40000000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x40000000</span> {
         <span class="comment">/* x &gt;= 2 */</span>
         <span class="comment">/* large ulp errors near zeros: 3.958, 7.086,.. */</span>
         <span class="kw">return</span> <span class="ident">common</span>(<span class="ident">ix</span>, <span class="ident">x</span>, <span class="bool-val">true</span>);
     }
 
     <span class="comment">/* U(x^2)/V(x^2) + (2/pi)*j0(x)*log(x) */</span>
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x3e400000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x3e400000</span> {
         <span class="comment">/* x &gt;= 2**-27 */</span>
         <span class="comment">/* large ulp error near the first zero, x ~= 0.89 */</span>
         <span class="ident">z</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">x</span>;
@@ -702,7 +704,7 @@
     <span class="number">1.46576176948256193810e+01</span>, <span class="comment">/* 0x402D50B3, 0x44391809 */</span>
 ];
 
-<span class="kw">fn</span> <span class="ident">pzero</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">fn</span> <span class="ident">pzero</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">&amp;</span>[<span class="ident">f64</span>; <span class="number">6</span>];
     <span class="kw">let</span> <span class="ident">q</span>: <span class="kw-2">&amp;</span>[<span class="ident">f64</span>; <span class="number">5</span>];
     <span class="kw">let</span> <span class="ident">z</span>: <span class="ident">f64</span>;
@@ -712,13 +714,13 @@
 
     <span class="ident">ix</span> <span class="op">=</span> <span class="ident">get_high_word</span>(<span class="ident">x</span>);
     <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x40200000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x40200000</span> {
         <span class="ident">p</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">PR8</span>;
         <span class="ident">q</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">PS8</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x40122E8B</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x40122E8B</span> {
         <span class="ident">p</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">PR5</span>;
         <span class="ident">q</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">PS5</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x4006DB6D</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x4006DB6D</span> {
         <span class="ident">p</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">PR3</span>;
         <span class="ident">q</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">PS3</span>;
     } <span class="kw">else</span>
@@ -814,7 +816,7 @@
     <span class="op">-</span><span class="number">5.31095493882666946917e+00</span>, <span class="comment">/* 0xC0153E6A, 0xF8B32931 */</span>
 ];
 
-<span class="kw">fn</span> <span class="ident">qzero</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">fn</span> <span class="ident">qzero</span>(<span class="ident">x</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">&amp;</span>[<span class="ident">f64</span>; <span class="number">6</span>];
     <span class="kw">let</span> <span class="ident">q</span>: <span class="kw-2">&amp;</span>[<span class="ident">f64</span>; <span class="number">6</span>];
     <span class="kw">let</span> <span class="ident">s</span>: <span class="ident">f64</span>;
@@ -824,13 +826,13 @@
 
     <span class="ident">ix</span> <span class="op">=</span> <span class="ident">get_high_word</span>(<span class="ident">x</span>);
     <span class="ident">ix</span> <span class="op">&amp;=</span> <span class="number">0x7fffffff</span>;
-    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x40200000</span> {
+    <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x40200000</span> {
         <span class="ident">p</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">QR8</span>;
         <span class="ident">q</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">QS8</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x40122E8B</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x40122E8B</span> {
         <span class="ident">p</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">QR5</span>;
         <span class="ident">q</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">QS5</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;=</span> <span class="number">0x4006DB6D</span> {
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">ix</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x4006DB6D</span> {
         <span class="ident">p</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">QR3</span>;
         <span class="ident">q</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">QS3</span>;
     } <span class="kw">else</span>

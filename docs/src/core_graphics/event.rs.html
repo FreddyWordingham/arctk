@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/core-graphics-0.19.2/src/event.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>event.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../core_graphics/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/core-graphics-0.19.2/src/event.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>event.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../core_graphics/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -1065,13 +1067,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">CGEvent</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">type_id</span>() <span class="op">-&gt;</span> <span class="ident">CFTypeID</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">type_id</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFTypeID</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CGEventGetTypeID</span>()
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">source</span>: <span class="ident">CGEventSource</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CGEvent</span>, ()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">source</span>: <span class="ident">CGEventSource</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CGEvent</span>, ()<span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">event_ref</span> <span class="op">=</span> <span class="ident">CGEventCreate</span>(<span class="ident">source</span>.<span class="ident">as_ptr</span>());
             <span class="kw">if</span> <span class="op">!</span><span class="ident">event_ref</span>.<span class="ident">is_null</span>() {
@@ -1086,7 +1088,7 @@
         <span class="ident">source</span>: <span class="ident">CGEventSource</span>,
         <span class="ident">keycode</span>: <span class="ident">CGKeyCode</span>,
         <span class="ident">keydown</span>: <span class="ident">bool</span>
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CGEvent</span>, ()<span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CGEvent</span>, ()<span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">event_ref</span> <span class="op">=</span> <span class="ident">CGEventCreateKeyboardEvent</span>(<span class="ident">source</span>.<span class="ident">as_ptr</span>(), <span class="ident">keycode</span>, <span class="ident">keydown</span>);
             <span class="kw">if</span> <span class="op">!</span><span class="ident">event_ref</span>.<span class="ident">is_null</span>() {
@@ -1102,7 +1104,7 @@
         <span class="ident">mouse_type</span>: <span class="ident">CGEventType</span>,
         <span class="ident">mouse_cursor_position</span>: <span class="ident">CGPoint</span>,
         <span class="ident">mouse_button</span>: <span class="ident">CGMouseButton</span>
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CGEvent</span>, ()<span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CGEvent</span>, ()<span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">event_ref</span> <span class="op">=</span> <span class="ident">CGEventCreateMouseEvent</span>(<span class="ident">source</span>.<span class="ident">as_ptr</span>(), <span class="ident">mouse_type</span>,
                 <span class="ident">mouse_cursor_position</span>, <span class="ident">mouse_button</span>);
@@ -1122,7 +1124,7 @@
         <span class="ident">wheel1</span>: <span class="ident">i32</span>,
         <span class="ident">wheel2</span>: <span class="ident">i32</span>,
         <span class="ident">wheel3</span>: <span class="ident">i32</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CGEvent</span>, ()<span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CGEvent</span>, ()<span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">event_ref</span> <span class="op">=</span> <span class="ident">CGEventCreateScrollWheelEvent2</span>(
                 <span class="ident">source</span>.<span class="ident">as_ptr</span>(),
@@ -1146,7 +1148,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">location</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGPoint</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">location</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGPoint</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CGEventGetLocation</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>())
         }
@@ -1165,7 +1167,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_flags</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGEventFlags</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_flags</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGEventFlags</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CGEventGetFlags</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>())
         }
@@ -1177,7 +1179,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGEventType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGEventType</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CGEventGetType</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>())
         }
@@ -1195,7 +1197,7 @@
         <span class="self">self</span>.<span class="ident">set_string_from_utf16_unchecked</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>);
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_integer_value_field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field</span>: <span class="ident">CGEventField</span>) <span class="op">-&gt;</span> <span class="ident">i64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_integer_value_field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field</span>: <span class="ident">CGEventField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i64</span> {
         <span class="kw">unsafe</span> { <span class="ident">CGEventGetIntegerValueField</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">field</span>) }
     }
 
@@ -1203,7 +1205,7 @@
         <span class="kw">unsafe</span> { <span class="ident">CGEventSetIntegerValueField</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">field</span>, <span class="ident">value</span>) }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_double_value_field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field</span>: <span class="ident">CGEventField</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_double_value_field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">field</span>: <span class="ident">CGEventField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">CGEventGetDoubleValueField</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="ident">field</span>) }
     }
 
@@ -1215,11 +1217,11 @@
 <span class="attribute">#[<span class="ident">link</span>(<span class="ident">name</span> <span class="op">=</span> <span class="string">&quot;CoreGraphics&quot;</span>, <span class="ident">kind</span> <span class="op">=</span> <span class="string">&quot;framework&quot;</span>)]</span>
 <span class="kw">extern</span> {
     <span class="doccomment">/// Return the type identifier for the opaque type `CGEventRef&#39;.</span>
-    <span class="kw">fn</span> <span class="ident">CGEventGetTypeID</span>() <span class="op">-&gt;</span> <span class="ident">CFTypeID</span>;
+    <span class="kw">fn</span> <span class="ident">CGEventGetTypeID</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFTypeID</span>;
 
     <span class="doccomment">/// Return a new event using the event source `source&#39;. If `source&#39; is NULL,</span>
     <span class="doccomment">/// the default source is used.</span>
-    <span class="kw">fn</span> <span class="ident">CGEventCreate</span>(<span class="ident">source</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventSourceRef</span>) <span class="op">-&gt;</span> ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>;
+    <span class="kw">fn</span> <span class="ident">CGEventCreate</span>(<span class="ident">source</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventSourceRef</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>;
 
     <span class="doccomment">/// Return a new keyboard event.</span>
     <span class="doccomment">///</span>
@@ -1232,7 +1234,7 @@
     <span class="doccomment">/// the SHIFT key must be down, the &#39;z&#39; key must go down, and then the SHIFT</span>
     <span class="doccomment">/// and &#39;z&#39; key must be released:</span>
     <span class="kw">fn</span> <span class="ident">CGEventCreateKeyboardEvent</span>(<span class="ident">source</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventSourceRef</span>, <span class="ident">keycode</span>: <span class="ident">CGKeyCode</span>,
-        <span class="ident">keydown</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>;
+        <span class="ident">keydown</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>;
 
     <span class="doccomment">/// Return a new mouse event.</span>
     <span class="doccomment">///</span>
@@ -1248,7 +1250,7 @@
     <span class="doccomment">/// Mouse button 1 is the secondary mouse button (right). Mouse button 2 is</span>
     <span class="doccomment">/// the center button, and the remaining buttons are in USB device order.</span>
     <span class="kw">fn</span> <span class="ident">CGEventCreateMouseEvent</span>(<span class="ident">source</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventSourceRef</span>, <span class="ident">mouseType</span>: <span class="ident">CGEventType</span>,
-        <span class="ident">mouseCursorPosition</span>: <span class="ident">CGPoint</span>, <span class="ident">mouseButton</span>: <span class="ident">CGMouseButton</span>) <span class="op">-&gt;</span> ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>;
+        <span class="ident">mouseCursorPosition</span>: <span class="ident">CGPoint</span>, <span class="ident">mouseButton</span>: <span class="ident">CGMouseButton</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>;
 
     <span class="doccomment">/// A non-variadic variant version of CGEventCreateScrollWheelEvent.</span>
     <span class="doccomment">///</span>
@@ -1264,7 +1266,7 @@
         <span class="ident">wheel1</span>: <span class="ident">i32</span>,
         <span class="ident">wheel2</span>: <span class="ident">i32</span>,
         <span class="ident">wheel3</span>: <span class="ident">i32</span>,
-    ) <span class="op">-&gt;</span> ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>;
 
     <span class="doccomment">/// Post an event into the event stream at a specified location.</span>
     <span class="doccomment">///</span>
@@ -1281,17 +1283,17 @@
     <span class="kw">fn</span> <span class="ident">CGEventSetFlags</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>, <span class="ident">flags</span>: <span class="ident">CGEventFlags</span>);
 
     <span class="doccomment">/// Return the event flags of an event.</span>
-    <span class="kw">fn</span> <span class="ident">CGEventGetFlags</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>) <span class="op">-&gt;</span> <span class="ident">CGEventFlags</span>;
+    <span class="kw">fn</span> <span class="ident">CGEventGetFlags</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGEventFlags</span>;
 
     <span class="doccomment">/// Return the location of an event in global display coordinates.</span>
     <span class="doccomment">/// CGPointZero is returned if event is not a valid ::sys::CGEventRef.</span>
-    <span class="kw">fn</span> <span class="ident">CGEventGetLocation</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>) <span class="op">-&gt;</span> <span class="ident">CGPoint</span>;
+    <span class="kw">fn</span> <span class="ident">CGEventGetLocation</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGPoint</span>;
 
     <span class="doccomment">/// Set the event type of an event.</span>
     <span class="kw">fn</span> <span class="ident">CGEventSetType</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>, <span class="ident">eventType</span>: <span class="ident">CGEventType</span>);
 
     <span class="doccomment">/// Return the event type of an event (left mouse down, for example).</span>
-    <span class="kw">fn</span> <span class="ident">CGEventGetType</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>) <span class="op">-&gt;</span> <span class="ident">CGEventType</span>;
+    <span class="kw">fn</span> <span class="ident">CGEventGetType</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGEventType</span>;
 
     <span class="doccomment">/// Set the Unicode string associated with a keyboard event.</span>
     <span class="doccomment">///</span>
@@ -1306,7 +1308,7 @@
                                        <span class="ident">string</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u16</span>);
 
     <span class="doccomment">/// Return the integer value of a field in an event.</span>
-    <span class="kw">fn</span> <span class="ident">CGEventGetIntegerValueField</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>, <span class="ident">field</span>: <span class="ident">CGEventField</span>) <span class="op">-&gt;</span> <span class="ident">i64</span>;
+    <span class="kw">fn</span> <span class="ident">CGEventGetIntegerValueField</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>, <span class="ident">field</span>: <span class="ident">CGEventField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i64</span>;
 
     <span class="doccomment">/// Set the integer value of a field in an event.</span>
     <span class="doccomment">///</span>
@@ -1325,7 +1327,7 @@
     <span class="doccomment">/// In cases where the field value is represented within the event by a fixed</span>
     <span class="doccomment">/// point number or an integer, the result is scaled to the appropriate range</span>
     <span class="doccomment">/// as part of creating the floating-point representation.</span>
-    <span class="kw">fn</span> <span class="ident">CGEventGetDoubleValueField</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>, <span class="ident">field</span>: <span class="ident">CGEventField</span>) <span class="op">-&gt;</span> <span class="ident">f64</span>;
+    <span class="kw">fn</span> <span class="ident">CGEventGetDoubleValueField</span>(<span class="ident">event</span>: ::<span class="ident">sys</span>::<span class="ident">CGEventRef</span>, <span class="ident">field</span>: <span class="ident">CGEventField</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span>;
 
     <span class="doccomment">/// Set the floating-point value of a field in an event.</span>
     <span class="doccomment">///</span>

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/cocoa-0.20.2/src/quartzcore.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>quartzcore.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../cocoa/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/cocoa-0.20.2/src/quartzcore.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>quartzcore.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../cocoa/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1891,7 +1893,7 @@
 
 <span class="comment">// CABase.h</span>
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_media_time</span>() <span class="op">-&gt;</span> <span class="ident">CFTimeInterval</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_media_time</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFTimeInterval</span> {
     <span class="kw">unsafe</span> {
         <span class="ident">CACurrentMediaTime</span>()
     }
@@ -1906,7 +1908,7 @@
 
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">CALayer</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CALayer</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CALayer</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CALayer</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">retain</span>])
         }
@@ -1924,19 +1926,19 @@
 
 <span class="kw">impl</span> <span class="ident">CALayer</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">CALayer</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CALayer</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CALayer</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CALayer</span>), <span class="ident">layer</span>])
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_layer</span>(<span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">CALayer</span>) <span class="op">-&gt;</span> <span class="ident">CALayer</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_layer</span>(<span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">CALayer</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CALayer</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CALayer</span>), <span class="ident">alloc</span>];
             <span class="ident">CALayer</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">layer</span>, <span class="ident">initWithLayer</span>:<span class="ident">other</span>.<span class="ident">id</span>()])
@@ -1944,44 +1946,44 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">presentation_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CALayer</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">presentation_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CALayer</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CALayer</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">presentationLayer</span>])
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">model_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CALayer</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">model_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CALayer</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CALayer</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">modelLayer</span>])
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_value_for_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">CFString</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_value_for_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">CFString</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CALayer</span>), <span class="ident">defaultValueForKey</span>:(<span class="ident">key</span>.<span class="ident">as_CFTypeRef</span>())]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needs_display_for_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">CFString</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needs_display_for_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">CFString</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CALayer</span>), <span class="ident">needsDisplayForKey</span>:(<span class="ident">key</span>.<span class="ident">as_CFTypeRef</span>())];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">should_archive_value_for_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">CFString</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">should_archive_value_for_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">CFString</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CALayer</span>), <span class="ident">shouldArchiveValueForKey</span>:(<span class="ident">key</span>.<span class="ident">as_CFTypeRef</span>())];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGRect</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">bounds</span>]
         }
@@ -1995,7 +1997,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGPoint</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGPoint</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">position</span>]
         }
@@ -2009,7 +2011,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">z_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGFloat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">z_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGFloat</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">zPosition</span>]
         }
@@ -2023,7 +2025,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">anchor_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGPoint</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">anchor_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGPoint</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">anchorPoint</span>]
         }
@@ -2037,7 +2039,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">anchor_point_z</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGFloat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">anchor_point_z</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGFloat</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">anchorPointZ</span>]
         }
@@ -2051,7 +2053,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">transform</span>]
         }
@@ -2065,7 +2067,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">affine_transform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGAffineTransform</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">affine_transform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGAffineTransform</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">affineTransform</span>]
         }
@@ -2079,7 +2081,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">frame</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">frame</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGRect</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">frame</span>]
         }
@@ -2093,10 +2095,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_hidden</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_hidden</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">isHidden</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2108,10 +2110,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_double_sided</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_double_sided</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">isDoubleSided</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2123,10 +2125,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_geometry_flipped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_geometry_flipped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">isGeometryFlipped</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2138,15 +2140,15 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_are_flipped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_are_flipped</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">contentsAreFlipped</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">superlayer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">superlayer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">superlayer</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">superlayer</span>];
             <span class="kw">if</span> <span class="ident">superlayer</span>.<span class="ident">is_null</span>() {
@@ -2165,7 +2167,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sublayers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CFArray</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sublayers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFArray</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">sublayers</span>: <span class="ident">CFArrayRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">sublayers</span>];
             <span class="ident">TCFType</span>::<span class="ident">wrap_under_create_rule</span>(<span class="ident">sublayers</span>)
@@ -2208,7 +2210,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sublayer_transform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sublayer_transform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">sublayerTransform</span>]
         }
@@ -2222,7 +2224,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">mask</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">mask</span>];
             <span class="kw">if</span> <span class="ident">mask</span>.<span class="ident">is_null</span>() {
@@ -2237,17 +2239,17 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mask</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">match</span> <span class="ident">mask</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setMask</span>:<span class="ident">nil</span>],
-                <span class="prelude-val">Some</span>(<span class="ident">mask</span>) <span class="op">=&gt;</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setMask</span>:(<span class="ident">mask</span>.<span class="ident">id</span>())],
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setMask</span>:<span class="ident">nil</span>],
+                <span class="prelude-val">Some</span>(<span class="ident">mask</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setMask</span>:(<span class="ident">mask</span>.<span class="ident">id</span>())],
             }
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">masks_to_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">masks_to_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">masksToBounds</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2259,44 +2261,44 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_point_from_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">CGPoint</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">CGPoint</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_point_from_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">CGPoint</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGPoint</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">layer</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">nil</span>,
-                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">nil</span>,
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">convertPoint</span>:<span class="kw-2">*</span><span class="ident">point</span> <span class="ident">fromLayer</span>:<span class="ident">layer</span>]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_point_to_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">CGPoint</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">CGPoint</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_point_to_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">CGPoint</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGPoint</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">layer</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">nil</span>,
-                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">nil</span>,
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">convertPoint</span>:<span class="kw-2">*</span><span class="ident">point</span> <span class="ident">toLayer</span>:<span class="ident">layer</span>]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_rect_from_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rect</span>: <span class="kw-2">&amp;</span><span class="ident">CGRect</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">CGRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_rect_from_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rect</span>: <span class="kw-2">&amp;</span><span class="ident">CGRect</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGRect</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">layer</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">nil</span>,
-                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">nil</span>,
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">convertRect</span>:<span class="kw-2">*</span><span class="ident">rect</span> <span class="ident">fromLayer</span>:<span class="ident">layer</span>]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_rect_to_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rect</span>: <span class="kw-2">&amp;</span><span class="ident">CGRect</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">CGRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_rect_to_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rect</span>: <span class="kw-2">&amp;</span><span class="ident">CGRect</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGRect</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">layer</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">nil</span>,
-                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">nil</span>,
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">convertRect</span>:<span class="kw-2">*</span><span class="ident">rect</span> <span class="ident">toLayer</span>:<span class="ident">layer</span>]
         }
@@ -2304,11 +2306,11 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_time_from_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="ident">CFTimeInterval</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>)
-                                   <span class="op">-&gt;</span> <span class="ident">CFTimeInterval</span> {
+                                   <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFTimeInterval</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">layer</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">nil</span>,
-                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">nil</span>,
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">convertTime</span>:<span class="ident">time</span> <span class="ident">fromLayer</span>:<span class="ident">layer</span>]
         }
@@ -2316,21 +2318,21 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">convert_time_to_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="ident">CFTimeInterval</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>)
-                                 <span class="op">-&gt;</span> <span class="ident">CFTimeInterval</span> {
+                                 <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFTimeInterval</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">layer</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">nil</span>,
-                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">nil</span>,
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">convertTime</span>:<span class="ident">time</span> <span class="ident">toLayer</span>:<span class="ident">layer</span>]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hit_test</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">CGPoint</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hit_test</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">CGPoint</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">hitTest</span>:<span class="kw-2">*</span><span class="ident">point</span>];
-            <span class="kw">if</span> <span class="ident">layer</span> <span class="op">==</span> <span class="ident">nil</span> {
+            <span class="kw">if</span> <span class="ident">layer</span> <span class="op">=</span><span class="op">=</span> <span class="ident">nil</span> {
                 <span class="prelude-val">None</span>
             } <span class="kw">else</span> {
                 <span class="prelude-val">Some</span>(<span class="ident">CALayer</span>(<span class="ident">layer</span>))
@@ -2339,15 +2341,15 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contains_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">CGPoint</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contains_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">CGPoint</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">result</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">containsPoint</span>:<span class="kw-2">*</span><span class="ident">point</span>];
-            <span class="ident">result</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">result</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">contents</span>]
         }
@@ -2359,7 +2361,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_rect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_rect</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGRect</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">contentsRect</span>]
         }
@@ -2373,7 +2375,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_gravity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ContentsGravity</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_gravity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">string</span>: <span class="ident">CFStringRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">contentsGravity</span>];
             <span class="ident">ContentsGravity</span>::<span class="ident">from_CFString</span>(<span class="ident">TCFType</span>::<span class="ident">wrap_under_create_rule</span>(<span class="ident">string</span>))
@@ -2389,7 +2391,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGFloat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGFloat</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">contentsScale</span>]
         }
@@ -2403,7 +2405,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGRect</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">contentsCenter</span>]
         }
@@ -2417,7 +2419,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_format</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ContentsFormat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contents_format</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentsFormat</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">string</span>: <span class="ident">CFStringRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">contentsFormat</span>];
             <span class="ident">ContentsFormat</span>::<span class="ident">from_CFString</span>(<span class="ident">TCFType</span>::<span class="ident">wrap_under_create_rule</span>(<span class="ident">string</span>))
@@ -2433,7 +2435,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minification_filter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Filter</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minification_filter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Filter</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">string</span>: <span class="ident">CFStringRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">minificationFilter</span>];
             <span class="ident">Filter</span>::<span class="ident">from_CFString</span>(<span class="ident">TCFType</span>::<span class="ident">wrap_under_create_rule</span>(<span class="ident">string</span>))
@@ -2449,7 +2451,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">magnification_filter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Filter</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">magnification_filter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Filter</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">string</span>: <span class="ident">CFStringRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">magnificationFilter</span>];
             <span class="ident">Filter</span>::<span class="ident">from_CFString</span>(<span class="ident">TCFType</span>::<span class="ident">wrap_under_create_rule</span>(<span class="ident">string</span>))
@@ -2465,7 +2467,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minification_filter_bias</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">minification_filter_bias</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">minificationFilterBias</span>]
         }
@@ -2479,10 +2481,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_opaque</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_opaque</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">isOpaque</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2515,10 +2517,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needs_display</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needs_display</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">needsDisplay</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2530,10 +2532,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needs_display_on_bounds_change</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needs_display_on_bounds_change</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">needsDisplayOnBoundsChange</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2545,10 +2547,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">draws_asynchronously</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">draws_asynchronously</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">drawsAsynchronously</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2574,7 +2576,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">edge_antialiasing_mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">EdgeAntialiasingMask</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">edge_antialiasing_mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EdgeAntialiasingMask</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">EdgeAntialiasingMask</span>::<span class="ident">from_bits_truncate</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">edgeAntialiasingMask</span>])
         }
@@ -2588,7 +2590,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">color</span>: <span class="ident">SysCGColorRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">backgroundColor</span>];
             <span class="kw">if</span> <span class="ident">color</span>.<span class="ident">is_null</span>() {
@@ -2603,15 +2605,15 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_background_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">color</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
-                <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="ident">color</span>.<span class="ident">as_CFTypeRef</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
+                <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>.<span class="ident">as_CFTypeRef</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setBackgroundColor</span>:<span class="ident">color</span>]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">corner_radius</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGFloat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">corner_radius</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGFloat</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">cornerRadius</span>]
         }
@@ -2625,7 +2627,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">masked_corners</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CornerMask</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">masked_corners</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CornerMask</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CornerMask</span>::<span class="ident">from_bits_truncate</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">maskedCorners</span>])
         }
@@ -2639,7 +2641,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">border_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGFloat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">border_width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGFloat</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">borderWidth</span>]
         }
@@ -2653,7 +2655,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">border_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">border_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">color</span>: <span class="ident">SysCGColorRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">borderColor</span>];
             <span class="kw">if</span> <span class="ident">color</span>.<span class="ident">is_null</span>() {
@@ -2668,15 +2670,15 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_border_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">color</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
-                <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="ident">color</span>.<span class="ident">as_CFTypeRef</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
+                <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>.<span class="ident">as_CFTypeRef</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setBorderColor</span>:<span class="ident">color</span>]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">opacity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">opacity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">opacity</span>]
         }
@@ -2690,7 +2692,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compositing_filter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compositing_filter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">compositingFilter</span>]
         }
@@ -2702,7 +2704,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">filters</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFArray</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">filters</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFArray</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">filters</span>: <span class="ident">CFArrayRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">filters</span>];
         <span class="kw">if</span> <span class="ident">filters</span>.<span class="ident">is_null</span>() {
             <span class="prelude-val">None</span>
@@ -2714,14 +2716,14 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_filters</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filters</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFArray</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">filters</span>: <span class="ident">CFTypeRef</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">filters</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">filters</span>) <span class="op">=&gt;</span> <span class="ident">filters</span>.<span class="ident">as_CFTypeRef</span>(),
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">filters</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">filters</span>.<span class="ident">as_CFTypeRef</span>(),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
         };
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setFilters</span>:<span class="ident">filters</span>]
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">background_filters</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFArray</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">background_filters</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFArray</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">filters</span>: <span class="ident">CFArrayRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">backgroundFilters</span>];
         <span class="kw">if</span> <span class="ident">filters</span>.<span class="ident">is_null</span>() {
             <span class="prelude-val">None</span>
@@ -2733,17 +2735,17 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_background_filters</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filters</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFArray</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">filters</span>: <span class="ident">CFTypeRef</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">filters</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">filters</span>) <span class="op">=&gt;</span> <span class="ident">filters</span>.<span class="ident">as_CFTypeRef</span>(),
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">filters</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">filters</span>.<span class="ident">as_CFTypeRef</span>(),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
         };
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setBackgroundFilters</span>:<span class="ident">filters</span>]
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">should_rasterize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">should_rasterize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">shouldRasterize</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2755,7 +2757,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rasterization_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGFloat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rasterization_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGFloat</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">rasterizationScale</span>]
         }
@@ -2771,7 +2773,7 @@
     <span class="comment">// Shadow properties</span>
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">color</span>: <span class="ident">SysCGColorRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">shadowColor</span>];
             <span class="kw">if</span> <span class="ident">color</span>.<span class="ident">is_null</span>() {
@@ -2786,15 +2788,15 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_shadow_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColor</span><span class="op">&gt;</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">color</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
-                <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="ident">color</span>.<span class="ident">as_CFTypeRef</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
+                <span class="prelude-val">Some</span>(<span class="ident">color</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>.<span class="ident">as_CFTypeRef</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setShadowColor</span>:<span class="ident">color</span>]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_opacity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_opacity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">shadowOpacity</span>]
         }
@@ -2808,7 +2810,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGSize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGSize</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">shadowOffset</span>]
         }
@@ -2822,7 +2824,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_radius</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGFloat</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_radius</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGFloat</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">shadowRadius</span>]
         }
@@ -2836,7 +2838,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGPath</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shadow_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGPath</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">path</span>: <span class="ident">SysCGPathRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">shadowPath</span>];
             <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_null</span>() {
@@ -2851,8 +2853,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_shadow_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGPath</span><span class="op">&gt;</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">sys_path_ref</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">path</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
-                <span class="prelude-val">Some</span>(<span class="ident">path</span>) <span class="op">=&gt;</span> <span class="ident">path</span>.<span class="ident">as_ptr</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
+                <span class="prelude-val">Some</span>(<span class="ident">path</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">path</span>.<span class="ident">as_ptr</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setShadowPath</span>:<span class="ident">sys_path_ref</span>]
         }
@@ -2861,7 +2863,7 @@
     <span class="comment">// Layout methods</span>
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">autoresizing_mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">AutoresizingMask</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">autoresizing_mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AutoresizingMask</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">AutoresizingMask</span>::<span class="ident">from_bits_truncate</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">autoresizingMask</span>])
         }
@@ -2875,7 +2877,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">layout_manager</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">layout_manager</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">layoutManager</span>]
         }
@@ -2887,7 +2889,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">preferred_frame_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGSize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">preferred_frame_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGSize</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">preferredFrameSize</span>]
         }
@@ -2901,10 +2903,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needs_layout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">needs_layout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">needsLayout</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -2939,7 +2941,7 @@
     <span class="comment">// Action methods</span>
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_action_for_key</span>(<span class="ident">event</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">default_action_for_key</span>(<span class="ident">event</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">event</span>: <span class="ident">CFString</span> <span class="op">=</span> <span class="ident">CFString</span>::<span class="ident">from</span>(<span class="ident">event</span>);
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CALayer</span>), <span class="ident">defaultActionForKey</span>:<span class="ident">event</span>.<span class="ident">as_CFTypeRef</span>()]
@@ -2947,7 +2949,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">action_for_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">event</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">action_for_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">event</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">event</span>: <span class="ident">CFString</span> <span class="op">=</span> <span class="ident">CFString</span>::<span class="ident">from</span>(<span class="ident">event</span>);
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">actionForKey</span>:<span class="ident">event</span>.<span class="ident">as_CFTypeRef</span>()]
@@ -2955,7 +2957,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">actions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CFDictionary</span><span class="op">&lt;</span><span class="ident">CFStringRef</span>, <span class="ident">CFTypeRef</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">actions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFDictionary</span><span class="op">&lt;</span><span class="ident">CFStringRef</span>, <span class="ident">CFTypeRef</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">actions</span>]
         }
@@ -2971,8 +2973,8 @@
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">add_animation_for_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">animation</span>: <span class="ident">id</span>, <span class="ident">for_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">for_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFString</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">for_key</span>.<span class="ident">map</span>(<span class="ident">CFString</span>::<span class="ident">from</span>);
         <span class="kw">let</span> <span class="ident">for_key</span>: <span class="ident">CFTypeRef</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">for_key</span> {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">for_key</span>) <span class="op">=&gt;</span> <span class="ident">for_key</span>.<span class="ident">as_CFTypeRef</span>(),
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">for_key</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">for_key</span>.<span class="ident">as_CFTypeRef</span>(),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
         };
         <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">addAnimation</span>:<span class="ident">animation</span> <span class="ident">forKey</span>:<span class="ident">for_key</span>]
     }
@@ -2993,7 +2995,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">animation_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">animation_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">keys</span>: <span class="ident">CFArrayRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">animationKeys</span>];
             <span class="kw">let</span> <span class="ident">keys</span>: <span class="ident">CFArray</span> <span class="op">=</span> <span class="ident">TCFType</span>::<span class="ident">wrap_under_create_rule</span>(<span class="ident">keys</span>);
@@ -3004,7 +3006,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">animation_for_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">animation_for_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">CFString</span>::<span class="ident">from</span>(<span class="ident">key</span>);
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">animationForKey</span>:<span class="ident">key</span>.<span class="ident">as_CFTypeRef</span>()]
@@ -3014,7 +3016,7 @@
     <span class="comment">// Miscellaneous properties</span>
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">name</span>: <span class="ident">CFStringRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>];
             <span class="ident">CFString</span>::<span class="ident">wrap_under_get_rule</span>(<span class="ident">name</span>).<span class="ident">to_string</span>()
@@ -3030,7 +3032,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delegate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delegate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">delegate</span>]
         }
@@ -3042,7 +3044,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">style</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFDictionary</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">style</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFDictionary</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">dictionary</span>: <span class="ident">CFDictionaryRef</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">style</span>];
             <span class="kw">if</span> <span class="ident">dictionary</span>.<span class="ident">is_null</span>() {
@@ -3057,8 +3059,8 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_style</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dictionary</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CFDictionary</span><span class="op">&gt;</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">dictionary</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">dictionary</span> {
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
-                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">dictionary</span>) <span class="op">=&gt;</span> <span class="ident">dictionary</span>.<span class="ident">as_CFTypeRef</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ptr</span>::<span class="ident">null</span>(),
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">dictionary</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">dictionary</span>.<span class="ident">as_CFTypeRef</span>(),
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setStyle</span>:<span class="ident">dictionary</span>]
         }
@@ -3100,41 +3102,41 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ContentsGravity</span> {
-    <span class="kw">fn</span> <span class="ident">into_CFString</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CFString</span> {
+    <span class="kw">fn</span> <span class="ident">into_CFString</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFString</span> {
         <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">ContentsGravity</span>::<span class="ident">Center</span>             <span class="op">=&gt;</span> <span class="string">&quot;center&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">Top</span>                <span class="op">=&gt;</span> <span class="string">&quot;top&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">Bottom</span>             <span class="op">=&gt;</span> <span class="string">&quot;bottom&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">Left</span>               <span class="op">=&gt;</span> <span class="string">&quot;left&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">Right</span>              <span class="op">=&gt;</span> <span class="string">&quot;right&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">TopLeft</span>            <span class="op">=&gt;</span> <span class="string">&quot;topLeft&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">TopRight</span>           <span class="op">=&gt;</span> <span class="string">&quot;topRight&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">BottomLeft</span>         <span class="op">=&gt;</span> <span class="string">&quot;bottomLeft&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">BottomRight</span>        <span class="op">=&gt;</span> <span class="string">&quot;bottomRight&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">Resize</span>             <span class="op">=&gt;</span> <span class="string">&quot;resize&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">ResizeAspect</span>       <span class="op">=&gt;</span> <span class="string">&quot;resizeAspect&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">ResizeAspectFill</span>   <span class="op">=&gt;</span> <span class="string">&quot;resizeAspectFill&quot;</span>,
-            <span class="ident">ContentsGravity</span>::<span class="ident">Other</span>(<span class="ident">other</span>)       <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">other</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">Center</span>             <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;center&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">Top</span>                <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;top&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">Bottom</span>             <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;bottom&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">Left</span>               <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;left&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">Right</span>              <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;right&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">TopLeft</span>            <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;topLeft&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">TopRight</span>           <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;topRight&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">BottomLeft</span>         <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;bottomLeft&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">BottomRight</span>        <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;bottomRight&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">Resize</span>             <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;resize&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">ResizeAspect</span>       <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;resizeAspect&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">ResizeAspectFill</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;resizeAspectFill&quot;</span>,
+            <span class="ident">ContentsGravity</span>::<span class="ident">Other</span>(<span class="ident">other</span>)       <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">other</span>,
         };
         <span class="ident">CFString</span>::<span class="ident">from</span>(<span class="ident">string</span>)
     }
 
     <span class="comment">// FIXME(pcwalton): Inefficient.</span>
-    <span class="kw">fn</span> <span class="ident">from_CFString</span>(<span class="ident">string</span>: <span class="ident">CFString</span>) <span class="op">-&gt;</span> <span class="ident">ContentsGravity</span> {
+    <span class="kw">fn</span> <span class="ident">from_CFString</span>(<span class="ident">string</span>: <span class="ident">CFString</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span> {
         <span class="kw">match</span> <span class="ident">string</span>.<span class="ident">to_string</span>() {
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;center&quot;</span>              <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Center</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;top&quot;</span>                 <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Top</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;bottom&quot;</span>              <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Bottom</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;left&quot;</span>                <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Left</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;right&quot;</span>               <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Right</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;topLeft&quot;</span>             <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">TopLeft</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;topRight&quot;</span>            <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">TopRight</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;bottomLeft&quot;</span>          <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">BottomLeft</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;bottomRight&quot;</span>         <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">BottomRight</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;resize&quot;</span>              <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Resize</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;resizeAspect&quot;</span>        <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">ResizeAspect</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;resizeAspectFill&quot;</span>    <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">ResizeAspectFill</span>,
-            <span class="kw">_</span>                                   <span class="op">=&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Other</span>(<span class="ident">string</span>),
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;center&quot;</span>              <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Center</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;top&quot;</span>                 <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Top</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;bottom&quot;</span>              <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Bottom</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;left&quot;</span>                <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Left</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;right&quot;</span>               <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Right</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;topLeft&quot;</span>             <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">TopLeft</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;topRight&quot;</span>            <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">TopRight</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;bottomLeft&quot;</span>          <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">BottomLeft</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;bottomRight&quot;</span>         <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">BottomRight</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;resize&quot;</span>              <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Resize</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;resizeAspect&quot;</span>        <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">ResizeAspect</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;resizeAspectFill&quot;</span>    <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">ResizeAspectFill</span>,
+            <span class="kw">_</span>                                   <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsGravity</span>::<span class="ident">Other</span>(<span class="ident">string</span>),
         }
     }
 }
@@ -3148,23 +3150,23 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ContentsFormat</span> {
-    <span class="kw">fn</span> <span class="ident">into_CFString</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CFString</span> {
+    <span class="kw">fn</span> <span class="ident">into_CFString</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFString</span> {
         <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">ContentsFormat</span>::<span class="ident">RGBA8Uint</span>       <span class="op">=&gt;</span> <span class="string">&quot;RGBA8&quot;</span>,
-            <span class="ident">ContentsFormat</span>::<span class="ident">RGBA16Float</span>     <span class="op">=&gt;</span> <span class="string">&quot;RGBAh&quot;</span>,
-            <span class="ident">ContentsFormat</span>::<span class="ident">Gray8Uint</span>       <span class="op">=&gt;</span> <span class="string">&quot;Gray8&quot;</span>,
-            <span class="ident">ContentsFormat</span>::<span class="ident">Other</span>(<span class="ident">other</span>)    <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">other</span>,
+            <span class="ident">ContentsFormat</span>::<span class="ident">RGBA8Uint</span>       <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;RGBA8&quot;</span>,
+            <span class="ident">ContentsFormat</span>::<span class="ident">RGBA16Float</span>     <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;RGBAh&quot;</span>,
+            <span class="ident">ContentsFormat</span>::<span class="ident">Gray8Uint</span>       <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Gray8&quot;</span>,
+            <span class="ident">ContentsFormat</span>::<span class="ident">Other</span>(<span class="ident">other</span>)    <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">other</span>,
         };
         <span class="ident">CFString</span>::<span class="ident">from</span>(<span class="ident">string</span>)
     }
 
     <span class="comment">// FIXME(pcwalton): Inefficient.</span>
-    <span class="kw">fn</span> <span class="ident">from_CFString</span>(<span class="ident">string</span>: <span class="ident">CFString</span>) <span class="op">-&gt;</span> <span class="ident">ContentsFormat</span> {
+    <span class="kw">fn</span> <span class="ident">from_CFString</span>(<span class="ident">string</span>: <span class="ident">CFString</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentsFormat</span> {
         <span class="kw">match</span> <span class="ident">string</span>.<span class="ident">to_string</span>() {
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;RGBA8&quot;</span>   <span class="op">=&gt;</span> <span class="ident">ContentsFormat</span>::<span class="ident">RGBA8Uint</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;RGBAh&quot;</span>   <span class="op">=&gt;</span> <span class="ident">ContentsFormat</span>::<span class="ident">RGBA16Float</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;Gray8&quot;</span>   <span class="op">=&gt;</span> <span class="ident">ContentsFormat</span>::<span class="ident">Gray8Uint</span>,
-            <span class="kw">_</span>                       <span class="op">=&gt;</span> <span class="ident">ContentsFormat</span>::<span class="ident">Other</span>(<span class="ident">string</span>),
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;RGBA8&quot;</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsFormat</span>::<span class="ident">RGBA8Uint</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;RGBAh&quot;</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsFormat</span>::<span class="ident">RGBA16Float</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;Gray8&quot;</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsFormat</span>::<span class="ident">Gray8Uint</span>,
+            <span class="kw">_</span>                       <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ContentsFormat</span>::<span class="ident">Other</span>(<span class="ident">string</span>),
         }
     }
 }
@@ -3178,54 +3180,54 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Filter</span> {
-    <span class="kw">fn</span> <span class="ident">into_CFString</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CFString</span> {
+    <span class="kw">fn</span> <span class="ident">into_CFString</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFString</span> {
         <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Filter</span>::<span class="ident">Nearest</span>         <span class="op">=&gt;</span> <span class="string">&quot;nearest&quot;</span>,
-            <span class="ident">Filter</span>::<span class="ident">Linear</span>          <span class="op">=&gt;</span> <span class="string">&quot;linear&quot;</span>,
-            <span class="ident">Filter</span>::<span class="ident">Trilinear</span>       <span class="op">=&gt;</span> <span class="string">&quot;trilinear&quot;</span>,
-            <span class="ident">Filter</span>::<span class="ident">Other</span>(<span class="ident">other</span>)    <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">other</span>,
+            <span class="ident">Filter</span>::<span class="ident">Nearest</span>         <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;nearest&quot;</span>,
+            <span class="ident">Filter</span>::<span class="ident">Linear</span>          <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;linear&quot;</span>,
+            <span class="ident">Filter</span>::<span class="ident">Trilinear</span>       <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;trilinear&quot;</span>,
+            <span class="ident">Filter</span>::<span class="ident">Other</span>(<span class="ident">other</span>)    <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="ident">other</span>,
         };
         <span class="ident">CFString</span>::<span class="ident">from</span>(<span class="ident">string</span>)
     }
 
     <span class="comment">// FIXME(pcwalton): Inefficient.</span>
-    <span class="kw">fn</span> <span class="ident">from_CFString</span>(<span class="ident">string</span>: <span class="ident">CFString</span>) <span class="op">-&gt;</span> <span class="ident">Filter</span> {
+    <span class="kw">fn</span> <span class="ident">from_CFString</span>(<span class="ident">string</span>: <span class="ident">CFString</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Filter</span> {
         <span class="kw">match</span> <span class="ident">string</span>.<span class="ident">to_string</span>() {
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;nearest&quot;</span>     <span class="op">=&gt;</span> <span class="ident">Filter</span>::<span class="ident">Nearest</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;linear&quot;</span>      <span class="op">=&gt;</span> <span class="ident">Filter</span>::<span class="ident">Linear</span>,
-            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;trilinear&quot;</span>   <span class="op">=&gt;</span> <span class="ident">Filter</span>::<span class="ident">Trilinear</span>,
-            <span class="kw">_</span>                           <span class="op">=&gt;</span> <span class="ident">Filter</span>::<span class="ident">Other</span>(<span class="ident">string</span>),
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;nearest&quot;</span>     <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Filter</span>::<span class="ident">Nearest</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;linear&quot;</span>      <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Filter</span>::<span class="ident">Linear</span>,
+            <span class="kw-2">ref</span> <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;trilinear&quot;</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Filter</span>::<span class="ident">Trilinear</span>,
+            <span class="kw">_</span>                           <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Filter</span>::<span class="ident">Other</span>(<span class="ident">string</span>),
         }
     }
 }
 
 <span class="macro">bitflags</span><span class="macro">!</span> {
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EdgeAntialiasingMask</span>: <span class="ident">u32</span> {
-        <span class="kw">const</span> <span class="ident">LEFT_EDGE</span>     <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">0</span>;   <span class="comment">// kCALayerLeftEdge</span>
-        <span class="kw">const</span> <span class="ident">RIGHT_EDGE</span>    <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>;   <span class="comment">// kCALayerRightEdge</span>
-        <span class="kw">const</span> <span class="ident">BOTTOM_EDGE</span>   <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">2</span>;   <span class="comment">// kCALayerBottomEdge</span>
-        <span class="kw">const</span> <span class="ident">TOP_EDGE</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">3</span>;   <span class="comment">// kCALayerTopEdge</span>
+        <span class="kw">const</span> <span class="ident">LEFT_EDGE</span>     <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">0</span>;   <span class="comment">// kCALayerLeftEdge</span>
+        <span class="kw">const</span> <span class="ident">RIGHT_EDGE</span>    <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;   <span class="comment">// kCALayerRightEdge</span>
+        <span class="kw">const</span> <span class="ident">BOTTOM_EDGE</span>   <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">2</span>;   <span class="comment">// kCALayerBottomEdge</span>
+        <span class="kw">const</span> <span class="ident">TOP_EDGE</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">3</span>;   <span class="comment">// kCALayerTopEdge</span>
     }
 }
 
 <span class="macro">bitflags</span><span class="macro">!</span> {
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CornerMask</span>: <span class="ident">NSUInteger</span> {
-        <span class="kw">const</span> <span class="ident">MIN_X_MIN_Y_CORNER</span> <span class="op">=</span>  <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">0</span>; <span class="comment">// kCALayerMinXMinYCorner</span>
-        <span class="kw">const</span> <span class="ident">MAX_X_MIN_Y_CORNER</span> <span class="op">=</span>  <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>; <span class="comment">// kCALayerMaxXMinYCorner</span>
-        <span class="kw">const</span> <span class="ident">MIN_X_MAX_Y_CORNER</span> <span class="op">=</span>  <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">2</span>; <span class="comment">// kCALayerMinXMaxYCorner</span>
-        <span class="kw">const</span> <span class="ident">MAX_X_MAX_Y_CORNER</span> <span class="op">=</span>  <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">3</span>; <span class="comment">// kCALayerMaxXMaxYCorner</span>
+        <span class="kw">const</span> <span class="ident">MIN_X_MIN_Y_CORNER</span> <span class="op">=</span>  <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">0</span>; <span class="comment">// kCALayerMinXMinYCorner</span>
+        <span class="kw">const</span> <span class="ident">MAX_X_MIN_Y_CORNER</span> <span class="op">=</span>  <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>; <span class="comment">// kCALayerMaxXMinYCorner</span>
+        <span class="kw">const</span> <span class="ident">MIN_X_MAX_Y_CORNER</span> <span class="op">=</span>  <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">2</span>; <span class="comment">// kCALayerMinXMaxYCorner</span>
+        <span class="kw">const</span> <span class="ident">MAX_X_MAX_Y_CORNER</span> <span class="op">=</span>  <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">3</span>; <span class="comment">// kCALayerMaxXMaxYCorner</span>
     }
 }
 
 <span class="macro">bitflags</span><span class="macro">!</span> {
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AutoresizingMask</span>: <span class="ident">u32</span> {
         <span class="kw">const</span> <span class="ident">NOT_SIZABLE</span>       <span class="op">=</span> <span class="number">0</span>;        <span class="comment">// kCALayerNotSizable</span>
-        <span class="kw">const</span> <span class="ident">MIN_X_MARGIN</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">0</span>;   <span class="comment">// kCALayerMinXMargin</span>
-        <span class="kw">const</span> <span class="ident">WIDTH_SIZABLE</span>     <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>;   <span class="comment">// kCALayerWidthSizable</span>
-        <span class="kw">const</span> <span class="ident">MAX_X_MARGIN</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">2</span>;   <span class="comment">// kCALayerMaxXMargin</span>
-        <span class="kw">const</span> <span class="ident">MIN_Y_MARGIN</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">3</span>;   <span class="comment">// kCALayerMinYMargin</span>
-        <span class="kw">const</span> <span class="ident">HEIGHT_SIZABLE</span>    <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">4</span>;   <span class="comment">// kCALayerHeightSizable</span>
-        <span class="kw">const</span> <span class="ident">MAX_Y_MARGIN</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">5</span>;   <span class="comment">// kCALayerMaxYMargin</span>
+        <span class="kw">const</span> <span class="ident">MIN_X_MARGIN</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">0</span>;   <span class="comment">// kCALayerMinXMargin</span>
+        <span class="kw">const</span> <span class="ident">WIDTH_SIZABLE</span>     <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;   <span class="comment">// kCALayerWidthSizable</span>
+        <span class="kw">const</span> <span class="ident">MAX_X_MARGIN</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">2</span>;   <span class="comment">// kCALayerMaxXMargin</span>
+        <span class="kw">const</span> <span class="ident">MIN_Y_MARGIN</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">3</span>;   <span class="comment">// kCALayerMinYMargin</span>
+        <span class="kw">const</span> <span class="ident">HEIGHT_SIZABLE</span>    <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">4</span>;   <span class="comment">// kCALayerHeightSizable</span>
+        <span class="kw">const</span> <span class="ident">MAX_Y_MARGIN</span>      <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">5</span>;   <span class="comment">// kCALayerMaxYMargin</span>
     }
 }
 
@@ -3238,7 +3240,7 @@
 
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">CARenderer</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CARenderer</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CARenderer</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CARenderer</span>(<span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">retain</span>])
         }
@@ -3256,13 +3258,13 @@
 
 <span class="kw">impl</span> <span class="ident">CARenderer</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_cgl_context</span>(<span class="ident">context</span>: <span class="ident">CGLContextObj</span>, <span class="ident">color_space</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColorSpace</span><span class="op">&gt;</span>)
-                                   <span class="op">-&gt;</span> <span class="ident">CARenderer</span> {
+                                   <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CARenderer</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pairs</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">CFString</span>, <span class="ident">CFType</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">color_space</span>) <span class="op">=</span> <span class="ident">color_space</span> {
             <span class="ident">pairs</span>.<span class="ident">push</span>((<span class="ident">CFString</span>::<span class="ident">wrap_under_get_rule</span>(<span class="ident">kCARendererColorSpace</span>),
@@ -3274,7 +3276,7 @@
         <span class="kw">let</span> <span class="ident">renderer</span>: <span class="ident">id</span> <span class="op">=</span>
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CARenderer</span>), <span class="ident">rendererWithCGLContext</span>:<span class="ident">context</span>
                                                          <span class="ident">options</span>:<span class="ident">options</span>.<span class="ident">as_CFTypeRef</span>()];
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">renderer</span> <span class="op">!=</span> <span class="ident">nil</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">renderer</span> <span class="op">!</span><span class="op">=</span> <span class="ident">nil</span>);
         <span class="ident">CARenderer</span>(<span class="ident">renderer</span>)
     }
 
@@ -3282,7 +3284,7 @@
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_metal_texture</span>(<span class="ident">metal_texture</span>: <span class="ident">id</span>,
                                      <span class="ident">metal_command_queue</span>: <span class="ident">id</span>,
                                      <span class="ident">color_space</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CGColorSpace</span><span class="op">&gt;</span>)
-                                     <span class="op">-&gt;</span> <span class="ident">CARenderer</span> {
+                                     <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CARenderer</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pairs</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">CFString</span>, <span class="ident">CFType</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
             (<span class="ident">CFString</span>::<span class="ident">wrap_under_get_rule</span>(<span class="ident">kCARendererMetalCommandQueue</span>),
              <span class="ident">CFType</span>::<span class="ident">wrap_under_get_rule</span>(<span class="ident">metal_command_queue</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>)),
@@ -3297,12 +3299,12 @@
         <span class="kw">let</span> <span class="ident">renderer</span>: <span class="ident">id</span> <span class="op">=</span>
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CARenderer</span>), <span class="ident">rendererWithMTLTexture</span>:<span class="ident">metal_texture</span>
                                                          <span class="ident">options</span>:<span class="ident">options</span>.<span class="ident">as_CFTypeRef</span>()];
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">renderer</span> <span class="op">!=</span> <span class="ident">nil</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">renderer</span> <span class="op">!</span><span class="op">=</span> <span class="ident">nil</span>);
         <span class="ident">CARenderer</span>(<span class="ident">renderer</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">layer</span>];
             <span class="kw">if</span> <span class="ident">layer</span>.<span class="ident">is_null</span>() {
@@ -3317,15 +3319,15 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CALayer</span><span class="op">&gt;</span>) {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">layer</span> {
-                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">nil</span>,
+                <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">layer</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">layer</span>.<span class="ident">id</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">nil</span>,
             };
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">setLayer</span>:<span class="ident">layer</span>]
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGRect</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">bounds</span>]
         }
@@ -3346,7 +3348,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGRect</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">updateBounds</span>]
         }
@@ -3367,7 +3369,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_frame_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CFTimeInterval</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_frame_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFTimeInterval</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">nextFrameTime</span>]
         }
@@ -3433,7 +3435,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">animation_duration</span>() <span class="op">-&gt;</span> <span class="ident">CFTimeInterval</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">animation_duration</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFTimeInterval</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CATransaction</span>), <span class="ident">animationDuration</span>]
         }
@@ -3447,7 +3449,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">animation_timing_function</span>() <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">animation_timing_function</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CATransaction</span>), <span class="ident">animationTimingFunction</span>]
         }
@@ -3459,10 +3461,10 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_actions</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_actions</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">flag</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CATransaction</span>), <span class="ident">disableActions</span>];
-            <span class="ident">flag</span> <span class="op">==</span> <span class="ident">YES</span>
+            <span class="ident">flag</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>
         }
     }
 
@@ -3474,7 +3476,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">completion_block</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RcBlock</span><span class="op">&lt;</span>(), ()<span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">completion_block</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RcBlock</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">completion_block</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Block</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span>
                 <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CATransaction</span>), <span class="ident">completionBlock</span>];
@@ -3496,7 +3498,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_for_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_for_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">key</span>: <span class="ident">CFString</span> <span class="op">=</span> <span class="ident">CFString</span>::<span class="ident">from</span>(<span class="ident">key</span>);
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">CATransaction</span>), <span class="ident">valueForKey</span>:<span class="ident">key</span>]
@@ -3525,7 +3527,7 @@
 
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">CATransform3D</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">CATransform3D</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">CATransform3D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DEqualToTransform</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">*</span><span class="ident">other</span>)
         }
@@ -3536,7 +3538,7 @@
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">CATransform3D</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">CATransform3D</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">CATransform3D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DConcat</span>(<span class="self">self</span>, <span class="ident">other</span>)
         }
@@ -3552,77 +3554,77 @@
     };
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_translation</span>(<span class="ident">tx</span>: <span class="ident">CGFloat</span>, <span class="ident">ty</span>: <span class="ident">CGFloat</span>, <span class="ident">tz</span>: <span class="ident">CGFloat</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_translation</span>(<span class="ident">tx</span>: <span class="ident">CGFloat</span>, <span class="ident">ty</span>: <span class="ident">CGFloat</span>, <span class="ident">tz</span>: <span class="ident">CGFloat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DMakeTranslation</span>(<span class="ident">tx</span>, <span class="ident">ty</span>, <span class="ident">tz</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scale</span>(<span class="ident">sx</span>: <span class="ident">CGFloat</span>, <span class="ident">sy</span>: <span class="ident">CGFloat</span>, <span class="ident">sz</span>: <span class="ident">CGFloat</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scale</span>(<span class="ident">sx</span>: <span class="ident">CGFloat</span>, <span class="ident">sy</span>: <span class="ident">CGFloat</span>, <span class="ident">sz</span>: <span class="ident">CGFloat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DMakeScale</span>(<span class="ident">sx</span>, <span class="ident">sy</span>, <span class="ident">sz</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_rotation</span>(<span class="ident">angle</span>: <span class="ident">CGFloat</span>, <span class="ident">x</span>: <span class="ident">CGFloat</span>, <span class="ident">y</span>: <span class="ident">CGFloat</span>, <span class="ident">z</span>: <span class="ident">CGFloat</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_rotation</span>(<span class="ident">angle</span>: <span class="ident">CGFloat</span>, <span class="ident">x</span>: <span class="ident">CGFloat</span>, <span class="ident">y</span>: <span class="ident">CGFloat</span>, <span class="ident">z</span>: <span class="ident">CGFloat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DMakeRotation</span>(<span class="ident">angle</span>, <span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">affine</span>(<span class="ident">affine_transform</span>: <span class="ident">CGAffineTransform</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">affine</span>(<span class="ident">affine_transform</span>: <span class="ident">CGAffineTransform</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DMakeAffineTransform</span>(<span class="ident">affine_transform</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_identity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_identity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DIsIdentity</span>(<span class="kw-2">*</span><span class="self">self</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">translate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tx</span>: <span class="ident">CGFloat</span>, <span class="ident">ty</span>: <span class="ident">CGFloat</span>, <span class="ident">tz</span>: <span class="ident">CGFloat</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">translate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tx</span>: <span class="ident">CGFloat</span>, <span class="ident">ty</span>: <span class="ident">CGFloat</span>, <span class="ident">tz</span>: <span class="ident">CGFloat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DTranslate</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">tx</span>, <span class="ident">ty</span>, <span class="ident">tz</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">sx</span>: <span class="ident">CGFloat</span>, <span class="ident">sy</span>: <span class="ident">CGFloat</span>, <span class="ident">sz</span>: <span class="ident">CGFloat</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">sx</span>: <span class="ident">CGFloat</span>, <span class="ident">sy</span>: <span class="ident">CGFloat</span>, <span class="ident">sz</span>: <span class="ident">CGFloat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DScale</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">sx</span>, <span class="ident">sy</span>, <span class="ident">sz</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">angle</span>: <span class="ident">CGFloat</span>, <span class="ident">x</span>: <span class="ident">CGFloat</span>, <span class="ident">y</span>: <span class="ident">CGFloat</span>, <span class="ident">z</span>: <span class="ident">CGFloat</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">angle</span>: <span class="ident">CGFloat</span>, <span class="ident">x</span>: <span class="ident">CGFloat</span>, <span class="ident">y</span>: <span class="ident">CGFloat</span>, <span class="ident">z</span>: <span class="ident">CGFloat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DRotate</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">angle</span>, <span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invert</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invert</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DInvert</span>(<span class="kw-2">*</span><span class="self">self</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DIsAffine</span>(<span class="kw-2">*</span><span class="self">self</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">CGAffineTransform</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGAffineTransform</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">CATransform3DGetAffineTransform</span>(<span class="kw-2">*</span><span class="self">self</span>)
         }
@@ -3634,25 +3636,25 @@
     <span class="kw">static</span> <span class="ident">kCARendererColorSpace</span>: <span class="ident">CFStringRef</span>;
     <span class="kw">static</span> <span class="ident">kCARendererMetalCommandQueue</span>: <span class="ident">CFStringRef</span>;
 
-    <span class="kw">fn</span> <span class="ident">CACurrentMediaTime</span>() <span class="op">-&gt;</span> <span class="ident">CFTimeInterval</span>;
+    <span class="kw">fn</span> <span class="ident">CACurrentMediaTime</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CFTimeInterval</span>;
 
-    <span class="kw">fn</span> <span class="ident">CATransform3DIsIdentity</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
-    <span class="kw">fn</span> <span class="ident">CATransform3DEqualToTransform</span>(<span class="ident">a</span>: <span class="ident">CATransform3D</span>, <span class="ident">b</span>: <span class="ident">CATransform3D</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
-    <span class="kw">fn</span> <span class="ident">CATransform3DMakeTranslation</span>(<span class="ident">tx</span>: <span class="ident">CGFloat</span>, <span class="ident">ty</span>: <span class="ident">CGFloat</span>, <span class="ident">tz</span>: <span class="ident">CGFloat</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
-    <span class="kw">fn</span> <span class="ident">CATransform3DMakeScale</span>(<span class="ident">sx</span>: <span class="ident">CGFloat</span>, <span class="ident">sy</span>: <span class="ident">CGFloat</span>, <span class="ident">sz</span>: <span class="ident">CGFloat</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DIsIdentity</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DEqualToTransform</span>(<span class="ident">a</span>: <span class="ident">CATransform3D</span>, <span class="ident">b</span>: <span class="ident">CATransform3D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DMakeTranslation</span>(<span class="ident">tx</span>: <span class="ident">CGFloat</span>, <span class="ident">ty</span>: <span class="ident">CGFloat</span>, <span class="ident">tz</span>: <span class="ident">CGFloat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DMakeScale</span>(<span class="ident">sx</span>: <span class="ident">CGFloat</span>, <span class="ident">sy</span>: <span class="ident">CGFloat</span>, <span class="ident">sz</span>: <span class="ident">CGFloat</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
     <span class="kw">fn</span> <span class="ident">CATransform3DMakeRotation</span>(<span class="ident">angle</span>: <span class="ident">CGFloat</span>, <span class="ident">x</span>: <span class="ident">CGFloat</span>, <span class="ident">y</span>: <span class="ident">CGFloat</span>, <span class="ident">z</span>: <span class="ident">CGFloat</span>)
-                                 <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
+                                 <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
     <span class="kw">fn</span> <span class="ident">CATransform3DTranslate</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>, <span class="ident">tx</span>: <span class="ident">CGFloat</span>, <span class="ident">ty</span>: <span class="ident">CGFloat</span>, <span class="ident">tz</span>: <span class="ident">CGFloat</span>)
-                              <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
+                              <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
     <span class="kw">fn</span> <span class="ident">CATransform3DScale</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>, <span class="ident">sx</span>: <span class="ident">CGFloat</span>, <span class="ident">sy</span>: <span class="ident">CGFloat</span>, <span class="ident">sz</span>: <span class="ident">CGFloat</span>)
-                          <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
+                          <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
     <span class="kw">fn</span> <span class="ident">CATransform3DRotate</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>, <span class="ident">angle</span>: <span class="ident">CGFloat</span>, <span class="ident">x</span>: <span class="ident">CGFloat</span>, <span class="ident">y</span>: <span class="ident">CGFloat</span>, <span class="ident">z</span>: <span class="ident">CGFloat</span>)
-                           <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
-    <span class="kw">fn</span> <span class="ident">CATransform3DConcat</span>(<span class="ident">a</span>: <span class="ident">CATransform3D</span>, <span class="ident">b</span>: <span class="ident">CATransform3D</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
-    <span class="kw">fn</span> <span class="ident">CATransform3DInvert</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
-    <span class="kw">fn</span> <span class="ident">CATransform3DMakeAffineTransform</span>(<span class="ident">m</span>: <span class="ident">CGAffineTransform</span>) <span class="op">-&gt;</span> <span class="ident">CATransform3D</span>;
-    <span class="kw">fn</span> <span class="ident">CATransform3DIsAffine</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
-    <span class="kw">fn</span> <span class="ident">CATransform3DGetAffineTransform</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>) <span class="op">-&gt;</span> <span class="ident">CGAffineTransform</span>;
+                           <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DConcat</span>(<span class="ident">a</span>: <span class="ident">CATransform3D</span>, <span class="ident">b</span>: <span class="ident">CATransform3D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DInvert</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DMakeAffineTransform</span>(<span class="ident">m</span>: <span class="ident">CGAffineTransform</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CATransform3D</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DIsAffine</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">CATransform3DGetAffineTransform</span>(<span class="ident">t</span>: <span class="ident">CATransform3D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CGAffineTransform</span>;
 }
 
 <span class="comment">// Miscellaneous structures in other frameworks.</span>
@@ -3677,13 +3679,13 @@
 
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="ident">u64</span>;
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampVideoTimeValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">0</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampHostTimeValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampSMPTETimeValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">2</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampVideoRefreshPeriodValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">3</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampRateScalarValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">4</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampTopField</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampBottomField</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">17</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampVideoTimeValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampHostTimeValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampSMPTETimeValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampVideoRefreshPeriodValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampRateScalarValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampTopField</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">16</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampBottomField</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">17</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampVideoHostTimeValid</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span>
     <span class="ident">kCVTimeStampVideoTimeValid</span> <span class="op">|</span> <span class="ident">kCVTimeStampHostTimeValid</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVTimeStampIsInterlaced</span>: <span class="ident">CVTimeStampFlags</span> <span class="op">=</span>
@@ -3716,7 +3718,7 @@
 
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">CVSMPTETimeFlags</span> <span class="op">=</span> <span class="ident">u32</span>;
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVSMPTETimeValid</span>:    <span class="ident">CVSMPTETimeFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">0</span>;
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVSMPTETimeRunning</span>:  <span class="ident">CVSMPTETimeFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVSMPTETimeValid</span>:    <span class="ident">CVSMPTETimeFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">kCVSMPTETimeRunning</span>:  <span class="ident">CVSMPTETimeFlags</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "cocoa";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shrev-1.1.1/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../shrev/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shrev-1.1.1/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../shrev/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -402,7 +404,7 @@
 <span class="kw">where</span>
     <span class="ident">E</span>: <span class="ident">Event</span>,
 {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">EventChannel</span>::<span class="ident">with_capacity</span>(<span class="ident">DEFAULT_CAPACITY</span>)
     }
 }
@@ -412,12 +414,12 @@
     <span class="ident">E</span>: <span class="ident">Event</span>,
 {
     <span class="doccomment">/// Create a new `EventChannel` with a default size of 64.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Default</span>::<span class="ident">default</span>()
     }
 
     <span class="doccomment">/// Create a new `EventChannel` with the given starting capacity.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_capacity</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_capacity</span>(<span class="ident">size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">storage</span>: <span class="ident">RingBuffer</span>::<span class="ident">new</span>(<span class="ident">size</span>),
         }
@@ -427,7 +429,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This can be used to skip calls to `iter_write` in case the event</span>
     <span class="doccomment">/// construction is expensive.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">would_write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">would_write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">storage</span>.<span class="ident">would_write</span>()
     }
 
@@ -443,7 +445,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Once you no longer perform `read`s with your `ReaderId`, you should</span>
     <span class="doccomment">/// drop it so the channel can safely overwrite events not read by it.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_reader</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_reader</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">storage</span>.<span class="ident">new_reader_id</span>()
     }
 
@@ -484,7 +486,7 @@
     <span class="doccomment">/// without iterating the result won&#39;t preserve the events returned. You</span>
     <span class="doccomment">/// need to iterate all the events as soon as you got them from this</span>
     <span class="doccomment">/// method. This behavior is equivalent to e.g. `Vec::drain`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader_id</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">EventIterator</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reader_id</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ReaderId</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EventIterator</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">storage</span>.<span class="ident">read</span>(<span class="ident">reader_id</span>)
     }
 }
@@ -507,12 +509,12 @@
 
         <span class="ident">channel</span>.<span class="ident">iter_write</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]);
 
-        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader0</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>();
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader0</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]);
 
         <span class="ident">channel</span>.<span class="ident">iter_write</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>]);
 
-        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader0</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>();
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader0</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">data</span>,
             <span class="macro">vec</span><span class="macro">!</span>[<span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>]
@@ -522,8 +524,8 @@
             <span class="ident">channel</span>.<span class="ident">single_write</span>(<span class="ident">i</span>);
         }
 
-        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader1</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, (<span class="number">1</span>..<span class="number">10_000</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>());
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader1</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">data</span>, (<span class="number">1</span>..<span class="number">10_000</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -536,12 +538,12 @@
         <span class="ident">channel</span>.<span class="ident">single_write</span>(<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">1</span> });
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">1</span> }],
-            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
         <span class="ident">channel</span>.<span class="ident">single_write</span>(<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">2</span> });
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">2</span> }],
-            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(
@@ -549,20 +551,20 @@
             <span class="ident">channel</span>
                 .<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id_extra</span>)
                 .<span class="ident">cloned</span>()
-                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
 
         <span class="ident">channel</span>.<span class="ident">single_write</span>(<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">3</span> });
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">3</span> }],
-            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">Test</span> { <span class="ident">id</span>: <span class="number">3</span> }],
             <span class="ident">channel</span>
                 .<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id_extra</span>)
                 .<span class="ident">cloned</span>()
-                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
     }
 
@@ -579,7 +581,7 @@
         <span class="comment">// Should be empty, because reader was created after the write</span>
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="ident">Vec</span>::<span class="op">&lt;</span><span class="ident">TestEvent</span><span class="op">&gt;</span>::<span class="ident">default</span>(),
-            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
 
         <span class="comment">// Should have data, as a second write was done</span>
@@ -587,7 +589,7 @@
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">TestEvent</span> { <span class="ident">data</span>: <span class="number">5</span> }],
-            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
 
         <span class="comment">// We can also just send in an iterator.</span>
@@ -599,7 +601,7 @@
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">TestEvent</span> { <span class="ident">data</span>: <span class="number">8</span> }, <span class="ident">TestEvent</span> { <span class="ident">data</span>: <span class="number">9</span> }],
-            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>()
+            <span class="ident">channel</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">reader_id</span>).<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()
         );
     }
 

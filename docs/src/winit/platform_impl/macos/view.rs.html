@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/view.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>view.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/view.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>view.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1116,7 +1118,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">CursorState</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">visible</span>: <span class="bool-val">true</span>,
             <span class="ident">cursor</span>: <span class="ident">Default</span>::<span class="ident">default</span>(),
@@ -1126,7 +1128,7 @@
 
 <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">struct</span> <span class="ident">ViewState</span> {
     <span class="ident">ns_window</span>: <span class="ident">id</span>,
-    <span class="kw">pub</span> <span class="ident">cursor_state</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CursorState</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">cursor_state</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CursorState</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">ime_spot</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">f64</span>, <span class="ident">f64</span>)<span class="op">&gt;</span>,
     <span class="ident">raw_characters</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">is_key_down</span>: <span class="ident">bool</span>,
@@ -1135,12 +1137,12 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ViewState</span> {
-    <span class="kw">fn</span> <span class="ident">get_scale_factor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">fn</span> <span class="ident">get_scale_factor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         (<span class="kw">unsafe</span> { <span class="ident">NSWindow</span>::<span class="ident">backingScaleFactor</span>(<span class="self">self</span>.<span class="ident">ns_window</span>) }) <span class="kw">as</span> <span class="ident">f64</span>
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_view</span>(<span class="ident">ns_window</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> (<span class="ident">IdRef</span>, <span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CursorState</span><span class="op">&gt;&gt;</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_view</span>(<span class="ident">ns_window</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">IdRef</span>, <span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CursorState</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
     <span class="kw">let</span> <span class="ident">cursor_state</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
     <span class="kw">let</span> <span class="ident">cursor_access</span> <span class="op">=</span> <span class="ident">Arc</span>::<span class="ident">downgrade</span>(<span class="kw-2">&amp;</span><span class="ident">cursor_state</span>);
     <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">ViewState</span> {
@@ -1185,7 +1187,7 @@
         <span class="ident">decl</span>.<span class="ident">add_method</span>(<span class="macro">sel</span><span class="macro">!</span>(<span class="ident">dealloc</span>), <span class="ident">dealloc</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>));
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">initWithWinit</span>:),
-            <span class="ident">init_with_winit</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">id</span>,
+            <span class="ident">init_with_winit</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">viewDidMoveToWindow</span>),
@@ -1197,11 +1199,11 @@
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">acceptsFirstResponder</span>),
-            <span class="ident">accepts_first_responder</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">accepts_first_responder</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">touchBar</span>),
-            <span class="ident">touch_bar</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">touch_bar</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">resetCursorRects</span>),
@@ -1209,15 +1211,15 @@
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">hasMarkedText</span>),
-            <span class="ident">has_marked_text</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">has_marked_text</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">markedRange</span>),
-            <span class="ident">marked_range</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">NSRange</span>,
+            <span class="ident">marked_range</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSRange</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">selectedRange</span>),
-            <span class="ident">selected_range</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">NSRange</span>,
+            <span class="ident">selected_range</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSRange</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">setMarkedText</span>:<span class="ident">selectedRange</span>:<span class="ident">replacementRange</span>:),
@@ -1226,12 +1228,12 @@
         <span class="ident">decl</span>.<span class="ident">add_method</span>(<span class="macro">sel</span><span class="macro">!</span>(<span class="ident">unmarkText</span>), <span class="ident">unmark_text</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>));
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">validAttributesForMarkedText</span>),
-            <span class="ident">valid_attributes_for_marked_text</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">id</span>,
+            <span class="ident">valid_attributes_for_marked_text</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">attributedSubstringForProposedRange</span>:<span class="ident">actualRange</span>:),
             <span class="ident">attributed_substring_for_proposed_range</span>
-                <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">NSRange</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">id</span>,
+                <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">NSRange</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">insertText</span>:<span class="ident">replacementRange</span>:),
@@ -1239,12 +1241,12 @@
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">characterIndexForPoint</span>:),
-            <span class="ident">character_index_for_point</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">NSPoint</span>) <span class="op">-&gt;</span> <span class="ident">NSUInteger</span>,
+            <span class="ident">character_index_for_point</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">NSPoint</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSUInteger</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">firstRectForCharacterRange</span>:<span class="ident">actualRange</span>:),
             <span class="ident">first_rect_for_character_range</span>
-                <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">NSRange</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">NSRect</span>,
+                <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">NSRange</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSRect</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">doCommandBySelector</span>:),
@@ -1319,7 +1321,7 @@
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">_wantsKeyDownForEvent</span>:),
-            <span class="ident">wants_key_down_for_event</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">wants_key_down_for_event</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">cancelOperation</span>:),
@@ -1346,10 +1348,10 @@
     }
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">init_with_winit</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>, <span class="ident">state</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">init_with_winit</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>, <span class="ident">state</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="ident">this</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">this</span>, <span class="ident">init</span>];
-        <span class="kw">if</span> <span class="ident">this</span> <span class="op">!=</span> <span class="ident">nil</span> {
+        <span class="kw">if</span> <span class="ident">this</span> <span class="op">!</span><span class="op">=</span> <span class="ident">nil</span> {
             (<span class="kw-2">*</span><span class="ident">this</span>).<span class="ident">set_ivar</span>(<span class="string">&quot;winitState&quot;</span>, <span class="ident">state</span>);
             <span class="kw">let</span> <span class="ident">marked_text</span> <span class="op">=</span>
                 <span class="op">&lt;</span><span class="ident">id</span> <span class="kw">as</span> <span class="ident">NSMutableAttributedString</span><span class="op">&gt;</span>::<span class="ident">init</span>(<span class="ident">NSMutableAttributedString</span>::<span class="ident">alloc</span>(<span class="ident">nil</span>));
@@ -1427,14 +1429,14 @@
     }
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">accepts_first_responder</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">accepts_first_responder</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span> {
     <span class="ident">YES</span>
 }
 
 <span class="comment">// This is necessary to prevent a beefy terminal error on MacBook Pros:</span>
 <span class="comment">// IMKInputSession [0x7fc573576ff0 presentFunctionRowItemTextInputViewWithEndpoint:completionHandler:] : [self textInputContext]=0x7fc573558e10 *NO* NSRemoteViewController to client, NSError=Error Domain=NSCocoaErrorDomain Code=4099 &quot;The connection from pid 0 was invalidated from this process.&quot; UserInfo={NSDebugDescription=The connection from pid 0 was invalidated from this process.}, com.apple.inputmethod.EmojiFunctionRowItem</span>
 <span class="comment">// TODO: Add an API extension for using `NSTouchBar`</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">touch_bar</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">touch_bar</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span> {
     <span class="ident">NO</span>
 }
 
@@ -1457,7 +1459,7 @@
     }
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">has_marked_text</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">has_marked_text</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span> {
     <span class="kw">unsafe</span> {
         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `hasMarkedText`&quot;</span>);
         <span class="kw">let</span> <span class="ident">marked_text</span>: <span class="ident">id</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">this</span>.<span class="ident">get_ivar</span>(<span class="string">&quot;markedText&quot;</span>);
@@ -1466,7 +1468,7 @@
     }
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">marked_range</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">NSRange</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">marked_range</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSRange</span> {
     <span class="kw">unsafe</span> {
         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `markedRange`&quot;</span>);
         <span class="kw">let</span> <span class="ident">marked_text</span>: <span class="ident">id</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">this</span>.<span class="ident">get_ivar</span>(<span class="string">&quot;markedText&quot;</span>);
@@ -1480,7 +1482,7 @@
     }
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">selected_range</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">NSRange</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">selected_range</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSRange</span> {
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `selectedRange`&quot;</span>);
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Completed `selectedRange`&quot;</span>);
     <span class="ident">util</span>::<span class="ident">EMPTY_RANGE</span>
@@ -1521,7 +1523,7 @@
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Completed `unmarkText`&quot;</span>);
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">valid_attributes_for_marked_text</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">valid_attributes_for_marked_text</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `validAttributesForMarkedText`&quot;</span>);
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Completed `validAttributesForMarkedText`&quot;</span>);
     <span class="kw">unsafe</span> { <span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">NSArray</span>), <span class="ident">array</span>] }
@@ -1532,13 +1534,13 @@
     <span class="ident">_sel</span>: <span class="ident">Sel</span>,
     <span class="ident">_range</span>: <span class="ident">NSRange</span>,
     <span class="ident">_actual_range</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="comment">// *mut NSRange</span>
-) <span class="op">-&gt;</span> <span class="ident">id</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `attributedSubstringForProposedRange`&quot;</span>);
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Completed `attributedSubstringForProposedRange`&quot;</span>);
     <span class="ident">nil</span>
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">character_index_for_point</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>, <span class="ident">_point</span>: <span class="ident">NSPoint</span>) <span class="op">-&gt;</span> <span class="ident">NSUInteger</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">character_index_for_point</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>, <span class="ident">_point</span>: <span class="ident">NSPoint</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSUInteger</span> {
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `characterIndexForPoint`&quot;</span>);
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Completed `characterIndexForPoint`&quot;</span>);
     <span class="number">0</span>
@@ -1549,12 +1551,12 @@
     <span class="ident">_sel</span>: <span class="ident">Sel</span>,
     <span class="ident">_range</span>: <span class="ident">NSRange</span>,
     <span class="ident">_actual_range</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="comment">// *mut NSRange</span>
-) <span class="op">-&gt;</span> <span class="ident">NSRect</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSRect</span> {
     <span class="kw">unsafe</span> {
         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `firstRectForCharacterRange`&quot;</span>);
         <span class="kw">let</span> <span class="ident">state_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">this</span>.<span class="ident">get_ivar</span>(<span class="string">&quot;winitState&quot;</span>);
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span>(<span class="ident">state_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ViewState</span>);
-        <span class="kw">let</span> (<span class="ident">x</span>, <span class="ident">y</span>) <span class="op">=</span> <span class="ident">state</span>.<span class="ident">ime_spot</span>.<span class="ident">unwrap_or_else</span>(<span class="op">||</span> {
+        <span class="kw">let</span> (<span class="ident">x</span>, <span class="ident">y</span>) <span class="op">=</span> <span class="ident">state</span>.<span class="ident">ime_spot</span>.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">content_rect</span> <span class="op">=</span> <span class="ident">NSWindow</span>::<span class="ident">contentRectForFrameRect_</span>(
                 <span class="ident">state</span>.<span class="ident">ns_window</span>,
                 <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="ident">state</span>.<span class="ident">ns_window</span>),
@@ -1613,7 +1615,7 @@
         <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span>(<span class="ident">state_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ViewState</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">events</span> <span class="op">=</span> <span class="ident">VecDeque</span>::<span class="ident">with_capacity</span>(<span class="number">1</span>);
-        <span class="kw">if</span> <span class="ident">command</span> <span class="op">==</span> <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">insertNewline</span>:) {
+        <span class="kw">if</span> <span class="ident">command</span> <span class="op">=</span><span class="op">=</span> <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">insertNewline</span>:) {
             <span class="comment">// The `else` condition would emit the same character, but I&#39;m keeping this here both...</span>
             <span class="comment">// 1) as a reminder for how `doCommandBySelector` works</span>
             <span class="comment">// 2) to make our use of carriage return explicit</span>
@@ -1641,7 +1643,7 @@
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Completed `doCommandBySelector`&quot;</span>);
 }
 
-<span class="kw">fn</span> <span class="ident">get_characters</span>(<span class="ident">event</span>: <span class="ident">id</span>, <span class="ident">ignore_modifiers</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+<span class="kw">fn</span> <span class="ident">get_characters</span>(<span class="ident">event</span>: <span class="ident">id</span>, <span class="ident">ignore_modifiers</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="ident">characters</span>: <span class="ident">id</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">ignore_modifiers</span> {
             <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">event</span>, <span class="ident">charactersIgnoringModifiers</span>]
@@ -1659,7 +1661,7 @@
 }
 
 <span class="comment">// As defined in: https://www.unicode.org/Public/MAPPINGS/VENDORS/APPLE/CORPCHAR.TXT</span>
-<span class="kw">fn</span> <span class="ident">is_corporate_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">fn</span> <span class="ident">is_corporate_character</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="kw">match</span> <span class="ident">c</span> {
         <span class="string">&#39;\u{F700}&#39;</span>..<span class="op">=</span><span class="string">&#39;\u{F747}&#39;</span>
         <span class="op">|</span> <span class="string">&#39;\u{F802}&#39;</span>..<span class="op">=</span><span class="string">&#39;\u{F84F}&#39;</span>
@@ -1668,22 +1670,22 @@
         <span class="op">|</span> <span class="string">&#39;\u{F85D}&#39;</span>
         <span class="op">|</span> <span class="string">&#39;\u{F85F}&#39;</span>
         <span class="op">|</span> <span class="string">&#39;\u{F860}&#39;</span>..<span class="op">=</span><span class="string">&#39;\u{F86B}&#39;</span>
-        <span class="op">|</span> <span class="string">&#39;\u{F870}&#39;</span>..<span class="op">=</span><span class="string">&#39;\u{F8FF}&#39;</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+        <span class="op">|</span> <span class="string">&#39;\u{F870}&#39;</span>..<span class="op">=</span><span class="string">&#39;\u{F8FF}&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
     }
 }
 
 <span class="comment">// Retrieves a layout-independent keycode given an event.</span>
-<span class="kw">fn</span> <span class="ident">retrieve_keycode</span>(<span class="ident">event</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VirtualKeyCode</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">retrieve_keycode</span>(<span class="ident">event</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VirtualKeyCode</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">get_code</span>(<span class="ident">ev</span>: <span class="ident">id</span>, <span class="ident">raw</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VirtualKeyCode</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">get_code</span>(<span class="ident">ev</span>: <span class="ident">id</span>, <span class="ident">raw</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VirtualKeyCode</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">characters</span> <span class="op">=</span> <span class="ident">get_characters</span>(<span class="ident">ev</span>, <span class="ident">raw</span>);
         <span class="ident">characters</span>.<span class="ident">chars</span>().<span class="ident">next</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">char_to_keycode</span>(<span class="ident">c</span>))
     }
 
     <span class="comment">// Cmd switches Roman letters for Dvorak-QWERTY layout, so we try modified characters first.</span>
     <span class="comment">// If we don&#39;t get a match, then we fall back to unmodified characters.</span>
-    <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="ident">get_code</span>(<span class="ident">event</span>, <span class="bool-val">false</span>).<span class="ident">or_else</span>(<span class="op">||</span> <span class="ident">get_code</span>(<span class="ident">event</span>, <span class="bool-val">true</span>));
+    <span class="kw">let</span> <span class="ident">code</span> <span class="op">=</span> <span class="ident">get_code</span>(<span class="ident">event</span>, <span class="bool-val">false</span>).<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">get_code</span>(<span class="ident">event</span>, <span class="bool-val">true</span>));
 
     <span class="comment">// We&#39;ve checked all layout related keys, so fall through to scancode.</span>
     <span class="comment">// Reaching this code means that the key is layout-independent (e.g. Backspace, Return).</span>
@@ -1691,16 +1693,16 @@
     <span class="comment">// We&#39;re additionally checking here for F21-F24 keys, since their keycode</span>
     <span class="comment">// can vary, but we know that they are encoded</span>
     <span class="comment">// in characters property.</span>
-    <span class="ident">code</span>.<span class="ident">or_else</span>(<span class="op">||</span> {
+    <span class="ident">code</span>.<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="ident">scancode</span> <span class="op">=</span> <span class="ident">get_scancode</span>(<span class="ident">event</span>);
-        <span class="ident">scancode_to_keycode</span>(<span class="ident">scancode</span>).<span class="ident">or_else</span>(<span class="op">||</span> <span class="ident">check_function_keys</span>(<span class="kw-2">&amp;</span><span class="ident">get_characters</span>(<span class="ident">event</span>, <span class="bool-val">true</span>)))
+        <span class="ident">scancode_to_keycode</span>(<span class="ident">scancode</span>).<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">check_function_keys</span>(<span class="kw-2">&amp;</span><span class="ident">get_characters</span>(<span class="ident">event</span>, <span class="bool-val">true</span>)))
     })
 }
 
 <span class="comment">// Update `state.modifiers` if `event` has something different</span>
 <span class="kw">fn</span> <span class="ident">update_potentially_stale_modifiers</span>(<span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ViewState</span>, <span class="ident">event</span>: <span class="ident">id</span>) {
     <span class="kw">let</span> <span class="ident">event_modifiers</span> <span class="op">=</span> <span class="ident">event_mods</span>(<span class="ident">event</span>);
-    <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">modifiers</span> <span class="op">!=</span> <span class="ident">event_modifiers</span> {
+    <span class="kw">if</span> <span class="ident">state</span>.<span class="ident">modifiers</span> <span class="op">!</span><span class="op">=</span> <span class="ident">event_modifiers</span> {
         <span class="ident">state</span>.<span class="ident">modifiers</span> <span class="op">=</span> <span class="ident">event_modifiers</span>;
 
         <span class="ident">AppState</span>::<span class="ident">queue_event</span>(<span class="ident">EventWrapper</span>::<span class="ident">StaticEvent</span>(<span class="ident">Event</span>::<span class="ident">WindowEvent</span> {
@@ -1868,7 +1870,7 @@
         <span class="kw">let</span> <span class="ident">window</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">this</span>, <span class="ident">window</span>];
         <span class="kw">let</span> <span class="ident">first_responder</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">window</span>, <span class="ident">firstResponder</span>];
         <span class="kw">let</span> <span class="ident">this_ptr</span> <span class="op">=</span> <span class="ident">this</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
-        <span class="kw">if</span> <span class="ident">first_responder</span> <span class="op">==</span> <span class="ident">this_ptr</span> {
+        <span class="kw">if</span> <span class="ident">first_responder</span> <span class="op">=</span><span class="op">=</span> <span class="ident">this_ptr</span> {
             <span class="kw">let</span> (): <span class="kw">_</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">window</span>, <span class="ident">selectNextKeyView</span>: <span class="ident">this</span>];
         }
     }
@@ -1879,7 +1881,7 @@
         <span class="kw">let</span> <span class="ident">window</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">this</span>, <span class="ident">window</span>];
         <span class="kw">let</span> <span class="ident">first_responder</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">window</span>, <span class="ident">firstResponder</span>];
         <span class="kw">let</span> <span class="ident">this_ptr</span> <span class="op">=</span> <span class="ident">this</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>;
-        <span class="kw">if</span> <span class="ident">first_responder</span> <span class="op">==</span> <span class="ident">this_ptr</span> {
+        <span class="kw">if</span> <span class="ident">first_responder</span> <span class="op">=</span><span class="op">=</span> <span class="ident">this_ptr</span> {
             <span class="kw">let</span> (): <span class="kw">_</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">window</span>, <span class="ident">selectPreviousKeyView</span>: <span class="ident">this</span>];
         }
     }
@@ -1985,9 +1987,9 @@
         <span class="kw">let</span> <span class="ident">view_rect</span> <span class="op">=</span> <span class="ident">NSView</span>::<span class="ident">frame</span>(<span class="ident">view</span>);
 
         <span class="kw">if</span> <span class="ident">view_point</span>.<span class="ident">x</span>.<span class="ident">is_sign_negative</span>()
-            <span class="op">||</span> <span class="ident">view_point</span>.<span class="ident">y</span>.<span class="ident">is_sign_negative</span>()
-            <span class="op">||</span> <span class="ident">view_point</span>.<span class="ident">x</span> <span class="op">&gt;</span> <span class="ident">view_rect</span>.<span class="ident">size</span>.<span class="ident">width</span>
-            <span class="op">||</span> <span class="ident">view_point</span>.<span class="ident">y</span> <span class="op">&gt;</span> <span class="ident">view_rect</span>.<span class="ident">size</span>.<span class="ident">height</span>
+            <span class="op">|</span><span class="op">|</span> <span class="ident">view_point</span>.<span class="ident">y</span>.<span class="ident">is_sign_negative</span>()
+            <span class="op">|</span><span class="op">|</span> <span class="ident">view_point</span>.<span class="ident">x</span> <span class="op">&gt;</span> <span class="ident">view_rect</span>.<span class="ident">size</span>.<span class="ident">width</span>
+            <span class="op">|</span><span class="op">|</span> <span class="ident">view_point</span>.<span class="ident">y</span> <span class="op">&gt;</span> <span class="ident">view_rect</span>.<span class="ident">size</span>.<span class="ident">height</span>
         {
             <span class="comment">// Point is outside of the client area (view)</span>
             <span class="kw">return</span>;
@@ -2072,18 +2074,18 @@
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="ident">delta</span> <span class="op">=</span> {
             <span class="kw">let</span> (<span class="ident">x</span>, <span class="ident">y</span>) <span class="op">=</span> (<span class="ident">event</span>.<span class="ident">scrollingDeltaX</span>(), <span class="ident">event</span>.<span class="ident">scrollingDeltaY</span>());
-            <span class="kw">if</span> <span class="ident">event</span>.<span class="ident">hasPreciseScrollingDeltas</span>() <span class="op">==</span> <span class="ident">YES</span> {
+            <span class="kw">if</span> <span class="ident">event</span>.<span class="ident">hasPreciseScrollingDeltas</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span> {
                 <span class="ident">MouseScrollDelta</span>::<span class="ident">PixelDelta</span>((<span class="ident">x</span> <span class="kw">as</span> <span class="ident">f64</span>, <span class="ident">y</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">into</span>())
             } <span class="kw">else</span> {
                 <span class="ident">MouseScrollDelta</span>::<span class="ident">LineDelta</span>(<span class="ident">x</span> <span class="kw">as</span> <span class="ident">f32</span>, <span class="ident">y</span> <span class="kw">as</span> <span class="ident">f32</span>)
             }
         };
         <span class="kw">let</span> <span class="ident">phase</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">event</span>.<span class="ident">phase</span>() {
-            <span class="ident">NSEventPhase</span>::<span class="ident">NSEventPhaseMayBegin</span> <span class="op">|</span> <span class="ident">NSEventPhase</span>::<span class="ident">NSEventPhaseBegan</span> <span class="op">=&gt;</span> {
+            <span class="ident">NSEventPhase</span>::<span class="ident">NSEventPhaseMayBegin</span> <span class="op">|</span> <span class="ident">NSEventPhase</span>::<span class="ident">NSEventPhaseBegan</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">TouchPhase</span>::<span class="ident">Started</span>
             }
-            <span class="ident">NSEventPhase</span>::<span class="ident">NSEventPhaseEnded</span> <span class="op">=&gt;</span> <span class="ident">TouchPhase</span>::<span class="ident">Ended</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">TouchPhase</span>::<span class="ident">Moved</span>,
+            <span class="ident">NSEventPhase</span>::<span class="ident">NSEventPhaseEnded</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TouchPhase</span>::<span class="ident">Ended</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TouchPhase</span>::<span class="ident">Moved</span>,
         };
 
         <span class="kw">let</span> <span class="ident">device_event</span> <span class="op">=</span> <span class="ident">Event</span>::<span class="ident">DeviceEvent</span> {
@@ -2141,7 +2143,7 @@
 <span class="comment">// Allows us to receive Ctrl-Tab and Ctrl-Esc.</span>
 <span class="comment">// Note that this *doesn&#39;t* help with any missing Cmd inputs.</span>
 <span class="comment">// https://github.com/chromium/chromium/blob/a86a8a6bcfa438fa3ac2eba6f02b3ad1f8e0756f/ui/views/cocoa/bridged_content_view.mm#L816</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">wants_key_down_for_event</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>, <span class="ident">_event</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">wants_key_down_for_event</span>(<span class="ident">_this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>, <span class="ident">_event</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span> {
     <span class="ident">YES</span>
 }
 </pre></div>

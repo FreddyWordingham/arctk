@@ -1,5 +1,6 @@
 (function() {var implementors = {};
 implementors["aho_corasick"] = [{"text":"impl StructuralEq for MatchKind","synthetic":false,"types":[]},{"text":"impl StructuralEq for MatchKind","synthetic":false,"types":[]},{"text":"impl StructuralEq for Match","synthetic":false,"types":[]}];
+implementors["arctk"] = [{"text":"impl StructuralEq for Name","synthetic":false,"types":[]}];
 implementors["arrayvec"] = [{"text":"impl&lt;T&gt; StructuralEq for CapacityError&lt;T&gt;","synthetic":false,"types":[]}];
 implementors["bracket_color"] = [{"text":"impl StructuralEq for XpColor","synthetic":false,"types":[]}];
 implementors["bracket_geometry"] = [{"text":"impl StructuralEq for Point","synthetic":false,"types":[]},{"text":"impl StructuralEq for Point3","synthetic":false,"types":[]},{"text":"impl StructuralEq for Rect","synthetic":false,"types":[]}];

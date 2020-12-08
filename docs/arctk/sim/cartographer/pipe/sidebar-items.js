@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["input","Simulation input."],["output","Output data structure."],["parameters_builder","Startup parameters file."],["parameters_linker","Startup parameters file."]]});

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shred-0.10.2/src/system.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>system.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../shred/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shred-0.10.2/src/system.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>system.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../shred/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -483,7 +485,7 @@
     <span class="doccomment">/// Tries to create a new instance of this type. This one returns `Some` in</span>
     <span class="doccomment">/// case there is a default, otherwise the system needs to override</span>
     <span class="doccomment">/// `System::accessor`.</span>
-    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// A list of [`ResourceId`]s the bundle</span>
     <span class="doccomment">/// needs read access to in order to</span>
@@ -499,7 +501,7 @@
     <span class="doccomment">/// (otherwise it has no effect).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`ResourceId`]: struct.ResourceId.html</span>
-    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// A list of [`ResourceId`]s the bundle</span>
     <span class="doccomment">/// needs write access to in order to</span>
@@ -515,33 +517,33 @@
     <span class="doccomment">/// (otherwise it has no effect).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`ResourceId`]: struct.ResourceId.html</span>
-    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span> <span class="ident">Accessor</span> <span class="kw">for</span> () {
-    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="ident">Vec</span>::<span class="ident">new</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="ident">Vec</span>::<span class="ident">new</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">Accessor</span> <span class="kw">for</span> <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="ident">Vec</span>::<span class="ident">new</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="ident">Vec</span>::<span class="ident">new</span>()
     }
 }
@@ -567,15 +569,15 @@
 {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">AccessorTy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">AccessorTy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">AccessorTy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">AccessorCow</span>::<span class="ident">Ref</span>(<span class="ident">r</span>) <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">r</span>,
-            <span class="ident">AccessorCow</span>::<span class="ident">Owned</span>(<span class="kw-2">ref</span> <span class="ident">o</span>) <span class="op">=&gt;</span> <span class="ident">o</span>,
+            <span class="ident">AccessorCow</span>::<span class="ident">Ref</span>(<span class="ident">r</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">r</span>,
+            <span class="ident">AccessorCow</span>::<span class="ident">Owned</span>(<span class="kw-2">ref</span> <span class="ident">o</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">o</span>,
         }
     }
 }
 
-<span class="kw">type</span> <span class="ident">AccessorTy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">System</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>::<span class="ident">SystemData</span> <span class="kw">as</span> <span class="ident">DynamicSystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>::<span class="ident">Accessor</span>;
+<span class="kw">type</span> <span class="ident">AccessorTy</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">System</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">SystemData</span> <span class="kw">as</span> <span class="ident">DynamicSystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">Accessor</span>;
 
 <span class="doccomment">/// Trait for fetching data and running systems. Automatically implemented for</span>
 <span class="doccomment">/// systems.</span>
@@ -653,12 +655,12 @@
     <span class="doccomment">/// allow more parallelization).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Defaults to `RunningTime::Average`.</span>
-    <span class="kw">fn</span> <span class="ident">running_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RunningTime</span> {
+    <span class="kw">fn</span> <span class="ident">running_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RunningTime</span> {
         <span class="ident">RunningTime</span>::<span class="ident">Average</span>
     }
 
     <span class="doccomment">/// Return the accessor from the [`SystemData`].</span>
-    <span class="kw">fn</span> <span class="ident">accessor</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">AccessorCow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">accessor</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AccessorCow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">AccessorCow</span>::<span class="ident">Owned</span>(
             <span class="ident">AccessorTy</span>::<span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="self">Self</span><span class="op">&gt;</span>::<span class="ident">try_new</span>().<span class="ident">expect</span>(<span class="string">&quot;Missing implementation for `accessor`&quot;</span>),
         )
@@ -744,17 +746,17 @@
     <span class="doccomment">/// Fetches the system data from `World`. Note that this is only specified</span>
     <span class="doccomment">/// for one concrete lifetime `&#39;a`, you need to implement the</span>
     <span class="doccomment">/// `SystemData` trait for every possible lifetime.</span>
-    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns all read dependencies as fetched from `Self::fetch`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Please note that returning wrong dependencies can lead to a panic.</span>
-    <span class="kw">fn</span> <span class="ident">reads</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">reads</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Returns all write dependencies as fetched from `Self::fetch`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Please note that returning wrong dependencies can lead to a panic.</span>
-    <span class="kw">fn</span> <span class="ident">writes</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">writes</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DynamicSystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span>
@@ -767,7 +769,7 @@
         <span class="ident">T</span>::<span class="ident">setup</span>(<span class="ident">world</span>);
     }
 
-    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">StaticAccessor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">StaticAccessor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">T</span>::<span class="ident">fetch</span>(<span class="ident">world</span>)
     }
 }
@@ -775,13 +777,13 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">SystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> () {
     <span class="kw">fn</span> <span class="ident">setup</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">World</span>) {}
 
-    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {}
+    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {}
 
-    <span class="kw">fn</span> <span class="ident">reads</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">reads</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="ident">Vec</span>::<span class="ident">new</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">writes</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">writes</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="ident">Vec</span>::<span class="ident">new</span>()
     }
 }
@@ -789,24 +791,24 @@
 <span class="doccomment">/// The static accessor that is used for `SystemData`.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StaticAccessor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="ident">marker</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw">fn</span>() <span class="op">-&gt;</span> <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">marker</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw">fn</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Accessor</span> <span class="kw">for</span> <span class="ident">StaticAccessor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">SystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="ident">StaticAccessor</span> {
             <span class="ident">marker</span>: <span class="ident">PhantomData</span>,
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="ident">T</span>::<span class="ident">reads</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="ident">T</span>::<span class="ident">writes</span>()
     }
 }
@@ -839,27 +841,27 @@
     <span class="doccomment">/// fallback value.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`World`]: trait.World.html</span>
-    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="ident">access</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Accessor</span>, <span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="ident">access</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Accessor</span>, <span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">SystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">setup</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">World</span>) {}
 
-    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">World</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">World</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">PhantomData</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">reads</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">reads</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="macro">vec</span><span class="macro">!</span>[]
     }
 
-    <span class="kw">fn</span> <span class="ident">writes</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">writes</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="macro">vec</span><span class="macro">!</span>[]
     }
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_data</span> {
-    ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span>),<span class="op">*</span> ) <span class="op">=&gt;</span> {
+    ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span>),<span class="op">*</span> ) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>),<span class="kw-2">*</span><span class="op">&gt;</span> <span class="ident">SystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> ( $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> , )<span class="op">*</span> )
             <span class="kw">where</span> $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> : <span class="ident">SystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> ),<span class="op">*</span>
             {
@@ -871,13 +873,13 @@
                      )<span class="op">*</span>
                 }
 
-                <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unused_variables</span>)]</span>
 
-                    ( $( <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> <span class="kw">as</span> <span class="ident">SystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>::<span class="ident">fetch</span>(<span class="ident">world</span>), )<span class="op">*</span> )
+                    ( $( <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> <span class="kw">as</span> <span class="ident">SystemData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">fetch</span>(<span class="ident">world</span>), )<span class="op">*</span> )
                 }
 
-                <span class="kw">fn</span> <span class="ident">reads</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+                <span class="kw">fn</span> <span class="ident">reads</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
                     <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
 
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
@@ -890,7 +892,7 @@
                     <span class="ident">r</span>
                 }
 
-                <span class="kw">fn</span> <span class="ident">writes</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+                <span class="kw">fn</span> <span class="ident">writes</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
                     <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span>
 
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();

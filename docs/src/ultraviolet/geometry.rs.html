@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ultraviolet-0.4.6/src/geometry.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>geometry.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ultraviolet/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ultraviolet-0.4.6/src/geometry.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>geometry.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ultraviolet/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -430,18 +432,18 @@
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_plane_ray</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">pn</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rn</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>:<span class="ident">ident</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> {
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">pn</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rn</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>:<span class="ident">ident</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=</span><span class="op">&gt;</span> {
         $(
             <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rn</span> {
                 <span class="doccomment">/// Returns the distance along the ray which intersects with the provided `Plane`</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersect_plane</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plane</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pn</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersect_plane</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plane</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span> {
                     <span class="ident">plane</span>.<span class="ident">intersect_ray</span>(<span class="kw-2">*</span><span class="self">self</span>)
                 }
 
                 <span class="doccomment">/// Returns a `Vec3` along the ray at a distance `t` from it&#39;s origin.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at_distance</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">z</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at_distance</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">z</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span> {
                     <span class="self">self</span>.<span class="ident">direction</span>.<span class="ident">mul_add</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>::<span class="ident">broadcast</span>(<span class="ident">z</span>), <span class="self">self</span>.<span class="ident">origin</span>)
                 }
             }
@@ -449,13 +451,13 @@
             <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pn</span> {
                 <span class="doccomment">/// Create a new `Plane`.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">normal</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">bias</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">normal</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">bias</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pn</span> { <span class="ident">normal</span>, <span class="ident">bias</span> }
                 }
 
                 <span class="doccomment">/// Create a new `Plane` from a point normal representation. The normal parameter must already be normalized.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_point_normal</span>(<span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">normal</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_point_normal</span>(<span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">normal</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="self">Self</span> {
                         <span class="ident">normal</span>,
                         <span class="ident">bias</span>: <span class="ident">point</span>.<span class="ident">dot</span>(<span class="ident">normal</span>),
@@ -464,31 +466,31 @@
 
                 <span class="doccomment">/// Create a new `Plane` from a point normal representation</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_point_vectors</span>(<span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">v1</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">v2</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_point_vectors</span>(<span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">v1</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">v2</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="self">Self</span>::<span class="ident">from_point_normal</span>(<span class="ident">point</span>, <span class="ident">v1</span>.<span class="ident">cross</span>(<span class="ident">v2</span>))
                 }
 
                 <span class="doccomment">/// Create a `Plane` which is facing along the X-Axis at the provided coordinate.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_x</span>(<span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_x</span>(<span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="self">Self</span>::<span class="ident">from_point_normal</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>::<span class="ident">new</span>(<span class="number">1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>,))
                 }
 
                 <span class="doccomment">/// Create a `Plane` which is facing along the Y-Axis at the provided coordinate.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_y</span>(<span class="ident">y</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_y</span>(<span class="ident">y</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="self">Self</span>::<span class="ident">from_point_normal</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>::<span class="ident">new</span>(<span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="ident">y</span>, <span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>::<span class="ident">new</span>(<span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="number">1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>))
                 }
 
                 <span class="doccomment">/// Create a `Plane` which is facing along the Z-Axis at the provided coordinate.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_z</span>(<span class="ident">z</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_z</span>(<span class="ident">z</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="self">Self</span>::<span class="ident">from_point_normal</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>::<span class="ident">new</span>(<span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="ident">z</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>::<span class="ident">new</span>(<span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="number">0</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="number">1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>))
                 }
 
                 <span class="doccomment">/// f32his `Plane` normal</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span> {
                     <span class="self">self</span>.<span class="ident">normal</span>
                 }
 
@@ -496,13 +498,13 @@
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
                 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>)  {
                     <span class="kw">let</span> <span class="ident">distance</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">mag</span>();
-                    <span class="self">self</span>.<span class="ident">normal</span> <span class="op">/=</span> <span class="ident">distance</span>;
-                    <span class="self">self</span>.<span class="ident">bias</span> <span class="op">/=</span> <span class="ident">distance</span>;
+                    <span class="self">self</span>.<span class="ident">normal</span> <span class="op">/</span><span class="op">=</span> <span class="ident">distance</span>;
+                    <span class="self">self</span>.<span class="ident">bias</span> <span class="op">/</span><span class="op">=</span> <span class="ident">distance</span>;
                 }
 
                 <span class="doccomment">/// Normalized representation of this `Plane`</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="kw">let</span> <span class="ident">distance</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">mag</span>();
                     <span class="self">Self</span> {
                         <span class="ident">normal</span>: <span class="self">self</span>.<span class="ident">normal</span> <span class="op">/</span> <span class="ident">distance</span>,
@@ -512,19 +514,19 @@
 
                 <span class="doccomment">/// Returns the dot product of this `Plane` and a provided `Vec3`</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
                     <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">x</span> <span class="op">*</span> <span class="ident">point</span>.<span class="ident">x</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">y</span> <span class="op">*</span> <span class="ident">point</span>.<span class="ident">y</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">z</span> <span class="op">*</span> <span class="ident">point</span>.<span class="ident">z</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">bias</span>
                 }
 
                 <span class="doccomment">/// Returns the dot product of this `Plane` and a provided `Vec3`, assumed to be a normal, computed with this planes normal.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
                     <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">x</span> <span class="op">*</span> <span class="ident">point</span>.<span class="ident">x</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">y</span> <span class="op">*</span> <span class="ident">point</span>.<span class="ident">y</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">z</span> <span class="op">*</span> <span class="ident">point</span>.<span class="ident">z</span>
                 }
 
                 <span class="doccomment">/// Returns the dot product of this `Plane` with another `Plane`. This is computed against the two plane normals.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot_plane</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plane</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pn</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dot_plane</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">plane</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
                     <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">x</span> <span class="op">*</span> <span class="ident">plane</span>.<span class="ident">normal</span>.<span class="ident">x</span>
                         <span class="op">+</span> <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">y</span> <span class="op">*</span> <span class="ident">plane</span>.<span class="ident">normal</span>.<span class="ident">y</span>
                         <span class="op">+</span> <span class="self">self</span>.<span class="ident">normal</span>.<span class="ident">z</span> <span class="op">*</span> <span class="ident">plane</span>.<span class="ident">normal</span>.<span class="ident">z</span>
@@ -535,7 +537,7 @@
                 <span class="doccomment">///</span>
                 <span class="doccomment">/// Warning: These intersection methods do not check for the ray never intersecting. This is up to the user to confirm.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersect_line</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">direction</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersect_line</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">point</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">direction</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="ident">fv</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dot</span>(<span class="ident">direction</span>);
                     <span class="kw">let</span> <span class="ident">distance</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dot_point</span>(<span class="ident">point</span>) <span class="op">/</span> <span class="ident">fv</span>;
 
@@ -546,7 +548,7 @@
                 <span class="doccomment">///</span>
                 <span class="doccomment">/// Warning: These intersection methods do not check for the ray never intersecting. This is up to the user to confirm.</span>
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersect_ray</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ray</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rn</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span> {
+                <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersect_ray</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ray</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">intersect_line</span>(<span class="ident">ray</span>.<span class="ident">origin</span>, <span class="ident">ray</span>.<span class="ident">direction</span>)
                 }
             }
@@ -554,9 +556,9 @@
     }
 }
 
-<span class="macro">impl_plane_ray</span><span class="macro">!</span>(<span class="ident">Plane</span>, <span class="ident">Ray</span>, <span class="ident">Vec3</span> <span class="op">=&gt;</span> <span class="ident">f32</span>);
-<span class="macro">impl_plane_ray</span><span class="macro">!</span>(<span class="ident">Planeu</span>, <span class="ident">Rayu</span>, <span class="ident">Vec3u</span> <span class="op">=&gt;</span> <span class="ident">u32</span>);
-<span class="macro">impl_plane_ray</span><span class="macro">!</span>(<span class="ident">Planei</span>, <span class="ident">Rayi</span>, <span class="ident">Vec3i</span> <span class="op">=&gt;</span> <span class="ident">i32</span>);
+<span class="macro">impl_plane_ray</span><span class="macro">!</span>(<span class="ident">Plane</span>, <span class="ident">Ray</span>, <span class="ident">Vec3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f32</span>);
+<span class="macro">impl_plane_ray</span><span class="macro">!</span>(<span class="ident">Planeu</span>, <span class="ident">Rayu</span>, <span class="ident">Vec3u</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u32</span>);
+<span class="macro">impl_plane_ray</span><span class="macro">!</span>(<span class="ident">Planei</span>, <span class="ident">Rayi</span>, <span class="ident">Vec3i</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i32</span>);
 
 <span class="doccomment">/// An axis-aligned bounding box</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
@@ -583,7 +585,7 @@
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_aabb</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">iter</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>:<span class="ident">ident</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> {
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">iter</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>:<span class="ident">ident</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=</span><span class="op">&gt;</span> {
         $(
         <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span> {
             <span class="doccomment">/// Creates a new axis-aligned bounding box.</span>
@@ -591,44 +593,44 @@
             <span class="doccomment">/// `min` **must** be less than or equal to `max`. This is not checked by the library, but will result in</span>
             <span class="doccomment">/// bad results and/or unsigned integer underflow if it is not held.</span>
             <span class="attribute">#[<span class="ident">must_use</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">min</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">max</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">min</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>, <span class="ident">max</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                 <span class="self">Self</span> { <span class="ident">min</span>, <span class="ident">max</span> }
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="attribute">#[<span class="ident">must_use</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-                <span class="ident">target</span>.<span class="ident">x</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">min</span>.<span class="ident">x</span>
-                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">x</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">x</span>
-                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">y</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">min</span>.<span class="ident">y</span>
-                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">y</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">y</span>
-                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">z</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">min</span>.<span class="ident">z</span>
-                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">z</span> <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">z</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+                <span class="ident">target</span>.<span class="ident">x</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">min</span>.<span class="ident">x</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">x</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">x</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">y</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">min</span>.<span class="ident">y</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">y</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">y</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">z</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">min</span>.<span class="ident">z</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">target</span>.<span class="ident">z</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">z</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="attribute">#[<span class="ident">must_use</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersects</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-                (<span class="self">self</span>.<span class="ident">min</span>.<span class="ident">x</span> <span class="op">&lt;=</span> <span class="ident">other</span>.<span class="ident">max</span>.<span class="ident">x</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">x</span> <span class="op">&gt;=</span> <span class="ident">other</span>.<span class="ident">min</span>.<span class="ident">x</span>)
-                    <span class="op">&amp;&amp;</span> (<span class="self">self</span>.<span class="ident">min</span>.<span class="ident">y</span> <span class="op">&lt;=</span> <span class="ident">other</span>.<span class="ident">max</span>.<span class="ident">y</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">y</span> <span class="op">&gt;=</span> <span class="ident">other</span>.<span class="ident">min</span>.<span class="ident">y</span>)
-                    <span class="op">&amp;&amp;</span> (<span class="self">self</span>.<span class="ident">min</span>.<span class="ident">z</span> <span class="op">&lt;=</span> <span class="ident">other</span>.<span class="ident">max</span>.<span class="ident">z</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">z</span> <span class="op">&gt;=</span> <span class="ident">other</span>.<span class="ident">min</span>.<span class="ident">z</span>)
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersects</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+                (<span class="self">self</span>.<span class="ident">min</span>.<span class="ident">x</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">max</span>.<span class="ident">x</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">x</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">min</span>.<span class="ident">x</span>)
+                    <span class="op">&amp;&amp;</span> (<span class="self">self</span>.<span class="ident">min</span>.<span class="ident">y</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">max</span>.<span class="ident">y</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">y</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">min</span>.<span class="ident">y</span>)
+                    <span class="op">&amp;&amp;</span> (<span class="self">self</span>.<span class="ident">min</span>.<span class="ident">z</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">max</span>.<span class="ident">z</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">max</span>.<span class="ident">z</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">min</span>.<span class="ident">z</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="attribute">#[<span class="ident">must_use</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span> {
                 <span class="self">self</span>.<span class="ident">max</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">min</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="attribute">#[<span class="ident">must_use</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
                 <span class="self">self</span>.<span class="ident">size</span>().<span class="ident">x</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">size</span>().<span class="ident">y</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">size</span>().<span class="ident">z</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="attribute">#[<span class="ident">must_use</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_stride</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">stride</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">iter</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter_stride</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">stride</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">iter</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">iter</span>::<span class="ident">new</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="ident">stride</span>)
             }
         }
@@ -643,7 +645,7 @@
         <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">iter</span> {
             <span class="doccomment">/// Create a new iterator.</span>
             <span class="attribute">#[<span class="ident">must_use</span>]</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">region</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>, <span class="ident">stride</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">region</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>, <span class="ident">stride</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                 <span class="self">Self</span> {
                     <span class="ident">track</span>: <span class="ident">region</span>.<span class="ident">min</span>,
                     <span class="ident">region</span>,
@@ -654,23 +656,23 @@
         <span class="kw">impl</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">iter</span> {
             <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v3t</span>;
 
-            <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">track</span>;
 
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">z</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">max</span>.<span class="ident">z</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">z</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">max</span>.<span class="ident">z</span> {
                     <span class="kw">return</span> <span class="prelude-val">None</span>;
                 }
 
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">x</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">max</span>.<span class="ident">x</span> <span class="op">-</span> (<span class="number">1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) {
-                    <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">y</span> <span class="op">+=</span> <span class="self">self</span>.<span class="ident">stride</span>;
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">x</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">max</span>.<span class="ident">x</span> <span class="op">-</span> (<span class="number">1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) {
+                    <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">y</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">stride</span>;
                     <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">x</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">min</span>.<span class="ident">x</span>;
                 } <span class="kw">else</span> {
-                    <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">x</span> <span class="op">+=</span> <span class="self">self</span>.<span class="ident">stride</span>;
+                    <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">x</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">stride</span>;
                     <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">ret</span>);
                 }
 
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">y</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">max</span>.<span class="ident">y</span> {
-                    <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">z</span> <span class="op">+=</span> <span class="self">self</span>.<span class="ident">stride</span>;
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">y</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">max</span>.<span class="ident">y</span> {
+                    <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">z</span> <span class="op">+</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">stride</span>;
 
                     <span class="self">self</span>.<span class="ident">track</span>.<span class="ident">y</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">min</span>.<span class="ident">y</span>;
                 }
@@ -679,7 +681,7 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+            <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
                 <span class="kw">let</span> <span class="ident">cur_volume</span> <span class="op">=</span> (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">track</span>, <span class="self">self</span>.<span class="ident">region</span>.<span class="ident">max</span>).<span class="ident">volume</span>() <span class="op">/</span> <span class="self">self</span>.<span class="ident">stride</span> <span class="op">/</span> <span class="self">self</span>.<span class="ident">stride</span> <span class="op">/</span> <span class="self">self</span>.<span class="ident">stride</span>) <span class="kw">as</span> <span class="ident">usize</span>;
                 <span class="kw">let</span> <span class="ident">volume</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">region</span>.<span class="ident">volume</span>() <span class="op">/</span> <span class="self">self</span>.<span class="ident">stride</span> <span class="op">/</span> <span class="self">self</span>.<span class="ident">stride</span> <span class="op">/</span> <span class="self">self</span>.<span class="ident">stride</span>) <span class="kw">as</span> <span class="ident">usize</span>;
                 (<span class="ident">volume</span> <span class="op">-</span> <span class="ident">cur_volume</span>, <span class="prelude-val">Some</span>(<span class="ident">volume</span>))
@@ -694,7 +696,7 @@
     <span class="doccomment">/// Same as iter_stride, but calls it with a stride of 1.0</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">AabbLinearIterator</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AabbLinearIterator</span> {
         <span class="self">self</span>.<span class="ident">iter_stride</span>(<span class="number">1.0</span>)
     }
 }
@@ -703,7 +705,7 @@
     <span class="doccomment">/// Same as iter_stride, but calls it with a stride of 1.0</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">AabbuLinearIterator</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AabbuLinearIterator</span> {
         <span class="self">self</span>.<span class="ident">iter_stride</span>(<span class="number">1</span>)
     }
 }
@@ -712,11 +714,11 @@
     <span class="doccomment">/// Same as iter_stride, but calls it with a stride of 1.0</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">AabbiLinearIterator</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AabbiLinearIterator</span> {
         <span class="self">self</span>.<span class="ident">iter_stride</span>(<span class="number">1</span>)
     }
 }
 
-<span class="macro">impl_aabb</span><span class="macro">!</span>(<span class="ident">Aabb</span>, <span class="ident">AabbLinearIterator</span>, <span class="ident">Vec3</span> <span class="op">=&gt;</span> <span class="ident">f32</span>, <span class="ident">Aabbu</span>, <span class="ident">AabbuLinearIterator</span>, <span class="ident">Vec3u</span> <span class="op">=&gt;</span> <span class="ident">u32</span>, <span class="ident">Aabbi</span>, <span class="ident">AabbiLinearIterator</span>, <span class="ident">Vec3i</span> <span class="op">=&gt;</span> <span class="ident">i32</span>);
+<span class="macro">impl_aabb</span><span class="macro">!</span>(<span class="ident">Aabb</span>, <span class="ident">AabbLinearIterator</span>, <span class="ident">Vec3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f32</span>, <span class="ident">Aabbu</span>, <span class="ident">AabbuLinearIterator</span>, <span class="ident">Vec3u</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u32</span>, <span class="ident">Aabbi</span>, <span class="ident">AabbiLinearIterator</span>, <span class="ident">Vec3i</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">i32</span>);
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "ultraviolet";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/window.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>window.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/window.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>window.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1202,14 +1204,14 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Id</span>(<span class="kw">pub</span> <span class="ident">usize</span>);
 
 <span class="kw">impl</span> <span class="ident">Id</span> {
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">dummy</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">dummy</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Id</span>(<span class="number">0</span>)
     }
 }
 
 <span class="comment">// Convert the `cocoa::base::id` associated with a window to a usize to use as a unique identifier</span>
 <span class="comment">// for the window.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_window_id</span>(<span class="ident">window_cocoa_id</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">Id</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_window_id</span>(<span class="ident">window_cocoa_id</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Id</span> {
     <span class="ident">Id</span>(<span class="ident">window_cocoa_id</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Object</span> <span class="kw">as</span> <span class="kw">_</span>)
 }
 
@@ -1222,21 +1224,21 @@
     <span class="kw">pub</span> <span class="ident">titlebar_hidden</span>: <span class="ident">bool</span>,
     <span class="kw">pub</span> <span class="ident">titlebar_buttons_hidden</span>: <span class="ident">bool</span>,
     <span class="kw">pub</span> <span class="ident">fullsize_content_view</span>: <span class="ident">bool</span>,
-    <span class="kw">pub</span> <span class="ident">resize_increments</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LogicalSize</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">resize_increments</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">LogicalSize</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">disallow_hidpi</span>: <span class="ident">bool</span>,
 }
 
-<span class="kw">fn</span> <span class="ident">create_app</span>(<span class="ident">activation_policy</span>: <span class="ident">ActivationPolicy</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">id</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">create_app</span>(<span class="ident">activation_policy</span>: <span class="ident">ActivationPolicy</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">id</span><span class="op">&gt;</span> {
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="ident">ns_app</span> <span class="op">=</span> <span class="ident">NSApp</span>();
-        <span class="kw">if</span> <span class="ident">ns_app</span> <span class="op">==</span> <span class="ident">nil</span> {
+        <span class="kw">if</span> <span class="ident">ns_app</span> <span class="op">=</span><span class="op">=</span> <span class="ident">nil</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="kw">use</span> <span class="self">self</span>::<span class="ident">NSApplicationActivationPolicy</span>::<span class="kw-2">*</span>;
             <span class="ident">ns_app</span>.<span class="ident">setActivationPolicy_</span>(<span class="kw">match</span> <span class="ident">activation_policy</span> {
-                <span class="ident">ActivationPolicy</span>::<span class="ident">Regular</span> <span class="op">=&gt;</span> <span class="ident">NSApplicationActivationPolicyRegular</span>,
-                <span class="ident">ActivationPolicy</span>::<span class="ident">Accessory</span> <span class="op">=&gt;</span> <span class="ident">NSApplicationActivationPolicyAccessory</span>,
-                <span class="ident">ActivationPolicy</span>::<span class="ident">Prohibited</span> <span class="op">=&gt;</span> <span class="ident">NSApplicationActivationPolicyProhibited</span>,
+                <span class="ident">ActivationPolicy</span>::<span class="ident">Regular</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NSApplicationActivationPolicyRegular</span>,
+                <span class="ident">ActivationPolicy</span>::<span class="ident">Accessory</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NSApplicationActivationPolicyAccessory</span>,
+                <span class="ident">ActivationPolicy</span>::<span class="ident">Prohibited</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NSApplicationActivationPolicyProhibited</span>,
             });
             <span class="ident">ns_app</span>.<span class="ident">finishLaunching</span>();
             <span class="prelude-val">Some</span>(<span class="ident">ns_app</span>)
@@ -1247,7 +1249,7 @@
 <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">create_view</span>(
     <span class="ident">ns_window</span>: <span class="ident">id</span>,
     <span class="ident">pl_attribs</span>: <span class="kw-2">&amp;</span><span class="ident">PlatformSpecificWindowBuilderAttributes</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">IdRef</span>, <span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CursorState</span><span class="op">&gt;&gt;</span>)<span class="op">&gt;</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">IdRef</span>, <span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CursorState</span><span class="op">&gt;</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
     <span class="kw">let</span> (<span class="ident">ns_view</span>, <span class="ident">cursor_state</span>) <span class="op">=</span> <span class="ident">new_view</span>(<span class="ident">ns_window</span>);
     <span class="ident">ns_view</span>.<span class="ident">non_nil</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">ns_view</span><span class="op">|</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="ident">pl_attribs</span>.<span class="ident">disallow_hidpi</span> {
@@ -1272,30 +1274,30 @@
 <span class="kw">fn</span> <span class="ident">create_window</span>(
     <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="ident">WindowAttributes</span>,
     <span class="ident">pl_attrs</span>: <span class="kw-2">&amp;</span><span class="ident">PlatformSpecificWindowBuilderAttributes</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">IdRef</span><span class="op">&gt;</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">IdRef</span><span class="op">&gt;</span> {
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="ident">NSAutoreleasePool</span>::<span class="ident">new</span>(<span class="ident">nil</span>);
         <span class="kw">let</span> <span class="ident">screen</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">attrs</span>.<span class="ident">fullscreen</span> {
             <span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="ident">RootMonitorHandle</span> { <span class="ident">inner</span>: <span class="kw-2">ref</span> <span class="ident">monitor</span> }))
             <span class="op">|</span> <span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="ident">RootVideoMode</span> {
                 <span class="ident">video_mode</span>: <span class="ident">VideoMode</span> { <span class="kw-2">ref</span> <span class="ident">monitor</span>, .. },
-            })) <span class="op">=&gt;</span> {
+            })) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">monitor_screen</span> <span class="op">=</span> <span class="ident">monitor</span>.<span class="ident">ns_screen</span>();
                 <span class="prelude-val">Some</span>(<span class="ident">monitor_screen</span>.<span class="ident">unwrap_or</span>(<span class="ident">appkit</span>::<span class="ident">NSScreen</span>::<span class="ident">mainScreen</span>(<span class="ident">nil</span>)))
             }
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         };
         <span class="kw">let</span> <span class="ident">frame</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">screen</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">screen</span>) <span class="op">=&gt;</span> <span class="ident">NSScreen</span>::<span class="ident">frame</span>(<span class="ident">screen</span>),
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">screen</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NSScreen</span>::<span class="ident">frame</span>(<span class="ident">screen</span>),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">screen</span> <span class="op">=</span> <span class="ident">NSScreen</span>::<span class="ident">mainScreen</span>(<span class="ident">nil</span>);
                 <span class="kw">let</span> <span class="ident">scale_factor</span> <span class="op">=</span> <span class="ident">NSScreen</span>::<span class="ident">backingScaleFactor</span>(<span class="ident">screen</span>) <span class="kw">as</span> <span class="ident">f64</span>;
                 <span class="kw">let</span> (<span class="ident">width</span>, <span class="ident">height</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">attrs</span>.<span class="ident">inner_size</span> {
-                    <span class="prelude-val">Some</span>(<span class="ident">size</span>) <span class="op">=&gt;</span> {
+                    <span class="prelude-val">Some</span>(<span class="ident">size</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">let</span> <span class="ident">logical</span> <span class="op">=</span> <span class="ident">size</span>.<span class="ident">to_logical</span>(<span class="ident">scale_factor</span>);
                         (<span class="ident">logical</span>.<span class="ident">width</span>, <span class="ident">logical</span>.<span class="ident">height</span>)
                     }
-                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> (<span class="number">800.0</span>, <span class="number">600.0</span>),
+                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> (<span class="number">800.0</span>, <span class="number">600.0</span>),
                 };
                 <span class="ident">NSRect</span>::<span class="ident">new</span>(<span class="ident">NSPoint</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>), <span class="ident">NSSize</span>::<span class="ident">new</span>(<span class="ident">width</span>, <span class="ident">height</span>))
             }
@@ -1325,7 +1327,7 @@
         }
 
         <span class="kw">if</span> <span class="ident">pl_attrs</span>.<span class="ident">fullsize_content_view</span> {
-            <span class="ident">masks</span> <span class="op">|=</span> <span class="ident">NSWindowStyleMask</span>::<span class="ident">NSFullSizeContentViewWindowMask</span>;
+            <span class="ident">masks</span> <span class="op">|</span><span class="op">=</span> <span class="ident">NSWindowStyleMask</span>::<span class="ident">NSFullSizeContentViewWindowMask</span>;
         }
 
         <span class="kw">let</span> <span class="ident">ns_window</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">WINDOW_CLASS</span>.<span class="number">0</span>, <span class="ident">alloc</span>];
@@ -1371,7 +1373,7 @@
 
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">increments</span>) <span class="op">=</span> <span class="ident">pl_attrs</span>.<span class="ident">resize_increments</span> {
                 <span class="kw">let</span> (<span class="ident">x</span>, <span class="ident">y</span>) <span class="op">=</span> (<span class="ident">increments</span>.<span class="ident">width</span>, <span class="ident">increments</span>.<span class="ident">height</span>);
-                <span class="kw">if</span> <span class="ident">x</span> <span class="op">&gt;=</span> <span class="number">1.0</span> <span class="op">&amp;&amp;</span> <span class="ident">y</span> <span class="op">&gt;=</span> <span class="number">1.0</span> {
+                <span class="kw">if</span> <span class="ident">x</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">1.0</span> <span class="op">&amp;&amp;</span> <span class="ident">y</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">1.0</span> {
                     <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">NSSize</span>::<span class="ident">new</span>(<span class="ident">x</span> <span class="kw">as</span> <span class="ident">CGFloat</span>, <span class="ident">y</span> <span class="kw">as</span> <span class="ident">CGFloat</span>);
                     <span class="ident">ns_window</span>.<span class="ident">setResizeIncrements_</span>(<span class="ident">size</span>);
                 }
@@ -1395,11 +1397,11 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">decl</span> <span class="op">=</span> <span class="ident">ClassDecl</span>::<span class="ident">new</span>(<span class="string">&quot;WinitWindow&quot;</span>, <span class="ident">window_superclass</span>).<span class="ident">unwrap</span>();
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">canBecomeMainWindow</span>),
-            <span class="ident">util</span>::<span class="ident">yes</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">util</span>::<span class="ident">yes</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">canBecomeKeyWindow</span>),
-            <span class="ident">util</span>::<span class="ident">yes</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">util</span>::<span class="ident">yes</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">WindowClass</span>(<span class="ident">decl</span>.<span class="ident">register</span>())
     };
@@ -1415,7 +1417,7 @@
     <span class="kw">pub</span> <span class="ident">in_fullscreen_transition</span>: <span class="ident">bool</span>,
     <span class="comment">// If it is attempted to toggle fullscreen when in_fullscreen_transition is true,</span>
     <span class="comment">// Set target_fullscreen and do after fullscreen transition is end.</span>
-    <span class="kw">pub</span> <span class="ident">target_fullscreen</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Fullscreen</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">target_fullscreen</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Fullscreen</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">maximized</span>: <span class="ident">bool</span>,
     <span class="kw">pub</span> <span class="ident">standard_frame</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">NSRect</span><span class="op">&gt;</span>,
     <span class="ident">is_simple_fullscreen</span>: <span class="ident">bool</span>,
@@ -1427,14 +1429,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SharedState</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">saved_standard_frame</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">NSRect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">saved_standard_frame</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSRect</span> {
         <span class="self">self</span>.<span class="ident">standard_frame</span>
-            .<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="ident">NSRect</span>::<span class="ident">new</span>(<span class="ident">NSPoint</span>::<span class="ident">new</span>(<span class="number">50.0</span>, <span class="number">50.0</span>), <span class="ident">NSSize</span>::<span class="ident">new</span>(<span class="number">800.0</span>, <span class="number">600.0</span>)))
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">NSRect</span>::<span class="ident">new</span>(<span class="ident">NSPoint</span>::<span class="ident">new</span>(<span class="number">50.0</span>, <span class="number">50.0</span>), <span class="ident">NSSize</span>::<span class="ident">new</span>(<span class="number">800.0</span>, <span class="number">600.0</span>)))
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">WindowAttributes</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SharedState</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">attribs</span>: <span class="ident">WindowAttributes</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">attribs</span>: <span class="ident">WindowAttributes</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">SharedState</span> {
             <span class="ident">resizable</span>: <span class="ident">attribs</span>.<span class="ident">resizable</span>,
             <span class="comment">// This fullscreen field tracks the current state of the window</span>
@@ -1454,10 +1456,10 @@
     <span class="kw">pub</span> <span class="ident">ns_window</span>: <span class="ident">IdRef</span>, <span class="comment">// never changes</span>
     <span class="kw">pub</span> <span class="ident">ns_view</span>: <span class="ident">IdRef</span>,   <span class="comment">// never changes</span>
     <span class="ident">input_context</span>: <span class="ident">IdRef</span>, <span class="comment">// never changes</span>
-    <span class="kw">pub</span> <span class="ident">shared_state</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">SharedState</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">shared_state</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">SharedState</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">decorations</span>: <span class="ident">AtomicBool</span>,
-    <span class="ident">cursor_state</span>: <span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CursorState</span><span class="op">&gt;&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">inner_rect</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">cursor_state</span>: <span class="ident">Weak</span><span class="op">&lt;</span><span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CursorState</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">inner_rect</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">UnownedWindow</span> {}
@@ -1467,7 +1469,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
         <span class="kw-2">mut</span> <span class="ident">win_attribs</span>: <span class="ident">WindowAttributes</span>,
         <span class="ident">pl_attribs</span>: <span class="ident">PlatformSpecificWindowBuilderAttributes</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Arc</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">IdRef</span>), <span class="ident">RootOsError</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Arc</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">IdRef</span>), <span class="ident">RootOsError</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">if</span> <span class="op">!</span><span class="macro">msg_send</span><span class="macro">!</span>[<span class="macro">class</span><span class="macro">!</span>(<span class="ident">NSThread</span>), <span class="ident">isMainThread</span>] {
                 <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Windows can only be created on the main thread on macOS&quot;</span>);
@@ -1476,18 +1478,18 @@
 
         <span class="kw">let</span> <span class="ident">pool</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NSAutoreleasePool</span>::<span class="ident">new</span>(<span class="ident">nil</span>) };
 
-        <span class="kw">let</span> <span class="ident">ns_app</span> <span class="op">=</span> <span class="ident">create_app</span>(<span class="ident">pl_attribs</span>.<span class="ident">activation_policy</span>).<span class="ident">ok_or_else</span>(<span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">ns_app</span> <span class="op">=</span> <span class="ident">create_app</span>(<span class="ident">pl_attribs</span>.<span class="ident">activation_policy</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> {
             <span class="kw">unsafe</span> { <span class="ident">pool</span>.<span class="ident">drain</span>() };
             <span class="macro">os_error</span><span class="macro">!</span>(<span class="ident">OsError</span>::<span class="ident">CreationError</span>(<span class="string">&quot;Couldn&#39;t create `NSApplication`&quot;</span>))
         })<span class="question-mark">?</span>;
 
-        <span class="kw">let</span> <span class="ident">ns_window</span> <span class="op">=</span> <span class="ident">create_window</span>(<span class="kw-2">&amp;</span><span class="ident">win_attribs</span>, <span class="kw-2">&amp;</span><span class="ident">pl_attribs</span>).<span class="ident">ok_or_else</span>(<span class="op">||</span> {
+        <span class="kw">let</span> <span class="ident">ns_window</span> <span class="op">=</span> <span class="ident">create_window</span>(<span class="kw-2">&amp;</span><span class="ident">win_attribs</span>, <span class="kw-2">&amp;</span><span class="ident">pl_attribs</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> {
             <span class="kw">unsafe</span> { <span class="ident">pool</span>.<span class="ident">drain</span>() };
             <span class="macro">os_error</span><span class="macro">!</span>(<span class="ident">OsError</span>::<span class="ident">CreationError</span>(<span class="string">&quot;Couldn&#39;t create `NSWindow`&quot;</span>))
         })<span class="question-mark">?</span>;
 
         <span class="kw">let</span> (<span class="ident">ns_view</span>, <span class="ident">cursor_state</span>) <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="ident">create_view</span>(<span class="kw-2">*</span><span class="ident">ns_window</span>, <span class="kw-2">&amp;</span><span class="ident">pl_attribs</span>) }.<span class="ident">ok_or_else</span>(<span class="op">||</span> {
+            <span class="kw">unsafe</span> { <span class="ident">create_view</span>(<span class="kw-2">*</span><span class="ident">ns_window</span>, <span class="kw-2">&amp;</span><span class="ident">pl_attribs</span>) }.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> {
                 <span class="kw">unsafe</span> { <span class="ident">pool</span>.<span class="ident">drain</span>() };
                 <span class="macro">os_error</span><span class="macro">!</span>(<span class="ident">OsError</span>::<span class="ident">CreationError</span>(<span class="string">&quot;Couldn&#39;t create `NSView`&quot;</span>))
             })<span class="question-mark">?</span>;
@@ -1577,7 +1579,7 @@
         <span class="kw">unsafe</span> { <span class="ident">util</span>::<span class="ident">set_style_mask_sync</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>, <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_view</span>, <span class="ident">mask</span>) };
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Id</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Id</span> {
         <span class="ident">get_window_id</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>)
     }
 
@@ -1589,8 +1591,8 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_visible</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">visible</span>: <span class="ident">bool</span>) {
         <span class="kw">match</span> <span class="ident">visible</span> {
-            <span class="bool-val">true</span> <span class="op">=&gt;</span> <span class="kw">unsafe</span> { <span class="ident">util</span>::<span class="ident">make_key_and_order_front_async</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) },
-            <span class="bool-val">false</span> <span class="op">=&gt;</span> <span class="kw">unsafe</span> { <span class="ident">util</span>::<span class="ident">order_out_async</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) },
+            <span class="bool-val">true</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> { <span class="ident">util</span>::<span class="ident">make_key_and_order_front_async</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) },
+            <span class="bool-val">false</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> { <span class="ident">util</span>::<span class="ident">order_out_async</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) },
         }
     }
 
@@ -1598,7 +1600,7 @@
         <span class="ident">AppState</span>::<span class="ident">queue_redraw</span>(<span class="ident">RootWindowId</span>(<span class="self">self</span>.<span class="ident">id</span>()));
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PhysicalPosition</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">NotSupportedError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PhysicalPosition</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">NotSupportedError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">frame_rect</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) };
         <span class="kw">let</span> <span class="ident">position</span> <span class="op">=</span> <span class="ident">LogicalPosition</span>::<span class="ident">new</span>(
             <span class="ident">frame_rect</span>.<span class="ident">origin</span>.<span class="ident">x</span> <span class="kw">as</span> <span class="ident">f64</span>,
@@ -1608,7 +1610,7 @@
         <span class="prelude-val">Ok</span>(<span class="ident">position</span>.<span class="ident">to_physical</span>(<span class="ident">scale_factor</span>))
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PhysicalPosition</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">NotSupportedError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PhysicalPosition</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">NotSupportedError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">content_rect</span> <span class="op">=</span> <span class="kw">unsafe</span> {
             <span class="ident">NSWindow</span>::<span class="ident">contentRectForFrameRect_</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>, <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>))
         };
@@ -1638,7 +1640,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">view_frame</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NSView</span>::<span class="ident">frame</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_view</span>) };
         <span class="kw">let</span> <span class="ident">logical</span>: <span class="ident">LogicalSize</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span>
             (<span class="ident">view_frame</span>.<span class="ident">size</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">f64</span>, <span class="ident">view_frame</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">into</span>();
@@ -1647,7 +1649,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PhysicalSize</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">view_frame</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) };
         <span class="kw">let</span> <span class="ident">logical</span>: <span class="ident">LogicalSize</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span>
             (<span class="ident">view_frame</span>.<span class="ident">size</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">f64</span>, <span class="ident">view_frame</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="kw">as</span> <span class="ident">f64</span>).<span class="ident">into</span>();
@@ -1697,7 +1699,7 @@
         <span class="kw">if</span> <span class="op">!</span><span class="ident">fullscreen</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mask</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">ns_window</span>.<span class="ident">styleMask</span>() };
             <span class="kw">if</span> <span class="ident">resizable</span> {
-                <span class="ident">mask</span> <span class="op">|=</span> <span class="ident">NSWindowStyleMask</span>::<span class="ident">NSResizableWindowMask</span>;
+                <span class="ident">mask</span> <span class="op">|</span><span class="op">=</span> <span class="ident">NSWindowStyleMask</span>::<span class="ident">NSResizableWindowMask</span>;
             } <span class="kw">else</span> {
                 <span class="ident">mask</span> <span class="op">&amp;=</span> <span class="op">!</span><span class="ident">NSWindowStyleMask</span>::<span class="ident">NSResizableWindowMask</span>;
             }
@@ -1718,7 +1720,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_grab</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">grab</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExternalError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_grab</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">grab</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExternalError</span><span class="op">&gt;</span> {
         <span class="comment">// TODO: Do this for real https://stackoverflow.com/a/40922095/5435443</span>
         <span class="ident">CGDisplay</span>::<span class="ident">associate_mouse_and_mouse_cursor_position</span>(<span class="op">!</span><span class="ident">grab</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">status</span><span class="op">|</span> <span class="ident">ExternalError</span>::<span class="ident">Os</span>(<span class="macro">os_error</span><span class="macro">!</span>(<span class="ident">OsError</span>::<span class="ident">CGError</span>(<span class="ident">status</span>))))
@@ -1728,7 +1730,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_visible</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">visible</span>: <span class="ident">bool</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">cursor_access</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">cursor_state</span>.<span class="ident">upgrade</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor_state</span> <span class="op">=</span> <span class="ident">cursor_access</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-            <span class="kw">if</span> <span class="ident">visible</span> <span class="op">!=</span> <span class="ident">cursor_state</span>.<span class="ident">visible</span> {
+            <span class="kw">if</span> <span class="ident">visible</span> <span class="op">!</span><span class="op">=</span> <span class="ident">cursor_state</span>.<span class="ident">visible</span> {
                 <span class="ident">cursor_state</span>.<span class="ident">visible</span> <span class="op">=</span> <span class="ident">visible</span>;
                 <span class="ident">drop</span>(<span class="ident">cursor_state</span>);
                 <span class="kw">unsafe</span> {
@@ -1741,12 +1743,12 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale_factor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale_factor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="kw">unsafe</span> { <span class="ident">NSWindow</span>::<span class="ident">backingScaleFactor</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) <span class="kw">as</span> <span class="kw">_</span> }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cursor_position</span>: <span class="ident">Position</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExternalError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_cursor_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">cursor_position</span>: <span class="ident">Position</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ExternalError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">physical_window_position</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner_position</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">scale_factor</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scale_factor</span>();
         <span class="kw">let</span> <span class="ident">window_position</span> <span class="op">=</span> <span class="ident">physical_window_position</span>.<span class="ident">to_logical</span>::<span class="op">&lt;</span><span class="ident">CGFloat</span><span class="op">&gt;</span>(<span class="ident">scale_factor</span>);
@@ -1763,7 +1765,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_zoomed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_zoomed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="comment">// because `isZoomed` doesn&#39;t work if the window&#39;s borderless,</span>
         <span class="comment">// we make it resizable temporalily.</span>
         <span class="kw">let</span> <span class="ident">curr_mask</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">ns_window</span>.<span class="ident">styleMask</span>() };
@@ -1782,14 +1784,14 @@
             <span class="self">self</span>.<span class="ident">set_style_mask_async</span>(<span class="ident">curr_mask</span>);
         }
 
-        <span class="ident">is_zoomed</span> <span class="op">!=</span> <span class="number">0</span>
+        <span class="ident">is_zoomed</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">saved_style</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">shared_state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SharedState</span>) <span class="op">-&gt;</span> <span class="ident">NSWindowStyleMask</span> {
+    <span class="kw">fn</span> <span class="ident">saved_style</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">shared_state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">SharedState</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSWindowStyleMask</span> {
         <span class="kw">let</span> <span class="ident">base_mask</span> <span class="op">=</span> <span class="ident">shared_state</span>
             .<span class="ident">saved_style</span>
             .<span class="ident">take</span>()
-            .<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">ns_window</span>.<span class="ident">styleMask</span>() });
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">ns_window</span>.<span class="ident">styleMask</span>() });
         <span class="kw">if</span> <span class="ident">shared_state</span>.<span class="ident">resizable</span> {
             <span class="ident">base_mask</span> <span class="op">|</span> <span class="ident">NSWindowStyleMask</span>::<span class="ident">NSResizableWindowMask</span>
         } <span class="kw">else</span> {
@@ -1819,8 +1821,8 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_minimized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">minimized</span>: <span class="ident">bool</span>) {
         <span class="kw">let</span> <span class="ident">is_minimized</span>: <span class="ident">BOOL</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="macro">msg_send</span><span class="macro">!</span>[<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>, <span class="ident">isMiniaturized</span>] };
-        <span class="kw">let</span> <span class="ident">is_minimized</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="ident">is_minimized</span> <span class="op">==</span> <span class="ident">YES</span>;
-        <span class="kw">if</span> <span class="ident">is_minimized</span> <span class="op">==</span> <span class="ident">minimized</span> {
+        <span class="kw">let</span> <span class="ident">is_minimized</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="ident">is_minimized</span> <span class="op">=</span><span class="op">=</span> <span class="ident">YES</span>;
+        <span class="kw">if</span> <span class="ident">is_minimized</span> <span class="op">=</span><span class="op">=</span> <span class="ident">minimized</span> {
             <span class="kw">return</span>;
         }
 
@@ -1838,7 +1840,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_maximized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">maximized</span>: <span class="ident">bool</span>) {
         <span class="kw">let</span> <span class="ident">is_zoomed</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_zoomed</span>();
-        <span class="kw">if</span> <span class="ident">is_zoomed</span> <span class="op">==</span> <span class="ident">maximized</span> {
+        <span class="kw">if</span> <span class="ident">is_zoomed</span> <span class="op">=</span><span class="op">=</span> <span class="ident">maximized</span> {
             <span class="kw">return</span>;
         };
         <span class="kw">unsafe</span> {
@@ -1852,7 +1854,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fullscreen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Fullscreen</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fullscreen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Fullscreen</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">shared_state_lock</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_state</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
         <span class="ident">shared_state_lock</span>.<span class="ident">fullscreen</span>.<span class="ident">clone</span>()
     }
@@ -1873,7 +1875,7 @@
             <span class="kw">return</span>;
         }
         <span class="kw">let</span> <span class="ident">old_fullscreen</span> <span class="op">=</span> <span class="ident">shared_state_lock</span>.<span class="ident">fullscreen</span>.<span class="ident">clone</span>();
-        <span class="kw">if</span> <span class="ident">fullscreen</span> <span class="op">==</span> <span class="ident">old_fullscreen</span> {
+        <span class="kw">if</span> <span class="ident">fullscreen</span> <span class="op">=</span><span class="op">=</span> <span class="ident">old_fullscreen</span> {
             <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Unlocked shared state in `set_fullscreen`&quot;</span>);
             <span class="kw">return</span>;
         }
@@ -1885,21 +1887,21 @@
         <span class="comment">// does not take a screen parameter, but uses the current screen)</span>
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">fullscreen</span>) <span class="op">=</span> <span class="ident">fullscreen</span> {
             <span class="kw">let</span> <span class="ident">new_screen</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">fullscreen</span> {
-                <span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="ident">RootMonitorHandle</span> { <span class="ident">inner</span>: <span class="kw-2">ref</span> <span class="ident">monitor</span> }) <span class="op">=&gt;</span> <span class="ident">monitor</span>,
+                <span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="ident">RootMonitorHandle</span> { <span class="ident">inner</span>: <span class="kw-2">ref</span> <span class="ident">monitor</span> }) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">monitor</span>,
                 <span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="ident">RootVideoMode</span> {
                     <span class="ident">video_mode</span>: <span class="ident">VideoMode</span> { <span class="kw-2">ref</span> <span class="ident">monitor</span>, .. },
-                }) <span class="op">=&gt;</span> <span class="ident">monitor</span>,
+                }) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">monitor</span>,
             }
             .<span class="ident">ns_screen</span>()
             .<span class="ident">unwrap</span>();
 
             <span class="kw">unsafe</span> {
                 <span class="kw">let</span> <span class="ident">old_screen</span> <span class="op">=</span> <span class="ident">NSWindow</span>::<span class="ident">screen</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>);
-                <span class="kw">if</span> <span class="ident">old_screen</span> <span class="op">!=</span> <span class="ident">new_screen</span> {
+                <span class="kw">if</span> <span class="ident">old_screen</span> <span class="op">!</span><span class="op">=</span> <span class="ident">new_screen</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">screen_frame</span>: <span class="ident">NSRect</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">new_screen</span>, <span class="ident">frame</span>];
                     <span class="comment">// The coordinate system here has its origin at bottom-left</span>
                     <span class="comment">// and Y goes up</span>
-                    <span class="ident">screen_frame</span>.<span class="ident">origin</span>.<span class="ident">y</span> <span class="op">+=</span> <span class="ident">screen_frame</span>.<span class="ident">size</span>.<span class="ident">height</span>;
+                    <span class="ident">screen_frame</span>.<span class="ident">origin</span>.<span class="ident">y</span> <span class="op">+</span><span class="op">=</span> <span class="ident">screen_frame</span>.<span class="ident">size</span>.<span class="ident">height</span>;
                     <span class="ident">util</span>::<span class="ident">set_frame_top_left_point_async</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>, <span class="ident">screen_frame</span>.<span class="ident">origin</span>);
                 }
             }
@@ -1926,7 +1928,7 @@
                 <span class="comment">// Fade to black (and wait for the fade to complete) to hide the</span>
                 <span class="comment">// flicker from capturing the display and switching display mode</span>
                 <span class="kw">if</span> <span class="ident">ffi</span>::<span class="ident">CGAcquireDisplayFadeReservation</span>(<span class="number">5.0</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fade_token</span>)
-                    <span class="op">==</span> <span class="ident">ffi</span>::<span class="ident">kCGErrorSuccess</span>
+                    <span class="op">=</span><span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">kCGErrorSuccess</span>
                 {
                     <span class="ident">ffi</span>::<span class="ident">CGDisplayFade</span>(
                         <span class="ident">fade_token</span>,
@@ -1949,11 +1951,11 @@
                     <span class="ident">video_mode</span>.<span class="ident">video_mode</span>.<span class="ident">native_mode</span>.<span class="number">0</span>,
                     <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null</span>(),
                 );
-                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span> <span class="op">==</span> <span class="ident">ffi</span>::<span class="ident">kCGErrorSuccess</span>, <span class="string">&quot;failed to set video mode&quot;</span>);
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">result</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">kCGErrorSuccess</span>, <span class="string">&quot;failed to set video mode&quot;</span>);
 
                 <span class="comment">// After the display has been configured, fade back in</span>
                 <span class="comment">// asynchronously</span>
-                <span class="kw">if</span> <span class="ident">fade_token</span> <span class="op">!=</span> <span class="ident">ffi</span>::<span class="ident">kCGDisplayFadeReservationInvalidToken</span> {
+                <span class="kw">if</span> <span class="ident">fade_token</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">kCGDisplayFadeReservationInvalidToken</span> {
                     <span class="ident">ffi</span>::<span class="ident">CGDisplayFade</span>(
                         <span class="ident">fade_token</span>,
                         <span class="number">0.6</span>,
@@ -1975,7 +1977,7 @@
         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Unlocked shared state in `set_fullscreen`&quot;</span>);
 
         <span class="kw">match</span> (<span class="kw-2">&amp;</span><span class="ident">old_fullscreen</span>, <span class="kw-2">&amp;</span><span class="ident">fullscreen</span>) {
-            (<span class="kw-2">&amp;</span><span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="kw">unsafe</span> {
+            (<span class="kw-2">&amp;</span><span class="prelude-val">None</span>, <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> {
                 <span class="ident">util</span>::<span class="ident">toggle_full_screen_async</span>(
                     <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>,
                     <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_view</span>,
@@ -1983,7 +1985,7 @@
                     <span class="ident">Arc</span>::<span class="ident">downgrade</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shared_state</span>),
                 );
             },
-            (<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="kw">_</span>)), <span class="kw-2">&amp;</span><span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="kw">unsafe</span> {
+            (<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="kw">_</span>)), <span class="kw-2">&amp;</span><span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> {
                 <span class="comment">// State is restored by `window_did_exit_fullscreen`</span>
                 <span class="ident">util</span>::<span class="ident">toggle_full_screen_async</span>(
                     <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>,
@@ -1992,7 +1994,7 @@
                     <span class="ident">Arc</span>::<span class="ident">downgrade</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shared_state</span>),
                 );
             },
-            (<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="ident">RootVideoMode</span> { <span class="kw-2">ref</span> <span class="ident">video_mode</span> })), <span class="kw-2">&amp;</span><span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="kw">unsafe</span> {
+            (<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="ident">RootVideoMode</span> { <span class="kw-2">ref</span> <span class="ident">video_mode</span> })), <span class="kw-2">&amp;</span><span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> {
                 <span class="ident">util</span>::<span class="ident">restore_display_mode_async</span>(<span class="ident">video_mode</span>.<span class="ident">monitor</span>().<span class="ident">inner</span>.<span class="ident">native_identifier</span>());
                 <span class="comment">// Rest of the state is restored by `window_did_exit_fullscreen`</span>
                 <span class="ident">util</span>::<span class="ident">toggle_full_screen_async</span>(
@@ -2002,7 +2004,7 @@
                     <span class="ident">Arc</span>::<span class="ident">downgrade</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shared_state</span>),
                 );
             },
-            (<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="kw">_</span>)), <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="kw">_</span>))) <span class="op">=&gt;</span> <span class="kw">unsafe</span> {
+            (<span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="kw">_</span>)), <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="kw">_</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> {
                 <span class="comment">// If we&#39;re already in fullscreen mode, calling</span>
                 <span class="comment">// `CGDisplayCapture` will place the shielding window on top of</span>
                 <span class="comment">// our window, which results in a black display and is not what</span>
@@ -2016,16 +2018,16 @@
             (
                 <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="ident">RootVideoMode</span> { <span class="kw-2">ref</span> <span class="ident">video_mode</span> })),
                 <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="kw">_</span>)),
-            ) <span class="op">=&gt;</span> <span class="kw">unsafe</span> {
+            ) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">unsafe</span> {
                 <span class="ident">util</span>::<span class="ident">restore_display_mode_async</span>(<span class="ident">video_mode</span>.<span class="ident">monitor</span>().<span class="ident">inner</span>.<span class="ident">native_identifier</span>());
             },
-            <span class="kw">_</span> <span class="op">=&gt;</span> (),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (),
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_decorations</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">decorations</span>: <span class="ident">bool</span>) {
-        <span class="kw">if</span> <span class="ident">decorations</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">decorations</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Acquire</span>) {
+        <span class="kw">if</span> <span class="ident">decorations</span> <span class="op">!</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">decorations</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">Acquire</span>) {
             <span class="self">self</span>.<span class="ident">decorations</span>.<span class="ident">store</span>(<span class="ident">decorations</span>, <span class="ident">Ordering</span>::<span class="ident">Release</span>);
 
             <span class="kw">let</span> (<span class="ident">fullscreen</span>, <span class="ident">resizable</span>) <span class="op">=</span> {
@@ -2100,7 +2102,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RootMonitorHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RootMonitorHandle</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">screen</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>, <span class="ident">screen</span>];
             <span class="kw">let</span> <span class="ident">desc</span> <span class="op">=</span> <span class="ident">NSScreen</span>::<span class="ident">deviceDescription</span>(<span class="ident">screen</span>);
@@ -2114,17 +2116,17 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">available_monitors</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">VecDeque</span><span class="op">&lt;</span><span class="ident">MonitorHandle</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">available_monitors</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">VecDeque</span><span class="op">&lt;</span><span class="ident">MonitorHandle</span><span class="op">&gt;</span> {
         <span class="ident">monitor</span>::<span class="ident">available_monitors</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">primary_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MonitorHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">primary_monitor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MonitorHandle</span> {
         <span class="ident">monitor</span>::<span class="ident">primary_monitor</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RawWindowHandle</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">raw_window_handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RawWindowHandle</span> {
         <span class="kw">let</span> <span class="ident">handle</span> <span class="op">=</span> <span class="ident">MacOSHandle</span> {
             <span class="ident">ns_window</span>: <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>,
             <span class="ident">ns_view</span>: <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_view</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>,
@@ -2136,12 +2138,12 @@
 
 <span class="kw">impl</span> <span class="ident">WindowExtMacOS</span> <span class="kw">for</span> <span class="ident">UnownedWindow</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ns_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">fn</span> <span class="ident">ns_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ns_view</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">fn</span> <span class="ident">ns_view</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_view</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>
     }
 
@@ -2149,8 +2151,8 @@
     <span class="kw">fn</span> <span class="ident">request_user_attention</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">request_type</span>: <span class="ident">RequestUserAttentionType</span>) {
         <span class="kw">unsafe</span> {
             <span class="ident">NSApp</span>().<span class="ident">requestUserAttention_</span>(<span class="kw">match</span> <span class="ident">request_type</span> {
-                <span class="ident">RequestUserAttentionType</span>::<span class="ident">Critical</span> <span class="op">=&gt;</span> <span class="ident">NSRequestUserAttentionType</span>::<span class="ident">NSCriticalRequest</span>,
-                <span class="ident">RequestUserAttentionType</span>::<span class="ident">Informational</span> <span class="op">=&gt;</span> {
+                <span class="ident">RequestUserAttentionType</span>::<span class="ident">Critical</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NSRequestUserAttentionType</span>::<span class="ident">NSCriticalRequest</span>,
+                <span class="ident">RequestUserAttentionType</span>::<span class="ident">Informational</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">NSRequestUserAttentionType</span>::<span class="ident">NSInformationalRequest</span>
                 }
             });
@@ -2158,13 +2160,13 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">simple_fullscreen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">simple_fullscreen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">shared_state_lock</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_state</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
         <span class="ident">shared_state_lock</span>.<span class="ident">is_simple_fullscreen</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">set_simple_fullscreen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fullscreen</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">set_simple_fullscreen</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fullscreen</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">shared_state_lock</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shared_state</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
 
         <span class="kw">unsafe</span> {
@@ -2174,8 +2176,8 @@
 
             <span class="comment">// Do nothing if native fullscreen is active.</span>
             <span class="kw">if</span> <span class="ident">is_native_fullscreen</span>
-                <span class="op">||</span> (<span class="ident">fullscreen</span> <span class="op">&amp;&amp;</span> <span class="ident">is_simple_fullscreen</span>)
-                <span class="op">||</span> (<span class="op">!</span><span class="ident">fullscreen</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">is_simple_fullscreen</span>)
+                <span class="op">|</span><span class="op">|</span> (<span class="ident">fullscreen</span> <span class="op">&amp;&amp;</span> <span class="ident">is_simple_fullscreen</span>)
+                <span class="op">|</span><span class="op">|</span> (<span class="op">!</span><span class="ident">fullscreen</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">is_simple_fullscreen</span>)
             {
                 <span class="kw">return</span> <span class="bool-val">false</span>;
             }
@@ -2251,7 +2253,7 @@
     <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Dropping `UnownedWindow` ({:?})&quot;</span>, <span class="self">self</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>);
         <span class="comment">// Close the window if it has not yet been closed.</span>
-        <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span> <span class="op">!=</span> <span class="ident">nil</span> {
+        <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span> <span class="op">!</span><span class="op">=</span> <span class="ident">nil</span> {
             <span class="kw">unsafe</span> { <span class="ident">util</span>::<span class="ident">close_async</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) };
         }
     }
@@ -2261,8 +2263,8 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current_rect</span> <span class="op">=</span> <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="ident">window</span>);
     <span class="kw">let</span> <span class="ident">content_rect</span> <span class="op">=</span> <span class="ident">NSWindow</span>::<span class="ident">contentRectForFrameRect_</span>(<span class="ident">window</span>, <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="ident">window</span>));
     <span class="comment">// Convert from client area size to window size</span>
-    <span class="ident">min_size</span>.<span class="ident">width</span> <span class="op">+=</span> (<span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">width</span> <span class="op">-</span> <span class="ident">content_rect</span>.<span class="ident">size</span>.<span class="ident">width</span>) <span class="kw">as</span> <span class="ident">f64</span>; <span class="comment">// this tends to be 0</span>
-    <span class="ident">min_size</span>.<span class="ident">height</span> <span class="op">+=</span> (<span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">content_rect</span>.<span class="ident">size</span>.<span class="ident">height</span>) <span class="kw">as</span> <span class="ident">f64</span>;
+    <span class="ident">min_size</span>.<span class="ident">width</span> <span class="op">+</span><span class="op">=</span> (<span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">width</span> <span class="op">-</span> <span class="ident">content_rect</span>.<span class="ident">size</span>.<span class="ident">width</span>) <span class="kw">as</span> <span class="ident">f64</span>; <span class="comment">// this tends to be 0</span>
+    <span class="ident">min_size</span>.<span class="ident">height</span> <span class="op">+</span><span class="op">=</span> (<span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">content_rect</span>.<span class="ident">size</span>.<span class="ident">height</span>) <span class="kw">as</span> <span class="ident">f64</span>;
     <span class="ident">window</span>.<span class="ident">setMinSize_</span>(<span class="ident">NSSize</span> {
         <span class="ident">width</span>: <span class="ident">min_size</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">CGFloat</span>,
         <span class="ident">height</span>: <span class="ident">min_size</span>.<span class="ident">height</span> <span class="kw">as</span> <span class="ident">CGFloat</span>,
@@ -2275,7 +2277,7 @@
     <span class="kw">if</span> <span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">&lt;</span> <span class="ident">min_size</span>.<span class="ident">height</span> {
         <span class="comment">// The origin point of a rectangle is at its bottom left in Cocoa.</span>
         <span class="comment">// To ensure the window&#39;s top-left point remains the same:</span>
-        <span class="ident">current_rect</span>.<span class="ident">origin</span>.<span class="ident">y</span> <span class="op">+=</span> <span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">min_size</span>.<span class="ident">height</span>;
+        <span class="ident">current_rect</span>.<span class="ident">origin</span>.<span class="ident">y</span> <span class="op">+</span><span class="op">=</span> <span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">min_size</span>.<span class="ident">height</span>;
         <span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">=</span> <span class="ident">min_size</span>.<span class="ident">height</span>;
         <span class="ident">window</span>.<span class="ident">setFrame_display_</span>(<span class="ident">current_rect</span>, <span class="number">0</span>)
     }
@@ -2285,8 +2287,8 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current_rect</span> <span class="op">=</span> <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="ident">window</span>);
     <span class="kw">let</span> <span class="ident">content_rect</span> <span class="op">=</span> <span class="ident">NSWindow</span>::<span class="ident">contentRectForFrameRect_</span>(<span class="ident">window</span>, <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="ident">window</span>));
     <span class="comment">// Convert from client area size to window size</span>
-    <span class="ident">max_size</span>.<span class="ident">width</span> <span class="op">+=</span> (<span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">width</span> <span class="op">-</span> <span class="ident">content_rect</span>.<span class="ident">size</span>.<span class="ident">width</span>) <span class="kw">as</span> <span class="ident">f64</span>; <span class="comment">// this tends to be 0</span>
-    <span class="ident">max_size</span>.<span class="ident">height</span> <span class="op">+=</span> (<span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">content_rect</span>.<span class="ident">size</span>.<span class="ident">height</span>) <span class="kw">as</span> <span class="ident">f64</span>;
+    <span class="ident">max_size</span>.<span class="ident">width</span> <span class="op">+</span><span class="op">=</span> (<span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">width</span> <span class="op">-</span> <span class="ident">content_rect</span>.<span class="ident">size</span>.<span class="ident">width</span>) <span class="kw">as</span> <span class="ident">f64</span>; <span class="comment">// this tends to be 0</span>
+    <span class="ident">max_size</span>.<span class="ident">height</span> <span class="op">+</span><span class="op">=</span> (<span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">content_rect</span>.<span class="ident">size</span>.<span class="ident">height</span>) <span class="kw">as</span> <span class="ident">f64</span>;
     <span class="ident">window</span>.<span class="ident">setMaxSize_</span>(<span class="ident">NSSize</span> {
         <span class="ident">width</span>: <span class="ident">max_size</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">CGFloat</span>,
         <span class="ident">height</span>: <span class="ident">max_size</span>.<span class="ident">height</span> <span class="kw">as</span> <span class="ident">CGFloat</span>,
@@ -2299,7 +2301,7 @@
     <span class="kw">if</span> <span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">&gt;</span> <span class="ident">max_size</span>.<span class="ident">height</span> {
         <span class="comment">// The origin point of a rectangle is at its bottom left in Cocoa.</span>
         <span class="comment">// To ensure the window&#39;s top-left point remains the same:</span>
-        <span class="ident">current_rect</span>.<span class="ident">origin</span>.<span class="ident">y</span> <span class="op">+=</span> <span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">max_size</span>.<span class="ident">height</span>;
+        <span class="ident">current_rect</span>.<span class="ident">origin</span>.<span class="ident">y</span> <span class="op">+</span><span class="op">=</span> <span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">-</span> <span class="ident">max_size</span>.<span class="ident">height</span>;
         <span class="ident">current_rect</span>.<span class="ident">size</span>.<span class="ident">height</span> <span class="op">=</span> <span class="ident">max_size</span>.<span class="ident">height</span>;
         <span class="ident">window</span>.<span class="ident">setFrame_display_</span>(<span class="ident">current_rect</span>, <span class="number">0</span>)
     }

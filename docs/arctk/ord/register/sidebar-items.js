@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Register","Name to index mapping."]]});
+initSidebarItems({"struct":[["Register","Register used to index named data."]]});

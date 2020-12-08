@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["basic","Photon-lifetime engine function."]]});
+initSidebarItems({"mod":[["standard","Photon-lifetime engine function."]]});

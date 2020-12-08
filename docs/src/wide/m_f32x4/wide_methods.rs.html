@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/wide-0.4.6/src/m_f32x4/wide_methods.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>wide_methods.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../wide/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/wide-0.4.6/src/m_f32x4/wide_methods.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>wide_methods.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../wide/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -751,7 +753,7 @@
   <span class="doccomment">/// Bitwise `(!self) &amp; rhs`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">andnot</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">andnot</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">andnot</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -762,7 +764,7 @@
   <span class="doccomment">/// Lanewise &quot;is the value a NaN value?&quot;</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_nan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_nan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="comment">// yes it&#39;s weird, yes it&#39;s correct.</span>
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_nan</span>(<span class="self">self</span>.<span class="ident">sse</span>) }
@@ -786,7 +788,7 @@
   <span class="doccomment">/// Lanewise &quot;is the value a non-NaN value?&quot;</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_ordinary</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_ordinary</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="comment">// yes it&#39;s weird, yes it&#39;s correct.</span>
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_ordinary</span>(<span class="self">self</span>.<span class="ident">sse</span>) }
@@ -818,7 +820,7 @@
   <span class="doccomment">/// all 1s or all 0s anyway.</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">merge</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">merge</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse4.1&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="ident">b</span>.<span class="ident">sse</span>.<span class="ident">blend_var</span>(<span class="ident">a</span>.<span class="ident">sse</span>, <span class="self">self</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -834,14 +836,14 @@
   <span class="doccomment">/// ```</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">move_mask</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">move_mask</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">move_mask</span>()
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="number">0_i32</span>;
       <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">4</span> {
         <span class="kw">if</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f32</span>, <span class="ident">i32</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">arr</span>[<span class="ident">i</span>]) <span class="op">&lt;</span> <span class="number">0</span> {
-          <span class="ident">out</span> <span class="op">|=</span> <span class="number">1</span><span class="op">&lt;&lt;</span><span class="ident">i</span>;
+          <span class="ident">out</span> <span class="op">|</span><span class="op">=</span> <span class="number">1</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">i</span>;
         }
       }
       <span class="ident">out</span>
@@ -851,12 +853,12 @@
   <span class="doccomment">/// Lanewise `==`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_eq</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_eq</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_eq</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="ident">test</span> <span class="op">=</span> <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> {
-        <span class="kw">if</span> <span class="ident">a</span> <span class="op">==</span> <span class="ident">b</span> {
+        <span class="kw">if</span> <span class="ident">a</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>)
         } <span class="kw">else</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="number">0</span>)
@@ -874,12 +876,12 @@
   <span class="doccomment">/// Lanewise `&gt;=`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ge</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ge</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_ge</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="ident">test</span> <span class="op">=</span> <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> {
-        <span class="kw">if</span> <span class="ident">a</span> <span class="op">&gt;=</span> <span class="ident">b</span> {
+        <span class="kw">if</span> <span class="ident">a</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">b</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>)
         } <span class="kw">else</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="number">0</span>)
@@ -897,7 +899,7 @@
   <span class="doccomment">/// Lanewise `&gt;`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_gt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_gt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_gt</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -920,12 +922,12 @@
   <span class="doccomment">/// Lanewise `&lt;=`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_le</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_le</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_le</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="ident">test</span> <span class="op">=</span> <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> {
-        <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;=</span> <span class="ident">b</span> {
+        <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">b</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>)
         } <span class="kw">else</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="number">0</span>)
@@ -943,7 +945,7 @@
   <span class="doccomment">/// Lanewise `&lt;`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_lt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_lt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_lt</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -966,12 +968,12 @@
   <span class="doccomment">/// Lanewise &quot;self.is_nan() | other.is_nan()&quot;</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nan</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nan</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_nan</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="ident">test</span> <span class="op">=</span> <span class="op">|</span><span class="ident">a</span>: <span class="ident">f32</span>, <span class="ident">b</span>: <span class="ident">f32</span><span class="op">|</span> {
-        <span class="kw">if</span> <span class="ident">a</span>.<span class="ident">is_nan</span>() <span class="op">||</span> <span class="ident">b</span>.<span class="ident">is_nan</span>() {
+        <span class="kw">if</span> <span class="ident">a</span>.<span class="ident">is_nan</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">b</span>.<span class="ident">is_nan</span>() {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>)
         } <span class="kw">else</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="number">0</span>)
@@ -989,12 +991,12 @@
   <span class="doccomment">/// Lanewise `!=`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ne</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ne</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_ne</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="ident">test</span> <span class="op">=</span> <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> {
-        <span class="kw">if</span> <span class="ident">a</span> <span class="op">!=</span> <span class="ident">b</span> {
+        <span class="kw">if</span> <span class="ident">a</span> <span class="op">!</span><span class="op">=</span> <span class="ident">b</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>)
         } <span class="kw">else</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="number">0</span>)
@@ -1014,12 +1016,12 @@
   <span class="doccomment">/// If you call this method it triggers [Third Impact](https://evangelion.fandom.com/wiki/Third_Impact)</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nge</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nge</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_nge</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="ident">test</span> <span class="op">=</span> <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> {
-        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">a</span> <span class="op">&gt;=</span> <span class="ident">b</span>) {
+        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">a</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">b</span>) {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>)
         } <span class="kw">else</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="number">0</span>)
@@ -1037,7 +1039,7 @@
   <span class="doccomment">/// Lanewise `!(a &gt; b)`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ngt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_ngt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_ngt</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -1060,12 +1062,12 @@
   <span class="doccomment">/// Lanewise `!(a &lt;= b)`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nle</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nle</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_nle</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="ident">test</span> <span class="op">=</span> <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> {
-        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">a</span> <span class="op">&lt;=</span> <span class="ident">b</span>) {
+        <span class="kw">if</span> <span class="op">!</span>(<span class="ident">a</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">b</span>) {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="ident">core</span>::<span class="ident">u32</span>::<span class="ident">MAX</span>)
         } <span class="kw">else</span> {
           <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">f32</span><span class="op">&gt;</span>(<span class="number">0</span>)
@@ -1083,7 +1085,7 @@
   <span class="doccomment">/// Lanewise `!(a &lt; b)`</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nlt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cmp_nlt</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cmp_nlt</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -1106,7 +1108,7 @@
   <span class="doccomment">/// Lanewise ceiling (next larger whole number)</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse4.1&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">ceil</span>() }
     } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse2&quot;</span>)]</span> {
@@ -1120,7 +1122,7 @@
   <span class="doccomment">/// Lanewise floor (next smaller whole number)</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse4.1&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">floor</span>() }
     } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse2&quot;</span>)]</span> {
@@ -1134,14 +1136,14 @@
   <span class="doccomment">/// Lanewise absolute value</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span> <span class="op">&amp;</span> <span class="self">Self</span>::<span class="ident">ALL_EXCEPT_SIGN</span>
   }
 
   <span class="doccomment">/// Lanewise cosine</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="comment">// Gonna TRUST that optimizer to skip the final `sin` computations</span>
     <span class="self">self</span>.<span class="ident">sin_cos</span>().<span class="number">1</span>
   }
@@ -1149,7 +1151,7 @@
   <span class="doccomment">/// Lanewise round to nearest whole number.</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;sse4.1&quot;</span>)]</span> {
       <span class="comment">// we sometimes have a direct round instruction</span>
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">round_nearest</span>() }
@@ -1176,7 +1178,7 @@
   <span class="doccomment">/// &quot;We called it &#39;[Sin](https://vignette.wikia.nocookie.net/finalfantasy/images/d/de/10sin-a.jpg)&#39;.&quot;</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="comment">// Gonna TRUST that optimizer to skip the final `cos` computations</span>
     <span class="self">self</span>.<span class="ident">sin_cos</span>().<span class="number">0</span>
   }
@@ -1191,7 +1193,7 @@
   <span class="doccomment">/// for info on how to enable CPU features if you haven&#39;t done that before.</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>, <span class="ident">c</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>, <span class="ident">c</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;fma&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">fmadd</span>(<span class="ident">b</span>.<span class="ident">sse</span>, <span class="ident">c</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -1204,7 +1206,7 @@
   <span class="doccomment">/// Fused if `fma` feature is enabled, see [`mul_add`](f32x4::mul_add).</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">negated_mul_add</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>, <span class="ident">c</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">negated_mul_add</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>, <span class="ident">c</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;fma&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">fnmadd</span>(<span class="ident">b</span>.<span class="ident">sse</span>, <span class="ident">c</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -1215,7 +1217,7 @@
   <span class="doccomment">/// Lanewise reciprocal, 1.0/lane</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">reciprocal</span>() }
     } <span class="kw">else</span> {
@@ -1226,7 +1228,7 @@
   <span class="doccomment">/// Lanewise maximum</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">max</span>(<span class="ident">b</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -1244,7 +1246,7 @@
   <span class="doccomment">/// Lanewise minimum</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">min</span>(<span class="ident">b</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -1262,7 +1264,7 @@
   <span class="doccomment">/// Lanewise round and get `i32x4` output</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_i32</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i32x4</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_i32</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32x4</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="ident">i32x4</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">round_i32</span>() }
     } <span class="kw">else</span> {
@@ -1285,7 +1287,7 @@
   <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">bad_style</span>)]</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32x4</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32x4</span> {
     <span class="kw">const</span> <span class="ident">EXPONENT_MASKu</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">0xFF000000_u32</span>;
     <span class="kw">const</span> <span class="ident">EXPONENT_MASKi</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="ident">EXPONENT_MASKu</span> <span class="kw">as</span> <span class="ident">i32</span>;
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse2&quot;</span>)]</span> {
@@ -1298,8 +1300,8 @@
     } <span class="kw">else</span> {
       <span class="kw">let</span> <span class="ident">op</span> <span class="op">=</span> <span class="op">|</span><span class="ident">f</span>: <span class="ident">f32</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="ident">t1</span> <span class="op">=</span> <span class="ident">f</span>.<span class="ident">to_bits</span>();
-        <span class="kw">let</span> <span class="ident">t2</span> <span class="op">=</span> <span class="ident">t1</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>;
-        <span class="kw">let</span> <span class="ident">t3</span> <span class="op">=</span> (<span class="ident">t2</span> <span class="op">&amp;</span> <span class="ident">EXPONENT_MASKu</span>) <span class="op">!=</span> <span class="ident">EXPONENT_MASKu</span>;
+        <span class="kw">let</span> <span class="ident">t2</span> <span class="op">=</span> <span class="ident">t1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;
+        <span class="kw">let</span> <span class="ident">t3</span> <span class="op">=</span> (<span class="ident">t2</span> <span class="op">&amp;</span> <span class="ident">EXPONENT_MASKu</span>) <span class="op">!</span><span class="op">=</span> <span class="ident">EXPONENT_MASKu</span>;
         <span class="kw">if</span> <span class="ident">t3</span> {
           <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="ident">u32</span>::<span class="ident">max_value</span>())
         } <span class="kw">else</span> {
@@ -1318,7 +1320,7 @@
   <span class="doccomment">/// Cast directly to `i32x4` (no change in bit pattern).</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cast_i32x4</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i32x4</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cast_i32x4</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32x4</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse2&quot;</span>)]</span> {
       <span class="ident">i32x4</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">cast_m128i</span>() }
     } <span class="kw">else</span> {
@@ -1329,28 +1331,28 @@
   <span class="doccomment">/// Copy the sign of `b` onto the value of `self`.</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copysign</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copysign</span>(<span class="self">self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span> <span class="op">^</span> (<span class="ident">b</span> <span class="op">&amp;</span> <span class="self">Self</span>::<span class="ident">NEGATIVE_ZERO</span>)
   }
 
   <span class="doccomment">/// Lanewise clamp to a per-lane min and max.</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clamp</span>(<span class="self">self</span>, <span class="ident">min</span>: <span class="self">Self</span>, <span class="ident">max</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clamp</span>(<span class="self">self</span>, <span class="ident">min</span>: <span class="self">Self</span>, <span class="ident">max</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span>.<span class="ident">max</span>(<span class="ident">min</span>).<span class="ident">min</span>(<span class="ident">max</span>)
   }
 
   <span class="doccomment">/// Lanewise sign-number (-1.0 if &lt; 0.0, otherwise 1.0)</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span>.<span class="ident">is_nan</span>().<span class="ident">merge</span>(<span class="ident">f32x4</span>::<span class="ident">NAN</span>, <span class="self">Self</span>::<span class="ident">ONE</span>.<span class="ident">copysign</span>(<span class="self">self</span>))
   }
 
   <span class="doccomment">/// Lanewise tangent</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> (<span class="ident">s</span>, <span class="ident">c</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">sin_cos</span>();
     <span class="ident">s</span> <span class="op">/</span> <span class="ident">c</span>
   }
@@ -1360,7 +1362,7 @@
   <span class="doccomment">/// &lt;https://github.com/vectorclass/version2/blob/master/vectormath_common.h#L111&gt;</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">polynomial_2</span>(<span class="self">self</span>, <span class="ident">c0</span>: <span class="self">Self</span>, <span class="ident">c1</span>: <span class="self">Self</span>, <span class="ident">c2</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">polynomial_2</span>(<span class="self">self</span>, <span class="ident">c0</span>: <span class="self">Self</span>, <span class="ident">c1</span>: <span class="self">Self</span>, <span class="ident">c2</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="ident">self2</span> <span class="op">=</span> <span class="self">self</span> <span class="op">*</span> <span class="self">self</span>;
     <span class="ident">self2</span>.<span class="ident">mul_add</span>(<span class="ident">c2</span>, <span class="self">self</span>.<span class="ident">mul_add</span>(<span class="ident">c1</span>, <span class="ident">c0</span>))
   }
@@ -1381,7 +1383,7 @@
   <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">bad_style</span>)]</span>
   <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">missing_inline_in_public_items</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
     <span class="comment">// Based on the Agner Fog &quot;vector class library&quot;:</span>
     <span class="comment">// https://github.com/vectorclass/version2/blob/master/vectormath_trig.h</span>
 
@@ -1430,13 +1432,13 @@
 
     <span class="comment">// calc sin</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sin1</span> <span class="op">=</span> <span class="ident">f32x4</span>::<span class="ident">merge</span>(<span class="ident">swap</span>.<span class="ident">cast_f32x4</span>(), <span class="ident">c</span>, <span class="ident">s</span>);
-    <span class="kw">let</span> <span class="ident">sign_sin</span>: <span class="ident">i32x4</span> <span class="op">=</span> (<span class="ident">q</span> <span class="op">&lt;&lt;</span> <span class="number">30</span>) <span class="op">^</span> <span class="self">self</span>.<span class="ident">cast_i32x4</span>();
+    <span class="kw">let</span> <span class="ident">sign_sin</span>: <span class="ident">i32x4</span> <span class="op">=</span> (<span class="ident">q</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">30</span>) <span class="op">^</span> <span class="self">self</span>.<span class="ident">cast_i32x4</span>();
     <span class="ident">sin1</span> <span class="op">=</span> <span class="ident">sin1</span>.<span class="ident">copysign</span>(<span class="ident">sign_sin</span>.<span class="ident">cast_f32x4</span>());
 
     <span class="comment">// calc cos</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cos1</span> <span class="op">=</span> <span class="ident">f32x4</span>::<span class="ident">merge</span>(<span class="ident">swap</span>.<span class="ident">cast_f32x4</span>(), <span class="ident">s</span>, <span class="ident">c</span>);
-    <span class="kw">let</span> <span class="ident">sign_cos</span>: <span class="ident">i32x4</span> <span class="op">=</span> ((<span class="ident">q</span> <span class="op">+</span> <span class="ident">i32x4</span>::<span class="ident">ONE</span>) <span class="op">&amp;</span> <span class="ident">i32x4</span>::<span class="ident">from</span>(<span class="number">2</span>)) <span class="op">&lt;&lt;</span> <span class="number">30</span>;
-    <span class="ident">cos1</span> <span class="op">^=</span> <span class="ident">sign_cos</span>.<span class="ident">cast_f32x4</span>();
+    <span class="kw">let</span> <span class="ident">sign_cos</span>: <span class="ident">i32x4</span> <span class="op">=</span> ((<span class="ident">q</span> <span class="op">+</span> <span class="ident">i32x4</span>::<span class="ident">ONE</span>) <span class="op">&amp;</span> <span class="ident">i32x4</span>::<span class="ident">from</span>(<span class="number">2</span>)) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">30</span>;
+    <span class="ident">cos1</span> <span class="op">^</span><span class="op">=</span> <span class="ident">sign_cos</span>.<span class="ident">cast_f32x4</span>();
 
     (<span class="ident">sin1</span>, <span class="ident">cos1</span>)
   }
@@ -1446,7 +1448,7 @@
   <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">unreadable_literal</span>)]</span>
   <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">excessive_precision</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_degrees</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_degrees</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">const_f32_as_f32x4</span><span class="macro">!</span>(
       <span class="kw">pub</span> <span class="ident">RAD_TO_DEG_RATIO</span>, <span class="number">57.2957795130823208767981548141051703_f32</span>
     );
@@ -1456,7 +1458,7 @@
   <span class="doccomment">/// Lanewise degrees -&gt; radians.</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_radians</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_radians</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">const_f32_as_f32x4</span><span class="macro">!</span>(
       <span class="kw">pub</span> <span class="ident">DEG_TO_RAD_RATIO</span>, <span class="ident">core</span>::<span class="ident">f32</span>::<span class="ident">consts</span>::<span class="ident">PI</span> <span class="op">/</span> <span class="number">180.0_f32</span>
     );
@@ -1466,14 +1468,14 @@
   <span class="doccomment">/// Lanewise fractional part.</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">trunc</span>()
   }
 
   <span class="doccomment">/// Lanewise sqrt</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> { <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span> <span class="op">=</span> <span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">sqrt</span>() }
     } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;toolchain_nightly&quot;</span>)]</span> {

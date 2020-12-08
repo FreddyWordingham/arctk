@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nom-5.1.2/src/str.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>str.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../nom/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nom-5.1.2/src/str.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>str.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../nom/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -502,25 +504,25 @@
   <span class="kw">fn</span> <span class="ident">tagtr_succeed</span>() {
     <span class="kw">const</span> <span class="ident">INPUT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Hello World!&quot;</span>;
     <span class="kw">const</span> <span class="ident">TAG</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Hello&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">tag</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">TAG</span>)
     }
 
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="string">&quot; World!&quot;</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot; World!&quot;</span>,
           <span class="string">&quot;Parser `tag` consumed leftover input.&quot;</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">TAG</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TAG</span>,
           <span class="string">&quot;Parser `tag` doesn&#39;t return the tag it matched on success. \
            Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">TAG</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `tag` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -535,8 +537,8 @@
 
     <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw">_</span>,<span class="kw">_</span>,(<span class="kw">_</span>, <span class="ident">ErrorKind</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">tag</span><span class="macro">!</span>(<span class="ident">INPUT</span>, <span class="ident">TAG</span>);
     <span class="kw">match</span> <span class="ident">res</span> {
-      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Incomplete</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
-      <span class="ident">other</span> <span class="op">=&gt;</span> {
+      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Incomplete</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">panic</span><span class="macro">!</span>(
           <span class="string">&quot;Parser `tag` didn&#39;t require more input when it should have. \
            Got `{:?}`.&quot;</span>,
@@ -553,8 +555,8 @@
 
     <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw">_</span>,<span class="kw">_</span>,(<span class="kw">_</span>, <span class="ident">ErrorKind</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">tag</span><span class="macro">!</span>(<span class="ident">INPUT</span>, <span class="ident">TAG</span>);
     <span class="kw">match</span> <span class="ident">res</span> {
-      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Error</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
-      <span class="ident">other</span> <span class="op">=&gt;</span> {
+      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Error</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">panic</span><span class="macro">!</span>(
           <span class="string">&quot;Parser `tag` didn&#39;t fail when it should have. Got `{:?}`.`&quot;</span>,
           <span class="ident">other</span>
@@ -571,20 +573,20 @@
 
     <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw">_</span>,<span class="kw">_</span>,(<span class="kw">_</span>, <span class="ident">ErrorKind</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">take</span><span class="macro">!</span>(<span class="ident">INPUT</span>, <span class="number">9</span>);
     <span class="kw">match</span> <span class="ident">res</span> {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="ident">LEFTOVER</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LEFTOVER</span>,
           <span class="string">&quot;Parser `take_s` consumed leftover input. Leftover `{}`.&quot;</span>,
           <span class="ident">extra</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">CONSUMED</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">CONSUMED</span>,
           <span class="string">&quot;Parser `take_s` doens&#39;t return the string it consumed on success. Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">CONSUMED</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_s` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -601,22 +603,22 @@
 
     <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw">_</span>,<span class="kw">_</span>,(<span class="kw">_</span>, <span class="ident">ErrorKind</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">take_until</span><span class="macro">!</span>(<span class="ident">INPUT</span>, <span class="ident">FIND</span>);
     <span class="kw">match</span> <span class="ident">res</span> {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="ident">LEFTOVER</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LEFTOVER</span>,
           <span class="string">&quot;Parser `take_until`\
            consumed leftover input. Leftover `{}`.&quot;</span>,
           <span class="ident">extra</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">CONSUMED</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">CONSUMED</span>,
           <span class="string">&quot;Parser `take_until`\
            doens&#39;t return the string it consumed on success. Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">CONSUMED</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_until` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -630,8 +632,8 @@
 
     <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw">_</span>,<span class="kw">_</span>,(<span class="kw">_</span>, <span class="ident">ErrorKind</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">take</span><span class="macro">!</span>(<span class="ident">INPUT</span>, <span class="number">13</span>);
     <span class="kw">match</span> <span class="ident">res</span> {
-      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Incomplete</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Incomplete</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take` didn&#39;t require more input when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -641,8 +643,8 @@
 
   <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">internal</span>::<span class="ident">Needed</span>;
 
-  <span class="kw">fn</span> <span class="ident">is_alphabetic</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-    (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">&gt;=</span> <span class="number">0x41</span> <span class="op">&amp;&amp;</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">&lt;=</span> <span class="number">0x5A</span>) <span class="op">||</span> (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">&gt;=</span> <span class="number">0x61</span> <span class="op">&amp;&amp;</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">&lt;=</span> <span class="number">0x7A</span>)
+  <span class="kw">fn</span> <span class="ident">is_alphabetic</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x41</span> <span class="op">&amp;&amp;</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x5A</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0x61</span> <span class="op">&amp;&amp;</span> <span class="ident">c</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">0x7A</span>)
   }
 
   <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -681,27 +683,27 @@
     <span class="kw">const</span> <span class="ident">INPUT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇáƒƭèř&quot;</span>;
     <span class="kw">const</span> <span class="ident">CONSUMED</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇ&quot;</span>;
     <span class="kw">const</span> <span class="ident">LEFTOVER</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;áƒƭèř&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">till_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-      <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;á&#39;</span>
+    <span class="kw">fn</span> <span class="ident">till_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+      <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;á&#39;</span>
     }
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">take_till</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">till_s</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="ident">LEFTOVER</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LEFTOVER</span>,
           <span class="string">&quot;Parser `take_till` consumed leftover input.&quot;</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">CONSUMED</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">CONSUMED</span>,
           <span class="string">&quot;Parser `take_till` doesn&#39;t return the string it consumed on success. \
            Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">CONSUMED</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_till` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -714,27 +716,27 @@
     <span class="kw">const</span> <span class="ident">INPUT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇáƒƭèř&quot;</span>;
     <span class="kw">const</span> <span class="ident">CONSUMED</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>;
     <span class="kw">const</span> <span class="ident">LEFTOVER</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇáƒƭèř&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">while_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-      <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;9&#39;</span>
+    <span class="kw">fn</span> <span class="ident">while_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+      <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;9&#39;</span>
     }
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">take_while</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">while_s</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="ident">LEFTOVER</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LEFTOVER</span>,
           <span class="string">&quot;Parser `take_while` consumed leftover input.&quot;</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">CONSUMED</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">CONSUMED</span>,
           <span class="string">&quot;Parser `take_while` doesn&#39;t return the string it consumed on success. \
            Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">CONSUMED</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_while` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -748,24 +750,24 @@
     <span class="kw">const</span> <span class="ident">AVOID</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;£úçƙ¥á&quot;</span>;
     <span class="kw">const</span> <span class="ident">CONSUMED</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇ&quot;</span>;
     <span class="kw">const</span> <span class="ident">LEFTOVER</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;áƒƭèř&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">is_not</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">AVOID</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="ident">LEFTOVER</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LEFTOVER</span>,
           <span class="string">&quot;Parser `is_not` consumed leftover input. Leftover `{}`.&quot;</span>,
           <span class="ident">extra</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">CONSUMED</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">CONSUMED</span>,
           <span class="string">&quot;Parser `is_not` doens&#39;t return the string it consumed on success. Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">CONSUMED</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `is_not` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -778,27 +780,27 @@
     <span class="kw">const</span> <span class="ident">INPUT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇáƒƭèř&quot;</span>;
     <span class="kw">const</span> <span class="ident">CONSUMED</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇ&quot;</span>;
     <span class="kw">const</span> <span class="ident">LEFTOVER</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;áƒƭèř&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">while_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-      <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;β&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;è&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;ƒ&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;ô&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;ř&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;è&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;Â&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;ß&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;Ç&#39;</span>
+    <span class="kw">fn</span> <span class="ident">while_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+      <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;β&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;è&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;ƒ&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;ô&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;ř&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;è&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;Â&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;ß&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;Ç&#39;</span>
     }
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">take_while</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">while_s</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="ident">LEFTOVER</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LEFTOVER</span>,
           <span class="string">&quot;Parser `take_while` consumed leftover input.&quot;</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">CONSUMED</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">CONSUMED</span>,
           <span class="string">&quot;Parser `take_while` doesn&#39;t return the string it consumed on success. \
            Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">CONSUMED</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_while` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -810,12 +812,12 @@
   <span class="kw">fn</span> <span class="ident">is_not_fail</span>() {
     <span class="kw">const</span> <span class="ident">INPUT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇáƒƭèř&quot;</span>;
     <span class="kw">const</span> <span class="ident">AVOID</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βúçƙ¥&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">is_not</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">AVOID</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Error</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Error</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `is_not` didn&#39;t fail when it should have. Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
       ),
@@ -827,27 +829,27 @@
     <span class="kw">const</span> <span class="ident">INPUT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇáƒƭèř&quot;</span>;
     <span class="kw">const</span> <span class="ident">CONSUMED</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇ&quot;</span>;
     <span class="kw">const</span> <span class="ident">LEFTOVER</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;áƒƭèř&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">while1_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-      <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;β&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;è&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;ƒ&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;ô&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;ř&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;è&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;Â&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;ß&#39;</span> <span class="op">||</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;Ç&#39;</span>
+    <span class="kw">fn</span> <span class="ident">while1_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+      <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;β&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;è&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;ƒ&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;ô&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;ř&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;è&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;Â&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;ß&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;Ç&#39;</span>
     }
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">take_while1</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">while1_s</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="ident">LEFTOVER</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LEFTOVER</span>,
           <span class="string">&quot;Parser `take_while1` consumed leftover input.&quot;</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">CONSUMED</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">CONSUMED</span>,
           <span class="string">&quot;Parser `take_while1` doesn&#39;t return the string it consumed on success. \
            Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">CONSUMED</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_while1` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -862,8 +864,8 @@
 
     <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw">_</span>,<span class="kw">_</span>,(<span class="kw">_</span>, <span class="ident">ErrorKind</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">take_until</span><span class="macro">!</span>(<span class="ident">INPUT</span>, <span class="ident">FIND</span>);
     <span class="kw">match</span> <span class="ident">res</span> {
-      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Incomplete</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Incomplete</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_until` didn&#39;t require more input when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -877,24 +879,24 @@
     <span class="kw">const</span> <span class="ident">MATCH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇ&quot;</span>;
     <span class="kw">const</span> <span class="ident">CONSUMED</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇ&quot;</span>;
     <span class="kw">const</span> <span class="ident">LEFTOVER</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;áƒƭèř&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">is_a</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">MATCH</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=&gt;</span> {
+      <span class="prelude-val">Ok</span>((<span class="ident">extra</span>, <span class="ident">output</span>)) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">extra</span> <span class="op">==</span> <span class="ident">LEFTOVER</span>,
+          <span class="ident">extra</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LEFTOVER</span>,
           <span class="string">&quot;Parser `is_a` consumed leftover input. Leftover `{}`.&quot;</span>,
           <span class="ident">extra</span>
         );
         <span class="macro">assert</span><span class="macro">!</span>(
-          <span class="ident">output</span> <span class="op">==</span> <span class="ident">CONSUMED</span>,
+          <span class="ident">output</span> <span class="op">=</span><span class="op">=</span> <span class="ident">CONSUMED</span>,
           <span class="string">&quot;Parser `is_a` doens&#39;t return the string it consumed on success. Expected `{}`, got `{}`.&quot;</span>,
           <span class="ident">CONSUMED</span>,
           <span class="ident">output</span>
         );
       }
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `is_a` didn&#39;t succeed when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -905,15 +907,15 @@
   <span class="attribute">#[<span class="ident">test</span>]</span>
   <span class="kw">fn</span> <span class="ident">take_while1_fail</span>() {
     <span class="kw">const</span> <span class="ident">INPUT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇáƒƭèř&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">while1_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-      <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;9&#39;</span>
+    <span class="kw">fn</span> <span class="ident">while1_s</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+      <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;9&#39;</span>
     }
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">take_while1</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">while1_s</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Error</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Error</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_while1` didn&#39;t fail when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -925,12 +927,12 @@
   <span class="kw">fn</span> <span class="ident">is_a_fail</span>() {
     <span class="kw">const</span> <span class="ident">INPUT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;βèƒôřèÂßÇáƒƭèř&quot;</span>;
     <span class="kw">const</span> <span class="ident">MATCH</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Ûñℓúçƙ¥&quot;</span>;
-    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">test</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
       <span class="macro">is_a</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="ident">MATCH</span>)
     }
     <span class="kw">match</span> <span class="ident">test</span>(<span class="ident">INPUT</span>) {
-      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Error</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Error</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `is_a` didn&#39;t fail when it should have. Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
       ),
@@ -944,8 +946,8 @@
 
     <span class="kw">let</span> <span class="ident">res</span>: <span class="ident">IResult</span><span class="op">&lt;</span><span class="kw">_</span>,<span class="kw">_</span>,(<span class="kw">_</span>, <span class="ident">ErrorKind</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">take_until</span><span class="macro">!</span>(<span class="ident">INPUT</span>, <span class="ident">FIND</span>);
     <span class="kw">match</span> <span class="ident">res</span> {
-      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Incomplete</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
-      <span class="ident">other</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
+      <span class="prelude-val">Err</span>(<span class="prelude-val">Err</span>::<span class="ident">Incomplete</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
+      <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(
         <span class="string">&quot;Parser `take_until` didn&#39;t fail when it should have. \
          Got `{:?}`.&quot;</span>,
         <span class="ident">other</span>
@@ -967,7 +969,7 @@
 
   <span class="attribute">#[<span class="ident">test</span>]</span>
   <span class="kw">fn</span> <span class="ident">utf8_indexing</span>() {
-    <span class="macro">named</span><span class="macro">!</span>(<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    <span class="macro">named</span><span class="macro">!</span>(<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="macro">tag</span><span class="macro">!</span>(<span class="string">&quot;.&quot;</span>)
       );
 

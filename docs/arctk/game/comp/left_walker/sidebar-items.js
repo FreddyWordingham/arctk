@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["LeftWalker","Tendency to walk left when possible."]]});

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shred-0.10.2/src/dispatch/batch.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>batch.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../shred/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/shred-0.10.2/src/dispatch/batch.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>batch.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../shred/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -474,21 +476,21 @@
 
 <span class="kw">impl</span> <span class="ident">BatchAccessor</span> {
     <span class="doccomment">/// Creates a `BatchAccessor`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">reads</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>, <span class="ident">writes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">reads</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>, <span class="ident">writes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">BatchAccessor</span> { <span class="ident">reads</span>, <span class="ident">writes</span> }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Accessor</span> <span class="kw">for</span> <span class="ident">BatchAccessor</span> {
-    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">reads</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">reads</span>.<span class="ident">clone</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">writes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ResourceId</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">writes</span>.<span class="ident">clone</span>()
     }
 }
@@ -502,7 +504,7 @@
 
     <span class="kw">fn</span> <span class="ident">setup</span>(<span class="ident">_accessor</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Accessor</span>, <span class="ident">_world</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">World</span>) {}
 
-    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="ident">_access</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Accessor</span>, <span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">fetch</span>(<span class="ident">_access</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Accessor</span>, <span class="ident">world</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">World</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">BatchUncheckedWorld</span>(<span class="ident">world</span>)
     }
 }
@@ -551,7 +553,7 @@
     <span class="doccomment">/// to uphold quarantees of `Send` only when it&#39;s created with</span>
     <span class="doccomment">/// correctly constructed `BatchAccessor`.</span>
     <span class="doccomment">/// `BatchAccessor` is meant for tracking which resourced are being used by the controller.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">accessor</span>: <span class="ident">BatchAccessor</span>, <span class="ident">dispatcher</span>: <span class="ident">Dispatcher</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">accessor</span>: <span class="ident">BatchAccessor</span>, <span class="ident">dispatcher</span>: <span class="ident">Dispatcher</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 }
 
 <span class="doccomment">/// The `DefaultBatchControllerSystem` is a simple implementation that will</span>
@@ -570,7 +572,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">BatchController</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DefaultBatchControllerSystem</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">BatchSystemData</span> <span class="op">=</span> ();
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">accessor</span>: <span class="ident">BatchAccessor</span>, <span class="ident">dispatcher</span>: <span class="ident">Dispatcher</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">accessor</span>: <span class="ident">BatchAccessor</span>, <span class="ident">dispatcher</span>: <span class="ident">Dispatcher</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">DefaultBatchControllerSystem</span> {
             <span class="ident">accessor</span>,
             <span class="ident">dispatcher</span>,
@@ -585,11 +587,11 @@
         <span class="self">self</span>.<span class="ident">dispatcher</span>.<span class="ident">dispatch</span>(<span class="ident">data</span>.<span class="number">0</span>);
     }
 
-    <span class="kw">fn</span> <span class="ident">running_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RunningTime</span> {
+    <span class="kw">fn</span> <span class="ident">running_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RunningTime</span> {
         <span class="ident">RunningTime</span>::<span class="ident">VeryLong</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">accessor</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">AccessorCow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;c</span>, <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">accessor</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AccessorCow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;c</span>, <span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">AccessorCow</span>::<span class="ident">Ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">accessor</span>)
     }
 
@@ -767,7 +769,7 @@
     }
 
     <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">PotatoStore</span> {
-        <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="ident">PotatoStore</span> {
                 <span class="ident">is_store_open</span>: <span class="bool-val">false</span>,
                 <span class="ident">potato_count</span>: <span class="number">50</span>,
@@ -782,7 +784,7 @@
     }
 
     <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">TomatoStore</span> {
-        <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="ident">TomatoStore</span> {
                 <span class="ident">is_store_open</span>: <span class="bool-val">false</span>,
                 <span class="ident">tomato_count</span>: <span class="number">50</span>,
@@ -796,7 +798,7 @@
     }
 
     <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">CustomerWallet</span> {
-        <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="ident">CustomerWallet</span> { <span class="ident">cents_count</span>: <span class="number">2000</span> }
         }
     }
@@ -834,7 +836,7 @@
 
         <span class="kw">fn</span> <span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">potato_store</span>: <span class="self">Self</span>::<span class="ident">SystemData</span>) {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">potato_store</span>.<span class="ident">is_store_open</span>);
-            <span class="ident">potato_store</span>.<span class="ident">potato_count</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="ident">potato_store</span>.<span class="ident">potato_count</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         }
     }
 
@@ -845,7 +847,7 @@
 
         <span class="kw">fn</span> <span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">tomato_store</span>: <span class="self">Self</span>::<span class="ident">SystemData</span>) {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">tomato_store</span>.<span class="ident">is_store_open</span>);
-            <span class="ident">tomato_store</span>.<span class="ident">tomato_count</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="ident">tomato_store</span>.<span class="ident">tomato_count</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         }
     }
 
@@ -858,8 +860,8 @@
 
         <span class="kw">fn</span> <span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, (<span class="kw-2">mut</span> <span class="ident">potato_store</span>, <span class="kw-2">mut</span> <span class="ident">customer_wallet</span>): <span class="self">Self</span>::<span class="ident">SystemData</span>) {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">potato_store</span>.<span class="ident">is_store_open</span>);
-            <span class="ident">potato_store</span>.<span class="ident">potato_count</span> <span class="op">-=</span> <span class="number">1</span>;
-            <span class="ident">customer_wallet</span>.<span class="ident">cents_count</span> <span class="op">-=</span> <span class="number">50</span>;
+            <span class="ident">potato_store</span>.<span class="ident">potato_count</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">customer_wallet</span>.<span class="ident">cents_count</span> <span class="op">-</span><span class="op">=</span> <span class="number">50</span>;
         }
     }
 
@@ -870,8 +872,8 @@
 
         <span class="kw">fn</span> <span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, (<span class="kw-2">mut</span> <span class="ident">tomato_store</span>, <span class="kw-2">mut</span> <span class="ident">customer_wallet</span>): <span class="self">Self</span>::<span class="ident">SystemData</span>) {
             <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">tomato_store</span>.<span class="ident">is_store_open</span>);
-            <span class="ident">tomato_store</span>.<span class="ident">tomato_count</span> <span class="op">-=</span> <span class="number">1</span>;
-            <span class="ident">customer_wallet</span>.<span class="ident">cents_count</span> <span class="op">-=</span> <span class="number">150</span>;
+            <span class="ident">tomato_store</span>.<span class="ident">tomato_count</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="ident">customer_wallet</span>.<span class="ident">cents_count</span> <span class="op">-</span><span class="op">=</span> <span class="number">150</span>;
         }
     }
 
@@ -885,7 +887,7 @@
     <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">BatchController</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CustomBatchControllerSystem</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
         <span class="kw">type</span> <span class="ident">BatchSystemData</span> <span class="op">=</span> ();
 
-        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">accessor</span>: <span class="ident">BatchAccessor</span>, <span class="ident">dispatcher</span>: <span class="ident">Dispatcher</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">create</span>(<span class="ident">accessor</span>: <span class="ident">BatchAccessor</span>, <span class="ident">dispatcher</span>: <span class="ident">Dispatcher</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="ident">CustomBatchControllerSystem</span> {
                 <span class="ident">accessor</span>,
                 <span class="ident">dispatcher</span>,
@@ -902,11 +904,11 @@
             }
         }
 
-        <span class="kw">fn</span> <span class="ident">running_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RunningTime</span> {
+        <span class="kw">fn</span> <span class="ident">running_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RunningTime</span> {
             <span class="ident">RunningTime</span>::<span class="ident">VeryLong</span>
         }
 
-        <span class="kw">fn</span> <span class="ident">accessor</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">AccessorCow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;c</span>, <span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">accessor</span><span class="op">&lt;</span><span class="lifetime">&#39;c</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;c</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AccessorCow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;c</span>, <span class="self">Self</span><span class="op">&gt;</span> {
             <span class="ident">AccessorCow</span>::<span class="ident">Ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">accessor</span>)
         }
 

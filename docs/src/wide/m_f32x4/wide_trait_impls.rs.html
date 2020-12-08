@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/wide-0.4.6/src/m_f32x4/wide_trait_impls.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>wide_trait_impls.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../wide/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/wide-0.4.6/src/m_f32x4/wide_trait_impls.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>wide_trait_impls.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../wide/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -442,7 +444,7 @@
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">f32x4</span> {
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw-2">*</span><span class="self">self</span>
   }
 }
@@ -450,7 +452,7 @@
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">f32x4</span> {
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>::<span class="ident">zeroed</span>()
   }
 }
@@ -460,7 +462,7 @@
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">f32x4</span> {
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="ident">m128</span>::<span class="ident">splat</span>(<span class="ident">val</span>) }
     } <span class="kw">else</span> {
@@ -473,7 +475,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">add</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -491,7 +493,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">add</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -509,7 +511,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">div</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -527,7 +529,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">div</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -545,7 +547,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">mul</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -563,7 +565,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">mul</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -581,7 +583,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">sub</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -599,7 +601,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">sub</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -617,7 +619,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitand</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitand</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">bitand</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -635,7 +637,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitand</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitand</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span> <span class="op">&amp;</span> <span class="kw-2">*</span><span class="ident">rhs</span>
   }
 }
@@ -644,7 +646,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">bitor</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -662,7 +664,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span> <span class="op">|</span> <span class="kw-2">*</span><span class="ident">rhs</span>
   }
 }
@@ -671,7 +673,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitxor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitxor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="macro">magic</span><span class="macro">!</span> {<span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_feature</span><span class="op">=</span><span class="string">&quot;sse&quot;</span>)]</span> {
       <span class="self">Self</span> { <span class="ident">sse</span>: <span class="self">self</span>.<span class="ident">sse</span>.<span class="ident">bitxor</span>(<span class="ident">rhs</span>.<span class="ident">sse</span>) }
     } <span class="kw">else</span> {
@@ -689,7 +691,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">bitxor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">bitxor</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span> <span class="op">^</span> <span class="kw-2">*</span><span class="ident">rhs</span>
   }
 }
@@ -699,27 +701,27 @@
   <span class="doccomment">/// Bitwise negation</span>
   <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">not</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">not</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">self</span> <span class="op">^</span> <span class="self">Self</span>::<span class="ident">ALL_BITS_ACTIVE</span>
   }
 }
 
 <span class="kw">impl</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">Sum</span> <span class="kw">for</span> <span class="ident">f32x4</span> {
   <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">f32x4</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">f32x4</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>);
     <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
-      <span class="ident">total</span> <span class="op">+=</span> <span class="ident">i</span>;
+      <span class="ident">total</span> <span class="op">+</span><span class="op">=</span> <span class="ident">i</span>;
     }
     <span class="ident">total</span>
   }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">Sum</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">f32x4</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">f32x4</span> {
   <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">f32x4</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">f32x4</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>);
     <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
-      <span class="ident">total</span> <span class="op">+=</span> <span class="ident">i</span>;
+      <span class="ident">total</span> <span class="op">+</span><span class="op">=</span> <span class="ident">i</span>;
     }
     <span class="ident">total</span>
   }
@@ -727,20 +729,20 @@
 
 <span class="kw">impl</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">Product</span> <span class="kw">for</span> <span class="ident">f32x4</span> {
   <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">product</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">f32x4</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">product</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">f32x4</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);
     <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
-      <span class="ident">total</span> <span class="op">*=</span> <span class="ident">i</span>;
+      <span class="ident">total</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">i</span>;
     }
     <span class="ident">total</span>
   }
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">iter</span>::<span class="ident">Product</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">f32x4</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">f32x4</span> {
   <span class="attribute">#[<span class="ident">inline</span>]</span>
-  <span class="kw">fn</span> <span class="ident">product</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">f32x4</span><span class="op">&gt;&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">product</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">f32x4</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);
     <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
-      <span class="ident">total</span> <span class="op">*=</span> <span class="ident">i</span>;
+      <span class="ident">total</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">i</span>;
     }
     <span class="ident">total</span>
   }
@@ -750,7 +752,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+  <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
     <span class="self">Self</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>) <span class="op">-</span> <span class="self">self</span>
   }
 }
@@ -758,7 +760,7 @@
   <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">f32x4</span>;
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="attribute">#[<span class="ident">must_use</span>]</span>
-  <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32x4</span> {
+  <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32x4</span> {
     <span class="ident">f32x4</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>) <span class="op">-</span> <span class="self">self</span>
   }
 }

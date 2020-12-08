@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/window_delegate.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>window_delegate.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/winit-0.22.2/src/platform_impl/macos/window_delegate.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>window_delegate.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../winit/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -622,7 +624,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">WindowDelegateState</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">UnownedWindow</span><span class="op">&gt;</span>, <span class="ident">initial_fullscreen</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">UnownedWindow</span><span class="op">&gt;</span>, <span class="ident">initial_fullscreen</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">scale_factor</span> <span class="op">=</span> <span class="ident">window</span>.<span class="ident">scale_factor</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">delegate_state</span> <span class="op">=</span> <span class="ident">WindowDelegateState</span> {
             <span class="ident">ns_window</span>: <span class="ident">window</span>.<span class="ident">ns_window</span>.<span class="ident">clone</span>(),
@@ -633,16 +635,16 @@
             <span class="ident">previous_scale_factor</span>: <span class="ident">scale_factor</span>,
         };
 
-        <span class="kw">if</span> <span class="ident">scale_factor</span> <span class="op">!=</span> <span class="number">1.0</span> {
+        <span class="kw">if</span> <span class="ident">scale_factor</span> <span class="op">!</span><span class="op">=</span> <span class="number">1.0</span> {
             <span class="ident">delegate_state</span>.<span class="ident">emit_static_scale_factor_changed_event</span>();
         }
 
         <span class="ident">delegate_state</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">with_window</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">with_window</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">UnownedWindow</span>) <span class="op">-&gt;</span> <span class="ident">T</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="ident">UnownedWindow</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>,
     {
         <span class="self">self</span>.<span class="ident">window</span>.<span class="ident">upgrade</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">ref</span> <span class="ident">window</span><span class="op">|</span> <span class="ident">callback</span>(<span class="ident">window</span>))
     }
@@ -657,7 +659,7 @@
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">emit_static_scale_factor_changed_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">let</span> <span class="ident">scale_factor</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_scale_factor</span>();
-        <span class="kw">if</span> <span class="ident">scale_factor</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">previous_scale_factor</span> {
+        <span class="kw">if</span> <span class="ident">scale_factor</span> <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">previous_scale_factor</span> {
             <span class="kw">return</span> ();
         };
 
@@ -682,24 +684,24 @@
         <span class="kw">let</span> <span class="ident">rect</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NSWindow</span>::<span class="ident">frame</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) };
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">rect</span>.<span class="ident">origin</span>.<span class="ident">x</span> <span class="kw">as</span> <span class="ident">f64</span>;
         <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">bottom_left_to_top_left</span>(<span class="ident">rect</span>);
-        <span class="kw">let</span> <span class="ident">moved</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">previous_position</span> <span class="op">!=</span> <span class="prelude-val">Some</span>((<span class="ident">x</span>, <span class="ident">y</span>));
+        <span class="kw">let</span> <span class="ident">moved</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">previous_position</span> <span class="op">!</span><span class="op">=</span> <span class="prelude-val">Some</span>((<span class="ident">x</span>, <span class="ident">y</span>));
         <span class="kw">if</span> <span class="ident">moved</span> {
             <span class="self">self</span>.<span class="ident">previous_position</span> <span class="op">=</span> <span class="prelude-val">Some</span>((<span class="ident">x</span>, <span class="ident">y</span>));
             <span class="self">self</span>.<span class="ident">emit_event</span>(<span class="ident">WindowEvent</span>::<span class="ident">Moved</span>((<span class="ident">x</span>, <span class="ident">y</span>).<span class="ident">into</span>()));
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">get_scale_factor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">fn</span> <span class="ident">get_scale_factor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         (<span class="kw">unsafe</span> { <span class="ident">NSWindow</span>::<span class="ident">backingScaleFactor</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_window</span>) }) <span class="kw">as</span> <span class="ident">f64</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">view_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">LogicalSize</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">view_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LogicalSize</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">ns_size</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">NSView</span>::<span class="ident">frame</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ns_view</span>).<span class="ident">size</span> };
         <span class="ident">LogicalSize</span>::<span class="ident">new</span>(<span class="ident">ns_size</span>.<span class="ident">width</span> <span class="kw">as</span> <span class="ident">f64</span>, <span class="ident">ns_size</span>.<span class="ident">height</span> <span class="kw">as</span> <span class="ident">f64</span>)
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_delegate</span>(<span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">UnownedWindow</span><span class="op">&gt;</span>, <span class="ident">initial_fullscreen</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">IdRef</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_delegate</span>(<span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">UnownedWindow</span><span class="op">&gt;</span>, <span class="ident">initial_fullscreen</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IdRef</span> {
     <span class="kw">let</span> <span class="ident">state</span> <span class="op">=</span> <span class="ident">WindowDelegateState</span>::<span class="ident">new</span>(<span class="ident">window</span>, <span class="ident">initial_fullscreen</span>);
     <span class="kw">unsafe</span> {
         <span class="comment">// This is free&#39;d in `dealloc`</span>
@@ -721,12 +723,12 @@
         <span class="ident">decl</span>.<span class="ident">add_method</span>(<span class="macro">sel</span><span class="macro">!</span>(<span class="ident">dealloc</span>), <span class="ident">dealloc</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>));
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">initWithWinit</span>:),
-            <span class="ident">init_with_winit</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">id</span>,
+            <span class="ident">init_with_winit</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span>,
         );
 
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">windowShouldClose</span>:),
-            <span class="ident">window_should_close</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">window_should_close</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">windowWillClose</span>:),
@@ -755,15 +757,15 @@
 
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">draggingEntered</span>:),
-            <span class="ident">dragging_entered</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">dragging_entered</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">prepareForDragOperation</span>:),
-            <span class="ident">prepare_for_drag_operation</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">prepare_for_drag_operation</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">performDragOperation</span>:),
-            <span class="ident">perform_drag_operation</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span>,
+            <span class="ident">perform_drag_operation</span> <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">concludeDragOperation</span>:),
@@ -777,7 +779,7 @@
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">window</span>:<span class="ident">willUseFullScreenPresentationOptions</span>:),
             <span class="ident">window_will_use_fullscreen_presentation_options</span>
-                <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>, <span class="ident">NSUInteger</span>) <span class="op">-&gt;</span> <span class="ident">NSUInteger</span>,
+                <span class="kw">as</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">Sel</span>, <span class="ident">id</span>, <span class="ident">NSUInteger</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSUInteger</span>,
         );
         <span class="ident">decl</span>.<span class="ident">add_method</span>(
             <span class="macro">sel</span><span class="macro">!</span>(<span class="ident">windowDidEnterFullScreen</span>:),
@@ -807,7 +809,7 @@
 
 <span class="comment">// This function is definitely unsafe, but labeling that would increase</span>
 <span class="comment">// boilerplate and wouldn&#39;t really clarify anything...</span>
-<span class="kw">fn</span> <span class="ident">with_state</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">WindowDelegateState</span>) <span class="op">-&gt;</span> <span class="ident">T</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">callback</span>: <span class="ident">F</span>) {
+<span class="kw">fn</span> <span class="ident">with_state</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">WindowDelegateState</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">callback</span>: <span class="ident">F</span>) {
     <span class="kw">let</span> <span class="ident">state_ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="ident">state_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">this</span>.<span class="ident">get_ivar</span>(<span class="string">&quot;winitState&quot;</span>);
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span>(<span class="ident">state_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">WindowDelegateState</span>)
@@ -821,10 +823,10 @@
     });
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">init_with_winit</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>, <span class="ident">state</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">id</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">init_with_winit</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="ident">_sel</span>: <span class="ident">Sel</span>, <span class="ident">state</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">id</span> {
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="ident">this</span>: <span class="ident">id</span> <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="ident">this</span>, <span class="ident">init</span>];
-        <span class="kw">if</span> <span class="ident">this</span> <span class="op">!=</span> <span class="ident">nil</span> {
+        <span class="kw">if</span> <span class="ident">this</span> <span class="op">!</span><span class="op">=</span> <span class="ident">nil</span> {
             (<span class="kw-2">*</span><span class="ident">this</span>).<span class="ident">set_ivar</span>(<span class="string">&quot;winitState&quot;</span>, <span class="ident">state</span>);
             <span class="ident">with_state</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">this</span>, <span class="op">|</span><span class="ident">state</span><span class="op">|</span> {
                 <span class="kw">let</span> () <span class="op">=</span> <span class="macro">msg_send</span><span class="macro">!</span>[<span class="kw-2">*</span><span class="ident">state</span>.<span class="ident">ns_window</span>, <span class="ident">setDelegate</span>: <span class="ident">this</span>];
@@ -834,7 +836,7 @@
     }
 }
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">window_should_close</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="kw">_</span>: <span class="ident">Sel</span>, <span class="kw">_</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">window_should_close</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="kw">_</span>: <span class="ident">Sel</span>, <span class="kw">_</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span> {
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `windowShouldClose:`&quot;</span>);
     <span class="ident">with_state</span>(<span class="ident">this</span>, <span class="op">|</span><span class="ident">state</span><span class="op">|</span> <span class="ident">state</span>.<span class="ident">emit_event</span>(<span class="ident">WindowEvent</span>::<span class="ident">CloseRequested</span>));
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Completed `windowShouldClose:`&quot;</span>);
@@ -923,7 +925,7 @@
 }
 
 <span class="doccomment">/// Invoked when the dragged image enters destination bounds or frame</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">dragging_entered</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="kw">_</span>: <span class="ident">Sel</span>, <span class="ident">sender</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">dragging_entered</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="kw">_</span>: <span class="ident">Sel</span>, <span class="ident">sender</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span> {
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `draggingEntered:`&quot;</span>);
 
     <span class="kw">use</span> <span class="ident">cocoa</span>::{<span class="ident">appkit</span>::<span class="ident">NSPasteboard</span>, <span class="ident">foundation</span>::<span class="ident">NSFastEnumeration</span>};
@@ -951,14 +953,14 @@
 }
 
 <span class="doccomment">/// Invoked when the image is released</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">prepare_for_drag_operation</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="kw">_</span>: <span class="ident">Sel</span>, <span class="kw">_</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">prepare_for_drag_operation</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="kw">_</span>: <span class="ident">Sel</span>, <span class="kw">_</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span> {
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `prepareForDragOperation:`&quot;</span>);
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Completed `prepareForDragOperation:`&quot;</span>);
     <span class="ident">YES</span>
 }
 
 <span class="doccomment">/// Invoked after the released image has been removed from the screen</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">perform_drag_operation</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="kw">_</span>: <span class="ident">Sel</span>, <span class="ident">sender</span>: <span class="ident">id</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">perform_drag_operation</span>(<span class="ident">this</span>: <span class="kw-2">&amp;</span><span class="ident">Object</span>, <span class="kw">_</span>: <span class="ident">Sel</span>, <span class="ident">sender</span>: <span class="ident">id</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BOOL</span> {
     <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;Triggered `performDragOperation:`&quot;</span>);
 
     <span class="kw">use</span> <span class="ident">cocoa</span>::{<span class="ident">appkit</span>::<span class="ident">NSPasteboard</span>, <span class="ident">foundation</span>::<span class="ident">NSFastEnumeration</span>};
@@ -1012,14 +1014,14 @@
                 <span class="comment">// Exclusive mode sets the state in `set_fullscreen` as the user</span>
                 <span class="comment">// can&#39;t enter exclusive mode by other means (like the</span>
                 <span class="comment">// fullscreen button on the window decorations)</span>
-                <span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
+                <span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Exclusive</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
                 <span class="comment">// `window_will_enter_fullscreen` was triggered and we&#39;re already</span>
                 <span class="comment">// in fullscreen, so we must&#39;ve reached here by `set_fullscreen`</span>
                 <span class="comment">// as it updates the state</span>
-                <span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="kw">_</span>)) <span class="op">=&gt;</span> (),
+                <span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> (),
                 <span class="comment">// Otherwise, we must&#39;ve reached fullscreen by the user clicking</span>
                 <span class="comment">// on the green fullscreen button. Update state!</span>
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">shared_state</span>.<span class="ident">fullscreen</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Fullscreen</span>::<span class="ident">Borderless</span>(<span class="ident">window</span>.<span class="ident">current_monitor</span>()))
                 }
             }
@@ -1049,7 +1051,7 @@
     <span class="kw">_</span>: <span class="ident">Sel</span>,
     <span class="kw">_</span>: <span class="ident">id</span>,
     <span class="ident">_proposed_options</span>: <span class="ident">NSUInteger</span>,
-) <span class="op">-&gt;</span> <span class="ident">NSUInteger</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NSUInteger</span> {
     <span class="comment">// Generally, games will want to disable the menu bar and the dock. Ideally,</span>
     <span class="comment">// this would be configurable by the user. Unfortunately because of our</span>
     <span class="comment">// `CGShieldingWindowLevel() + 1` hack (see `set_fullscreen`), our window is</span>

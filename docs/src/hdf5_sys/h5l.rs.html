@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/hdf5-sys-0.7.0/src/h5l.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>h5l.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../hdf5_sys/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/hdf5-sys-0.7.0/src/h5l.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>h5l.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../hdf5_sys/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -368,7 +370,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5L_info1_t</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() }
     }
 }
@@ -380,16 +382,16 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5L_info1_t__u</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">H5L_info1_t__u</span> {
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">address</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">haddr_t</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">address</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">haddr_t</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">value</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> [<span class="ident">u64</span>; <span class="number">1</span>] <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">haddr_t</span>
     }
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">val_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">size_t</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">val_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">size_t</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">value</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> [<span class="ident">u64</span>; <span class="number">1</span>] <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">size_t</span>
     }
 }
@@ -407,7 +409,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5L_info2_t</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() }
     }
 }
@@ -422,7 +424,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5L_info2_t__u</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() }
     }
 }
@@ -434,7 +436,7 @@
         <span class="ident">lnkdata</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
         <span class="ident">lnkdata_size</span>: <span class="ident">size_t</span>,
         <span class="ident">lcpl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">H5L_move_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
@@ -442,7 +444,7 @@
         <span class="ident">new_loc</span>: <span class="ident">hid_t</span>,
         <span class="ident">lnkdata</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
         <span class="ident">lnkdata_size</span>: <span class="ident">size_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">H5L_copy_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
@@ -450,7 +452,7 @@
         <span class="ident">new_loc</span>: <span class="ident">hid_t</span>,
         <span class="ident">lnkdata</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
         <span class="ident">lnkdata_size</span>: <span class="ident">size_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">H5L_traverse_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
@@ -459,7 +461,7 @@
         <span class="ident">lnkdata</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
         <span class="ident">lnkdata_size</span>: <span class="ident">size_t</span>,
         <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">hid_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">hid_t</span>,
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">H5L_delete_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
@@ -467,7 +469,7 @@
         <span class="ident">file</span>: <span class="ident">hid_t</span>,
         <span class="ident">lnkdata</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
         <span class="ident">lnkdata_size</span>: <span class="ident">size_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">H5L_query_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
@@ -476,7 +478,7 @@
         <span class="ident">lnkdata_size</span>: <span class="ident">size_t</span>,
         <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
         <span class="ident">buf_size</span>: <span class="ident">size_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">ssize_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ssize_t</span>,
 <span class="op">&gt;</span>;
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
@@ -494,7 +496,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5L_class_t</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() }
     }
 }
@@ -505,7 +507,7 @@
         <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
         <span class="ident">info</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">H5L_info1_t</span>,
         <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">H5L_iterate2_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
@@ -514,7 +516,7 @@
         <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
         <span class="ident">info</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">H5L_info2_t</span>,
         <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">H5L_elink_traverse_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
     <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
@@ -525,48 +527,48 @@
         <span class="ident">acc_flags</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uint</span>,
         <span class="ident">fapl_id</span>: <span class="ident">hid_t</span>,
         <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>,
 <span class="op">&gt;</span>;
 
 <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lmove</span>(
         <span class="ident">src_loc</span>: <span class="ident">hid_t</span>, <span class="ident">src_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">dst_loc</span>: <span class="ident">hid_t</span>, <span class="ident">dst_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
         <span class="ident">lcpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lcopy</span>(
         <span class="ident">src_loc</span>: <span class="ident">hid_t</span>, <span class="ident">src_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">dst_loc</span>: <span class="ident">hid_t</span>, <span class="ident">dst_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
         <span class="ident">lcpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lcreate_hard</span>(
         <span class="ident">cur_loc</span>: <span class="ident">hid_t</span>, <span class="ident">cur_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">dst_loc</span>: <span class="ident">hid_t</span>, <span class="ident">dst_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
         <span class="ident">lcpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lcreate_soft</span>(
         <span class="ident">link_target</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">link_loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">link_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">lcpl_id</span>: <span class="ident">hid_t</span>,
         <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Ldelete</span>(<span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Ldelete</span>(<span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Ldelete_by_idx</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">n</span>: <span class="ident">hsize_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lget_val</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">size</span>: <span class="ident">size_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lget_val_by_idx</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">n</span>: <span class="ident">hsize_t</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">size</span>: <span class="ident">size_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lexists</span>(<span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>) <span class="op">-&gt;</span> <span class="ident">htri_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lexists</span>(<span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">htri_t</span>;
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">hdf5_1_12_0</span>, <span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;deprecated in HDF5 1.12.0, use H5Lget_info2()&quot;</span>))]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">hdf5_1_12_0</span>), <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;H5Lget_info&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lget_info1</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">linfo</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">H5L_info1_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lget_info2</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">linfo</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">H5L_info2_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg_attr</span>(
         <span class="ident">hdf5_1_12_0</span>,
         <span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;deprecated in HDF5 1.12.0, use H5Lget_info_by_idx2()&quot;</span>)
@@ -575,27 +577,27 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lget_info_by_idx</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">n</span>: <span class="ident">hsize_t</span>, <span class="ident">linfo</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">H5L_info1_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lget_info_by_idx2</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">n</span>: <span class="ident">hsize_t</span>, <span class="ident">linfo</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">H5L_info2_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lget_name_by_idx</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">n</span>: <span class="ident">hsize_t</span>, <span class="ident">name</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>, <span class="ident">size</span>: <span class="ident">size_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">ssize_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ssize_t</span>;
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">hdf5_1_12_0</span>, <span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;deprecated in HDF5 1.12.0, use H5Literate2()&quot;</span>))]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">hdf5_1_12_0</span>), <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;H5Literate&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Literate1</span>(
         <span class="ident">grp_id</span>: <span class="ident">hid_t</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>, <span class="ident">idx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>,
         <span class="ident">op</span>: <span class="ident">H5L_iterate1_t</span>, <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Literate2</span>(
         <span class="ident">grp_id</span>: <span class="ident">hid_t</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>, <span class="ident">idx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>,
         <span class="ident">op</span>: <span class="ident">H5L_iterate2_t</span>, <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg_attr</span>(
         <span class="ident">hdf5_1_12_0</span>,
         <span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;deprecated in HDF5 1.12.0, use H5Literate_by_name2()&quot;</span>)
@@ -604,23 +606,23 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Literate_by_name1</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">idx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>, <span class="ident">op</span>: <span class="ident">H5L_iterate1_t</span>, <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Literate_by_name2</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">idx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">hsize_t</span>, <span class="ident">op</span>: <span class="ident">H5L_iterate2_t</span>, <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">hdf5_1_12_0</span>, <span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;deprecated in HDF5 1.12.0, use H5Lvisit2()&quot;</span>))]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">hdf5_1_12_0</span>), <span class="ident">link_name</span> <span class="op">=</span> <span class="string">&quot;H5Lvisit&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lvisit1</span>(
         <span class="ident">grp_id</span>: <span class="ident">hid_t</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>, <span class="ident">op</span>: <span class="ident">H5L_iterate1_t</span>,
         <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lvisit2</span>(
         <span class="ident">grp_id</span>: <span class="ident">hid_t</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>, <span class="ident">op</span>: <span class="ident">H5L_iterate2_t</span>,
         <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg_attr</span>(
         <span class="ident">hdf5_1_12_0</span>,
         <span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;deprecated in HDF5 1.12.0, use H5Lvisit_by_name2()&quot;</span>)
@@ -629,27 +631,27 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lvisit_by_name1</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">op</span>: <span class="ident">H5L_iterate1_t</span>, <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lvisit_by_name2</span>(
         <span class="ident">loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">group_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">idx_type</span>: <span class="ident">H5_index_t</span>, <span class="ident">order</span>: <span class="ident">H5_iter_order_t</span>,
         <span class="ident">op</span>: <span class="ident">H5L_iterate2_t</span>, <span class="ident">op_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lcreate_ud</span>(
         <span class="ident">link_loc_id</span>: <span class="ident">hid_t</span>, <span class="ident">link_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">link_type</span>: <span class="ident">H5L_type_t</span>, <span class="ident">udata</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
         <span class="ident">udata_size</span>: <span class="ident">size_t</span>, <span class="ident">lcpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lregister</span>(<span class="ident">cls</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">H5L_class_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lunregister</span>(<span class="ident">id</span>: <span class="ident">H5L_type_t</span>) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lis_registered</span>(<span class="ident">id</span>: <span class="ident">H5L_type_t</span>) <span class="op">-&gt;</span> <span class="ident">htri_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lregister</span>(<span class="ident">cls</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">H5L_class_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lunregister</span>(<span class="ident">id</span>: <span class="ident">H5L_type_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lis_registered</span>(<span class="ident">id</span>: <span class="ident">H5L_type_t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">htri_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lunpack_elink_val</span>(
         <span class="ident">ext_linkval</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>, <span class="ident">link_size</span>: <span class="ident">size_t</span>, <span class="ident">flags</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uint</span>,
         <span class="ident">filename</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">obj_path</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Lcreate_external</span>(
         <span class="ident">file_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">obj_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">link_loc_id</span>: <span class="ident">hid_t</span>,
         <span class="ident">link_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">lcpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">lapl_id</span>: <span class="ident">hid_t</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">herr_t</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">hdf5_1_12_0</span>))]</span>
