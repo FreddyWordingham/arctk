@@ -12,8 +12,8 @@ use std::path::Path;
 #[load]
 #[derive(Clone)]
 pub enum EngineBuilder {
-    /// Basic sampling engine.
-    Basic,
+    /// Standard sampling engine.
+    Standard,
 }
 
 impl Build for EngineBuilder {
@@ -22,7 +22,7 @@ impl Build for EngineBuilder {
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Engine, Error> {
         match self {
-            Self::Basic => Ok(engines::basic),
+            Self::Standard => Ok(engines::standard),
         }
     }
 }
