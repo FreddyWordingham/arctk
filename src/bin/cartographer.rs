@@ -6,6 +6,7 @@ use arctk::{
     file::{Build, Load, Save},
     geom::Tree,
     ord::Link,
+    sim::cartographer::{run, Input, ParametersBuilder},
     util::{
         banner::{section, title},
         dir,
@@ -32,15 +33,19 @@ fn main() {
         .expect("Failed to load parameters file.");
 
     section(term_width, "Building");
-    let setup = builder
+    let params = builder
         .build(&in_dir)
         .expect("Failed to construct Babbage operation.");
 
     section(term_width, "Linking");
+    let grid = params.grid;
+    let sett = params.sett;
+    let engine = params.engine;
+    let input = Input::new(&grid, &sett);
 
     section(term_width, "Mapping");
-    // let output = single_thread(engine, &input).expect("Failed to run mapping");
-    let output = multi_thread(engine, &input).expect("Failed to run mapping");
+    // let output = run::single_thread(engine, &input).expect("Failed to run mapping");
+    let output = run::multi_thread(engine, &input).expect("Failed to run mapping");
     output.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");
