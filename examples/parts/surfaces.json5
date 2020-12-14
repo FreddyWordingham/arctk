@@ -1,7 +1,7 @@
 {
     centrepiece : {
         mesh    : [["objs/cube.obj"], {scale:1.0e-3}],
-        attr    : 'flash'
+        attr    : 'flesh'
     },
     mirror      : {
         mesh    : [["objs/mirrors.obj"], {scale:1.0e-3}],
