@@ -61,7 +61,7 @@ impl Operation {
                         .expect("Failed to place point within grid.");
                     weights.push(vec![data[index]]);
                 }
-                Table::new(weights).save(&out_dir.join("output.csv"))
+                Table::new(vec!["weight".to_string()], weights).save(&out_dir.join("output.csv"))
             }
         }
     }
