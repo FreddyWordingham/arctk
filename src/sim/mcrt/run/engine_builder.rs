@@ -14,6 +14,8 @@ use std::path::Path;
 pub enum EngineBuilder {
     /// Standard sampling engine.
     Standard,
+    /// Raman sampling engine.
+    Raman,
 }
 
 impl Build for EngineBuilder {
@@ -23,6 +25,7 @@ impl Build for EngineBuilder {
     fn build(self, _in_dir: &Path) -> Result<Engine, Error> {
         match self {
             Self::Standard => Ok(engines::standard),
+            Self::Raman => Ok(engines::raman),
         }
     }
 }
