@@ -35,7 +35,7 @@ fn main() {
     section(term_width, "Building");
     let params = builder
         .build(&in_dir)
-        .expect("Failed to construct Babbage operation.");
+        .expect("Failed to construct parameters.");
 
     section(term_width, "Linking");
     let grid = params.grid;
