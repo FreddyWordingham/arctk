@@ -3,8 +3,7 @@
 use crate::{
     err::Error,
     file::{Build, Redirect},
-    geom::{GridBuilder, SurfaceBuilder, TreeSettings},
-    ord::Set,
+    geom::GridBuilder,
     sim::cartographer::{EngineBuilder, Parameters, Settings},
 };
 use arctk_attr::load;

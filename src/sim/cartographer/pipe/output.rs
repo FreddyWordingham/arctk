@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     file::Save,
-    ord::{Register, X, Y, Z},
+    ord::{X, Y, Z},
 };
 use ndarray::Array3;
 use std::{ops::AddAssign, path::Path};

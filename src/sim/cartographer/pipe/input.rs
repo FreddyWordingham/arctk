@@ -1,9 +1,6 @@
 //! Simulation input.
 
-use crate::{
-    geom::{Grid, Tree},
-    sim::cartographer::Settings,
-};
+use crate::{geom::Grid, sim::cartographer::Settings};
 
 /// Cartographer simulation resources conglomerate.
 pub struct Input<'a> {

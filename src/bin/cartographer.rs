@@ -4,15 +4,12 @@
 use arctk::{
     args,
     file::{Build, Load, Save},
-    geom::Tree,
-    ord::Link,
     sim::cartographer::{run, Input, ParametersBuilder},
     util::{
         banner::{section, title},
         dir,
     },
 };
-use arctk_attr::input;
 use std::{env::current_dir, path::PathBuf};
 
 fn main() {

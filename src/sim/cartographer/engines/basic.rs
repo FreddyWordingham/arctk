@@ -1,21 +1,12 @@
 //! Ray observation engine function.
 
-use crate::{
-    geom::Trace,
-    math::Pos3,
-    ord::{Name, X, Y, Z},
-    phys::Crossing,
-    sim::{
-        cartographer::{Event, Input, Output},
-        mcrt::AttributeLinker,
-    },
-};
+use crate::sim::cartographer::{Input, Output};
 use rand::rngs::ThreadRng;
 
 /// Determine the material contents of a given voxel.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn basic(input: &Input, rng: &mut ThreadRng, index: [usize; 3], data: &mut Output) {
+pub fn basic(_input: &Input, _rng: &mut ThreadRng, _index: [usize; 3], _data: &mut Output) {
     // let super_sampling = input.sett.super_sampling();
     // let super_samples = super_sampling.num_samples();
     // let weight = 1.0 / super_samples as f64;
