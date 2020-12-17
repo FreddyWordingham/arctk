@@ -44,13 +44,13 @@ macro_rules! reports {
 #[macro_export]
 macro_rules! fmt_report {
     ($fmt: expr, $expression: expr) => {
-        writeln!(fmt, "{:>32} : {}", stringify!($expression), $expression)?;
+        writeln!($fmt, "{:>32} : {}", stringify!($expression), $expression)?;
     };
     ($fmt: expr, $expression: expr, $desc: expr) => {
-        writeln!(fmt, "{:>32} : {}", $desc, $expression)?;
+        writeln!($fmt, "{:>32} : {}", $desc, $expression)?;
     };
     ($fmt: expr, $expression: expr, $desc: expr, $units: expr) => {
-        writeln!(fmt, "{:>32} : {} [{}]", $desc, $expression, $units)?;
+        writeln!($fmt, "{:>32} : {} [{}]", $desc, $expression, $units)?;
     };
 }
 
@@ -58,24 +58,24 @@ macro_rules! fmt_report {
 #[macro_export]
 macro_rules! fmt_reports {
     ($fmt: expr, $expression: expr) => {
-        write!(fmt, "{:>32} :", stringify!($expression))?;
+        write!($fmt, "{:>32} :", stringify!($expression))?;
         for item in $expression {
-            write!(fmt, " {}", item)?;
+            write!($fmt, " {}", item)?;
         }
-        writeln!(fmt)?;
+        writeln!($fmt)?;
     };
     ($fmt: expr, $expression: expr, $desc: expr) => {
-        write!(fmt, "{:>32} :", $desc)?;
+        write!($fmt, "{:>32} :", $desc)?;
         for item in $expression {
-            write!(fmt, " {}", item)?;
+            write!($fmt, " {}", item)?;
         }
-        writeln!(fmt)?;
+        writeln!($fmt)?;
     };
     ($fmt: expr, $expression: expr, $desc: expr, $units: expr) => {
-        write!(fmt, "{:>32} :", $desc)?;
+        write!($fmt, "{:>32} :", $desc)?;
         for item in $expression {
-            write!(fmt, " {}", item)?;
+            write!($fmt, " {}", item)?;
         }
-        writeln!(fmt, " [{}]", $units)?;
+        writeln!($fmt, " [{}]", $units)?;
     };
 }
