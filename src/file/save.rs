@@ -17,9 +17,7 @@ pub trait Save {
     /// if the instance can not be serialised or if the file can't be written to.
     #[inline]
     fn save(&self, path: &Path) -> Result<(), Error> {
-        if path.is_file() {
-            println!("Saving file: {}", path.display());
-        }
+        println!("Saving: {}", path.display());
 
         self.save_data(path)
     }
