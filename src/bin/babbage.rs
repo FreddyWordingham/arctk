@@ -5,7 +5,7 @@ use arctk::{
     args,
     file::{Build, Load},
     report,
-    // sim::babbage::OperationBuilder,
+    sim::babbage::{Operation, OperationBuilder},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -20,8 +20,8 @@ use std::{
 // Input parameters.
 #[input]
 struct Parameters {
-    // /// Operation to perform.
-// op: OperationBuilder,
+    /// Operation to perform.
+    op: OperationBuilder,
 }
 
 fn main() {
@@ -29,11 +29,12 @@ fn main() {
     title(term_width, "Babbage");
 
     let (in_dir, _out_dir, params_path) = initialisation(term_width);
-    let _params = input(term_width, &in_dir.join(&params_path));
+    let _op = input(term_width, &in_dir, &params_path);
 
     section(term_width, "Finished");
 }
 
+/// Initialise the input arguments.
 fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     section(term_width, "Initialisation");
     sub_section(term_width, "args");
@@ -58,8 +59,17 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     (in_dir, out_dir, params_path)
 }
 
-fn input(term_width: usize, params_path: &Path) -> Parameters {
+/// Retrieve the input parameters file structure.
+fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Operation {
+    section(term_width, "Input");
+    sub_section(term_width, "Loading");
     let params = Parameters::load(params_path).expect("Failed to load parameters file.");
 
-    params
+    sub_section(term_width, "Building");
+    let op = params
+        .op
+        .build(&in_dir)
+        .expect("Failed to construct Babbage operation.");
+
+    op
 }
