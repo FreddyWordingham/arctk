@@ -8,6 +8,7 @@ use crate::{
     geom::Grid,
     math::Pos3,
     ord::{X, Y, Z},
+    util::datacube::display_datacube,
 };
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
@@ -89,54 +90,46 @@ impl Display for Operation {
             Self::Sum(cubes) => {
                 writeln!(fmt, "Sum...")?;
                 for cube in cubes {
-                    cube_info(fmt, cube);
+                    display_datacube(fmt, cube)?;
                 }
                 Ok(())
             }
             Self::Add(cube, x) => {
                 writeln!(fmt, "Add...")?;
-                cube_info(fmt, cube);
+                display_datacube(fmt, cube)?;
                 fmt_report!(fmt, x, "x");
                 Ok(())
             }
             Self::Sub(cube, x) => {
                 writeln!(fmt, "Subtract...")?;
-                cube_info(fmt, cube);
+                display_datacube(fmt, cube)?;
                 fmt_report!(fmt, x, "x");
                 Ok(())
             }
             Self::Mult(cube, x) => {
                 writeln!(fmt, "Multiply...")?;
-                cube_info(fmt, cube);
+                display_datacube(fmt, cube)?;
                 fmt_report!(fmt, x, "x");
                 Ok(())
             }
             Self::Div(cube, x) => {
                 writeln!(fmt, "Divide...")?;
-                cube_info(fmt, cube);
+                display_datacube(fmt, cube)?;
                 fmt_report!(fmt, x, "x");
                 Ok(())
             }
             Self::Norm(cube) => {
                 writeln!(fmt, "Normalise...")?;
-                cube_info(fmt, cube);
+                display_datacube(fmt, cube)?;
                 Ok(())
             }
             Self::Sample(points, cube, grid) => {
                 writeln!(fmt, "Normalise...")?;
                 fmt_reports!(fmt, points, "sampling points");
-                cube_info(fmt, cube);
+                display_datacube(fmt, cube)?;
                 fmt_report!(fmt, grid, "grid");
                 Ok(())
             }
         }
     }
-}
-
-fn cube_info(fmt: &mut Formatter, _datacube: &Array3<f64>) -> Result<(), std::fmt::Error> {
-    writeln!(fmt, "...")?;
-    // fmt_report!(fmt, points_path.display(), "points");
-    // fmt_report!(fmt, data_path.display(), "datacube");
-    // fmt_report!(fmt, grid, "grid");
-    Ok(())
 }
