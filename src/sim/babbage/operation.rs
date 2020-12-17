@@ -1,8 +1,17 @@
 //! Operation implementation.
 
-use crate::{data::Table, err::Error, file::Save, geom::Grid, math::Pos3};
+use crate::{
+    data::Table,
+    err::Error,
+    file::Save,
+    fmt_report, fmt_reports,
+    geom::Grid,
+    math::Pos3,
+    ord::{X, Y, Z},
+};
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
+use std::fmt::{Display, Formatter};
 use std::path::Path;
 
 /// Possible operation enumeration.
@@ -65,4 +74,69 @@ impl Operation {
             }
         }
     }
+}
+
+impl Display for Operation {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        match self {
+            Self::Zero(res) => {
+                write!(fmt, "Zero: [{}x{}x{}]", res[X], res[Y], res[Z])
+            }
+            Self::Unit(res) => {
+                write!(fmt, "Unit: [{}x{}x{}]", res[X], res[Y], res[Z])
+            }
+            Self::Sum(cubes) => {
+                writeln!(fmt, "Sum...")?;
+                for cube in cubes {
+                    cube_info(fmt, cube);
+                }
+                Ok(())
+            }
+            Self::Add(cube, x) => {
+                writeln!(fmt, "Add...")?;
+                cube_info(fmt, cube);
+                fmt_report!(fmt, x, "x");
+                Ok(())
+            }
+            Self::Sub(cube, x) => {
+                writeln!(fmt, "Subtract...")?;
+                cube_info(fmt, cube);
+                fmt_report!(fmt, x, "x");
+                Ok(())
+            }
+            Self::Mult(cube, x) => {
+                writeln!(fmt, "Multiply...")?;
+                cube_info(fmt, cube);
+                fmt_report!(fmt, x, "x");
+                Ok(())
+            }
+            Self::Div(cube, x) => {
+                writeln!(fmt, "Divide...")?;
+                cube_info(fmt, cube);
+                fmt_report!(fmt, x, "x");
+                Ok(())
+            }
+            Self::Norm(cube) => {
+                writeln!(fmt, "Normalise...")?;
+                cube_info(fmt, cube);
+                Ok(())
+            }
+            Self::Sample(points, cube, grid) => {
+                writeln!(fmt, "Normalise...")?;
+                fmt_reports!(fmt, points, "sampling points");
+                cube_info(fmt, cube);
+                fmt_report!(fmt, grid, "grid");
+                Ok(())
+            }
+        }
+    }
+}
+
+fn cube_info(fmt: &mut Formatter, _datacube: &Array3<f64>) -> Result<(), std::fmt::Error> {
+    writeln!(fmt, "...")?;
+    // fmt_report!(fmt, points_path.display(), "points");
+    // fmt_report!(fmt, data_path.display(), "datacube");
+    // fmt_report!(fmt, grid, "grid");
+    Ok(())
 }
