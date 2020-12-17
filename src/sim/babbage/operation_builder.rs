@@ -1,5 +1,6 @@
 //! Operation implementation.
 
+use crate::fmt_report;
 use crate::{
     data::Table,
     err::Error,
@@ -11,6 +12,7 @@ use crate::{
 };
 use arctk_attr::load;
 use ndarray::Array3;
+use std::fmt::{Display, Formatter};
 use std::path::{Path, PathBuf};
 
 /// Possible operation enumeration.
@@ -88,5 +90,47 @@ impl Build for OperationBuilder {
                 Self::Inst::Sample(points, data_cube, grid)
             }
         })
+    }
+}
+
+impl Display for OperationBuilder {
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        match self {
+            Self::Zero(res) => {
+                write!(fmt, "Zero: [{}x{}x{}]", res[X], res[Y], res[Z])
+            }
+            Self::Unit(res) => {
+                write!(fmt, "Unit: [{}x{}x{}]", res[X], res[Y], res[Z])
+            }
+            Self::Sum(data_paths) => {
+                write!(fmt, "Sum: [")?;
+                for path in data_paths {
+                    write!(fmt, "{} ", path.display())?;
+                }
+                write!(fmt, "]")
+            }
+            Self::Add(data_path, x) => {
+                write!(fmt, "Add: {} + {}", data_path.display(), x)
+            }
+            Self::Sub(data_path, x) => {
+                write!(fmt, "Add: {} - {}", data_path.display(), x)
+            }
+            Self::Mult(data_path, x) => {
+                write!(fmt, "Add: {} * {}", data_path.display(), x)
+            }
+            Self::Div(data_path, x) => {
+                write!(fmt, "Add: {} / {}", data_path.display(), x)
+            }
+            Self::Norm(data_path) => {
+                write!(fmt, "Normalise: {}", data_path.display())
+            }
+            Self::Sample(points_path, data_path, grid) => {
+                writeln!(fmt, "Sample...")?;
+                fmt_report!(fmt, points_path.display(), "points");
+                fmt_report!(fmt, data_path.display(), "datacube");
+                fmt_report!(fmt, grid, "grid");
+                Ok(())
+            }
+        }
     }
 }

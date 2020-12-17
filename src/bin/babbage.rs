@@ -28,8 +28,7 @@ use arctk::fmt_report;
 use std::fmt::{Display, Error, Formatter};
 impl Display for Parameters {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
-        // writeln!(fmt, "", self.op);
-        // fmt_report!(Self::fmt, "", self.op);
+        fmt_report!(fmt, self.op, "operation builder");
     }
 }
 
