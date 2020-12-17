@@ -38,8 +38,9 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Babbage");
 
-    let (in_dir, _out_dir, params_path) = initialisation(term_width);
-    let _op = input(term_width, &in_dir, &params_path);
+    let (in_dir, out_dir, params_path) = initialisation(term_width);
+    let op = input(term_width, &in_dir, &params_path);
+    let data = run(term_width, op, &out_dir);
 
     section(term_width, "Finished");
 }
@@ -82,7 +83,15 @@ fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Operation {
         .op
         .build(&in_dir)
         .expect("Failed to construct Babbage operation.");
-    // report!(format!("{:?}", op), "op");
+    report!(op, "operation");
 
     op
+}
+
+/// Run the operation.
+fn run(term_width: usize, op: Operation, out_dir: &Path) {
+    section(term_width, "Running");
+
+    op.run(&out_dir)
+        .expect("Operation failed... we'll get 'em next time.");
 }
