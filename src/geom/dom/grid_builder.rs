@@ -4,11 +4,15 @@ use crate::{
     access,
     err::Error,
     file::Build,
+    fmt_report,
     geom::{Cube, Grid},
     ord::{X, Y, Z},
 };
 use arctk_attr::load;
-use std::path::Path;
+use std::{
+    fmt::{Display, Formatter},
+    path::Path,
+};
 
 /// Grid builder.
 #[load]
@@ -49,5 +53,18 @@ impl Build for GridBuilder {
     #[inline]
     fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
         Ok(Grid::new(self.boundary, self.res))
+    }
+}
+
+impl Display for GridBuilder {
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.boundary, "boundary");
+        fmt_report!(
+            fmt,
+            &format!("[{}x{}x{}]", self.res[X], self.res[Y], self.res[Z]),
+            "resolution"
+        );
+        Ok(())
     }
 }

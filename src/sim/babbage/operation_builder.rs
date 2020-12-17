@@ -1,10 +1,10 @@
 //! Operation implementation.
 
-use crate::fmt_report;
 use crate::{
     data::Table,
     err::Error,
     file::{Build, Load, Redirect},
+    fmt_report,
     geom::GridBuilder,
     math::Pos3,
     ord::{X, Y, Z},
@@ -12,8 +12,10 @@ use crate::{
 };
 use arctk_attr::load;
 use ndarray::Array3;
-use std::fmt::{Display, Formatter};
-use std::path::{Path, PathBuf};
+use std::{
+    fmt::{Display, Formatter},
+    path::{Path, PathBuf},
+};
 
 /// Possible operation enumeration.
 #[load]
@@ -94,6 +96,7 @@ impl Build for OperationBuilder {
 }
 
 impl Display for OperationBuilder {
+    #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match self {
             Self::Zero(res) => {
@@ -113,13 +116,13 @@ impl Display for OperationBuilder {
                 write!(fmt, "Add: {} + {}", data_path.display(), x)
             }
             Self::Sub(data_path, x) => {
-                write!(fmt, "Add: {} - {}", data_path.display(), x)
+                write!(fmt, "Subtract: {} - {}", data_path.display(), x)
             }
             Self::Mult(data_path, x) => {
-                write!(fmt, "Add: {} * {}", data_path.display(), x)
+                write!(fmt, "Multiply: {} * {}", data_path.display(), x)
             }
             Self::Div(data_path, x) => {
-                write!(fmt, "Add: {} / {}", data_path.display(), x)
+                write!(fmt, "Divide: {} / {}", data_path.display(), x)
             }
             Self::Norm(data_path) => {
                 write!(fmt, "Normalise: {}", data_path.display())

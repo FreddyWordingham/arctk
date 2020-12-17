@@ -304,3 +304,22 @@ impl Trace for Cube {
         None
     }
 }
+
+use crate::fmt_report;
+use std::fmt::{Display, Formatter};
+impl Display for Cube {
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(
+            fmt,
+            &format!("[{}x{}x{}]", self.mins.x, self.mins.y, self.mins.z),
+            "mins"
+        );
+        fmt_report!(
+            fmt,
+            &format!("[{}x{}x{}]", self.maxs.x, self.maxs.y, self.maxs.z),
+            "maxs"
+        );
+        Ok(())
+    }
+}
