@@ -4,7 +4,7 @@ use crate::{
     err::Error,
     file::{Build, Redirect},
     geom::GridBuilder,
-    sim::cartographer::{EngineBuilder, Parameters, Settings},
+    sim::cartographer::{EngineBuilder, Parameters, Settings, SurfaceBuilder},
 };
 use arctk_attr::load;
 use std::path::Path;
@@ -13,6 +13,8 @@ use std::path::Path;
 /// Holds paths to data still on the disk.
 #[load]
 pub struct ParametersBuilder {
+    /// Surfaces.
+    surfs: Redirect<Set<SurfaceBuilder>>,
     /// Measurement grid settings.
     grid: Redirect<GridBuilder>,
     /// Simulation specific settings.

@@ -12,7 +12,7 @@ pub struct SurfaceLinker {
     mesh: Mesh,
     /// Attribute name.
     attr: Name,
-}
+} 
 
 impl SurfaceLinker {
     /// Construct a new instance.
