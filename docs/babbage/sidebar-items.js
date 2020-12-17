@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["initialisation","Initialise the input arguments."],["input","Retrieve the input parameters file structure."],["main",""],["run","Run the operation."]],"struct":[["Parameters",""]]});

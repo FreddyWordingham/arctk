@@ -16,7 +16,7 @@ pub struct CameraBuilder {
     pos: Pos3,
     /// Target.
     tar: Pos3,
-    /// Horizontal field-of-view [deg].
+    /// Horizontal field-of-view (deg).
     fov: f64,
     /// Image resolution.
     res: [usize; 2],

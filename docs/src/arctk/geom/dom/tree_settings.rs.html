@@ -37,11 +37,29 @@
 <span id="34">34</span>
 <span id="35">35</span>
 <span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Adaptive tree construction settings.</span>
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">clone</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">clone</span>, <span class="ident">fmt_report</span>};
 <span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">load</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>};
 
 <span class="doccomment">/// Tree construction settings.</span>
 <span class="attribute">#[<span class="ident">load</span>]</span>
@@ -72,6 +90,22 @@
             <span class="ident">max_depth</span>,
             <span class="ident">padding</span>,
         }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">TreeSettings</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;...&quot;</span>)<span class="question-mark">?</span>;
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">tar_tris</span>, <span class="string">&quot;target triangles&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">max_depth</span>, <span class="string">&quot;maximum depth&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(
+            <span class="ident">fmt</span>,
+            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}%&quot;</span>, <span class="self">self</span>.<span class="ident">padding</span> <span class="op">*</span> <span class="number">100.0</span>),
+            <span class="string">&quot;padding percentage&quot;</span>
+        );
+
+        <span class="prelude-val">Ok</span>(())
     }
 }
 </pre></div>

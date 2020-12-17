@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["scatter","Perform a photon scattering event."],["shift_scatter","Perform a photon scattering event with a probability of shifting wavelength."]]});

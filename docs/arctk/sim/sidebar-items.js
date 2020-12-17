@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["mcrt","Monte-Carlo radiative transfer simulation module."]]});
+initSidebarItems({"mod":[["babbage","Babbage datacube manipulation module."]]});

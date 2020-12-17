@@ -124,15 +124,39 @@
 <span id="121">121</span>
 <span id="122">122</span>
 <span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Regular Cartesian-grid cell scheme.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">access</span>,
+    <span class="ident">access</span>, <span class="ident">fmt_report</span>,
     <span class="ident">geom</span>::<span class="ident">Cube</span>,
     <span class="ident">math</span>::{<span class="ident">Pos3</span>, <span class="ident">Vec3</span>},
     <span class="ident">ord</span>::{<span class="ident">X</span>, <span class="ident">Y</span>, <span class="ident">Z</span>},
 };
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>};
 
 <span class="doccomment">/// Regular Cartesian-grid structure.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Grid</span> {
@@ -246,6 +270,28 @@
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
         }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Grid</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;...&quot;</span>)<span class="question-mark">?</span>;
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">boundary</span>, <span class="string">&quot;boundary&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(
+            <span class="ident">fmt</span>,
+            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;[{}x{}x{}]&quot;</span>, <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">X</span>], <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">Y</span>], <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">Z</span>]),
+            <span class="string">&quot;resolution&quot;</span>
+        );
+        <span class="macro">fmt_report</span><span class="macro">!</span>(
+            <span class="ident">fmt</span>,
+            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+                <span class="string">&quot;{}m x {}m x {}m&quot;</span>,
+                <span class="self">self</span>.<span class="ident">voxel_size</span>.<span class="ident">x</span>, <span class="self">self</span>.<span class="ident">voxel_size</span>.<span class="ident">y</span>, <span class="self">self</span>.<span class="ident">voxel_size</span>.<span class="ident">z</span>
+            ),
+            <span class="string">&quot;voxel size&quot;</span>
+        );
+        <span class="prelude-val">Ok</span>(())
     }
 }
 </pre></div>
