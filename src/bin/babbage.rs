@@ -12,25 +12,29 @@ use arctk::{
     },
 };
 use arctk_attr::input;
-use std::{env::current_dir, path::PathBuf};
+use std::{
+    env::current_dir,
+    path::{Path, PathBuf},
+};
 
-// // Input parameters.
-// #[input]
-// struct Parameters {
-//     /// Operation to perform.
-//     op: OperationBuilder,
-// }
+// Input parameters.
+#[input]
+struct Parameters {
+    // /// Operation to perform.
+// op: OperationBuilder,
+}
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Babbage");
 
-    let (_in_dir, _out_dir) = initialisation(term_width);
+    let (in_dir, _out_dir, params_path) = initialisation(term_width);
+    let _params = input(term_width, &in_dir.join(&params_path));
 
     section(term_width, "Finished");
 }
 
-fn initialisation(term_width: usize) -> (PathBuf, PathBuf) {
+fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     section(term_width, "Initialisation");
     sub_section(term_width, "args");
     args!(
@@ -51,5 +55,11 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf) {
     report!(in_dir.display(), "input directory");
     report!(out_dir.display(), "output directory");
 
-    (in_dir, out_dir)
+    (in_dir, out_dir, params_path)
+}
+
+fn input(term_width: usize, params_path: &Path) -> Parameters {
+    let params = Parameters::load(params_path).expect("Failed to load parameters file.");
+
+    params
 }
