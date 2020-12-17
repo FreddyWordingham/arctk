@@ -308,6 +308,7 @@ impl Trace for Cube {
 use crate::fmt_report;
 use std::fmt::{Display, Formatter};
 impl Display for Cube {
+    #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
         fmt_report!(

@@ -40,7 +40,7 @@ fn main() {
 
     let (in_dir, out_dir, params_path) = initialisation(term_width);
     let op = input(term_width, &in_dir, &params_path);
-    let data = run(term_width, op, &out_dir);
+    run(term_width, op, &out_dir);
 
     section(term_width, "Finished");
 }

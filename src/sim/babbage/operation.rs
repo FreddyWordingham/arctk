@@ -12,8 +12,10 @@ use crate::{
 };
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
-use std::fmt::{Display, Formatter};
-use std::path::Path;
+use std::{
+    fmt::{Display, Formatter},
+    path::Path,
+};
 
 /// Possible operation enumeration.
 pub enum Operation {
@@ -60,7 +62,9 @@ impl Operation {
             Self::Mult(ref data, x) => (data * x).save(&out_dir.join("output.nc")),
             Self::Div(ref data, x) => (data / x).save(&out_dir.join("output.nc")),
             Self::Norm(ref data) => {
-                let max = *data.max().expect("Failed to determine maximal value.");
+                let max = *data
+                    .max()
+                    .unwrap_or_else(|_| panic!("Failed to determine maximum value."));
                 (data / max).save(&out_dir.join("output.nc"))
             }
             Self::Sample(ref points, ref data, ref grid) => {
@@ -68,7 +72,7 @@ impl Operation {
                 for point in points {
                     let index = grid
                         .gen_index(point)
-                        .expect("Failed to place point within grid.");
+                        .unwrap_or_else(|| panic!("Failed to place point within grid."));
                     weights.push(vec![data[index]]);
                 }
                 Table::new(vec!["weight".to_string()], weights).save(&out_dir.join("output.csv"))
@@ -80,50 +84,50 @@ impl Operation {
 impl Display for Operation {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
-        match self {
+        match *self {
             Self::Zero(res) => {
                 write!(fmt, "Zero: [{}x{}x{}]", res[X], res[Y], res[Z])
             }
             Self::Unit(res) => {
                 write!(fmt, "Unit: [{}x{}x{}]", res[X], res[Y], res[Z])
             }
-            Self::Sum(cubes) => {
+            Self::Sum(ref cubes) => {
                 writeln!(fmt, "Sum...")?;
                 for cube in cubes {
                     display_datacube(fmt, cube)?;
                 }
                 Ok(())
             }
-            Self::Add(cube, x) => {
+            Self::Add(ref cube, x) => {
                 writeln!(fmt, "Add...")?;
                 display_datacube(fmt, cube)?;
                 fmt_report!(fmt, x, "x");
                 Ok(())
             }
-            Self::Sub(cube, x) => {
+            Self::Sub(ref cube, x) => {
                 writeln!(fmt, "Subtract...")?;
                 display_datacube(fmt, cube)?;
                 fmt_report!(fmt, x, "x");
                 Ok(())
             }
-            Self::Mult(cube, x) => {
+            Self::Mult(ref cube, x) => {
                 writeln!(fmt, "Multiply...")?;
                 display_datacube(fmt, cube)?;
                 fmt_report!(fmt, x, "x");
                 Ok(())
             }
-            Self::Div(cube, x) => {
+            Self::Div(ref cube, x) => {
                 writeln!(fmt, "Divide...")?;
                 display_datacube(fmt, cube)?;
                 fmt_report!(fmt, x, "x");
                 Ok(())
             }
-            Self::Norm(cube) => {
+            Self::Norm(ref cube) => {
                 writeln!(fmt, "Normalise...")?;
                 display_datacube(fmt, cube)?;
                 Ok(())
             }
-            Self::Sample(points, cube, grid) => {
+            Self::Sample(ref points, ref cube, ref grid) => {
                 writeln!(fmt, "Normalise...")?;
                 fmt_reports!(fmt, points, "sampling points");
                 display_datacube(fmt, cube)?;

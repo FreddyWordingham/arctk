@@ -9,8 +9,14 @@ use ndarray_stats::QuantileExt;
 use std::fmt::Formatter;
 
 /// Write a datacubes properties to a given formatter.
+/// # Errors
+/// if the minimum value of the data array can not be determined or
+/// if the maximum value of the data array can not be determined.
 #[inline]
-pub fn display_datacube(fmt: &mut Formatter, datacube: &Array3<f64>) -> Result<(), std::fmt::Error> {
+pub fn display_datacube(
+    fmt: &mut Formatter,
+    datacube: &Array3<f64>,
+) -> Result<(), std::fmt::Error> {
     writeln!(fmt, "...")?;
     let res = datacube.shape();
     fmt_report!(
@@ -20,12 +26,16 @@ pub fn display_datacube(fmt: &mut Formatter, datacube: &Array3<f64>) -> Result<(
     );
     fmt_report!(
         fmt,
-        datacube.min().expect("Failed to determine minimum value."),
+        datacube
+            .min()
+            .unwrap_or_else(|_| panic!("Failed to determine minimum value.")),
         "minimum"
     );
     fmt_report!(
         fmt,
-        datacube.max().expect("Failed to determine maximum value."),
+        datacube
+            .max()
+            .unwrap_or_else(|_| panic!("Failed to determine maximum value.")),
         "maximum"
     );
     let sum = datacube.sum();

@@ -98,36 +98,36 @@ impl Build for OperationBuilder {
 impl Display for OperationBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
-        match self {
+        match *self {
             Self::Zero(res) => {
                 write!(fmt, "Zero: [{}x{}x{}]", res[X], res[Y], res[Z])
             }
             Self::Unit(res) => {
                 write!(fmt, "Unit: [{}x{}x{}]", res[X], res[Y], res[Z])
             }
-            Self::Sum(data_paths) => {
+            Self::Sum(ref data_paths) => {
                 write!(fmt, "Sum: [")?;
                 for path in data_paths {
                     write!(fmt, "{} ", path.display())?;
                 }
                 write!(fmt, "]")
             }
-            Self::Add(data_path, x) => {
+            Self::Add(ref data_path, x) => {
                 write!(fmt, "Add: {} + {}", data_path.display(), x)
             }
-            Self::Sub(data_path, x) => {
+            Self::Sub(ref data_path, x) => {
                 write!(fmt, "Subtract: {} - {}", data_path.display(), x)
             }
-            Self::Mult(data_path, x) => {
+            Self::Mult(ref data_path, x) => {
                 write!(fmt, "Multiply: {} * {}", data_path.display(), x)
             }
-            Self::Div(data_path, x) => {
+            Self::Div(ref data_path, x) => {
                 write!(fmt, "Divide: {} / {}", data_path.display(), x)
             }
-            Self::Norm(data_path) => {
+            Self::Norm(ref data_path) => {
                 write!(fmt, "Normalise: {}", data_path.display())
             }
-            Self::Sample(points_path, data_path, grid) => {
+            Self::Sample(ref points_path, ref data_path, ref grid) => {
                 writeln!(fmt, "Sample...")?;
                 fmt_report!(fmt, points_path.display(), "points");
                 fmt_report!(fmt, data_path.display(), "datacube");
