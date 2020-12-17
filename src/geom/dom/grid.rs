@@ -1,11 +1,12 @@
 //! Regular Cartesian-grid cell scheme.
 
 use crate::{
-    access,
+    access, fmt_report,
     geom::Cube,
     math::{Pos3, Vec3},
     ord::{X, Y, Z},
 };
+use std::fmt::{Display, Formatter};
 
 /// Regular Cartesian-grid structure.
 pub struct Grid {
@@ -119,5 +120,27 @@ impl Grid {
         } else {
             None
         }
+    }
+}
+
+impl Display for Grid {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.boundary, "boundary");
+        fmt_report!(
+            fmt,
+            &format!("[{}x{}x{}]", self.res[X], self.res[Y], self.res[Z]),
+            "resolution"
+        );
+        fmt_report!(
+            fmt,
+            &format!(
+                "{}m x {}m x {}m",
+                self.voxel_size.x, self.voxel_size.y, self.voxel_size.z
+            ),
+            "voxel size"
+        );
+        Ok(())
     }
 }
