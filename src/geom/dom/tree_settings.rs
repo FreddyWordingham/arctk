@@ -1,7 +1,8 @@
 //! Adaptive tree construction settings.
 
-use crate::clone;
+use crate::{clone, fmt_report};
 use arctk_attr::load;
+use std::fmt::{Display, Formatter};
 
 /// Tree construction settings.
 #[load]
@@ -32,5 +33,21 @@ impl TreeSettings {
             max_depth,
             padding,
         }
+    }
+}
+
+impl Display for TreeSettings {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.tar_tris, "target triangles");
+        fmt_report!(fmt, self.max_depth, "maximum depth");
+        fmt_report!(
+            fmt,
+            &format!("{}%", self.padding * 100.0),
+            "padding percentage"
+        );
+
+        Ok(())
     }
 }
