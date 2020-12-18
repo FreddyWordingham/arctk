@@ -1,0 +1,5 @@
+{
+    sett    : { There   : 'settings/cartographer.json5' },
+    tree    : { There   : 'settings/tree_5_8.json5' },
+    grid    : { There   : 'settings/grid_20m_64.json5' },
+}
