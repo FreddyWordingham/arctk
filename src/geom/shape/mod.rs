@@ -2,8 +2,8 @@
 
 pub mod cube;
 pub mod mesh;
-pub mod mesh_builder;
+pub mod mesh_loader;
 pub mod smooth_triangle;
 pub mod triangle;
 
-pub use self::{cube::*, mesh::*, mesh_builder::*, smooth_triangle::*, triangle::*};
+pub use self::{cube::*, mesh::*, mesh_loader::*, smooth_triangle::*, triangle::*};

@@ -4,7 +4,7 @@ use crate::{
     data::Table,
     err::Error,
     fs::{File, Load},
-    geom::{Emitter, MeshBuilder, Ray},
+    geom::{Emitter, MeshLoader, Ray},
     math::{Dir3, Pos3},
     ord::{X, Y, Z},
 };
@@ -21,7 +21,7 @@ pub enum EmitterLoader {
     /// Weighted point list.
     WeightedPoints(PathBuf, PathBuf),
     /// Surface mesh.
-    Surface(MeshBuilder),
+    Surface(MeshLoader),
 }
 
 impl Load for EmitterLoader {

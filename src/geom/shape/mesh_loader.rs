@@ -1,4 +1,4 @@
-//! Mesh form implementation.
+//! Mesh loader.
 
 use crate::{
     err::Error,
@@ -12,14 +12,14 @@ use std::path::{Path, PathBuf};
 
 /// Loadable triangle mesh conglomerate structure.
 #[load]
-pub struct MeshBuilder(
+pub struct MeshLoader(
     /// List of object files.
     Vec<PathBuf>,
     /// Optional transformation.
     Option<Trans3Builder>,
 );
 
-impl Load for MeshBuilder {
+impl Load for MeshLoader {
     type Inst = Mesh;
 
     #[inline]
