@@ -5,7 +5,7 @@ use arctk::{
     args,
     file::Load,
     report,
-    sim::cartographer::Parameters,
+    sim::cartographer::ParametersBuilder,
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -55,11 +55,12 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
 fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> () {
     section(term_width, "Input");
     sub_section(term_width, "Loading");
-    let params =
-        Parameters::load(&in_dir.join(&params_path)).expect("Failed to load parameters file.");
+    let params = ParametersBuilder::load(&in_dir.join(&params_path))
+        .expect("Failed to load parameters file.");
     report!(params, "parameters");
 
     sub_section(term_width, "Building");
+    let params = params.build(in_dir);
     // let op = params
     //     .op
     //     .build(&in_dir)
