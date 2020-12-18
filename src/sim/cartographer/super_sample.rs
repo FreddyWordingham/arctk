@@ -1,12 +1,9 @@
-//! Super sampling implementation.
+//! Super sampling options.
 
-use crate::{
-    geom::Cube,
-    math::Pos3,
-    tools::{linear_to_three_dim, Valid},
-};
+use crate::{geom::Cube, math::Pos3, tools::linear_to_three_dim};
 use arctk_attr::load;
 use rand::Rng;
+use std::fmt::{Display, Error, Formatter};
 
 /// Super sampling types.
 #[load]
@@ -44,13 +41,13 @@ impl SuperSample {
     }
 }
 
-impl Valid for SuperSample {
+impl Display for SuperSample {
     #[inline]
-    fn check(&self) -> bool {
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         match *self {
-            Self::Off => true,
-            Self::Uniform([nx, ny, nz]) => (nx > 0) && (ny > 0) && (nz > 0),
-            Self::Random(n) => n > 0,
+            Self::Off => write!(fmt, "Off"),
+            Self::Uniform([nx, ny, nz]) => write!(fmt, "[{}x{}x{}]", nx, ny, nz),
+            Self::Random(n) => write!(fmt, "Random ({})", n),
         }
     }
 }
