@@ -5,34 +5,16 @@ use arctk::{
     args,
     file::{Build, Load},
     report,
-    sim::babbage::{Operation, OperationBuilder},
+    sim::babbage::{Operation, Parameters},
     util::{
         banner::{section, sub_section, title},
         dir,
     },
 };
-use arctk_attr::input;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
 };
-
-// Input parameters.
-#[input]
-struct Parameters {
-    /// Operation to perform.
-    op: OperationBuilder,
-}
-
-use arctk::fmt_report;
-use std::fmt::{Display, Error, Formatter};
-impl Display for Parameters {
-    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
-        writeln!(fmt, "...")?;
-        fmt_report!(fmt, self.op, "operation builder");
-        Ok(())
-    }
-}
 
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
