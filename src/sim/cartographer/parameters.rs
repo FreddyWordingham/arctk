@@ -1,6 +1,6 @@
 //! Input parameters.
 
-use crate::fmt_report;
+// use crate::fmt_report;
 use arctk_attr::load;
 use std::fmt::{Display, Error, Formatter};
 

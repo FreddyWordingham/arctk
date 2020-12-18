@@ -1,7 +1,6 @@
 //! Input parameters.
 
-use crate::fmt_report;
-use crate::sim::babbage::OperationBuilder;
+use crate::{fmt_report, sim::babbage::OperationBuilder};
 use arctk_attr::load;
 use std::fmt::{Display, Error, Formatter};
 

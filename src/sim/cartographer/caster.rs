@@ -1,10 +1,12 @@
 //! Ray caster enumeration.
 
 use crate::{
+    fmt_report,
     geom::Ray,
     math::{rand_circle_point, rand_sphere_point, Dir3, Pos3, Vec3},
 };
 use arctk_attr::load;
+use std::fmt::{Display, Error, Formatter};
 
 /// Ray caster generation.
 #[load]
@@ -12,11 +14,11 @@ use arctk_attr::load;
 pub enum Caster {
     /// Direction.
     Direction(Dir3),
-    /// Target [m].
+    /// Target (m).
     Target(Pos3),
-    /// Soft-targeting [m] [rad].
+    /// Soft-targeting (samples, target (m), spread (rad)).
     Soft(i32, Pos3, f64),
-    /// Radiant.
+    /// Radiant (samples).
     Radiant(i32),
 }
 
@@ -50,6 +52,34 @@ impl Caster {
         match *self {
             Self::Direction(..) | Self::Target(..) => 1,
             Self::Soft(samples, ..) | Self::Radiant(samples) => samples,
+        }
+    }
+}
+
+impl Display for Caster {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        match *self {
+            Self::Direction(dir) => {
+                write!(fmt, "Direction: [{}, {}, {}]", dir.x, dir.y, dir.z)
+            }
+            Self::Target(tar) => {
+                write!(fmt, "Target: [{}m, {}m, {}m]", tar.x, tar.y, tar.z)
+            }
+            Self::Soft(samples, tar, spread) => {
+                writeln!(fmt, "Soft...")?;
+                fmt_report!(fmt, samples, "samples");
+                fmt_report!(
+                    fmt,
+                    &format!("[{}m, {}m, {}m]", tar.x, tar.y, tar.z),
+                    "target"
+                );
+                fmt_report!(fmt, spread.to_degrees(), "spread (deg)");
+                Ok(())
+            }
+            Self::Radiant(samples) => {
+                write!(fmt, "Radiant: {}", samples)
+            }
         }
     }
 }
