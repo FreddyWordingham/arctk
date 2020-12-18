@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    fs::{from_json, Build, File},
+    fs::{from_json, File, Load},
     ord::{Link, Map, Name},
 };
 use serde::{Deserialize, Serialize};
@@ -100,15 +100,15 @@ where
 }
 
 #[allow(clippy::use_self)]
-impl<T: Build> Build for Set<T> {
+impl<T: Load> Load for Set<T> {
     type Inst = Set<T::Inst>;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let mut map = Map::new();
 
         for (key, item) in self.0 {
-            map.insert(key, item.build(in_dir)?);
+            map.insert(key, item.load(in_dir)?);
         }
 
         Ok(Self::Inst::new(map))

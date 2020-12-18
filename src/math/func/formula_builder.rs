@@ -1,12 +1,9 @@
 //! Formula form implementation.
 
-use crate::{err::Error, fs::Build};
+use crate::ord::Build;
 use arctk_attr::load;
 use ndarray::Array1;
-use std::{
-    fmt::{Display, Formatter},
-    path::Path,
-};
+use std::fmt::{Display, Formatter};
 
 /// Mathematical formulae accepting a single scalar argument.
 #[load]
@@ -31,8 +28,8 @@ impl Build for FormulaBuilder {
     type Inst = crate::math::Formula;
 
     #[inline]
-    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
-        Ok(match self {
+    fn build(self) -> Self::Inst {
+        match self {
             Self::Constant(c) => Self::Inst::Constant { c },
             Self::Line(c, m) => Self::Inst::Line { c, m },
             Self::Bifurcation(t, under, over) => Self::Inst::Bifurcation { t, under, over },
@@ -53,7 +50,7 @@ impl Build for FormulaBuilder {
                 Array1::from(grads),
                 Array1::from(quads),
             ),
-        })
+        }
     }
 }
 

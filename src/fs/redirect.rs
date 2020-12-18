@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    fs::{as_json, from_json, Build, File, Save},
+    fs::{as_json, from_json, File, Load, Save},
 };
 use serde::{Deserialize, Serialize};
 use std::{
@@ -36,11 +36,11 @@ impl<T: Serialize> Save for Redirect<T> {
     }
 }
 
-impl<T: File> Build for Redirect<T> {
+impl<T: File> Load for Redirect<T> {
     type Inst = T;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         match self {
             Self::There(path) => {
                 let path = in_dir.join(path);

@@ -2,9 +2,10 @@
 
 use crate::{
     err::Error,
-    fs::{Build, File},
-    geom::Transformable,
+    fs::{File, Load},
+    geom::{Mesh, Transformable},
     math::Trans3Builder,
+    ord::Build,
 };
 use arctk_attr::load;
 use std::path::{Path, PathBuf};
@@ -18,13 +19,13 @@ pub struct MeshBuilder(
     Option<Trans3Builder>,
 );
 
-impl Build for MeshBuilder {
-    type Inst = crate::geom::Mesh;
+impl Load for MeshBuilder {
+    type Inst = Mesh;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let trans = if let Some(t) = self.1 {
-            Some(t.build(in_dir)?)
+            Some(t.build())
         } else {
             None
         };

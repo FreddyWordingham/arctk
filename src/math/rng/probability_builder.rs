@@ -1,12 +1,9 @@
 //! Probability builder.
 
-use crate::{err::Error, fs::Build, math::Probability};
+use crate::{math::Probability, ord::Build};
 use arctk_attr::load;
 use ndarray::Array1;
-use std::{
-    fmt::{Display, Formatter},
-    path::Path,
-};
+use std::fmt::{Display, Formatter};
 
 /// Probability distribution builders.
 #[load]
@@ -29,8 +26,8 @@ impl Build for ProbabilityBuilder {
     type Inst = Probability;
 
     #[inline]
-    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
-        Ok(match self {
+    fn build(self) -> Self::Inst {
+        match self {
             Self::Point(p) => Self::Inst::new_point(p),
             Self::Points(ps) => Self::Inst::new_points(ps),
             Self::Uniform(min, max) => Self::Inst::new_uniform(min, max),
@@ -39,7 +36,7 @@ impl Build for ProbabilityBuilder {
             Self::ConstantSpline(xs, ps) => {
                 Self::Inst::new_constant_spline(Array1::from(xs), &Array1::from(ps))
             }
-        })
+        }
     }
 }
 

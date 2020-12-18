@@ -1,13 +1,11 @@
 //! Camera builder structure.
 
 use crate::{
-    err::Error,
-    fs::Build,
     geom::{Camera, Orient},
     math::Pos3,
+    ord::Build,
 };
 use arctk_attr::load;
-use std::path::Path;
 
 /// Loadable camera structure.
 #[load]
@@ -28,14 +26,12 @@ impl Build for CameraBuilder {
     type Inst = Camera;
 
     #[inline]
-    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
-        let ss = self.ss_power.map_or(1, |ss| ss);
-
-        Ok(Self::Inst::new(
+    fn build(self) -> Self::Inst {
+        Camera::new(
             Orient::new_tar(self.pos, &self.tar),
             self.fov.to_radians(),
             self.res,
-            ss,
-        ))
+            self.ss_power.map_or(1, |ss| ss),
+        )
     }
 }

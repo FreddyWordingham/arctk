@@ -1,18 +1,13 @@
 //! Regular-Cartesian grid builder.
 
 use crate::{
-    access,
-    err::Error,
-    fmt_report,
-    fs::Build,
+    access, fmt_report,
     geom::{Cube, Grid},
+    ord::Build,
     ord::{X, Y, Z},
 };
 use arctk_attr::load;
-use std::{
-    fmt::{Display, Formatter},
-    path::Path,
-};
+use std::fmt::{Display, Formatter};
 
 /// Grid builder.
 #[load]
@@ -48,11 +43,11 @@ impl GridBuilder {
 }
 
 impl Build for GridBuilder {
-    type Inst = crate::geom::Grid;
+    type Inst = Grid;
 
     #[inline]
-    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
-        Ok(Grid::new(self.boundary, self.res))
+    fn build(self) -> Grid {
+        Grid::new(self.boundary, self.res)
     }
 }
 

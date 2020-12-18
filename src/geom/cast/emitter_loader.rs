@@ -3,7 +3,7 @@
 use crate::{
     data::Table,
     err::Error,
-    fs::{Build, File},
+    fs::{File, Load},
     geom::{Emitter, MeshBuilder, Ray},
     math::{Dir3, Pos3},
     ord::{X, Y, Z},
@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 
 /// Ray emission structure.
 #[load]
-pub enum EmitterBuilder {
+pub enum EmitterLoader {
     /// Single beam.
     Beam(Pos3, Dir3),
     /// Point list.
@@ -24,11 +24,11 @@ pub enum EmitterBuilder {
     Surface(MeshBuilder),
 }
 
-impl Build for EmitterBuilder {
+impl Load for EmitterLoader {
     type Inst = Emitter;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Beam(pos, dir) => Self::Inst::new_beam(Ray::new(pos, dir)),
             Self::Points(points_path) => {
@@ -54,7 +54,7 @@ impl Build for EmitterBuilder {
 
                 Self::Inst::new_weighted_points(points, &weights)
             }
-            Self::Surface(mesh) => Self::Inst::new_surface(mesh.build(in_dir)?),
+            Self::Surface(mesh) => Self::Inst::new_surface(mesh.load(in_dir)?),
         })
     }
 }

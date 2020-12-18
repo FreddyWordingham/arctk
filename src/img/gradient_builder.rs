@@ -1,12 +1,10 @@
 //! Gradient builder implementation.
 
 use crate::{
-    err::Error,
-    fs::Build,
     img::{Colour, Gradient},
+    ord::Build,
 };
 use arctk_attr::load;
-use std::path::Path;
 
 /// Loadable colour gradient structure.
 #[load]
@@ -19,11 +17,12 @@ impl Build for GradientBuilder {
     type Inst = Gradient;
 
     #[inline]
-    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn build(self) -> Self::Inst {
         let mut cols = Vec::with_capacity(self.0.len());
 
         for col in self.0 {
-            let col_arr = hex::decode(col.replace("#", ""))?;
+            let col_arr = hex::decode(col.replace("#", ""))
+                .unwrap_or_else(|_| panic!("Failed to parse hexidecimal string: {}.", col));
 
             let r = f32::from(col_arr[0]) / 255.0;
             let g = f32::from(col_arr[1]) / 255.0;
@@ -33,6 +32,6 @@ impl Build for GradientBuilder {
             cols.push(Colour::new(r, g, b, a));
         }
 
-        Ok(Self::Inst::new(cols))
+        Self::Inst::new(cols)
     }
 }
