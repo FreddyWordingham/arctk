@@ -1,6 +1,6 @@
 //! Probability builder.
 
-use crate::{err::Error, file::Build, math::Probability};
+use crate::{err::Error, fs::Build, math::Probability};
 use arctk_attr::load;
 use ndarray::Array1;
 use std::{

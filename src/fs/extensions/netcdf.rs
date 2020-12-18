@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    file::{Load, Save},
+    fs::{File, Save},
     ord::{X, Y, Z},
 };
 use ndarray::{Array2, Array3, ArrayD};
@@ -10,9 +10,9 @@ use netcdf::Numeric;
 use std::path::Path;
 
 #[allow(clippy::use_self)]
-impl<T: Numeric> Load for ArrayD<T> {
+impl<T: Numeric> File for ArrayD<T> {
     #[inline]
-    fn load_data(path: &Path) -> Result<ArrayD<T>, Error> {
+    fn load(path: &Path) -> Result<ArrayD<T>, Error> {
         let file = netcdf::open(path)?;
         let var = &file.variable("data").ok_or("Missing variable 'data'.")?;
         let arr = var.values::<T>(None, None)?;
@@ -21,9 +21,9 @@ impl<T: Numeric> Load for ArrayD<T> {
 }
 
 #[allow(clippy::use_self)]
-impl<T: Numeric> Load for Array2<T> {
+impl<T: Numeric> File for Array2<T> {
     #[inline]
-    fn load_data(path: &Path) -> Result<Array2<T>, Error> {
+    fn load(path: &Path) -> Result<Array2<T>, Error> {
         let arr_d = ArrayD::load(path)?;
 
         let xi = arr_d.shape()[X];
@@ -35,9 +35,9 @@ impl<T: Numeric> Load for Array2<T> {
 }
 
 #[allow(clippy::use_self)]
-impl<T: Numeric> Load for Array3<T> {
+impl<T: Numeric> File for Array3<T> {
     #[inline]
-    fn load_data(path: &Path) -> Result<Array3<T>, Error> {
+    fn load(path: &Path) -> Result<Array3<T>, Error> {
         let arr_d = ArrayD::load(path)?;
 
         let xi = arr_d.shape()[X];

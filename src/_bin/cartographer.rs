@@ -3,7 +3,7 @@
 
 use arctk::{
     args,
-    file::Load,
+    file::{Build, Load},
     report,
     sim::cartographer::ParametersBuilder,
     util::{
@@ -60,7 +60,8 @@ fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> () {
     report!(params, "parameters");
 
     sub_section(term_width, "Building");
-    let params = params.build(in_dir);
+    let build = params.build(in_dir).expect("Failed to build parameters.");
+    report!(build, "build");
     // let op = params
     //     .op
     //     .build(&in_dir)

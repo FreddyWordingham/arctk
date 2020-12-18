@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    file::{from_json, Build, Load},
+    fs::{from_json, Build, File},
     ord::{Link, Map, Name},
 };
 use serde::{Deserialize, Serialize};
@@ -89,12 +89,12 @@ impl<T> IntoIterator for Set<T> {
     }
 }
 
-impl<T> Load for Set<T>
+impl<T> File for Set<T>
 where
     for<'de> T: Deserialize<'de>,
 {
     #[inline]
-    fn load_data(path: &Path) -> Result<Self, Error> {
+    fn load(path: &Path) -> Result<Self, Error> {
         from_json(path)
     }
 }

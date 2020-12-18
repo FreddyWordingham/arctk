@@ -27,11 +27,11 @@ impl Build for ParametersBuilder {
 
     #[inline]
     fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        let sett = self.sett.build(in_dir)?;
-        let tree = self.tree.build(in_dir)?;
-        let grid = self.grid.build(in_dir)?.build(in_dir)?;
+        let _sett = self.sett.build(in_dir)?;
+        let _tree = self.tree.build(in_dir)?;
+        let _grid = self.grid.build(in_dir)?.build(in_dir)?;
 
-        Ok(Self::Inst::new(sett, tree, grid))
+        Ok(Self::Inst::new())
     }
 }
 

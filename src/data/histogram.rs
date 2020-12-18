@@ -3,7 +3,7 @@
 use crate::{
     access,
     err::Error,
-    file::Save,
+    fs::Save,
     tools::{Binner, Range},
 };
 use ndarray::Array1;

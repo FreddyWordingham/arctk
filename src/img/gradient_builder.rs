@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    file::Build,
+    fs::Build,
     img::{Colour, Gradient},
 };
 use arctk_attr::load;

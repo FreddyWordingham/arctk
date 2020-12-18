@@ -1,6 +1,6 @@
 //! Data table implementation.
 
-use crate::{access, err::Error, file::Save};
+use crate::{access, err::Error, fs::Save};
 use std::{fmt::Display, fs::File, io::Write, ops::AddAssign, path::Path};
 
 /// Table of row data.

@@ -1,17 +1,16 @@
 //! Commer-Separated-Variable file handling.
 
-use crate::{data::Table, err::Error, file::Load};
+use crate::{data::Table, err::Error, fs::File};
 use std::{
-    fs::File,
     io::{BufRead, BufReader},
     path::Path,
     str::FromStr,
 };
 
-impl<T: FromStr> Load for Table<T> {
+impl<T: FromStr> File for Table<T> {
     #[inline]
-    fn load_data(path: &Path) -> Result<Self, Error> {
-        let mut lines: Vec<_> = BufReader::new(File::open(path)?)
+    fn load(path: &Path) -> Result<Self, Error> {
+        let mut lines: Vec<_> = BufReader::new(std::fs::File::open(path)?)
             .lines()
             .map(Result::unwrap)
             .filter(|line| !line.starts_with("//"))

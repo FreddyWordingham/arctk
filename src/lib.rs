@@ -33,14 +33,14 @@
 pub mod chem;
 pub mod data;
 pub mod err;
-pub mod file;
+pub mod fs;
 pub mod geom;
 pub mod img;
 pub mod math;
 pub mod meta;
 pub mod ord;
 pub mod phys;
-pub mod sim;
+// pub mod sim;
 pub mod tools;
 pub mod util;
 

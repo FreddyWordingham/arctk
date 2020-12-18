@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    file::{as_json, from_json, Build, Load, Save},
+    fs::{as_json, from_json, Build, File, Save},
 };
 use serde::{Deserialize, Serialize};
 use std::{
@@ -19,12 +19,12 @@ pub enum Redirect<T> {
     Here(T),
 }
 
-impl<T: Load> Load for Redirect<T>
+impl<T: File> File for Redirect<T>
 where
     for<'de> T: Deserialize<'de>,
 {
     #[inline]
-    fn load_data(path: &Path) -> Result<Self, Error> {
+    fn load(path: &Path) -> Result<Self, Error> {
         from_json(path)
     }
 }
@@ -36,7 +36,7 @@ impl<T: Serialize> Save for Redirect<T> {
     }
 }
 
-impl<T: Load> Build for Redirect<T> {
+impl<T: File> Build for Redirect<T> {
     type Inst = T;
 
     #[inline]

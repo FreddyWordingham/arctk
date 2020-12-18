@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    file::{Build, Load},
+    fs::{Build, File},
     geom::Transformable,
     math::Trans3Builder,
 };

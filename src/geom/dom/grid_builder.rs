@@ -3,8 +3,8 @@
 use crate::{
     access,
     err::Error,
-    file::Build,
     fmt_report,
+    fs::Build,
     geom::{Cube, Grid},
     ord::{X, Y, Z},
 };

@@ -3,7 +3,7 @@
 use crate::{
     data::Table,
     err::Error,
-    file::{Build, Load},
+    fs::{Build, File},
     geom::{Emitter, MeshBuilder, Ray},
     math::{Dir3, Pos3},
     ord::{X, Y, Z},

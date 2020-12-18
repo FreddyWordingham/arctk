@@ -1,10 +1,10 @@
-//! Load trait.
+//! Load from file trait.
 
 use crate::err::Error;
 use std::path::Path;
 
 /// Types implementing this trait can be loaded from a file.
-pub trait Load
+pub trait File
 where
     Self: std::marker::Sized,
 {
@@ -13,15 +13,14 @@ where
     /// if the target file can not be found,
     /// or the read string can not be serialised into an instance of the required type.
     #[inline]
-    fn load(path: &Path) -> Result<Self, Error> {
+    fn new_from_file(path: &Path) -> Result<Self, Error> {
         println!("Loading: {}", path.display());
-
-        Self::load_data(path)
+        Self::load(path)
     }
 
     /// Deserialize the type from a given file.
     /// # Errors
     /// if the target file can not be found,
     /// or the read string can not be serialised into an instance of the required type.
-    fn load_data(path: &Path) -> Result<Self, Error>;
+    fn load(path: &Path) -> Result<Self, Error>;
 }

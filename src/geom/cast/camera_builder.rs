@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    file::Build,
+    fs::Build,
     geom::{Camera, Orient},
     math::Pos3,
 };

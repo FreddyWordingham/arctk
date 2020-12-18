@@ -1,6 +1,6 @@
 //! Png writing.
 
-use crate::{err::Error, file::Save, img::Image};
+use crate::{err::Error, fs::Save, img::Image};
 use ndarray::{Array2, ShapeBuilder};
 use palette::{Pixel, Srgba};
 use png::{BitDepth, ColorType, Encoder};

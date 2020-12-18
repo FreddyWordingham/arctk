@@ -2,20 +2,19 @@
 
 use crate::{
     err::Error,
-    file::Load,
+    fs::File,
     geom::{Mesh, SmoothTriangle},
     math::{Dir3, Pos3, Vec3},
 };
 use std::{
-    fs::File,
     io::{BufRead, BufReader},
     path::Path,
 };
 
-impl Load for Mesh {
+impl File for Mesh {
     #[inline]
-    fn load_data(path: &Path) -> Result<Self, Error> {
-        let vertex_lines: Vec<_> = BufReader::new(File::open(path)?)
+    fn load(path: &Path) -> Result<Self, Error> {
+        let vertex_lines: Vec<_> = BufReader::new(std::fs::File::open(path)?)
             .lines()
             .map(Result::unwrap)
             .filter(|line| line.starts_with("v "))
@@ -33,7 +32,7 @@ impl Load for Mesh {
             verts.push(Pos3::new(px, py, pz));
         }
 
-        let normal_lines: Vec<_> = BufReader::new(File::open(path)?)
+        let normal_lines: Vec<_> = BufReader::new(std::fs::File::open(path)?)
             .lines()
             .map(Result::unwrap)
             .filter(|line| line.starts_with("vn "))
@@ -51,7 +50,7 @@ impl Load for Mesh {
             norms.push(Dir3::new_normalize(Vec3::new(nx, ny, nz)));
         }
 
-        let face_lines: Vec<_> = BufReader::new(File::open(path)?)
+        let face_lines: Vec<_> = BufReader::new(std::fs::File::open(path)?)
             .lines()
             .map(Result::unwrap)
             .filter(|line| line.starts_with("f "))
