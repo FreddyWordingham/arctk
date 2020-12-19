@@ -27,7 +27,7 @@ impl Parameters {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(
+    pub const fn new(
         sett: Settings,
         tree: TreeSettings,
         grid: Grid,
