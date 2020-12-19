@@ -1,11 +1,9 @@
 //! Buildable parameters.
 
 use crate::{ord::Build, sim::cartographer::Parameters};
-use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
 
 /// Runtime parameters builder.
-#[file]
 pub struct ParametersBuilder {}
 
 impl ParametersBuilder {

@@ -3,18 +3,23 @@
 use crate::{
     err::Error,
     // fmt_report,
-    fs::Load,
-    sim::cartographer::ParametersBuilder,
+    fs::{Load, Redirect},
+    geom::{GridBuilder, TreeSettings},
+    sim::cartographer::{ParametersBuilder, Settings},
 };
 use arctk_attr::file;
-use std::{
-    fmt::{Display, Formatter},
-    path::Path,
-};
+use std::path::Path;
 
 /// Loadable runtime parameters.
 #[file]
-pub struct ParametersLoader {}
+pub struct ParametersLoader {
+    /// Simulation specific settings.
+    sett: Redirect<Settings>,
+    /// Tree settings.
+    tree: Redirect<TreeSettings>,
+    /// Measurement grid settings.
+    grid: Redirect<GridBuilder>,
+}
 
 impl Load for ParametersLoader {
     type Inst = ParametersBuilder;
@@ -22,14 +27,5 @@ impl Load for ParametersLoader {
     #[inline]
     fn load(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
         Ok(Self::Inst::new())
-    }
-}
-
-impl Display for ParametersLoader {
-    #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
-        writeln!(fmt, "...")?;
-        // fmt_report!(fmt, self.op, "operation loader");
-        Ok(())
     }
 }
