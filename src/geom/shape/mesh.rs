@@ -1,12 +1,13 @@
 //! Smooth triangle-mesh implementation.
 
 use crate::{
-    access, clone,
+    access, clone, fmt_report,
     geom::{Collide, Cube, Emit, Ray, Side, SmoothTriangle, Trace, Transformable},
     math::Trans3,
     ord::{ALPHA, X},
 };
 use rand::Rng;
+use std::fmt::{Display, Formatter};
 
 /// Boundary padding.
 const PADDING: f64 = 1e-6;
@@ -156,5 +157,16 @@ impl Trace for Mesh {
             .iter()
             .filter_map(|tri| tri.dist_side(ray))
             .min_by(|a, b| a.0.partial_cmp(&b.0).unwrap())
+    }
+}
+
+impl Display for Mesh {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.boundary, "boundary");
+        fmt_report!(fmt, self.tris.len(), "num triangles");
+        fmt_report!(fmt, self.area, "area");
+        Ok(())
     }
 }

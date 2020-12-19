@@ -48,7 +48,7 @@ impl Display for AttributeLinker {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {
-            Self::Interface(in_mat, out_mat) => {
+            Self::Interface(ref in_mat, ref out_mat) => {
                 write!(fmt, "Interface: {} :| {}", in_mat, out_mat)
             }
             Self::Mirror(abs) => {
