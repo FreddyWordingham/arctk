@@ -64,17 +64,13 @@ impl Display for Caster {
                 write!(fmt, "Direction: [{}, {}, {}]", dir.x, dir.y, dir.z)
             }
             Self::Target(tar) => {
-                write!(fmt, "Target: [{}m, {}m, {}m]", tar.x, tar.y, tar.z)
+                write!(fmt, "Target: [{}, {}, {}]", tar.x, tar.y, tar.z)
             }
             Self::Soft(samples, tar, spread) => {
                 writeln!(fmt, "Soft...")?;
                 fmt_report!(fmt, samples, "samples");
-                fmt_report!(
-                    fmt,
-                    &format!("[{}m, {}m, {}m]", tar.x, tar.y, tar.z),
-                    "target"
-                );
-                fmt_report!(fmt, spread.to_degrees(), "spread (deg)");
+                fmt_report!(fmt, &format!("[{}, {}, {}]", tar.x, tar.y, tar.z), "target");
+                fmt_report!(fmt, spread.to_degrees(), "spread");
                 Ok(())
             }
             Self::Radiant(samples) => {
