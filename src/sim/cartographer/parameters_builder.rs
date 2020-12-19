@@ -1,6 +1,7 @@
 //! Buildable parameters.
 
 use crate::{
+    fmt_report,
     geom::{GridBuilder, SurfaceLinker, TreeSettings},
     ord::{Build, Set},
     phys::AttributeLinker,
@@ -62,7 +63,11 @@ impl Display for ParametersBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
-        // fmt_report!(fmt, self.sett, "settings");
+        fmt_report!(fmt, self.sett, "settings");
+        fmt_report!(fmt, self.tree, "tree settings");
+        fmt_report!(fmt, self.grid, "grid builder");
+        fmt_report!(fmt, self.surfs, "surfaces");
+        fmt_report!(fmt, self.attrs, "attributes");
         Ok(())
     }
 }
