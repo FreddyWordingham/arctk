@@ -24,11 +24,7 @@ impl Load for MeshLoader {
 
     #[inline]
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        let trans = if let Some(t) = self.1 {
-            Some(t.build())
-        } else {
-            None
-        };
+        let trans = self.1.map(Build::build);
 
         let mut tris = Vec::new();
         for name in self.0 {
