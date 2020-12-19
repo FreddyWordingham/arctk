@@ -3,8 +3,7 @@
 use crate::{
     access, fmt_report,
     geom::{Cube, Grid},
-    ord::Build,
-    ord::{X, Y, Z},
+    ord::{Build, X, Y, Z},
 };
 use arctk_attr::file;
 use std::fmt::{Display, Formatter};

@@ -2,7 +2,6 @@
 
 use crate::{
     err::Error,
-    // fmt_report,
     fs::{Load, Redirect},
     geom::{GridBuilder, TreeSettings},
     sim::cartographer::{ParametersBuilder, Settings},
