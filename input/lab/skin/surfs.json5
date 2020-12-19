@@ -1,10 +1,34 @@
 {
-    centrepiece : {
-        mesh    : [["res/objs/cube.obj"], null],
-        attr    : 'fog'
+    0_stratum_corneum   : {
+        mesh    : [["res/objs/skin/L0.obj"], null],
+        attr    : 'stratum_corneum'
     },
-    mirror      : {
-        mesh    : [["res/objs/mirrors.obj"], null],
-        attr    : 'mirror'
-    }
+    1_living_epidermis  : {
+        mesh    : [["res/objs/skin/L1.obj"], null],
+        attr    : 'living_epidermis'
+    },
+    2_papillary_dermis  : {
+        mesh    : [["res/objs/skin/L2.obj"], null],
+        attr    : 'papillary_dermis'
+    },
+    3_upper_bnd         : {
+        mesh    : [["res/objs/skin/L3.obj"], null],
+        attr    : 'upper_bnd'
+    },
+    4_dermis            : {
+        mesh    : [["res/objs/skin/L4.obj"], null],
+        attr    : 'dermis'
+    },
+    5_lower_bnd         : {
+        mesh    : [["res/objs/skin/L5.obj"], null],
+        attr    : 'lower_bnd'
+    },
+    6_subcutaneous_fat  : {
+        mesh    : [["res/objs/skin/L6.obj"], null],
+        attr    : 'subcutaneous_fat'
+    },
+    tumour  : {
+        mesh    : [["res/objs/skin/tumour.obj"], null],
+        attr    : 'tumour'
+    },
 }
