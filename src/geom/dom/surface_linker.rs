@@ -1,4 +1,4 @@
-//! Optical surface linking structure.
+//! Surface linking structure.
 
 use crate::{
     err::Error,
@@ -6,13 +6,13 @@ use crate::{
     ord::{Link, Name, Set},
 };
 
-/// Optical surface.
+/// Surface with named attribute.
 pub struct SurfaceLinker {
     /// Mesh.
     mesh: Mesh,
     /// Attribute name.
     attr: Name,
-} 
+}
 
 impl SurfaceLinker {
     /// Construct a new instance.
