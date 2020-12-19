@@ -6,6 +6,7 @@ use crate::{
     phys::{Attribute, Material},
 };
 use arctk_attr::file;
+use std::fmt::{Display, Formatter};
 
 /// Surface attribute setup.
 #[file]
@@ -40,5 +41,19 @@ impl<'a> Link<'a, Material> for AttributeLinker {
             ),
             Self::Mirror(r) => Attribute::Mirror(r),
         })
+    }
+}
+
+impl Display for AttributeLinker {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        match *self {
+            Self::Interface(in_mat, out_mat) => {
+                write!(fmt, "Interface: {} :| {}", in_mat, out_mat)
+            }
+            Self::Mirror(abs) => {
+                write!(fmt, "Mirror: {}% abs", abs * 100.0)
+            }
+        }
     }
 }
