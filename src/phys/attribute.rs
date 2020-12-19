@@ -1,4 +1,4 @@
-//! Attributes implementation.
+//! Optical attributes.
 
 use crate::phys::Material;
 
