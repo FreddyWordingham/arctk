@@ -5,11 +5,11 @@ use crate::{
     err::Error,
     ord::{Link, Name, Set},
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use ndarray::{Array1, Array2};
 
 /// Reactor linking structure.
-#[load]
+#[file]
 pub struct ReactorLinker {
     /// Reactions.
     reacts: Vec<ReactionLinker>,

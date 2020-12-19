@@ -5,10 +5,10 @@ use crate::{
     math::Pos3,
     ord::Build,
 };
-use arctk_attr::load;
+use arctk_attr::file;
 
 /// Loadable camera structure.
-#[load]
+#[file]
 pub struct CameraBuilder {
     /// Position.
     pos: Pos3,

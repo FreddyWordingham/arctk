@@ -5,11 +5,11 @@ use crate::{
     err::Error,
     ord::{Link, Name, Set},
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use ndarray::Array1;
 
 /// Reaction linker.
-#[load]
+#[file]
 pub struct ReactionLinker {
     /// Reaction rate.
     rate: RateLinker,

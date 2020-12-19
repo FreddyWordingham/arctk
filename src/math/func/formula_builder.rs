@@ -1,12 +1,12 @@
 //! Formula form implementation.
 
 use crate::ord::Build;
-use arctk_attr::load;
+use arctk_attr::file;
 use ndarray::Array1;
 use std::fmt::{Display, Formatter};
 
 /// Mathematical formulae accepting a single scalar argument.
-#[load]
+#[file]
 pub enum FormulaBuilder {
     /// Constant value. = c
     Constant(f64),

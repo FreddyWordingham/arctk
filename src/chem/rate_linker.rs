@@ -5,10 +5,10 @@ use crate::{
     err::Error,
     ord::{Link, Name, Set},
 };
-use arctk_attr::load;
+use arctk_attr::file;
 
 /// Rate of reaction builder.
-#[load]
+#[file]
 pub struct RateLinker(f64, Vec<(Name, f64)>);
 
 impl<'a> Link<'a, usize> for RateLinker {

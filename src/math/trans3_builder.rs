@@ -1,11 +1,11 @@
 //! Transform form implementation.
 
 use crate::{math::Vec3, ord::Build};
-use arctk_attr::load;
+use arctk_attr::file;
 use nalgebra::{Translation3, UnitQuaternion};
 
 /// Loadable transform structure.
-#[load]
+#[file]
 #[derive(Clone)]
 pub struct Trans3Builder {
     /// Optional translation to apply.

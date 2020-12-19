@@ -4,10 +4,10 @@ use crate::{
     img::{Colour, Gradient},
     ord::Build,
 };
-use arctk_attr::load;
+use arctk_attr::file;
 
 /// Loadable colour gradient structure.
-#[load]
+#[file]
 pub struct GradientBuilder(
     /// List of colours.
     Vec<String>,

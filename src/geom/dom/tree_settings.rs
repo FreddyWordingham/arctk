@@ -1,11 +1,11 @@
 //! Adaptive tree construction settings.
 
 use crate::{clone, fmt_report};
-use arctk_attr::load;
+use arctk_attr::file;
 use std::fmt::{Display, Formatter};
 
 /// Tree construction settings.
-#[load]
+#[file]
 pub struct TreeSettings {
     /// Target maximum number of triangles per cell.
     tar_tris: usize,

@@ -1,14 +1,14 @@
 //! Range implementation.
 
 use crate::clone;
-use arctk_attr::load;
+use arctk_attr::file;
 use std::{
     f64::{INFINITY, NEG_INFINITY},
     fmt::{Display, Formatter, Result},
 };
 
 /// One-dimensional inclusive Range.
-#[load]
+#[file]
 #[derive(Clone, PartialEq)]
 pub struct Range {
     /// Minimum bound.

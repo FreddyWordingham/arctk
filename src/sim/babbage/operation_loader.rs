@@ -10,7 +10,7 @@ use crate::{
     ord::{X, Y, Z},
     sim::babbage::OperationBuilder,
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use ndarray::Array3;
 use std::{
     fmt::{Display, Formatter},
@@ -18,7 +18,7 @@ use std::{
 };
 
 /// Possible operation enumeration.
-#[load]
+#[file]
 #[derive(Clone)]
 pub enum OperationLoader {
     /// Generate a zero cube of the giver resolution.

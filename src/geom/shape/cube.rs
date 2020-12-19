@@ -7,13 +7,13 @@ use crate::{
     ord::{X, Y, Z},
     tools::Range,
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use rand::Rng;
 use std::cmp::Ordering;
 
 /// Axis-aligned bounding box geometry.
 /// Used for spatial partitioning.
-#[load]
+#[file]
 #[derive(Clone)]
 pub struct Cube {
     /// Minimum bound.

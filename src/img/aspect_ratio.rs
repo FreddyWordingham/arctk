@@ -1,10 +1,10 @@
 //! Formula implementation.
 
-use arctk_attr::load;
+use arctk_attr::file;
 use std::fmt::{Display, Formatter, Result};
 
 /// Aspect-ratio enumeration.
-#[load]
+#[file]
 #[derive(Clone)]
 pub enum AspectRatio {
     /// Square. 1:1.

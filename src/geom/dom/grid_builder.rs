@@ -6,11 +6,11 @@ use crate::{
     ord::Build,
     ord::{X, Y, Z},
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use std::fmt::{Display, Formatter};
 
 /// Grid builder.
-#[load]
+#[file]
 #[derive(Clone)]
 pub struct GridBuilder {
     /// Boundary.

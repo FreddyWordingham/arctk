@@ -6,14 +6,14 @@ use crate::{
     fs::Load,
     sim::babbage::{OperationLoader, ParametersBuilder},
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use std::{
     fmt::{Display, Formatter},
     path::Path,
 };
 
 /// Loadable runtime parameters.
-#[load]
+#[file]
 pub struct ParametersLoader {
     /// Operation to perform.
     op: OperationLoader,

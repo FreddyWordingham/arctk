@@ -1,12 +1,12 @@
 //! Probability builder.
 
 use crate::{math::Probability, ord::Build};
-use arctk_attr::load;
+use arctk_attr::file;
 use ndarray::Array1;
 use std::fmt::{Display, Formatter};
 
 /// Probability distribution builders.
-#[load]
+#[file]
 pub enum ProbabilityBuilder {
     /// Point.
     Point(f64),

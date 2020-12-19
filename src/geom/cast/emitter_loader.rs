@@ -8,11 +8,11 @@ use crate::{
     math::{Dir3, Pos3},
     ord::{X, Y, Z},
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use std::path::{Path, PathBuf};
 
 /// Ray emission structure.
-#[load]
+#[file]
 pub enum EmitterLoader {
     /// Single beam.
     Beam(Pos3, Dir3),
