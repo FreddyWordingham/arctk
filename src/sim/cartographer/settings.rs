@@ -4,11 +4,11 @@ use crate::{
     access, clone, fmt_report,
     sim::cartographer::{Caster, SuperSample},
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
 
 /// General settings structure.
-#[load]
+#[file]
 pub struct Settings {
     /// Number of photons to simulate in each thread block.
     block_size: usize,

@@ -1,12 +1,12 @@
 //! Super sampling options.
 
 use crate::{geom::Cube, math::Pos3, tools::linear_to_three_dim};
-use arctk_attr::load;
+use arctk_attr::file;
 use rand::Rng;
 use std::fmt::{Display, Error, Formatter};
 
 /// Super sampling types.
-#[load]
+#[file]
 #[derive(Clone)]
 pub enum SuperSample {
     /// Single sample.

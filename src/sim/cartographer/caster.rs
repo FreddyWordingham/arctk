@@ -5,11 +5,11 @@ use crate::{
     geom::Ray,
     math::{rand_circle_point, rand_sphere_point, Dir3, Pos3, Vec3},
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
 
 /// Ray caster generation.
-#[load]
+#[file]
 #[derive(Clone)]
 pub enum Caster {
     /// Direction.

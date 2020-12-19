@@ -1,47 +1,36 @@
-//! Input parameter builder.
+//! Buildable parameters.
 
-use crate::fmt_report;
-use crate::{
-    err::Error,
-    file::{Build, Redirect},
-    geom::{GridBuilder, TreeSettings},
-    sim::cartographer::{Parameters, Settings},
-};
-use arctk_attr::load;
-use std::fmt::{Display, Formatter};
-use std::path::Path;
+use crate::{ord::Build, sim::cartographer::Parameters};
+use arctk_attr::file;
+use std::fmt::{Display, Error, Formatter};
 
 /// Runtime parameters builder.
-#[load]
-pub struct ParametersBuilder {
-    /// Simulation specific settings.
-    sett: Redirect<Settings>,
-    /// Tree settings.
-    tree: Redirect<TreeSettings>,
-    /// Measurement grid settings.
-    grid: Redirect<GridBuilder>,
+#[file]
+pub struct ParametersBuilder {}
+
+impl ParametersBuilder {
+    /// Construct a new instance.
+    #[must_use]
+    #[inline]
+    pub fn new() -> Self {
+        Self {}
+    }
 }
 
 impl Build for ParametersBuilder {
     type Inst = Parameters;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        let _sett = self.sett.build(in_dir)?;
-        let _tree = self.tree.build(in_dir)?;
-        let _grid = self.grid.build(in_dir)?.build(in_dir)?;
-
-        Ok(Self::Inst::new())
+    fn build(self) -> Self::Inst {
+        Self::Inst::new()
     }
 }
 
 impl Display for ParametersBuilder {
     #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
-        fmt_report!(fmt, self.sett, "settings");
-        fmt_report!(fmt, self.tree, "tree settings");
-        fmt_report!(fmt, self.grid, "grid settings");
+        // fmt_report!(fmt, self.sett, "settings");
         Ok(())
     }
 }
