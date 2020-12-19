@@ -1,17 +1,45 @@
 //! Buildable parameters.
 
-use crate::{ord::Build, sim::cartographer::Parameters};
+use crate::{
+    geom::{GridBuilder, SurfaceLinker, TreeSettings},
+    ord::{Build, Set},
+    phys::AttributeLinker,
+    sim::cartographer::{Parameters, Settings},
+};
 use std::fmt::{Display, Error, Formatter};
 
 /// Runtime parameters builder.
-pub struct ParametersBuilder {}
+pub struct ParametersBuilder {
+    /// Simulation specific settings.
+    sett: Settings,
+    /// Tree settings.
+    tree: TreeSettings,
+    /// Measurement grid settings.
+    grid: GridBuilder,
+    /// Surfaces.
+    surfs: Set<SurfaceLinker>,
+    /// Attributes.
+    attrs: Set<AttributeLinker>,
+}
 
 impl ParametersBuilder {
     /// Construct a new instance.
     #[must_use]
     #[inline]
-    pub fn new() -> Self {
-        Self {}
+    pub const fn new(
+        sett: Settings,
+        tree: TreeSettings,
+        grid: GridBuilder,
+        surfs: Set<SurfaceLinker>,
+        attrs: Set<AttributeLinker>,
+    ) -> Self {
+        Self {
+            sett,
+            tree,
+            grid,
+            surfs,
+            attrs,
+        }
     }
 }
 
@@ -20,7 +48,13 @@ impl Build for ParametersBuilder {
 
     #[inline]
     fn build(self) -> Self::Inst {
-        Self::Inst::new()
+        let sett = self.sett;
+        let tree = self.tree;
+        let grid = self.grid.build();
+        let surfs = self.surfs;
+        let attrs = self.attrs;
+
+        Self::Inst::new(sett, tree, grid, surfs, attrs)
     }
 }
 

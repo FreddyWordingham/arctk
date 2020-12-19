@@ -3,4 +3,5 @@
     tree    : { There   : 'settings/tree_5_8.json5' },
     grid    : { There   : 'settings/grid_20mm_64.json5' },
     surfs   : { There   : 'lab/skin/test.json5' },
+    attrs   : { There   : 'lab/skin/attributes.json5' },
 }
