@@ -1,19 +1,11 @@
 {   // Surface attributes.
-    stratum_corneum
-        : { Interface   : ['stratum_corneum', 'air'] },
-    living_epidermis
-        : { Interface   : ['living_epidermis', 'stratum_corneum'] },
-    papillary_dermis
-        : { Interface   : ['papillary_dermis', 'living_epidermis'] },
-    upper_bnd
-        : { Interface   : ['upper_bnd', 'papillary_dermis'] },
-    dermis
-        : { Interface   : ['dermis', 'upper_bnd'] },
-    lower_bnd
-        : { Interface   : ['lower_bnd', 'dermis'] },
-    subcutaneous_fat
-        : { Interface   : ['subcutaneous_fat', 'lower_bnd'] },
-    tumour
-        : { Interface   : ['tumour', 'papillary_dermis'] },
-    mirror  : { Mirror      : 0.99 },
+    stratum_corneum     : { Interface   : ['stratum_corneum',   'air'] },
+    living_epidermis    : { Interface   : ['living_epidermis',  'stratum_corneum'] },
+    papillary_dermis    : { Interface   : ['papillary_dermis',  'living_epidermis'] },
+    upper_bnd           : { Interface   : ['upper_bnd',         'papillary_dermis'] },
+    dermis              : { Interface   : ['dermis',            'upper_bnd'] },
+    lower_bnd           : { Interface   : ['lower_bnd',         'dermis'] },
+    subcutaneous_fat    : { Interface   : ['subcutaneous_fat',  'lower_bnd'] },
+    tumour              : { Interface   : ['tumour',            'papillary_dermis'] },
+    mirror              : { Mirror      : 0.99 },
 }
