@@ -2,10 +2,12 @@
 
 use crate::{
     err::Error,
+    fmt_report,
     fs::{from_json, File, Load},
     ord::{Link, Map, Name},
 };
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 use std::{
     collections::btree_map::{IntoIter, Values},
     path::Path,
@@ -137,5 +139,16 @@ impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
             list.push((name, val.link(set)?));
         }
         Self::Inst::from_pairs(list)
+    }
+}
+
+impl<T: Display> Display for Set<T> {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        for (key, val) in &self.0 {
+            fmt_report!(fmt, key, &format!("{} ->", val));
+        }
+        Ok(())
     }
 }
