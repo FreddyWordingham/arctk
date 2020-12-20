@@ -2,10 +2,12 @@
 
 use crate::{
     err::Error,
+    fmt_report,
     fs::Save,
     ord::{Register, X, Y, Z},
 };
 use ndarray::Array3;
+use std::fmt::{Display, Formatter};
 use std::{ops::AddAssign, path::Path};
 
 /// Cartographer output data.
@@ -62,5 +64,14 @@ impl<'a> Save for Output<'a> {
 
         println!("void\t{}%", self.void.sum() / max * 100.0);
         self.void.save(&out_dir.join("map_void.nc"))
+    }
+}
+
+impl Display for Output<'_> {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.mat_reg, "material register");
+        Ok(())
     }
 }
