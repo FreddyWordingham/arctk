@@ -8,7 +8,7 @@ pub trait File
 where
     Self: std::marker::Sized,
 {
-    /// Report the opening of a fil (if it is a filepath) and load the data.
+    /// Load an instance of this type from a given path.
     /// # Errors
     /// if the target file can not be found,
     /// or the read string can not be serialised into an instance of the required type.

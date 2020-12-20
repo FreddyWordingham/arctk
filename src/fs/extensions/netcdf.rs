@@ -24,7 +24,7 @@ impl<T: Numeric> File for ArrayD<T> {
 impl<T: Numeric> File for Array2<T> {
     #[inline]
     fn load(path: &Path) -> Result<Array2<T>, Error> {
-        let arr_d = ArrayD::load(path)?;
+        let arr_d = ArrayD::new_from_file(path)?;
 
         let xi = arr_d.shape()[X];
         let yi = arr_d.shape()[Y];
@@ -38,7 +38,7 @@ impl<T: Numeric> File for Array2<T> {
 impl<T: Numeric> File for Array3<T> {
     #[inline]
     fn load(path: &Path) -> Result<Array3<T>, Error> {
-        let arr_d = ArrayD::load(path)?;
+        let arr_d = ArrayD::new_from_file(path)?;
 
         let xi = arr_d.shape()[X];
         let yi = arr_d.shape()[Y];

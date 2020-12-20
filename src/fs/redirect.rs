@@ -44,7 +44,7 @@ impl<T: File> Load for Redirect<T> {
         match self {
             Self::There(path) => {
                 let path = in_dir.join(path);
-                T::load(&path)
+                T::new_from_file(&path)
             }
             Self::Here(val) => Ok(val),
         }

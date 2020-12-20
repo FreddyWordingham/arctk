@@ -28,7 +28,7 @@ impl Load for MeshLoader {
 
         let mut tris = Vec::new();
         for name in self.0 {
-            let mut obj = Self::Inst::load(&in_dir.join(name))?;
+            let mut obj = Self::Inst::new_from_file(&in_dir.join(name))?;
             if let Some(t) = trans {
                 obj.transform(&t);
             }

@@ -52,39 +52,39 @@ impl Load for OperationLoader {
             Self::Sum(data_paths) => {
                 let mut cubes = Vec::with_capacity(data_paths.len());
                 for d in &data_paths {
-                    cubes.push(Array3::load(&in_dir.join(d))?);
+                    cubes.push(Array3::new_from_file(&in_dir.join(d))?);
                 }
                 Self::Inst::Sum(cubes)
             }
             Self::Add(data_path, x) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
                 Self::Inst::Add(cube, x)
             }
             Self::Sub(data_path, x) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
                 Self::Inst::Sub(cube, x)
             }
             Self::Mult(data_path, x) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
                 Self::Inst::Mult(cube, x)
             }
             Self::Div(data_path, x) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
                 Self::Inst::Div(cube, x)
             }
             Self::Norm(data_path) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
                 Self::Inst::Norm(cube)
             }
             Self::Sample(points_path, data_path, grid) => {
-                let table = Table::load(&in_dir.join(points_path))?;
+                let table = Table::new_from_file(&in_dir.join(points_path))?;
                 let points = table
                     .into_inner()
                     .iter()
                     .map(|row| Pos3::new(row[X], row[Y], row[Z]))
                     .collect();
 
-                let data_cube = Array3::load(&in_dir.join(data_path))?;
+                let data_cube = Array3::new_from_file(&in_dir.join(data_path))?;
 
                 let grid = grid.load(in_dir)?;
 
