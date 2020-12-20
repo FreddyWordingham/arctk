@@ -1,6 +1,7 @@
 //! Simulation input.
 
-use crate::sim::cartographer::Settings;
+use crate::{fmt_report, sim::cartographer::Settings};
+use std::fmt::{Display, Error, Formatter};
 
 /// Cartographer simulation resources conglomerate.
 pub struct Input<'a> {
@@ -14,5 +15,14 @@ impl<'a> Input<'a> {
     #[must_use]
     pub const fn new(sett: &'a Settings) -> Self {
         Self { sett }
+    }
+}
+
+impl Display for Input<'_> {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.sett, "settings");
+        Ok(())
     }
 }
