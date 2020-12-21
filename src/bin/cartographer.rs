@@ -7,7 +7,7 @@ use arctk::{
     geom::Tree,
     ord::{Build, Link, Register},
     report,
-    sim::cartographer::{Parameters, ParametersBuilderLoader},
+    sim::cartographer::{Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -25,18 +25,26 @@ fn main() {
     let (in_dir, _out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
 
-    sub_section(term_width, "Registration");
+    section(term_width, "Input");
+    sub_section(term_width, "Reconstruction");
+    let sett = params.sett;
+    let grid = params.grid;
     let attrs = params.attrs;
+
+    sub_section(term_width, "Registration");
     let mat_reg = Register::new(attrs.requires());
+
+    sub_section(term_width, "Linking");
     let surfs = params
         .surfs
         .link(&attrs)
         .expect("Failed to link attribute-linkers to surfaces.");
-    let tree = Tree::new(&params.tree, &surfs);
-    let grid = params.grid;
-    let sett = params.sett;
 
-    sub_section(term_width, "Linking");
+    sub_section(term_width, "Growing");
+    let tree = Tree::new(&params.tree, &surfs);
+
+    sub_section(term_width, "Input");
+    let input = Input::new();
 
     section(term_width, "Finished");
 }
@@ -68,7 +76,7 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
 
 /// Load the required files and form the input parameters.
 fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
-    section(term_width, "Input");
+    section(term_width, "Parameters");
     sub_section(term_width, "Loading");
     let builder = ParametersBuilderLoader::new_from_file(&in_dir.join(&params_path))
         .expect("Failed to load parameters file.")

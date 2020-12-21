@@ -5,8 +5,7 @@ use crate::{
     fs::{Load, Redirect},
     geom::{GridBuilder, SurfaceLinkerLoader, TreeSettings},
     ord::Set,
-    phys::AttributeLinker,
-    sim::cartographer::{ParametersBuilder, Settings},
+    sim::cartographer::{AttributeLinker, ParametersBuilder, Settings},
 };
 use arctk_attr::file;
 use std::path::Path;

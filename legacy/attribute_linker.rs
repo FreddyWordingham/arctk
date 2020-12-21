@@ -44,6 +44,33 @@ impl<'a> Link<'a, Material> for AttributeLinker {
     }
 }
 
+impl Register for AttributeLinker {
+    type Inst = AttributeIdx;
+
+    #[inline]
+    fn requires(&self) -> Vec<Name> {
+        match *self {
+            Self::Interface(ref inside, ref outside) => vec![inside.clone(), outside.clone()],
+            Self::Mirror(..) => vec![],
+        }
+    }
+
+    #[inline]
+    fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
+        Ok(match self {
+            Self::Interface(ref inside, ref outside) => Attribute::Interface(
+                mats.get(inside).unwrap_or_else(|| {
+                    panic!("Failed to link attribute-interface key: {}", inside)
+                }),
+                mats.get(outside).unwrap_or_else(|| {
+                    panic!("Failed to link attribute-interface key: {}", outside)
+                }),
+            ),
+            Self::Mirror(r) => Attribute::Mirror(r),
+        })
+    }
+}
+
 impl Display for AttributeLinker {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {

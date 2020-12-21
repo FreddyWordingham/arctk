@@ -4,8 +4,7 @@ use crate::{
     fmt_report,
     geom::{Grid, Tree},
     ord::Set,
-    phys::AttributeLinker,
-    sim::cartographer::Settings,
+    sim::cartographer::{AttributeLinker, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
