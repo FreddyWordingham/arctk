@@ -2,6 +2,6 @@
     sett    : { There   : 'settings/cartographer.json5' },
     tree    : { There   : 'settings/tree_5_8.json5' },
     grid    : { There   : 'settings/grid_20mm_64.json5' },
-    surfs   : { There   : 'lab/skin/surfaces.json5' },
+    surfs   : { There   : 'lab/skin/plane_surfaces.json5' },
     attrs   : { There   : 'lab/skin/attributes.json5' },
 }
