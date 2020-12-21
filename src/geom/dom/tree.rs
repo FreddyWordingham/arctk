@@ -1,11 +1,13 @@
 //! Adaptive tree cell scheme.
 
 use crate::{
+    fmt_report,
     geom::{Collide, Cube, Hit, Ray, Scan, SmoothTriangle, Surface, Trace, TreeSettings},
     math::Pos3,
     ord::Set,
     tools::ProgressBar,
 };
+use std::fmt::{Display, Error, Formatter};
 
 /// Tree cell enumeration.
 pub enum Tree<'a, T> {
@@ -356,5 +358,18 @@ impl<'a, T> Tree<'a, T> {
         }
 
         None
+    }
+}
+
+impl<T> Display for Tree<'_, T> {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.boundary(), "boundary");
+        fmt_report!(fmt, self.num_cells(), "total cells");
+        fmt_report!(fmt, self.num_leaves(), "leaf cells");
+        fmt_report!(fmt, self.num_tris(), "Triangle references");
+        fmt_report!(fmt, self.depth(), "maximum depth");
+        Ok(())
     }
 }

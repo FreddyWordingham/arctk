@@ -4,7 +4,8 @@
 use arctk::{
     args,
     fs::{File, Load},
-    ord::Build,
+    geom::Tree,
+    ord::{Build, Link, Register},
     report,
     sim::cartographer::{Parameters, ParametersBuilderLoader},
     util::{
@@ -22,7 +23,20 @@ fn main() {
     title(term_width, "Cartographer");
 
     let (in_dir, _out_dir, params_path) = initialisation(term_width);
-    let _params = input(term_width, &in_dir, &params_path);
+    let params = load_parameters(term_width, &in_dir, &params_path);
+
+    sub_section(term_width, "Registration");
+    let attrs = params.attrs;
+    let mat_reg = Register::new(attrs.requires());
+    let surfs = params
+        .surfs
+        .link(&attrs)
+        .expect("Failed to link attribute-linkers to surfaces.");
+    let tree = Tree::new(&params.tree, &surfs);
+    let grid = params.grid;
+    let sett = params.sett;
+
+    sub_section(term_width, "Linking");
 
     section(term_width, "Finished");
 }
@@ -52,8 +66,8 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     (in_dir, out_dir, params_path)
 }
 
-/// Retrieve the input parameters file structure.
-fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
+/// Load the required files and form the input parameters.
+fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
     section(term_width, "Input");
     sub_section(term_width, "Loading");
     let builder = ParametersBuilderLoader::new_from_file(&in_dir.join(&params_path))
