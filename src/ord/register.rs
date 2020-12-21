@@ -1,6 +1,10 @@
 //! Register structure.
 
-use crate::ord::{Map, Name, Set};
+use crate::{
+    fmt_report,
+    ord::{Map, Name, Set},
+};
+use std::fmt::{Display, Error, Formatter};
 
 /// Register used to index named data.
 pub struct Register(Set<usize>);
@@ -49,5 +53,16 @@ impl Register {
     #[must_use]
     pub fn names_list(&self) -> Vec<Name> {
         self.0.names_list()
+    }
+}
+
+impl Display for Register {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        for (key, val) in self.0.map() {
+            fmt_report!(fmt, val, &format!("{} ->", key));
+        }
+        Ok(())
     }
 }
