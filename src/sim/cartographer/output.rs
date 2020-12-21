@@ -43,7 +43,7 @@ impl<'a> Output<'a> {
     }
 }
 
-impl<'a> AddAssign<&Self> for Output<'a> {
+impl AddAssign<&Self> for Output<'_> {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
         self.void += &rhs.void;
@@ -53,7 +53,7 @@ impl<'a> AddAssign<&Self> for Output<'a> {
     }
 }
 
-impl<'a> Save for Output<'a> {
+impl Save for Output<'_> {
     #[inline]
     fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
         let max = self.void.len() as f64;
