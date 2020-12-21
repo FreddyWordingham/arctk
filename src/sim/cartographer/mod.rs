@@ -12,6 +12,6 @@ pub mod settings;
 pub mod super_sample;
 
 pub use self::{
-    attribute::*, attribute_linker::*, caster::*, parameters::*, parameters_builder::*,
+    attribute::*, attribute_linker::*, caster::*, input::*, parameters::*, parameters_builder::*,
     parameters_builder_loader::*, settings::*, super_sample::*,
 };

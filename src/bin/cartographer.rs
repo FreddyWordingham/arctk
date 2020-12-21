@@ -18,6 +18,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+/// Main cartographer function.
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Cartographer");
@@ -28,23 +29,33 @@ fn main() {
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
+    report!(sett, "settings");
     let grid = params.grid;
-    let attrs = params.attrs;
+    report!(grid, "measurement grid");
 
     sub_section(term_width, "Registration");
-    let mat_reg = Register::new(attrs.requires());
+    let mat_reg = Register::new(params.attrs.requires());
+    report!(mat_reg, "material register");
 
     sub_section(term_width, "Linking");
+    let attrs = params
+        .attrs
+        .link(mat_reg.set())
+        .expect("Failed to link attribute to surfaces.");
+    report!(attrs, "attributes");
     let surfs = params
         .surfs
         .link(&attrs)
-        .expect("Failed to link attribute-linkers to surfaces.");
+        .expect("Failed to link attribute to surfaces.");
+    report!(attrs, "surfaces");
 
     sub_section(term_width, "Growing");
     let tree = Tree::new(&params.tree, &surfs);
+    report!(tree, "hist-scan tree");
 
     sub_section(term_width, "Input");
-    let input = Input::new();
+    let input = Input::new(&attrs, &tree, &grid, &sett);
+    report!(input, "input");
 
     section(term_width, "Finished");
 }

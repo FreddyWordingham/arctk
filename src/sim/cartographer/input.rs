@@ -4,16 +4,16 @@ use crate::{
     fmt_report,
     geom::{Grid, Tree},
     ord::Set,
-    sim::cartographer::{AttributeLinker, Settings},
+    sim::cartographer::{Attribute, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
 /// Cartographer simulation resources conglomerate.
 pub struct Input<'a> {
     /// Attributes.
-    pub attrs: &'a Set<AttributeLinker>,
+    pub attrs: &'a Set<Attribute>,
     /// Hit-scan tree.
-    pub tree: &'a Tree<'a, AttributeLinker>,
+    pub tree: &'a Tree<'a, Attribute>,
     /// Measurement grid.
     pub grid: &'a Grid,
     /// General settings.
@@ -25,8 +25,8 @@ impl<'a> Input<'a> {
     #[inline]
     #[must_use]
     pub const fn new(
-        attrs: &'a Set<AttributeLinker>,
-        tree: &'a Tree<'a, AttributeLinker>,
+        attrs: &'a Set<Attribute>,
+        tree: &'a Tree<'a, Attribute>,
         grid: &'a Grid,
         sett: &'a Settings,
     ) -> Self {
@@ -43,7 +43,7 @@ impl Display for Input<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
-        fmt_report!(fmt, self.attrs, "attribute-linkers");
+        fmt_report!(fmt, self.attrs, "attributes");
         fmt_report!(fmt, self.tree, "hit-scan tree");
         fmt_report!(fmt, self.grid, "measurement grid");
         fmt_report!(fmt, self.sett, "settings");
