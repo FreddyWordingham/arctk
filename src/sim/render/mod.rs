@@ -6,6 +6,7 @@ pub mod engine;
 pub mod engine_builder;
 pub mod engines;
 pub mod input;
+pub mod lighting;
 pub mod output;
 pub mod parameters;
 pub mod parameters_builder;
