@@ -83,7 +83,7 @@ impl<T> Set<T> {
     /// Reference the internal map.
     #[inline]
     #[must_use]
-    pub fn map(&self) -> &Map<Name, T> {
+    pub const fn map(&self) -> &Map<Name, T> {
         &self.0
     }
 }

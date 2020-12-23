@@ -50,7 +50,7 @@ pub fn single_thread<'a>(input: &'a Input) -> Result<Output<'a>, Error> {
 #[must_use]
 fn thread<'a>(input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) -> Output<'a> {
     let res = *input.grid.res();
-    let mut data = Output::new(&input.mat_reg, res);
+    let mut data = Output::new(input.mat_reg, res);
 
     let mut rng = thread_rng();
 
