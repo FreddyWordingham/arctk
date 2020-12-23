@@ -47,13 +47,13 @@ specs = { version = "0.16.*", optional = true }
 specs-derive = { version = "0.4.*", optional = true }
 terminal_size = { version = "0.1.*", optional = true }
 
-# [[bin]]
-# name = "babbage"
-# required-features = ["terminal_size", "netcdf"]
+[[bin]]
+name = "babbage"
+required-features = ["terminal_size", "netcdf"]
 
-# [[bin]]
-# name = "cartographer"
-# required-features = ["terminal_size", "netcdf"]
+[[bin]]
+name = "cartographer"
+required-features = ["terminal_size", "netcdf"]
 
 # # [[bin]]
 # # name = "diffuse"
@@ -67,9 +67,9 @@ terminal_size = { version = "0.1.*", optional = true }
 # name = "mcrt"
 # required-features = ["netcdf", "terminal_size"]
 
-# [[bin]]
-# name = "render"
-# required-features = ["png", "terminal_size"]
+[[bin]]
+name = "render"
+required-features = ["terminal_size", "png"]
 
 # [[bin]]
 # name = "wonder"

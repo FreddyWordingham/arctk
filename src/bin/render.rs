@@ -1,5 +1,5 @@
-//! Datacube manipulation engine binary.
-//! Produce some data from some other data.
+//! Rendering engine binary.
+//! Produce two-dimensional image data from a three-dimensional scene.
 
 use arctk::{
     args,
@@ -7,7 +7,7 @@ use arctk::{
     geom::Tree,
     ord::{Build, Link, Register},
     report,
-    sim::cartographer::{run, Input, Parameters, ParametersBuilderLoader},
+    sim::render::{run, Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -18,10 +18,10 @@ use std::{
     path::{Path, PathBuf},
 };
 
-/// Main cartographer function.
+/// Main render function.
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
-    title(term_width, "Cartographer");
+    title(term_width, "Render");
 
     let (in_dir, out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
@@ -30,24 +30,15 @@ fn main() {
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
     report!(sett, "settings");
-    let grid = params.grid;
-    report!(grid, "measurement grid");
-
-    sub_section(term_width, "Registration");
-    let mat_reg = Register::new(params.attrs.requires());
-    report!(mat_reg, "material register");
+    let attrs = params.attrs;
+    report!(attrs, "attributes");
 
     sub_section(term_width, "Linking");
-    let attrs = params
-        .attrs
-        .link(mat_reg.set())
-        .expect("Failed to link attribute to surfaces.");
-    report!(attrs, "attributes");
     let surfs = params
         .surfs
         .link(&attrs)
-        .expect("Failed to link materials to attributes.");
-    report!(surfs, "surfaces");
+        .expect("Failed to link attribute to surfaces.");
+    report!(attrs, "surfaces");
 
     sub_section(term_width, "Growing");
     let tree = Tree::new(&params.tree, &surfs);
