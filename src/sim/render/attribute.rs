@@ -1,6 +1,6 @@
 //! Attributes implementation.
 
-use crate::{img::Gradient, ord::Name, util::fmt::gradient::to_string};
+use crate::{img::Gradient, util::fmt::gradient::to_string};
 use std::fmt::{Display, Error, Formatter};
 
 /// Surface attributes.
