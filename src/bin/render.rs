@@ -26,34 +26,34 @@ fn main() {
     let (in_dir, out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
 
-    section(term_width, "Input");
-    sub_section(term_width, "Reconstruction");
-    let sett = params.sett;
-    report!(sett, "settings");
-    let attrs = params.attrs;
-    report!(attrs, "attributes");
+    // section(term_width, "Input");
+    // sub_section(term_width, "Reconstruction");
+    // let sett = params.sett;
+    // report!(sett, "settings");
+    // let attrs = params.attrs;
+    // report!(attrs, "attributes");
 
-    sub_section(term_width, "Linking");
-    let surfs = params
-        .surfs
-        .link(&attrs)
-        .expect("Failed to link attribute to surfaces.");
-    report!(surfs, "surfaces");
+    // sub_section(term_width, "Linking");
+    // let surfs = params
+    //     .surfs
+    //     .link(&attrs)
+    //     .expect("Failed to link attribute to surfaces.");
+    // report!(surfs, "surfaces");
 
-    sub_section(term_width, "Growing");
-    let tree = Tree::new(&params.tree, &surfs);
-    report!(tree, "hist-scan tree");
+    // sub_section(term_width, "Growing");
+    // let tree = Tree::new(&params.tree, &surfs);
+    // report!(tree, "hist-scan tree");
 
-    sub_section(term_width, "Input");
-    let input = Input::new(&mat_reg, &attrs, &tree, &grid, &sett);
-    report!(input, "input");
+    // sub_section(term_width, "Input");
+    // let input = Input::new(&mat_reg, &attrs, &tree, &grid, &sett);
+    // report!(input, "input");
 
-    section(term_width, "Running");
-    let data = run::multi_thread(&input).expect("Failed to run cartographer.");
+    // section(term_width, "Running");
+    // let data = run::multi_thread(&input).expect("Failed to run cartographer.");
 
-    section(term_width, "Saving");
-    report!(data, "data");
-    data.save(&out_dir).expect("Failed to save output data.");
+    // section(term_width, "Saving");
+    // report!(data, "data");
+    // data.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }
