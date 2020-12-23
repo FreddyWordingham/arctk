@@ -10,5 +10,6 @@ pub mod attribute_linker;
 // pub mod run;
 pub mod settings;
 pub mod shader;
+pub mod shader_linker;
 
-pub use self::{attribute::*, attribute_linker::*, settings::*, shader::*};
+pub use self::{attribute::*, attribute_linker::*, settings::*, shader::*, shader_linker::*};
