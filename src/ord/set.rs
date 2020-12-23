@@ -4,7 +4,7 @@ use crate::{
     err::Error,
     fmt_report,
     fs::{from_json, File, Load},
-    ord::{Link, Map, Name},
+    ord::{Build, Link, Map, Name},
 };
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
@@ -124,10 +124,25 @@ impl<T: Load> Load for Set<T> {
     }
 }
 
+impl<T: Build> Build for Set<T> {
+    type Inst = Set<T::Inst>;
+
+    #[must_use]
+    #[inline]
+    fn build(self) -> Self::Inst {
+        let mut list = Vec::with_capacity(self.0.len());
+        for (name, val) in self.0 {
+            list.push((name, val.build()));
+        }
+        Self::Inst::from_pairs(list).expect("Failed to build set.")
+    }
+}
+
 #[allow(clippy::use_self)]
 impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
     type Inst = Set<S::Inst>;
 
+    #[must_use]
     #[inline]
     fn requires(&self) -> Vec<Name> {
         self.0

@@ -3,9 +3,10 @@
 use crate::{
     err::Error,
     fs::{Load, Redirect},
-    geom::{GridBuilder, SurfaceLinkerLoader, TreeSettings},
+    geom::{CameraBuilder, SurfaceLinkerLoader, TreeSettings},
+    img::GradientBuilder,
     ord::Set,
-    sim::render::{AttributeLinker, ParametersBuilder, Settings},
+    sim::render::{AttributeLinker, EngineBuilder, ParametersBuilder, Settings, ShaderLinker},
 };
 use arctk_attr::file;
 use std::path::Path;
@@ -22,7 +23,7 @@ pub struct ParametersBuilderLoader {
     /// Attributes.
     attrs: Redirect<Set<AttributeLinker>>,
     /// Colour gradients.
-    grads: Redirect<Set<GradientLoader>>,
+    grads: Redirect<Set<GradientBuilder>>,
     /// Main camera.
     cam: Redirect<CameraBuilder>,
     /// Shader settings.

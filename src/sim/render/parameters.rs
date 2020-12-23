@@ -26,3 +26,29 @@ pub struct Parameters {
     /// Engine selection.
     pub engine: Engine,
 }
+
+impl Parameters {
+    /// Construct a new instance.
+    #[inline]
+    pub fn new(
+        sett: Settings,
+        tree: TreeSettings,
+        surfs: Set<SurfaceLinker>,
+        attrs: Set<AttributeLinker>,
+        grads: Set<Gradient>,
+        cam: Camera,
+        shader: ShaderLinker,
+        engine: Engine,
+    ) -> Self {
+        Self {
+            sett,
+            tree,
+            surfs,
+            attrs,
+            grads,
+            cam,
+            shader,
+            engine,
+        }
+    }
+}

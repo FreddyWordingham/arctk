@@ -1,52 +1,72 @@
 //! Loadable parameters.
 
 use crate::{
-    err::Error,
-    fs::{Load, Redirect},
-    geom::{GridBuilder, SurfaceLinkerLoader, TreeSettings},
-    ord::Set,
-    sim::render::{AttributeLinker, ParametersBuilder, Settings},
+    geom::{CameraBuilder, SurfaceLinker, TreeSettings},
+    img::GradientBuilder,
+    ord::{Build, Set},
+    sim::render::{AttributeLinker, EngineBuilder, Parameters, Settings, ShaderLinker},
 };
-use arctk_attr::file;
-use std::path::Path;
 
 /// Loadable runtime parameters.
-#[file]
 pub struct ParametersBuilder {
     /// Rendering specific settings.
-    sett: Redirect<Settings>,
+    sett: Settings,
     /// Tree settings.
-    tree: Redirect<TreeSettings>,
+    tree: TreeSettings,
     /// Surfaces.
-    surfs: Redirect<Set<SurfaceLinker>>,
+    surfs: Set<SurfaceLinker>,
     /// Attributes.
-    attrs: Redirect<Set<AttributeLinker>>,
+    attrs: Set<AttributeLinker>,
     /// Colour gradients.
-    grads: Redirect<Set<Gradient>>,
+    grads: Set<GradientBuilder>,
     /// Main camera.
-    cam: Redirect<CameraBuilder>,
+    cam: CameraBuilder,
     /// Shader settings.
-    shader: Redirect<ShaderLinker>,
+    shader: ShaderLinker,
     /// Engine selection.
     engine: EngineBuilder,
 }
 
-impl Load for ParametersBuilderLoader {
-    type Inst = ParametersBuilder;
+impl ParametersBuilder {
+    /// Construct a new instance.
+    #[inline]
+    pub fn new(
+        sett: Settings,
+        tree: TreeSettings,
+        surfs: Set<SurfaceLinker>,
+        attrs: Set<AttributeLinker>,
+        grads: Set<GradientBuilder>,
+        cam: CameraBuilder,
+        shader: ShaderLinker,
+        engine: EngineBuilder,
+    ) -> Self {
+        Self {
+            sett,
+            tree,
+            surfs,
+            attrs,
+            grads,
+            cam,
+            shader,
+            engine,
+        }
+    }
+}
+
+impl Build for ParametersBuilder {
+    type Inst = Parameters;
 
     #[inline]
-    fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        let sett = self.sett.load(in_dir)?;
-        let tree = self.tree.load(in_dir)?;
-        let surfs = self.surfs.load(in_dir)?.load(in_dir)?;
-        let attrs = self.attrs.load(in_dir)?;
-        let grads = self.grads.load(in_dir)?;
-        let cam = self.cam.load(in_dir)?;
-        let shader = self.shader.load(in_dir)?;
-        let engine = self.engine;
+    fn build(self) -> Self::Inst {
+        let sett = self.sett;
+        let tree = self.tree;
+        let surfs = self.surfs;
+        let attrs = self.attrs;
+        let grads = self.grads.build();
+        let cam = self.cam.build();
+        let shader = self.shader;
+        let engine = self.engine.build();
 
-        Ok(Self::Inst::new(
-            sett, tree, surfs, attrs, grads, cam, shader, engine,
-        ))
+        Self::Inst::new(sett, tree, surfs, attrs, grads, cam, shader, engine)
     }
 }
