@@ -29,8 +29,10 @@ pub struct ParametersBuilder {
 
 impl ParametersBuilder {
     /// Construct a new instance.
+    #[allow(clippy::too_many_arguments)]
+    #[must_use]
     #[inline]
-    pub fn new(
+    pub const fn new(
         sett: Settings,
         tree: TreeSettings,
         surfs: Set<SurfaceLinker>,

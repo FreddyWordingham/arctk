@@ -124,9 +124,11 @@ impl<T: Load> Load for Set<T> {
     }
 }
 
+#[allow(clippy::use_self)]
 impl<T: Build> Build for Set<T> {
     type Inst = Set<T::Inst>;
 
+    #[allow(clippy::expect_used)]
     #[must_use]
     #[inline]
     fn build(self) -> Self::Inst {

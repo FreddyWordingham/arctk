@@ -29,6 +29,7 @@ pub struct Parameters {
 
 impl Parameters {
     /// Construct a new instance.
+    #[allow(clippy::too_many_arguments)]
     #[inline]
     pub fn new(
         sett: Settings,
