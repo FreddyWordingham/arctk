@@ -155,7 +155,6 @@ fn colour(
     // Data recording.
     data.shadow[pixel] += shadow * weight;
     data.light[pixel] += light * weight;
-    data.final_norm[pixel] += weight * norm.as_ref();
 
     // Colouring.
     data.colour.pixels_mut()[pixel] += col * weight as f32;

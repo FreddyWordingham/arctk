@@ -4,7 +4,6 @@ use crate::{
     err::Error,
     fs::Save,
     img::{Colour, Gradient, Image},
-    math::Vec3,
     ord::{X, Y},
     report,
 };
@@ -16,8 +15,6 @@ use std::{ops::AddAssign, path::Path};
 pub struct Output<'a> {
     /// Render time.
     pub time: Array2<f64>,
-    /// Final surface normal.
-    pub final_norm: Array2<Vec3>,
     /// Lighting factors.
     pub light: Array2<f64>,
     /// Shadowing factors.
@@ -38,7 +35,6 @@ impl<'a> Output<'a> {
 
         Self {
             time: Array2::zeros(res),
-            final_norm: Array2::default(res),
             light: Array2::zeros(res),
             shadow: Array2::zeros(res),
             colour: Image::new_blank(res, Colour::default()),
@@ -51,7 +47,6 @@ impl<'a> AddAssign<&Self> for Output<'a> {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
         self.time += &rhs.time;
-        self.final_norm += &rhs.final_norm;
         self.light += &rhs.light;
         self.shadow += &rhs.shadow;
         self.colour += &rhs.colour;
@@ -65,13 +60,6 @@ impl<'a> Save for Output<'a> {
         report!("Maximum time", max_time, "ms");
         Image::new(self.time.map(|x| self.grad.get(x.log(max_time) as f32)))
             .save(&out_dir.join("time.png"))?;
-
-        // Image::new(
-        //     self.final_norm
-        //         .map(Vec3::normalize)
-        //         .map(|n| Colour::new(n.x.abs() as f32, n.y.abs() as f32, n.z.abs() as f32, 1.0)),
-        // )
-        // .save(&out_dir.join("normals.png"))?;
 
         let max_light = self.light.max()?;
         report!("Maximum light value", max_light);
