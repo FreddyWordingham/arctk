@@ -38,7 +38,7 @@ fn main() {
         .surfs
         .link(&attrs)
         .expect("Failed to link attribute to surfaces.");
-    report!(attrs, "surfaces");
+    report!(surfs, "surfaces");
 
     sub_section(term_width, "Growing");
     let tree = Tree::new(&params.tree, &surfs);
