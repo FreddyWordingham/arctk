@@ -108,10 +108,7 @@ impl Display for Shader<'_> {
         );
         fmt_report!(
             fmt,
-            &format!(
-                "[{}, {}, {}]",
-                self.shadow[0], self.shadow[1], self.shadow[2]
-            ),
+            &format!("[{}, {}, {}]", self.shadow[0], self.shadow[1]),
             "shadowing fractions"
         );
         fmt_report!(fmt, self.spec_pow, "specular power");
