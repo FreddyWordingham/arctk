@@ -34,7 +34,7 @@ pub fn light(input: &Input, ray: &Ray, norm: &Dir3) -> f64 {
 /// Unity no shadows.
 #[inline]
 #[must_use]
-pub fn shadowing(input: &Input, rng: &mut ThreadRng, ray: &Ray, norm: &Dir3) -> f64 {
+pub fn shadow(input: &Input, rng: &mut ThreadRng, ray: &Ray, norm: &Dir3) -> f64 {
     let bump_dist = input.sett.bump_dist();
 
     let sun_dir = Dir3::new_normalize(input.shader.sun_pos() - ray.pos());
