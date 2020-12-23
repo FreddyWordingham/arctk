@@ -1,6 +1,7 @@
 //! Shader settings.
 
-use crate::{access, clone, img::Gradient, math::Pos3};
+use crate::{access, clone, fmt_report, img::Gradient, math::Pos3, util::gradient::to_string};
+use std::fmt::{Display, Error, Formatter};
 
 /// Colouring settings.
 pub struct Shader<'a> {
@@ -88,5 +89,62 @@ impl<'a> Shader<'a> {
             sky_grad,
             data_grad,
         }
+    }
+}
+
+impl Display for Shader<'_> {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(
+            fmt,
+            &format!("{}, {}, {}", self.sun_pos.x, self.sun_pos.y, self.sun_pos.z),
+            "sun position (m)"
+        );
+        fmt_report!(
+            fmt,
+            &format!("[{}, {}]", self.light[0], self.light[1]),
+            "lighting fractions"
+        );
+        fmt_report!(
+            fmt,
+            &format!(
+                "[{}, {}, {}]",
+                self.shadow[0], self.shadow[1], self.shadow[2]
+            ),
+            "shadowing fractions"
+        );
+        fmt_report!(fmt, self.spec_pow, "specular power");
+        fmt_report!(
+            fmt,
+            &format!("[{}, {}]", self.occ_dist[0], self.occ_dist[1]),
+            "occlusion distance (m)"
+        );
+        fmt_report!(fmt, self.fall_off, "fall off rate (m^-1)");
+
+        let soft_shadow_samples = if let Some((n, alpha)) = self.soft_shadow_samples {
+            format!("{} samples, angle {} (deg)", n, alpha.to_degrees())
+        } else {
+            "OFF".to_string()
+        };
+        fmt_report!(fmt, soft_shadow_samples, "soft shadowing");
+
+        let ambient_shadow_samples = if let Some((n, p)) = self.ambient_shadow_samples {
+            format!("{} samples, power {}", n, p)
+        } else {
+            "OFF".to_string()
+        };
+        fmt_report!(fmt, ambient_shadow_samples, "ambient shadowing");
+        fmt_report!(
+            fmt,
+            &format!("[{}]", to_string(self.sky_grad, 32)),
+            "sky gradient"
+        );
+        fmt_report!(
+            fmt,
+            &format!("[{}]", to_string(self.data_grad, 32)),
+            "data gradient"
+        );
+        Ok(())
     }
 }
