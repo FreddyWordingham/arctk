@@ -1,15 +1,11 @@
 //! Loadable parameters.
 
 use crate::{
-    err::Error,
-    fs::{Load, Redirect},
-    geom::{Camera, GridBuilder, SurfaceLinker, TreeSettings},
+    geom::{Camera, SurfaceLinker, TreeSettings},
     img::Gradient,
     ord::Set,
-    sim::render::{AttributeLinker, Settings, ShaderLinker},
+    sim::render::{AttributeLinker, Engine, Settings, ShaderLinker},
 };
-use arctk_attr::file;
-use std::path::Path;
 
 /// Loadable runtime parameters.
 pub struct Parameters {

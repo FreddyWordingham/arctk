@@ -1,7 +1,7 @@
 //! Shader settings.
 
 use crate::{
-    access, clone, fmt_report,
+    fmt_report,
     ord::{Name, X, Y, Z},
 };
 use arctk_attr::file;
