@@ -4,9 +4,11 @@ use crate::{
     access, clone, fmt_report,
     ord::{Name, X, Y, Z},
 };
+use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
 
 /// Colouring settings.
+#[file]
 pub struct ShaderLinker {
     /// Sun position used for lighting calculations [m].
     sun_pos: [f64; 3],
