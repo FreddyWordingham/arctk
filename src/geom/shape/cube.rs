@@ -313,13 +313,13 @@ impl Display for Cube {
         writeln!(fmt, "...")?;
         fmt_report!(
             fmt,
-            &format!("[{}x{}x{}]", self.mins.x, self.mins.y, self.mins.z),
-            "mins"
+            &format!("({}, {}, {})", self.mins.x, self.mins.y, self.mins.z),
+            "mins (m)"
         );
         fmt_report!(
             fmt,
-            &format!("[{}x{}x{}]", self.maxs.x, self.maxs.y, self.maxs.z),
-            "maxs"
+            &format!("({}, {}, {})", self.maxs.x, self.maxs.y, self.maxs.z),
+            "maxs (m)"
         );
         Ok(())
     }

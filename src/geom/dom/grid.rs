@@ -136,7 +136,7 @@ impl Display for Grid {
         fmt_report!(
             fmt,
             &format!(
-                "{}m x {}m x {}m",
+                "({}, {}, {})",
                 self.voxel_size.x, self.voxel_size.y, self.voxel_size.z
             ),
             "voxel size"
