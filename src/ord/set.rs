@@ -171,7 +171,7 @@ impl<T: Display> Display for Set<T> {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
         for (key, val) in &self.0 {
-            fmt_report!(fmt, val, &format!("[{}]", key));
+            fmt_report!(fmt, val, &format!("{{{}}}", key));
         }
         Ok(())
     }

@@ -14,7 +14,7 @@ where
     /// or the read string can not be serialised into an instance of the required type.
     #[inline]
     fn new_from_file(path: &Path) -> Result<Self, Error> {
-        println!("Loading: {}", path.display());
+        println!("[LOAD] {}", path.display());
         Self::load(path)
     }
 
