@@ -21,7 +21,7 @@ pub fn display_datacube(
     let res = datacube.shape();
     fmt_report!(
         fmt,
-        &format!("[{}x{}x{}]", res[X], res[Y], res[Z]),
+        &format!("[{} x {} x {}]", res[X], res[Y], res[Z]),
         "resolution"
     );
     fmt_report!(

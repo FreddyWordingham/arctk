@@ -58,7 +58,7 @@ impl Display for CameraBuilder {
         fmt_report!(fmt, self.fov, "field of view (deg)");
         fmt_report!(
             fmt,
-            &format!("[{}x{}]", self.res[X], self.res[Y]),
+            &format!("[{} x {}]", self.res[X], self.res[Y]),
             "resolution"
         );
 

@@ -99,10 +99,10 @@ impl Display for OperationLoader {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {
             Self::Zero(res) => {
-                write!(fmt, "Zero: [{}x{}x{}]", res[X], res[Y], res[Z])
+                write!(fmt, "Zero: [{} x {} x {}]", res[X], res[Y], res[Z])
             }
             Self::Unit(res) => {
-                write!(fmt, "Unit: [{}x{}x{}]", res[X], res[Y], res[Z])
+                write!(fmt, "Unit: [{} x {} x {}]", res[X], res[Y], res[Z])
             }
             Self::Sum(ref data_paths) => {
                 write!(fmt, "Sum: [")?;

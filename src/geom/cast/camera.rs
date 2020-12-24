@@ -105,7 +105,7 @@ impl Display for Camera {
         fmt_report!(fmt, self.half_delta_theta, "dTheta/2");
         fmt_report!(
             fmt,
-            &format!("[{}x{}]", self.res[X], self.res[Y]),
+            &format!("[{} x {}]", self.res[X], self.res[Y]),
             "resolution"
         );
         fmt_report!(fmt, self.ss_power, "super sampling power");

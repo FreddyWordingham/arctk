@@ -46,7 +46,7 @@ impl Display for SuperSample {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         match *self {
             Self::Off => write!(fmt, "Off"),
-            Self::Uniform([nx, ny, nz]) => write!(fmt, "[{}x{}x{}]", nx, ny, nz),
+            Self::Uniform([nx, ny, nz]) => write!(fmt, "[{} x {} x {}]", nx, ny, nz),
             Self::Random(n) => write!(fmt, "Random ({})", n),
         }
     }
