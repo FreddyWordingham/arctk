@@ -1,11 +1,13 @@
 //! Loadable parameters.
 
 use crate::{
+    fmt_report,
     geom::{CameraBuilder, SurfaceLinker, TreeSettings},
     img::GradientBuilder,
     ord::{Build, Set},
     sim::render::{AttributeLinker, EngineBuilder, Parameters, Settings, ShaderLinker},
 };
+use std::fmt::{Display, Error, Formatter};
 
 /// Loadable runtime parameters.
 pub struct ParametersBuilder {
@@ -70,5 +72,21 @@ impl Build for ParametersBuilder {
         let engine = self.engine.build();
 
         Self::Inst::new(sett, tree, surfs, attrs, grads, cam, shader, engine)
+    }
+}
+
+impl Display for ParametersBuilder {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.sett, "settings");
+        fmt_report!(fmt, self.tree, "tree settings");
+        fmt_report!(fmt, self.surfs, "surface");
+        fmt_report!(fmt, self.attrs, "attribute");
+        fmt_report!(fmt, self.grads, "gradients");
+        fmt_report!(fmt, self.cam, "camera");
+        fmt_report!(fmt, self.shader, "shader");
+        fmt_report!(fmt, self.engine, "engine");
+        Ok(())
     }
 }
