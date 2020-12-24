@@ -69,7 +69,7 @@ impl Display for Parameters {
         for (key, val) in self.grads.map() {
             fmt_report!(fmt, to_string(val, 32), key);
         }
-        writeln!(fmt);
+        writeln!(fmt)?;
         fmt_report!(fmt, self.cam, "camera");
         fmt_report!(fmt, self.shader, "shader");
         fmt_report!(fmt, "{* POINTER LOADED *}", "engine");
