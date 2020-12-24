@@ -1,11 +1,12 @@
 //! Camera structure.
 
 use crate::{
-    access, clone,
+    access, clone, fmt_report,
     geom::{Orient, Ray},
     math::{Pos3, Rot3},
     ord::{X, Y},
 };
+use std::fmt::{Display, Error, Formatter};
 
 /// Tracer emission structure.
 pub struct Camera {
@@ -93,5 +94,21 @@ impl Camera {
             * ray.dir();
 
         ray
+    }
+}
+
+impl Display for Camera {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.orient, "orientation");
+        fmt_report!(fmt, self.half_delta_theta, "dTheta/2");
+        fmt_report!(
+            fmt,
+            &format!("[{}x{}]", self.res[X], self.res[Y]),
+            "resolution"
+        );
+        fmt_report!(fmt, self.ss_power, "super sampling power");
+        Ok(())
     }
 }

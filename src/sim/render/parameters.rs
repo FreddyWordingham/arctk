@@ -1,11 +1,14 @@
 //! Loadable parameters.
 
 use crate::{
+    fmt_report,
     geom::{Camera, SurfaceLinker, TreeSettings},
     img::Gradient,
     ord::Set,
     sim::render::{AttributeLinker, Engine, Settings, ShaderLinker},
+    util::fmt::gradient::to_string,
 };
+use std::fmt::{Display, Error, Formatter};
 
 /// Loadable runtime parameters.
 pub struct Parameters {
@@ -51,5 +54,24 @@ impl Parameters {
             shader,
             engine,
         }
+    }
+}
+
+impl Display for Parameters {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.sett, "settings");
+        fmt_report!(fmt, self.tree, "tree settings");
+        fmt_report!(fmt, self.surfs, "surfaces");
+        fmt_report!(fmt, self.attrs, "attributes");
+        fmt_report!(fmt, "...", "gradients");
+        for (key, val) in self.grads.map() {
+            fmt_report!(fmt, &format!("{} ->", to_string(val, 32)), key);
+        }
+        fmt_report!(fmt, self.cam, "camera");
+        fmt_report!(fmt, self.shader, "shader");
+        fmt_report!(fmt, "{* POINTER LOADED *}", "engine");
+        Ok(())
     }
 }
