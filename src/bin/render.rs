@@ -23,8 +23,8 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Render");
 
-    let (_in_dir, _out_dir, _params_path) = initialisation(term_width);
-    // let params = load_parameters(term_width, &in_dir, &params_path);
+    let (in_dir, _out_dir, params_path) = initialisation(term_width);
+    let _params = load_parameters(term_width, &in_dir, &params_path);
 
     // section(term_width, "Input");
     // sub_section(term_width, "Reconstruction");

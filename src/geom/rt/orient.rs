@@ -1,10 +1,11 @@
 //! Orientation implementation.
 
 use crate::{
-    access,
+    access, fmt_report,
     geom::Ray,
     math::{Dir3, Pos3, Vec3},
 };
+use std::fmt::{Display, Error, Formatter};
 
 /// Orientation structure.
 #[derive(Debug)]
@@ -125,5 +126,36 @@ impl Orient {
     #[must_use]
     pub fn left_ray(&self) -> Ray {
         Ray::new(self.pos, -self.right)
+    }
+}
+
+impl Display for Orient {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(
+            fmt,
+            &format!("({}, {}, {})", self.pos.x, self.pos.y, self.pos.z),
+            "position (m)"
+        );
+        fmt_report!(
+            fmt,
+            &format!(
+                "({}, {}, {})",
+                self.forward.x, self.forward.y, self.forward.z
+            ),
+            "forwards"
+        );
+        fmt_report!(
+            fmt,
+            &format!("({}, {}, {})", self.right.x, self.right.y, self.right.z),
+            "rightwards"
+        );
+        fmt_report!(
+            fmt,
+            &format!("({}, {}, {})", self.up.x, self.up.y, self.up.z),
+            "upwards"
+        );
+        Ok(())
     }
 }
