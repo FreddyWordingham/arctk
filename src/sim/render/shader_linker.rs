@@ -39,7 +39,7 @@ impl Display for ShaderLinker {
         fmt_report!(
             fmt,
             &format!(
-                "{}, {}, {}",
+                "({}, {}, {})",
                 self.sun_pos[X], self.sun_pos[Y], self.sun_pos[Z]
             ),
             "sun position (m)"
