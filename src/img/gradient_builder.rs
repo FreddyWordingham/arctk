@@ -1,10 +1,12 @@
 //! Gradient builder implementation.
 
 use crate::{
+    fmt_reports,
     img::{Colour, Gradient},
     ord::Build,
 };
 use arctk_attr::file;
+use std::fmt::{Display, Error, Formatter};
 
 /// Loadable colour gradient structure.
 #[file]
@@ -33,5 +35,14 @@ impl Build for GradientBuilder {
         }
 
         Self::Inst::new(cols)
+    }
+}
+
+impl Display for GradientBuilder {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_reports!(fmt, self.0, "colours");
+        Ok(())
     }
 }
