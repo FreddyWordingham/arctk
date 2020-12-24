@@ -42,7 +42,7 @@ impl Display for GradientBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
-        fmt_reports!(fmt, self.0, "colours");
+        fmt_reports!(fmt, &self.0, "colours");
         Ok(())
     }
 }
