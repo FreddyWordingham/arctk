@@ -1,7 +1,6 @@
 //! Gradient builder implementation.
 
 use crate::{
-    fmt_reports,
     img::{Colour, Gradient},
     ord::Build,
 };
@@ -41,8 +40,15 @@ impl Build for GradientBuilder {
 impl Display for GradientBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
-        writeln!(fmt, "...")?;
-        fmt_reports!(fmt, &self.0, "colours");
+        if self.0.is_empty() {
+            write!(fmt, "[]")?;
+        } else {
+            write!(fmt, "[{}", self.0[0])?;
+            for col in self.0.iter().skip(1) {
+                write!(fmt, ", {}", col)?;
+            }
+            write!(fmt, "]")?;
+        }
         Ok(())
     }
 }

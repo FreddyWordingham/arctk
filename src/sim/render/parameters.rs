@@ -67,8 +67,9 @@ impl Display for Parameters {
         fmt_report!(fmt, self.attrs, "attributes");
         fmt_report!(fmt, "...", "gradients");
         for (key, val) in self.grads.map() {
-            fmt_report!(fmt, &format!("{} ->", to_string(val, 32)), key);
+            fmt_report!(fmt, to_string(val, 32), key);
         }
+        writeln!(fmt);
         fmt_report!(fmt, self.cam, "camera");
         fmt_report!(fmt, self.shader, "shader");
         fmt_report!(fmt, "{* POINTER LOADED *}", "engine");
