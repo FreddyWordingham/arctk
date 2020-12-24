@@ -75,8 +75,8 @@ impl Display for ShaderLinker {
             "OFF".to_string()
         };
         fmt_report!(fmt, ambient_shadow_samples, "ambient shadowing");
-        fmt_report!(fmt, self.sky_grad, "sky gradient");
-        fmt_report!(fmt, self.data_grad, "data gradient");
+        fmt_report!(fmt, &format!("[{}]", self.sky_grad), "sky gradient");
+        fmt_report!(fmt, &format!("[{}]", self.data_grad), "data gradient");
         Ok(())
     }
 }
