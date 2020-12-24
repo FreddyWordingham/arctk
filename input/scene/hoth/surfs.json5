@@ -1,0 +1,6 @@
+{   // Map of surface attributes.
+    atat        : { attr: 'metal',  mesh: [["res/objs/hoth/atat.obj"], null]},
+    visor       : { attr: 'visor',  mesh: [["res/objs/hoth/visor.obj"], null]},
+    snow        : { attr: 'snow',  mesh: [["res/objs/hoth/snow.obj"], null]},
+    mountains   : { attr: 'snow',  mesh: [["res/objs/hoth/mountains.obj"], null]},
+}

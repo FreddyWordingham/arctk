@@ -1,0 +1,5 @@
+{
+    metal   : { Opaque      : 'greyscale' },
+    snow    : { Opaque      : 'greyscale' },
+    visor   : { Transparent : ['pure_lust', 0.4] },
+}
