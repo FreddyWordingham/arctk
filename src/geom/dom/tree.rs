@@ -367,7 +367,15 @@ impl<T> Display for Tree<'_, T> {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.boundary(), "boundary");
         fmt_report!(fmt, self.num_cells(), "total cells");
-        fmt_report!(fmt, self.num_leaves(), "leaf cells");
+        fmt_report!(
+            fmt,
+            &format!(
+                "{} ({:.2}%)",
+                self.num_leaves(),
+                self.num_leaves() as f64 / self.num_cells() as f64 * 100.0
+            ),
+            "leaf cells"
+        );
         fmt_report!(fmt, self.num_tris(), "Triangle references");
         fmt_report!(fmt, self.depth(), "maximum depth");
         Ok(())
