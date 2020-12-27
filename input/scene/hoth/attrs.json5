@@ -1,6 +1,11 @@
 {
+    glass   : { Mirror      : ['crystal_clear', 0.3] },
+    body    : { Opaque      : 'dania' },
+    panels  : { Opaque      : 'citrus_peel' },
+    guns    : { Mirror      : ['sky', 0.7] },
     metal   : { Mirror      : ['greyscale', 0.9] },
     snow    : { Luminous    : ['greyscale', 1.3] },
+    rock    : { Switchable  : [['greyscale', 'evening_night'], 0.0] },
     oil     : { Refractive  : ['rastafari', 0.3, [1.0, 1.4]] },
     visor   : { Luminous : ['pure_lust', 1.4] },
     shield  : { Refractive  : ['amin', 0.025, [1.0, 1.1]] },

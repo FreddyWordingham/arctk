@@ -2,8 +2,12 @@
     atat        : { attr: 'metal',  mesh: [["res/objs/hoth/atat.obj"], null]},
     visor       : { attr: 'visor',  mesh: [["res/objs/hoth/visor.obj"], null]},
     snow        : { attr: 'snow',  mesh: [["res/objs/hoth/snow.obj"], null]},
-    mountains   : { attr: 'snow',  mesh: [["res/objs/hoth/mountains_0.obj", "res/objs/hoth/mountains_1.obj"], null]},
+    mountains   : { attr: 'rock',  mesh: [["res/objs/hoth/mountains_0.obj", "res/objs/hoth/mountains_1.obj"], {trans: [0,0,-1]}]},
     oil         : { attr: 'oil',  mesh: [["res/objs/hoth/oil.obj"], null]},
     cannon      : { attr: 'metal',  mesh: [["res/objs/hoth/cannon.obj"], null]},
     shield      : { attr: 'shield',  mesh: [["res/objs/hoth/shield.obj"], null]},
+    glass       : { attr: 'glass',  mesh: [["res/objs/hoth/snowspeeder_glass.obj"], null]},
+    body        : { attr: 'body',  mesh: [["res/objs/hoth/snowspeeder_body.obj"], null]},
+    panels      : { attr: 'panels',  mesh: [["res/objs/hoth/snowspeeder_panels.obj"], null]},
+    guns        : { attr: 'guns',  mesh: [["res/objs/hoth/snowspeeder_guns.obj"], null]},
 }
