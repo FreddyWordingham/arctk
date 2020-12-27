@@ -2,13 +2,16 @@
 
 use crate::{
     err::Error,
+    fmt_report,
     fs::Save,
     img::{Colour, Gradient, Image},
     ord::{X, Y},
     report,
+    util::gradient::to_string,
 };
 use ndarray::Array2;
 use ndarray_stats::QuantileExt;
+use std::fmt::{Display, Formatter};
 use std::{ops::AddAssign, path::Path};
 
 /// Rendering output data.
@@ -72,5 +75,17 @@ impl<'a> Save for Output<'a> {
             .save(&out_dir.join("shadow.png"))?;
 
         self.colour.save(&out_dir.join("colour.png"))
+    }
+}
+
+impl Display for Output<'_> {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.time, "time");
+        fmt_report!(fmt, self.light, "light");
+        fmt_report!(fmt, self.shadow, "shadow");
+        fmt_report!(fmt, to_string(self.grad, 32), "gradient");
+        Ok(())
     }
 }

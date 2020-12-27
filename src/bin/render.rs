@@ -3,15 +3,15 @@
 
 use arctk::{
     args,
-    fs::{File, Load},
+    fs::{File, Load, Save},
     geom::Tree,
     ord::{Build, Link},
     report,
     sim::render::{run, Input, Parameters, ParametersBuilderLoader},
-    util::fmt::gradient::to_string,
     util::{
         banner::{section, sub_section, title},
         dir,
+        fmt::gradient::to_string,
     },
 };
 use std::{
@@ -24,7 +24,7 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Render");
 
-    let (in_dir, _out_dir, params_path) = initialisation(term_width);
+    let (in_dir, out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
 
     section(term_width, "Input");
