@@ -1,11 +1,15 @@
 //! Shader settings.
 
 use crate::{
+    err::Error,
     fmt_report,
-    ord::{Name, X, Y, Z},
+    img::Gradient,
+    math::Pos3,
+    ord::{Link, Name, Set, X, Y, Z},
+    sim::render::Shader,
 };
 use arctk_attr::file;
-use std::fmt::{Display, Error, Formatter};
+use std::fmt::{Display, Formatter};
 
 /// Colouring settings.
 #[file]
@@ -32,9 +36,44 @@ pub struct ShaderLinker {
     data_grad: Name,
 }
 
+impl<'a> Link<'a, Gradient> for ShaderLinker {
+    type Inst = Shader<'a>;
+
+    #[inline]
+    fn requires(&self) -> Vec<Name> {
+        vec![self.sky_grad.clone(), self.data_grad.clone()]
+    }
+
+    #[inline]
+    fn link(self, reg: &'a Set<Gradient>) -> Result<Self::Inst, Error> {
+        let soft_shadow_samples = if let Some((n, alpha)) = self.soft_shadow_samples {
+            Some((n, alpha.to_radians()))
+        } else {
+            None
+        };
+
+        Ok(Self::Inst::new(
+            Pos3::new(self.sun_pos[X], self.sun_pos[Y], self.sun_pos[Z]),
+            self.light,
+            self.shadow,
+            self.spec_pow,
+            self.occ_dist,
+            self.fall_off,
+            soft_shadow_samples,
+            self.ambient_shadow_samples,
+            reg.get(&self.sky_grad).unwrap_or_else(|| {
+                panic!("Failed to link shader-gradient key: {}", &self.sky_grad)
+            }),
+            reg.get(&self.data_grad).unwrap_or_else(|| {
+                panic!("Failed to link shader-gradient key: {}", &self.data_grad)
+            }),
+        ))
+    }
+}
+
 impl Display for ShaderLinker {
     #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
         fmt_report!(
             fmt,
@@ -63,7 +102,7 @@ impl Display for ShaderLinker {
         fmt_report!(fmt, self.fall_off, "fall off rate (m^-1)");
 
         let soft_shadow_samples = if let Some((n, alpha)) = self.soft_shadow_samples {
-            format!("{} samples, angle {} (deg)", n, alpha.to_degrees())
+            format!("{} samples, angle {} (deg)", n, alpha)
         } else {
             "OFF".to_string()
         };

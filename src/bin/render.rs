@@ -29,32 +29,38 @@ fn main() {
 
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
-    let shader = params.shader;
-    report!(shader, "shader");
     let sett = params.sett;
     report!(sett, "settings");
     let grads = params.grads;
     for (key, val) in grads.map() {
         report!(to_string(val, 32), &format!("{}", key));
     }
-    let attrs = params.attrs;
-    report!(attrs, "attributes");
     let cam = params.cam;
     report!(cam, "camera");
 
     sub_section(term_width, "Linking");
+    let attrs = params
+        .attrs
+        .link(&grads)
+        .expect("Failed to link x to attributes.");
+    report!(attrs, "attributes");
     let surfs = params
         .surfs
         .link(&attrs)
         .expect("Failed to link attribute to surfaces.");
     report!(surfs, "surfaces");
+    let shader = params
+        .shader
+        .link(&grads)
+        .expect("Failed to link attribute to shader.");
+    report!(shader, "shader");
 
     sub_section(term_width, "Growing");
     let tree = Tree::new(&params.tree, &surfs);
     report!(tree, "hist-scan tree");
 
     sub_section(term_width, "Input");
-    let input = Input::new();
+    let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader);
     report!(input, "input");
 
     // section(term_width, "Running");

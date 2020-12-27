@@ -22,20 +22,15 @@ impl Display for Attribute<'_> {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         match *self {
             Self::Opaque(grad) => {
-                write!(fmt, "Opaque: [{}]", to_string(grad, 32))
+                write!(fmt, "Opaque: {}", to_string(grad, 32))
             }
             Self::Mirror(grad, abs_frac) => {
-                write!(
-                    fmt,
-                    "Mirror: {}% [{}]",
-                    abs_frac * 100.0,
-                    to_string(grad, 32)
-                )
+                write!(fmt, "Mirror: {}% {}", abs_frac * 100.0, to_string(grad, 32))
             }
             Self::Transparent(grad, abs_frac) => {
                 write!(
                     fmt,
-                    "Transparent: {}% [{}]",
+                    "Transparent: {}% {}",
                     abs_frac * 100.0,
                     to_string(grad, 32)
                 )
@@ -43,7 +38,7 @@ impl Display for Attribute<'_> {
             Self::Refractive(grad, abs_frac, [inside, outside]) => {
                 write!(
                     fmt,
-                    "Transparent: {}% {}:|{} [{}]",
+                    "Transparent: {}% {}:|{} {}",
                     abs_frac * 100.0,
                     inside,
                     outside,
@@ -53,7 +48,7 @@ impl Display for Attribute<'_> {
             Self::Luminous(grad, multiplier) => {
                 write!(
                     fmt,
-                    "Luminous: {}% [{}]",
+                    "Luminous: {}% {}",
                     multiplier * 100.0,
                     to_string(grad, 32)
                 )

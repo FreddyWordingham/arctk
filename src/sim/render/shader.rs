@@ -134,12 +134,12 @@ impl Display for Shader<'_> {
         fmt_report!(fmt, ambient_shadow_samples, "ambient shadowing");
         fmt_report!(
             fmt,
-            &format!("[{}]", to_string(self.sky_grad, 32)),
+            &format!("{}", to_string(self.sky_grad, 32)),
             "sky gradient"
         );
         fmt_report!(
             fmt,
-            &format!("[{}]", to_string(self.data_grad, 32)),
+            &format!("{}", to_string(self.data_grad, 32)),
             "data gradient"
         );
         Ok(())
