@@ -102,7 +102,7 @@ impl Display for Camera {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.orient, "orientation");
-        fmt_report!(fmt, self.half_delta_theta, "dTheta/2");
+        fmt_report!(fmt, self.half_delta_theta.to_degrees(), "dTheta/2 (deg)");
         fmt_report!(
             fmt,
             &format!("[{} x {}]", self.res[X], self.res[Y]),
