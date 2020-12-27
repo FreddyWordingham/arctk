@@ -7,7 +7,7 @@ use arctk::{
     geom::Tree,
     ord::{Build, Link},
     report,
-    sim::render::{Input, Parameters, ParametersBuilderLoader},
+    sim::render::{run, Input, Parameters, ParametersBuilderLoader},
     util::fmt::gradient::to_string,
     util::{
         banner::{section, sub_section, title},
@@ -29,6 +29,8 @@ fn main() {
 
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
+    let engine = params.engine;
+    report!("{* POINTER SET *}", "engine");
     let sett = params.sett;
     report!(sett, "settings");
     let grads = params.grads;
@@ -63,8 +65,8 @@ fn main() {
     let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader);
     report!(input, "input");
 
-    // section(term_width, "Running");
-    // let data = run::multi_thread(&input).expect("Failed to run cartographer.");
+    section(term_width, "Running");
+    let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
 
     // section(term_width, "Saving");
     // report!(data, "data");
