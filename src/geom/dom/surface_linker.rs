@@ -50,7 +50,7 @@ impl Display for SurfaceLinker {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.mesh, "mesh");
-        fmt_report!(fmt, self.attr, "attribute name");
+        fmt_report!(fmt, self.attr, "attribute");
         Ok(())
     }
 }
