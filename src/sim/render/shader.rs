@@ -132,16 +132,8 @@ impl Display for Shader<'_> {
             "OFF".to_string()
         };
         fmt_report!(fmt, ambient_shadow_samples, "ambient shadowing");
-        fmt_report!(
-            fmt,
-            &format!("{}", to_string(self.sky_grad, 32)),
-            "sky gradient"
-        );
-        fmt_report!(
-            fmt,
-            &format!("{}", to_string(self.data_grad, 32)),
-            "data gradient"
-        );
+        fmt_report!(fmt, to_string(self.sky_grad, 32), "sky gradient");
+        fmt_report!(fmt, to_string(self.data_grad, 32), "data gradient");
         Ok(())
     }
 }
