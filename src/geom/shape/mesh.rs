@@ -166,7 +166,7 @@ impl Display for Mesh {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.boundary, "boundary");
         fmt_report!(fmt, self.tris.len(), "num triangles");
-        fmt_report!(fmt, self.area, "area");
+        fmt_report!(fmt, self.area, "area (m)");
         Ok(())
     }
 }
