@@ -4,7 +4,9 @@
 use arctk::{
     args,
     fs::{File, Load},
+    geom::Tree,
     ord::Build,
+    ord::Link,
     report,
     sim::render::{Parameters, ParametersBuilderLoader},
     // sim::render::{run, Input, Parameters, ParametersBuilderLoader},
@@ -24,25 +26,25 @@ fn main() {
     title(term_width, "Render");
 
     let (in_dir, _out_dir, params_path) = initialisation(term_width);
-    let _params = load_parameters(term_width, &in_dir, &params_path);
+    let params = load_parameters(term_width, &in_dir, &params_path);
 
-    // section(term_width, "Input");
-    // sub_section(term_width, "Reconstruction");
-    // let sett = params.sett;
-    // report!(sett, "settings");
-    // let attrs = params.attrs;
-    // report!(attrs, "attributes");
+    section(term_width, "Input");
+    sub_section(term_width, "Reconstruction");
+    let sett = params.sett;
+    report!(sett, "settings");
+    let attrs = params.attrs;
+    report!(attrs, "attributes");
 
-    // sub_section(term_width, "Linking");
-    // let surfs = params
-    //     .surfs
-    //     .link(&attrs)
-    //     .expect("Failed to link attribute to surfaces.");
-    // report!(surfs, "surfaces");
+    sub_section(term_width, "Linking");
+    let surfs = params
+        .surfs
+        .link(&attrs)
+        .expect("Failed to link attribute to surfaces.");
+    report!(surfs, "surfaces");
 
-    // sub_section(term_width, "Growing");
-    // let tree = Tree::new(&params.tree, &surfs);
-    // report!(tree, "hist-scan tree");
+    sub_section(term_width, "Growing");
+    let tree = Tree::new(&params.tree, &surfs);
+    report!(tree, "hist-scan tree");
 
     // sub_section(term_width, "Input");
     // let input = Input::new(&mat_reg, &attrs, &tree, &grid, &sett);
