@@ -110,7 +110,7 @@ pub fn occlusion(input: &Input, mut ray: Ray, mut dist: f64) -> f64 {
 
         // Handle collision.
         match *hit.tag() {
-            Attribute::Opaque(..) => {
+            Attribute::Opaque(..) | Attribute::Switchable(..) => {
                 return vis / dist.mul_add(input.shader.fall_off(), 1.0);
             }
             Attribute::Mirror(.., abs_frac) => {

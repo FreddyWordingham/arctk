@@ -15,6 +15,8 @@ pub enum Attribute<'a> {
     Refractive(&'a Gradient, f64, [f64; 2]),
     /// Luminous surface, brightness multiplier.
     Luminous(&'a Gradient, f64),
+    /// Switchable condition, conditional value.
+    Switchable([&'a Gradient; 2], f64),
 }
 
 impl Display for Attribute<'_> {
@@ -51,6 +53,15 @@ impl Display for Attribute<'_> {
                     "Luminous: {}% {}",
                     multiplier * 100.0,
                     to_string(grad, 32)
+                )
+            }
+            Self::Switchable(grads, x) => {
+                write!(
+                    fmt,
+                    "multiplier: {} {}&{}",
+                    x,
+                    to_string(grads[0], 32),
+                    to_string(grads[1], 32)
                 )
             }
         }

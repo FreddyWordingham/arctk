@@ -22,7 +22,7 @@ pub enum AttributeLinker {
     Refractive(Name, f64, [f64; 2]),
     /// Luminous surface, brightness multiplier.
     Luminous(Name, f64),
-    /// Switchable condition.
+    /// Switchable condition, conditional value.
     Switchable([Name; 2], f64),
 }
 
@@ -74,13 +74,13 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
                 bright_mult,
             ),
-            Self::Switchable(ref grads, x) => Attribute::Switchable(
+            Self::Switchable(ref gs, x) => Attribute::Switchable(
                 [
-                    grads[0].get(grads).unwrap_or_else(|| {
-                        panic!("Failed to link attribute-gradient key: {}", grads[0])
+                    grads.get(&gs[0]).unwrap_or_else(|| {
+                        panic!("Failed to link attribute-gradient key: {}", gs[0])
                     }),
-                    grads[1].get(grads).unwrap_or_else(|| {
-                        panic!("Failed to link attribute-gradient key: {}", grads[1])
+                    grads.get(&gs[1]).unwrap_or_else(|| {
+                        panic!("Failed to link attribute-gradient key: {}", gs[1])
                     }),
                 ],
                 x,

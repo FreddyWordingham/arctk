@@ -94,6 +94,16 @@ pub fn antler(
                 *trace.weight_mut() = 0.0;
                 break;
             }
+            Attribute::Switchable([grad_0, grad_1], x) => {
+                trace.ray_mut().travel(hit.dist());
+                if trace.ray().pos().x < x {
+                    colour(input, rng, &mut trace, norm, grad_0, data, pixel, 1.0);
+                } else {
+                    colour(input, rng, &mut trace, norm, grad_1, data, pixel, 1.0);
+                }
+                *trace.weight_mut() = 0.0;
+                break;
+            }
         }
     }
 
