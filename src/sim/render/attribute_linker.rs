@@ -22,6 +22,8 @@ pub enum AttributeLinker {
     Refractive(Name, f64, [f64; 2]),
     /// Luminous surface, brightness multiplier.
     Luminous(Name, f64),
+    /// Switchable condition.
+    Switchable([Name; 2], f64),
 }
 
 impl<'a> Link<'a, Gradient> for AttributeLinker {
@@ -35,6 +37,7 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
             | Self::Transparent(ref grad, ..)
             | Self::Refractive(ref grad, ..)
             | Self::Luminous(ref grad, ..) => vec![grad.clone()],
+            Self::Switchable(ref grads, ..) => grads.clone().to_vec(),
         }
     }
 
@@ -71,6 +74,17 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
                     .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
                 bright_mult,
             ),
+            Self::Switchable(ref grads, x) => Attribute::Switchable(
+                [
+                    grads[0].get(grads).unwrap_or_else(|| {
+                        panic!("Failed to link attribute-gradient key: {}", grads[0])
+                    }),
+                    grads[1].get(grads).unwrap_or_else(|| {
+                        panic!("Failed to link attribute-gradient key: {}", grads[1])
+                    }),
+                ],
+                x,
+            ),
         })
     }
 }
@@ -100,6 +114,9 @@ impl Display for AttributeLinker {
             }
             Self::Luminous(ref grad, multiplier) => {
                 write!(fmt, "Luminous: {}% {}", multiplier * 100.0, grad)
+            }
+            Self::Switchable(ref grads, x) => {
+                write!(fmt, "Switchable : {} {}&{}", x, grads[0], grads[1])
             }
         }
     }
