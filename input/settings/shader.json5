@@ -7,6 +7,6 @@
     spec_pow                : 2,
     occ_dist                : [1e2, 1e2],
     fall_off                : 1e1,
-    soft_shadow_samples     : [31, 5.0],
+    soft_shadow_samples     : [31, 1.0],
     ambient_shadow_samples  : [101, 4]
 }
