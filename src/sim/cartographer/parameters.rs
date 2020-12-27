@@ -1,7 +1,7 @@
 //! Input parameters.
 
-use crate::fmt_report;
 use crate::{
+    fmt_report,
     geom::{Grid, SurfaceLinker, TreeSettings},
     ord::Set,
     sim::cartographer::{AttributeLinker, Settings},

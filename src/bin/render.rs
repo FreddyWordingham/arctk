@@ -5,11 +5,9 @@ use arctk::{
     args,
     fs::{File, Load},
     geom::Tree,
-    ord::Build,
-    ord::Link,
+    ord::{Build, Link},
     report,
     sim::render::{Parameters, ParametersBuilderLoader},
-    // sim::render::{run, Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,

@@ -7,8 +7,11 @@ use crate::{
     ord::{Register, X, Y, Z},
 };
 use ndarray::Array3;
-use std::fmt::{Display, Formatter};
-use std::{ops::AddAssign, path::Path};
+use std::{
+    fmt::{Display, Formatter},
+    ops::AddAssign,
+    path::Path,
+};
 
 /// Cartographer output data.
 pub struct Output<'a> {

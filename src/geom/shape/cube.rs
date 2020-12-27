@@ -1,7 +1,7 @@
 //! Axis-aligned-bounding-box implementation.
 
 use crate::{
-    access,
+    access, fmt_report,
     geom::{Collide, Mesh, Ray, Side, Trace},
     math::{Dir3, Pos3, Vec3},
     ord::{X, Y, Z},
@@ -9,7 +9,10 @@ use crate::{
 };
 use arctk_attr::file;
 use rand::Rng;
-use std::cmp::Ordering;
+use std::{
+    cmp::Ordering,
+    fmt::{Display, Formatter},
+};
 
 /// Axis-aligned bounding box geometry.
 /// Used for spatial partitioning.
@@ -305,8 +308,6 @@ impl Trace for Cube {
     }
 }
 
-use crate::fmt_report;
-use std::fmt::{Display, Formatter};
 impl Display for Cube {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
@@ -321,6 +322,10 @@ impl Display for Cube {
             &format!("({}, {}, {})", self.maxs.x, self.maxs.y, self.maxs.z),
             "maxs (m)"
         );
+        let c = self.centre();
+        fmt_report!(fmt, &format!("({}, {}, {})", c.x, c.y, c.z), "center (m)");
+        fmt_report!(fmt, self.area(), "area (m^2)");
+        fmt_report!(fmt, self.vol(), "volume (m^3)");
         Ok(())
     }
 }

@@ -7,9 +7,9 @@ use crate::{
     ord::{Build, Link, Map, Name},
 };
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
 use std::{
     collections::btree_map::{IntoIter, Values},
+    fmt::{Display, Formatter},
     path::Path,
 };
 
