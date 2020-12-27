@@ -7,7 +7,8 @@ use arctk::{
     geom::Tree,
     ord::{Build, Link},
     report,
-    sim::render::{Parameters, ParametersBuilderLoader},
+    sim::render::{Input, Parameters, ParametersBuilderLoader},
+    util::fmt::gradient::to_string,
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -28,10 +29,18 @@ fn main() {
 
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
+    let shader = params.shader;
+    report!(shader, "shader");
     let sett = params.sett;
     report!(sett, "settings");
+    let grads = params.grads;
+    for (key, val) in grads.map() {
+        report!(to_string(val, 32), &format!("{}", key));
+    }
     let attrs = params.attrs;
     report!(attrs, "attributes");
+    let cam = params.cam;
+    report!(cam, "camera");
 
     sub_section(term_width, "Linking");
     let surfs = params
@@ -44,9 +53,9 @@ fn main() {
     let tree = Tree::new(&params.tree, &surfs);
     report!(tree, "hist-scan tree");
 
-    // sub_section(term_width, "Input");
-    // let input = Input::new(&mat_reg, &attrs, &tree, &grid, &sett);
-    // report!(input, "input");
+    sub_section(term_width, "Input");
+    let input = Input::new();
+    report!(input, "input");
 
     // section(term_width, "Running");
     // let data = run::multi_thread(&input).expect("Failed to run cartographer.");
