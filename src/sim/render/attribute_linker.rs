@@ -80,18 +80,18 @@ impl Display for AttributeLinker {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {
             Self::Opaque(ref grad) => {
-                write!(fmt, "Opaque: [{}]", grad)
+                write!(fmt, "Opaque: {}", grad)
             }
             Self::Mirror(ref grad, abs_frac) => {
-                write!(fmt, "Mirror: {}% [{}]", abs_frac * 100.0, grad)
+                write!(fmt, "Mirror: {}% {}", abs_frac * 100.0, grad)
             }
             Self::Transparent(ref grad, abs_frac) => {
-                write!(fmt, "Transparent: {}% [{}]", abs_frac * 100.0, grad)
+                write!(fmt, "Transparent: {}% {}", abs_frac * 100.0, grad)
             }
             Self::Refractive(ref grad, abs_frac, [inside, outside]) => {
                 write!(
                     fmt,
-                    "Transparent: {}% {}:|{} [{}]",
+                    "Transparent: {}% {}:|{} {}",
                     abs_frac * 100.0,
                     inside,
                     outside,
@@ -99,7 +99,7 @@ impl Display for AttributeLinker {
                 )
             }
             Self::Luminous(ref grad, multiplier) => {
-                write!(fmt, "Luminous: {}% [{}]", multiplier * 100.0, grad)
+                write!(fmt, "Luminous: {}% {}", multiplier * 100.0, grad)
             }
         }
     }
