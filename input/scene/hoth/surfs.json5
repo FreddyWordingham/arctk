@@ -3,7 +3,7 @@
     atat            : { attr: 'metal',  mesh: [["res/objs/hoth/atat.obj", "res/objs/hoth/atat_bb.obj"], null]},
     visor           : { attr: 'visor',  mesh: [["res/objs/hoth/visor.obj", "res/objs/hoth/atat_bb_visor.obj"], null]},
     snow            : { attr: 'snow',  mesh: [["res/objs/hoth/snow.obj"], null]},
-    mountains       : { attr: 'mountain',  mesh: [["res/objs/hoth/mountains_0.obj", "res/objs/hoth/mountains_1.obj"], {trans: [0,0,-1]}]},
+    mountains       : { attr: 'mountain',  mesh: [["res/objs/hoth/mountains.obj"], null},
     oil             : { attr: 'oil',  mesh: [["res/objs/hoth/oil.obj"], null]},
     cannon          : { attr: 'metal',  mesh: [["res/objs/hoth/cannon.obj", "res/objs/hoth/ion_cannons.obj"], null]},
     shield          : { attr: 'shield',  mesh: [["res/objs/hoth/shield.obj"], null]},
