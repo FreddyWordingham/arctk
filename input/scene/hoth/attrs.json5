@@ -6,7 +6,7 @@
     guns    : { Mirror      : ['sky', 0.7] },
     metal   : { Mirror      : ['greyscale', 0.9] },
     snow    : { Opaque      : 'whitescale' },
-    mountain: { Switchable  : [['greyscale', 'evening_sunshine'], 1.0] },
+    mountain: { Switchable  : [['greyscale', 'evening_sunshine'], 2.0] },
     oil     : { Refractive  : ['rastafari', 0.3, [1.0, 1.4]] },
     visor   : { Luminous    : ['pure_lust', 1.4] },
     shield  : { Refractive  : ['amin', 0.025, [1.0, 1.1]] },
