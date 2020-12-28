@@ -11,7 +11,7 @@
     body            : { attr: 'body',  mesh: [["res/objs/hoth/snowspeeder_body.obj"], null]},
     panels          : { attr: 'panels',  mesh: [["res/objs/hoth/snowspeeder_panels.obj"], null]},
     guns            : { attr: 'guns',  mesh: [["res/objs/hoth/snowspeeder_guns.obj"], null]},
-    lake            : { attr: 'water',  mesh: [["res/objs/hoth/lake.obj"], null]},
+    lake            : { attr: 'water',  mesh: [["res/objs/hoth/lake.obj", "res/objs/hoth/water.obj"], null]},
     rocks           : { attr: 'rock',  mesh: [["res/objs/hoth/ice_0.obj"], null]},
     ice             : { attr: 'ice',  mesh: [["res/objs/hoth/ice_1.obj"], null]},
     trees           : { attr: 'pine',  mesh: [["res/objs/hoth/trees.obj"], null]},
