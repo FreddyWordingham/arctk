@@ -12,6 +12,7 @@
     expresso            : ['#ad5389FF', '#3c1053FF'],
     firewatch           : ['#cb2d3eFF', '#ef473aff'],
     greyscale           : ['#000000ff', '#ffffffff'],
+    whitescale          : ['#aaaaaaff', '#ffffffff'],
     harvey              : ['#1f4037FF', '#99f2c8FF'],
     jshine              : ['#12c2e9FF', '#c471edFF', '#f64f59FF'],
     king_yna            : ['#1a2a6cFF', '#b21f1fFF', '#fdbb2dFF'],

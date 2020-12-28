@@ -1,5 +1,5 @@
 {   // Map of surface attributes.
-    star_destroyers : { attr: 'metal',  mesh: [["res/objs/hoth/star_destroyers.obj"], null]},
+    star_destroyers : { attr: 'metal',  mesh: [["res/objs/hoth/star_destroyers.obj"], {trans: [0,0,14], scale: 0.5}]},
     atat            : { attr: 'metal',  mesh: [["res/objs/hoth/atat.obj", "res/objs/hoth/atat_bb.obj"], null]},
     visor           : { attr: 'visor',  mesh: [["res/objs/hoth/visor.obj", "res/objs/hoth/atat_bb_visor.obj"], null]},
     snow            : { attr: 'snow',  mesh: [["res/objs/hoth/snow.obj"], null]},
