@@ -15,4 +15,6 @@
     rocks           : { attr: 'rock',  mesh: [["res/objs/hoth/ice_0.obj"], null]},
     ice             : { attr: 'ice',  mesh: [["res/objs/hoth/ice_1.obj"], null]},
     trees           : { attr: 'pine',  mesh: [["res/objs/hoth/trees.obj"], null]},
+    solar           : { attr: 'plasma',  mesh: [["res/objs/hoth/solar.obj"], {trans:[0,2,-1]}]},
+    death_star      : { attr: 'metal',  mesh: [["res/objs/hoth/death_star.obj"], {trans: [0,-4,0]}]},
 }
