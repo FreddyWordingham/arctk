@@ -24,6 +24,8 @@ pub struct Input<'a> {
     pub sett: &'a Settings,
     /// Shader settings.
     pub shader: &'a Shader<'a>,
+    /// Image number.
+    pub img_id: usize,
 }
 
 impl<'a> Input<'a> {
@@ -37,6 +39,7 @@ impl<'a> Input<'a> {
         tree: &'a Tree<Attribute>,
         sett: &'a Settings,
         shader: &'a Shader,
+        img_id: usize,
     ) -> Self {
         Self {
             grads,
@@ -45,6 +48,7 @@ impl<'a> Input<'a> {
             tree,
             sett,
             shader,
+            img_id,
         }
     }
 }
@@ -62,6 +66,7 @@ impl Display for Input<'_> {
         fmt_report!(fmt, self.tree, "hit-scan tree");
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.shader, "shader");
+        fmt_report!(fmt, self.img_id, "image id");
         Ok(())
     }
 }

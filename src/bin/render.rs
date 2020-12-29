@@ -61,26 +61,38 @@ fn main() {
     let tree = Tree::new(&params.tree, &surfs);
     report!(tree, "hist-scan tree");
 
-    sub_section(term_width, "Input");
-    let mut input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader);
-    report!(input, "input");
+    {
+        section(term_width, "Running");
+        use arctk::{
+            geom::CameraBuilder,
+            math::{Pos3, Vec3},
+        };
+        use std::f64::consts::PI;
 
-    use arctk::{geom::CameraBuilder, math::Pos3};
-    let cam_builder = CameraBuilder::new(
-        Pos3::new(13.41372, -15.61519, 3.242525),
-        Pos3::new(0.0, 7.0, 1.63079),
-        80.0,
-        [100, 100],
-        None,
-    );
-    let cam = cam_builder.clone().build();
+        let cam_builder = CameraBuilder::new(
+            Pos3::new(13.41372, -15.61519, 3.242525),
+            Pos3::new(0.0, 7.0, 1.63079),
+            80.0,
+            [100, 100],
+            None,
+        );
 
-    section(term_width, "Running");
-    let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
-    report!(data, "data");
-    data.save(&out_dir).expect("Failed to save output data.");
+        let total_shots = 20;
+        let displacement = Vec3::new(5.0, 0.0, 0.0);
+        for n in 0..total_shots {
+            let t = ((n as f64 / total_shots as f64) * PI).sin();
+            let mut cam = cam_builder.clone();
+            cam.travel(displacement * t);
+            let cam = cam.build();
 
-    input.cam = &cam;
+            let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader, n);
+            report!(input, "input");
+
+            let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
+            report!(data, "data");
+            data.save(&out_dir).expect("Failed to save output data.");
+        }
+    }
 
     section(term_width, "Finished");
 }
