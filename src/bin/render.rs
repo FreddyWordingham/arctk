@@ -86,7 +86,7 @@ fn main() {
             let cam = cam.build();
 
             let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader, n);
-            report!(input, "input");
+            // report!(input, "input");
 
             let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
             report!(data, "data");
