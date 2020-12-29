@@ -27,13 +27,15 @@ pub struct Output<'a> {
     pub colour: Image,
     /// Data colouring gradient.
     grad: &'a Gradient,
+    /// Image number.
+    img_id: usize,
 }
 
 impl<'a> Output<'a> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(res: [usize; 2], grad: &'a Gradient) -> Self {
+    pub fn new(res: [usize; 2], grad: &'a Gradient, img_id: usize) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
 
@@ -43,6 +45,7 @@ impl<'a> Output<'a> {
             shadow: Array2::zeros(res),
             colour: Image::new_blank(res, Colour::default()),
             grad,
+            img_id,
         }
     }
 }
@@ -50,6 +53,8 @@ impl<'a> Output<'a> {
 impl<'a> AddAssign<&Self> for Output<'a> {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
+        debug_assert!(self.img_id == rhs.img_id);
+
         self.time += &rhs.time;
         self.light += &rhs.light;
         self.shadow += &rhs.shadow;
@@ -63,19 +68,20 @@ impl<'a> Save for Output<'a> {
         let max_time = *self.time.max()?;
         report!("Maximum time", max_time, "ms");
         Image::new(self.time.map(|x| self.grad.get(x.log(max_time) as f32)))
-            .save(&out_dir.join("time.png"))?;
+            .save(&out_dir.join(&format!("time_{:04}.png", self.img_id)))?;
 
         let max_light = self.light.max()?;
         report!("Maximum light value", max_light);
         Image::new(self.light.map(|x| self.grad.get((*x / max_light) as f32)))
-            .save(&out_dir.join("light.png"))?;
+            .save(&out_dir.join(&format!("light_{:04}.png", self.img_id)))?;
 
         let max_shadow = self.shadow.max()?;
         report!("Maximum shadow value", max_shadow);
         Image::new(self.shadow.map(|x| self.grad.get((*x / max_shadow) as f32)))
-            .save(&out_dir.join("shadow.png"))?;
+            .save(&out_dir.join(&format!("shadow_{:04}.png", self.img_id)))?;
 
-        self.colour.save(&out_dir.join("colour.png"))
+        self.colour
+            .save(&out_dir.join(&format!("colour_{:04}.png", self.img_id)))
     }
 }
 
