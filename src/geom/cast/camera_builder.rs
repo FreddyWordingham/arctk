@@ -3,7 +3,7 @@
 use crate::{
     fmt_report,
     geom::{Camera, Orient},
-    math::Pos3,
+    math::{Pos3, Vec3},
     ord::{Build, X, Y},
 };
 use arctk_attr::file;
@@ -42,6 +42,12 @@ impl CameraBuilder {
             res,
             ss_power,
         }
+    }
+
+    /// Move the camera.
+    #[inline]
+    pub fn travel(&mut self, d: Vec3) {
+        self.pos += d;
     }
 }
 
