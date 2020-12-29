@@ -4,18 +4,19 @@ use crate::{
     fmt_report,
     geom::{Camera, Orient},
     math::Pos3,
-    ord::{Build, X, Y, Z},
+    ord::{Build, X, Y},
 };
 use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
 
 /// Loadable camera structure.
 #[file]
+#[derive(Clone)]
 pub struct CameraBuilder {
     /// Position.
-    pos: [f64; 3],
+    pos: Pos3,
     /// Target.
-    tar: [f64; 3],
+    tar: Pos3,
     /// Horizontal field-of-view (deg).
     fov: f64,
     /// Image resolution.
@@ -24,16 +25,33 @@ pub struct CameraBuilder {
     ss_power: Option<usize>,
 }
 
+impl CameraBuilder {
+    /// Construct a new instance.
+    #[inline]
+    #[must_use]
+    pub fn new(pos: Pos3, tar: Pos3, fov: f64, res: [usize; 2], ss_power: Option<usize>) -> Self {
+        debug_assert!(fov > 0.0);
+        debug_assert!(res[X] > 0);
+        debug_assert!(res[Y] > 0);
+        debug_assert!(ss_power.is_none() || ss_power.unwrap() > 1);
+
+        Self {
+            pos,
+            tar,
+            fov,
+            res,
+            ss_power,
+        }
+    }
+}
+
 impl Build for CameraBuilder {
     type Inst = Camera;
 
     #[inline]
     fn build(self) -> Self::Inst {
         Camera::new(
-            Orient::new_tar(
-                Pos3::new(self.pos[X], self.pos[Y], self.pos[Z]),
-                &Pos3::new(self.tar[X], self.tar[Y], self.tar[Z]),
-            ),
+            Orient::new_tar(self.pos, &self.tar),
             self.fov.to_radians(),
             self.res,
             self.ss_power.map_or(1, |ss| ss),
@@ -47,12 +65,12 @@ impl Display for CameraBuilder {
         writeln!(fmt, "...")?;
         fmt_report!(
             fmt,
-            &format!("({}, {}, {})", self.pos[X], self.pos[Y], self.pos[Z]),
+            &format!("({}, {}, {})", self.pos.x, self.pos.y, self.pos.z),
             "position (m)"
         );
         fmt_report!(
             fmt,
-            &format!("({}, {}, {})", self.tar[X], self.tar[Y], self.tar[Z]),
+            &format!("({}, {}, {})", self.tar.x, self.tar.y, self.tar.z),
             "target (m)"
         );
         fmt_report!(fmt, self.fov, "field of view (deg)");

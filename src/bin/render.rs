@@ -62,15 +62,25 @@ fn main() {
     report!(tree, "hist-scan tree");
 
     sub_section(term_width, "Input");
-    let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader);
+    let mut input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader);
     report!(input, "input");
+
+    use arctk::{geom::CameraBuilder, math::Pos3};
+    let cam_builder = CameraBuilder::new(
+        Pos3::new(13.41372, -15.61519, 3.242525),
+        Pos3::new(0.0, 7.0, 1.63079),
+        80.0,
+        [100, 100],
+        None,
+    );
+    let cam = cam_builder.clone().build();
 
     section(term_width, "Running");
     let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
-
-    section(term_width, "Saving");
     report!(data, "data");
     data.save(&out_dir).expect("Failed to save output data.");
+
+    input.cam = &cam;
 
     section(term_width, "Finished");
 }

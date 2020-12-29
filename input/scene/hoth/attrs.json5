@@ -14,5 +14,5 @@
     rock    : { Opaque      : 'cool_brown' },
     water   : { Refractive  : ['evening_night', 0.25, [1.0, 1.3]] },
     // plasma  : { Refractive  : ['witching_hour', 0.25, [1.0, 2.0]] },
-    plasma  : { Opaque      : 'citrus_peel' },
+    plasma  : { Luminous    : ['citrus_peel', 2.0] },
 }
