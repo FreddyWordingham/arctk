@@ -3,8 +3,8 @@
     tree    : { There   : 'settings/tree_5_8.json5' },
     grid    : { Here    : {
         boundary: {
-            mins: [-0.8e-3, -0.8e-3, -0.8e-3],
-            maxs: [ 0.8e-3,  0.8e-3,  0.8e-3],
+            mins: [-5.0e-3, -5.0e-3, -5.0e-3],
+            maxs: [ 5.0e-3,  5.0e-3,  5.0e-3],
         },
         res: [128, 128, 128],
     } },

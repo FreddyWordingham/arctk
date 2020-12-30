@@ -32,7 +32,8 @@ impl<'a, T> Tree<'a, T> {
     #[inline]
     #[must_use]
     pub fn new(sett: &TreeSettings, surfs: &'a Set<Surface<T>>) -> Self {
-        let boundary = Self::init_boundary(surfs);
+        let mut boundary = Self::init_boundary(surfs);
+        boundary.expand(sett.padding());
 
         let mut tris = Vec::new();
         for surf in surfs.values() {
