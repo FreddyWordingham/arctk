@@ -66,17 +66,17 @@ impl<'a> Save for Output<'a> {
     #[inline]
     fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
         let max_time = *self.time.max()?;
-        report!("Maximum time", max_time, "ms");
+        report!(max_time, "Maximum time", "ms");
         Image::new(self.time.map(|x| self.grad.get(x.log(max_time) as f32)))
             .save(&out_dir.join(&format!("time_{:04}.png", self.img_id)))?;
 
         let max_light = self.light.max()?;
-        report!("Maximum light value", max_light);
+        report!(max_light, "Maximum light value");
         Image::new(self.light.map(|x| self.grad.get((*x / max_light) as f32)))
             .save(&out_dir.join(&format!("light_{:04}.png", self.img_id)))?;
 
         let max_shadow = self.shadow.max()?;
-        report!("Maximum shadow value", max_shadow);
+        report!(max_shadow, "Maximum shadow value");
         Image::new(self.shadow.map(|x| self.grad.get((*x / max_shadow) as f32)))
             .save(&out_dir.join(&format!("shadow_{:04}.png", self.img_id)))?;
 
