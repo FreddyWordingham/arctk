@@ -102,7 +102,7 @@ impl Display for ShaderLinker {
         fmt_report!(fmt, self.fall_off, "fall off rate (m^-1)");
 
         let soft_shadow_samples = if let Some((n, alpha)) = self.soft_shadow_samples {
-            format!("{} samples, angle {} (deg)", n, alpha)
+            format!("{} samples, angle (deg) {}", n, alpha)
         } else {
             "OFF".to_string()
         };

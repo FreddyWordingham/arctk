@@ -120,7 +120,7 @@ impl Display for Shader<'_> {
         fmt_report!(fmt, self.fall_off, "fall off rate (m^-1)");
 
         let soft_shadow_samples = if let Some((n, alpha)) = self.soft_shadow_samples {
-            format!("{} samples, angle {} (deg)", n, alpha.to_degrees())
+            format!("{} samples, angle (deg) {}", n, alpha.to_degrees())
         } else {
             "OFF".to_string()
         };
