@@ -1,7 +1,13 @@
 {
     sett    : { There   : 'settings/cartographer.json5' },
     tree    : { There   : 'settings/tree_5_8.json5' },
-    grid    : { There   : 'settings/grid_10mm_64.json5' },
+    grid    : { Here    : {
+        boundary: {
+            mins: [-0.8e-3, -0.8e-3, -0.8e-3],
+            maxs: [ 0.8e-3,  0.8e-3,  0.8e-3],
+        },
+        res: [128, 128, 128],
+    } },
     surfs   : { There   : 'lab/skin/plane_surfaces.json5' },
     attrs   : { There   : 'lab/skin/attributes.json5' },
 }
