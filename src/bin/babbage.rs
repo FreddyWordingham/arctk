@@ -17,6 +17,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+/// Main program function.
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Babbage");

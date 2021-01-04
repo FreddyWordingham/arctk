@@ -1,5 +1,5 @@
-//! Rendering engine binary.
-//! Produce two-dimensional image data from a three-dimensional scene.
+//! Monte-Carlo radiative transfer simulation binary.
+//! Compute the radiative field for a given set of setup and light source.
 
 use arctk::{
     args,
@@ -7,7 +7,7 @@ use arctk::{
     geom::Tree,
     ord::{Build, Link},
     report,
-    sim::render::{run, Input, Parameters, ParametersBuilderLoader},
+    sim::mcrt::{run, Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -22,53 +22,53 @@ use std::{
 /// Main program function.
 fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
-    title(term_width, "Render");
+    title(term_width, "MCRT");
 
     let (in_dir, out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
 
-    section(term_width, "Input");
-    sub_section(term_width, "Reconstruction");
-    let engine = params.engine;
-    report!("{* POINTER SET *}", "engine");
-    let sett = params.sett;
-    report!(sett, "settings");
-    let grads = params.grads;
-    for (key, val) in grads.map() {
-        report!(to_string(val, 32), &format!("{}", key));
-    }
-    let cam = params.cam;
-    report!(cam, "camera");
+    // section(term_width, "Input");
+    // sub_section(term_width, "Reconstruction");
+    // let engine = params.engine;
+    // report!("{* POINTER SET *}", "engine");
+    // let sett = params.sett;
+    // report!(sett, "settings");
+    // let grads = params.grads;
+    // for (key, val) in grads.map() {
+    //     report!(to_string(val, 32), &format!("{}", key));
+    // }
+    // let cam = params.cam;
+    // report!(cam, "camera");
 
-    sub_section(term_width, "Linking");
-    let attrs = params
-        .attrs
-        .link(&grads)
-        .expect("Failed to link x to attributes.");
-    report!(attrs, "attributes");
-    let surfs = params
-        .surfs
-        .link(&attrs)
-        .expect("Failed to link attribute to surfaces.");
-    report!(surfs, "surfaces");
-    let shader = params
-        .shader
-        .link(&grads)
-        .expect("Failed to link attribute to shader.");
-    report!(shader, "shader");
+    // sub_section(term_width, "Linking");
+    // let attrs = params
+    //     .attrs
+    //     .link(&grads)
+    //     .expect("Failed to link x to attributes.");
+    // report!(attrs, "attributes");
+    // let surfs = params
+    //     .surfs
+    //     .link(&attrs)
+    //     .expect("Failed to link attribute to surfaces.");
+    // report!(surfs, "surfaces");
+    // let shader = params
+    //     .shader
+    //     .link(&grads)
+    //     .expect("Failed to link attribute to shader.");
+    // report!(shader, "shader");
 
-    sub_section(term_width, "Growing");
-    let tree = Tree::new(&params.tree, &surfs);
-    report!(tree, "hist-scan tree");
+    // sub_section(term_width, "Growing");
+    // let tree = Tree::new(&params.tree, &surfs);
+    // report!(tree, "hist-scan tree");
 
-    section(term_width, "Running");
-    let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader, 0);
-    report!(input, "input");
-    let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
+    // section(term_width, "Running");
+    // let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader, 0);
+    // report!(input, "input");
+    // let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
 
-    section(term_width, "Saving");
-    report!(data, "data");
-    data.save(&out_dir).expect("Failed to save output data.");
+    // section(term_width, "Saving");
+    // report!(data, "data");
+    // data.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }
