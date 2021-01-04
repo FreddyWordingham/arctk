@@ -1,34 +1,34 @@
 {
     stratum_corneum     : {
-        mesh    : [["res/objs/skin/L0.obj"], null],
+        mesh    : [["res/objs/skin/L0.obj"], {scale:1.0e-3}],
         attr    : 'stratum_corneum'
     },
     living_epidermis    : {
-        mesh    : [["res/objs/skin/L1.obj"], null],
+        mesh    : [["res/objs/skin/L1.obj"], {scale:1.0e-3}],
         attr    : 'living_epidermis'
     },
     papillary_dermis    : {
-        mesh    : [["res/objs/skin/L2.obj"], null],
+        mesh    : [["res/objs/skin/L2.obj"], {scale:1.0e-3}],
         attr    : 'papillary_dermis'
     },
     upper_bnd           : {
-        mesh    : [["res/objs/skin/L3.obj"], null],
+        mesh    : [["res/objs/skin/L3.obj"], {scale:1.0e-3}],
         attr    : 'upper_bnd'
     },
     dermis              : {
-        mesh    : [["res/objs/skin/L4.obj"], null],
+        mesh    : [["res/objs/skin/L4.obj"], {scale:1.0e-3}],
         attr    : 'dermis'
     },
     lower_bnd           : {
-        mesh    : [["res/objs/skin/L5.obj"], null],
+        mesh    : [["res/objs/skin/L5.obj"], {scale:1.0e-3}],
         attr    : 'lower_bnd'
     },
     subcutaneous_fat    : {
-        mesh    : [["res/objs/skin/L6.obj"], null],
+        mesh    : [["res/objs/skin/L6.obj"], {scale:1.0e-3}],
         attr    : 'subcutaneous_fat'
     },
     tumour  : {
-        mesh    : [["res/objs/skin/tumour.obj"], null],
+        mesh    : [["res/objs/skin/tumour.obj"], {scale:1.0e-3}],
         attr    : 'tumour'
     },
 }

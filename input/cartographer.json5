@@ -6,8 +6,8 @@
             mins: [-4.0e-3, -4.0e-3, -4.0e-3],
             maxs: [ 4.0e-3,  4.0e-3,  4.0e-3],
         },
-        res: [128, 128, 128],
+        res: [256, 256, 256],
     } },
-    surfs   : { There   : 'lab/skin/plane_surfaces.json5' },
+    surfs   : { There   : 'lab/skin/surfaces.json5' },
     attrs   : { There   : 'lab/skin/attributes.json5' },
 }

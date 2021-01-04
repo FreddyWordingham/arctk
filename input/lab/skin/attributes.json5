@@ -6,7 +6,6 @@
     dermis              : { Interface   : ['dermis',            'upper_bnd'] },
     lower_bnd           : { Interface   : ['lower_bnd',         'dermis'] },
     subcutaneous_fat    : { Interface   : ['subcutaneous_fat',  'lower_bnd'] },
-    // tumour              : { Interface   : ['tumour',            'papillary_dermis'] },
-    tumour              : { Interface   : [            'tumour','dermis'] },
+    tumour              : { Interface   : ['tumour',            'dermis'] },
     mirror              : { Mirror      : 0.99 },
 }
