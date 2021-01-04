@@ -13,6 +13,8 @@ use std::fmt::{Display, Formatter};
 
 /// Possible operation enumeration.
 pub enum OperationBuilder {
+    /// Report information about data cube.
+    Info(Array3<f64>),
     /// Generate a zero cube of the giver resolution.
     Zero([usize; 3]),
     /// Generate a unit cube of the giver resolution.
@@ -39,6 +41,7 @@ impl Build for OperationBuilder {
     #[inline]
     fn build(self) -> Self::Inst {
         match self {
+            Self::Info(cube) => Self::Inst::Info(cube),
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
             Self::Sum(cubes) => Self::Inst::Sum(cubes),
@@ -58,6 +61,11 @@ impl Display for OperationBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {
+            Self::Info(ref cube) => {
+                writeln!(fmt, "Information...")?;
+                display_datacube(fmt, cube)?;
+                Ok(())
+            }
             Self::Zero(res) => {
                 write!(fmt, "Zero: [{} x {} x {}]", res[X], res[Y], res[Z])
             }

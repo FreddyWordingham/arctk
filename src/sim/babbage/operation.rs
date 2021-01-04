@@ -19,6 +19,8 @@ use std::{
 
 /// Possible operation enumeration.
 pub enum Operation {
+    /// Report information about data cube.
+    Info(Array3<f64>),
     /// Generate a zero cube of the giver resolution.
     Zero([usize; 3]),
     /// Generate a unit cube of the giver resolution.
@@ -48,6 +50,21 @@ impl Operation {
     #[inline]
     pub fn run(&self, out_dir: &Path) -> Result<(), Error> {
         match *self {
+            Self::Info(ref data) => {
+                let max = *data
+                    .max()
+                    .unwrap_or_else(|_| panic!("Failed to determine maximum value."));
+                let min = *data
+                    .min()
+                    .unwrap_or_else(|_| panic!("Failed to determine minimum value."));
+                let sum = data.sum();
+                println!("Minimum value: {}", min);
+                println!("Maximum value: {}", max);
+                println!("Sum     value: {}", sum);
+                println!("Average value: {}", sum / data.len() as f64);
+                // (data / max).save(&out_dir.join("output.nc"))
+                Ok(())
+            }
             Self::Zero(res) => Array3::<f64>::zeros(res).save(&out_dir.join("output.nc")),
             Self::Unit(res) => (Array3::<f64>::zeros(res) + 1.0).save(&out_dir.join("output.nc")),
             Self::Sum(ref data) => {
@@ -85,6 +102,11 @@ impl Display for Operation {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {
+            Self::Info(ref cube) => {
+                writeln!(fmt, "Information...")?;
+                display_datacube(fmt, cube)?;
+                Ok(())
+            }
             Self::Zero(res) => {
                 write!(fmt, "Zero: [{} x {} x {}]", res[X], res[Y], res[Z])
             }

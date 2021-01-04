@@ -21,6 +21,8 @@ use std::{
 #[file]
 #[derive(Clone)]
 pub enum OperationBuilderLoader {
+    /// Report information about a data cube.
+    Info(PathBuf),
     /// Generate a zero cube of the giver resolution.
     Zero([usize; 3]),
     /// Generate a unit cube of the giver resolution.
@@ -47,6 +49,10 @@ impl Load for OperationBuilderLoader {
     #[inline]
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         Ok(match self {
+            Self::Info(data_path) => {
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
+                Self::Inst::Info(cube)
+            }
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
             Self::Sum(data_paths) => {
@@ -98,6 +104,9 @@ impl Display for OperationBuilderLoader {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {
+            Self::Info(ref data_path) => {
+                write!(fmt, "Information: {}", data_path.display())
+            }
             Self::Zero(res) => {
                 write!(fmt, "Zero: [{} x {} x {}]", res[X], res[Y], res[Z])
             }
