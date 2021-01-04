@@ -20,7 +20,7 @@ use std::{
 /// Possible operation enumeration.
 #[file]
 #[derive(Clone)]
-pub enum OperationLoader {
+pub enum OperationBuilderLoader {
     /// Generate a zero cube of the giver resolution.
     Zero([usize; 3]),
     /// Generate a unit cube of the giver resolution.
@@ -41,7 +41,7 @@ pub enum OperationLoader {
     Sample(PathBuf, PathBuf, Redirect<GridBuilder>),
 }
 
-impl Load for OperationLoader {
+impl Load for OperationBuilderLoader {
     type Inst = OperationBuilder;
 
     #[inline]
@@ -94,7 +94,7 @@ impl Load for OperationLoader {
     }
 }
 
-impl Display for OperationLoader {
+impl Display for OperationBuilderLoader {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {

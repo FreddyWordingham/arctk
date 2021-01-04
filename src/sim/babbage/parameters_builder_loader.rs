@@ -4,7 +4,7 @@ use crate::{
     err::Error,
     fmt_report,
     fs::Load,
-    sim::babbage::{OperationLoader, ParametersBuilder},
+    sim::babbage::{OperationBuilderLoader, ParametersBuilder},
 };
 use arctk_attr::file;
 use std::{
@@ -14,12 +14,12 @@ use std::{
 
 /// Loadable runtime parameters.
 #[file]
-pub struct ParametersLoader {
+pub struct ParametersBuilderLoader {
     /// Operation to perform.
-    op: OperationLoader,
+    op: OperationBuilderLoader,
 }
 
-impl Load for ParametersLoader {
+impl Load for ParametersBuilderLoader {
     type Inst = ParametersBuilder;
 
     #[inline]
@@ -28,7 +28,7 @@ impl Load for ParametersLoader {
     }
 }
 
-impl Display for ParametersLoader {
+impl Display for ParametersBuilderLoader {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
