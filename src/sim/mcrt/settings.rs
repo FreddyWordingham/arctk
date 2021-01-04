@@ -1,6 +1,6 @@
 //! MCRT settings.
 
-use crate::{access, clone};
+use crate::clone;
 
 /// General settings structure.
 pub struct Settings {

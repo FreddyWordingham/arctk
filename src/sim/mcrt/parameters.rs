@@ -1,4 +1,4 @@
-//! Loadable parameters.
+//! Runtime parameters.
 
 use crate::{
     fmt_report,
@@ -10,22 +10,20 @@ use crate::{
 };
 use std::fmt::{Display, Error, Formatter};
 
-/// Loadable runtime parameters.
+/// Runtime parameters.
 pub struct Parameters {
-    /// Rendering specific settings.
+    /// Simulation specific settings.
     pub sett: Settings,
     /// Tree settings.
     pub tree: TreeSettings,
     /// Surfaces.
-    pub surfs: Set<SurfaceLinker>,
+    pub surfs: Set<Surface>,
     /// Attributes.
-    pub attrs: Set<AttributeLinker>,
-    /// Colour gradients.
-    pub grads: Set<Gradient>,
-    /// Main camera.
-    pub cam: Camera,
-    /// Shader settings.
-    pub shader: ShaderLinker,
+    pub attrs: Set<Attribute>,
+    /// Materials.
+    pub mats: Set<Material>,
+    /// Light settings.
+    pub light: Light,
     /// Engine selection.
     pub engine: Engine,
 }
@@ -37,11 +35,10 @@ impl Parameters {
     pub fn new(
         sett: Settings,
         tree: TreeSettings,
-        surfs: Set<SurfaceLinker>,
-        attrs: Set<AttributeLinker>,
-        grads: Set<Gradient>,
-        cam: Camera,
-        shader: ShaderLinker,
+        surfs: Set<Surface>,
+        attrs: Set<Attribute>,
+        mats: Set<Material>,
+        light: Light,
         engine: Engine,
     ) -> Self {
         Self {
@@ -49,9 +46,8 @@ impl Parameters {
             tree,
             surfs,
             attrs,
-            grads,
-            cam,
-            shader,
+            mats,
+            light,
             engine,
         }
     }
@@ -65,13 +61,8 @@ impl Display for Parameters {
         fmt_report!(fmt, self.tree, "tree settings");
         fmt_report!(fmt, self.surfs, "surfaces");
         fmt_report!(fmt, self.attrs, "attributes");
-        fmt_report!(fmt, "...", "gradients");
-        for (key, val) in self.grads.map() {
-            fmt_report!(fmt, to_string(val, 32), &format!("{}", key));
-        }
-        writeln!(fmt)?;
-        fmt_report!(fmt, self.cam, "camera");
-        fmt_report!(fmt, self.shader, "shader");
+        fmt_report!(fmt, self.mats, "materials");
+        fmt_report!(fmt, self.light, "light");
         fmt_report!(fmt, "{* POINTER LOADED *}", "engine");
         Ok(())
     }
