@@ -1,7 +1,8 @@
 //! Light surface structure.
 
-use crate::{access, clone, geom::Emitter, math::Probability, phys::Photon};
+use crate::{access, clone, fmt_report, geom::Emitter, math::Probability, phys::Photon};
 use rand::Rng;
+use std::fmt::{Display, Error, Formatter};
 
 /// Photon emission structure.
 pub struct Light {
@@ -40,5 +41,16 @@ impl Light {
         let wavelength = self.spec.sample(&mut rng);
 
         Photon::new(ray, wavelength, power)
+    }
+}
+
+impl Display for Light {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.power, "power (J/s)");
+        fmt_report!(fmt, self.emitter, "emitter");
+        fmt_report!(fmt, self.spec, "emission spectrum");
+        Ok(())
     }
 }

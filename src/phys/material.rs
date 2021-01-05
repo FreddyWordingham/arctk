@@ -1,6 +1,7 @@
 //! Optical material.
 
 use crate::{access, fmt_report, math::Formula, phys::Local};
+use std::fmt::{Display, Error, Formatter};
 
 /// Optical properties.
 pub struct Material {

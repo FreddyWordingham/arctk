@@ -4,6 +4,7 @@ use crate::{
     fmt_report,
     geom::{SurfaceLinker, TreeSettings},
     ord::{Build, Set},
+    phys::{LightBuilder, MaterialBuilder},
     sim::mcrt::{AttributeLinker, EngineBuilder, Parameters, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
