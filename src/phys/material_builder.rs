@@ -1,7 +1,8 @@
 //! Material builder.
 
-use crate::{err::Error, math::FormulaBuilder, ord::Build, phys::Material};
+use crate::{fmt_report, math::FormulaBuilder, ord::Build, phys::Material};
 use arctk_attr::file;
+use std::fmt::{Display, Error, Formatter};
 use std::path::Path;
 
 /// Loadable material.
@@ -23,27 +24,47 @@ impl Build for MaterialBuilder {
     type Inst = Material;
 
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        let ref_index = self.ref_index.build(in_dir)?;
-        let scat_coeff = self.scat_coeff.build(in_dir)?;
+    fn build(self) -> Self::Inst {
+        let ref_index = self.ref_index.build();
+        let scat_coeff = self.scat_coeff.build();
         let abs_coeff = if let Some(abs_coeff) = self.abs_coeff {
-            Some(abs_coeff.build(in_dir)?)
+            Some(abs_coeff.build())
         } else {
             None
         };
         let shift_coeff = if let Some(shift_coeff) = self.shift_coeff {
-            Some(shift_coeff.build(in_dir)?)
+            Some(shift_coeff.build())
         } else {
             None
         };
-        let asym_fact = self.asym_fact.build(in_dir)?;
+        let asym_fact = self.asym_fact.build();
 
-        Ok(Self::Inst::new(
-            ref_index,
-            scat_coeff,
-            abs_coeff,
-            shift_coeff,
-            asym_fact,
-        ))
+        Self::Inst::new(ref_index, scat_coeff, abs_coeff, shift_coeff, asym_fact)
+    }
+}
+
+impl Display for MaterialBuilder {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.ref_index, "refractive index");
+        fmt_report!(fmt, self.scat_coeff, "scattering coefficient (m^-1)");
+
+        let abs_coeff = if let Some(abs_coeff) = self.shift_coeff {
+            format!("{}", abs_coeff)
+        } else {
+            "NONE".to_string()
+        };
+        fmt_report!(fmt, abs_coeff, "absorption coefficient (m^-1)");
+
+        let shift_coeff = if let Some(shift_coeff) = self.shift_coeff {
+            format!("{}", shift_coeff)
+        } else {
+            "NONE".to_string()
+        };
+        fmt_report!(fmt, shift_coeff, "shift coefficient (m^-1)");
+
+        fmt_report!(fmt, self.asym_fact, "asymmetry factor");
+        Ok(())
     }
 }

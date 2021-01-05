@@ -3,7 +3,7 @@
 use crate::{math::Probability, ord::Build};
 use arctk_attr::file;
 use ndarray::Array1;
-use std::fmt::{Display, Formatter};
+use std::fmt::{Display, Error, Formatter};
 
 /// Probability distribution builders.
 #[file]
@@ -42,7 +42,7 @@ impl Build for ProbabilityBuilder {
 
 impl Display for ProbabilityBuilder {
     #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> std::fmt::Result {
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         let kind = match *self {
             Self::Point { .. } => "Constant",
             Self::Points { .. } => "Line",

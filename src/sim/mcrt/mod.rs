@@ -13,9 +13,6 @@ pub mod parameters_builder_loader;
 // pub mod run;
 pub mod settings;
 
-pub use self::attribute::*;
-pub use self::attribute_linker::*;
+pub use self::{attribute::*, attribute_linker::*};
 // pub use self::parameters::*;
-pub use self::parameters_builder::*;
-pub use self::parameters_builder_loader::*;
-pub use self::settings::*;
+pub use self::{parameters_builder::*, parameters_builder_loader::*, settings::*};

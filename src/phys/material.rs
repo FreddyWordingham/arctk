@@ -78,14 +78,14 @@ impl Display for Material {
         } else {
             "NONE".to_string()
         };
-        fmt_report!(fmt, self.shift_coeff, "absorption coefficient (m^-1)");
+        fmt_report!(fmt, abs_coeff, "absorption coefficient (m^-1)");
 
         let shift_coeff = if let Some(shift_coeff) = self.shift_coeff {
             format!("{}", shift_coeff)
         } else {
             "NONE".to_string()
         };
-        fmt_report!(fmt, self.shift_coeff, "shift coefficient (m^-1)");
+        fmt_report!(fmt, shift_coeff, "shift coefficient (m^-1)");
 
         fmt_report!(fmt, self.asym_fact, "asymmetry factor");
         Ok(())

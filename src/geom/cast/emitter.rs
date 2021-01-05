@@ -5,6 +5,7 @@ use crate::{
     math::{rand_isotropic_dir, Pos3},
 };
 use rand::Rng;
+use std::fmt::{Display, Error, Formatter};
 
 /// Ray emission structure.
 pub enum Emitter {
@@ -80,5 +81,18 @@ impl Emitter {
             }
             Self::Surface(ref mesh) => mesh.cast(rng),
         }
+    }
+}
+
+impl Display for Emitter {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        let kind = match *self {
+            Self::Beam { .. } => "Beam",
+            Self::Points { .. } => "Points",
+            Self::WeightedPoints { .. } => "WeightedPoints",
+            Self::Surface { .. } => "Surface",
+        };
+        write!(fmt, "{}", kind)
     }
 }

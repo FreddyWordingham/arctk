@@ -7,13 +7,15 @@ use crate::{
     img::{Colour, Gradient, Image},
     ord::{X, Y},
     report,
-    util::fmt::datacube::display_datasquare,
-    util::gradient::to_string,
+    util::{fmt::datacube::display_datasquare, gradient::to_string},
 };
 use ndarray::Array2;
 use ndarray_stats::QuantileExt;
-use std::fmt::{Display, Formatter};
-use std::{ops::AddAssign, path::Path};
+use std::{
+    fmt::{Display, Formatter},
+    ops::AddAssign,
+    path::Path,
+};
 
 /// Rendering output data.
 pub struct Output<'a> {

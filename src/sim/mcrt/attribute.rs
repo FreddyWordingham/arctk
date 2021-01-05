@@ -1,7 +1,7 @@
 //! Optical attributes.
 
-use std::fmt::{Display, Error, Formatter};
 use crate::phys::Material;
+use std::fmt::{Display, Error, Formatter};
 
 /// Surface attributes.
 pub enum Attribute<'a> {

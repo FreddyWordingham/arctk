@@ -9,6 +9,7 @@ use crate::{
     ord::{X, Y, Z},
 };
 use arctk_attr::file;
+use std::fmt::{Display, Formatter};
 use std::path::{Path, PathBuf};
 
 /// Ray emission structure.
@@ -56,5 +57,18 @@ impl Load for EmitterLoader {
             }
             Self::Surface(mesh) => Self::Inst::new_surface(mesh.load(in_dir)?),
         })
+    }
+}
+
+impl Display for EmitterLoader {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        let kind = match *self {
+            Self::Beam { .. } => "Beam",
+            Self::Points { .. } => "Points",
+            Self::WeightedPoints { .. } => "WeightedPoints",
+            Self::Surface { .. } => "Surface",
+        };
+        write!(fmt, "{}", kind)
     }
 }
