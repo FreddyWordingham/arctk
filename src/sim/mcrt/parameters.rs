@@ -2,11 +2,10 @@
 
 use crate::{
     fmt_report,
-    geom::{Camera, SurfaceLinker, TreeSettings},
-    img::Gradient,
+    geom::{SurfaceLinker, TreeSettings},
     ord::Set,
-    sim::render::{AttributeLinker, Engine, Settings, ShaderLinker},
-    util::fmt::gradient::to_string,
+    phys::Material,
+    sim::mcrt::{Attribute, Engine, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
@@ -17,7 +16,7 @@ pub struct Parameters {
     /// Tree settings.
     pub tree: TreeSettings,
     /// Surfaces.
-    pub surfs: Set<Surface>,
+    pub surfs: Set<SurfaceLinker>,
     /// Attributes.
     pub attrs: Set<Attribute>,
     /// Materials.
@@ -35,7 +34,7 @@ impl Parameters {
     pub fn new(
         sett: Settings,
         tree: TreeSettings,
-        surfs: Set<Surface>,
+        surfs: Set<SurfaceLinker>,
         attrs: Set<Attribute>,
         mats: Set<Material>,
         light: Light,

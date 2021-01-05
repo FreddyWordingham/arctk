@@ -3,13 +3,10 @@
 use crate::{
     err::Error,
     fs::{Load, Redirect},
-    geom::{CameraBuilder, SurfaceLinkerLoader, TreeSettings},
-    img::GradientBuilder,
+    geom::{SurfaceLinkerLoader, TreeSettings},
     ord::Set,
-    sim::mcrt::{
-        AttributeLinker, EngineBuilder, LightBuilder, MaterialBuilder, ParametersBuilder, Settings,
-        Settings,
-    },
+    phys::MaterialBuilder,
+    sim::mcrt::{AttributeLinker, EngineBuilder, LightBuilder, ParametersBuilder, Settings},
 };
 use arctk_attr::file;
 use std::path::Path;

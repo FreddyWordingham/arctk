@@ -2,10 +2,9 @@
 
 use crate::{
     fmt_report,
-    geom::{CameraBuilder, SurfaceLinker, TreeSettings},
-    img::GradientBuilder,
+    geom::{SurfaceLinker, TreeSettings},
     ord::{Build, Set},
-    sim::render::{AttributeLinker, EngineBuilder, Parameters, Settings, ShaderLinker},
+    sim::mcrt::{AttributeLinker, EngineBuilder, Parameters, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
@@ -66,7 +65,7 @@ impl Build for ParametersBuilder {
         let light = self.light.build();
         let engine = self.engine.build();
 
-        Self::Inst::new(sett, tree, surfs, mats, grads, light, engine)
+        Self::Inst::new(sett, tree, surfs, attrs, mats, light, engine)
     }
 }
 
