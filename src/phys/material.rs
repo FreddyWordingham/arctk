@@ -1,6 +1,6 @@
 //! Optical material.
 
-use crate::{access, math::Formula, phys::Local};
+use crate::{access, fmt_report, math::Formula, phys::Local};
 
 /// Optical properties.
 pub struct Material {
@@ -62,5 +62,31 @@ impl Material {
         let g = self.asym_fact.y(w);
 
         Local::new(index, scat, abs, shift, g)
+    }
+}
+
+impl Display for Material {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.ref_index, "refractive index");
+        fmt_report!(fmt, self.scat_coeff, "scattering coefficient (m^-1)");
+
+        let abs_coeff = if let Some(abs_coeff) = self.shift_coeff {
+            format!("{}", abs_coeff)
+        } else {
+            "NONE".to_string()
+        };
+        fmt_report!(fmt, self.shift_coeff, "absorption coefficient (m^-1)");
+
+        let shift_coeff = if let Some(shift_coeff) = self.shift_coeff {
+            format!("{}", shift_coeff)
+        } else {
+            "NONE".to_string()
+        };
+        fmt_report!(fmt, self.shift_coeff, "shift coefficient (m^-1)");
+
+        fmt_report!(fmt, self.asym_fact, "asymmetry factor");
+        Ok(())
     }
 }
