@@ -1,43 +1,44 @@
-//! Runtime parameters.
+//! Loadable parameters.
 
 use crate::{
     fmt_report,
     geom::{SurfaceLinker, TreeSettings},
-    ord::Set,
-    phys::Material,
-    sim::mcrt::{Attribute, Engine, Settings},
+    ord::{Build, Link, Set},
+    phys::{LightLinker, Material, MaterialBuilder},
+    sim::mcrt::{AttributeLinker, Engine, EngineBuilder, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
-/// Runtime parameters.
+/// Loadable runtime parameters.
 pub struct Parameters {
     /// Simulation specific settings.
-    pub sett: Settings,
+    sett: Settings,
     /// Tree settings.
-    pub tree: TreeSettings,
+    tree: TreeSettings,
     /// Surfaces.
-    pub surfs: Set<SurfaceLinker>,
+    surfs: Set<SurfaceLinker>,
     /// Attributes.
-    pub attrs: Set<Attribute>,
+    attrs: Set<AttributeLinker>,
     /// Materials.
-    pub mats: Set<Material>,
-    /// Light settings.
-    pub light: Light,
+    mats: Set<Material>,
+    /// Main light.
+    light: LightLinker,
     /// Engine selection.
-    pub engine: Engine,
+    engine: Engine,
 }
 
 impl Parameters {
     /// Construct a new instance.
     #[allow(clippy::too_many_arguments)]
+    #[must_use]
     #[inline]
-    pub fn new(
+    pub const fn new(
         sett: Settings,
         tree: TreeSettings,
         surfs: Set<SurfaceLinker>,
-        attrs: Set<Attribute>,
+        attrs: Set<AttributeLinker>,
         mats: Set<Material>,
-        light: Light,
+        light: LightLinker,
         engine: Engine,
     ) -> Self {
         Self {

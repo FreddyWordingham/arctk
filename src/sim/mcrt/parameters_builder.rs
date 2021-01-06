@@ -4,7 +4,7 @@ use crate::{
     fmt_report,
     geom::{SurfaceLinker, TreeSettings},
     ord::{Build, Set},
-    phys::{LightBuilder, MaterialBuilder},
+    phys::{LightLinkerBuilder, MaterialBuilder},
     sim::mcrt::{AttributeLinker, EngineBuilder, Parameters, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
@@ -22,7 +22,7 @@ pub struct ParametersBuilder {
     /// Materials.
     mats: Set<MaterialBuilder>,
     /// Main light.
-    light: LightBuilder,
+    light: LightLinkerBuilder,
     /// Engine selection.
     engine: EngineBuilder,
 }
@@ -38,7 +38,7 @@ impl ParametersBuilder {
         surfs: Set<SurfaceLinker>,
         attrs: Set<AttributeLinker>,
         mats: Set<MaterialBuilder>,
-        light: LightBuilder,
+        light: LightLinkerBuilder,
         engine: EngineBuilder,
     ) -> Self {
         Self {

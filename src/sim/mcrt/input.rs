@@ -3,8 +3,8 @@
 use crate::{
     geom::{Grid, Tree},
     ord::Set,
-    phys::Material,
-    sim::mcrt::{Attribute, Light, Settings},
+    phys::{Light, Material},
+    sim::mcrt::{Attribute, Settings},
 };
 
 /// MCRT simulation resources conglomerate.
@@ -14,7 +14,7 @@ pub struct Input<'a> {
     /// Attributes.
     pub attrs: &'a Set<Attribute<'a>>,
     /// Emission light.
-    pub light: &'a Light,
+    pub light: &'a Light<'a>,
     /// Hit-scan tree.
     pub tree: &'a Tree<'a, Attribute<'a>>,
     /// Measurement grid.
