@@ -3,28 +3,28 @@
 use crate::{
     fmt_report,
     geom::{SurfaceLinker, TreeSettings},
-    ord::{Build, Link, Set},
-    phys::{LightLinker, Material, MaterialBuilder},
-    sim::mcrt::{AttributeLinker, Engine, EngineBuilder, Settings},
+    ord::Set,
+    phys::{LightLinker, Material},
+    sim::mcrt::{AttributeLinker, Engine, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
 /// Loadable runtime parameters.
 pub struct Parameters {
     /// Simulation specific settings.
-    sett: Settings,
+    pub sett: Settings,
     /// Tree settings.
-    tree: TreeSettings,
+    pub tree: TreeSettings,
     /// Surfaces.
-    surfs: Set<SurfaceLinker>,
+    pub surfs: Set<SurfaceLinker>,
     /// Attributes.
-    attrs: Set<AttributeLinker>,
+    pub attrs: Set<AttributeLinker>,
     /// Materials.
-    mats: Set<Material>,
+    pub mats: Set<Material>,
     /// Main light.
-    light: LightLinker,
+    pub light: LightLinker,
     /// Engine selection.
-    engine: Engine,
+    pub engine: Engine,
 }
 
 impl Parameters {
@@ -32,7 +32,7 @@ impl Parameters {
     #[allow(clippy::too_many_arguments)]
     #[must_use]
     #[inline]
-    pub const fn new(
+    pub fn new(
         sett: Settings,
         tree: TreeSettings,
         surfs: Set<SurfaceLinker>,

@@ -8,6 +8,7 @@ use rand::Rng;
 use std::fmt::{Display, Error, Formatter};
 
 /// Ray emission structure.
+#[derive(Clone)]
 pub enum Emitter {
     /// Single beam.
     Beam(Ray),

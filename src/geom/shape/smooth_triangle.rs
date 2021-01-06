@@ -9,6 +9,7 @@ use crate::{
 use rand::Rng;
 
 /// Triangle geometry with normal interpolation.
+#[derive(Clone)]
 pub struct SmoothTriangle {
     /// Base triangle.
     tri: Triangle,

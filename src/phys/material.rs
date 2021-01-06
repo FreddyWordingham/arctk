@@ -73,14 +73,14 @@ impl Display for Material {
         fmt_report!(fmt, self.ref_index, "refractive index");
         fmt_report!(fmt, self.scat_coeff, "scattering coefficient (m^-1)");
 
-        let abs_coeff = if let Some(abs_coeff) = self.shift_coeff {
+        let abs_coeff = if let Some(abs_coeff) = &self.abs_coeff {
             format!("{}", abs_coeff)
         } else {
             "NONE".to_string()
         };
         fmt_report!(fmt, abs_coeff, "absorption coefficient (m^-1)");
 
-        let shift_coeff = if let Some(shift_coeff) = self.shift_coeff {
+        let shift_coeff = if let Some(shift_coeff) = &self.shift_coeff {
             format!("{}", shift_coeff)
         } else {
             "NONE".to_string()

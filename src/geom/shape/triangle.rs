@@ -9,6 +9,7 @@ use crate::{
 use rand::Rng;
 
 /// Triangle.
+#[derive(Clone)]
 pub struct Triangle {
     /// Vertex points.
     verts: [Pos3; 3],

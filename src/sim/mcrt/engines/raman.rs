@@ -2,7 +2,8 @@
 
 use crate::{
     geom::Trace,
-    sim::mcrt::{scatter, surface, travel, Event, Input, Output, Photon},
+    phys::Photon,
+    sim::mcrt::{scatter::scatter, surface::surface, travel::travel, Event, Input, Output},
 };
 use rand::{rngs::ThreadRng, Rng};
 

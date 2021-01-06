@@ -13,6 +13,7 @@ use std::fmt::{Display, Formatter};
 const PADDING: f64 = 1e-6;
 
 /// Mesh geometry.
+#[derive(Clone)]
 pub struct Mesh {
     /// Bounding box.
     boundary: Cube,
