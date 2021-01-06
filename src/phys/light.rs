@@ -24,6 +24,7 @@ pub struct Light<'a> {
 impl<'a> Light<'a> {
     clone!(power, f64);
     access!(spec, Probability);
+    access!(mat, Material);
 
     /// Construct a new instance.
     #[inline]
