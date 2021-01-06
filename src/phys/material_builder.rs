@@ -3,7 +3,6 @@
 use crate::{fmt_report, math::FormulaBuilder, ord::Build, phys::Material};
 use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
-use std::path::Path;
 
 /// Loadable material.
 #[file]

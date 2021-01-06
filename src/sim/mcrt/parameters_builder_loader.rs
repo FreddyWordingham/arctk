@@ -6,7 +6,7 @@ use crate::{
     geom::{SurfaceLinkerLoader, TreeSettings},
     ord::Set,
     phys::MaterialBuilder,
-    sim::mcrt::{AttributeLinker, EngineBuilder, LightBuilder, ParametersBuilder, Settings},
+    sim::mcrt::{AttributeLinker, EngineBuilder, LightBuilderLoader, ParametersBuilder, Settings},
 };
 use arctk_attr::file;
 use std::path::Path;
@@ -25,7 +25,7 @@ pub struct ParametersBuilderLoader {
     /// Materials.
     mats: Redirect<Set<MaterialBuilder>>,
     /// Main light.
-    light: Redirect<LightBuilder>,
+    light: Redirect<LightBuilderLoader>,
     /// Engine selection.
     engine: EngineBuilder,
 }
