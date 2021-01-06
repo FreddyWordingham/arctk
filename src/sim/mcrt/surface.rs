@@ -2,8 +2,7 @@
 
 use crate::{
     geom::Hit,
-    phys::Crossing,
-    phys::{Local, Photon},
+    phys::{Crossing, Local, Photon},
     sim::mcrt::Attribute,
 };
 use rand::{rngs::ThreadRng, Rng};

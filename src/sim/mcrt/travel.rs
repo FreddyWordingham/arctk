@@ -1,7 +1,9 @@
 //! Photon movement function.
 
-use crate::phys::{Local, Photon};
-use crate::sim::mcrt::Output;
+use crate::{
+    phys::{Local, Photon},
+    sim::mcrt::Output,
+};
 use physical_constants::SPEED_OF_LIGHT_IN_VACUUM;
 
 /// Move the photon forward and record the flight.

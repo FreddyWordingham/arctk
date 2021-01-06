@@ -12,13 +12,13 @@ pub mod parameters;
 pub mod parameters_builder;
 pub mod parameters_builder_loader;
 pub mod peel_off;
+pub mod run;
 pub mod scatter;
+pub mod settings;
 pub mod surface;
 pub mod travel;
-// pub mod run;
-pub mod settings;
 
-pub use self::{attribute::*, attribute_linker::*, event::*};
-pub use self::{engine::*, engine_builder::*};
-pub use self::{input::*, output::*, settings::*};
-pub use self::{parameters::*, parameters_builder::*, parameters_builder_loader::*};
+pub use self::{
+    attribute::*, attribute_linker::*, engine::*, engine_builder::*, event::*, input::*, output::*,
+    parameters::*, parameters_builder::*, parameters_builder_loader::*, run::*, settings::*,
+};

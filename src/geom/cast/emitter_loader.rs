@@ -9,8 +9,10 @@ use crate::{
     ord::{X, Y, Z},
 };
 use arctk_attr::file;
-use std::fmt::{Display, Formatter};
-use std::path::{Path, PathBuf};
+use std::{
+    fmt::{Display, Formatter},
+    path::{Path, PathBuf},
+};
 
 /// Ray emission structure.
 #[file]
