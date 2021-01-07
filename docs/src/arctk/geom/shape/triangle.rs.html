@@ -278,6 +278,7 @@
 <span id="275">275</span>
 <span id="276">276</span>
 <span id="277">277</span>
+<span id="278">278</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Flat triangle implementation.</span>
 
@@ -290,6 +291,7 @@
 <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
 
 <span class="doccomment">/// Triangle.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Triangle</span> {
     <span class="doccomment">/// Vertex points.</span>
     <span class="ident">verts</span>: [<span class="ident">Pos3</span>; <span class="number">3</span>],

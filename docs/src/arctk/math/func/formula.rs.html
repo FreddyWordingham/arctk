@@ -194,11 +194,28 @@
 <span id="191">191</span>
 <span id="192">192</span>
 <span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Formula implementation.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">math</span>::<span class="ident">is_ascending</span>;
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array1</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Error</span>, <span class="ident">Formatter</span>};
 
 <span class="doccomment">/// Mathematical formulae accepting a single scalar argument.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
@@ -386,6 +403,21 @@
                 <span class="ident">ys</span>[<span class="ident">ys</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>]
             }
         }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Formula</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">kind</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="self">Self</span>::<span class="ident">Constant</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Constant&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Line</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Line&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">Bifurcation</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Bifurcation&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">ConstantSpline</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Constant Spline&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">LinearSpline</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Linear Spline&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">QuadraticSpline</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Quadrati Spline&quot;</span>,
+        };
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">kind</span>)
     }
 }
 </pre></div>

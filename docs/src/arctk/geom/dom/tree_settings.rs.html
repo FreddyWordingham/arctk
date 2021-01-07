@@ -58,11 +58,11 @@
 <span class="doccomment">//! Adaptive tree construction settings.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">clone</span>, <span class="ident">fmt_report</span>};
-<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">load</span>;
+<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">file</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>};
 
 <span class="doccomment">/// Tree construction settings.</span>
-<span class="attribute">#[<span class="ident">load</span>]</span>
+<span class="attribute">#[<span class="ident">file</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TreeSettings</span> {
     <span class="doccomment">/// Target maximum number of triangles per cell.</span>
     <span class="ident">tar_tris</span>: <span class="ident">usize</span>,

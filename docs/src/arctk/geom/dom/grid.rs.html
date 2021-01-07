@@ -280,13 +280,13 @@
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">boundary</span>, <span class="string">&quot;boundary&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(
             <span class="ident">fmt</span>,
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;[{}x{}x{}]&quot;</span>, <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">X</span>], <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">Y</span>], <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">Z</span>]),
+            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;[{} x {} x {}]&quot;</span>, <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">X</span>], <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">Y</span>], <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">Z</span>]),
             <span class="string">&quot;resolution&quot;</span>
         );
         <span class="macro">fmt_report</span><span class="macro">!</span>(
             <span class="ident">fmt</span>,
             <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
-                <span class="string">&quot;{}m x {}m x {}m&quot;</span>,
+                <span class="string">&quot;({}, {}, {})&quot;</span>,
                 <span class="self">self</span>.<span class="ident">voxel_size</span>.<span class="ident">x</span>, <span class="self">self</span>.<span class="ident">voxel_size</span>.<span class="ident">y</span>, <span class="self">self</span>.<span class="ident">voxel_size</span>.<span class="ident">z</span>
             ),
             <span class="string">&quot;voxel size&quot;</span>

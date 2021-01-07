@@ -81,67 +81,34 @@
 <span id="78">78</span>
 <span id="79">79</span>
 <span id="80">80</span>
-<span id="81">81</span>
-<span id="82">82</span>
-<span id="83">83</span>
-<span id="84">84</span>
-<span id="85">85</span>
-<span id="86">86</span>
-<span id="87">87</span>
-<span id="88">88</span>
-<span id="89">89</span>
-<span id="90">90</span>
-<span id="91">91</span>
-<span id="92">92</span>
-<span id="93">93</span>
-<span id="94">94</span>
-<span id="95">95</span>
-<span id="96">96</span>
-<span id="97">97</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Datacube manipulation engine binary.</span>
 <span class="doccomment">//! Produce some data from some other data.</span>
 
 <span class="kw">use</span> <span class="ident">arctk</span>::{
     <span class="ident">args</span>,
-    <span class="ident">file</span>::{<span class="ident">Build</span>, <span class="ident">Load</span>},
+    <span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">Load</span>},
+    <span class="ident">ord</span>::<span class="ident">Build</span>,
     <span class="ident">report</span>,
-    <span class="ident">sim</span>::<span class="ident">babbage</span>::{<span class="ident">Operation</span>, <span class="ident">OperationBuilder</span>},
+    <span class="ident">sim</span>::<span class="ident">babbage</span>::{<span class="ident">Operation</span>, <span class="ident">Parameters</span>, <span class="ident">ParametersBuilderLoader</span>},
     <span class="ident">util</span>::{
         <span class="ident">banner</span>::{<span class="ident">section</span>, <span class="ident">sub_section</span>, <span class="ident">title</span>},
         <span class="ident">dir</span>,
     },
 };
-<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">input</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">env</span>::<span class="ident">current_dir</span>,
     <span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>},
 };
 
-<span class="comment">// Input parameters.</span>
-<span class="attribute">#[<span class="ident">input</span>]</span>
-<span class="kw">struct</span> <span class="ident">Parameters</span> {
-    <span class="doccomment">/// Operation to perform.</span>
-    <span class="ident">op</span>: <span class="ident">OperationBuilder</span>,
-}
-
-<span class="kw">use</span> <span class="ident">arctk</span>::<span class="ident">fmt_report</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Error</span>, <span class="ident">Formatter</span>};
-<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Parameters</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">op</span>, <span class="string">&quot;operation builder&quot;</span>);
-        <span class="prelude-val">Ok</span>(())
-    }
-}
-
+<span class="doccomment">/// Main program function.</span>
 <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">term_width</span> <span class="op">=</span> <span class="ident">arctk</span>::<span class="ident">util</span>::<span class="ident">term</span>::<span class="ident">width</span>().<span class="ident">unwrap_or</span>(<span class="number">80</span>);
     <span class="ident">title</span>(<span class="ident">term_width</span>, <span class="string">&quot;Babbage&quot;</span>);
 
     <span class="kw">let</span> (<span class="ident">in_dir</span>, <span class="ident">out_dir</span>, <span class="ident">params_path</span>) <span class="op">=</span> <span class="ident">initialisation</span>(<span class="ident">term_width</span>);
-    <span class="kw">let</span> <span class="ident">op</span> <span class="op">=</span> <span class="ident">input</span>(<span class="ident">term_width</span>, <span class="kw-2">&amp;</span><span class="ident">in_dir</span>, <span class="kw-2">&amp;</span><span class="ident">params_path</span>);
-    <span class="ident">run</span>(<span class="ident">term_width</span>, <span class="ident">op</span>, <span class="kw-2">&amp;</span><span class="ident">out_dir</span>);
+    <span class="kw">let</span> <span class="ident">params</span> <span class="op">=</span> <span class="ident">input</span>(<span class="ident">term_width</span>, <span class="kw-2">&amp;</span><span class="ident">in_dir</span>, <span class="kw-2">&amp;</span><span class="ident">params_path</span>);
+    <span class="ident">run</span>(<span class="ident">term_width</span>, <span class="ident">params</span>.<span class="ident">op</span>, <span class="kw-2">&amp;</span><span class="ident">out_dir</span>);
 
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Finished&quot;</span>);
 }
@@ -172,21 +139,20 @@
 }
 
 <span class="doccomment">/// Retrieve the input parameters file structure.</span>
-<span class="kw">fn</span> <span class="ident">input</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>, <span class="ident">in_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">params_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Operation</span> {
+<span class="kw">fn</span> <span class="ident">input</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>, <span class="ident">in_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">params_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Parameters</span> {
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Input&quot;</span>);
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Loading&quot;</span>);
-    <span class="kw">let</span> <span class="ident">params</span> <span class="op">=</span>
-        <span class="ident">Parameters</span>::<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="ident">params_path</span>)).<span class="ident">expect</span>(<span class="string">&quot;Failed to load parameters file.&quot;</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">params</span>, <span class="string">&quot;parameters&quot;</span>);
+    <span class="kw">let</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">ParametersBuilderLoader</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="ident">params_path</span>))
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to load parameters file.&quot;</span>)
+        .<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>)
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to load parameter resource files.&quot;</span>);
+    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">builder</span>, <span class="string">&quot;builder&quot;</span>);
 
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Building&quot;</span>);
-    <span class="kw">let</span> <span class="ident">op</span> <span class="op">=</span> <span class="ident">params</span>
-        .<span class="ident">op</span>
-        .<span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>)
-        .<span class="ident">expect</span>(<span class="string">&quot;Failed to construct Babbage operation.&quot;</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">op</span>, <span class="string">&quot;operation&quot;</span>);
+    <span class="kw">let</span> <span class="ident">params</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">build</span>();
+    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">params</span>, <span class="string">&quot;parameters&quot;</span>);
 
-    <span class="ident">op</span>
+    <span class="ident">params</span>
 }
 
 <span class="doccomment">/// Run the operation.</span>

@@ -68,11 +68,11 @@
     <span class="ident">err</span>::<span class="ident">Error</span>,
     <span class="ident">ord</span>::{<span class="ident">Link</span>, <span class="ident">Name</span>, <span class="ident">Set</span>},
 };
-<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">load</span>;
+<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">file</span>;
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array1</span>;
 
 <span class="doccomment">/// Reaction linker.</span>
-<span class="attribute">#[<span class="ident">load</span>]</span>
+<span class="attribute">#[<span class="ident">file</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ReactionLinker</span> {
     <span class="doccomment">/// Reaction rate.</span>
     <span class="ident">rate</span>: <span class="ident">RateLinker</span>,

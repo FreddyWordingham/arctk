@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["crossing","Crossing implementation."]]});
+initSidebarItems({"mod":[["crossing","Crossing implementation."],["light","Light surface structure."],["light_linker","Light surface structure."],["light_linker_builder","Light surface structure."],["light_linker_builder_loader","Loadable light surface structure."],["local","Local optical environment."],["material","Optical material."],["material_builder","Material builder."],["photon","Photon particle."]]});

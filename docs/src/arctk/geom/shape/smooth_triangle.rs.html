@@ -121,6 +121,7 @@
 <span id="118">118</span>
 <span id="119">119</span>
 <span id="120">120</span>
+<span id="121">121</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Smooth triangle implementation.</span>
 
@@ -133,6 +134,7 @@
 <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
 
 <span class="doccomment">/// Triangle geometry with normal interpolation.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SmoothTriangle</span> {
     <span class="doccomment">/// Base triangle.</span>
     <span class="ident">tri</span>: <span class="ident">Triangle</span>,

@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["link","Setup trait."],["list","Enumerated lists."],["map","Map alias."],["name","Name type."],["register","Register structure."],["set","Data set."]]});
+initSidebarItems({"mod":[["build","Build trait."],["link","Setup trait."],["list","Enumerated lists."],["map","Map alias."],["name","Name type."],["register","Register structure."],["set","Data set."]]});

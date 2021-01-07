@@ -103,11 +103,11 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Formula implementation.</span>
 
-<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">load</span>;
+<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">file</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>, <span class="prelude-ty">Result</span>};
 
 <span class="doccomment">/// Aspect-ratio enumeration.</span>
-<span class="attribute">#[<span class="ident">load</span>]</span>
+<span class="attribute">#[<span class="ident">file</span>]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">AspectRatio</span> {
     <span class="doccomment">/// Square. 1:1.</span>

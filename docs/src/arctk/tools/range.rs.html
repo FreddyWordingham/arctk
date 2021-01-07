@@ -97,14 +97,14 @@
 <span class="doccomment">//! Range implementation.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">clone</span>;
-<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">load</span>;
+<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">file</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">f64</span>::{<span class="ident">INFINITY</span>, <span class="ident">NEG_INFINITY</span>},
     <span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>, <span class="prelude-ty">Result</span>},
 };
 
 <span class="doccomment">/// One-dimensional inclusive Range.</span>
-<span class="attribute">#[<span class="ident">load</span>]</span>
+<span class="attribute">#[<span class="ident">file</span>]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Range</span> {
     <span class="doccomment">/// Minimum bound.</span>

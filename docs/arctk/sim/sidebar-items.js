@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["babbage","Babbage datacube manipulation module."]]});
+initSidebarItems({"mod":[["babbage","Babbage datacube manipulation module."],["cartographer","Cartography surface-to-volume mapping module."],["mcrt","Monte Carlo Radiative-transfer module."],["render","Rendering module."]]});

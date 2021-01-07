@@ -327,23 +327,31 @@
 <span id="324">324</span>
 <span id="325">325</span>
 <span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Axis-aligned-bounding-box implementation.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">access</span>,
+    <span class="ident">access</span>, <span class="ident">fmt_report</span>,
     <span class="ident">geom</span>::{<span class="ident">Collide</span>, <span class="ident">Mesh</span>, <span class="ident">Ray</span>, <span class="ident">Side</span>, <span class="ident">Trace</span>},
     <span class="ident">math</span>::{<span class="ident">Dir3</span>, <span class="ident">Pos3</span>, <span class="ident">Vec3</span>},
     <span class="ident">ord</span>::{<span class="ident">X</span>, <span class="ident">Y</span>, <span class="ident">Z</span>},
     <span class="ident">tools</span>::<span class="ident">Range</span>,
 };
-<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">load</span>;
+<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">file</span>;
 <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{
+    <span class="ident">cmp</span>::<span class="ident">Ordering</span>,
+    <span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>},
+};
 
 <span class="doccomment">/// Axis-aligned bounding box geometry.</span>
 <span class="doccomment">/// Used for spatial partitioning.</span>
-<span class="attribute">#[<span class="ident">load</span>]</span>
+<span class="attribute">#[<span class="ident">file</span>]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Cube</span> {
     <span class="doccomment">/// Minimum bound.</span>
@@ -635,22 +643,24 @@
     }
 }
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">fmt_report</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>};
 <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Cube</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;...&quot;</span>)<span class="question-mark">?</span>;
         <span class="macro">fmt_report</span><span class="macro">!</span>(
             <span class="ident">fmt</span>,
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;[{}x{}x{}]&quot;</span>, <span class="self">self</span>.<span class="ident">mins</span>.<span class="ident">x</span>, <span class="self">self</span>.<span class="ident">mins</span>.<span class="ident">y</span>, <span class="self">self</span>.<span class="ident">mins</span>.<span class="ident">z</span>),
-            <span class="string">&quot;mins&quot;</span>
+            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;({}, {}, {})&quot;</span>, <span class="self">self</span>.<span class="ident">mins</span>.<span class="ident">x</span>, <span class="self">self</span>.<span class="ident">mins</span>.<span class="ident">y</span>, <span class="self">self</span>.<span class="ident">mins</span>.<span class="ident">z</span>),
+            <span class="string">&quot;mins (m)&quot;</span>
         );
         <span class="macro">fmt_report</span><span class="macro">!</span>(
             <span class="ident">fmt</span>,
-            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;[{}x{}x{}]&quot;</span>, <span class="self">self</span>.<span class="ident">maxs</span>.<span class="ident">x</span>, <span class="self">self</span>.<span class="ident">maxs</span>.<span class="ident">y</span>, <span class="self">self</span>.<span class="ident">maxs</span>.<span class="ident">z</span>),
-            <span class="string">&quot;maxs&quot;</span>
+            <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;({}, {}, {})&quot;</span>, <span class="self">self</span>.<span class="ident">maxs</span>.<span class="ident">x</span>, <span class="self">self</span>.<span class="ident">maxs</span>.<span class="ident">y</span>, <span class="self">self</span>.<span class="ident">maxs</span>.<span class="ident">z</span>),
+            <span class="string">&quot;maxs (m)&quot;</span>
         );
+        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">centre</span>();
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;({}, {}, {})&quot;</span>, <span class="ident">c</span>.<span class="ident">x</span>, <span class="ident">c</span>.<span class="ident">y</span>, <span class="ident">c</span>.<span class="ident">z</span>), <span class="string">&quot;center (m)&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">area</span>(), <span class="string">&quot;area (m^2)&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">vol</span>(), <span class="string">&quot;volume (m^3)&quot;</span>);
         <span class="prelude-val">Ok</span>(())
     }
 }

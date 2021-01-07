@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["light","Calculate the lighting factor. Zero indicates darkness. Unity indicates fully illuminated."],["occlusion","Calculate the occlusion experienced over a distance along ray. Zero indicates full occlusion. Unity indicates full view."],["shadow","Calculate the shadowing factor. Zero completely enshrouded. Unity no shadows."]]});
