@@ -25,7 +25,7 @@ pub struct ParametersBuilderLoader {
     /// Attributes.
     attrs: Redirect<Set<AttributeLinker>>,
     /// Materials.
-    mats: Redirect<Set<MaterialBuilder>>,
+    mats: Redirect<Set<Redirect<MaterialBuilder>>>,
     /// Main light.
     light: Redirect<LightLinkerBuilderLoader>,
     /// Engine selection.
@@ -42,7 +42,7 @@ impl Load for ParametersBuilderLoader {
         let grid = self.grid.load(in_dir)?;
         let surfs = self.surfs.load(in_dir)?.load(in_dir)?;
         let attrs = self.attrs.load(in_dir)?;
-        let mats = self.mats.load(in_dir)?;
+        let mats = self.mats.load(in_dir)?.load(in_dir)?;
         let light = self.light.load(in_dir)?.load(in_dir)?;
         let engine = self.engine;
 

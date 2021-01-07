@@ -1,0 +1,11 @@
+{   // List of material resources used.
+    air                 : { There    : 'res/mats/misc/air.json5' },
+    stratum_corneum     : { There    : 'res/mats/skin/stratum_corneum.json5' },
+    living_epidermis    : { There    : 'res/mats/skin/living_epidermis.json5' },
+    papillary_dermis    : { There    : 'res/mats/skin/papillary_dermis.json5' },
+    upper_bnd           : { There    : 'res/mats/skin/upper_bnd.json5' },
+    dermis              : { There    : 'res/mats/skin/dermis.json5' },
+    lower_bnd           : { There    : 'res/mats/skin/lower_bnd.json5' },
+    subcutaneous_fat    : { There    : 'res/mats/skin/subcutaneous_fat.json5' },
+    tumour              : { There    : 'res/mats/skin/tumour.json5' },
+}

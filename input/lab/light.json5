@@ -1,0 +1,6 @@
+{
+    power   : 1.0,
+    emit    : { Surface: [['res/objs/skin/led.obj'], {scale: 1.0e-3}] },
+    spec    : { Here: {Point: 6.3e-7}},
+    mat     : "air"
+}
