@@ -44,7 +44,7 @@ fn main() {
     let attrs = params
         .attrs
         .link(&grads)
-        .expect("Failed to link x to attributes.");
+        .expect("Failed to link gradients to attributes.");
     report!(attrs, "attributes");
     let surfs = params
         .surfs
@@ -59,7 +59,7 @@ fn main() {
 
     sub_section(term_width, "Growing");
     let tree = Tree::new(&params.tree, &surfs);
-    report!(tree, "hist-scan tree");
+    report!(tree, "hit-scan tree");
 
     section(term_width, "Running");
     let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader, 0);

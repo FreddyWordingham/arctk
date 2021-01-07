@@ -2,7 +2,7 @@
 
 use crate::{
     fmt_report,
-    geom::{SurfaceLinker, TreeSettings},
+    geom::{Grid, SurfaceLinker, TreeSettings},
     ord::Set,
     phys::{LightLinker, Material},
     sim::mcrt::{AttributeLinker, Engine, Settings},
@@ -15,6 +15,8 @@ pub struct Parameters {
     pub sett: Settings,
     /// Tree settings.
     pub tree: TreeSettings,
+    /// Measurement grid settings.
+    pub grid: Grid,
     /// Surfaces.
     pub surfs: Set<SurfaceLinker>,
     /// Attributes.
@@ -35,6 +37,7 @@ impl Parameters {
     pub fn new(
         sett: Settings,
         tree: TreeSettings,
+        grid: Grid,
         surfs: Set<SurfaceLinker>,
         attrs: Set<AttributeLinker>,
         mats: Set<Material>,
@@ -44,6 +47,7 @@ impl Parameters {
         Self {
             sett,
             tree,
+            grid,
             surfs,
             attrs,
             mats,
@@ -59,6 +63,7 @@ impl Display for Parameters {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.tree, "tree settings");
+        fmt_report!(fmt, self.grid, "grid settings");
         fmt_report!(fmt, self.surfs, "surfaces");
         fmt_report!(fmt, self.attrs, "attributes");
         fmt_report!(fmt, self.mats, "materials");

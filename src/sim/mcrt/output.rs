@@ -3,11 +3,14 @@
 use crate::{
     access, clone,
     err::Error,
+    fmt_report,
     fs::Save,
     geom::Cube,
     ord::{X, Y, Z},
+    util::fmt::datacube::display_datacube,
 };
 use ndarray::Array3;
+use std::fmt::{Display, Formatter};
 use std::{ops::AddAssign, path::Path};
 
 /// MCRT output data.
@@ -76,6 +79,23 @@ impl Save for Output {
         let path = out_dir.join("shift_density.nc");
         (&self.shifts / self.cell_vol).save(&path)?;
 
+        Ok(())
+    }
+}
+
+impl Display for Output {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.boundary, "Boundary");
+        fmt_report!(fmt, self.cell_vol, "Cell volume (m^3)");
+        writeln!(fmt, "Emission data...")?;
+        display_datacube(fmt, &self.emission)?;
+        writeln!(fmt, "Energy data...")?;
+        display_datacube(fmt, &self.energy)?;
+        writeln!(fmt, "Absorbed energy data...")?;
+        display_datacube(fmt, &self.absorptions)?;
+        writeln!(fmt, "Shifted energy data...")?;
         Ok(())
     }
 }

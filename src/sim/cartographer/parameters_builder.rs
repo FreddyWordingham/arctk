@@ -64,7 +64,7 @@ impl Display for ParametersBuilder {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.tree, "tree settings");
-        fmt_report!(fmt, self.grid, "grid builder");
+        fmt_report!(fmt, self.grid, "grid settings");
         fmt_report!(fmt, self.surfs, "surfaces");
         fmt_report!(fmt, self.attrs, "attributes");
         Ok(())

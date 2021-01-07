@@ -3,10 +3,11 @@
 
 use arctk::{
     args,
-    fs::{File, Load},
-    ord::Build,
+    fs::{File, Load, Save},
+    geom::Tree,
+    ord::{Build, Link},
     report,
-    sim::mcrt::{Parameters, ParametersBuilderLoader},
+    sim::mcrt::{run, Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -22,51 +23,49 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "MCRT");
 
-    let (in_dir, _out_dir, params_path) = initialisation(term_width);
-    let _params = load_parameters(term_width, &in_dir, &params_path);
+    let (in_dir, out_dir, params_path) = initialisation(term_width);
+    let params = load_parameters(term_width, &in_dir, &params_path);
 
-    // section(term_width, "Input");
-    // sub_section(term_width, "Reconstruction");
-    // let engine = params.engine;
-    // report!("{* POINTER SET *}", "engine");
-    // let sett = params.sett;
-    // report!(sett, "settings");
-    // let grads = params.grads;
-    // for (key, val) in grads.map() {
-    //     report!(to_string(val, 32), &format!("{}", key));
-    // }
-    // let cam = params.cam;
-    // report!(cam, "camera");
+    section(term_width, "Input");
+    sub_section(term_width, "Reconstruction");
+    let engine = params.engine;
+    report!("{* POINTER SET *}", "engine");
+    let sett = params.sett;
+    report!(sett, "settings");
+    let grid = params.grid;
+    report!(grid, "measurement grid");
+    let mats = params.mats;
+    report!(mats, "materials");
 
-    // sub_section(term_width, "Linking");
-    // let attrs = params
-    //     .attrs
-    //     .link(&grads)
-    //     .expect("Failed to link x to attributes.");
-    // report!(attrs, "attributes");
-    // let surfs = params
-    //     .surfs
-    //     .link(&attrs)
-    //     .expect("Failed to link attribute to surfaces.");
-    // report!(surfs, "surfaces");
-    // let shader = params
-    //     .shader
-    //     .link(&grads)
-    //     .expect("Failed to link attribute to shader.");
-    // report!(shader, "shader");
+    sub_section(term_width, "Linking");
+    let light = params
+        .light
+        .link(&mats)
+        .expect("Failed to link materials to light.");
+    report!(light, "light");
+    let attrs = params
+        .attrs
+        .link(&mats)
+        .expect("Failed to link materials to attributes.");
+    report!(attrs, "attributes");
+    let surfs = params
+        .surfs
+        .link(&attrs)
+        .expect("Failed to link attribute to surfaces.");
+    report!(surfs, "surfaces");
 
-    // sub_section(term_width, "Growing");
-    // let tree = Tree::new(&params.tree, &surfs);
-    // report!(tree, "hist-scan tree");
+    sub_section(term_width, "Growing");
+    let tree = Tree::new(&params.tree, &surfs);
+    report!(tree, "hit-scan tree");
 
-    // section(term_width, "Running");
-    // let input = Input::new(&grads, &attrs, &cam, &tree, &sett, &shader, 0);
-    // report!(input, "input");
-    // let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
+    section(term_width, "Running");
+    let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);
+    report!(input, "input");
+    let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
 
-    // section(term_width, "Saving");
-    // report!(data, "data");
-    // data.save(&out_dir).expect("Failed to save output data.");
+    section(term_width, "Saving");
+    report!(data, "data");
+    data.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }

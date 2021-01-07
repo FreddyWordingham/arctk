@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     fs::{Load, Redirect},
-    geom::{SurfaceLinkerLoader, TreeSettings},
+    geom::{GridBuilder, SurfaceLinkerLoader, TreeSettings},
     ord::Set,
     phys::{LightLinkerBuilderLoader, MaterialBuilder},
     sim::mcrt::{AttributeLinker, EngineBuilder, ParametersBuilder, Settings},
@@ -18,6 +18,8 @@ pub struct ParametersBuilderLoader {
     sett: Redirect<Settings>,
     /// Tree settings.
     tree: Redirect<TreeSettings>,
+    /// Measurement grid settings.
+    grid: Redirect<GridBuilder>,
     /// Surfaces.
     surfs: Redirect<Set<SurfaceLinkerLoader>>,
     /// Attributes.
@@ -37,6 +39,7 @@ impl Load for ParametersBuilderLoader {
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let sett = self.sett.load(in_dir)?;
         let tree = self.tree.load(in_dir)?;
+        let grid = self.grid.load(in_dir)?;
         let surfs = self.surfs.load(in_dir)?.load(in_dir)?;
         let attrs = self.attrs.load(in_dir)?;
         let mats = self.mats.load(in_dir)?;
@@ -44,7 +47,7 @@ impl Load for ParametersBuilderLoader {
         let engine = self.engine;
 
         Ok(Self::Inst::new(
-            sett, tree, surfs, attrs, mats, light, engine,
+            sett, tree, grid, surfs, attrs, mats, light, engine,
         ))
     }
 }

@@ -2,7 +2,7 @@
 
 use crate::{
     fmt_report,
-    geom::{SurfaceLinker, TreeSettings},
+    geom::{GridBuilder, SurfaceLinker, TreeSettings},
     ord::{Build, Set},
     phys::{LightLinkerBuilder, MaterialBuilder},
     sim::mcrt::{AttributeLinker, EngineBuilder, Parameters, Settings},
@@ -15,6 +15,8 @@ pub struct ParametersBuilder {
     sett: Settings,
     /// Tree settings.
     tree: TreeSettings,
+    /// Measurement grid settings.
+    grid: GridBuilder,
     /// Surfaces.
     surfs: Set<SurfaceLinker>,
     /// Attributes.
@@ -35,6 +37,7 @@ impl ParametersBuilder {
     pub const fn new(
         sett: Settings,
         tree: TreeSettings,
+        grid: GridBuilder,
         surfs: Set<SurfaceLinker>,
         attrs: Set<AttributeLinker>,
         mats: Set<MaterialBuilder>,
@@ -44,6 +47,7 @@ impl ParametersBuilder {
         Self {
             sett,
             tree,
+            grid,
             surfs,
             attrs,
             mats,
@@ -60,13 +64,14 @@ impl Build for ParametersBuilder {
     fn build(self) -> Self::Inst {
         let sett = self.sett;
         let tree = self.tree;
+        let grid = self.grid.build();
         let surfs = self.surfs;
         let attrs = self.attrs;
         let mats = self.mats.build();
         let light = self.light.build();
         let engine = self.engine.build();
 
-        Self::Inst::new(sett, tree, surfs, attrs, mats, light, engine)
+        Self::Inst::new(sett, tree, grid, surfs, attrs, mats, light, engine)
     }
 }
 
@@ -76,6 +81,7 @@ impl Display for ParametersBuilder {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.tree, "tree settings");
+        fmt_report!(fmt, self.grid, "grid settings");
         fmt_report!(fmt, self.surfs, "surfaces");
         fmt_report!(fmt, self.attrs, "attributes");
         fmt_report!(fmt, self.mats, "materials");

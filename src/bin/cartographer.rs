@@ -51,7 +51,7 @@ fn main() {
 
     sub_section(term_width, "Growing");
     let tree = Tree::new(&params.tree, &surfs);
-    report!(tree, "hist-scan tree");
+    report!(tree, "hit-scan tree");
 
     sub_section(term_width, "Input");
     let input = Input::new(&mat_reg, &attrs, &tree, &grid, &sett);
