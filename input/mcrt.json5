@@ -13,4 +13,5 @@
     mats    : { There   : 'lab/materials.json5' },
     attrs   : { There   : 'lab/attributes.json5' },
     surfs   : { There   : 'lab/surfaces.json5' },
+    // surfs   : { There   : 'lab/plane_surfaces.json5' },
 }
