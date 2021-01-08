@@ -1,0 +1,3 @@
+{   // Map of surface attributes.
+    tumour  : { attr: 'tumour', mesh: [["res/objs/skin/tumour.obj"], {scale:1.0e-3}]},
+}
