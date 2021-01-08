@@ -6,6 +6,11 @@
     dermis              : { Interface   : ['dermis',            'upper_bnd'] },
     lower_bnd           : { Interface   : ['lower_bnd',         'dermis'] },
     subcutaneous_fat    : { Interface   : ['subcutaneous_fat',  'lower_bnd'] },
-    tumour              : { Interface   : ['tumour',            'dermis'] },
+    cap                 : { Interface   : ['tumour',            'air'] },
+    tumour_sc           : { Interface   : ['tumour',            'stratum_corneum'] },
+    tumour_le           : { Interface   : ['tumour',            'living_epidermis'] },
+    tumour_pd           : { Interface   : ['tumour',            'papillary_dermis'] },
+    tumour_ubnd         : { Interface   : ['tumour',            'upper_bnd'] },
+    base                : { Interface   : ['tumour',            'dermis'] },
     mirror              : { Mirror      : 0.99 },
 }
