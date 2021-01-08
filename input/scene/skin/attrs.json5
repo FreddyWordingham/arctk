@@ -1,11 +1,36 @@
 {
-    a0 : { Refractive  : ['citrus_peel', 0.3, [1.50, 1.00]] },
-    a1 : { Refractive  : ['citrus_peel', 0.3, [1.34, 1.50]] },
-    a2 : { Refractive  : ['citrus_peel', 0.3, [1.40, 1.34]] },
-    a3 : { Refractive  : ['citrus_peel', 0.3, [1.39, 1.40]] },
-    a4 : { Refractive  : ['citrus_peel', 0.3, [1.40, 1.39]] },
-    a5 : { Refractive  : ['citrus_peel', 0.3, [1.38, 1.40]] },
-    a6 : { Refractive  : ['citrus_peel', 0.3, [1.44, 1.38]] },
-    a7 : { Refractive  : ['citrus_peel', 0.3, [1.44, 1.44]] },
-    tumour          : { Opaque      : 'red_ocean' },
+    // a0 : { Refractive  : ['amin', 0.3, [1.50, 1.00]] },
+    // a1 : { Refractive  : ['atlas', 0.3, [1.34, 1.50]] },
+    // a2 : { Refractive  : ['by_design', 0.3, [1.40, 1.34]] },
+    // a3 : { Refractive  : ['citrus_peel', 0.3, [1.39, 1.40]] },
+    // a4 : { Refractive  : ['copper', 0.3, [1.40, 1.39]] },
+    // a5 : { Refractive  : ['crystal_clear', 0.3, [1.38, 1.40]] },
+    // a6 : { Refractive  : ['dania', 0.3, [1.44, 1.38]] },
+    // a7 : { Refractive  : ['dark_ocean', 0.3, [1.44, 1.44]] },
+
+    // r0 : { Refractive  : ['harvey', 0.3, [1.44, 1.44]] },
+    // r1 : { Refractive  : ['jshine', 0.3, [1.44, 1.44]] },
+    // r2 : { Refractive  : ['king_yna', 0.3, [1.44, 1.44]] },
+
+    // c0 : { Refractive  : ['wiretap', 0.3, [1.44, 1.44]] },
+    // b0 : { Refractive  : ['starfall', 0.3, [1.44, 1.44]] },
+
+    a0 : { Opaque   : 'amin' },
+    a1 : { Opaque   : 'atlas' },
+    a2 : { Opaque   : 'by_design' },
+    a3 : { Opaque   : 'citrus_peel' },
+    a4 : { Opaque   : 'copper' },
+    a5 : { Opaque   : 'crystal_clear' },
+    a6 : { Opaque   : 'dania' },
+    a7 : { Opaque   : 'dark_ocean' },
+
+    r0 : { Opaque   : 'harvey' },
+    r1 : { Opaque   : 'jshine' },
+    r2 : { Opaque   : 'king_yna' },
+    r3 : { Opaque   : 'rainbow_blue' },
+
+    c0 : { Opaque   : 'wiretap' },
+    b0 : { Opaque   : 'starfall' },
+
+    // tumour          : { Opaque      : 'red_ocean' },
 }
