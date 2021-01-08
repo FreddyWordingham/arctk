@@ -12,6 +12,8 @@ use std::fmt::{Display, Error, Formatter};
 pub enum EngineBuilder {
     /// Antler rendering engine.
     Antler,
+    /// Cross-section rendering engine.
+    Cross,
 }
 
 impl Build for EngineBuilder {
@@ -21,6 +23,7 @@ impl Build for EngineBuilder {
     fn build(self) -> Self::Inst {
         match self {
             Self::Antler => engines::antler,
+            Self::Cross => engines::cross,
         }
     }
 }
@@ -30,6 +33,7 @@ impl Display for EngineBuilder {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         match *self {
             Self::Antler => write!(fmt, "Antler"),
+            Self::Cross => write!(fmt, "Cross-Section"),
         }
     }
 }
