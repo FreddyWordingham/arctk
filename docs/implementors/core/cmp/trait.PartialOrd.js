@@ -6,7 +6,7 @@ implementors["cocoa"] = [{"text":"impl PartialOrd&lt;NSApplicationPresentationOp
 implementors["console"] = [{"text":"impl PartialOrd&lt;Attribute&gt; for Attribute","synthetic":false,"types":[]}];
 implementors["core_foundation"] = [{"text":"impl PartialOrd&lt;CFDate&gt; for CFDate","synthetic":false,"types":[]},{"text":"impl PartialOrd&lt;CFNumber&gt; for CFNumber","synthetic":false,"types":[]}];
 implementors["core_graphics"] = [{"text":"impl PartialOrd&lt;CGEventFlags&gt; for CGEventFlags","synthetic":false,"types":[]},{"text":"impl PartialOrd&lt;CGGradientDrawingOptions&gt; for CGGradientDrawingOptions","synthetic":false,"types":[]}];
-implementors["crossbeam_epoch"] = [{"text":"impl&lt;'g, T&gt; PartialOrd&lt;Shared&lt;'g, T&gt;&gt; for Shared&lt;'g, T&gt;","synthetic":false,"types":[]}];
+implementors["crossbeam_epoch"] = [{"text":"impl&lt;'g, T:&nbsp;?Sized + Pointable&gt; PartialOrd&lt;Shared&lt;'g, T&gt;&gt; for Shared&lt;'g, T&gt;","synthetic":false,"types":[]}];
 implementors["deflate"] = [{"text":"impl PartialOrd&lt;Compression&gt; for Compression","synthetic":false,"types":[]},{"text":"impl PartialOrd&lt;MatchingType&gt; for MatchingType","synthetic":false,"types":[]}];
 implementors["either"] = [{"text":"impl&lt;L:&nbsp;PartialOrd, R:&nbsp;PartialOrd&gt; PartialOrd&lt;Either&lt;L, R&gt;&gt; for Either&lt;L, R&gt;","synthetic":false,"types":[]}];
 implementors["generic_array"] = [{"text":"impl&lt;T:&nbsp;PartialOrd, N&gt; PartialOrd&lt;GenericArray&lt;T, N&gt;&gt; for GenericArray&lt;T, N&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;N: ArrayLength&lt;T&gt;,&nbsp;</span>","synthetic":false,"types":[]}];

@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["antler","Pixel-sampling engine function."]]});
+initSidebarItems({"mod":[["antler","Pixel-sampling engine function."],["cross","Pixel-sampling engine function."]]});

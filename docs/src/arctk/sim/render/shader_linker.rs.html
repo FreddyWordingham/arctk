@@ -139,7 +139,7 @@
 <span class="doccomment">/// Colouring settings.</span>
 <span class="attribute">#[<span class="ident">file</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ShaderLinker</span> {
-    <span class="doccomment">/// Sun position used for lighting calculations [m].</span>
+    <span class="doccomment">/// Sun position used for lighting calculations (m).</span>
     <span class="ident">sun_pos</span>: [<span class="ident">f64</span>; <span class="number">3</span>],
     <span class="doccomment">/// Ambient, diffuse, and occlusion lighting fractions.</span>
     <span class="ident">light</span>: [<span class="ident">f64</span>; <span class="number">3</span>],
@@ -151,7 +151,7 @@
     <span class="ident">occ_dist</span>: [<span class="ident">f64</span>; <span class="number">2</span>],
     <span class="doccomment">/// Effect fall-off rate.</span>
     <span class="ident">fall_off</span>: <span class="ident">f64</span>,
-    <span class="doccomment">/// Optional number of soft shadowing samples, and angular radius [rad].</span>
+    <span class="doccomment">/// Optional number of soft shadowing samples, and angular radius (rad).</span>
     <span class="ident">soft_shadow_samples</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">f64</span>)<span class="op">&gt;</span>,
     <span class="doccomment">/// Optional number of ambient shadowing samples and the scaling power.</span>
     <span class="ident">ambient_shadow_samples</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">i32</span>)<span class="op">&gt;</span>,

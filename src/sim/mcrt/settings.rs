@@ -11,7 +11,7 @@ pub struct Settings {
     num_phot: usize,
     /// Number of photons to simulate in each thread block.
     block_size: usize,
-    /// Bump distance [m].
+    /// Bump distance (m).
     bump_dist: f64,
     /// Loop limit.
     loop_limit: u64,

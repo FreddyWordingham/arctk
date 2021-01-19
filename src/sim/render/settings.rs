@@ -9,7 +9,7 @@ use std::fmt::{Display, Error, Formatter};
 pub struct Settings {
     /// Number of tracers to simulate in each thread block.
     block_size: usize,
-    /// Bump distance [m].
+    /// Bump distance (m).
     bump_dist: f64,
     /// Loop limit.
     loop_limit: u64,

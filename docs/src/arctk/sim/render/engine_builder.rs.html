@@ -36,6 +36,10 @@
 <span id="33">33</span>
 <span id="34">34</span>
 <span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Engine selection.</span>
 
@@ -51,6 +55,8 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">EngineBuilder</span> {
     <span class="doccomment">/// Antler rendering engine.</span>
     <span class="ident">Antler</span>,
+    <span class="doccomment">/// Cross-section rendering engine.</span>
+    <span class="ident">Cross</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Build</span> <span class="kw">for</span> <span class="ident">EngineBuilder</span> {
@@ -60,6 +66,7 @@
     <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Antler</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">engines</span>::<span class="ident">antler</span>,
+            <span class="self">Self</span>::<span class="ident">Cross</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">engines</span>::<span class="ident">cross</span>,
         }
     }
 }
@@ -69,6 +76,7 @@
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Antler</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Antler&quot;</span>),
+            <span class="self">Self</span>::<span class="ident">Cross</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Cross-Section&quot;</span>),
         }
     }
 }

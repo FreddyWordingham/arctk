@@ -9,9 +9,9 @@ pub struct Photon {
     ray: Ray,
     /// Statistical weight.
     weight: f64,
-    /// Wavelength [m].
+    /// Wavelength (m).
     wavelength: f64,
-    /// Power [J/s].
+    /// Power (J/s).
     power: f64,
 }
 

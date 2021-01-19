@@ -5,7 +5,7 @@ use std::fmt::{Display, Error, Formatter};
 
 /// Colouring settings.
 pub struct Shader<'a> {
-    /// Sun position used for lighting calculations [m].
+    /// Sun position used for lighting calculations (m).
     sun_pos: Pos3,
     /// Ambient, diffuse, and occlusion lighting fractions.
     light: [f64; 3],
@@ -17,7 +17,7 @@ pub struct Shader<'a> {
     occ_dist: [f64; 2],
     /// Effect fall-off rate.
     fall_off: f64,
-    /// Optional number of soft shadowing samples, and angular radius [rad].
+    /// Optional number of soft shadowing samples, and angular radius (rad).
     soft_shadow_samples: Option<(i32, f64)>,
     /// Optional number of ambient shadowing samples and the scaling power.
     ambient_shadow_samples: Option<(i32, i32)>,

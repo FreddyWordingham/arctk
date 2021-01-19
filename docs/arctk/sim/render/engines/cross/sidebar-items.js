@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["cross","Calculate the colour of a single tracer."]]});

@@ -82,7 +82,7 @@
     <span class="doccomment">/// Attributes.</span>
     <span class="ident">attrs</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">AttributeLinker</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Materials.</span>
-    <span class="ident">mats</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">MaterialBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">mats</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">MaterialBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Main light.</span>
     <span class="ident">light</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">LightLinkerBuilderLoader</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Engine selection.</span>
@@ -99,7 +99,7 @@
         <span class="kw">let</span> <span class="ident">grid</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">grid</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">surfs</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">surfs</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">attrs</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">attrs</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">mats</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mats</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">mats</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mats</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">light</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">light</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">engine</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">engine</span>;
 
