@@ -1,7 +1,8 @@
 //! Reactor structure.
 
-use crate::chem::Rate;
+use crate::{chem::Rate, fmt_report};
 use ndarray::{Array1, Array2};
+use std::fmt::{Display, Error, Formatter};
 
 /// Complete reactor structure.
 #[derive(Debug)]
@@ -46,5 +47,15 @@ impl Reactor {
         }
 
         deltas
+    }
+}
+
+impl Display for Reactor {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.rates, "rates");
+        fmt_report!(fmt, self.coeffs, "coefficients");
+        Ok(())
     }
 }
