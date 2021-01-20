@@ -1,4 +1,4 @@
-//! Loadable parameters.
+//! Runtime parameters.
 
 use crate::{
     fmt_report,
@@ -9,7 +9,7 @@ use crate::{
 };
 use std::fmt::{Display, Error, Formatter};
 
-/// Loadable runtime parameters.
+/// Runtime parameters.
 pub struct Parameters {
     /// Simulation specific settings.
     pub sett: Settings,

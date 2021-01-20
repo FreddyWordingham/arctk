@@ -1,4 +1,4 @@
-//! Input parameters.
+//! Runtime parameters.
 
 use crate::{
     fmt_report,

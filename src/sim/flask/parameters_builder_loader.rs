@@ -16,20 +16,10 @@ use std::path::Path;
 pub struct ParametersBuilderLoader {
     /// Simulation specific settings.
     sett: Redirect<Settings>,
-    /// Tree settings.
-    tree: Redirect<TreeSettings>,
-    /// Measurement grid settings.
-    grid: Redirect<GridBuilder>,
-    /// Surfaces.
-    surfs: Redirect<Set<SurfaceLinkerLoader>>,
-    /// Attributes.
-    attrs: Redirect<Set<AttributeLinker>>,
-    /// Materials.
-    mats: Redirect<Set<Redirect<MaterialBuilder>>>,
-    /// Main light.
-    light: Redirect<LightLinkerBuilderLoader>,
-    /// Engine selection.
-    engine: EngineBuilder,
+    /// Initial concentrations.
+    concs: Redirect<Concentrations>,
+    /// Reactions.
+    reactor: Redirect<ReactorLinker>,
 }
 
 impl Load for ParametersBuilderLoader {
@@ -38,16 +28,9 @@ impl Load for ParametersBuilderLoader {
     #[inline]
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let sett = self.sett.load(in_dir)?;
-        let tree = self.tree.load(in_dir)?;
-        let grid = self.grid.load(in_dir)?;
-        let surfs = self.surfs.load(in_dir)?.load(in_dir)?;
-        let attrs = self.attrs.load(in_dir)?;
-        let mats = self.mats.load(in_dir)?.load(in_dir)?;
-        let light = self.light.load(in_dir)?.load(in_dir)?;
-        let engine = self.engine;
+        let concs = self.tree.load(in_dir)?;
+        let reactor = self.grid.load(in_dir)?;
 
-        Ok(Self::Inst::new(
-            sett, tree, grid, surfs, attrs, mats, light, engine,
-        ))
+        Ok(Self::Inst::new(sett, concs, reactor))
     }
 }
