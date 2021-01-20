@@ -59,9 +59,9 @@ required-features = ["terminal_size", "netcdf"]
 # # name = "diffuse"
 # # required-features = ["netcdf", "terminal_size"]
 
-# [[bin]]
-# name = "flask"
-# required-features = ["terminal_size"]
+[[bin]]
+name = "flask"
+required-features = ["terminal_size"]
 
 [[bin]]
 name = "mcrt"
