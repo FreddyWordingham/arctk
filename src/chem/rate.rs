@@ -1,6 +1,8 @@
 //! Rate structure.
 
+use crate::{fmt_report, fmt_reports};
 use ndarray::Array1;
+use std::fmt::{Display, Error, Formatter};
 
 /// Rate of reaction.
 #[derive(Debug, Clone)]
@@ -33,5 +35,22 @@ impl Rate {
         }
 
         r
+    }
+}
+
+impl Display for Rate {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        let power = self.orders.len();
+        fmt_report!(fmt, self.k, &format!("rate ([C]^-{} s^-1)", power));
+
+        let mut orders = Vec::with_capacity(power);
+        for &(c, m) in &self.orders {
+            orders.push(format!("[{}]^{}", c, m));
+        }
+        fmt_reports!(fmt, orders, "orders");
+
+        Ok(())
     }
 }
