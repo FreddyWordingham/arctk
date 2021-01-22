@@ -56,7 +56,8 @@ fn main() {
 
     section(term_width, "Saving");
     report!(data, "data");
-    data.save(&out_dir).expect("Failed to save output data.");
+    data.save(&out_dir.join("concs.csv"))
+        .expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }
