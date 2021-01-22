@@ -1,6 +1,6 @@
 //! Reaction structure.
 
-use crate::{access, chem::Rate};
+use crate::chem::Rate;
 use ndarray::Array1;
 
 /// Reaction.
@@ -13,8 +13,6 @@ pub struct Reaction {
 }
 
 impl Reaction {
-    access!(coeffs, Array1<f64>);
-
     /// Construct a new instance.
     #[inline]
     #[must_use]
