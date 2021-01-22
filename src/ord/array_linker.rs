@@ -20,6 +20,13 @@ impl ArrayLinker {
     pub fn len(&self) -> usize {
         self.0.len()
     }
+
+    /// Determine if the wrapped vec is unoccupied.
+    #[inline]
+    #[must_use]
+    pub fn is_empty(&self) -> bool {
+        self.0.is_empty()
+    }
 }
 
 impl<'a> Link<'a, usize> for ArrayLinker {
