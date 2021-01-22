@@ -4,9 +4,9 @@
 use arctk::{
     args,
     fs::{File, Load},
-    ord::{Build, Link, Register},
+    ord::{Link, Register},
     report,
-    sim::flask::{Parameters, ParametersLoader},
+    sim::flask::{Input, Parameters, ParametersLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -22,7 +22,7 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Flask");
 
-    let (in_dir, out_dir, params_path) = initialisation(term_width);
+    let (in_dir, _out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
 
     section(term_width, "Input");
@@ -42,7 +42,7 @@ fn main() {
     report!(reactor, "reactor");
 
     sub_section(term_width, "Input");
-    let input = Input::new(&specs, &reactor, &sett);
+    let input = Input::new(&spec_reg, &reactor, &sett);
     report!(input, "input");
 
     // section(term_width, "Running");
