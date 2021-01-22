@@ -13,6 +13,19 @@ use std::fmt::{Display, Formatter};
 #[file]
 pub struct RateLinker(f64, Vec<(Name, f64)>);
 
+impl RateLinker {
+    /// Get the total power of the reaction.
+    #[inline]
+    #[must_use]
+    pub fn power(&self) -> f64 {
+        let mut p = 0.0;
+        for (_, c) in &self.1 {
+            p += c;
+        }
+        p
+    }
+}
+
 impl<'a> Link<'a, usize> for RateLinker {
     type Inst = Rate;
 
@@ -53,16 +66,6 @@ impl Display for RateLinker {
                 write!(fmt, " {}^{}", c, m)?;
             }
         }
-
-        // writeln!(fmt, "...")?;
-        // let power = self.1.len();
-        // fmt_report!(fmt, self.0, &format!("rate ([C]^-{} s^-1)", power));
-
-        // let mut orders = Vec::with_capacity(power);
-        // for (c, m) in &self.1 {
-        //     orders.push(format!("[{}]^{}", c, m));
-        // }
-        // fmt_reports!(fmt, orders, "orders");
 
         Ok(())
     }
