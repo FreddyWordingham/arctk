@@ -5,14 +5,14 @@ use crate::{
     err::Error,
     fs::{Load, Redirect},
     ord::ArrayLinker,
-    sim::flask::{ParametersBuilder, Settings},
+    sim::flask::{Parameters, Settings},
 };
 use arctk_attr::file;
 use std::path::Path;
 
 /// Loadable runtime parameters.
 #[file]
-pub struct ParametersBuilderLoader {
+pub struct ParametersLoader {
     /// Simulation specific settings.
     sett: Redirect<Settings>,
     /// Initial concentrations.
@@ -21,8 +21,8 @@ pub struct ParametersBuilderLoader {
     reactor: Redirect<ReactorLinker>,
 }
 
-impl Load for ParametersBuilderLoader {
-    type Inst = ParametersBuilder;
+impl Load for ParametersLoader {
+    type Inst = Parameters;
 
     #[inline]
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
