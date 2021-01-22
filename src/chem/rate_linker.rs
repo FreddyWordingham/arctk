@@ -3,7 +3,6 @@
 use crate::{
     chem::Rate,
     err::Error,
-    fmt_report, fmt_reports,
     ord::{Link, Name, Set},
 };
 use arctk_attr::file;
