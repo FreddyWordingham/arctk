@@ -3,7 +3,7 @@
 
 use arctk::{
     args,
-    fs::{File, Load},
+    fs::{File, Load, Save},
     ord::{Link, Register},
     report,
     sim::flask::{run, Input, Parameters, ParametersLoader},
@@ -22,7 +22,7 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Flask");
 
-    let (in_dir, _out_dir, params_path) = initialisation(term_width);
+    let (in_dir, out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
 
     section(term_width, "Input");

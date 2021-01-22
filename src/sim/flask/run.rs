@@ -1,34 +1,48 @@
 //! Simulation control functions.
 
-use crate::{
-    chem::Reactor,
-    err::Error,
-    sim::flask::{Input, Output},
-    tools::ProgressBar,
-};
+use crate::{chem::Reactor, data::Table, err::Error, sim::flask::Input, tools::ProgressBar};
 use ndarray::Array1;
 
 /// Run a Flask simulation using a single thread.
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]
-pub fn single_thread(mut concs: Array1<f64>, input: &Input) -> Result<Output, Error> {
+pub fn single_thread(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
     let steps = input.sett.dumps();
+    let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
+
+    let mut records = Vec::with_capacity(steps + 1);
 
     let mut pb = ProgressBar::new("Single-threaded", steps);
 
-    let mut time = 0.0;
-    let dt = input.sett.time() / input.sett.dumps().max(1) as f64;
+    for n in 0..steps {
+        let mut row = Vec::with_capacity(1 + concs.len());
+        row.push(dt * n as f64);
+        for c in &concs {
+            row.push(*c);
+        }
+        records.push(row);
 
-    for _ in 0..steps {
         concs = evolve_rk4(input.reactor, concs, dt);
-        time += dt;
         pb.tick();
-        println!("{:>8} : {}", time, concs);
     }
 
-    let mut data = Output::new(input.sett.time(), input.specs, steps);
-    Ok(data)
+    {
+        let mut row = Vec::with_capacity(1 + concs.len());
+        row.push(input.sett.time());
+        for c in &concs {
+            row.push(*c);
+        }
+        records.push(row);
+    }
+
+    let mut headings = Vec::with_capacity(1 + concs.len());
+    headings.push("time".to_string());
+    for spec in &input.specs.names_list() {
+        headings.push(spec.as_string());
+    }
+
+    Ok(Table::new(headings, records))
 }
 
 /// Evolve forward the given amount of time.
