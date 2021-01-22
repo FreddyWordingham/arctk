@@ -1,11 +1,10 @@
 //! Loadable parameters.
 
 use crate::{
+    chem::ReactorLinker,
     fmt_report,
-    geom::{GridBuilder, SurfaceLinker, TreeSettings},
-    ord::{Build, Set},
-    phys::{LightLinkerBuilder, MaterialBuilder},
-    sim::mcrt::{AttributeLinker, EngineBuilder, Parameters, Settings},
+    ord::{ArrayLinker, Build},
+    sim::flask::{Parameters, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
@@ -14,7 +13,7 @@ pub struct ParametersBuilder {
     /// Simulation specific settings.
     sett: Settings,
     /// Initial concentrations.
-    concs: Concentrations,
+    concs: ArrayLinker,
     /// Reactions.
     reactor: ReactorLinker,
 }
@@ -24,7 +23,7 @@ impl ParametersBuilder {
     #[allow(clippy::too_many_arguments)]
     #[must_use]
     #[inline]
-    pub const fn new(sett: Settings, concs: Concentrations, reactor: ReactorLinker) -> Self {
+    pub const fn new(sett: Settings, concs: ArrayLinker, reactor: ReactorLinker) -> Self {
         Self {
             sett,
             concs,
@@ -39,8 +38,8 @@ impl Build for ParametersBuilder {
     #[inline]
     fn build(self) -> Self::Inst {
         let sett = self.sett;
-        let concs = self.tree;
-        let reactor = self.grid;
+        let concs = self.concs;
+        let reactor = self.reactor;
 
         Self::Inst::new(sett, concs, reactor)
     }
@@ -51,8 +50,8 @@ impl Display for ParametersBuilder {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
-        fmt_report!(fmt, self.tree, "concentrations");
-        fmt_report!(fmt, self.grid, "reactor");
+        fmt_report!(fmt, self.concs, "concentrations");
+        fmt_report!(fmt, self.reactor, "reactor");
         Ok(())
     }
 }

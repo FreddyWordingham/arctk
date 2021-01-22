@@ -3,10 +3,12 @@
 use crate::{
     chem::{ReactionLinker, Reactor},
     err::Error,
+    fmt_reports,
     ord::{Link, Name, Set},
 };
 use arctk_attr::file;
 use ndarray::{Array1, Array2};
+use std::fmt::{Display, Formatter};
 
 /// Reactor linking structure.
 #[file]
@@ -45,7 +47,11 @@ impl<'a> Link<'a, usize> for ReactorLinker {
     }
 }
 
-// Self {
-//     rates: Array1::from(rates),
-//     coeffs,
-// }
+impl Display for ReactorLinker {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_reports!(fmt, self.reacts, "reactions");
+        Ok(())
+    }
+}
