@@ -4,7 +4,7 @@
 use arctk::{
     args,
     fs::{File, Load},
-    ord::Build,
+    ord::{Build, Link, Register},
     report,
     sim::flask::{Parameters, ParametersLoader},
     util::{
@@ -29,6 +29,17 @@ fn main() {
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
     report!(sett, "settings");
+
+    sub_section(term_width, "Registration");
+    let spec_reg = Register::new(params.reactor.requires());
+    report!(spec_reg, "species register");
+
+    sub_section(term_width, "Linking");
+    let reactor = params
+        .reactor
+        .link(spec_reg.set())
+        .expect("Failed to link species to reactor.");
+    report!(reactor, "reactor");
 
     sub_section(term_width, "Input");
     // let input = Input::new(&specs, &reactor, &sett);
