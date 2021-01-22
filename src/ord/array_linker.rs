@@ -2,7 +2,6 @@
 
 use crate::{
     err::Error,
-    fmt_reports,
     ord::{Link, Name, Set},
 };
 use arctk_attr::file;
@@ -63,13 +62,13 @@ impl<'a> Link<'a, usize> for ArrayLinker {
 impl Display for ArrayLinker {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
-        writeln!(fmt, "...")?;
+        if !self.0.is_empty() {
+            write!(fmt, "{}{}", self.0[0].1, self.0[0].0)?;
 
-        let mut concs = Vec::with_capacity(self.0.len());
-        for (name, value) in &self.0 {
-            concs.push(format!("{}[{}]", value, name));
+            for (name, value) in self.0.iter().skip(1) {
+                write!(fmt, " {}{}", value, name)?;
+            }
         }
-        fmt_reports!(fmt, concs, "concentrations");
 
         Ok(())
     }
