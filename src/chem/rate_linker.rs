@@ -67,6 +67,6 @@ impl Display for RateLinker {
             }
         }
 
-        Ok(())
+        write!(fmt, " ([C]^{} /s)", self.power())
     }
 }
