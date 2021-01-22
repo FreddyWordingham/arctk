@@ -54,9 +54,9 @@ fn main() {
     section(term_width, "Running");
     let data = run::single_thread(concs, &input).expect("Failed to run cartographer.");
 
-    // section(term_width, "Saving");
-    // report!(data, "data");
-    // data.save(&out_dir).expect("Failed to save output data.");
+    section(term_width, "Saving");
+    report!(data, "data");
+    data.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }
