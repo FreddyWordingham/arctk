@@ -1,7 +1,8 @@
 //! Data table implementation.
 
 use crate::{access, err::Error, fs::Save};
-use std::{fmt::Display, fs::File, io::Write, ops::AddAssign, path::Path};
+use std::fmt::{Display, Formatter};
+use std::{fs::File, io::Write, ops::AddAssign, path::Path};
 
 /// Table of row data.
 pub struct Table<T> {
@@ -73,6 +74,31 @@ impl<T: Display> Save for Table<T> {
                 write!(file, ", {:>32}", x)?;
             }
             writeln!(file)?;
+        }
+
+        Ok(())
+    }
+}
+
+impl<T: Display> Display for Table<T> {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        write!(fmt, "{}", self.headings[0])?;
+        for heading in self.headings.iter().skip(1) {
+            write!(fmt, ",{}", heading)?;
+        }
+        writeln!(fmt)?;
+
+        for row in &self.rows {
+            let mut iter = row.iter();
+            if let Some(x) = iter.next() {
+                write!(fmt, "{:>32}", x)?;
+            }
+
+            for x in iter {
+                write!(fmt, ", {:>32}", x)?;
+            }
+            writeln!(fmt)?;
         }
 
         Ok(())
