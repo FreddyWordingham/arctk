@@ -35,7 +35,7 @@ impl Output {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(total_time: f64, reg: Register, num_steps: usize) -> Self {
+    pub fn new(total_time: f64, reg: &Register, num_steps: usize) -> Self {
         debug_assert!(total_time > 0.0);
         debug_assert!(num_steps > 0);
 
