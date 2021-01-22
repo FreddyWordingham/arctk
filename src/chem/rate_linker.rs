@@ -13,10 +13,10 @@ use std::fmt::{Display, Formatter};
 pub struct RateLinker(f64, Vec<(Name, f64)>);
 
 impl RateLinker {
-    /// Get the total power of the reaction.
+    /// Get the total order of the reaction.
     #[inline]
     #[must_use]
-    pub fn power(&self) -> f64 {
+    pub fn order(&self) -> f64 {
         let mut p = 0.0;
         for (_, c) in &self.1 {
             p += c;
@@ -66,6 +66,6 @@ impl Display for RateLinker {
             }
         }
 
-        write!(fmt, " ([C]^{} s^-1)", -self.power())
+        Ok(())
     }
 }

@@ -64,7 +64,11 @@ impl Display for ReactionLinker {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        fmt_report!(fmt, self.rate, "rate");
+        fmt_report!(
+            fmt,
+            self.rate,
+            &format!("rate ([C]^{} s^-1)", -self.rate.order())
+        );
 
         let mut rs = Vec::with_capacity(self.reactants.len());
         for (c, m) in &self.reactants {

@@ -60,6 +60,6 @@ impl Display for Rate {
             }
         }
 
-        write!(fmt, " ([C]^{} s^-1)", -self.order())
+        Ok(())
     }
 }
