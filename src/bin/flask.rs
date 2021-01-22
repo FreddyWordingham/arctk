@@ -23,12 +23,12 @@ fn main() {
     title(term_width, "Flask");
 
     let (in_dir, out_dir, params_path) = initialisation(term_width);
-    let params = input(term_width, &in_dir, &params_path);
+    let params = load_parameters(term_width, &in_dir, &params_path);
 
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
-    // let sett = params.sett;
-    // report!(sett, "settings");
+    let sett = params.sett;
+    report!(sett, "settings");
 
     sub_section(term_width, "Input");
     // let input = Input::new(&specs, &reactor, &sett);
@@ -64,9 +64,9 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     (in_dir, out_dir, params_path)
 }
 
-/// Retrieve the input parameters file structure.
-fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
-    section(term_width, "Input");
+/// Load the required files and form the input parameters.
+fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
+    section(term_width, "Parameters");
     sub_section(term_width, "Loading");
     let params = ParametersLoader::new_from_file(&in_dir.join(&params_path))
         .expect("Failed to load parameters file.")

@@ -43,7 +43,7 @@ impl Display for Rate {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
         let power = self.orders.len();
-        fmt_report!(fmt, self.k, &format!("rate ([C]^-{} s^-1)", power));
+        fmt_report!(fmt, self.k, &format!("rate ([C]^{} s^-1)", -(power as i32)));
 
         let mut orders = Vec::with_capacity(power);
         for &(c, m) in &self.orders {
