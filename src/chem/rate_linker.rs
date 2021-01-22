@@ -50,7 +50,7 @@ impl Display for RateLinker {
         fmt_report!(fmt, self.0, &format!("rate ([C]^-{} s^-1)", power));
 
         let mut orders = Vec::with_capacity(power);
-        for &(c, m) in &self.1 {
+        for (c, m) in &self.1 {
             orders.push(format!("[{}]^{}", c, m));
         }
         fmt_reports!(fmt, orders, "orders");

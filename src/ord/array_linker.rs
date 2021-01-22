@@ -59,7 +59,7 @@ impl Display for ArrayLinker {
         writeln!(fmt, "...")?;
 
         let mut concs = Vec::with_capacity(self.0.len());
-        for &(name, value) in &self.0 {
+        for (name, value) in &self.0 {
             concs.push(format!("{}[{}]", value, name));
         }
         fmt_reports!(fmt, concs, "concentrations");

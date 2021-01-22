@@ -51,7 +51,7 @@ impl Display for ReactorLinker {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        fmt_reports!(fmt, self.reacts, "reactions");
+        fmt_reports!(fmt, &self.reacts, "reactions");
         Ok(())
     }
 }
