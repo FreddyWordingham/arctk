@@ -57,25 +57,7 @@ impl<T: Display> Save for Table<T> {
     #[inline]
     fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = File::create(path)?;
-
-        write!(file, "{}", self.headings[0])?;
-        for heading in self.headings.iter().skip(1) {
-            write!(file, ",{}", heading)?;
-        }
-        writeln!(file)?;
-
-        for row in &self.rows {
-            let mut iter = row.iter();
-            if let Some(x) = iter.next() {
-                write!(file, "{:>32}", x)?;
-            }
-
-            for x in iter {
-                write!(file, ", {:>32}", x)?;
-            }
-            writeln!(file)?;
-        }
-
+        write!(file, "{}", self)?;
         Ok(())
     }
 }
