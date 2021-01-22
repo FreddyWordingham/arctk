@@ -1,8 +1,7 @@
 //! Rate structure.
 
-use crate::{fmt_report, fmt_reports};
 use ndarray::Array1;
-use std::fmt::{Display, Error, Formatter};
+use std::fmt::{Display, Formatter};
 
 /// Rate of reaction.
 #[derive(Debug, Clone)]
@@ -24,6 +23,17 @@ impl Rate {
         Self { k, orders }
     }
 
+    /// Get the total order of the reaction.
+    #[inline]
+    #[must_use]
+    pub fn order(&self) -> f64 {
+        let mut p = 0.0;
+        for (_, c) in &self.orders {
+            p += c;
+        }
+        p
+    }
+
     /// Calculate the current rate given the current concentrations.
     #[inline]
     #[must_use]
@@ -40,17 +50,16 @@ impl Rate {
 
 impl Display for Rate {
     #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
-        writeln!(fmt, "...")?;
-        let power = self.orders.len();
-        fmt_report!(fmt, self.k, &format!("rate ([C]^{} s^-1)", -(power as i32)));
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        write!(fmt, "{}", self.k)?;
 
-        let mut orders = Vec::with_capacity(power);
-        for &(c, m) in &self.orders {
-            orders.push(format!("[{}]^{}", c, m));
+        if !self.orders.is_empty() {
+            write!(fmt, " *")?;
+            for (c, m) in &self.orders {
+                write!(fmt, " {}^{}", c, m)?;
+            }
         }
-        fmt_reports!(fmt, orders, "orders");
 
-        Ok(())
+        write!(fmt, " ([C]^{} s^-1)", -self.order())
     }
 }
