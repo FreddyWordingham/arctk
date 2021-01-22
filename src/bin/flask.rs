@@ -42,10 +42,15 @@ fn main() {
     report!(reactor, "reactor");
 
     sub_section(term_width, "Input");
-    // let input = Input::new(&specs, &reactor, &sett);
-    // report!(input, "input");
+    let input = Input::new(&specs, &reactor, &sett);
+    report!(input, "input");
 
-    // run(term_width, params.op, &out_dir);
+    // section(term_width, "Running");
+    // let data = run::multi_thread(&input).expect("Failed to run cartographer.");
+
+    // section(term_width, "Saving");
+    // report!(data, "data");
+    // data.save(&out_dir).expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }
