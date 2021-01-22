@@ -45,15 +45,24 @@ impl<'a> Link<'a, usize> for RateLinker {
 impl Display for RateLinker {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
-        writeln!(fmt, "...")?;
-        let power = self.1.len();
-        fmt_report!(fmt, self.0, &format!("rate ([C]^-{} s^-1)", power));
+        write!(fmt, "{}", self.0)?;
 
-        let mut orders = Vec::with_capacity(power);
-        for (c, m) in &self.1 {
-            orders.push(format!("[{}]^{}", c, m));
+        if !self.1.is_empty() {
+            write!(fmt, " *")?;
+            for (c, m) in &self.1 {
+                write!(fmt, " {}^{}", c, m)?;
+            }
         }
-        fmt_reports!(fmt, orders, "orders");
+
+        // writeln!(fmt, "...")?;
+        // let power = self.1.len();
+        // fmt_report!(fmt, self.0, &format!("rate ([C]^-{} s^-1)", power));
+
+        // let mut orders = Vec::with_capacity(power);
+        // for (c, m) in &self.1 {
+        //     orders.push(format!("[{}]^{}", c, m));
+        // }
+        // fmt_reports!(fmt, orders, "orders");
 
         Ok(())
     }
