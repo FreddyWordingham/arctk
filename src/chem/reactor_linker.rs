@@ -3,7 +3,7 @@
 use crate::{
     chem::{ReactionLinker, Reactor},
     err::Error,
-    fmt_reports,
+    fmt_report,
     ord::{Link, Name, Set},
 };
 use arctk_attr::file;
@@ -48,7 +48,9 @@ impl Display for ReactorLinker {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        fmt_reports!(fmt, &self.0, "reactions");
+        for reaction in &self.0 {
+            fmt_report!(fmt, reaction, "->");
+        }
         Ok(())
     }
 }
