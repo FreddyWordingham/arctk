@@ -6,7 +6,7 @@ use arctk::{
     fs::{File, Load},
     ord::{Link, Register},
     report,
-    sim::flask::{Input, Parameters, ParametersLoader},
+    sim::flask::{run, Input, Parameters, ParametersLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -35,6 +35,12 @@ fn main() {
     report!(spec_reg, "species register");
 
     sub_section(term_width, "Linking");
+    let concs = params
+        .concs
+        .link(spec_reg.set())
+        .expect("Failed to link species to initial concentrations.");
+    report!(concs, "concs");
+
     let reactor = params
         .reactor
         .link(spec_reg.set())
@@ -45,8 +51,8 @@ fn main() {
     let input = Input::new(&spec_reg, &reactor, &sett);
     report!(input, "input");
 
-    // section(term_width, "Running");
-    // let data = run::multi_thread(&input).expect("Failed to run cartographer.");
+    section(term_width, "Running");
+    let data = run::single_thread(concs, &input).expect("Failed to run cartographer.");
 
     // section(term_width, "Saving");
     // report!(data, "data");
