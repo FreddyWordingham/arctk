@@ -55,9 +55,9 @@ required-features = ["terminal_size", "netcdf"]
 name = "cartographer"
 required-features = ["terminal_size", "netcdf"]
 
-# # [[bin]]
-# # name = "diffuse"
-# # required-features = ["netcdf", "terminal_size"]
+[[bin]]
+name = "diffuse"
+required-features = ["netcdf", "terminal_size"]
 
 [[bin]]
 name = "flask"

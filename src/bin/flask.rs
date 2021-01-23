@@ -1,5 +1,5 @@
 //! Chemical network simulation binary.
-//! Compute the time evolution of a set of reacting chemicals.
+//! Compute the time evolution of a set of reacting species.
 
 use arctk::{
     args,

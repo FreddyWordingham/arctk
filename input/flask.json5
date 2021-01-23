@@ -1,7 +1,7 @@
 {
     sett    : { Here    : {
         time    :   20.0,
-        dumps   :   1e1,
+        dumps   :   1e3,
     } },
     concs   : { Here    : [
             ["A", 1.0]
