@@ -55,10 +55,10 @@ impl Display for Reactor {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
         for (i, r) in self.rates.iter().enumerate() {
-            fmt_report!(fmt, r, format!("r{} ([C]^{} s^-1) ->", i, -r.order()));
+            fmt_report!(fmt, r, format!("k{} ([C]^{} s^-1) ->", i, -r.order()));
         }
         for (i, k) in self.coeffs.outer_iter().enumerate() {
-            fmt_report!(fmt, k, format!("k{} ->", i));
+            fmt_report!(fmt, k, format!("r{} ->", i));
         }
         Ok(())
     }
