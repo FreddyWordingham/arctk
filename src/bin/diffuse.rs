@@ -7,7 +7,6 @@ use arctk::{
     ord::Build,
     report,
     sim::diffuse::{Parameters, ParametersBuilderLoader},
-    // sim::diffuse::{run, Input, Parameters, ParametersLoader},
     util::{
         banner::{section, sub_section, title},
         dir,

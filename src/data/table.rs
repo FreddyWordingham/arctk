@@ -1,8 +1,13 @@
 //! Data table implementation.
 
 use crate::{access, err::Error, fs::Save};
-use std::fmt::{Display, Formatter};
-use std::{fs::File, io::Write, ops::AddAssign, path::Path};
+use std::{
+    fmt::{Display, Formatter},
+    fs::File,
+    io::Write,
+    ops::AddAssign,
+    path::Path,
+};
 
 /// Table of row data.
 pub struct Table<T> {

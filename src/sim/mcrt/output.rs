@@ -10,8 +10,11 @@ use crate::{
     util::datacube::display_datacube,
 };
 use ndarray::Array3;
-use std::fmt::{Display, Formatter};
-use std::{ops::AddAssign, path::Path};
+use std::{
+    fmt::{Display, Formatter},
+    ops::AddAssign,
+    path::Path,
+};
 
 /// MCRT output data.
 pub struct Output {

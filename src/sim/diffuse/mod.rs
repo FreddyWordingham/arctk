@@ -7,9 +7,6 @@ pub mod parameters_builder_loader;
 // pub mod run;
 pub mod settings;
 
-pub use self::input::*;
-pub use self::parameters::*;
-pub use self::parameters_builder::*;
-pub use self::parameters_builder_loader::*;
+pub use self::{input::*, parameters::*, parameters_builder::*, parameters_builder_loader::*};
 // pub use self::run::*;
 pub use self::settings::*;
