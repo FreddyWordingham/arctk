@@ -7,7 +7,7 @@ use crate::{
     fs::Save,
     geom::Cube,
     ord::{X, Y, Z},
-    util::fmt::datacube::display_datacube,
+    util::datacube::display_datacube,
 };
 use ndarray::Array3;
 use std::fmt::{Display, Formatter};
