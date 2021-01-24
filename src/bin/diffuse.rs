@@ -6,7 +6,7 @@ use arctk::{
     fs::{File, Load},
     ord::Build,
     report,
-    sim::diffuse::{Parameters, ParametersBuilderLoader},
+    sim::diffuse::{Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -23,12 +23,15 @@ fn main() {
     title(term_width, "Diffuse");
 
     let (in_dir, _out_dir, params_path) = initialisation(term_width);
-    let _params = load_parameters(term_width, &in_dir, &params_path);
+    let params = load_parameters(term_width, &in_dir, &params_path);
 
-    // section(term_width, "Input");
-    // sub_section(term_width, "Reconstruction");
-    // let sett = params.sett;
-    // report!(sett, "settings");
+    section(term_width, "Input");
+    sub_section(term_width, "Reconstruction");
+    let sett = params.sett;
+    report!(sett, "settings");
+
+    let coeffs = params.coeffs;
+    report!(coeffs, "diffusion coefficents");
 
     // sub_section(term_width, "Registration");
     // let spec_reg = Register::new(params.reactor.requires());
@@ -47,9 +50,9 @@ fn main() {
     //     .expect("Failed to link species to reactor.");
     // report!(reactor, "reactor");
 
-    // sub_section(term_width, "Input");
-    // let input = Input::new(&spec_reg, &reactor, &sett);
-    // report!(input, "input");
+    sub_section(term_width, "Input");
+    let input = Input::new(&coeffs, &sett);
+    report!(input, "input");
 
     // section(term_width, "Running");
     // let data = run::single_thread(concs, &input).expect("Failed to run cartographer.");
