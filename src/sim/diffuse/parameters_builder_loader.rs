@@ -3,25 +3,29 @@
 use crate::{
     err::Error,
     fs::{Load, Redirect},
-    sim::diffuse::{Parameters, Settings},
+    geom::GridBuilder,
+    sim::diffuse::{ParametersBuilder, Settings},
 };
 use arctk_attr::file;
 use std::path::Path;
 
 /// Loadable runtime parameters.
 #[file]
-pub struct ParametersLoader {
+pub struct ParametersBuilderLoader {
     /// Simulation specific settings.
     sett: Redirect<Settings>,
+    /// Measurement grid settings.
+    grid: Redirect<GridBuilder>,
 }
 
-impl Load for ParametersLoader {
-    type Inst = Parameters;
+impl Load for ParametersBuilderLoader {
+    type Inst = ParametersBuilder;
 
     #[inline]
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let sett = self.sett.load(in_dir)?;
+        let grid = self.grid.load(in_dir)?;
 
-        Ok(Self::Inst::new(sett))
+        Ok(Self::Inst::new(sett, grid))
     }
 }
