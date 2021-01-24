@@ -1,6 +1,7 @@
 {
     // op  : { Zero    : [256, 256, 256] },
     // op  : { Unit    : [256, 256, 256] },
+    op  : { Point   : [127, 127, 127] },
     // op  : { Sum     : ["../output/map_{air}.nc", "../output/map_{tumour}.nc"] },
-    op  : { Info    : "../output/map_{tumour}.nc" },
+    // op  : { Info    : "../output/map_{tumour}.nc" },
 }
