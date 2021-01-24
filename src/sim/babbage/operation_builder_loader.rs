@@ -23,10 +23,12 @@ use std::{
 pub enum OperationBuilderLoader {
     /// Report information about a data cube.
     Info(PathBuf),
-    /// Generate a zero cube of the giver resolution.
+    /// Generate a zero cube of the given resolution.
     Zero([usize; 3]),
-    /// Generate a unit cube of the giver resolution.
+    /// Generate a unit cube of the given resolution.
     Unit([usize; 3]),
+    /// Generate a zero cube, with a point at the center, of the given resolution.
+    Point([usize; 3]),
     /// Sum cubes together.
     Sum(Vec<PathBuf>),
     /// Add a value to the data cube.
@@ -55,6 +57,7 @@ impl Load for OperationBuilderLoader {
             }
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
+            Self::Point(res) => Self::Inst::Point(res),
             Self::Sum(data_paths) => {
                 let mut cubes = Vec::with_capacity(data_paths.len());
                 for d in &data_paths {
@@ -112,6 +115,9 @@ impl Display for OperationBuilderLoader {
             }
             Self::Unit(res) => {
                 write!(fmt, "Unit: [{} x {} x {}]", res[X], res[Y], res[Z])
+            }
+            Self::Point(res) => {
+                write!(fmt, "Point: [{} x {} x {}]", res[X], res[Y], res[Z])
             }
             Self::Sum(ref data_paths) => {
                 write!(fmt, "Sum: [")?;
