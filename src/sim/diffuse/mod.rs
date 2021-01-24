@@ -1,6 +1,7 @@
 //! Diffusion chamber module.
 
 pub mod input;
+pub mod output;
 pub mod parameters;
 pub mod parameters_builder;
 pub mod parameters_builder_loader;
@@ -9,6 +10,6 @@ pub mod settings;
 pub mod stencil;
 
 pub use self::{
-    input::*, parameters::*, parameters_builder::*, parameters_builder_loader::*, run::*,
-    settings::*, stencil::*,
+    input::*, output::*, parameters::*, parameters_builder::*, parameters_builder_loader::*,
+    run::*, settings::*, stencil::*,
 };

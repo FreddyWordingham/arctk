@@ -28,13 +28,8 @@ fn main() {
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
-    report!(sett, "settings");
-
     let coeffs = params.coeffs;
-    report!(coeffs, "diffusion coefficents");
-
-    let concs = params.init;
-    report!(concs, "initial concentrations");
+    let _concs = params.init;
 
     sub_section(term_width, "Input");
     let input = Input::new(&coeffs, &sett);
