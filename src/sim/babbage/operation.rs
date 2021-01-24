@@ -21,10 +21,12 @@ use std::{
 pub enum Operation {
     /// Report information about data cube.
     Info(Array3<f64>),
-    /// Generate a zero cube of the giver resolution.
+    /// Generate a zero cube of the given resolution.
     Zero([usize; 3]),
-    /// Generate a unit cube of the giver resolution.
+    /// Generate a unit cube of the given resolution.
     Unit([usize; 3]),
+    /// Generate a zero cube, with a point at the center, of the given resolution.
+    Point([usize; 3]),
     /// Sum cubes together.
     Sum(Vec<Array3<f64>>),
     /// Add a value to the data cube.
@@ -67,6 +69,12 @@ impl Operation {
             }
             Self::Zero(res) => Array3::<f64>::zeros(res).save(&out_dir.join("output.nc")),
             Self::Unit(res) => (Array3::<f64>::zeros(res) + 1.0).save(&out_dir.join("output.nc")),
+            Self::Point(res) => {
+                let mut a = Array3::<f64>::zeros(res);
+                a[[res[X] / 2, res[Y] / 2, res[Z] / 2]] = 1.0;
+                a
+            }
+            .save(&out_dir.join("output.nc")),
             Self::Sum(ref data) => {
                 let mut base = data[0].clone();
                 for d in data.iter().skip(1) {
@@ -112,6 +120,9 @@ impl Display for Operation {
             }
             Self::Unit(res) => {
                 write!(fmt, "Unit: [{} x {} x {}]", res[X], res[Y], res[Z])
+            }
+            Self::Point(res) => {
+                write!(fmt, "Point: [{} x {} x {}]", res[X], res[Y], res[Z])
             }
             Self::Sum(ref cubes) => {
                 writeln!(fmt, "Sum...")?;

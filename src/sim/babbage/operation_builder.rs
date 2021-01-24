@@ -15,9 +15,9 @@ use std::fmt::{Display, Formatter};
 pub enum OperationBuilder {
     /// Report information about data cube.
     Info(Array3<f64>),
-    /// Generate a zero cube of the giver resolution.
+    /// Generate a zero cube of the given resolution.
     Zero([usize; 3]),
-    /// Generate a unit cube of the giver resolution.
+    /// Generate a unit cube of the given resolution.
     Unit([usize; 3]),
     /// Generate a zero cube, with a point at the center, of the given resolution.
     Point([usize; 3]),
