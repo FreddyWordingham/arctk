@@ -19,6 +19,8 @@ pub enum OperationBuilder {
     Zero([usize; 3]),
     /// Generate a unit cube of the giver resolution.
     Unit([usize; 3]),
+    /// Generate a zero cube, with a point at the center, of the given resolution.
+    Point([usize; 3]),
     /// Sum cubes together.
     Sum(Vec<Array3<f64>>),
     /// Add a value to the data cube.
@@ -44,6 +46,7 @@ impl Build for OperationBuilder {
             Self::Info(cube) => Self::Inst::Info(cube),
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
+            Self::Point(res) => Self::Inst::Point(res),
             Self::Sum(cubes) => Self::Inst::Sum(cubes),
             Self::Add(cube, x) => Self::Inst::Add(cube, x),
             Self::Sub(cube, x) => Self::Inst::Sub(cube, x),
@@ -71,6 +74,9 @@ impl Display for OperationBuilder {
             }
             Self::Unit(res) => {
                 write!(fmt, "Unit: [{} x {} x {}]", res[X], res[Y], res[Z])
+            }
+            Self::Point(res) => {
+                write!(fmt, "Point: [{} x {} x {}]", res[X], res[Y], res[Z])
             }
             Self::Sum(ref cubes) => {
                 writeln!(fmt, "Sum...")?;
