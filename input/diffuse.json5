@@ -1,0 +1,9 @@
+{
+    sett    : { Here    : {
+        time    :   20.0,
+        dumps   :   1e3,
+    } },
+    grid    : { There   : 'settings/grid_8mm_64.json5' },
+    init    : "point.nc",
+    coeffs  : "unit.nc",
+}
