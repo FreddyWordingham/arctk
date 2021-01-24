@@ -5,8 +5,10 @@ use crate::{
     geom::GridBuilder,
     ord::Build,
     sim::diffuse::{Parameters, Settings},
+    util::datacube::display_datacube,
 };
 use arctk_attr::file;
+use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
 /// Loadable runtime parameters.
@@ -16,14 +18,28 @@ pub struct ParametersBuilder {
     sett: Settings,
     /// Measurement grid settings.
     grid: GridBuilder,
+    /// Initial concentration map.
+    init: Array3<f64>,
+    /// Diffusion coefficents map.
+    coeffs: Array3<f64>,
 }
 
 impl ParametersBuilder {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(sett: Settings, grid: GridBuilder) -> Self {
-        Self { sett, grid }
+    pub const fn new(
+        sett: Settings,
+        grid: GridBuilder,
+        init: Array3<f64>,
+        coeffs: Array3<f64>,
+    ) -> Self {
+        Self {
+            sett,
+            grid,
+            init,
+            coeffs,
+        }
     }
 }
 
@@ -34,8 +50,10 @@ impl Build for ParametersBuilder {
     fn build(self) -> Self::Inst {
         let sett = self.sett;
         let grid = self.grid.build();
+        let init = self.init;
+        let coeffs = self.coeffs;
 
-        Self::Inst::new(sett, grid)
+        Self::Inst::new(sett, grid, init, coeffs)
     }
 }
 
@@ -45,6 +63,10 @@ impl Display for ParametersBuilder {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid settings");
+        writeln!(fmt, "initial values...")?;
+        display_datacube(fmt, &self.init)?;
+        writeln!(fmt, "diffusion coefficients...")?;
+        display_datacube(fmt, &self.coeffs)?;
         Ok(())
     }
 }

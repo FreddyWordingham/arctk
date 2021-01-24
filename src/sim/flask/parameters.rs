@@ -8,7 +8,7 @@ pub struct Parameters {
     /// Simulation specific settings.
     pub sett: Settings,
     /// Initial concentrations.
-    pub concs: ArrayLinker,
+    pub init: ArrayLinker,
     /// Reactions.
     pub reactor: ReactorLinker,
 }
@@ -18,10 +18,10 @@ impl Parameters {
     #[allow(clippy::too_many_arguments)]
     #[must_use]
     #[inline]
-    pub const fn new(sett: Settings, concs: ArrayLinker, reactor: ReactorLinker) -> Self {
+    pub const fn new(sett: Settings, init: ArrayLinker, reactor: ReactorLinker) -> Self {
         Self {
             sett,
-            concs,
+            init,
             reactor,
         }
     }
@@ -32,7 +32,7 @@ impl Display for Parameters {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
-        fmt_report!(fmt, self.concs, "concentrations");
+        fmt_report!(fmt, self.init, "initial values");
         fmt_report!(fmt, self.reactor, "reactor");
         Ok(())
     }

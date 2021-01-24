@@ -36,7 +36,7 @@ fn main() {
 
     sub_section(term_width, "Linking");
     let concs = params
-        .concs
+        .init
         .link(spec_reg.set())
         .expect("Failed to link species to initial concentrations.");
     report!(concs, "concs");

@@ -16,7 +16,7 @@ pub struct ParametersLoader {
     /// Simulation specific settings.
     sett: Redirect<Settings>,
     /// Initial concentrations.
-    concs: Redirect<ArrayLinker>,
+    init: Redirect<ArrayLinker>,
     /// Reactions.
     reactor: Redirect<ReactorLinker>,
 }
@@ -27,9 +27,9 @@ impl Load for ParametersLoader {
     #[inline]
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let sett = self.sett.load(in_dir)?;
-        let concs = self.concs.load(in_dir)?;
+        let init = self.init.load(in_dir)?;
         let reactor = self.reactor.load(in_dir)?;
 
-        Ok(Self::Inst::new(sett, concs, reactor))
+        Ok(Self::Inst::new(sett, init, reactor))
     }
 }
