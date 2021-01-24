@@ -2,14 +2,12 @@
 
 use crate::{
     err::Error,
-    geom::Grid,
     math::Vec3,
     ord::{X, Y},
-    sim::diffuse::{stencil::Grad, Input, Output},
-    tools::{linear_to_three_dim, ProgressBar, SilentProgressBar},
+    sim::diffuse::{stencil::Grad, Input},
+    tools::SilentProgressBar,
 };
 use ndarray::Array3;
-use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 

@@ -3,7 +3,7 @@
 
 use arctk::{
     args,
-    fs::{File, Load},
+    fs::{File, Load, Save},
     ord::Build,
     report,
     sim::diffuse::{run, Input, Parameters, ParametersBuilderLoader},
@@ -22,7 +22,7 @@ fn main() {
     let term_width = arctk::util::term::width().unwrap_or(80);
     title(term_width, "Diffuse");
 
-    let (in_dir, _out_dir, params_path) = initialisation(term_width);
+    let (in_dir, out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
 
     section(term_width, "Input");
@@ -40,10 +40,10 @@ fn main() {
     let data = run::multi_thread(&input, concs).expect("Failed to run diffuse simulation.");
     // let data = run::single_thread(&input,concs).expect("Failed to run diffuse simulation.");
 
-    // section(term_width, "Saving");
-    // report!(data, "data");
-    // data.save(&out_dir.join("concs.csv"))
-    //     .expect("Failed to save output data.");
+    section(term_width, "Saving");
+    report!(data, "data");
+    data.save(&out_dir.join("final.nc"))
+        .expect("Failed to save output data.");
 
     section(term_width, "Finished");
 }
