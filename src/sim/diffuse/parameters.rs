@@ -11,9 +11,9 @@ pub struct Parameters {
     /// Measurement grid.
     pub grid: Grid,
     /// Initial concentration map.
-    init: Array3<f64>,
+    pub init: Array3<f64>,
     /// Diffusion coefficents map.
-    coeffs: Array3<f64>,
+    pub coeffs: Array3<f64>,
 }
 
 impl Parameters {
