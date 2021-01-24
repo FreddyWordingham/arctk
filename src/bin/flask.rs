@@ -52,7 +52,7 @@ fn main() {
     report!(input, "input");
 
     section(term_width, "Running");
-    let data = run::single_thread(concs, &input).expect("Failed to run cartographer.");
+    let data = run::single_thread(concs, &input).expect("Failed to run flask simulation.");
 
     section(term_width, "Saving");
     report!(data, "data");

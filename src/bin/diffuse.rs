@@ -6,7 +6,7 @@ use arctk::{
     fs::{File, Load},
     ord::Build,
     report,
-    sim::diffuse::{Input, Parameters, ParametersBuilderLoader},
+    sim::diffuse::{run, Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -28,15 +28,17 @@ fn main() {
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
+    let grid = params.grid;
     let coeffs = params.coeffs;
-    let _concs = params.init;
+    let concs = params.init;
 
     sub_section(term_width, "Input");
-    let input = Input::new(&coeffs, &sett);
+    let input = Input::new(&coeffs, &grid, &sett);
     report!(input, "input");
 
-    // section(term_width, "Running");
-    // let data = run::single_thread(concs, &input).expect("Failed to run cartographer.");
+    section(term_width, "Running");
+    let data = run::multi_thread(&input, concs).expect("Failed to run diffuse simulation.");
+    // let data = run::single_thread(&input,concs).expect("Failed to run diffuse simulation.");
 
     // section(term_width, "Saving");
     // report!(data, "data");
