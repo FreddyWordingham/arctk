@@ -33,22 +33,8 @@ fn main() {
     let coeffs = params.coeffs;
     report!(coeffs, "diffusion coefficents");
 
-    // sub_section(term_width, "Registration");
-    // let spec_reg = Register::new(params.reactor.requires());
-    // report!(spec_reg, "species register");
-
-    // sub_section(term_width, "Linking");
-    // let concs = params
-    //     .concs
-    //     .link(spec_reg.set())
-    //     .expect("Failed to link species to initial concentrations.");
-    // report!(concs, "concs");
-
-    // let reactor = params
-    //     .reactor
-    //     .link(spec_reg.set())
-    //     .expect("Failed to link species to reactor.");
-    // report!(reactor, "reactor");
+    let concs = params.init;
+    report!(concs, "initial concentrations");
 
     sub_section(term_width, "Input");
     let input = Input::new(&coeffs, &sett);

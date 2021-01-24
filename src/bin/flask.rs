@@ -39,7 +39,7 @@ fn main() {
         .init
         .link(spec_reg.set())
         .expect("Failed to link species to initial concentrations.");
-    report!(concs, "concs");
+    report!(concs, "initial concentrations");
 
     let reactor = params
         .reactor
