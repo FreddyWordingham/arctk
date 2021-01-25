@@ -1,7 +1,8 @@
 {
     sett    : { Here    : {
-        time    :   20.0,
-        dumps   :   1e3,
+        time        :   20.0,
+        dumps       :   1e1,
+        block_size  :   1e3,
     } },
     grid    : { There   : 'settings/grid_8mm_127.json5' },
     init    : "point.nc",
