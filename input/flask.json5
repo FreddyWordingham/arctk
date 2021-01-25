@@ -2,8 +2,9 @@
     sett    : { Here    : {
         time    :   20.0,
         dumps   :   1e3,
+        quality :   0.8
     } },
-    concs   : { Here    : [
+    init    : { Here    : [
             ["A", 1.0]
     ] },
     reactor: { Here     : [
