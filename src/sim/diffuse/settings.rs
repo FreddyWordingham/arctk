@@ -31,7 +31,7 @@ impl Settings {
         debug_assert!(time > 0.0);
         debug_assert!(dumps > 0);
         debug_assert!(quality > 0.0);
-        debug_assert!(quality <> 1.0);
+        debug_assert!(quality < 1.0);
 
         Self {
             block_size,
