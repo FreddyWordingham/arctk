@@ -38,10 +38,8 @@ fn main() {
 
     section(term_width, "Running");
     let data = run::multi_thread(&input, concs).expect("Failed to run diffuse simulation.");
-    // let data = run::single_thread(&input,concs).expect("Failed to run diffuse simulation.");
 
     section(term_width, "Saving");
-    report!(data, "data");
     data.save(&out_dir.join("final.nc"))
         .expect("Failed to save output data.");
 

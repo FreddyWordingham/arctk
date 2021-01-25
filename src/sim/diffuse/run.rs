@@ -5,9 +5,10 @@ use crate::{
     math::Vec3,
     ord::{X, Y},
     sim::diffuse::{stencil::Grad, Input},
-    tools::SilentProgressBar,
+    tools::{ProgressBar, SilentProgressBar},
 };
 use ndarray::Array3;
+use ndarray_stats::QuantileExt;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
@@ -16,40 +17,53 @@ use std::sync::{Arc, Mutex};
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn multi_thread(input: &Input, values: Array3<f64>) -> Result<Array3<f64>, Error> {
-    let pb = SilentProgressBar::new(input.grid.num_cells());
-    let pb = Arc::new(Mutex::new(pb));
+pub fn multi_thread(input: &Input, mut values: Array3<f64>) -> Result<Array3<f64>, Error> {
+    let spb = SilentProgressBar::new(input.grid.num_cells());
+    let spb = Arc::new(Mutex::new(spb));
 
     let threads: Vec<_> = (0..num_cpus::get()).collect();
-    let mut out: Vec<_> = threads
-        .par_iter()
-        .map(|_id| thread(input, &values, &Arc::clone(&pb)))
-        .collect();
 
-    let mut data = out.pop().expect("No data received.");
-    while let Some(o) = out.pop() {
-        data += &o;
+    let voxel_size = input.grid.voxel_size();
+    let voxel_size_sq = Vec3::new(
+        voxel_size.x * voxel_size.x,
+        voxel_size.y * voxel_size.y,
+        voxel_size.z * voxel_size.z,
+    );
+    let min_voxel_size_sq = voxel_size_sq.min();
+
+    let max_coeff = input
+        .coeffs
+        .max()
+        .expect("Failed to determine maximum coefficient.");
+    let max_dt = min_voxel_size_sq / (4.0 * max_coeff * max_coeff);
+
+    let dt = max_dt * 0.1;
+    let num_steps = (input.sett.time() / dt) as usize;
+    let mut pb = ProgressBar::new("Diffusing", num_steps);
+    for _n in 0..num_steps {
+        let mut out: Vec<_> = threads
+            .par_iter()
+            .map(|_id| thread(input, &values, &Arc::clone(&spb)))
+            .collect();
+
+        let mut rates = out.pop().expect("No data received.");
+        while let Some(o) = out.pop() {
+            rates += &o;
+        }
+
+        values += &(&rates * dt);
+        pb.tick();
     }
+    pb.finish_with_message("Simulation complete.");
 
-    Ok(data)
-}
-
-/// Run a MCRT simulation using a single thread.
-/// # Errors
-/// if the progress bar can not be locked.
-#[inline]
-pub fn single_thread(input: &Input, values: Array3<f64>) -> Result<Array3<f64>, Error> {
-    let pb = SilentProgressBar::new(input.grid.num_cells());
-    let pb = Arc::new(Mutex::new(pb));
-
-    Ok(thread(input, &values, &pb))
+    Ok(values)
 }
 
 /// Thread control function.
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-fn thread(input: &Input, values: &Array3<f64>, pb: &Arc<Mutex<SilentProgressBar>>) -> Array3<f64> {
+fn thread(input: &Input, values: &Array3<f64>, spb: &Arc<Mutex<SilentProgressBar>>) -> Array3<f64> {
     let rates = Array3::zeros(*input.grid.res());
     let voxel_size = input.grid.voxel_size();
     let voxel_size_sq = Vec3::new(
@@ -59,7 +73,7 @@ fn thread(input: &Input, values: &Array3<f64>, pb: &Arc<Mutex<SilentProgressBar>
     );
 
     diff_rate(
-        pb,
+        spb,
         input.sett.block_size(),
         &voxel_size_sq,
         values,
@@ -73,7 +87,7 @@ fn thread(input: &Input, values: &Array3<f64>, pb: &Arc<Mutex<SilentProgressBar>
 #[inline]
 #[must_use]
 fn diff_rate(
-    pb: &Arc<Mutex<SilentProgressBar>>,
+    spb: &Arc<Mutex<SilentProgressBar>>,
     block_size: usize,
     cell_size_sq: &Vec3,
     values: &Array3<f64>,
@@ -82,9 +96,9 @@ fn diff_rate(
 ) -> Array3<f64> {
     let res = values.shape();
     while let Some((start, end)) = {
-        let mut pb = pb.lock().expect("Could not lock progress bar.");
-        let b = pb.block(block_size);
-        std::mem::drop(pb);
+        let mut spb = spb.lock().expect("Could not lock progress bar.");
+        let b = spb.block(block_size);
+        std::mem::drop(spb);
         b
     } {
         for n in start as usize..end as usize {
