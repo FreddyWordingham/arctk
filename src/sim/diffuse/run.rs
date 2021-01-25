@@ -2,6 +2,7 @@
 
 use crate::{
     err::Error,
+    fs::Save,
     math::Vec3,
     ord::{X, Y},
     sim::diffuse::{stencil::Grad, Input},
@@ -9,13 +10,36 @@ use crate::{
 };
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
+use std::path::PathBuf;
 
 /// Run a single-threaded Diffuse simulation.
 /// # Errors
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn single_thread(input: &Input, mut values: Array3<f64>) -> Result<Array3<f64>, Error> {
+pub fn single_thread(
+    out_dir: &PathBuf,
+    input: &Input,
+    mut values: Array3<f64>,
+) -> Result<Array3<f64>, Error> {
+    let steps = input.sett.dumps();
+    let step_time = input.sett.time() / steps as f64;
+    for n in 0..steps {
+        values = thread(input, values, step_time)?;
+        values.save(&out_dir.join(&format!("{:03}_diff.nc", n)))?;
+    }
+
+    Ok(values)
+}
+
+/// Run a single-threaded Diffuse simulation.
+/// # Errors
+/// if the progress bar can not be locked.
+#[allow(clippy::expect_used)]
+#[inline]
+pub fn thread(input: &Input, mut values: Array3<f64>, time: f64) -> Result<Array3<f64>, Error> {
+    debug_assert!(time > 0.0);
+
     let voxel_size = input.grid.voxel_size();
     let voxel_size_sq = Vec3::new(
         voxel_size.x * voxel_size.x,
@@ -31,8 +55,8 @@ pub fn single_thread(input: &Input, mut values: Array3<f64>) -> Result<Array3<f6
     let max_dt = min_voxel_size_sq / (4.0 * max_coeff * max_coeff);
 
     let dt = max_dt * (1.0 - input.sett.quality());
-    let num_steps = (input.sett.time() / dt) as usize;
-    let dt = input.sett.time() / num_steps as f64;
+    let num_steps = (time / dt) as usize;
+    let dt = time / num_steps as f64;
 
     let mut pb = ProgressBar::new("Diffusing", num_steps);
     let mut rate = Array3::zeros(*input.grid.res());
