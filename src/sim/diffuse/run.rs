@@ -4,14 +4,11 @@ use crate::{
     err::Error,
     math::Vec3,
     ord::{X, Y},
-    report,
     sim::diffuse::{stencil::Grad, Input},
-    tools::{ProgressBar, SilentProgressBar},
+    tools::ProgressBar,
 };
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
-use rayon::prelude::*;
-use std::sync::{Arc, Mutex};
 
 /// Run a single-threaded Diffuse simulation.
 /// # Errors
@@ -61,8 +58,6 @@ fn rates(input: &Input, values: &Array3<f64>, mut rates: Array3<f64>) -> Array3<
         voxel_size.y * voxel_size.y,
         voxel_size.z * voxel_size.z,
     );
-
-    for n in rates.iter_mut().enumerate() {}
 
     let length = values.len();
     for n in 0..length {

@@ -26,7 +26,7 @@ impl Settings {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(block_size: usize, time: f64, dumps: usize) -> Self {
+    pub fn new(block_size: usize, time: f64, dumps: usize, accuracy: f64) -> Self {
         debug_assert!(block_size > 0);
         debug_assert!(time > 0.0);
         debug_assert!(dumps > 0);

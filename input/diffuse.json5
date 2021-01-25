@@ -3,6 +3,7 @@
         time        :   1e-1,
         dumps       :   1e1,
         block_size  :   1e1,
+        accuracy    :   0.9,
     } },
     // grid    : { There   : 'settings/grid_8mm_127.json5' },
     grid    : { There   : 'settings/grid_10cm_31.json5' },
