@@ -1,12 +1,11 @@
 {
     sett    : { Here    : {
-        // time        :   10.0,
-        time        :   1e0,
+        time        :   1e2,
         dumps       :   1e1,
-        block_size  :   1e3,
+        block_size  :   1e1,
     } },
     // grid    : { There   : 'settings/grid_8mm_127.json5' },
-    grid    : { There   : 'settings/grid_10cm_127.json5' },
+    grid    : { There   : 'settings/grid_10cm_31.json5' },
     init    : "point_50.nc",
     coeffs  : "tenth.nc",
 }

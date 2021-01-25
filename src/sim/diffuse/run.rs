@@ -4,6 +4,7 @@ use crate::{
     err::Error,
     math::Vec3,
     ord::{X, Y},
+    report,
     sim::diffuse::{stencil::Grad, Input},
     tools::{ProgressBar, SilentProgressBar},
 };
@@ -30,17 +31,22 @@ pub fn multi_thread(input: &Input, mut values: Array3<f64>) -> Result<Array3<f64
         voxel_size.z * voxel_size.z,
     );
     let min_voxel_size_sq = voxel_size_sq.min();
+    report!(min_voxel_size_sq);
 
     let max_coeff = input
         .coeffs
         .max()
         .expect("Failed to determine maximum coefficient.");
+    report!(max_coeff);
     let max_dt = min_voxel_size_sq / (4.0 * max_coeff * max_coeff);
+    report!(max_dt);
 
     let dt = max_dt * 0.1;
     let num_steps = (input.sett.time() / dt) as usize;
+    let dt = input.sett.time() / num_steps as f64;
+    report!(dt);
     let mut pb = ProgressBar::new("Diffusing", num_steps);
-    for _n in 0..num_steps {
+    for _n in 0..10 {
         let mut out: Vec<_> = threads
             .par_iter()
             .map(|_id| thread(input, &values, &Arc::clone(&spb)))
@@ -51,8 +57,21 @@ pub fn multi_thread(input: &Input, mut values: Array3<f64>) -> Result<Array3<f64
             rates += &o;
         }
 
+        {
+            let index = [15, 15, 15];
+            let stencil = Grad::new(index, &values);
+            let rate = stencil.rate(input.coeffs[index], &voxel_size_sq);
+
+            report!(stencil);
+            report!(rate);
+            report!(rates);
+            report!(rates[[15, 15, 15]]);
+            report!(values[[15, 15, 15]]);
+        }
+
         values += &(&rates * dt);
         pb.tick();
+        // panic!("TETS");
     }
     pb.finish_with_message("Simulation complete.");
 
