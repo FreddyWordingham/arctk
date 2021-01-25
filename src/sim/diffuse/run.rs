@@ -64,7 +64,7 @@ pub fn multi_thread(input: &Input, mut values: Array3<f64>) -> Result<Array3<f64
 #[inline]
 #[must_use]
 fn thread(input: &Input, values: &Array3<f64>, spb: &Arc<Mutex<SilentProgressBar>>) -> Array3<f64> {
-    let rates = Array3::zeros(*input.grid.res());
+    let res = *input.grid.res();
     let voxel_size = input.grid.voxel_size();
     let voxel_size_sq = Vec3::new(
         voxel_size.x * voxel_size.x,
@@ -72,29 +72,9 @@ fn thread(input: &Input, values: &Array3<f64>, spb: &Arc<Mutex<SilentProgressBar
         voxel_size.z * voxel_size.z,
     );
 
-    diff_rate(
-        spb,
-        input.sett.block_size(),
-        &voxel_size_sq,
-        values,
-        input.coeffs,
-        rates,
-    )
-}
+    let block_size = input.sett.block_size();
 
-/// Calculate the diffusion rates for each cell.
-#[allow(clippy::expect_used)]
-#[inline]
-#[must_use]
-fn diff_rate(
-    spb: &Arc<Mutex<SilentProgressBar>>,
-    block_size: usize,
-    cell_size_sq: &Vec3,
-    values: &Array3<f64>,
-    coeffs: &Array3<f64>,
-    mut rate: Array3<f64>,
-) -> Array3<f64> {
-    let res = values.shape();
+    let mut rate = Array3::zeros(res);
     while let Some((start, end)) = {
         let mut spb = spb.lock().expect("Could not lock progress bar.");
         let b = spb.block(block_size);
@@ -109,8 +89,7 @@ fn diff_rate(
             let index = [xi, yi, zi];
 
             let stencil = Grad::new(index, values);
-            let r = stencil.rate(coeffs[index], cell_size_sq);
-            rate[index] = r;
+            rate[index] = stencil.rate(input.coeffs[index], &voxel_size_sq);
         }
     }
 
