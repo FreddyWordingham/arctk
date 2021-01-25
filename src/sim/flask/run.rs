@@ -11,7 +11,7 @@ use ndarray_stats::QuantileExt;
 pub fn single_thread(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
     let steps = input.sett.dumps();
     let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
-    let quality = input.sett.quality();
+    let quality = 1.0 - input.sett.quality();
     let min_time = input.sett.min_time();
 
     let mut records = Vec::with_capacity(steps + 1);
@@ -119,7 +119,7 @@ fn evolve_rk4(
         k1 = reactor.deltas(&concs);
 
         let dt = ((&concs / &k1)
-            .min()
+            .max()
             .expect("Failed to determine minimum rate of change.")
             * quality)
             .max(min_time)

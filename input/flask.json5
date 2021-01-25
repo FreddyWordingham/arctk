@@ -1,11 +1,15 @@
 {
     sett    : { Here    : {
-        time    :   20.0,
-        dumps   :   1e3,
-        quality :   0.8
+        time        :   20.0,
+        dumps       :   1e2,
+        quality     :   0.99,
+        // quality     :   0.001,
+        min_time    :   1e-6
     } },
     init    : { Here    : [
-            ["A", 1.0]
+            ["A", 1.0],
+            ["B", 1.0e-6],
+            ["C", 1.0e-6],
     ] },
     reactor: { Here     : [
         // {
