@@ -1,6 +1,6 @@
 {
     sett    : { Here    : {
-        time        :   1e2,
+        time        :   1e-1,
         dumps       :   1e1,
         block_size  :   1e1,
     } },

@@ -13,12 +13,15 @@ pub struct Settings {
     time: f64,
     /// Number of intermediate dumps.
     dumps: usize,
+    /// Accuracy parameter [0:1].
+    accuracy: f64,
 }
 
 impl Settings {
     clone!(block_size, usize);
     clone!(time, f64);
     clone!(dumps, usize);
+    clone!(accuracy, f64);
 
     /// Construct a new instance.
     #[inline]
@@ -27,11 +30,14 @@ impl Settings {
         debug_assert!(block_size > 0);
         debug_assert!(time > 0.0);
         debug_assert!(dumps > 0);
+        debug_assert!(accuracy > 0.0);
+        debug_assert!(accuracy <= 1.0);
 
         Self {
             block_size,
             time,
             dumps,
+            accuracy,
         }
     }
 }
@@ -43,6 +49,7 @@ impl Display for Settings {
         fmt_report!(fmt, self.block_size, "block size");
         fmt_report!(fmt, self.time, "integration time (s)");
         fmt_report!(fmt, self.dumps, "intermediate dumps");
+        fmt_report!(fmt, self.accuracy, "accuracy parameter");
         Ok(())
     }
 }
