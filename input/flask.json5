@@ -1,9 +1,8 @@
 {
     sett    : { Here    : {
         time        :   20.0,
-        dumps       :   1e2,
-        quality     :   0.99,
-        // quality     :   0.001,
+        dumps       :   199,
+        quality     :   0.999,
         min_time    :   1e-6
     } },
     init    : { Here    : [
