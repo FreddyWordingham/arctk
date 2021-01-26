@@ -1,6 +1,14 @@
 {
-    stratum_corneum     : {
-        mesh    : [["res/objs/test/monkey.obj"], {scale:1.0e-3}],
+    fiber     : {
+        mesh    : [["res/objs/test/fiber.obj"], {scale:1.0e-3}],
+        attr    : 'centerpiece'
+    },
+    fiber_start     : {
+        mesh    : [["res/objs/test/fiber_start.obj"], {scale:1.0e-3}],
+        attr    : 'centerpiece'
+    },
+    fiber_end     : {
+        mesh    : [["res/objs/test/fiber_end.obj"], {scale:1.0e-3}],
         attr    : 'centerpiece'
     }
 }

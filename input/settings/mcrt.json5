@@ -1,5 +1,5 @@
 {   // Monte Carlo radiative transfer settings.
-    num_phot            : 1e4,      // Total number of photons to simulate.
+    num_phot            : 1e3,      // Total number of photons to simulate.
     block_size          : 1e2,      // Number of photons to run before requesting more.
     bump_dist           : 1e-9,     // Distance to move past boundary collisions.
     loop_limit          : 1e6,      // Total number of iterations allowed.

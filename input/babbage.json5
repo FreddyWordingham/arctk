@@ -10,5 +10,5 @@
     // op  : { Mult    : ["unit.nc", 1e-1] },
     // op  : { Point    : [31, 31, 31] },
     // op  : { Mult    : ["point.nc", 50.0] },
-    op  : { Info    : "../output/map_{inside}.nc" },
+    op  : { Info    : "../output/absorption_density.nc" },
 }

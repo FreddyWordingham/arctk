@@ -1,4 +1,5 @@
 {   // Surface attributes.
+    // flesh               : { Interface   : ['flesh',   'air'] },
     stratum_corneum     : { Interface   : ['stratum_corneum',   'air'] },
     living_epidermis    : { Interface   : ['living_epidermis',  'stratum_corneum'] },
     papillary_dermis    : { Interface   : ['papillary_dermis',  'living_epidermis'] },
