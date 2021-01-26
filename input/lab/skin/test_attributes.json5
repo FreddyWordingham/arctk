@@ -1,0 +1,3 @@
+{   // Surface attributes.
+    centerpiece :   { Interface : ['inside',    'outside'] },
+}

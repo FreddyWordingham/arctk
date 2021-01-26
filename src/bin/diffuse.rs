@@ -40,6 +40,10 @@ fn main() {
     let data =
         run::single_thread(&out_dir, &input, concs).expect("Failed to run diffuse simulation.");
 
+    for n in 0..31 {
+        println!("{}", data[[15, 15, n]]);
+    }
+
     section(term_width, "Saving");
     data.save(&out_dir.join("final.nc"))
         .expect("Failed to save output data.");

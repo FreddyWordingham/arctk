@@ -1,0 +1,6 @@
+{
+    stratum_corneum     : {
+        mesh    : [["res/objs/test/monkey.obj"], {scale:1.0e-3}],
+        attr    : 'centerpiece'
+    }
+}

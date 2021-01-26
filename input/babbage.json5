@@ -4,11 +4,11 @@
     // op  : { Point   : [127, 127, 127] },
     // op  : { Mult    : ["point.nc", 50.0] },
     // op  : { Sum     : ["../output/map_{air}.nc", "../output/map_{tumour}.nc"] },
-    // op  : { Info    : "../output/map_{tumour}.nc" },
 
 
     // op  : { Unit    : [31, 31, 31] },
     // op  : { Mult    : ["unit.nc", 1e-1] },
     // op  : { Point    : [31, 31, 31] },
-    op  : { Mult    : ["point.nc", 50.0] },
+    // op  : { Mult    : ["point.nc", 50.0] },
+    op  : { Info    : "../output/map_{inside}.nc" },
 }
