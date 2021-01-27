@@ -1,7 +1,6 @@
 //! Attribute linker.
 
 use crate::{
-    data::Histogram,
     err::Error,
     ord::{Link, Name, Set},
     phys::Material,
@@ -17,8 +16,8 @@ pub enum AttributeLinker {
     Interface(Name, Name),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
-    /// Spectrometer, [start wavelength, end wavelength], number of bins.
-    Spectrometer([f64; 2], u64),
+    /// Spectrometer, index.
+    Spectrometer(usize),
 }
 
 impl<'a> Link<'a, Material> for AttributeLinker {
@@ -45,9 +44,7 @@ impl<'a> Link<'a, Material> for AttributeLinker {
                 }),
             ),
             Self::Mirror(r) => Attribute::Mirror(r),
-            Self::Spectrometer([start, end], n) => {
-                Attribute::Spectrometer(Histogram::new(start, end, n))
-            }
+            Self::Spectrometer(index) => Attribute::Spectrometer(index),
         })
     }
 }
@@ -62,8 +59,8 @@ impl Display for AttributeLinker {
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
             }
-            Self::Spectrometer([start, end], n) => {
-                write!(fmt, "Spectrometer: [{}, {}] ({})", start, end, n)
+            Self::Spectrometer(index) => {
+                write!(fmt, "Spectrometer: {}", index)
             }
         }
     }

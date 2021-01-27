@@ -3,14 +3,20 @@
 use crate::{
     geom::Hit,
     phys::{Crossing, Local, Photon},
-    sim::mcrt::Attribute,
+    sim::mcrt::{Attribute, Output},
 };
 use rand::{rngs::ThreadRng, Rng};
 
 /// Handle a surface collision.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn surface(rng: &mut ThreadRng, hit: &Hit<Attribute>, phot: &mut Photon, env: &mut Local) {
+pub fn surface(
+    rng: &mut ThreadRng,
+    hit: &Hit<Attribute>,
+    phot: &mut Photon,
+    env: &mut Local,
+    mut data: &mut Output,
+) {
     match *hit.tag() {
         Attribute::Interface(inside, outside) => {
             // Reference materials.
@@ -50,6 +56,10 @@ pub fn surface(rng: &mut ThreadRng, hit: &Hit<Attribute>, phot: &mut Photon, env
         Attribute::Mirror(abs) => {
             *phot.weight_mut() *= abs;
             *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
+        }
+        Attribute::Spectrometer(index) => {
+            *phot.weight_mut() = 0.0;
+            // *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
         }
     }
 }
