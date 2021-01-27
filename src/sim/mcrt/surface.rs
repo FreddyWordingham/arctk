@@ -15,7 +15,7 @@ pub fn surface(
     hit: &Hit<Attribute>,
     phot: &mut Photon,
     env: &mut Local,
-    mut data: &mut Output,
+    data: &mut Output,
 ) {
     match *hit.tag() {
         Attribute::Interface(inside, outside) => {
@@ -57,9 +57,10 @@ pub fn surface(
             *phot.weight_mut() *= abs;
             *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
         }
-        Attribute::Spectrometer(index) => {
+        Attribute::Spectrometer => {
+            data.hist
+                .try_collect_weight(phot.wavelength(), phot.weight());
             *phot.weight_mut() = 0.0;
-            // *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
         }
     }
 }

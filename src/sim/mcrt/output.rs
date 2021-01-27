@@ -2,6 +2,7 @@
 
 use crate::{
     access, clone,
+    data::Histogram,
     err::Error,
     fmt_report,
     fs::Save,
@@ -30,6 +31,8 @@ pub struct Output {
     pub absorptions: Array3<f64>,
     /// Wavelength shifts.
     pub shifts: Array3<f64>,
+    /// Histogram data.
+    pub hist: Histogram,
 }
 
 impl Output {
@@ -39,7 +42,7 @@ impl Output {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(boundary: Cube, res: [usize; 3]) -> Self {
+    pub fn new(boundary: Cube, res: [usize; 3], hist: Histogram) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
         debug_assert!(res[Z] > 0);
@@ -53,6 +56,7 @@ impl Output {
             energy: Array3::zeros(res),
             absorptions: Array3::zeros(res),
             shifts: Array3::zeros(res),
+            hist,
         }
     }
 }
@@ -81,6 +85,9 @@ impl Save for Output {
 
         let path = out_dir.join("shift_density.nc");
         (&self.shifts / self.cell_vol).save(&path)?;
+
+        let path = out_dir.join("histogram.csv");
+        self.hist.save(&path)?;
 
         Ok(())
     }

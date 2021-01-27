@@ -1,6 +1,7 @@
 //! Simulation control functions.
 
 use crate::{
+    data::Histogram,
     err::Error,
     sim::mcrt::{Engine, Input, Output},
     tools::ProgressBar,
@@ -50,7 +51,11 @@ pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 #[must_use]
 fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output {
     let res = *input.grid.res();
-    let mut data = Output::new(input.grid.boundary().clone(), res);
+    let mut data = Output::new(
+        input.grid.boundary().clone(),
+        res,
+        Histogram::new(400e-9, 800e-9, 40),
+    );
 
     let mut rng = thread_rng();
 

@@ -16,8 +16,8 @@ pub enum AttributeLinker {
     Interface(Name, Name),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
-    /// Spectrometer, index.
-    Spectrometer(usize),
+    /// Spectrometer.
+    Spectrometer,
 }
 
 impl<'a> Link<'a, Material> for AttributeLinker {
@@ -28,7 +28,7 @@ impl<'a> Link<'a, Material> for AttributeLinker {
         match *self {
             Self::Interface(ref inside, ref outside) => vec![inside.clone(), outside.clone()],
             Self::Mirror(..) => vec![],
-            Self::Spectrometer(..) => vec![],
+            Self::Spectrometer => vec![],
         }
     }
 
@@ -44,7 +44,7 @@ impl<'a> Link<'a, Material> for AttributeLinker {
                 }),
             ),
             Self::Mirror(r) => Attribute::Mirror(r),
-            Self::Spectrometer(index) => Attribute::Spectrometer(index),
+            Self::Spectrometer => Attribute::Spectrometer,
         })
     }
 }
@@ -59,8 +59,8 @@ impl Display for AttributeLinker {
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
             }
-            Self::Spectrometer(index) => {
-                write!(fmt, "Spectrometer: {}", index)
+            Self::Spectrometer => {
+                write!(fmt, "Spectrometer")
             }
         }
     }

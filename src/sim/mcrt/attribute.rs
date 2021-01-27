@@ -10,7 +10,7 @@ pub enum Attribute<'a> {
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
     /// Spectrometer.
-    Spectrometer(usize),
+    Spectrometer,
 }
 
 impl Display for Attribute<'_> {
@@ -23,8 +23,8 @@ impl Display for Attribute<'_> {
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
             }
-            Self::Spectrometer(index) => {
-                write!(fmt, "Spectrometer: {}", index,)
+            Self::Spectrometer => {
+                write!(fmt, "Spectrometer")
             }
         }
     }
