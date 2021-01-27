@@ -1,6 +1,6 @@
 //! Optical attributes.
 
-use crate::phys::Material;
+use crate::{data::Histogram, phys::Material};
 use std::fmt::{Display, Error, Formatter};
 
 /// Surface attributes.
@@ -9,6 +9,8 @@ pub enum Attribute<'a> {
     Interface(&'a Material, &'a Material),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
+    /// Spectrometer.
+    Spectrometer(Histogram),
 }
 
 impl Display for Attribute<'_> {
@@ -20,6 +22,15 @@ impl Display for Attribute<'_> {
             }
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
+            }
+            Self::Spectrometer(hist) => {
+                write!(
+                    fmt,
+                    "Spectrometer: [{}, {}] ({})",
+                    hist.binner().range().min(),
+                    hist.binner().range().max(),
+                    hist.binner().bins()
+                )
             }
         }
     }
