@@ -106,6 +106,7 @@ impl Display for Output {
         writeln!(fmt, "Absorbed energy data...")?;
         display_datacube(fmt, &self.absorptions)?;
         writeln!(fmt, "Shifted energy data...")?;
+        // fmt_report!(fmt, self.hist, "Histogram");
         Ok(())
     }
 }

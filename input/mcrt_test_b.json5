@@ -1,0 +1,16 @@
+{
+    tree    : { There   : 'settings/tree_5_8.json5' },
+    grid    : { Here    : {
+        boundary: {
+            mins: [-1.0534e-6, -1.0123e-6, -31.0213e-3],
+            maxs: [ 1.0324e-6,  1.05435e-6,  1.0132e-3],
+        },
+        res: [1, 1, 256],
+    } },
+    sett    : { There   : 'settings/mcrt.json5' },
+    engine  : "Standard",
+    light   : { There   : 'lab/test/light.json5' },
+    mats    : { There   : 'lab/test/materials.json5' },
+    attrs   : { There   : 'lab/test/attributes.json5' },
+    surfs   : { There   : 'lab/test/surfaces.json5' },
+}
