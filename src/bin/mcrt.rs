@@ -63,10 +63,6 @@ fn main() {
     report!(input, "input");
     let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
 
-    for n in 0..256 {
-        println!("{}\t{}\n", n, data.energy[[0, 0, n]]);
-    }
-
     section(term_width, "Saving");
     report!(data, "data");
     data.save(&out_dir).expect("Failed to save output data.");
