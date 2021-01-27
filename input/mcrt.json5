@@ -2,10 +2,10 @@
     tree    : { There   : 'settings/tree_5_8.json5' },
     grid    : { Here    : {
         boundary: {
-            mins: [-2.0534e-3, -2.0123e-3, -2.0213e-3],
-            maxs: [ 2.0324e-3,  2.05435e-3,  2.0132e-3],
+            mins: [-4.0534e-3, -4.0123e-3, -4.0213e-3],
+            maxs: [ 4.0324e-3,  4.05435e-3,  4.0132e-3],
         },
-        res: [128, 128, 128],
+        res: [64, 64, 64],
     } },
     sett    : { There   : 'settings/mcrt.json5' },
     engine  : "Standard",
