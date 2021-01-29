@@ -47,33 +47,33 @@ specs = { version = "0.16.*", optional = true }
 specs-derive = { version = "0.4.*", optional = true }
 terminal_size = { version = "0.1.*", optional = true }
 
-[[bin]]
-name = "babbage"
-required-features = ["terminal_size", "netcdf"]
-
-[[bin]]
-name = "cartographer"
-required-features = ["terminal_size", "netcdf"]
-
-[[bin]]
-name = "diffuse"
-required-features = ["netcdf", "terminal_size"]
-
-[[bin]]
-name = "flask"
-required-features = ["terminal_size"]
-
-[[bin]]
-name = "mcrt"
-required-features = ["terminal_size", "netcdf"]
-
-[[bin]]
-name = "render"
-required-features = ["terminal_size", "png"]
+# [[bin]]
+# name = "babbage"
+# required-features = ["terminal_size", "netcdf"]
 
 # [[bin]]
-# name = "wonder"
-# required-features = ["rltk", "specs", "specs-derive", "terminal_size"]
+# name = "cartographer"
+# required-features = ["terminal_size", "netcdf"]
+
+# [[bin]]
+# name = "diffuse"
+# required-features = ["netcdf", "terminal_size"]
+
+# [[bin]]
+# name = "flask"
+# required-features = ["terminal_size"]
+
+# [[bin]]
+# name = "mcrt"
+# required-features = ["terminal_size", "netcdf"]
+
+# [[bin]]
+# name = "reactor"
+# required-features = ["terminal_size", "netcdf"]
+
+# [[bin]]
+# name = "render"
+# required-features = ["terminal_size", "png"]
 
 [profile.dev]
 # Development profile: "cargo build".
