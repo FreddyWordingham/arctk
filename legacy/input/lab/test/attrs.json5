@@ -1,4 +1,0 @@
-{
-    fog     : { Interface   : ['fog', 'air'] },
-    mirror  : { Mirror      : 0.99 },
-}

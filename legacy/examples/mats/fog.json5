@@ -1,5 +1,0 @@
-{   // Material optical properties.
-    ref_index   : { Constant: 1.0   },  // Constant refractive index of 1.0.
-    scat_coeff  : { Constant: 1.0e1 },  // Constant scattering coefficient of 10.0 per m.
-    asym_fact   : { Constant: 0.5   },  // A-symmetry scattering parameter of 0.5.
-}

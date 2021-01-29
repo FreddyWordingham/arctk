@@ -1,9 +1,0 @@
-{
-    block_size      : 1e3,
-    bump_dist       : 1e-6,
-    loop_limit      : 1e2,
-    caster          : { Radiant: 101 },
-    // caster          : { Target: [0.0, 0.0, 0.0] },
-    super_sampling  : 'Off',
-    // super_sampling  : { Uniform: [4, 4, 4] }
-}

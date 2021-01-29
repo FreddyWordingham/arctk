@@ -1,5 +1,0 @@
-{   // Surface attributes.
-    flesh   : { Interface   : ['flesh', 'air'] },   // Inside is flesh material (nice!), outside is air material.
-    fog     : { Interface   : ['fog', 'air'] },     // Inside is fog material, outside is air material.
-    mirror  : { Mirror      : 0.99 },               // Mirror reflecting 99% of incident light.
-}
