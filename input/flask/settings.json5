@@ -1,0 +1,6 @@
+{
+    time        :   50.0,
+    dumps       :   999,
+    quality     :   0.99,
+    min_time    :   1e-9
+}

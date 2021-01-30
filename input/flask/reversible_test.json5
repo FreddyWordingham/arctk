@@ -1,14 +1,8 @@
 {
-    sett    : { Here    : {
-        time        :   25.0,
-        dumps       :   249,
-        quality     :   0.999,
-        min_time    :   1e-9
-    } },
+    sett    : { There   : "flask/settings.json5" },
     init    : { Here    : [
             ["A", 1.0],
-            ["B", 1.0e-15],
-            ["C", 1.0e-15],
+            ["B", 1.0]
     ] },
     reactor: { Here     : [
         {
@@ -19,7 +13,7 @@
         {
             rate        : [0.5, [["B", 1]]],
             reactants   : [["B", 1]],
-            products    : [["C", 1]],
+            products    : [["A", 1]],
         }
     ] }
 }
