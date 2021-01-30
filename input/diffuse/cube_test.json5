@@ -1,0 +1,11 @@
+{
+    sett    : { Here    : {
+        time        :   1e-1,
+        dumps       :   1e2,
+        block_size  :   1e1,
+        quality     :   0.8,
+    } },
+    grid    : { There   : 'grid/10cm_31.json5' },
+    init    : "../output/cube_50deg.nc",
+    coeffs  : "../output/tenth.nc",
+}

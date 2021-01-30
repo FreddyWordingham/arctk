@@ -3,20 +3,15 @@
 use crate::{
     data::Table,
     err::Error,
-    fmt_report, fmt_reports,
     fs::Save,
     geom::Grid,
     math::Pos3,
     ord::{X, Y, Z},
     report,
-    util::datacube::display_datacube,
 };
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
-use std::{
-    fmt::{Display, Formatter},
-    path::Path,
-};
+use std::path::Path;
 
 /// Possible operation enumeration.
 pub enum Operation {
@@ -28,6 +23,12 @@ pub enum Operation {
     Unit([usize; 3]),
     /// Generate a zero cube, with a point at the center, of the given resolution.
     Point([usize; 3]),
+    /// Generate a partially filled cube, with a range of indices, within the given resolution.
+    Fill {
+        res: [usize; 3],
+        mins: [usize; 3],
+        maxs: [usize; 3],
+    },
     /// Sum cubes together.
     Sum(Vec<Array3<f64>>),
     /// Add a value to the data cube.
@@ -84,6 +85,18 @@ impl Operation {
                 a
             }
             .save(&path.with_extension("nc")),
+            Self::Fill { res, mins, maxs } => {
+                let mut a = Array3::<f64>::zeros(res);
+                for zi in mins[Z]..=maxs[Z] {
+                    for yi in mins[Y]..=maxs[Y] {
+                        for xi in mins[X]..=maxs[X] {
+                            a[[xi, yi, zi]] = 1.0;
+                        }
+                    }
+                }
+                a
+            }
+            .save(&path.with_extension("nc")),
             Self::Sum(ref data) => {
                 let mut base = data[0].clone();
                 for d in data.iter().skip(1) {
@@ -110,71 +123,6 @@ impl Operation {
                     weights.push(vec![data[index]]);
                 }
                 Table::new(vec!["weight".to_string()], weights).save(&path.with_extension("csv"))
-            }
-        }
-    }
-}
-
-impl Display for Operation {
-    #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
-        match *self {
-            Self::Info(ref cube) => {
-                writeln!(fmt, "Information...")?;
-                display_datacube(fmt, cube)?;
-                Ok(())
-            }
-            Self::Zero(res) => {
-                write!(fmt, "Zero: [{} x {} x {}]", res[X], res[Y], res[Z])
-            }
-            Self::Unit(res) => {
-                write!(fmt, "Unit: [{} x {} x {}]", res[X], res[Y], res[Z])
-            }
-            Self::Point(res) => {
-                write!(fmt, "Point: [{} x {} x {}]", res[X], res[Y], res[Z])
-            }
-            Self::Sum(ref cubes) => {
-                writeln!(fmt, "Sum...")?;
-                for cube in cubes {
-                    display_datacube(fmt, cube)?;
-                }
-                Ok(())
-            }
-            Self::Add(ref cube, x) => {
-                writeln!(fmt, "Add...")?;
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, x, "x");
-                Ok(())
-            }
-            Self::Sub(ref cube, x) => {
-                writeln!(fmt, "Subtract...")?;
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, x, "x");
-                Ok(())
-            }
-            Self::Mult(ref cube, x) => {
-                writeln!(fmt, "Multiply...")?;
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, x, "x");
-                Ok(())
-            }
-            Self::Div(ref cube, x) => {
-                writeln!(fmt, "Divide...")?;
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, x, "x");
-                Ok(())
-            }
-            Self::Norm(ref cube) => {
-                writeln!(fmt, "Normalise...")?;
-                display_datacube(fmt, cube)?;
-                Ok(())
-            }
-            Self::Sample(ref points, ref cube, ref grid) => {
-                writeln!(fmt, "Normalise...")?;
-                fmt_reports!(fmt, points, "sampling points");
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, grid, "grid");
-                Ok(())
             }
         }
     }

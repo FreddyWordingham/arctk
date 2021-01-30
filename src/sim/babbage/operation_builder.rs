@@ -1,15 +1,7 @@
 //! Operation builder.
 
-use crate::{
-    fmt_report, fmt_reports,
-    geom::GridBuilder,
-    math::Pos3,
-    ord::{Build, X, Y, Z},
-    sim::babbage::Operation,
-    util::datacube::display_datacube,
-};
+use crate::{geom::GridBuilder, math::Pos3, ord::Build, sim::babbage::Operation};
 use ndarray::Array3;
-use std::fmt::{Display, Formatter};
 
 /// Possible operation enumeration.
 pub enum OperationBuilder {
@@ -21,6 +13,12 @@ pub enum OperationBuilder {
     Unit([usize; 3]),
     /// Generate a zero cube, with a point at the center, of the given resolution.
     Point([usize; 3]),
+    /// Generate a partially filled cube, with a range of indices, within the given resolution.
+    Fill {
+        res: [usize; 3],
+        mins: [usize; 3],
+        maxs: [usize; 3],
+    },
     /// Sum cubes together.
     Sum(Vec<Array3<f64>>),
     /// Add a value to the data cube.
@@ -47,6 +45,7 @@ impl Build for OperationBuilder {
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
             Self::Point(res) => Self::Inst::Point(res),
+            Self::Fill { res, mins, maxs } => Self::Inst::Fill { res, mins, maxs },
             Self::Sum(cubes) => Self::Inst::Sum(cubes),
             Self::Add(cube, x) => Self::Inst::Add(cube, x),
             Self::Sub(cube, x) => Self::Inst::Sub(cube, x),
@@ -55,71 +54,6 @@ impl Build for OperationBuilder {
             Self::Norm(cube) => Self::Inst::Norm(cube),
             Self::Sample(points, cube, grid_builder) => {
                 Self::Inst::Sample(points, cube, grid_builder.build())
-            }
-        }
-    }
-}
-
-impl Display for OperationBuilder {
-    #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
-        match *self {
-            Self::Info(ref cube) => {
-                writeln!(fmt, "Information...")?;
-                display_datacube(fmt, cube)?;
-                Ok(())
-            }
-            Self::Zero(res) => {
-                write!(fmt, "Zero: [{} x {} x {}]", res[X], res[Y], res[Z])
-            }
-            Self::Unit(res) => {
-                write!(fmt, "Unit: [{} x {} x {}]", res[X], res[Y], res[Z])
-            }
-            Self::Point(res) => {
-                write!(fmt, "Point: [{} x {} x {}]", res[X], res[Y], res[Z])
-            }
-            Self::Sum(ref cubes) => {
-                writeln!(fmt, "Sum...")?;
-                for cube in cubes {
-                    display_datacube(fmt, cube)?;
-                }
-                Ok(())
-            }
-            Self::Add(ref cube, x) => {
-                writeln!(fmt, "Add...")?;
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, x, "x");
-                Ok(())
-            }
-            Self::Sub(ref cube, x) => {
-                writeln!(fmt, "Subtract...")?;
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, x, "x");
-                Ok(())
-            }
-            Self::Mult(ref cube, x) => {
-                writeln!(fmt, "Multiply...")?;
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, x, "x");
-                Ok(())
-            }
-            Self::Div(ref cube, x) => {
-                writeln!(fmt, "Divide...")?;
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, x, "x");
-                Ok(())
-            }
-            Self::Norm(ref cube) => {
-                writeln!(fmt, "Normalise...")?;
-                display_datacube(fmt, cube)?;
-                Ok(())
-            }
-            Self::Sample(ref points, ref cube, ref grid_builder) => {
-                writeln!(fmt, "Normalise...")?;
-                fmt_reports!(fmt, points, "sampling points");
-                display_datacube(fmt, cube)?;
-                fmt_report!(fmt, grid_builder, "grid builder");
-                Ok(())
             }
         }
     }

@@ -29,6 +29,12 @@ pub enum OperationBuilderLoader {
     Unit([usize; 3]),
     /// Generate a zero cube, with a point at the center, of the given resolution.
     Point([usize; 3]),
+    /// Generate a partially filled cube, with a range of indices, within the given resolution.
+    Fill {
+        res: [usize; 3],
+        mins: [usize; 3],
+        maxs: [usize; 3],
+    },
     /// Sum cubes together.
     Sum(Vec<PathBuf>),
     /// Add a value to the data cube.
@@ -58,6 +64,7 @@ impl Load for OperationBuilderLoader {
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
             Self::Point(res) => Self::Inst::Point(res),
+            Self::Fill { res, mins, maxs } => Self::Inst::Fill { res, mins, maxs },
             Self::Sum(data_paths) => {
                 let mut cubes = Vec::with_capacity(data_paths.len());
                 for d in &data_paths {
@@ -118,6 +125,13 @@ impl Display for OperationBuilderLoader {
             }
             Self::Point(res) => {
                 write!(fmt, "Point: [{} x {} x {}]", res[X], res[Y], res[Z])
+            }
+            Self::Fill { res, mins, maxs } => {
+                write!(
+                    fmt,
+                    "Fill: [{} x {} x {}], [{}-{} x {}-{} x {}-{}]",
+                    res[X], res[Y], res[Z], mins[X], mins[Y], mins[Z], maxs[X], maxs[Y], maxs[Z],
+                )
             }
             Self::Sum(ref data_paths) => {
                 write!(fmt, "Sum: [")?;
