@@ -1,12 +1,12 @@
-//! Chemical network simulation binary.
-//! Compute the time evolution of a set of reacting species.
+//! Diffusion simulation binary.
+//! Compute the time evolution of a volume of diffusing species.
 
 use arctk::{
     args,
     fs::{File, Load, Save},
-    ord::{Link, Register},
+    ord::Build,
     report,
-    sim::flask::{run, Input, Parameters, ParametersLoader},
+    sim::diffuse::{run, Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -24,7 +24,7 @@ const BACKUP_TERM_WIDTH: usize = 80;
 /// Main simulation function.
 fn main() {
     let term_width = term::width(BACKUP_TERM_WIDTH);
-    title(term_width, "Flask");
+    title(term_width, "Diffuse");
 
     let (in_dir, out_dir, params_path) = initialisation(term_width);
     let params = load_parameters(term_width, &in_dir, &params_path);
@@ -32,34 +32,20 @@ fn main() {
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
-
-    sub_section(term_width, "Registration");
-    let spec_reg = Register::new(params.reactor.requires());
-    report!(spec_reg, "species register");
-
-    sub_section(term_width, "Linking");
-    let concs = params
-        .init
-        .link(spec_reg.set())
-        .expect("Failed to link species to initial concentrations.");
-    report!(concs, "initial concentrations");
-
-    let reactor = params
-        .reactor
-        .link(spec_reg.set())
-        .expect("Failed to link species to reactor.");
-    report!(reactor, "reactor");
+    let grid = params.grid;
+    let coeffs = params.coeffs;
+    let concs = params.init;
 
     sub_section(term_width, "Input");
-    let input = Input::new(&spec_reg, &reactor, &sett);
+    let input = Input::new(&coeffs, &grid, &sett);
     report!(input, "input");
 
     section(term_width, "Running");
-    let data = run(concs, &input).expect("Failed to run flask simulation.");
+    let data =
+        run::single_thread(&out_dir, &input, concs).expect("Failed to run diffuse simulation.");
 
     section(term_width, "Saving");
-    // report!(data, "data");
-    data.save(&out_dir.join("concs.csv"))
+    data.save(&out_dir.join("final.nc"))
         .expect("Failed to save output data.");
 
     section(term_width, "Finished");
@@ -94,10 +80,14 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
 fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
     section(term_width, "Parameters");
     sub_section(term_width, "Loading");
-    let params = ParametersLoader::new_from_file(&in_dir.join(&params_path))
+    let builder = ParametersBuilderLoader::new_from_file(&in_dir.join(&params_path))
         .expect("Failed to load parameters file.")
         .load(&in_dir)
         .expect("Failed to load parameter resource files.");
+    report!(builder, "builder");
+
+    sub_section(term_width, "Building");
+    let params = builder.build();
     report!(params, "parameters");
 
     params

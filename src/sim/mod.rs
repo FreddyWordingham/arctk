@@ -6,8 +6,8 @@ pub mod babbage;
 // #[cfg(feature = "netcdf")]
 // pub mod cartographer;
 
-// #[cfg(feature = "netcdf")]
-// pub mod diffuse;
+#[cfg(feature = "netcdf")]
+pub mod diffuse;
 
 pub mod flask;
 

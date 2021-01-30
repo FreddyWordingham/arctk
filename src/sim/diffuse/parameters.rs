@@ -37,9 +37,9 @@ impl Display for Parameters {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid");
-        writeln!(fmt, "initial values...")?;
+        write!(fmt, "{:>32} : ", "initial values")?;
         display_datacube(fmt, &self.init)?;
-        writeln!(fmt, "diffusion coefficients...")?;
+        write!(fmt, "{:>32} : ", "diffusion coefficients")?;
         display_datacube(fmt, &self.coeffs)?;
         Ok(())
     }

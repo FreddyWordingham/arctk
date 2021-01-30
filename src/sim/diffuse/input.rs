@@ -27,7 +27,7 @@ impl Display for Input<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
-        writeln!(fmt, "Coefficient map data...")?;
+        write!(fmt, "{:>32} : ", "diffusion coefficients")?;
         display_datacube(fmt, self.coeffs)?;
         fmt_report!(fmt, self.grid, "measurement grid");
         fmt_report!(fmt, self.sett, "settings");
