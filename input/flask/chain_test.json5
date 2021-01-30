@@ -1,20 +1,18 @@
 {
     sett    : { There   : "flask/settings.json5" },
     init    : { Here    : [
-            ["A", 1.0],
-            ["B", 1.0e-15],
-            ["C", 1.0e-15],
+            ["A", 1.0]
     ] },
     reactor: { Here     : [
         {
             rate        : [0.1, [["A", 1]]],
             reactants   : [["A", 1]],
-            products    : [["B", 1]],
+            products    : [["B", 1]]
         },
         {
             rate        : [0.5, [["B", 1]]],
             reactants   : [["B", 1]],
-            products    : [["C", 1]],
+            products    : [["C", 1]]
         }
     ] }
 }

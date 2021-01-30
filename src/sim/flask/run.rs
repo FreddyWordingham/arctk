@@ -9,6 +9,8 @@ use ndarray_stats::QuantileExt;
 /// if the progress bar can not be locked.
 #[inline]
 pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
+    concs += std::f64::MIN_POSITIVE;
+
     let steps = input.sett.dumps() + 1;
     let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
     let quality = 1.0 - input.sett.quality();

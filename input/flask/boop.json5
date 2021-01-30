@@ -2,39 +2,33 @@
     sett    : { There   : "flask/settings.json5" },
     init    : { Here    : [
             ["A", 1.0],
-            ["B", 1.0e-15],
-            ["C", 1.0e-15],
-            ["D", 1.0e-15],
-            ["E", 1.0],
-            ["F", 1.0e-15],
-            ["G", 1.0e-15],
-            ["X", 1.0e-15],
+            ["E", 1.0]
     ] },
     reactor: { Here     : [
         {
             rate        : [0.1, [["A", 1]]],
             reactants   : [["A", 1]],
-            products    : [["B", 1]],
+            products    : [["B", 1]]
         },
         {
             rate        : [0.2, [["B", 1]]],
             reactants   : [["B", 1]],
-            products    : [["C", 1]],
+            products    : [["C", 1]]
         },
         {
             rate        : [0.8, [["A", 1], ["C", 1]]],
             reactants   : [["A", 1], ["C", 4]],
-            products    : [["D", 5]],
+            products    : [["D", 5]]
         },
         {
             rate        : [0.8, [["D", 1], ["E", 1]]],
             reactants   : [["D", 1], ["E", 1]],
-            products    : [["F", 1], ["G", 1]],
+            products    : [["F", 1], ["G", 1]]
         },
         {
             rate        : [0.8, [["G", 1], ["B", 1]]],
             reactants   : [["G", 3], ["B", 1]],
-            products    : [["X", 4]],
+            products    : [["X", 4]]
         }
     ] }
 }
