@@ -47,9 +47,9 @@ specs = { version = "0.16.*", optional = true }
 specs-derive = { version = "0.4.*", optional = true }
 terminal_size = "0.1.*"
 
-# [[bin]]
-# name = "babbage"
-# required-features = ["netcdf"]
+[[bin]]
+name = "babbage"
+required-features = ["netcdf"]
 
 # [[bin]]
 # name = "cartographer"

@@ -2,7 +2,7 @@
 
 use crate::{
     err::Error,
-    fmt_report,
+    fmt_reports,
     fs::Load,
     sim::babbage::{OperationBuilderLoader, ParametersBuilder},
 };
@@ -15,8 +15,8 @@ use std::{
 /// Loadable runtime parameters.
 #[file]
 pub struct ParametersBuilderLoader {
-    /// Operation to perform.
-    op: OperationBuilderLoader,
+    /// Operations to perform.
+    ops: Vec<OperationBuilderLoader>,
 }
 
 impl Load for ParametersBuilderLoader {
@@ -24,7 +24,12 @@ impl Load for ParametersBuilderLoader {
 
     #[inline]
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        Ok(Self::Inst::new(self.op.load(in_dir)?))
+        Ok(Self::Inst::new(
+            self.ops
+                .into_iter()
+                .map(|op| op.load(in_dir))
+                .collect::<Result<Vec<_>, _>>()?,
+        ))
     }
 }
 
@@ -32,7 +37,7 @@ impl Display for ParametersBuilderLoader {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        fmt_report!(fmt, self.op, "operation loader");
+        fmt_reports!(fmt, &self.ops, "operation loaders");
         Ok(())
     }
 }

@@ -64,7 +64,6 @@ impl Operation {
                 println!("Maximum value: {}", max);
                 println!("Sum     value: {}", sum);
                 println!("Average value: {}", sum / data.len() as f64);
-                // (data / max).save(&out_dir.join("output.nc"))
                 Ok(())
             }
             Self::Zero(res) => Array3::<f64>::zeros(res).save(&out_dir.join("output.nc")),
