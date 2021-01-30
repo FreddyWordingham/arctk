@@ -65,7 +65,7 @@ impl Display for ArrayLinker {
         if !self.0.is_empty() {
             write!(fmt, "{}{}", self.0[0].1, self.0[0].0)?;
 
-            for (name, value) in self.0.iter().skip(1) {
+            for &(ref name, value) in self.0.iter().skip(1) {
                 write!(fmt, " {}{}", value, name)?;
             }
         }

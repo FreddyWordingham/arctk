@@ -28,7 +28,7 @@ impl Rate {
     #[must_use]
     pub fn order(&self) -> f64 {
         let mut p = 0.0;
-        for (_, c) in &self.orders {
+        for &(_, c) in &self.orders {
             p += c;
         }
         p
@@ -55,7 +55,7 @@ impl Display for Rate {
 
         if !self.orders.is_empty() {
             write!(fmt, " *")?;
-            for (c, m) in &self.orders {
+            for &(c, m) in &self.orders {
                 write!(fmt, " {}^{}", c, m)?;
             }
         }

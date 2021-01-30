@@ -54,8 +54,8 @@ pub fn thread(input: &Input, mut values: Array3<f64>, time: f64) -> Result<Array
         .expect("Failed to determine maximum coefficient.");
     let max_dt = min_voxel_size_sq / (4.0 * max_coeff * max_coeff);
 
-    let dt = max_dt * (1.0 - input.sett.quality());
-    let num_steps = (time / dt) as usize;
+    let target_dt = max_dt * (1.0 - input.sett.quality());
+    let num_steps = (time / target_dt) as usize;
     let dt = time / num_steps as f64;
 
     let mut pb = ProgressBar::new("Diffusing", num_steps);

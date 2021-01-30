@@ -18,7 +18,7 @@ impl RateLinker {
     #[must_use]
     pub fn order(&self) -> f64 {
         let mut p = 0.0;
-        for (_, c) in &self.1 {
+        for &(_, c) in &self.1 {
             p += c;
         }
         p
@@ -61,7 +61,7 @@ impl Display for RateLinker {
 
         if !self.1.is_empty() {
             write!(fmt, " *")?;
-            for (c, m) in &self.1 {
+            for &(ref c, m) in &self.1 {
                 write!(fmt, " {}^{}", c, m)?;
             }
         }

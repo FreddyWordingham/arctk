@@ -25,7 +25,7 @@ impl LightLinkerBuilder {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(power: f64, emit: Emitter, spec: ProbabilityBuilder, mat: Name) -> Self {
+    pub const fn new(power: f64, emit: Emitter, spec: ProbabilityBuilder, mat: Name) -> Self {
         Self {
             power,
             emit,

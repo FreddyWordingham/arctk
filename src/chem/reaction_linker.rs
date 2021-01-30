@@ -71,13 +71,13 @@ impl Display for ReactionLinker {
         );
 
         let mut rs = Vec::with_capacity(self.reactants.len());
-        for (c, m) in &self.reactants {
+        for &(ref c, m) in &self.reactants {
             rs.push(format!("{}{}", m, c));
         }
         fmt_reports!(fmt, rs, "reactants");
 
         let mut ps = Vec::with_capacity(self.products.len());
-        for (c, m) in &self.products {
+        for &(ref c, m) in &self.products {
             ps.push(format!("{}{}", m, c));
         }
         fmt_reports!(fmt, ps, "products");

@@ -56,7 +56,7 @@ fn evolve_euler(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<
     debug_assert!(time > 0.0);
 
     let n = 100;
-    let dt = time / n as f64;
+    let dt = time / f64::from(n);
 
     for _ in 0..n {
         concs += &(&reactor.deltas(&concs) * dt);
@@ -96,6 +96,7 @@ fn evolve_euler(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<
 // }
 
 /// Evolve forward the given amount of time.
+#[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
 fn evolve_rk4(

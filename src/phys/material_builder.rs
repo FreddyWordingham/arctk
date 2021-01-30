@@ -26,16 +26,8 @@ impl Build for MaterialBuilder {
     fn build(self) -> Self::Inst {
         let ref_index = self.ref_index.build();
         let scat_coeff = self.scat_coeff.build();
-        let abs_coeff = if let Some(abs_coeff) = self.abs_coeff {
-            Some(abs_coeff.build())
-        } else {
-            None
-        };
-        let shift_coeff = if let Some(shift_coeff) = self.shift_coeff {
-            Some(shift_coeff.build())
-        } else {
-            None
-        };
+        let abs_coeff = self.abs_coeff.map(Build::build);
+        let shift_coeff = self.shift_coeff.map(Build::build);
         let asym_fact = self.asym_fact.build();
 
         Self::Inst::new(ref_index, scat_coeff, abs_coeff, shift_coeff, asym_fact)
@@ -49,14 +41,14 @@ impl Display for MaterialBuilder {
         fmt_report!(fmt, self.ref_index, "refractive index");
         fmt_report!(fmt, self.scat_coeff, "scattering coefficient (m^-1)");
 
-        let abs_coeff = if let Some(abs_coeff) = &self.shift_coeff {
+        let abs_coeff = if let Some(ref abs_coeff) = self.shift_coeff {
             format!("{}", abs_coeff)
         } else {
             "NONE".to_string()
         };
         fmt_report!(fmt, abs_coeff, "absorption coefficient (m^-1)");
 
-        let shift_coeff = if let Some(shift_coeff) = &self.shift_coeff {
+        let shift_coeff = if let Some(ref shift_coeff) = self.shift_coeff {
             format!("{}", shift_coeff)
         } else {
             "NONE".to_string()

@@ -25,6 +25,7 @@
     clippy::modulo_arithmetic,
     clippy::multiple_inherent_impl,
     clippy::panic,
+    clippy::panic_in_result_fn,
     clippy::print_stdout,
     clippy::unreachable,
     clippy::unwrap_used
