@@ -8,6 +8,7 @@ use crate::{
     geom::Grid,
     math::Pos3,
     ord::{X, Y, Z},
+    report,
     util::datacube::display_datacube,
 };
 use ndarray::Array3;
@@ -50,11 +51,18 @@ impl Operation {
     /// or if a sampling point can not be located within the grid.
     #[allow(clippy::expect_used)]
     #[inline]
-    pub fn run(&self, out_dir: &Path, name: &str) -> Result<(), Error> {
-        let path = out_dir.join(&format!("{}", name));
+    pub fn run(&self, out_dir: &Path, name: String) -> Result<(), Error> {
+        let path = out_dir.join(name);
 
         match *self {
             Self::Info(ref data) => {
+                let res = data.raw_dim();
+                report!(
+                    &format!("[{} x {} x {}]", res[X], res[Y], res[Z]),
+                    "Resolution"
+                );
+                report!(data.len(), "Length");
+
                 let max = *data
                     .max()
                     .unwrap_or_else(|_| panic!("Failed to determine maximum value."));
@@ -62,10 +70,10 @@ impl Operation {
                     .min()
                     .unwrap_or_else(|_| panic!("Failed to determine minimum value."));
                 let sum = data.sum();
-                println!("Minimum value: {}", min);
-                println!("Maximum value: {}", max);
-                println!("Sum     value: {}", sum);
-                println!("Average value: {}", sum / data.len() as f64);
+                report!(min, "Minimum");
+                report!(max, "Maximum");
+                report!(sum, "Sum");
+                report!(sum / data.len() as f64, "Average");
                 Ok(())
             }
             Self::Zero(res) => Array3::<f64>::zeros(res).save(&path.with_extension("nc")),

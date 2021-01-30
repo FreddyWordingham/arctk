@@ -67,7 +67,7 @@ fn run(term_width: usize, params: Parameters, in_dir: &Path, out_dir: &Path) -> 
     for (name, op) in params.ops {
         sub_section(term_width, &format!("Operation {}", name));
         report!(op, "operation");
-        op.load(in_dir)?.build().run(&out_dir, &name)?;
+        op.load(in_dir)?.build().run(&out_dir, name)?;
     }
 
     Ok(())
