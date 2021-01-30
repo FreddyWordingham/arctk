@@ -64,10 +64,13 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
 fn run(term_width: usize, params: Parameters, in_dir: &Path, out_dir: &Path) -> Result<(), Error> {
     section(term_width, "Running");
 
-    for (name, op) in params.ops {
+    for (name, op) in &params.ops {
         sub_section(term_width, &format!("Operation {}", name));
         report!(op, "operation");
-        op.load(in_dir)?.build().run(&out_dir, name)?;
+        op.clone()
+            .load(in_dir)?
+            .build()
+            .run(&out_dir, name.to_string())?;
     }
 
     Ok(())

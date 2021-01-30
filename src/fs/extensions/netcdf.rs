@@ -5,31 +5,22 @@ use crate::{
     fs::{File, Save},
     ord::{X, Y, Z},
 };
-use ndarray::{Array2, Array3, ArrayD};
+use ndarray::{Array2, Array3};
 use netcdf::Numeric;
 use std::path::Path;
-
-#[allow(clippy::use_self)]
-impl<T: Numeric> File for ArrayD<T> {
-    #[inline]
-    fn load(path: &Path) -> Result<ArrayD<T>, Error> {
-        let file = netcdf::open(path)?;
-        let var = &file.variable("data").ok_or("Missing variable 'data'.")?;
-        let arr = var.values::<T>(None, None)?;
-        Ok(arr)
-    }
-}
 
 #[allow(clippy::use_self)]
 impl<T: Numeric> File for Array2<T> {
     #[inline]
     fn load(path: &Path) -> Result<Array2<T>, Error> {
-        let arr_d = ArrayD::new_from_file(path)?;
+        let file = netcdf::open(path)?;
+        let data = &file.variable("data").ok_or("Missing variable 'data'.")?;
+        let arr = data.values::<T>(None, None)?;
 
-        let xi = arr_d.shape()[X];
-        let yi = arr_d.shape()[Y];
+        let xi = arr.shape()[X];
+        let yi = arr.shape()[Y];
 
-        let arr = Array2::from_shape_vec([xi, yi], arr_d.into_raw_vec())?;
+        let arr = Array2::from_shape_vec([xi, yi], arr.into_raw_vec())?;
         Ok(arr)
     }
 }
@@ -38,13 +29,15 @@ impl<T: Numeric> File for Array2<T> {
 impl<T: Numeric> File for Array3<T> {
     #[inline]
     fn load(path: &Path) -> Result<Array3<T>, Error> {
-        let arr_d = ArrayD::new_from_file(path)?;
+        let file = netcdf::open(path)?;
+        let data = &file.variable("data").ok_or("Missing variable 'data'.")?;
+        let arr = data.values::<T>(None, None)?;
 
-        let xi = arr_d.shape()[X];
-        let yi = arr_d.shape()[Y];
-        let zi = arr_d.shape()[Z];
+        let xi = arr.shape()[X];
+        let yi = arr.shape()[Y];
+        let zi = arr.shape()[Z];
 
-        let arr = Array3::from_shape_vec([xi, yi, zi], arr_d.into_raw_vec())?;
+        let arr = Array3::from_shape_vec([xi, yi, zi], arr.into_raw_vec())?;
         Ok(arr)
     }
 }
