@@ -7,6 +7,7 @@ use terminal_size::terminal_size;
 /// # Errors
 /// if the terminal width can not be determined.
 #[inline]
+#[must_use]
 pub fn width(default: usize) -> usize {
     if let Some((width, _)) = terminal_size() {
         width.0 as usize

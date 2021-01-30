@@ -11,9 +11,12 @@ use arctk::{
 };
 use std::{env::current_dir, path::PathBuf};
 
+/// Backup print width if the terminal width can not be determined.
+const BACKUP_TERM_WIDTH: usize = 80;
+
 /// Main program function.
 fn main() {
-    let term_width = term::width(80);
+    let term_width = term::width(BACKUP_TERM_WIDTH);
     title(term_width, "Babbage");
 
     let (_in_dir, _out_dir, _params_path) = initialisation(term_width);
