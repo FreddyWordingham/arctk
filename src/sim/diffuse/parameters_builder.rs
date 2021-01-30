@@ -7,12 +7,10 @@ use crate::{
     sim::diffuse::{Parameters, Settings},
     util::datacube::display_datacube,
 };
-use arctk_attr::file;
 use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
 /// Loadable runtime parameters.
-#[file]
 pub struct ParametersBuilder {
     /// Simulation specific settings.
     sett: Settings,

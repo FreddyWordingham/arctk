@@ -127,10 +127,10 @@ impl Probability {
     pub fn sample<R: Rng>(&self, rng: &mut R) -> f64 {
         match *self {
             Self::Point { ref c } => *c,
-            Self::Points { ref cs } => cs[rng.gen_range(0, cs.len())],
-            Self::Uniform { ref min, ref max } => rng.gen_range(min, max),
+            Self::Points { ref cs } => cs[rng.gen_range(0..cs.len())],
+            Self::Uniform { ref min, ref max } => rng.gen_range(*min..*max),
             Self::Linear { t, delta, lambda } => {
-                t + (delta - (lambda * rng.gen_range(0.0, 1.0))).sqrt()
+                t + (delta - (lambda * rng.gen_range(0.0..1.0))).sqrt()
             }
             Self::Gaussian { ref mu, ref sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
             Self::ConstantSpline { ref cdf } => cdf.y(rng.gen()),

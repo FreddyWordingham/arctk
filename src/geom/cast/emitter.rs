@@ -69,7 +69,7 @@ impl Emitter {
         match *self {
             Self::Beam(ref ray) => ray.clone(),
             Self::Points(ref ps) => {
-                Ray::new(ps[rng.gen_range(0, ps.len())], rand_isotropic_dir(rng))
+                Ray::new(ps[rng.gen_range(0..ps.len())], rand_isotropic_dir(rng))
             }
             Self::WeightedPoints(ref ps, ref ws) => {
                 let r: f64 = rng.gen();

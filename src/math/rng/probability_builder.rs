@@ -11,7 +11,7 @@ pub enum ProbabilityBuilder {
     /// Point.
     Point(f64),
     /// Points.
-    Points(Array1<f64>),
+    Points(Vec<f64>),
     /// Uniform range.
     Uniform(f64, f64),
     /// Linear function.
@@ -29,7 +29,7 @@ impl Build for ProbabilityBuilder {
     fn build(self) -> Self::Inst {
         match self {
             Self::Point(p) => Self::Inst::new_point(p),
-            Self::Points(ps) => Self::Inst::new_points(ps),
+            Self::Points(ps) => Self::Inst::new_points(Array1::from(ps)),
             Self::Uniform(min, max) => Self::Inst::new_uniform(min, max),
             Self::Linear(min, max, m, c) => Self::Inst::new_linear(min, max, m, c),
             Self::Gaussian(mu, sigma) => Self::Inst::new_gaussian(mu, sigma),

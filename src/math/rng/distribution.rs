@@ -17,12 +17,12 @@ pub fn sample_henyey_greenstein<R: Rng>(rng: &mut R, asym: f64) -> f64 {
     debug_assert!(asym.abs() <= 1.0);
 
     if asym.abs() < 1.0e-6 {
-        return rng.gen_range(-1.0_f64, 1.0).acos();
+        return rng.gen_range(-1.0_f64..1.0).acos();
     }
 
     let asym_sq = asym * asym;
 
-    let a = (1.0 - asym_sq) / asym.mul_add(rng.gen_range(-1.0, 1.0), 1.0);
+    let a = (1.0 - asym_sq) / asym.mul_add(rng.gen_range(-1.0..1.0), 1.0);
     ((1.0 + asym_sq - (a * a)) / (2.0 * asym)).acos()
 }
 
@@ -30,8 +30,8 @@ pub fn sample_henyey_greenstein<R: Rng>(rng: &mut R, asym: f64) -> f64 {
 #[inline]
 #[must_use]
 pub fn sample_normal<R: Rng>(rng: &mut R) -> f64 {
-    let a = (-2.0 * rng.gen_range(0.0_f64, 1.0).ln()).sqrt();
-    let theta = rng.gen_range(0.0, 2.0 * PI);
+    let a = (-2.0 * rng.gen_range(0.0_f64..1.0).ln()).sqrt();
+    let theta = rng.gen_range(0.0..(2.0 * PI));
 
     // Z = Some(a * theta.sin()); // Using mutable static will lead to data race; we waste the the other value :(.
 
@@ -51,8 +51,8 @@ pub fn sample_gaussian<R: Rng>(rng: &mut R, mu: f64, sigma: f64) -> f64 {
 #[inline]
 #[must_use]
 pub fn rand_isotropic_dir<R: Rng>(rng: &mut R) -> Dir3 {
-    let theta = rng.gen_range(0.0, 2.0 * PI);
-    let z: f64 = rng.gen_range(-1.0, 1.0);
+    let theta = rng.gen_range(0.0..(2.0 * PI));
+    let z: f64 = rng.gen_range(-1.0..1.0);
 
     let v = (1.0 - (z * z)).sqrt();
 

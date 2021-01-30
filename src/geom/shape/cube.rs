@@ -210,9 +210,9 @@ impl Cube {
     pub fn rand_pos<R: Rng>(&self, rng: &mut R) -> Pos3 {
         let widths = self.widths();
 
-        let x = self.mins.x + rng.gen_range(0.0, widths.x);
-        let y = self.mins.y + rng.gen_range(0.0, widths.y);
-        let z = self.mins.z + rng.gen_range(0.0, widths.z);
+        let x = self.mins.x + rng.gen_range(0.0..widths.x);
+        let y = self.mins.y + rng.gen_range(0.0..widths.y);
+        let z = self.mins.z + rng.gen_range(0.0..widths.z);
 
         Pos3::new(x, y, z)
     }

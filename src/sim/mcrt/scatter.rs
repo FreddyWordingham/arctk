@@ -15,7 +15,7 @@ pub fn scatter(rng: &mut ThreadRng, phot: &mut Photon, env: &Local) {
 
     // The remaining weight is scattered.
     let phi = sample_henyey_greenstein(rng, env.asym());
-    let theta = rng.gen_range(0.0, PI * 2.0);
+    let theta = rng.gen_range(0.0..(PI * 2.0));
     phot.ray_mut().rotate(phi, theta);
 }
 
@@ -36,6 +36,6 @@ pub fn shift_scatter(rng: &mut ThreadRng, phot: &mut Photon, env: &Local) {
 
     // The remaining weight is scattered.
     let phi = sample_henyey_greenstein(rng, env.asym());
-    let theta = rng.gen_range(0.0, PI * 2.0);
+    let theta = rng.gen_range(0.0..(PI * 2.0));
     phot.ray_mut().rotate(phi, theta);
 }

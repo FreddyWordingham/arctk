@@ -43,7 +43,7 @@ pub fn shadow(input: &Input, rng: &mut ThreadRng, ray: &Ray, norm: &Dir3) -> f64
     *light_ray.dir_mut() = sun_dir;
 
     let solar = if let Some((samples, rad)) = input.shader.soft_shadow_samples() {
-        let offset = rng.gen_range(0.0, 2.0 * PI);
+        let offset = rng.gen_range(0.0..(2.0 * PI));
         let mut total = 0.0;
         for n in 0..samples {
             let (r, theta) = rand_circle_point(n, samples);
@@ -57,7 +57,7 @@ pub fn shadow(input: &Input, rng: &mut ThreadRng, ray: &Ray, norm: &Dir3) -> f64
     };
 
     if let Some((samples, power)) = input.shader.ambient_shadow_samples() {
-        let offset = rng.gen_range(0.0, 2.0 * PI);
+        let offset = rng.gen_range(0.0..(2.0 * PI));
         let mut total = 0.0;
         let mut norm_ray = Ray::new(*ray.pos(), *norm);
         norm_ray.travel(bump_dist);

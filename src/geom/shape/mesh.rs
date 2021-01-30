@@ -110,7 +110,7 @@ impl Emit for Mesh {
     #[inline]
     #[must_use]
     fn cast<R: Rng>(&self, rng: &mut R) -> Ray {
-        let r = rng.gen_range(0.0, self.area);
+        let r = rng.gen_range(0.0..self.area);
         let mut total_area = 0.0;
         for tri in &self.tris {
             total_area += tri.tri().area();
