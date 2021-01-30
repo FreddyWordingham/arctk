@@ -1,7 +1,7 @@
 {
     sett    : { Here    : {
-        time        :   1e-2,
-        dumps       :   1e0,
+        time        :   1e-1,
+        dumps       :   1e2,
         block_size  :   1e1,
         quality     :   0.8,
     } },
