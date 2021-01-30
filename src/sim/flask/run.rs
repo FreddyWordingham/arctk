@@ -8,7 +8,7 @@ use ndarray_stats::QuantileExt;
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]
-pub fn single_thread(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
+pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
     let steps = input.sett.dumps() + 1;
     let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
     let quality = 1.0 - input.sett.quality();
@@ -16,7 +16,7 @@ pub fn single_thread(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>
 
     let mut records = Vec::with_capacity(steps + 1);
 
-    let mut pb = ProgressBar::new("Single-threaded", steps);
+    let mut pb = ProgressBar::new("Simulating", steps);
 
     for n in 0..steps {
         let mut row = Vec::with_capacity(1 + concs.len());
@@ -47,53 +47,6 @@ pub fn single_thread(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>
 
     Ok(Table::new(headings, records))
 }
-
-/// Evolve forward the given amount of time.
-#[allow(dead_code)]
-#[inline]
-#[must_use]
-fn evolve_euler(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
-    debug_assert!(time > 0.0);
-
-    let n = 100;
-    let dt = time / f64::from(n);
-
-    for _ in 0..n {
-        concs += &(&reactor.deltas(&concs) * dt);
-    }
-
-    concs
-}
-
-// /// Evolve forward the given amount of time.
-// #[inline]
-// #[must_use]
-// fn evolve_rk4(reactor: &Reactor, mut concs: Array1<f64>, time: f64) -> Array1<f64> {
-//     debug_assert!(time > 0.0);
-
-//     let n = 100;
-//     let dt = time / n as f64;
-//     let half_dt = dt * 0.5;
-//     let sixth_dt = dt / 6.0;
-
-//     let mut k1;
-//     let mut k2;
-//     let mut k3;
-//     let mut k4;
-//     for _ in 0..n {
-//         k1 = reactor.deltas(&concs);
-
-//         let rs = (&concs / &k1).min().max(1e-3);
-
-//         k2 = reactor.deltas(&(&concs + &(&k1 * half_dt)));
-//         k3 = reactor.deltas(&(&concs + &(&k2 * half_dt)));
-//         k4 = reactor.deltas(&(&concs + &(&k3 * dt)));
-
-//         concs += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
-//     }
-
-//     concs
-// }
 
 /// Evolve forward the given amount of time.
 #[allow(clippy::expect_used)]

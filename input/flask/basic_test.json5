@@ -1,0 +1,19 @@
+{
+    sett    : { Here    : {
+        time        :   50.0,
+        dumps       :   49,
+        quality     :   0.999,
+        min_time    :   1e-15
+    } },
+    init    : { Here    : [
+            ["A", 1.0],
+            ["B", 1.0e-15],
+    ] },
+    reactor: { Here     : [
+        {
+            rate        : [1.0, [["A", 1]]],
+            reactants   : [["A", 1]],
+            products    : [["B", 1]],
+        }
+    ] }
+}

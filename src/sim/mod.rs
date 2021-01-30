@@ -9,7 +9,7 @@ pub mod babbage;
 // #[cfg(feature = "netcdf")]
 // pub mod diffuse;
 
-// pub mod flask;
+pub mod flask;
 
 // #[cfg(feature = "netcdf")]
 // pub mod mcrt;

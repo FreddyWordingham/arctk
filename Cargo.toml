@@ -59,8 +59,8 @@ required-features = ["netcdf"]
 # name = "diffuse"
 # required-features = ["netcdf"],
 
-# [[bin]]
-# name = "flask"
+[[bin]]
+name = "flask"
 
 # [[bin]]
 # name = "mcrt"
