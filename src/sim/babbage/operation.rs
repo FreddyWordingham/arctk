@@ -83,7 +83,7 @@ impl Operation {
                 a[[res[X] / 2, res[Y] / 2, res[Z] / 2]] = 1.0;
                 a
             }
-            .save(&out_dir.join("output.nc")),
+            .save(&path.with_extension("nc")),
             Self::Sum(ref data) => {
                 let mut base = data[0].clone();
                 for d in data.iter().skip(1) {
