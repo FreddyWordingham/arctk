@@ -50,7 +50,9 @@ impl Operation {
     /// or if a sampling point can not be located within the grid.
     #[allow(clippy::expect_used)]
     #[inline]
-    pub fn run(&self, out_dir: &Path) -> Result<(), Error> {
+    pub fn run(&self, out_dir: &Path, name: &str) -> Result<(), Error> {
+        let path = out_dir.join(&format!("{}", name));
+
         match *self {
             Self::Info(ref data) => {
                 let max = *data
@@ -66,8 +68,8 @@ impl Operation {
                 println!("Average value: {}", sum / data.len() as f64);
                 Ok(())
             }
-            Self::Zero(res) => Array3::<f64>::zeros(res).save(&out_dir.join("output.nc")),
-            Self::Unit(res) => (Array3::<f64>::zeros(res) + 1.0).save(&out_dir.join("output.nc")),
+            Self::Zero(res) => Array3::<f64>::zeros(res).save(&path.with_extension("nc")),
+            Self::Unit(res) => (Array3::<f64>::zeros(res) + 1.0).save(&path.with_extension("nc")),
             Self::Point(res) => {
                 let mut a = Array3::<f64>::zeros(res);
                 a[[res[X] / 2, res[Y] / 2, res[Z] / 2]] = 1.0;
@@ -79,17 +81,17 @@ impl Operation {
                 for d in data.iter().skip(1) {
                     base += d;
                 }
-                base.save(&out_dir.join("output.nc"))
+                base.save(&path.with_extension("nc"))
             }
-            Self::Add(ref data, x) => (data + x).save(&out_dir.join("output.nc")),
-            Self::Sub(ref data, x) => (data - x).save(&out_dir.join("output.nc")),
-            Self::Mult(ref data, x) => (data * x).save(&out_dir.join("output.nc")),
-            Self::Div(ref data, x) => (data / x).save(&out_dir.join("output.nc")),
+            Self::Add(ref data, x) => (data + x).save(&path.with_extension("nc")),
+            Self::Sub(ref data, x) => (data - x).save(&path.with_extension("nc")),
+            Self::Mult(ref data, x) => (data * x).save(&path.with_extension("nc")),
+            Self::Div(ref data, x) => (data / x).save(&path.with_extension("nc")),
             Self::Norm(ref data) => {
                 let max = *data
                     .max()
                     .unwrap_or_else(|_| panic!("Failed to determine maximum value."));
-                (data / max).save(&out_dir.join("output.nc"))
+                (data / max).save(&path.with_extension("nc"))
             }
             Self::Sample(ref points, ref data, ref grid) => {
                 let mut weights = Vec::with_capacity(points.len());
@@ -99,7 +101,7 @@ impl Operation {
                         .unwrap_or_else(|| panic!("Failed to place point within grid."));
                     weights.push(vec![data[index]]);
                 }
-                Table::new(vec!["weight".to_string()], weights).save(&out_dir.join("output.csv"))
+                Table::new(vec!["weight".to_string()], weights).save(&path.with_extension("csv"))
             }
         }
     }

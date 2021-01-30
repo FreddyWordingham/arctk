@@ -3,10 +3,11 @@
 
 use arctk::{
     args,
+    err::Error,
     fs::{File, Load},
     ord::Build,
     report,
-    sim::babbage::{Parameters, ParametersBuilderLoader},
+    sim::babbage::Parameters,
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -26,9 +27,10 @@ fn main() {
     let term_width = term::width(BACKUP_TERM_WIDTH);
     title(term_width, "Babbage");
 
-    let (in_dir, _out_dir, params_path) = initialisation(term_width);
-    let _params = input(term_width, &in_dir, &params_path);
-    // run(term_width, params.op, &out_dir);
+    let (in_dir, out_dir, params_path) = initialisation(term_width);
+    let params = Parameters::new_from_file(&in_dir.join(&params_path))
+        .expect("Failed to load parameters file.");
+    run(term_width, params, &in_dir, &out_dir).expect("Running operations failed.");
 
     section(term_width, "Finished");
 }
@@ -58,23 +60,15 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     (in_dir, out_dir, params_path)
 }
 
-/// Retrieve the input parameters file structure.
-fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
-    section(term_width, "Input");
-    sub_section(term_width, "Loading");
-    let loader = ParametersBuilderLoader::new_from_file(&in_dir.join(&params_path))
-        .expect("Failed to load parameters file.");
-    report!(loader, "loader");
+/// Run the operations and save their results.
+fn run(term_width: usize, params: Parameters, in_dir: &Path, out_dir: &Path) -> Result<(), Error> {
+    section(term_width, "Running");
 
-    sub_section(term_width, "Building");
-    let builder = loader
-        .load(&in_dir)
-        .expect("Failed to load parameter resource files.");
-    report!(builder, "builder");
+    for (name, op) in params.ops {
+        sub_section(term_width, &format!("Operation {}", name));
+        report!(op, "operation");
+        op.load(in_dir)?.build().run(&out_dir, &name)?;
+    }
 
-    sub_section(term_width, "Parameterised");
-    let params = builder.build();
-    report!(params, "parameters");
-
-    params
+    Ok(())
 }
