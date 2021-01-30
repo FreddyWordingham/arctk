@@ -1,23 +1,26 @@
 //! Buildable parameters.
 
 use crate::{
-    fmt_reports,
+    fmt_report,
     ord::Build,
     sim::babbage::{OperationBuilder, Parameters},
 };
-use std::fmt::{Display, Error, Formatter};
+use std::{
+    fmt::{Display, Error, Formatter},
+    path::PathBuf,
+};
 
 /// Runtime parameters.
 pub struct ParametersBuilder {
     /// Operation builder.
-    ops: Vec<OperationBuilder>,
+    ops: Vec<(OperationBuilder, PathBuf)>,
 }
 
 impl ParametersBuilder {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(ops: Vec<OperationBuilder>) -> Self {
+    pub const fn new(ops: Vec<(OperationBuilder, PathBuf)>) -> Self {
         Self { ops }
     }
 }
@@ -27,7 +30,12 @@ impl Build for ParametersBuilder {
 
     #[inline]
     fn build(self) -> Self::Inst {
-        Self::Inst::new(self.ops.into_iter().map(Build::build).collect())
+        let mut ops = Vec::with_capacity(self.ops.len());
+        for (op, path) in self.ops {
+            ops.push((op.build(), path));
+        }
+
+        Self::Inst::new(ops)
     }
 }
 
@@ -35,7 +43,9 @@ impl Display for ParametersBuilder {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
-        fmt_reports!(fmt, &self.ops, "operation builders");
+        for &(ref op, ref path) in &self.ops {
+            fmt_report!(fmt, op, path.display());
+        }
         Ok(())
     }
 }

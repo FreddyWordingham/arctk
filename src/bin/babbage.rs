@@ -2,14 +2,21 @@
 //! Produce some data from some other data.
 
 use arctk::{
-    args, report,
+    args,
+    fs::{File, Load},
+    ord::Build,
+    report,
+    sim::babbage::{Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
         fmt::term,
     },
 };
-use std::{env::current_dir, path::PathBuf};
+use std::{
+    env::current_dir,
+    path::{Path, PathBuf},
+};
 
 /// Backup print width if the terminal width can not be determined.
 const BACKUP_TERM_WIDTH: usize = 80;
@@ -19,8 +26,8 @@ fn main() {
     let term_width = term::width(BACKUP_TERM_WIDTH);
     title(term_width, "Babbage");
 
-    let (_in_dir, _out_dir, _params_path) = initialisation(term_width);
-    // let params = input(term_width, &in_dir, &params_path);
+    let (in_dir, _out_dir, params_path) = initialisation(term_width);
+    let _params = input(term_width, &in_dir, &params_path);
     // run(term_width, params.op, &out_dir);
 
     section(term_width, "Finished");
@@ -51,19 +58,23 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     (in_dir, out_dir, params_path)
 }
 
-// /// Retrieve the input parameters file structure.
-// fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
-//     section(term_width, "Input");
-//     sub_section(term_width, "Loading");
-//     let builder = ParametersBuilderLoader::new_from_file(&in_dir.join(&params_path))
-//         .expect("Failed to load parameters file.")
-//         .load(&in_dir)
-//         .expect("Failed to load parameter resource files.");
-//     report!(builder, "builder");
+/// Retrieve the input parameters file structure.
+fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
+    section(term_width, "Input");
+    sub_section(term_width, "Loading");
+    let loader = ParametersBuilderLoader::new_from_file(&in_dir.join(&params_path))
+        .expect("Failed to load parameters file.");
+    report!(loader, "loader");
 
-//     sub_section(term_width, "Building");
-//     let params = builder.build();
-//     report!(params, "parameters");
+    sub_section(term_width, "Building");
+    let builder = loader
+        .load(&in_dir)
+        .expect("Failed to load parameter resource files.");
+    report!(builder, "builder");
 
-//     params
-// }
+    sub_section(term_width, "Parameterised");
+    let params = builder.build();
+    report!(params, "parameters");
+
+    params
+}

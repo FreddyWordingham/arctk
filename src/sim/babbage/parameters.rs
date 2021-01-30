@@ -1,19 +1,22 @@
 //! Runtime parameters.
 
-use crate::{fmt_reports, sim::babbage::Operation};
-use std::fmt::{Display, Error, Formatter};
+use crate::{fmt_report, sim::babbage::Operation};
+use std::{
+    fmt::{Display, Error, Formatter},
+    path::PathBuf,
+};
 
 /// Runtime parameters.
 pub struct Parameters {
     /// Operation to perform.
-    pub ops: Vec<Operation>,
+    pub ops: Vec<(Operation, PathBuf)>,
 }
 
 impl Parameters {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(ops: Vec<Operation>) -> Self {
+    pub const fn new(ops: Vec<(Operation, PathBuf)>) -> Self {
         Self { ops }
     }
 }
@@ -22,7 +25,9 @@ impl Display for Parameters {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
-        fmt_reports!(fmt, &self.ops, "operation");
+        for &(ref op, ref path) in &self.ops {
+            fmt_report!(fmt, op, path.display());
+        }
         Ok(())
     }
 }
