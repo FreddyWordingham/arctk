@@ -1,0 +1,36 @@
+{
+    ops: [
+        [
+            "base_map",
+            { Unit      : [31, 31, 31] }
+        ],
+        [
+            "cube_map",
+            { Fill      : {
+                res     : [31, 31, 31],
+                mins    : [10, 10, 10],
+                maxs    : [20, 20, 20],
+            } }
+        ],
+        [
+            "a",
+            { Remove    : ["../output/base_map.nc", "../output/cube_map.nc"] }
+        ],
+        [
+            "b",
+            { Mult    : ["../output/a.nc", 0.0001] }
+        ],
+        [
+            "c",
+            { Mult    : ["../output/cube_map.nc", 0.01] }
+        ],
+        [
+            "cube_coeffs",
+            { Sum     : ["../output/b.nc", "../output/c.nc"] }
+        ],
+        [
+            "info",
+            { Info    : "../output/cube_coeffs.nc" }
+        ]
+    ]
+}

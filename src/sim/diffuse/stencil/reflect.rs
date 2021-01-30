@@ -1,4 +1,4 @@
-//! Gradient-type stencil structure.
+//! Reflective-type stencil structure.
 
 use crate::{
     fmt_report,
@@ -8,9 +8,9 @@ use crate::{
 use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
-/// Gradient stencil implementation.
+/// Reflective stencil implementation.
 #[derive(Debug)]
-pub struct Grad {
+pub struct Reflect {
     /// Twice the central value.
     c2: f64,
     /// Previous-x value.
@@ -27,7 +27,7 @@ pub struct Grad {
     next_z: f64,
 }
 
-impl Grad {
+impl Reflect {
     /// Construct a new instance.
     #[inline]
     #[must_use]
@@ -39,43 +39,31 @@ impl Grad {
 
         let [xi, yi, zi] = index;
 
-        let c2 = values[[xi, yi, zi]] * 2.0;
+        let c = values[[xi, yi, zi]];
 
-        let prev_x = if xi == 0 {
-            c2 - values[[xi + 1, yi, zi]]
-        } else {
-            values[[xi - 1, yi, zi]]
-        };
+        let prev_x = if xi == 0 { c } else { values[[xi - 1, yi, zi]] };
         let next_x = if xi == max_x {
-            c2 - values[[xi - 1, yi, zi]]
+            c
         } else {
             values[[xi + 1, yi, zi]]
         };
 
-        let prev_y = if yi == 0 {
-            c2 - values[[xi, yi + 1, zi]]
-        } else {
-            values[[xi, yi - 1, zi]]
-        };
+        let prev_y = if yi == 0 { c } else { values[[xi, yi - 1, zi]] };
         let next_y = if yi == max_y {
-            c2 - values[[xi, yi - 1, zi]]
+            c
         } else {
             values[[xi, yi + 1, zi]]
         };
 
-        let prev_z = if zi == 0 {
-            c2 - values[[xi, yi, zi + 1]]
-        } else {
-            values[[xi, yi, zi - 1]]
-        };
+        let prev_z = if zi == 0 { c } else { values[[xi, yi, zi - 1]] };
         let next_z = if zi == max_z {
-            c2 - values[[xi, yi, zi - 1]]
+            c
         } else {
             values[[xi, yi, zi + 1]]
         };
 
         Self {
-            c2,
+            c2: c * 2.0,
             prev_x,
             next_x,
             prev_y,
@@ -96,7 +84,7 @@ impl Grad {
     }
 }
 
-impl Display for Grad {
+impl Display for Reflect {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;

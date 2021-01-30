@@ -19,6 +19,8 @@ pub enum OperationBuilder {
         mins: [usize; 3],
         maxs: [usize; 3],
     },
+    /// Remove one cube from another.
+    Remove(Array3<f64>, Array3<f64>),
     /// Sum cubes together.
     Sum(Vec<Array3<f64>>),
     /// Add a value to the data cube.
@@ -46,6 +48,7 @@ impl Build for OperationBuilder {
             Self::Unit(res) => Self::Inst::Unit(res),
             Self::Point(res) => Self::Inst::Point(res),
             Self::Fill { res, mins, maxs } => Self::Inst::Fill { res, mins, maxs },
+            Self::Remove(a, b) => Self::Inst::Remove(a, b),
             Self::Sum(cubes) => Self::Inst::Sum(cubes),
             Self::Add(cube, x) => Self::Inst::Add(cube, x),
             Self::Sub(cube, x) => Self::Inst::Sub(cube, x),

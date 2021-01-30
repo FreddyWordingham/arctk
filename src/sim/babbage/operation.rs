@@ -29,6 +29,8 @@ pub enum Operation {
         mins: [usize; 3],
         maxs: [usize; 3],
     },
+    /// Remove one cube from another.
+    Remove(Array3<f64>, Array3<f64>),
     /// Sum cubes together.
     Sum(Vec<Array3<f64>>),
     /// Add a value to the data cube.
@@ -97,6 +99,9 @@ impl Operation {
                 a
             }
             .save(&path.with_extension("nc")),
+            Self::Remove(ref data_a, ref data_b) => {
+                (data_a - data_b).save(&path.with_extension("nc"))
+            }
             Self::Sum(ref data) => {
                 let mut base = data[0].clone();
                 for d in data.iter().skip(1) {

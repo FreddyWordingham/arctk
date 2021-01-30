@@ -1,0 +1,24 @@
+{
+    ops: [
+        [
+            "info_a",
+            { Info    : "../output/001_diff.nc" }
+        ],
+        [
+            "info_b",
+            { Info    : "../output/010_diff.nc" }
+        ],
+        [
+            "info_c",
+            { Info    : "../output/020_diff.nc" }
+        ],
+        [
+            "info_d",
+            { Info    : "../output/050_diff.nc" }
+        ],
+        [
+            "info_e",
+            { Info    : "../output/099_diff.nc" }
+        ]
+    ]
+}

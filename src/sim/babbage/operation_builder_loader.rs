@@ -35,6 +35,8 @@ pub enum OperationBuilderLoader {
         mins: [usize; 3],
         maxs: [usize; 3],
     },
+    /// Remove one cube from another.
+    Remove(PathBuf, PathBuf),
     /// Sum cubes together.
     Sum(Vec<PathBuf>),
     /// Add a value to the data cube.
@@ -65,6 +67,11 @@ impl Load for OperationBuilderLoader {
             Self::Unit(res) => Self::Inst::Unit(res),
             Self::Point(res) => Self::Inst::Point(res),
             Self::Fill { res, mins, maxs } => Self::Inst::Fill { res, mins, maxs },
+            Self::Remove(data_a_path, data_b_path) => {
+                let a = Array3::new_from_file(&in_dir.join(data_a_path))?;
+                let b = Array3::new_from_file(&in_dir.join(data_b_path))?;
+                Self::Inst::Remove(a, b)
+            }
             Self::Sum(data_paths) => {
                 let mut cubes = Vec::with_capacity(data_paths.len());
                 for d in &data_paths {
@@ -131,6 +138,14 @@ impl Display for OperationBuilderLoader {
                     fmt,
                     "Fill: [{} x {} x {}], [{}-{} x {}-{} x {}-{}]",
                     res[X], res[Y], res[Z], mins[X], mins[Y], mins[Z], maxs[X], maxs[Y], maxs[Z],
+                )
+            }
+            Self::Remove(ref data_a_path, ref data_b_path) => {
+                write!(
+                    fmt,
+                    "Remove: {} - {}",
+                    data_a_path.display(),
+                    data_b_path.display(),
                 )
             }
             Self::Sum(ref data_paths) => {
