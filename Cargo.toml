@@ -13,7 +13,7 @@ documentation = "https://freddywordingham.github.io/arctk"
 exclude = ["docs/", "input/", "output/"]
 
 [features]
-# default = ["netcdf", "png", "terminal_size", "game"]
+# default = ["netcdf", "png"]
 
 [dependencies]
 arctk-attr = { path = "../arctk-attr" }
@@ -45,35 +45,34 @@ serde_json = "1.0.*"
 slice-of-array = "0.2.*"
 specs = { version = "0.16.*", optional = true }
 specs-derive = { version = "0.4.*", optional = true }
-terminal_size = { version = "0.1.*", optional = true }
+terminal_size = "0.1.*"
 
 # [[bin]]
 # name = "babbage"
-# required-features = ["terminal_size", "netcdf"]
+# required-features = ["netcdf"]
 
 # [[bin]]
 # name = "cartographer"
-# required-features = ["terminal_size", "netcdf"]
+# required-features = ["netcdf"]
 
 # [[bin]]
 # name = "diffuse"
-# required-features = ["netcdf", "terminal_size"]
+# required-features = ["netcdf"],
 
 # [[bin]]
 # name = "flask"
-# required-features = ["terminal_size"]
 
 # [[bin]]
 # name = "mcrt"
-# required-features = ["terminal_size", "netcdf"]
+# required-features = ["netcdf"]
 
 # [[bin]]
 # name = "reactor"
-# required-features = ["terminal_size", "netcdf"]
+# required-features = ["netcdf"]
 
 # [[bin]]
 # name = "render"
-# required-features = ["terminal_size", "png"]
+# required-features = ["png"]
 
 [profile.dev]
 # Development profile: "cargo build".
