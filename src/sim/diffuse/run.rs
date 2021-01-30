@@ -4,7 +4,6 @@ use crate::{
     err::Error,
     fs::Save,
     math::Vec3,
-    ord::{X, Y},
     sim::diffuse::{stencil, Input},
     tools::ProgressBar,
 };
@@ -92,18 +91,18 @@ fn calc_rates(
     voxel_size_sq: &Vec3,
 ) -> Array3<f64> {
     let res = *input.grid.res();
+    let [rx, ry, rz] = res;
 
-    let length = values.len();
-    for n in 0..length {
-        let xi = n % res[X];
-        let yi = (n / res[X]) % res[Y];
-        let zi = n / (res[X] * res[Y]);
+    for xi in 0..rx {
+        for yi in 0..ry {
+            for zi in 0..rz {
+                let index = [xi, yi, zi];
 
-        let index = [xi, yi, zi];
-
-        // let stencil = stencil::Reflect::new(index, values);
-        let stencil = stencil::Grad::new(index, values);
-        rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
+                // let stencil = stencil::Reflect::new(index, values);
+                let stencil = stencil::Grad::new(index, values);
+                rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
+            }
+        }
     }
 
     rates
