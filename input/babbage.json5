@@ -18,7 +18,7 @@
         ],
         [
             "e",
-            { Info    : "d.nc" }
+            { Info    : "../output/d.nc" }
         ]
     ]
 }
