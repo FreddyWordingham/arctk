@@ -1,6 +1,9 @@
 //! Simulation input.
 
-use crate::{chem::Reactor, fmt_report, geom::Grid, ord::Register, sim::reactor::Settings,util::datacube::display_datatesseract};
+use crate::{
+    chem::Reactor, fmt_report, geom::Grid, ord::Register, sim::reactor::Settings,
+    util::datacube::display_datatesseract,
+};
 use ndarray::Array4;
 use std::fmt::{Display, Error, Formatter};
 

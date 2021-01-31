@@ -1,6 +1,10 @@
 //! Gradient-type stencil structure.
 
-use crate::{fmt_report, math::Vec3};
+use crate::{
+    fmt_report,
+    math::Vec3,
+    ord::{X, Y, Z},
+};
 use ndarray::Array4;
 use std::fmt::{Display, Error, Formatter};
 
@@ -29,45 +33,45 @@ impl Grad {
     #[must_use]
     pub fn new(index: [usize; 4], values: &Array4<f64>) -> Self {
         let shape = values.shape();
-        let max_x = shape[1] - 1;
-        let max_y = shape[2] - 1;
-        let max_z = shape[3] - 1;
+        let max_x = shape[X] - 1;
+        let max_y = shape[Y] - 1;
+        let max_z = shape[Z] - 1;
 
-        let [si, xi, yi, zi] = index;
+        let [xi, yi, zi, si] = index;
 
-        let c2 = values[[si, xi, yi, zi]] * 2.0;
+        let c2 = values[[xi, yi, zi, si]] * 2.0;
 
         let prev_x = if xi == 0 {
-            c2 - values[[si, xi + 1, yi, zi]]
+            c2 - values[[xi + 1, yi, zi, si]]
         } else {
-            values[[si, xi - 1, yi, zi]]
+            values[[xi - 1, yi, zi, si]]
         };
         let next_x = if xi == max_x {
-            c2 - values[[si, xi - 1, yi, zi]]
+            c2 - values[[xi - 1, yi, zi, si]]
         } else {
-            values[[si, xi + 1, yi, zi]]
+            values[[xi + 1, yi, zi, si]]
         };
 
         let prev_y = if yi == 0 {
-            c2 - values[[si, xi, yi + 1, zi]]
+            c2 - values[[xi, yi + 1, zi, si]]
         } else {
-            values[[si, xi, yi - 1, zi]]
+            values[[xi, yi - 1, zi, si]]
         };
         let next_y = if yi == max_y {
-            c2 - values[[si, xi, yi - 1, zi]]
+            c2 - values[[xi, yi - 1, zi, si]]
         } else {
-            values[[si, xi, yi + 1, zi]]
+            values[[xi, yi + 1, zi, si]]
         };
 
         let prev_z = if zi == 0 {
-            c2 - values[[si, xi, yi, zi + 1]]
+            c2 - values[[xi, yi, zi + 1, si]]
         } else {
-            values[[si, xi, yi, zi - 1]]
+            values[[xi, yi, zi - 1, si]]
         };
         let next_z = if zi == max_z {
-            c2 - values[[si, xi, yi, zi - 1]]
+            c2 - values[[xi, yi, zi - 1, si]]
         } else {
-            values[[si, xi, yi, zi + 1]]
+            values[[xi, yi, zi + 1, si]]
         };
 
         Self {

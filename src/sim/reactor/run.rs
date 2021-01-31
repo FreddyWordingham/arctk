@@ -5,6 +5,7 @@ use crate::{
     err::Error,
     fs::Save,
     math::Vec3,
+    ord::{X, Y, Z},
     sim::reactor::{stencil, Input},
     tools::ProgressBar,
 };
@@ -82,15 +83,16 @@ pub fn integrate(
         values = react(input, values, dt / 2.0);
 
         // Full diffusion step.
-        rates = calc_diff_rates(input, &values, rates, voxel_size_sq);
-        values += &(&rates * dt);
+        let values_rates = diffuse(input, values, rates, voxel_size_sq, dt);
+        values = values_rates.0;
+        rates = values_rates.1;
 
         // Last reaction half-step.
         values = react(input, values, dt / 2.0);
 
         pb.tick();
     }
-    pb.finish_with_message("Simulation complete.");
+    pb.finish_with_message("Step complete.");
 
     (values, rates)
 }
@@ -98,35 +100,37 @@ pub fn integrate(
 /// Diffusion rate calculation function.
 #[allow(clippy::expect_used)]
 #[inline]
-#[must_use]
-fn calc_diff_rates(
+fn diffuse(
     input: &Input,
-    values: &Array4<f64>,
+    mut values: Array4<f64>,
     mut rates: Array4<f64>,
     voxel_size_sq: &Vec3,
-) -> Array4<f64> {
+    time: f64,
+) -> (Array4<f64>, Array4<f64>) {
+    debug_assert!(time > 0.0);
+
     let [rs, rx, ry, rz] = [
         values.shape()[0],
-        values.shape()[1],
-        values.shape()[2],
-        values.shape()[3],
+        values.shape()[X + 1],
+        values.shape()[Y + 1],
+        values.shape()[Z + 1],
     ];
 
     for si in 0..rs {
-        for zi in 0..rz {
+        for xi in 0..rx {
             for yi in 0..ry {
-                for xi in 0..rx {
+                for zi in 0..rz {
                     let index = [si, xi, yi, zi];
-
-                    // let stencil = stencil::Reflect::new(index, values);
-                    let stencil = stencil::Grad::new(index, values);
+                    let stencil = stencil::Grad::new(index, &values);
                     rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
                 }
             }
         }
     }
 
-    rates
+    values += &(&rates * time);
+
+    (values, rates)
 }
 
 /// Reaction calculation function.
@@ -138,12 +142,13 @@ fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
 
     let [rs, rx, ry, rz] = [
         values.shape()[0],
-        values.shape()[1],
-        values.shape()[2],
-        values.shape()[3],
+        values.shape()[X + 1],
+        values.shape()[Y + 1],
+        values.shape()[Z + 1],
     ];
 
     let mut concs = Array1::zeros(rs);
+    let mut ks = [concs.clone(), concs.clone(), concs.clone(), concs.clone()];
     for xi in 0..rx {
         for yi in 0..ry {
             for zi in 0..rz {
@@ -151,13 +156,16 @@ fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
                     concs[si] = values[[si, xi, yi, zi]] + MIN_POSITIVE;
                 }
 
-                concs = evolve_rk4(
+                let concs_ks = evolve_rk4(
                     input.reactor,
                     concs,
+                    ks,
                     time,
                     input.sett.quality(),
                     input.sett.min_time(),
                 );
+                concs = concs_ks.0;
+                ks = concs_ks.1;
 
                 for si in 0..rs {
                     values[[si, xi, yi, zi]] = concs[si] - MIN_POSITIVE;
@@ -176,24 +184,21 @@ fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
 fn evolve_rk4(
     reactor: &Reactor,
     mut concs: Array1<f64>,
+    mut ks: [Array1<f64>; 4],
     total_time: f64,
     quality: f64,
     min_time: f64,
-) -> Array1<f64> {
+) -> (Array1<f64>, [Array1<f64>; 4]) {
     debug_assert!(total_time > 0.0);
     debug_assert!(quality > 0.0);
     debug_assert!(quality < 1.0);
     debug_assert!(min_time <= total_time);
 
     let mut time = 0.0;
-    let mut k1;
-    let mut k2;
-    let mut k3;
-    let mut k4;
     while time < total_time {
-        k1 = reactor.deltas(&concs);
+        ks[0] = reactor.deltas(&concs);
 
-        let dt = ((&concs / &k1)
+        let dt = ((&concs / &ks[0])
             .max()
             .expect("Failed to determine minimum rate of change.")
             * quality)
@@ -202,13 +207,13 @@ fn evolve_rk4(
         let half_dt = dt * 0.5;
         let sixth_dt = dt / 6.0;
 
-        k2 = reactor.deltas(&(&concs + &(&k1 * half_dt)));
-        k3 = reactor.deltas(&(&concs + &(&k2 * half_dt)));
-        k4 = reactor.deltas(&(&concs + &(&k3 * dt)));
+        ks[1] = reactor.deltas(&(&concs + &(&ks[0] * half_dt)));
+        ks[2] = reactor.deltas(&(&concs + &(&ks[1] * half_dt)));
+        ks[3] = reactor.deltas(&(&concs + &(&ks[2] * dt)));
 
-        concs += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
+        concs += &(&(&ks[0] + &(2.0 * (&ks[1] + &ks[2])) + &ks[3]) * sixth_dt);
         time += dt;
     }
 
-    concs
+    (concs, ks)
 }
