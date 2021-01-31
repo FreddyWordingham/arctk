@@ -109,18 +109,18 @@ fn diffuse(
 ) -> (Array4<f64>, Array4<f64>) {
     debug_assert!(time > 0.0);
 
-    let [rs, rx, ry, rz] = [
+    let [rx, ry, rz, rs] = [
         values.shape()[0],
-        values.shape()[X + 1],
-        values.shape()[Y + 1],
-        values.shape()[Z + 1],
+        values.shape()[1],
+        values.shape()[2],
+        values.shape()[3],
     ];
 
-    for si in 0..rs {
-        for xi in 0..rx {
-            for yi in 0..ry {
-                for zi in 0..rz {
-                    let index = [si, xi, yi, zi];
+    for xi in 0..rx {
+        for yi in 0..ry {
+            for zi in 0..rz {
+                for si in 0..rs {
+                    let index = [xi, yi, zi, si];
                     let stencil = stencil::Grad::new(index, &values);
                     rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
                 }
@@ -140,11 +140,11 @@ fn diffuse(
 fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
     debug_assert!(time > 0.0);
 
-    let [rs, rx, ry, rz] = [
+    let [rx, ry, rz, rs] = [
         values.shape()[0],
-        values.shape()[X + 1],
-        values.shape()[Y + 1],
-        values.shape()[Z + 1],
+        values.shape()[1],
+        values.shape()[2],
+        values.shape()[3],
     ];
 
     let mut concs = Array1::zeros(rs);
@@ -153,7 +153,7 @@ fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
         for yi in 0..ry {
             for zi in 0..rz {
                 for si in 0..rs {
-                    concs[si] = values[[si, xi, yi, zi]] + MIN_POSITIVE;
+                    concs[si] = values[[xi, yi, zi, si]] + MIN_POSITIVE;
                 }
 
                 let concs_ks = evolve_rk4(
@@ -168,7 +168,7 @@ fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
                 ks = concs_ks.1;
 
                 for si in 0..rs {
-                    values[[si, xi, yi, zi]] = concs[si] - MIN_POSITIVE;
+                    values[[xi, yi, zi, si]] = concs[si] - MIN_POSITIVE;
                 }
             }
         }
