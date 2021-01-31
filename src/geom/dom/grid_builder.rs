@@ -57,7 +57,7 @@ impl Display for GridBuilder {
         fmt_report!(fmt, self.boundary, "boundary");
         fmt_report!(
             fmt,
-            &format!("[{}x{}x{}]", self.res[X], self.res[Y], self.res[Z]),
+            &format!("[{} x {} x {}]", self.res[X], self.res[Y], self.res[Z]),
             "resolution"
         );
         Ok(())
