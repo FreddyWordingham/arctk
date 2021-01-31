@@ -1,9 +1,9 @@
 //! Simulation input.
 
-use crate::{chem::Reactor, fmt_report, ord::Register, sim::flask::Settings};
+use crate::{chem::Reactor, fmt_report, ord::Register, sim::reactor::Settings};
 use std::fmt::{Display, Error, Formatter};
 
-/// Flask simulation resources conglomerate.
+/// Reactor simulation resources conglomerate.
 pub struct Input<'a> {
     /// Register of known species.
     pub specs: &'a Register,
