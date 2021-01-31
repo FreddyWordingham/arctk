@@ -33,7 +33,7 @@ pub fn single_thread(
         .coeffs
         .max()
         .expect("Failed to determine maximum coefficient.");
-    let max_dt = min_voxel_size_sq / (4.0 * max_coeff);
+    let max_dt = min_voxel_size_sq / (8.0 * max_coeff);
     let dt = max_dt * (1.0 - input.sett.quality()).min(1.0).max(0.0);
 
     let steps = input.sett.dumps();
@@ -44,6 +44,7 @@ pub fn single_thread(
         values = vr.0;
         rates = vr.1;
         values.save(&out_dir.join(&format!("{:03}_diff.nc", n)))?;
+        rates.save(&out_dir.join(&format!("{:03}_rate.nc", n)))?;
     }
 
     Ok(values)

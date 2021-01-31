@@ -22,7 +22,7 @@
         ],
         [
             "c",
-            { Mult    : ["../output/cube_map.nc", 0.01] }
+            { Mult    : ["../output/cube_map.nc", 0.1] }
         ],
         [
             "cube_coeffs",
