@@ -3,10 +3,10 @@
 
 use arctk::{
     args,
-    fs::{File, Load, Save},
+    fs::{File, Load},
     ord::{Build, Link, Register, X, Y, Z},
     report,
-    sim::reactor::{Input, Parameters, ParametersBuilderLoader},
+    sim::reactor::{run, Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -66,12 +66,12 @@ fn main() {
     let input = Input::new(&spec_reg, &reactor, &coeffs, &grid, &sett);
     report!(input, "input");
 
-    // section(term_width, "Running");
-    // let data = run(concs, &input).expect("Failed to run flask simulation.");
+    section(term_width, "Running");
+    let _data =
+        run::single_thread(&out_dir, &input, values).expect("Failed to run reactor simulation.");
 
     // section(term_width, "Saving");
-    // // report!(data, "data");
-    // data.save(&out_dir.join("concs.csv"))
+    // data.save(&out_dir.join("final.nc"))
     //     .expect("Failed to save output data.");
 
     section(term_width, "Finished");
