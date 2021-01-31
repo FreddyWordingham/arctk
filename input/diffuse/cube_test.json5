@@ -1,9 +1,5 @@
 {
-    sett    : { Here    : {
-        time        :   1e-2,
-        dumps       :   1e2,
-        quality     :   0.5,
-    } },
+    sett    : { There   : "diffuse/settings.json5" },
     grid    : { There   : 'grid/10cm_31.json5' },
     init    : "../output/point_50deg.nc",
     // init    : "../output/cube_50deg.nc",

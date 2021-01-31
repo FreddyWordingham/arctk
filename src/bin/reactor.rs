@@ -6,6 +6,7 @@ use arctk::{
     fs::{File, Load, Save},
     ord::{Link, Register},
     report,
+    sim::reactor::{Parameters, ParametersLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -26,7 +27,7 @@ fn main() {
     title(term_width, "Reactor");
 
     let (in_dir, out_dir, params_path) = initialisation(term_width);
-    // let params = load_parameters(term_width, &in_dir, &params_path);
+    let params = load_parameters(term_width, &in_dir, &params_path);
 
     // section(term_width, "Input");
     // sub_section(term_width, "Reconstruction");
@@ -89,15 +90,15 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     (in_dir, out_dir, params_path)
 }
 
-// /// Load the required files and form the input parameters.
-// fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
-//     section(term_width, "Parameters");
-//     sub_section(term_width, "Loading");
-//     let params = ParametersLoader::new_from_file(&in_dir.join(&params_path))
-//         .expect("Failed to load parameters file.")
-//         .load(&in_dir)
-//         .expect("Failed to load parameter resource files.");
-//     report!(params, "parameters");
+/// Load the required files and form the input parameters.
+fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
+    section(term_width, "Parameters");
+    sub_section(term_width, "Loading");
+    let params = ParametersLoader::new_from_file(&in_dir.join(&params_path))
+        .expect("Failed to load parameters file.")
+        .load(&in_dir)
+        .expect("Failed to load parameter resource files.");
+    report!(params, "parameters");
 
-//     params
-// }
+    params
+}

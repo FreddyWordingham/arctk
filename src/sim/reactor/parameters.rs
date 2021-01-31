@@ -1,6 +1,9 @@
 //! Runtime parameters.
 
-use crate::{chem::ReactorLinker, fmt_report, ord::Set, sim::reactor::Settings};
+use crate::{
+    chem::ReactorLinker, fmt_report, ord::Set, sim::reactor::Settings,
+    util::fmt::datacube::display_datacube,
+};
 use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
@@ -32,7 +35,11 @@ impl Display for Parameters {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
-        fmt_report!(fmt, self.init, "initial values");
+        for (name, values) in self.init.map() {
+            write!(fmt, "{:>32} : ", &format!("init {} values", name))?;
+            display_datacube(fmt, values)?;
+        }
+
         fmt_report!(fmt, self.reactor, "reactor");
         Ok(())
     }

@@ -1,0 +1,19 @@
+{
+    sett    : { There   : "reactor/settings.json5" },
+    init    : { Here    : {
+        A:  "../output/a.nc",
+        B:  "../output/b.nc",
+    } },
+    reactor: { Here     : [
+        {
+            rate        : [0.1, [["A", 1]]],
+            reactants   : [["A", 1]],
+            products    : [["B", 1]]
+        },
+        {
+            rate        : [0.5, [["B", 1]]],
+            reactants   : [["B", 1]],
+            products    : [["C", 1]]
+        }
+    ] }
+}
