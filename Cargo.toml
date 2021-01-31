@@ -62,6 +62,10 @@ required-features = ["netcdf"]
 [[bin]]
 name = "flask"
 
+[[bin]]
+name = "reactor"
+required-features = ["netcdf"]
+
 # [[bin]]
 # name = "mcrt"
 # required-features = ["netcdf"]
