@@ -56,17 +56,11 @@ fn main() {
         }
     }
 
-    // let concs = params
-    //     .init
-    //     .link(spec_reg.set())
-    //     .expect("Failed to link species to initial concentrations.");
-    // report!(concs, "initial concentrations");
-
-    // let reactor = params
-    //     .reactor
-    //     .link(spec_reg.set())
-    //     .expect("Failed to link species to reactor.");
-    // report!(reactor, "reactor");
+    let reactor = params
+        .reactor
+        .link(spec_reg.set())
+        .expect("Failed to link species to reactor.");
+    report!(reactor, "reactor");
 
     // sub_section(term_width, "Input");
     // let input = Input::new(&spec_reg, &reactor, &sett);
