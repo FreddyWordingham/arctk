@@ -2,9 +2,7 @@
 
 use crate::{
     chem::ReactorLinker,
-    err::Error,
     fmt_report,
-    fs::{File, Load, Redirect},
     geom::GridBuilder,
     ord::{Build, Set},
     sim::reactor::{Parameters, Settings},
@@ -13,7 +11,6 @@ use crate::{
 use arctk_attr::file;
 use ndarray::Array3;
 use std::fmt::{Display, Formatter};
-use std::path::{Path, PathBuf};
 
 /// Buildable runtime parameters.
 #[file]

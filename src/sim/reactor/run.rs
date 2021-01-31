@@ -1,6 +1,11 @@
 //! Simulation control functions.
 
-use crate::{err::Error, fs::Save, math::Vec3, sim::reactor::Input, tools::ProgressBar};
+use crate::{
+    err::Error,
+    math::Vec3,
+    sim::reactor::{stencil, Input},
+    tools::ProgressBar,
+};
 use ndarray::Array4;
 use ndarray_stats::QuantileExt;
 use std::path::PathBuf;
@@ -11,7 +16,7 @@ use std::path::PathBuf;
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn single_thread(
-    out_dir: &PathBuf,
+    _out_dir: &PathBuf,
     input: &Input,
     mut values: Array4<f64>,
 ) -> Result<Array4<f64>, Error> {
@@ -33,7 +38,7 @@ pub fn single_thread(
     let steps = input.sett.dumps();
     let step_time = input.sett.time() / steps as f64;
     let mut rates = Array4::zeros(values.raw_dim());
-    for n in 0..steps {
+    for _n in 0..steps {
         let vr = integrate(input, values, rates, &voxel_size_sq, step_time, dt);
         values = vr.0;
         rates = vr.1;
@@ -85,7 +90,12 @@ fn calc_diff_rates(
     mut rates: Array4<f64>,
     voxel_size_sq: &Vec3,
 ) -> Array4<f64> {
-    let [rs, rx, ry, rz] = *values.shape();
+    let [rs, rx, ry, rz] = [
+        values.shape()[0],
+        values.shape()[1],
+        values.shape()[2],
+        values.shape()[3],
+    ];
 
     for si in 0..rs {
         for zi in 0..rz {
