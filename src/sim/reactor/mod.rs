@@ -2,16 +2,10 @@
 
 pub mod input;
 // pub mod output;
-// pub mod parameters;
-// pub mod parameters_builder;
-// pub mod parameters_builder_loader;
+pub mod parameters;
+pub mod parameters_loader;
 // pub mod run;
 pub mod settings;
 // pub mod stencil;
 
-pub use self::input::*;
-pub use self::settings::*;
-// pub use self::{
-//     input::*, output::*, parameters::*, parameters_builder::*, parameters_builder_loader::*,
-//     run::*, settings::*, stencil::*,
-// };
+pub use self::{input::*, parameters::*, parameters_loader::*, settings::*};

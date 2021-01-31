@@ -1,6 +1,7 @@
 //! Runtime parameters.
 
-use crate::{chem::ReactorLinker, fmt_report, ord::ArrayLinker, sim::flask::Settings};
+use crate::{chem::ReactorLinker, fmt_report, ord::Set, sim::reactor::Settings};
+use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
 /// Runtime parameters.
@@ -8,7 +9,7 @@ pub struct Parameters {
     /// Simulation specific settings.
     pub sett: Settings,
     /// Initial concentrations.
-    pub init: ArrayLinker,
+    pub init: Set<Array3<f64>>,
     /// Reactions.
     pub reactor: ReactorLinker,
 }
@@ -17,7 +18,7 @@ impl Parameters {
     /// Construct a new instance.
     #[must_use]
     #[inline]
-    pub const fn new(sett: Settings, init: ArrayLinker, reactor: ReactorLinker) -> Self {
+    pub const fn new(sett: Settings, init: Set<Array3<f64>>, reactor: ReactorLinker) -> Self {
         Self {
             sett,
             init,
