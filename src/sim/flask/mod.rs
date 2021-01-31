@@ -1,4 +1,4 @@
-//! Flask kinetics module.
+//! Reaction kinetics module.
 
 pub mod input;
 pub mod parameters;

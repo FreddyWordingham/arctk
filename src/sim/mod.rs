@@ -11,6 +11,9 @@ pub mod diffuse;
 
 pub mod flask;
 
+#[cfg(feature = "netcdf")]
+pub mod reactor;
+
 // #[cfg(feature = "netcdf")]
 // pub mod mcrt;
 
