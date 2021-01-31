@@ -6,7 +6,7 @@ use arctk::{
     fs::{File, Load, Save},
     ord::{Build, Link, Register, X, Y, Z},
     report,
-    sim::reactor::{Parameters, ParametersBuilderLoader},
+    sim::reactor::{Input, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -62,9 +62,9 @@ fn main() {
         .expect("Failed to link species to reactor.");
     report!(reactor, "reactor");
 
-    // sub_section(term_width, "Input");
-    // let input = Input::new(&spec_reg, &reactor, &sett);
-    // report!(input, "input");
+    sub_section(term_width, "Input");
+    let input = Input::new(&spec_reg, &reactor, &coeffs, &grid, &sett);
+    report!(input, "input");
 
     // section(term_width, "Running");
     // let data = run(concs, &input).expect("Failed to run flask simulation.");
