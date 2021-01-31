@@ -1,8 +1,9 @@
 {
     sett    : { There   : "reactor/settings.json5" },
-    init    : { Here    : {
-        A:  "../output/a.nc",
-        B:  "../output/b.nc",
+    grid    : { There   : "grid/10cm_31.json5" },
+    values_coeffs   : { Here    : {
+        A:  ["../output/a_values.nc", "../output/a_coeffs.nc"],
+        B:  ["../output/b_values.nc", "../output/b_coeffs.nc"],
     } },
     reactor: { Here     : [
         {
