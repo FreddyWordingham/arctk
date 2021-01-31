@@ -1,14 +1,16 @@
 //! Simulation control functions.
 
 use crate::{
+    chem::Reactor,
     err::Error,
     fs::Save,
     math::Vec3,
     sim::reactor::{stencil, Input},
     tools::ProgressBar,
 };
-use ndarray::{Array4, Axis};
+use ndarray::{Array1, Array4, Axis};
 use ndarray_stats::QuantileExt;
+use std::f64::MIN_POSITIVE;
 use std::path::PathBuf;
 
 /// Run a single-threaded reaction-diffusion simulation.
@@ -21,8 +23,6 @@ pub fn single_thread(
     input: &Input,
     mut values: Array4<f64>,
 ) -> Result<Array4<f64>, Error> {
-    let num_spec = input.specs.len();
-
     let voxel_size = input.grid.voxel_size();
     let voxel_size_sq = Vec3::new(
         voxel_size.x * voxel_size.x,
@@ -49,8 +49,7 @@ pub fn single_thread(
         for (name, si) in input.specs.set().map() {
             values
                 .index_axis(Axis(0), *si)
-                .save(&out_dir.join(&format!("{:03}_diff.nc", n)))?;
-            // rates.save(&out_dir.join(&format!("{:03}_rate.nc", n)))?;
+                .save(&out_dir.join(&format!("{:03}_{}_diff.nc", name, n)))?;
         }
     }
 
@@ -79,8 +78,16 @@ pub fn integrate(
 
     let mut pb = ProgressBar::new("Diffusion-Reaction", num_steps);
     for _ in 0..num_steps {
+        // First reaction half-step.
+        values = react(input, values, dt / 2.0);
+
+        // Full diffusion step.
         rates = calc_diff_rates(input, &values, rates, voxel_size_sq);
         values += &(&rates * dt);
+
+        // Last reaction half-step.
+        values = react(input, values, dt / 2.0);
+
         pb.tick();
     }
     pb.finish_with_message("Simulation complete.");
@@ -120,4 +127,88 @@ fn calc_diff_rates(
     }
 
     rates
+}
+
+/// Reaction calculation function.
+#[allow(clippy::expect_used)]
+#[inline]
+#[must_use]
+fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
+    debug_assert!(time > 0.0);
+
+    let [rs, rx, ry, rz] = [
+        values.shape()[0],
+        values.shape()[1],
+        values.shape()[2],
+        values.shape()[3],
+    ];
+
+    let mut concs = Array1::zeros(rs);
+    for xi in 0..rx {
+        for yi in 0..ry {
+            for zi in 0..rz {
+                for si in 0..rs {
+                    concs[si] = values[[si, xi, yi, zi]] + MIN_POSITIVE;
+                }
+
+                concs = evolve_rk4(
+                    input.reactor,
+                    concs,
+                    time,
+                    input.sett.quality(),
+                    input.sett.min_time(),
+                );
+
+                for si in 0..rs {
+                    values[[si, xi, yi, zi]] = concs[si] - MIN_POSITIVE;
+                }
+            }
+        }
+    }
+
+    values
+}
+
+/// Evolve forward the given amount of time.
+#[allow(clippy::expect_used)]
+#[inline]
+#[must_use]
+fn evolve_rk4(
+    reactor: &Reactor,
+    mut concs: Array1<f64>,
+    total_time: f64,
+    quality: f64,
+    min_time: f64,
+) -> Array1<f64> {
+    debug_assert!(total_time > 0.0);
+    debug_assert!(quality > 0.0);
+    debug_assert!(quality < 1.0);
+    debug_assert!(min_time <= total_time);
+
+    let mut time = 0.0;
+    let mut k1;
+    let mut k2;
+    let mut k3;
+    let mut k4;
+    while time < total_time {
+        k1 = reactor.deltas(&concs);
+
+        let dt = ((&concs / &k1)
+            .max()
+            .expect("Failed to determine minimum rate of change.")
+            * quality)
+            .max(min_time)
+            .min(total_time - time);
+        let half_dt = dt * 0.5;
+        let sixth_dt = dt / 6.0;
+
+        k2 = reactor.deltas(&(&concs + &(&k1 * half_dt)));
+        k3 = reactor.deltas(&(&concs + &(&k2 * half_dt)));
+        k4 = reactor.deltas(&(&concs + &(&k3 * dt)));
+
+        concs += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
+        time += dt;
+    }
+
+    concs
 }
