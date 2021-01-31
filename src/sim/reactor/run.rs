@@ -2,11 +2,12 @@
 
 use crate::{
     err::Error,
+    fs::Save,
     math::Vec3,
     sim::reactor::{stencil, Input},
     tools::ProgressBar,
 };
-use ndarray::Array4;
+use ndarray::{Array4, Axis};
 use ndarray_stats::QuantileExt;
 use std::path::PathBuf;
 
@@ -16,10 +17,12 @@ use std::path::PathBuf;
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn single_thread(
-    _out_dir: &PathBuf,
+    out_dir: &PathBuf,
     input: &Input,
     mut values: Array4<f64>,
 ) -> Result<Array4<f64>, Error> {
+    let num_spec = input.specs.len();
+
     let voxel_size = input.grid.voxel_size();
     let voxel_size_sq = Vec3::new(
         voxel_size.x * voxel_size.x,
@@ -38,12 +41,17 @@ pub fn single_thread(
     let steps = input.sett.dumps();
     let step_time = input.sett.time() / steps as f64;
     let mut rates = Array4::zeros(values.raw_dim());
-    for _n in 0..steps {
+    for n in 0..steps {
         let vr = integrate(input, values, rates, &voxel_size_sq, step_time, dt);
         values = vr.0;
         rates = vr.1;
-        // values.save(&out_dir.join(&format!("{:03}_diff.nc", n)))?;
-        // rates.save(&out_dir.join(&format!("{:03}_rate.nc", n)))?;
+
+        for (name, si) in input.specs.set().map() {
+            values
+                .index_axis(Axis(0), *si)
+                .save(&out_dir.join(&format!("{:03}_diff.nc", n)))?;
+            // rates.save(&out_dir.join(&format!("{:03}_rate.nc", n)))?;
+        }
     }
 
     Ok(values)
