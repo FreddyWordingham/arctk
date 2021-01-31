@@ -4,9 +4,9 @@
 use arctk::{
     args,
     fs::{File, Load, Save},
-    ord::{Link, Register},
+    ord::{Build, Link, Register},
     report,
-    sim::reactor::{Parameters, ParametersLoader},
+    sim::reactor::{Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -94,10 +94,14 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
 fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
     section(term_width, "Parameters");
     sub_section(term_width, "Loading");
-    let params = ParametersLoader::new_from_file(&in_dir.join(&params_path))
+    let params = ParametersBuilderLoader::new_from_file(&in_dir.join(&params_path))
         .expect("Failed to load parameters file.")
         .load(&in_dir)
         .expect("Failed to load parameter resource files.");
+    report!(params, "parameters");
+
+    sub_section(term_width, "Building");
+    let params = params.build();
     report!(params, "parameters");
 
     params
