@@ -41,11 +41,16 @@ fn main() {
     report!(spec_reg, "species register");
 
     sub_section(term_width, "Linking");
-    let concs = params
+    let values = params
         .init
         .link(spec_reg.set())
-        .expect("Failed to link species to initial concentrations.");
-    report!(concs, "initial concentrations");
+        .expect("Failed to link species to initial values.");
+    report!(values, "initial values");
+    let sources = params
+        .sources
+        .link(spec_reg.set())
+        .expect("Failed to link species to sources/sinks.");
+    report!(sources, "sources/sinks");
 
     let reactor = params
         .reactor
@@ -54,15 +59,15 @@ fn main() {
     report!(reactor, "reactor");
 
     sub_section(term_width, "Input");
-    let input = Input::new(&spec_reg, &reactor, &sett);
+    let input = Input::new(&spec_reg, &sources, &reactor, &sett);
     report!(input, "input");
 
     section(term_width, "Running");
-    let data = run(concs, &input).expect("Failed to run flask simulation.");
+    let data = run(values, &input).expect("Failed to run flask simulation.");
 
     section(term_width, "Saving");
     // report!(data, "data");
-    data.save(&out_dir.join("concs.csv"))
+    data.save(&out_dir.join("values.csv"))
         .expect("Failed to save output data.");
 
     section(term_width, "Finished");

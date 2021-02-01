@@ -3,13 +3,14 @@
 use crate::{chem::Reactor, data::Table, err::Error, sim::flask::Input, tools::ProgressBar};
 use ndarray::Array1;
 use ndarray_stats::QuantileExt;
+use std::f64::MIN_POSITIVE;
 
 /// Run a Flask simulation using a single thread.
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]
 pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
-    concs += std::f64::MIN_POSITIVE;
+    concs += MIN_POSITIVE;
 
     let steps = input.sett.dumps() + 1;
     let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
@@ -19,7 +20,6 @@ pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
     let mut records = Vec::with_capacity(steps + 1);
 
     let mut pb = ProgressBar::new("Simulating", steps);
-
     for n in 0..steps {
         let mut row = Vec::with_capacity(1 + concs.len());
         row.push(dt * n as f64);
@@ -28,7 +28,7 @@ pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
         }
         records.push(row);
 
-        concs = evolve_rk4(input.reactor, concs, dt, quality, min_time);
+        concs = evolve_rk4(concs, input.sources, input.reactor, dt, quality, min_time);
         pb.tick();
     }
 
@@ -55,8 +55,9 @@ pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
 #[inline]
 #[must_use]
 fn evolve_rk4(
-    reactor: &Reactor,
     mut concs: Array1<f64>,
+    sources: &Array1<f64>,
+    reactor: &Reactor,
     total_time: f64,
     quality: f64,
     min_time: f64,
@@ -72,7 +73,7 @@ fn evolve_rk4(
     let mut k3;
     let mut k4;
     while time < total_time {
-        k1 = reactor.deltas(&concs);
+        k1 = reactor.deltas(&concs) + sources;
 
         let dt = ((&concs / &k1)
             .max()
