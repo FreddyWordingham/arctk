@@ -30,8 +30,9 @@ impl Load for ParametersLoader {
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let sett = self.sett.load(in_dir)?;
         let init = self.init.load(in_dir)?;
+        let sources = self.sources.load(in_dir)?;
         let reactor = self.reactor.load(in_dir)?;
 
-        Ok(Self::Inst::new(sett, init, reactor))
+        Ok(Self::Inst::new(sett, init, sources, reactor))
     }
 }
