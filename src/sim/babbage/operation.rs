@@ -25,8 +25,11 @@ pub enum Operation {
     Point([usize; 3]),
     /// Generate a partially filled cube, with a range of indices, within the given resolution.
     Fill {
+        /// Total resolution.
         res: [usize; 3],
+        /// Minimum inclusive filling bound.
         mins: [usize; 3],
+        /// Maximum inclusive filling bound.
         maxs: [usize; 3],
     },
     /// Remove one cube from another.

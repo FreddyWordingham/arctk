@@ -5,7 +5,6 @@ use crate::{
     err::Error,
     fs::Save,
     math::Vec3,
-    ord::{X, Y, Z},
     sim::reactor::{stencil, Input},
     tools::ProgressBar,
 };

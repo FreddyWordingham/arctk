@@ -29,7 +29,7 @@ impl ParametersBuilder {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(
+    pub const fn new(
         sett: Settings,
         grid: GridBuilder,
         values_coeffs: Set<(Array3<f64>, Array3<f64>)>,
@@ -65,7 +65,7 @@ impl Display for ParametersBuilder {
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid");
 
-        for (name, (values, coeffs)) in self.values_coeffs.map() {
+        for (name, &(ref values, ref coeffs)) in self.values_coeffs.map() {
             write!(fmt, "{:>32} : ", &format!("init {} values", name))?;
             display_datacube(fmt, values)?;
             write!(fmt, "{:>32} : ", &format!("{} diffusion coefficents", name))?;
