@@ -9,8 +9,8 @@ use std::f64::MIN_POSITIVE;
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]
-pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
-    concs += MIN_POSITIVE;
+pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
+    values += MIN_POSITIVE;
 
     let steps = input.sett.dumps() + 1;
     let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
@@ -21,27 +21,27 @@ pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
 
     let mut pb = ProgressBar::new("Simulating", steps);
     for n in 0..steps {
-        let mut row = Vec::with_capacity(1 + concs.len());
+        let mut row = Vec::with_capacity(1 + values.len());
         row.push(dt * n as f64);
-        for c in &concs {
-            row.push(*c);
+        for val in &values {
+            row.push(*val);
         }
         records.push(row);
 
-        concs = evolve_rk4(concs, input.sources, input.reactor, dt, quality, min_time);
+        values = evolve_rk4(values, input.sources, input.reactor, dt, quality, min_time);
         pb.tick();
     }
 
     {
-        let mut row = Vec::with_capacity(1 + concs.len());
+        let mut row = Vec::with_capacity(1 + values.len());
         row.push(input.sett.time());
-        for c in &concs {
-            row.push(*c);
+        for val in &values {
+            row.push(*val);
         }
         records.push(row);
     }
 
-    let mut headings = Vec::with_capacity(1 + concs.len());
+    let mut headings = Vec::with_capacity(1 + values.len());
     headings.push("time".to_string());
     for spec in &input.specs.names_list() {
         headings.push(spec.as_string());
@@ -55,7 +55,7 @@ pub fn run(mut concs: Array1<f64>, input: &Input) -> Result<Table<f64>, Error> {
 #[inline]
 #[must_use]
 fn evolve_rk4(
-    mut concs: Array1<f64>,
+    mut values: Array1<f64>,
     sources: &Array1<f64>,
     reactor: &Reactor,
     total_time: f64,
@@ -73,11 +73,10 @@ fn evolve_rk4(
     let mut k3;
     let mut k4;
     while time < total_time {
-        // k1 = (reactor.deltas(&concs) + sources).mapv(|elem| elem.max(0.0));
-        k1 = reactor.deltas(&concs) + sources;
+        k1 = reactor.deltas(&values) + sources;
 
-        let dt = ((&concs / &k1)
-            .max()
+        let dt = ((&values / &k1)
+            .min()
             .expect("Failed to determine minimum rate of change.")
             * quality)
             .max(min_time)
@@ -85,17 +84,17 @@ fn evolve_rk4(
         let half_dt = dt * 0.5;
         let sixth_dt = dt / 6.0;
 
-        k2 = reactor.deltas(&(&concs + &(&k1 * half_dt)));
-        k3 = reactor.deltas(&(&concs + &(&k2 * half_dt)));
-        k4 = reactor.deltas(&(&concs + &(&k3 * dt)));
+        k2 = reactor.deltas(&(&values + &(&k1 * half_dt)));
+        k3 = reactor.deltas(&(&values + &(&k2 * half_dt)));
+        k4 = reactor.deltas(&(&values + &(&k3 * dt)));
 
-        concs += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
-        concs.map_inplace(|elem| {
+        values += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
+        values.map_inplace(|elem| {
             *elem = elem.max(MIN_POSITIVE);
         });
 
         time += dt;
     }
 
-    concs
+    values
 }
