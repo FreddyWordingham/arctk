@@ -73,7 +73,6 @@ fn evolve_rk4(
     let mut k3;
     let mut k4;
     while time < total_time {
-        // k1 = reactor.deltas(&values) + sources;
         k1 = reactor.deltas(&values);
 
         let dt = ((&values / &k1)
@@ -91,6 +90,8 @@ fn evolve_rk4(
         k4 = reactor.deltas(&(&values + &(&k3 * dt)));
 
         values += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
+        values += &(sources * dt);
+
         values.map_inplace(|elem| {
             *elem = elem.max(MIN_POSITIVE);
         });
