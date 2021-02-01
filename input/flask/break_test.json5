@@ -2,9 +2,12 @@
     sett    : { There   : "flask/settings.json5" },
     init    : { Here    : [
             ["A", 1.0],
-            ["B", 1.0]
+            ["X", 1.0]
     ] },
     sources : { Here    : [
+            ["C", -0.1],    // Break if C is sink.
+            ["X", -0.1],
+            ["Y", -0.1],
     ] },
     reactor: { Here     : [
         {
@@ -15,7 +18,7 @@
         {
             rate        : [0.5, [["B", 1]]],
             reactants   : [["B", 1]],
-            products    : [["A", 1]]
+            products    : [["C", 1]]
         }
     ] }
 }

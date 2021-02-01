@@ -3,8 +3,8 @@
     init    : { Here    : [
     ] },
     sources : { Here    : [
-            ["A", 1.0],
-            ["X", 1.0],
+            ["A", 0.1],
+            ["X", 0.1],
     ] },
     reactor: { Here     : [
         {
