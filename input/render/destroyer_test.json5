@@ -1,0 +1,18 @@
+{
+    tree    : { There   : 'misc/tree/t5_d8.json5' },
+    sett    : { There   : 'render/test/settings.json5' },
+    shader  : { There   : 'render/test/shader.json5' },
+    engine  : "Antler",
+    grads   : { There   : 'render/test/grads.json5' },
+    attrs   : { There   : 'render/test/attrs.json5' },
+    surfs   : { Here    : {
+        destroyer   : { attr: 'plastic',    mesh: [["res/objs/test/destroyer.obj"], null] }
+    } },
+    cam     : { Here    : {
+        pos         : [0.0, 6.0, 3.0],
+        tar         : [0.0, 0.0, -0.5],
+        fov         : 50.0,
+        res         : [4000, 4000],
+        ss_power    : 3
+    } },
+}

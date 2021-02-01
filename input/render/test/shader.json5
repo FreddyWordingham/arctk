@@ -1,0 +1,12 @@
+{
+    sky_grad                : 'sky',
+    data_grad               : 'greyscale',
+    sun_pos                 : [32, -38, 54],
+    light                   : [0.3, 0.4, 0.3],
+    shadow                  : [0.6, 0.4],
+    spec_pow                : 1,
+    occ_dist                : [1e1, 1e1],
+    fall_off                : 1e1,
+    soft_shadow_samples     : [31, 1.0],
+    ambient_shadow_samples  : [101, 4]
+}

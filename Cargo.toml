@@ -1,6 +1,6 @@
 [package]
 name = "arctk"
-version = "0.14.4"
+version = "0.14.6"
 authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
 description = "Physics simulation library and binaries"
 repository = "https://github.com/FreddyWordingham/arctk"
@@ -51,9 +51,9 @@ terminal_size = "0.1.*"
 name = "babbage"
 required-features = ["netcdf"]
 
-# [[bin]]
-# name = "cartographer"
-# required-features = ["netcdf"]
+[[bin]]
+name = "cartographer"
+required-features = ["netcdf"]
 
 [[bin]]
 name = "diffuse"
@@ -70,13 +70,9 @@ required-features = ["netcdf"]
 # name = "mcrt"
 # required-features = ["netcdf"]
 
-# [[bin]]
-# name = "reactor"
-# required-features = ["netcdf"]
-
-# [[bin]]
-# name = "render"
-# required-features = ["png"]
+[[bin]]
+name = "render"
+required-features = ["png"]
 
 [profile.dev]
 # Development profile: "cargo build".
