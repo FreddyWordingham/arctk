@@ -73,7 +73,7 @@ fn evolve_rk4(
     let mut k3;
     let mut k4;
     while time < total_time {
-        k1 = reactor.deltas(&concs) + sources;
+        k1 = (reactor.deltas(&concs) + sources).mapv(|elem| elem.max(0.0));
 
         let dt = ((&concs / &k1)
             .max()
