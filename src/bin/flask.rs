@@ -34,7 +34,10 @@ fn main() {
     let sett = params.sett;
 
     sub_section(term_width, "Registration");
-    let spec_reg = Register::new(params.reactor.requires());
+    let mut spec_names = params.reactor.requires();
+    spec_names.append(&mut params.init.requires());
+    spec_names.append(&mut params.sources.requires());
+    let spec_reg = Register::new(spec_names);
     report!(spec_reg, "species register");
 
     sub_section(term_width, "Linking");
