@@ -15,8 +15,10 @@ use std::path::Path;
 pub struct ParametersLoader {
     /// Simulation specific settings.
     sett: Redirect<Settings>,
-    /// Initial concentrations.
+    /// Initial values.
     init: Redirect<ArrayLinker>,
+    /// Sources/sinks.
+    sources: Redirect<ArrayLinker>,
     /// Reactions.
     reactor: Redirect<ReactorLinker>,
 }
