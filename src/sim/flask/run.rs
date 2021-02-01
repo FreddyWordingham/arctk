@@ -73,7 +73,8 @@ fn evolve_rk4(
     let mut k3;
     let mut k4;
     while time < total_time {
-        k1 = (reactor.deltas(&concs) + sources).mapv(|elem| elem.max(0.0));
+        // k1 = (reactor.deltas(&concs) + sources).mapv(|elem| elem.max(0.0));
+        k1 = reactor.deltas(&concs) + sources;
 
         let dt = ((&concs / &k1)
             .max()
@@ -89,6 +90,10 @@ fn evolve_rk4(
         k4 = reactor.deltas(&(&concs + &(&k3 * dt)));
 
         concs += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
+        concs.map_inplace(|elem| {
+            *elem = elem.max(MIN_POSITIVE);
+        });
+
         time += dt;
     }
 

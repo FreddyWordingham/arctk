@@ -1,10 +1,13 @@
 {
     sett    : { There   : "flask/settings.json5" },
     init    : { Here    : [
+            ["A", 1.0],
+            ["X", 1.0]
     ] },
     sources : { Here    : [
-            ["A", 1.0],
-            ["X", 1.0],
+            ["C", -0.2],
+            ["X", -0.2],
+            ["Y", -0.2],
     ] },
     reactor: { Here     : [
         {
