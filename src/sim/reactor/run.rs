@@ -50,7 +50,7 @@ pub fn single_thread(
         for (name, si) in input.specs.set().map() {
             values
                 .index_axis(Axis(0), *si)
-                .save(&out_dir.join(&format!("{:03}_{}_diff.nc", name, n)))?;
+                .save(&out_dir.join(&format!("{:03}_{}_diff.nc", n, name)))?;
         }
     }
 
@@ -109,7 +109,7 @@ fn diffuse(
 ) -> (Array4<f64>, Array4<f64>) {
     debug_assert!(time > 0.0);
 
-    let [rx, ry, rz, rs] = [
+    let [rs, rx, ry, rz] = [
         values.shape()[0],
         values.shape()[1],
         values.shape()[2],
@@ -120,7 +120,7 @@ fn diffuse(
         for yi in 0..ry {
             for zi in 0..rz {
                 for si in 0..rs {
-                    let index = [xi, yi, zi, si];
+                    let index = [si, xi, yi, zi];
                     let stencil = stencil::Grad::new(index, &values);
                     rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
                 }
@@ -140,7 +140,7 @@ fn diffuse(
 fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
     debug_assert!(time > 0.0);
 
-    let [rx, ry, rz, rs] = [
+    let [rs, rx, ry, rz] = [
         values.shape()[0],
         values.shape()[1],
         values.shape()[2],
@@ -153,7 +153,7 @@ fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
         for yi in 0..ry {
             for zi in 0..rz {
                 for si in 0..rs {
-                    concs[si] = values[[xi, yi, zi, si]] + MIN_POSITIVE;
+                    concs[si] = values[[si, xi, yi, zi]] + MIN_POSITIVE;
                 }
 
                 let concs_ks = evolve_rk4(
@@ -168,7 +168,7 @@ fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
                 ks = concs_ks.1;
 
                 for si in 0..rs {
-                    values[[xi, yi, zi, si]] = concs[si] - MIN_POSITIVE;
+                    values[[si, xi, yi, zi]] = concs[si] - MIN_POSITIVE;
                 }
             }
         }

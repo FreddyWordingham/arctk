@@ -33,45 +33,45 @@ impl Grad {
     #[must_use]
     pub fn new(index: [usize; 4], values: &Array4<f64>) -> Self {
         let shape = values.shape();
-        let max_x = shape[X] - 1;
-        let max_y = shape[Y] - 1;
-        let max_z = shape[Z] - 1;
+        let max_x = shape[1 + X] - 1;
+        let max_y = shape[1 + Y] - 1;
+        let max_z = shape[1 + Z] - 1;
 
-        let [xi, yi, zi, si] = index;
+        let [si, xi, yi, zi] = index;
 
-        let c2 = values[[xi, yi, zi, si]] * 2.0;
+        let c2 = values[[si, xi, yi, zi]] * 2.0;
 
         let prev_x = if xi == 0 {
-            c2 - values[[xi + 1, yi, zi, si]]
+            c2 - values[[si, xi + 1, yi, zi]]
         } else {
-            values[[xi - 1, yi, zi, si]]
+            values[[si, xi - 1, yi, zi]]
         };
         let next_x = if xi == max_x {
-            c2 - values[[xi - 1, yi, zi, si]]
+            c2 - values[[si, xi - 1, yi, zi]]
         } else {
-            values[[xi + 1, yi, zi, si]]
+            values[[si, xi + 1, yi, zi]]
         };
 
         let prev_y = if yi == 0 {
-            c2 - values[[xi, yi + 1, zi, si]]
+            c2 - values[[si, xi, yi + 1, zi]]
         } else {
-            values[[xi, yi - 1, zi, si]]
+            values[[si, xi, yi - 1, zi]]
         };
         let next_y = if yi == max_y {
-            c2 - values[[xi, yi - 1, zi, si]]
+            c2 - values[[si, xi, yi - 1, zi]]
         } else {
-            values[[xi, yi + 1, zi, si]]
+            values[[si, xi, yi + 1, zi]]
         };
 
         let prev_z = if zi == 0 {
-            c2 - values[[xi, yi, zi + 1, si]]
+            c2 - values[[si, xi, yi, zi + 1]]
         } else {
-            values[[xi, yi, zi - 1, si]]
+            values[[si, xi, yi, zi - 1]]
         };
         let next_z = if zi == max_z {
-            c2 - values[[xi, yi, zi - 1, si]]
+            c2 - values[[si, xi, yi, zi - 1]]
         } else {
-            values[[xi, yi, zi + 1, si]]
+            values[[si, xi, yi, zi + 1]]
         };
 
         Self {
