@@ -73,12 +73,14 @@ fn evolve_rk4(
     let mut k3;
     let mut k4;
     while time < total_time {
-        k1 = reactor.deltas(&values) + sources;
+        // k1 = reactor.deltas(&values) + sources;
+        k1 = reactor.deltas(&values);
 
-        let dt = (&values / &k1)
+        let dt = ((&values / &k1)
+            .map(|v| v.abs())
             .min()
             .expect("Failed to determine minimum rate of change.")
-            .max(quality)
+            * quality)
             .max(min_time)
             .min(total_time - time);
         let half_dt = dt * 0.5;
