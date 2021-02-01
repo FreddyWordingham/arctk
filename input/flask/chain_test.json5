@@ -3,6 +3,8 @@
     init    : { Here    : [
             ["A", 1.0]
     ] },
+    sources    : { Here    : [
+    ] },
     reactor: { Here     : [
         {
             rate        : [0.1, [["A", 1]]],
