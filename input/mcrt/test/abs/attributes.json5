@@ -1,0 +1,3 @@
+{   // Surface attributes.
+    black  : { Interface   : ['black', 'air'] },
+}

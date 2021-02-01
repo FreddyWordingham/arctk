@@ -1,0 +1,13 @@
+{
+    power   : 1.0,
+    emit    : {
+        Surface: [['res/objs/test/circle.obj'],
+        {
+            scale:  0.1,
+            trans:  [-2.0, 0.0, 0.0],
+            rot:    [0.0, 90.0, 0.0]
+        } ]
+    },
+    spec    : { Here: { Point: 6.3e-7 } },
+    mat     : "air"
+}
