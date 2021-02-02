@@ -101,7 +101,8 @@ fn calc_rates(
 
                 // let stencil = stencil::Reflect::new(index, values);
                 let stencil = stencil::Grad::new(index, values);
-                rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
+                rates[index] =
+                    stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
             }
         }
     }
