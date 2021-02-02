@@ -85,6 +85,7 @@ pub fn integrate(
         let values_rates = diffuse(input, values, rates, voxel_size_sq, dt);
         values = values_rates.0;
         rates = values_rates.1;
+        // Potentially check for -ve values here (from sink terms).
 
         // Last reaction half-step.
         values = react(input, values, dt / 2.0);
