@@ -19,7 +19,7 @@ pub struct ParametersBuilder {
     sett: Settings,
     /// Measurement grid settings.
     grid: GridBuilder,
-    /// Initial concentrations and diffusion coefficient maps.
+    /// List of diffusion coefficients, initial values, and sources/sinks.
     coeffs_values_sources: Set<(Array3<f64>, Array3<f64>, Array3<f64>)>,
     /// Reaction rate multiplier map.
     multipliers: Array3<f64>,
@@ -70,7 +70,7 @@ impl Display for ParametersBuilder {
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid");
 
-        for (name, &(ref coeffs, ref values, ref sources)) in self.values_coeffs.map() {
+        for (name, &(ref coeffs, ref values, ref sources)) in self.coeffs_values_sources.map() {
             write!(fmt, "{:>32} : ", &format!("{} diffusion coefficents", name))?;
             display_datacube(fmt, coeffs)?;
             write!(fmt, "{:>32} : ", &format!("init {} values", name))?;

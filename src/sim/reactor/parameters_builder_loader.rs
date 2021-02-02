@@ -42,21 +42,21 @@ impl Load for ParametersBuilderLoader {
             let coeffs = Array3::new_from_file(&in_dir.join(coeff_path))?;
 
             let values = if let Some(values) = value_path {
-                Array3::new_from_file(&in_dir.join(values))?;
+                Array3::new_from_file(&in_dir.join(values))?
             } else {
-                Array3::zeros(*coeffs.raw_dim())
+                Array3::zeros(coeffs.raw_dim())
             };
 
-            let sources = if let Some(sources) = value_path {
-                Array3::new_from_file(&in_dir.join(sources))?;
+            let sources = if let Some(sources) = source_path {
+                Array3::new_from_file(&in_dir.join(sources))?
             } else {
-                Array3::zeros(*coeffs.raw_dim())
+                Array3::zeros(coeffs.raw_dim())
             };
 
             list.push((name, (coeffs, values, sources)));
         }
 
-        let multiplier = self.multiplier.load(in_dir)?;
+        let multipliers = Array3::new_from_file(&in_dir.join(self.multipliers))?;
 
         let reactor = self.reactor.load(in_dir)?;
 
@@ -64,7 +64,7 @@ impl Load for ParametersBuilderLoader {
             sett,
             grid,
             Set::from_pairs(list)?,
-            multiplier,
+            multipliers,
             reactor,
         ))
     }

@@ -13,8 +13,10 @@ pub struct Parameters {
     pub sett: Settings,
     /// Measurement grid.
     pub grid: Grid,
-    /// Initial concentrations and diffusion coefficents.
-    pub values_coeffs: Set<(Array3<f64>, Array3<f64>)>,
+    /// List of diffusion coefficients, initial values, and sources/sinks.
+    pub coeffs_values_sources: Set<(Array3<f64>, Array3<f64>, Array3<f64>)>,
+    /// Reaction rate multiplier map.
+    pub multipliers: Array3<f64>,
     /// Reactions.
     pub reactor: ReactorLinker,
 }
@@ -26,13 +28,15 @@ impl Parameters {
     pub const fn new(
         sett: Settings,
         grid: Grid,
-        values_coeffs: Set<(Array3<f64>, Array3<f64>)>,
+        coeffs_values_sources: Set<(Array3<f64>, Array3<f64>, Array3<f64>)>,
+        multipliers: Array3<f64>,
         reactor: ReactorLinker,
     ) -> Self {
         Self {
             sett,
             grid,
-            values_coeffs,
+            coeffs_values_sources,
+            multipliers,
             reactor,
         }
     }
@@ -45,11 +49,13 @@ impl Display for Parameters {
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid");
 
-        for (name, &(ref values, ref coeffs)) in self.values_coeffs.map() {
-            write!(fmt, "{:>32} : ", &format!("init {} values", name))?;
-            display_datacube(fmt, values)?;
+        for (name, &(ref values, ref coeffs, ref sources)) in self.coeffs_values_sources.map() {
             write!(fmt, "{:>32} : ", &format!("{} diffusion coefficents", name))?;
             display_datacube(fmt, coeffs)?;
+            write!(fmt, "{:>32} : ", &format!("init {} values", name))?;
+            display_datacube(fmt, values)?;
+            write!(fmt, "{:>32} : ", &format!("source/sink {} values", name))?;
+            display_datacube(fmt, sources)?;
         }
 
         fmt_report!(fmt, self.reactor, "reactor");

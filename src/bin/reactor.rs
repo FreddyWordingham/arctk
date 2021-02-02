@@ -41,16 +41,18 @@ fn main() {
 
     sub_section(term_width, "Linking");
     let shape = [spec_reg.len(), grid.res()[X], grid.res()[Y], grid.res()[Z]];
-    let mut values: Array4<f64> = Array4::zeros(shape);
     let mut coeffs: Array4<f64> = Array4::zeros(shape);
-    for (name, (vs, cs)) in params.values_coeffs.map() {
+    let mut values: Array4<f64> = Array4::zeros(shape);
+    let mut sources: Array4<f64> = Array4::zeros(shape);
+    for (name, (cs, vs, ss)) in params.coeffs_values_sources.map() {
         let index = spec_reg.set().map()[name];
 
         for xi in 0..grid.res()[X] {
             for yi in 0..grid.res()[Y] {
                 for zi in 0..grid.res()[Z] {
-                    values[[index, xi, yi, zi]] = vs[[xi, yi, zi]];
                     coeffs[[index, xi, yi, zi]] = cs[[xi, yi, zi]];
+                    values[[index, xi, yi, zi]] = vs[[xi, yi, zi]];
+                    sources[[index, xi, yi, zi]] = ss[[xi, yi, zi]];
                 }
             }
         }
