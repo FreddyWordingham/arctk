@@ -34,6 +34,7 @@ fn main() {
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
     let grid = params.grid;
+    let multipliers = params.multipliers;
 
     sub_section(term_width, "Registration");
     let spec_reg = Register::new(params.reactor.requires());
