@@ -34,10 +34,11 @@ fn main() {
     let sett = params.sett;
     let grid = params.grid;
     let coeffs = params.coeffs;
+    let sources = params.sources;
     let concs = params.init;
 
     sub_section(term_width, "Input");
-    let input = Input::new(&coeffs, &grid, &sett);
+    let input = Input::new(&coeffs, &sources, &grid, &sett);
     report!(input, "input");
 
     section(term_width, "Running");
