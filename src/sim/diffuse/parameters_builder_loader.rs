@@ -17,10 +17,12 @@ pub struct ParametersBuilderLoader {
     sett: Redirect<Settings>,
     /// Measurement grid settings.
     grid: Redirect<GridBuilder>,
-    /// Initial concentration map.
-    init: PathBuf,
     /// Diffusion coefficents map.
     coeffs: PathBuf,
+    /// Initial concentration map.
+    init: Option<PathBuf>,
+    /// Source map.
+    sources: Option<PathBuf>,
 }
 
 impl Load for ParametersBuilderLoader {
@@ -30,9 +32,18 @@ impl Load for ParametersBuilderLoader {
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let sett = self.sett.load(in_dir)?;
         let grid = self.grid.load(in_dir)?;
-        let init = Array3::new_from_file(&in_dir.join(self.init))?;
         let coeffs = Array3::new_from_file(&in_dir.join(self.coeffs))?;
+        let init = if let Some(init) = self.init {
+            Array3::new_from_file(&in_dir.join(init))?
+        } else {
+            Array3::zeros(coeffs.raw_dim())
+        };
+        let sources = if let Some(sources) = self.sources {
+            Array3::new_from_file(&in_dir.join(sources))?
+        } else {
+            Array3::zeros(coeffs.raw_dim())
+        };
 
-        Ok(Self::Inst::new(sett, grid, init, coeffs))
+        Ok(Self::Inst::new(sett, grid, coeffs, init, sources))
     }
 }

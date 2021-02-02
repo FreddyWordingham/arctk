@@ -101,3 +101,55 @@ fn evolve_rk4(
 
     values
 }
+
+// /// Evolve forward the given amount of time.
+// /// (Fully integrate the source terms).
+// #[allow(clippy::expect_used)]
+// #[inline]
+// #[must_use]
+// fn evolve_rk4(
+//     mut values: Array1<f64>,
+//     sources: &Array1<f64>,
+//     reactor: &Reactor,
+//     total_time: f64,
+//     quality: f64,
+//     min_time: f64,
+// ) -> Array1<f64> {
+//     debug_assert!(total_time > 0.0);
+//     debug_assert!(quality > 0.0);
+//     debug_assert!(quality < 1.0);
+//     debug_assert!(min_time <= total_time);
+
+//     let mut time = 0.0;
+//     let mut k1;
+//     let mut k2;
+//     let mut k3;
+//     let mut k4;
+//     while time < total_time {
+//         k1 = reactor.deltas(&values) + sources;
+
+//         let dt = ((&values / &k1)
+//             .map(|v| v.abs())
+//             .min()
+//             .expect("Failed to determine minimum rate of change.")
+//             * quality)
+//             .max(min_time)
+//             .min(total_time - time);
+//         let half_dt = dt * 0.5;
+//         let sixth_dt = dt / 6.0;
+
+//         k2 = reactor.deltas(&(&values + &(&k1 * half_dt))) + sources;
+//         k3 = reactor.deltas(&(&values + &(&k2 * half_dt))) + sources;
+//         k4 = reactor.deltas(&(&values + &(&k3 * dt))) + sources;
+
+//         values += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
+
+//         values.map_inplace(|elem| {
+//             *elem = elem.max(MIN_POSITIVE);
+//         });
+
+//         time += dt;
+//     }
+
+//     values
+// }
