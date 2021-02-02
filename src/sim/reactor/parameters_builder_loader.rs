@@ -14,6 +14,7 @@ use std::path::{Path, PathBuf};
 
 /// Loadable runtime parameters.
 #[file]
+#[allow(clippy::type_complexity)]
 pub struct ParametersBuilderLoader {
     /// Simulation specific settings.
     sett: Redirect<Settings>,
