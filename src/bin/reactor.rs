@@ -66,7 +66,15 @@ fn main() {
     report!(reactor, "reactor");
 
     sub_section(term_width, "Input");
-    let input = Input::new(&spec_reg, &reactor, &coeffs, &grid, &sett);
+    let input = Input::new(
+        &spec_reg,
+        &reactor,
+        &coeffs,
+        &sources,
+        &multipliers,
+        &grid,
+        &sett,
+    );
     report!(input, "input");
 
     section(term_width, "Running");

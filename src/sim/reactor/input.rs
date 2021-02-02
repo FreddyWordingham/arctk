@@ -1,10 +1,14 @@
 //! Simulation input.
 
 use crate::{
-    chem::Reactor, fmt_report, geom::Grid, ord::Register, sim::reactor::Settings,
-    util::datacube::display_datatesseract,
+    chem::Reactor,
+    fmt_report,
+    geom::Grid,
+    ord::Register,
+    sim::reactor::Settings,
+    util::datacube::{display_datacube, display_datatesseract},
 };
-use ndarray::Array4;
+use ndarray::{Array3, Array4};
 use std::fmt::{Display, Error, Formatter};
 
 /// Reactor simulation resources conglomerate.
@@ -15,6 +19,10 @@ pub struct Input<'a> {
     pub reactor: &'a Reactor,
     /// Map of diffusion coeffs.
     pub coeffs: &'a Array4<f64>,
+    /// Map of source/sinks.
+    pub sources: &'a Array4<f64>,
+    /// Map of rate multipliers.
+    pub multipliers: &'a Array3<f64>,
     /// Measurement grid.
     pub grid: &'a Grid,
     /// General settings.
@@ -29,6 +37,8 @@ impl<'a> Input<'a> {
         specs: &'a Register,
         reactor: &'a Reactor,
         coeffs: &'a Array4<f64>,
+        sources: &'a Array4<f64>,
+        multipliers: &'a Array3<f64>,
         grid: &'a Grid,
         sett: &'a Settings,
     ) -> Self {
@@ -36,6 +46,8 @@ impl<'a> Input<'a> {
             specs,
             reactor,
             coeffs,
+            sources,
+            multipliers,
             grid,
             sett,
         }
@@ -50,6 +62,8 @@ impl Display for Input<'_> {
         fmt_report!(fmt, self.reactor, "reactor");
         write!(fmt, "{:>32} : ", "diffusion coefficients")?;
         display_datatesseract(fmt, self.coeffs)?;
+        write!(fmt, "{:>32} : ", "rate multipliers")?;
+        display_datacube(fmt, self.multipliers)?;
         fmt_report!(fmt, self.grid, "measurement grid");
         fmt_report!(fmt, self.sett, "settings");
         Ok(())
