@@ -10,10 +10,12 @@ pub struct Parameters {
     pub sett: Settings,
     /// Measurement grid.
     pub grid: Grid,
-    /// Initial concentration map.
-    pub init: Array3<f64>,
     /// Diffusion coefficents map.
     pub coeffs: Array3<f64>,
+    /// Initial concentration map.
+    pub init: Array3<f64>,
+    /// Source map.
+    pub sources: Array3<f64>,
 }
 
 impl Parameters {
@@ -21,12 +23,19 @@ impl Parameters {
     #[allow(clippy::too_many_arguments)]
     #[must_use]
     #[inline]
-    pub const fn new(sett: Settings, grid: Grid, init: Array3<f64>, coeffs: Array3<f64>) -> Self {
+    pub const fn new(
+        sett: Settings,
+        grid: Grid,
+        coeffs: Array3<f64>,
+        init: Array3<f64>,
+        sources: Array3<f64>,
+    ) -> Self {
         Self {
             sett,
             grid,
-            init,
             coeffs,
+            init,
+            sources,
         }
     }
 }
