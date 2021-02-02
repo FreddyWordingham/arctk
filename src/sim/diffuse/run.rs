@@ -74,6 +74,7 @@ pub fn integrate(
     for _ in 0..num_steps {
         rates = calc_rates(input, &values, rates, voxel_size_sq);
         values += &(&rates * dt);
+        // Potentially check for -ve values here.
         pb.tick();
     }
     pb.finish_with_message("Simulation complete.");
