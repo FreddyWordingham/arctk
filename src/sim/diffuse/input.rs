@@ -8,6 +8,8 @@ use std::fmt::{Display, Error, Formatter};
 pub struct Input<'a> {
     /// Map of diffusion coeffs.
     pub coeffs: &'a Array3<f64>,
+    /// Map sources/sinks.
+    pub sources: &'a Array3<f64>,
     /// Measurement grid.
     pub grid: &'a Grid,
     /// General settings.
@@ -18,8 +20,18 @@ impl<'a> Input<'a> {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(coeffs: &'a Array3<f64>, grid: &'a Grid, sett: &'a Settings) -> Self {
-        Self { coeffs, grid, sett }
+    pub const fn new(
+        coeffs: &'a Array3<f64>,
+        sources: &'a Array3<f64>,
+        grid: &'a Grid,
+        sett: &'a Settings,
+    ) -> Self {
+        Self {
+            coeffs,
+            sources,
+            grid,
+            sett,
+        }
     }
 }
 
@@ -29,6 +41,8 @@ impl Display for Input<'_> {
         writeln!(fmt, "...")?;
         write!(fmt, "{:>32} : ", "diffusion coefficients")?;
         display_datacube(fmt, self.coeffs)?;
+        write!(fmt, "{:>32} : ", "sources/sinks")?;
+        display_datacube(fmt, self.sources)?;
         fmt_report!(fmt, self.grid, "measurement grid");
         fmt_report!(fmt, self.sett, "settings");
         Ok(())
