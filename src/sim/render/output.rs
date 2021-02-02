@@ -52,6 +52,8 @@ impl<'a> Output<'a> {
     }
 }
 
+unsafe impl<'a> Sync for Output<'a> {}
+
 impl<'a> AddAssign<&Self> for Output<'a> {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {

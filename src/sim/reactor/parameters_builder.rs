@@ -21,6 +21,8 @@ pub struct ParametersBuilder {
     grid: GridBuilder,
     /// Initial concentrations and diffusion coefficient maps.
     values_coeffs: Set<(Array3<f64>, Array3<f64>)>,
+    /// Reaction rate multiplier map.
+    multipliers: PathBuf,
     /// Reactions.
     reactor: ReactorLinker,
 }
