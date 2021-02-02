@@ -161,7 +161,7 @@ fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
                     input.reactor,
                     concs,
                     ks,
-                    time,
+                    time * input.multipliers[[xi, yi, zi]],
                     input.sett.quality(),
                     input.sett.min_time(),
                 );
