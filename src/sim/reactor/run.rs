@@ -10,8 +10,7 @@ use crate::{
 };
 use ndarray::{Array1, Array4, Axis};
 use ndarray_stats::QuantileExt;
-use std::f64::MIN_POSITIVE;
-use std::path::PathBuf;
+use std::{f64::MIN_POSITIVE, path::PathBuf};
 
 /// Run a single-threaded reaction-diffusion simulation.
 /// # Errors
