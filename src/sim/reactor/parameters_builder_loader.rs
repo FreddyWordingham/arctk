@@ -35,10 +35,10 @@ impl Load for ParametersBuilderLoader {
         let sett = self.sett.load(in_dir)?;
         let grid = self.grid.load(in_dir)?;
 
-        // let coeffs_values_sources = self.coeffs_values_sources.load(in_dir)?;
+        let coeffs_values_sources = self.coeffs_values_sources.load(in_dir)?;
 
         let mut list = Vec::with_capacity(coeffs_values_sources.len());
-        for (name, (coeff_path, value_path, source_path)) in self.coeffs_values_sources {
+        for (name, (coeff_path, value_path, source_path)) in coeffs_values_sources {
             let coeffs = Array3::new_from_file(&in_dir.join(coeff_path))?;
 
             let values = if let Some(values) = value_path {

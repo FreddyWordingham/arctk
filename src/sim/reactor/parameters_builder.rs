@@ -20,9 +20,9 @@ pub struct ParametersBuilder {
     /// Measurement grid settings.
     grid: GridBuilder,
     /// Initial concentrations and diffusion coefficient maps.
-    values_coeffs: Set<(Array3<f64>, Array3<f64>)>,
+    coeffs_values_sources: Set<(Array3<f64>, Array3<f64>, Array3<f64>)>,
     /// Reaction rate multiplier map.
-    multipliers: PathBuf,
+    multipliers: Array3<f64>,
     /// Reactions.
     reactor: ReactorLinker,
 }
@@ -34,13 +34,15 @@ impl ParametersBuilder {
     pub const fn new(
         sett: Settings,
         grid: GridBuilder,
-        values_coeffs: Set<(Array3<f64>, Array3<f64>)>,
+        coeffs_values_sources: Set<(Array3<f64>, Array3<f64>, Array3<f64>)>,
+        multipliers: Array3<f64>,
         reactor: ReactorLinker,
     ) -> Self {
         Self {
             sett,
             grid,
-            values_coeffs,
+            coeffs_values_sources,
+            multipliers,
             reactor,
         }
     }
@@ -53,10 +55,11 @@ impl Build for ParametersBuilder {
     fn build(self) -> Self::Inst {
         let sett = self.sett;
         let grid = self.grid.build();
-        let values_coeffs = self.values_coeffs;
+        let coeffs_values_sources = self.coeffs_values_sources;
+        let multipliers = self.multipliers;
         let reactor = self.reactor;
 
-        Self::Inst::new(sett, grid, values_coeffs, reactor)
+        Self::Inst::new(sett, grid, coeffs_values_sources, multipliers, reactor)
     }
 }
 
@@ -67,11 +70,13 @@ impl Display for ParametersBuilder {
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid");
 
-        for (name, &(ref values, ref coeffs)) in self.values_coeffs.map() {
-            write!(fmt, "{:>32} : ", &format!("init {} values", name))?;
-            display_datacube(fmt, values)?;
+        for (name, &(ref coeffs, ref values, ref sources)) in self.values_coeffs.map() {
             write!(fmt, "{:>32} : ", &format!("{} diffusion coefficents", name))?;
             display_datacube(fmt, coeffs)?;
+            write!(fmt, "{:>32} : ", &format!("init {} values", name))?;
+            display_datacube(fmt, values)?;
+            write!(fmt, "{:>32} : ", &format!("source/sink {} values", name))?;
+            display_datacube(fmt, sources)?;
         }
 
         fmt_report!(fmt, self.reactor, "reactor");
