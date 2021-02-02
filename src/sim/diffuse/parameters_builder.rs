@@ -16,10 +16,12 @@ pub struct ParametersBuilder {
     sett: Settings,
     /// Measurement grid settings.
     grid: GridBuilder,
-    /// Initial concentration map.
-    init: Array3<f64>,
     /// Diffusion coefficents map.
     coeffs: Array3<f64>,
+    /// Initial concentration map.
+    init: Array3<f64>,
+    /// Source/sink map.
+    sources: Array3<f64>,
 }
 
 impl ParametersBuilder {
@@ -29,14 +31,16 @@ impl ParametersBuilder {
     pub const fn new(
         sett: Settings,
         grid: GridBuilder,
-        init: Array3<f64>,
         coeffs: Array3<f64>,
+        init: Array3<f64>,
+        sources: Array3<f64>,
     ) -> Self {
         Self {
             sett,
             grid,
-            init,
             coeffs,
+            init,
+            sources,
         }
     }
 }
@@ -48,10 +52,11 @@ impl Build for ParametersBuilder {
     fn build(self) -> Self::Inst {
         let sett = self.sett;
         let grid = self.grid.build();
-        let init = self.init;
         let coeffs = self.coeffs;
+        let init = self.init;
+        let sources = self.sources;
 
-        Self::Inst::new(sett, grid, init, coeffs)
+        Self::Inst::new(sett, grid, coeffs, init, sources)
     }
 }
 
@@ -61,10 +66,12 @@ impl Display for ParametersBuilder {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid settings");
-        write!(fmt, "{:>32} : ", "initial values")?;
-        display_datacube(fmt, &self.init)?;
         write!(fmt, "{:>32} : ", "diffusion coefficients")?;
         display_datacube(fmt, &self.coeffs)?;
+        write!(fmt, "{:>32} : ", "initial values")?;
+        display_datacube(fmt, &self.init)?;
+        write!(fmt, "{:>32} : ", "sources/sinks")?;
+        display_datacube(fmt, &self.sources)?;
         Ok(())
     }
 }
