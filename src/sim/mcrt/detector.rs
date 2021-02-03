@@ -17,8 +17,6 @@ impl Display for Detector {
                 fmt_report!(fmt, "Spectrometer", "kind");
                 fmt_report!(fmt, hist, "histogram");
                 Ok(())
-                // fmt_report!(fmt, hist, "Spectrometer");
-                // fmt_report!(fmt, hist, "Spectrometer");
             }
         }
     }
