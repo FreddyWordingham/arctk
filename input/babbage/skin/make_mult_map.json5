@@ -5,8 +5,12 @@
             { Unit      : [31, 31, 31] }
         ],
         [
-            "mult_map",
+            "pos_map",
             { Sum     : ["../output/unit.nc", "../output/map_{tumour}.nc"] }
+        ],
+        [
+            "mult_map",
+            { Remove    : ["../output/pos_map.nc", "../output/map_{air}.nc"] }
         ],
         [
             "info",

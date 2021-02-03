@@ -1,5 +1,15 @@
 {   // Surface attributes.
-    air_into_skin       : { Interface   : ['skin',      'air'] },
-    air_into_tumour     : { Interface   : ['tumour',    'air'] },
-    skin_into_tumour    : { Interface   : ['tumour',    'skin'] }
+    air_to_SC           : { Interface   : ['stratum_corneum',           'air'] },
+    SC_to_LE            : { Interface   : ['living_epidermis',          'stratum_corneum'] },
+    LE_to_PD            : { Interface   : ['pappilary_epidermis',       'living_epidermis'] },
+    PD_to_UBND          : { Interface   : ['upper_blood_net_dermis',    'pappilary_epidermis'] },
+    UBND_to_dermis      : { Interface   : ['dermis',                    'upper_blood_net_dermis'] },
+    dermis_to_DBND      : { Interface   : ['deep_blood_net_dermis',     'dermis'] },
+    DBND_to_SF          : { Interface   : ['subcutaneous_fat',          'deep_blood_net_dermis'] },
+    SC_to_tumour        : { Interface   : ['tumour',                    'subcutaneous_fat'] },
+    LE_to_tumour        : { Interface   : ['tumour',                    'living_epidermis'] },
+    PD_to_tumour        : { Interface   : ['tumour',                    'pappilary_epidermis'] },
+    UBND_to_tumour      : { Interface   : ['tumour',                    'upper_blood_net_dermis'] },
+    air_to_SC           : { Interface   : ['stratum_corneum',           'air'] },
+    dermis_to_tumour    : { Interface   : ['tumour',                    'dermis'] }
 }

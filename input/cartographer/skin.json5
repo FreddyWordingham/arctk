@@ -1,7 +1,7 @@
 {
     sett    : { There   : 'cartographer/settings.json5' },
     tree    : { There   : 'misc/tree/t5_d6.json5' },
-    grid    : { There   : 'misc/grid/5mm_31.json5' },
+    grid    : { There   : 'misc/grid/5mm_101.json5' },
     surfs   : { There   : 'models/skin/surfaces.json5' },
     attrs   : { There   : 'models/skin/attributes.json5' },
 }
