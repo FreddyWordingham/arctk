@@ -1,7 +1,7 @@
 //! Binner implementation.
 
 use crate::{access, clone, tools::Range};
-use std::fmt::{Display, Formatter, Result};
+use std::fmt::{Display, Error, Formatter};
 
 /// One-dimensional binning structure.
 #[derive(Debug, Clone, PartialEq)]

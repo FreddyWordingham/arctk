@@ -8,7 +8,13 @@ use crate::{
     tools::{Binner, Range},
 };
 use ndarray::Array1;
-use std::{fs::File, io::Write, ops::AddAssign, path::Path};
+use std::{
+    fmt::{Display, Formatter},
+    fs::File,
+    io::Write,
+    ops::AddAssign,
+    path::Path,
+};
 
 /// Static range, constant bin width, Histogram.
 pub struct Histogram {
@@ -109,8 +115,9 @@ impl Save for Histogram {
 
 impl Display for Histogram {
     #[inline]
-    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         fmt_report!(fmt, self.binner, "binner");
         fmt_report!(fmt, self.counts.sum(), "total counts");
+        Ok(())
     }
 }
