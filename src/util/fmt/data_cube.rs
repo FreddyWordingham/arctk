@@ -12,7 +12,7 @@ use std::fmt::{Display, Error, Formatter};
 /// Three-dimensional array analysis structure.
 pub struct DataCube {
     /// Resolution.
-    res: [usize; 2],
+    res: [usize; 3],
     /// Minimum value.
     min: f64,
     /// Maximum value.
@@ -31,10 +31,17 @@ impl DataCube {
         let shape = data.shape();
 
         let ave = data.sum() / data.len() as f64;
-        let sd = (data.map(|v| (ave - v).powi(2)).sum() / data.len() as f64).sqrt();
+        let sd = (data
+            .map(|v| {
+                let d = ave - v;
+                d * d
+            })
+            .sum()
+            / data.len() as f64)
+            .sqrt();
 
         Self {
-            res: [shape[X], shape[Y]],
+            res: [shape[X], shape[Y], shape[Z]],
             min: *data.min().expect("Unable to determine minimum value."),
             max: *data.max().expect("Unable to determine maximum value."),
             ave,
