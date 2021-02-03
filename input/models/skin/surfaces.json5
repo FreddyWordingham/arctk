@@ -1,0 +1,14 @@
+{
+    skin        : {
+        mesh    : [["res/objs/skin/skin.obj"], { scale: 1.0e-3 }],
+        attr    : 'air_into_skin'
+    },
+    tumour_cap  : {
+        mesh    : [["res/objs/skin/tumour_cap.obj"], { scale: 1.0e-3 }],
+        attr    : 'air_into_tumour'
+    },
+    tumour_case : {
+        mesh    : [["res/objs/skin/tumour_case.obj"], { scale: 1.0e-3 }],
+        attr    : 'skin_into_tumour'
+    }
+}

@@ -1,0 +1,5 @@
+{   // Surface attributes.
+    air_into_skin       : { Interface   : ['skin',      'air'] },
+    air_into_tumour     : { Interface   : ['tumour',    'air'] },
+    skin_into_tumour    : { Interface   : ['tumour',    'skin'] }
+}

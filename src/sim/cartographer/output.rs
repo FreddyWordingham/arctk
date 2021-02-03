@@ -5,6 +5,7 @@ use crate::{
     fmt_report,
     fs::Save,
     ord::{Register, X, Y, Z},
+    util::datacube::display_datacube,
 };
 use ndarray::Array3;
 use std::{
@@ -59,13 +60,9 @@ impl AddAssign<&Self> for Output<'_> {
 impl Save for Output<'_> {
     #[inline]
     fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
-        let max = self.void.len() as f64;
         for (name, index) in self.mat_reg.set().map().iter() {
-            // println!("{}\t{}%", name, map.sum() / map.len() as f64 * 100.0);
             self.mats[*index].save(&out_dir.join(&format!("map_{}.nc", name)))?;
         }
-
-        println!("void\t{}%", self.void.sum() / max * 100.0);
         self.void.save(&out_dir.join("map_void.nc"))
     }
 }
@@ -74,7 +71,16 @@ impl Display for Output<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        fmt_report!(fmt, self.mat_reg, "material register");
+        let max = self.void.len() as f64;
+        for (name, index) in self.mat_reg.set().map().iter() {
+            let map = &self.mats[*index];
+            fmt_report!(fmt, index, &format!("{} data", name));
+            fmt_report!(fmt, map.sum() / map.len() as f64 * 100.0, "volume (%)");
+            fmt_report!(fmt, name, display_datacube(fmt, map)?);
+        }
+        writeln!(fmt, "*VOID* data...")?;
+        // fmt_report!(fmt, "void\t{}%", self.void.sum() / max * 100.0);
+        display_datacube(fmt, &self.void)?;
         Ok(())
     }
 }
