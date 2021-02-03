@@ -9,7 +9,4 @@ pub mod gradient;
 pub mod report;
 pub mod term;
 
-pub use self::analyze::*;
-pub use self::data_cube::*;
-pub use self::data_square::*;
-pub use self::data_tesseract::*;
+pub use self::{analyze::*, data_cube::*, data_square::*, data_tesseract::*};
