@@ -5,12 +5,14 @@ use crate::{
     geom::{Grid, Tree},
     ord::Set,
     phys::{Light, Material},
-    sim::mcrt::{Attribute, Settings},
+    sim::mcrt::{Attribute, Detector, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
 /// MCRT simulation resources conglomerate.
 pub struct Input<'a> {
+    /// Detectors.
+    pub detectors: &'a Set<Detector>,
     /// Materials.
     pub mats: &'a Set<Material>,
     /// Attributes.
@@ -30,6 +32,7 @@ impl<'a> Input<'a> {
     #[inline]
     #[must_use]
     pub const fn new(
+        detectors: &'a Set<Detector>,
         mats: &'a Set<Material>,
         attrs: &'a Set<Attribute>,
         light: &'a Light,
@@ -38,6 +41,7 @@ impl<'a> Input<'a> {
         sett: &'a Settings,
     ) -> Self {
         Self {
+            detectors,
             mats,
             attrs,
             light,
@@ -52,6 +56,7 @@ impl Display for Input<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.detectors, "detectors");
         fmt_report!(fmt, self.attrs, "materials");
         fmt_report!(fmt, self.attrs, "attributes");
         fmt_report!(fmt, self.light, "light");

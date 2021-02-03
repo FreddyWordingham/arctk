@@ -63,7 +63,7 @@ fn main() {
     report!(tree, "hit-scan tree");
 
     section(term_width, "Running");
-    let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);
+    let input = Input::new(&detectors, &mats, &attrs, &light, &tree, &grid, &sett);
     report!(input, "input");
     let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
 
