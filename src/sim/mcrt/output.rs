@@ -98,8 +98,9 @@ impl Save for Output<'_> {
         let path = out_dir.join("shift_density.nc");
         (&self.shifts / self.cell_vol).save(&path)?;
 
-        // let path = out_dir.join("histogram.csv");
-        // self.hist.save(&path)?;
+        for (name, index) in self.spec_reg.set().map().iter() {
+            self.specs[*index].save(&out_dir.join(&format!("spectrometer_{}.csv", name)))?;
+        }
 
         Ok(())
     }
