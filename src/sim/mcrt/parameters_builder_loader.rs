@@ -47,7 +47,7 @@ impl Load for ParametersBuilderLoader {
         let engine = self.engine;
 
         Ok(Self::Inst::new(
-            sett, tree, grid, surfs, attrs, mats, light, engine,
+            sett, tree, grid, surfs, attrs, mats, detectors, light, engine,
         ))
     }
 }
