@@ -51,6 +51,8 @@ fn main() {
     report!(light, "light");
     let attrs = params
         .attrs
+        .link(&detectors)
+        .expect("Failed to link detectors to attributes.")
         .link(&mats)
         .expect("Failed to link materials to attributes.");
     report!(attrs, "attributes");

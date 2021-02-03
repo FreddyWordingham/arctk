@@ -1,6 +1,6 @@
 //! Optical attributes.
 
-use crate::phys::Material;
+use crate::{phys::Material, sim::mcrt::Detector};
 use std::fmt::{Display, Error, Formatter};
 
 /// Surface attributes.
@@ -9,8 +9,8 @@ pub enum Attribute<'a> {
     Interface(&'a Material, &'a Material),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
-    /// Spectrometer.
-    Spectrometer,
+    /// Detector.
+    Detector(&'a Detector),
 }
 
 impl Display for Attribute<'_> {
@@ -23,8 +23,8 @@ impl Display for Attribute<'_> {
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
             }
-            Self::Spectrometer => {
-                write!(fmt, "Spectrometer")
+            Self::Detector(det) => {
+                write!(fmt, "Spectrometer: {}", det)
             }
         }
     }

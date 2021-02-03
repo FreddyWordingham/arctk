@@ -1,40 +1,38 @@
-//! Attribute linker.
+//! Attribute second-stage linker.
 
 use crate::{
     err::Error,
     ord::{Link, Name, Set},
     phys::Material,
-    sim::mcrt::Attribute,
+    sim::mcrt::{Attribute, Detector},
 };
-use arctk_attr::file;
 use std::fmt::{Display, Formatter};
 
 /// Surface attribute setup.
-#[file]
-pub enum AttributeLinker {
+pub enum AttributeLinker<'a> {
     /// Material interface, inside material name, outside material name.
     Interface(Name, Name),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
     /// Spectrometer.
-    Spectrometer,
+    Detector(&'a Detector),
 }
 
-impl<'a> Link<'a, Material> for AttributeLinker {
+impl<'a> Link<'a, Material> for AttributeLinker<'a> {
     type Inst = Attribute<'a>;
 
     #[inline]
     fn requires(&self) -> Vec<Name> {
         match *self {
             Self::Interface(ref inside, ref outside) => vec![inside.clone(), outside.clone()],
-            Self::Mirror(..) | Self::Spectrometer => vec![],
+            Self::Mirror(..) | Self::Detector(..) => vec![],
         }
     }
 
     #[inline]
     fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         Ok(match self {
-            Self::Interface(ref inside, ref outside) => Attribute::Interface(
+            Self::Interface(ref inside, ref outside) => Self::Inst::Interface(
                 mats.get(inside).unwrap_or_else(|| {
                     panic!("Failed to link attribute-interface key: {}", inside)
                 }),
@@ -42,13 +40,13 @@ impl<'a> Link<'a, Material> for AttributeLinker {
                     panic!("Failed to link attribute-interface key: {}", outside)
                 }),
             ),
-            Self::Mirror(r) => Attribute::Mirror(r),
-            Self::Spectrometer => Attribute::Spectrometer,
+            Self::Mirror(r) => Self::Inst::Mirror(r),
+            Self::Detector(det) => Self::Inst::Detector(det),
         })
     }
 }
 
-impl Display for AttributeLinker {
+impl<'a> Display for AttributeLinker<'a> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {
@@ -58,8 +56,8 @@ impl Display for AttributeLinker {
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
             }
-            Self::Spectrometer => {
-                write!(fmt, "Spectrometer")
+            Self::Detector(detector) => {
+                write!(fmt, "Detector: {}", detector)
             }
         }
     }
