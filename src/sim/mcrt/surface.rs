@@ -59,7 +59,6 @@ pub fn surface(
         }
         Attribute::Spectrometer(id) => {
             data.specs[id].try_collect_weight(phot.wavelength(), phot.weight());
-            *phot.weight_mut() = 0.0;
         }
     }
 }
