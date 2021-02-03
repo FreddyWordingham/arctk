@@ -5,7 +5,7 @@ use crate::{
     geom::{Grid, SurfaceLinker, TreeSettings},
     ord::Set,
     phys::{LightLinker, Material},
-    sim::mcrt::{AttributeLinker, Engine, Settings},
+    sim::mcrt::{AttributeLinker, Detector, Engine, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
@@ -23,6 +23,8 @@ pub struct Parameters {
     pub attrs: Set<AttributeLinker>,
     /// Materials.
     pub mats: Set<Material>,
+    /// Detectors.
+    pub detectors: Set<Detector>,
     /// Main light.
     pub light: LightLinker,
     /// Engine selection.
@@ -41,6 +43,7 @@ impl Parameters {
         surfs: Set<SurfaceLinker>,
         attrs: Set<AttributeLinker>,
         mats: Set<Material>,
+        detectors: Set<Detector>,
         light: LightLinker,
         engine: Engine,
     ) -> Self {
@@ -51,6 +54,7 @@ impl Parameters {
             surfs,
             attrs,
             mats,
+            detectors,
             light,
             engine,
         }
@@ -67,6 +71,7 @@ impl Display for Parameters {
         fmt_report!(fmt, self.surfs, "surfaces");
         fmt_report!(fmt, self.attrs, "attributes");
         fmt_report!(fmt, self.mats, "materials");
+        fmt_report!(fmt, self.detectors, "detectors");
         fmt_report!(fmt, self.light, "light");
         fmt_report!(fmt, "{* POINTER LOADED *}", "engine");
         Ok(())
