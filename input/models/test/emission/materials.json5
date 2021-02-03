@@ -1,0 +1,3 @@
+{   // List of material resources used.
+    air                     : { There    : 'res/mats/misc/air.json5' }
+}

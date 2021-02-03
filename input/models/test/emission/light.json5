@@ -1,0 +1,6 @@
+{
+    power   : 1.0,
+    emit    : { Surface: [['res/objs/test/circle.obj'], {scale: 1.0e-3, trans: [0.0, 0.0, -2.0e-3]}] },
+    spec    : { Here: {Point: 6.3e-7}},
+    mat     : "air"
+}

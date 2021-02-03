@@ -1,0 +1,6 @@
+{   // Map of surface attributes.
+    det_0   : {
+        attr: 'spectrometer_0',
+        mesh: [["res/objs/test/circle.obj"], {scale:2.0e-3, trans:[0.0,0.0,2.0e-3]}]
+    }
+}
