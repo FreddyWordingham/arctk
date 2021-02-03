@@ -16,7 +16,7 @@ pub trait Link<'a, T> {
     /// Link the instance type.
     /// # Errors
     /// if a field could not be referenced.
-    fn link(self, set: &'a mut Set<T>) -> Result<Self::Inst, Error>;
+    fn link(self, set: &'a Set<T>) -> Result<Self::Inst, Error>;
 }
 
 #[allow(clippy::use_self)]
@@ -34,7 +34,7 @@ impl<'a, T, S: Link<'a, T>> Link<'a, T> for Vec<S> {
     }
 
     #[inline]
-    fn link(self, set: &'a mut Set<T>) -> Result<Self::Inst, Error> {
+    fn link(self, set: &'a Set<T>) -> Result<Self::Inst, Error> {
         let mut list = Vec::with_capacity(self.len());
 
         for x in self {

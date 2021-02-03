@@ -34,7 +34,7 @@ impl<'a, T: 'a> Link<'a, T> for SurfaceLinker {
     }
 
     #[inline]
-    fn link(self, attrs: &'a mut Set<T>) -> Result<Self::Inst, Error> {
+    fn link(self, attrs: &'a Set<T>) -> Result<Self::Inst, Error> {
         let attr = self.attr;
         Ok(Surface::new(
             self.mesh,

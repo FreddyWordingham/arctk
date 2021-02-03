@@ -5,7 +5,7 @@ use arctk::{
     args,
     fs::{File, Load, Save},
     geom::Tree,
-    ord::{Build, Link},
+    ord::{Build, Link, Register},
     report,
     sim::mcrt::{run, Input, Parameters, ParametersBuilderLoader},
     util::{
@@ -43,6 +43,10 @@ fn main() {
     let detectors = params.detectors;
     report!(detectors, "detectors");
 
+    sub_section(term_width, "Registration");
+    let spec_reg = Register::new(params.attrs.requires());
+    report!(spec_reg, "spectrometer register");
+
     sub_section(term_width, "Linking");
     let light = params
         .light
@@ -51,8 +55,8 @@ fn main() {
     report!(light, "light");
     let attrs = params
         .attrs
-        .link(&detectors)
-        .expect("Failed to link detectors to attributes.")
+        .link(spec_reg.set())
+        .expect("Failed to link spectrometers to attributes.")
         .link(&mats)
         .expect("Failed to link materials to attributes.");
     report!(attrs, "attributes");
@@ -67,7 +71,7 @@ fn main() {
     report!(tree, "hit-scan tree");
 
     section(term_width, "Running");
-    let input = Input::new(&detectors, &mats, &attrs, &light, &tree, &grid, &sett);
+    let input = Input::new(&mats, &attrs, &light, &tree, &grid, &sett);
     report!(input, "input");
     let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
 

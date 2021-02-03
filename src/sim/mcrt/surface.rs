@@ -57,8 +57,8 @@ pub fn surface(
             *phot.weight_mut() *= abs;
             *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
         }
-        Attribute::Detector(det) => {
-            det.detect(phot);
+        Attribute::Spectrometer(id) => {
+            // det.detect(phot);
         }
     }
 }

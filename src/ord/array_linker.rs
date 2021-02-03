@@ -47,7 +47,7 @@ impl<'a> Link<'a, usize> for ArrayLinker {
     /// # Errors
     /// if a field could not be referenced.
     #[inline]
-    fn link(self, reg: &'a mut Set<usize>) -> Result<Self::Inst, Error> {
+    fn link(self, reg: &'a Set<usize>) -> Result<Self::Inst, Error> {
         let mut arr = Array1::zeros(reg.len());
         for (name, x) in self.0 {
             arr[*reg

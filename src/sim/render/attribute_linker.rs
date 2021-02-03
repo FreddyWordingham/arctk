@@ -42,7 +42,7 @@ impl<'a> Link<'a, Gradient> for AttributeLinker {
     }
 
     #[inline]
-    fn link(self, grads: &'a mut Set<Gradient>) -> Result<Self::Inst, Error> {
+    fn link(self, grads: &'a Set<Gradient>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Opaque(ref grad) => Attribute::Opaque(
                 grads

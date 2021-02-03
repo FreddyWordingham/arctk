@@ -31,7 +31,7 @@ impl<'a> Link<'a, usize> for ReactorLinker {
     }
 
     #[inline]
-    fn link(self, reg: &'a mut Set<usize>) -> Result<Self::Inst, Error> {
+    fn link(self, reg: &'a Set<usize>) -> Result<Self::Inst, Error> {
         let mut rates = Vec::with_capacity(self.0.len());
         let mut coeffs = Array2::zeros([self.0.len(), reg.len()]);
         for (mut coeff_set, react) in coeffs.outer_iter_mut().zip(self.0) {

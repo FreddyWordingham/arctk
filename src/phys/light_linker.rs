@@ -47,7 +47,7 @@ impl<'a> Link<'a, Material> for LightLinker {
     }
 
     #[inline]
-    fn link(self, mats: &'a mut Set<Material>) -> Result<Self::Inst, Error> {
+    fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
         let power = self.power;
         let emitter = self.emitter.clone();
         let spec = self.spec.clone();

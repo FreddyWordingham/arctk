@@ -5,7 +5,7 @@ use crate::{
     geom::{GridBuilder, SurfaceLinker, TreeSettings},
     ord::{Build, Set},
     phys::{LightLinkerBuilder, MaterialBuilder},
-    sim::mcrt::{AttributeLinkerLinker, DetectorBuilder, EngineBuilder, Parameters, Settings},
+    sim::mcrt::{AttributeLinkerLinker, DetectorSetup, EngineBuilder, Parameters, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
@@ -24,7 +24,7 @@ pub struct ParametersBuilder {
     /// Materials.
     mats: Set<MaterialBuilder>,
     /// Detectors.
-    detectors: Set<DetectorBuilder>,
+    detectors: Set<DetectorSetup>,
     /// Main light.
     light: LightLinkerBuilder,
     /// Engine selection.
@@ -43,7 +43,7 @@ impl ParametersBuilder {
         surfs: Set<SurfaceLinker>,
         attrs: Set<AttributeLinkerLinker>,
         mats: Set<MaterialBuilder>,
-        detectors: Set<DetectorBuilder>,
+        detectors: Set<DetectorSetup>,
         light: LightLinkerBuilder,
         engine: EngineBuilder,
     ) -> Self {
@@ -72,7 +72,7 @@ impl Build for ParametersBuilder {
         let surfs = self.surfs;
         let attrs = self.attrs;
         let mats = self.mats.build();
-        let detectors = self.detectors.build();
+        let detectors = self.detectors;
         let light = self.light.build();
         let engine = self.engine.build();
 

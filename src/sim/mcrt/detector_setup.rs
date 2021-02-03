@@ -1,30 +1,17 @@
-//! Optical detector builders.
+//! Optical detector setup information.
 
-use crate::{data::Histogram, fmt_report, ord::Build, sim::mcrt::Detector, tools::Range};
+use crate::{fmt_report, tools::Range};
 use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
 
 /// Detectors.
 #[file]
-pub enum DetectorBuilder {
+pub enum DetectorSetup {
     /// Spectrometer.
     Spectrometer([f64; 2], u64),
 }
 
-impl Build for DetectorBuilder {
-    type Inst = Detector;
-
-    #[inline]
-    fn build(self) -> Self::Inst {
-        match self {
-            Self::Spectrometer([min, max], bins) => {
-                Self::Inst::Spectrometer(Histogram::new(min, max, bins))
-            }
-        }
-    }
-}
-
-impl Display for DetectorBuilder {
+impl Display for DetectorSetup {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         match *self {

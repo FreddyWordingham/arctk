@@ -3,7 +3,7 @@
 use crate::{
     err::Error,
     ord::{Link, Name, Set},
-    sim::mcrt::{AttributeLinker, Detector},
+    sim::mcrt::AttributeLinker,
 };
 use arctk_attr::file;
 use std::fmt::{Display, Formatter};
@@ -16,30 +16,35 @@ pub enum AttributeLinkerLinker {
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
     /// Spectrometer.
-    Detector(Name),
+    Spectrometer(Name),
 }
 
-impl<'a> Link<'a, Detector> for AttributeLinkerLinker {
-    type Inst = AttributeLinker<'a>;
+impl<'a> Link<'a, usize> for AttributeLinkerLinker {
+    type Inst = AttributeLinker;
 
     #[inline]
+    #[must_use]
     fn requires(&self) -> Vec<Name> {
-        match *self {
-            Self::Interface(..) | Self::Mirror(..) => vec![],
-            Self::Detector(ref name) => vec![name.clone()],
+        if let Self::Spectrometer(name) = self {
+            vec![name.clone()]
+        } else {
+            vec![]
         }
     }
 
     #[inline]
-    fn link(self, detectors: &'a mut Set<Detector>) -> Result<Self::Inst, Error> {
+    fn link(self, reg: &'a Set<usize>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Interface(inside, outside) => Self::Inst::Interface(inside, outside),
             Self::Mirror(r) => Self::Inst::Mirror(r),
-            Self::Detector(ref name) => Self::Inst::Detector(
-                detectors
-                    .get_mut(name)
-                    .unwrap_or_else(|| panic!("Failed to link attribute-detector key: {}", name)),
-            ),
+            Self::Spectrometer(ref name) => {
+                Self::Inst::Spectrometer(*reg.get(&name).unwrap_or_else(|| {
+                    panic!(
+                        "Failed to link attribute-linker-spectrometer-index: {}",
+                        name
+                    )
+                }))
+            }
         })
     }
 }
@@ -54,8 +59,8 @@ impl Display for AttributeLinkerLinker {
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
             }
-            Self::Detector(ref name) => {
-                write!(fmt, "Detector: {}", name)
+            Self::Spectrometer(ref id) => {
+                write!(fmt, "Spectrometer: {}", id)
             }
         }
     }

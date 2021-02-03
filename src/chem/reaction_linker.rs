@@ -41,7 +41,7 @@ impl<'a> Link<'a, usize> for ReactionLinker {
     }
 
     #[inline]
-    fn link(self, reg: &'a mut Set<usize>) -> Result<Self::Inst, Error> {
+    fn link(self, reg: &'a Set<usize>) -> Result<Self::Inst, Error> {
         let mut coeffs = Array1::zeros(reg.len());
 
         for (name, s) in self.reactants {
