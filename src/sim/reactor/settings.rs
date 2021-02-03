@@ -7,13 +7,13 @@ use std::fmt::{Display, Error, Formatter};
 /// General settings structure.
 #[file]
 pub struct Settings {
-    /// Total integration time [s].
+    /// Total integration time (s).
     time: f64,
     /// Number of intermediate dumps.
     dumps: usize,
-    /// Quality parameter [0:1].
+    /// Quality parameter \[0:1\].
     quality: f64,
-    /// Minimum timestep [s].
+    /// Minimum timestep (s).
     min_time: f64,
 }
 
