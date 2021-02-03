@@ -23,6 +23,7 @@
     clippy::integer_division,
     clippy::module_name_repetitions,
     clippy::modulo_arithmetic,
+    clippy::multiple_crate_versions,
     clippy::multiple_inherent_impl,
     clippy::panic,
     clippy::panic_in_result_fn,
