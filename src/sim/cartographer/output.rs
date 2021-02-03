@@ -77,7 +77,13 @@ impl Display for Output<'_> {
             fmt_report!(fmt, map.sum() / map.len() as f64 * 100.0, "volume (%)");
             fmt_report!(fmt, map.display(), "map");
         }
-        fmt_report!(fmt, self.void.display(), "VOID");
+        fmt_report!(fmt, "*", "VOID");
+        fmt_report!(
+            fmt,
+            self.void.sum() / self.void.len() as f64 * 100.0,
+            "volume (%)"
+        );
+        fmt_report!(fmt, self.void.display(), "map");
         Ok(())
     }
 }
