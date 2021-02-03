@@ -21,13 +21,21 @@ pub struct DataTesseract {
 
 impl DataTesseract {
     /// Construct a new instance.
+    #[allow(clippy::expect_used)]
     #[inline]
     #[must_use]
     pub fn new(data: &Array4<f64>) -> Self {
         let shape = data.shape();
 
         let ave = data.sum() / data.len() as f64;
-        let sd = (data.map(|v| (ave - v).powi(2)).sum() / data.len() as f64).sqrt();
+        let sd = (data
+            .map(|v| {
+                let d = ave - v;
+                d * d
+            })
+            .sum()
+            / data.len() as f64)
+            .sqrt();
 
         Self {
             res: [shape[0], shape[1], shape[2], shape[3]],
@@ -66,7 +74,10 @@ impl Display for DataTesseract {
 
 impl Analyze for Array4<f64> {
     type Inst = DataTesseract;
+
+    #[inline]
+    #[must_use]
     fn display(&self) -> Self::Inst {
-        Self::Inst::new(&self)
+        Self::Inst::new(self)
     }
 }

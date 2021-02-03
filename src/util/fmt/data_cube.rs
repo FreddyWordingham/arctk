@@ -25,6 +25,7 @@ pub struct DataCube {
 
 impl DataCube {
     /// Construct a new instance.
+    #[allow(clippy::expect_used)]
     #[inline]
     #[must_use]
     pub fn new(data: &Array3<f64>) -> Self {
@@ -70,7 +71,10 @@ impl Display for DataCube {
 
 impl Analyze for Array3<f64> {
     type Inst = DataCube;
+
+    #[inline]
+    #[must_use]
     fn display(&self) -> Self::Inst {
-        Self::Inst::new(&self)
+        Self::Inst::new(self)
     }
 }
