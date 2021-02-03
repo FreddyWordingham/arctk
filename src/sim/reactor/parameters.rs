@@ -2,7 +2,7 @@
 
 use crate::{
     chem::ReactorLinker, fmt_report, geom::Grid, ord::Set, sim::reactor::Settings,
-    util::fmt::datacube::display_datacube,
+    util::fmt::DataCube,
 };
 use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
@@ -50,12 +50,17 @@ impl Display for Parameters {
         fmt_report!(fmt, self.grid, "grid");
 
         for (name, &(ref values, ref coeffs, ref sources)) in self.coeffs_values_sources.map() {
-            write!(fmt, "{:>32} : ", &format!("{} diffusion coefficents", name))?;
-            display_datacube(fmt, coeffs)?;
-            write!(fmt, "{:>32} : ", &format!("init {} values", name))?;
-            display_datacube(fmt, values)?;
-            write!(fmt, "{:>32} : ", &format!("source/sink {} values", name))?;
-            display_datacube(fmt, sources)?;
+            fmt_report!(
+                fmt,
+                DataCube::new(coeffs),
+                &format!("{} diffusion coefficents", name)
+            );
+            fmt_report!(fmt, DataCube::new(values), &format!("init {} values", name));
+            fmt_report!(
+                fmt,
+                DataCube::new(sources),
+                &format!("source/sink {} values", name)
+            );
         }
 
         fmt_report!(fmt, self.reactor, "reactor");

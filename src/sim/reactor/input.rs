@@ -1,12 +1,8 @@
 //! Simulation input.
 
 use crate::{
-    chem::Reactor,
-    fmt_report,
-    geom::Grid,
-    ord::Register,
-    sim::reactor::Settings,
-    util::datacube::{display_datacube, display_datatesseract},
+    chem::Reactor, fmt_report, geom::Grid, ord::Register, sim::reactor::Settings,
+    util::fmt::Analyze,
 };
 use ndarray::{Array3, Array4};
 use std::fmt::{Display, Error, Formatter};
@@ -60,10 +56,8 @@ impl Display for Input<'_> {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.specs, "species");
         fmt_report!(fmt, self.reactor, "reactor");
-        write!(fmt, "{:>32} : ", "diffusion coefficients")?;
-        display_datatesseract(fmt, self.coeffs)?;
-        write!(fmt, "{:>32} : ", "rate multipliers")?;
-        display_datacube(fmt, self.multipliers)?;
+        fmt_report!(fmt, self.coeffs.display(), "diffusion coefficients");
+        fmt_report!(fmt, self.multipliers.display(), "rate multipliers");
         fmt_report!(fmt, self.grid, "measurement grid");
         fmt_report!(fmt, self.sett, "settings");
         Ok(())

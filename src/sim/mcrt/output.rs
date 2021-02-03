@@ -8,7 +8,7 @@ use crate::{
     fs::Save,
     geom::Cube,
     ord::{X, Y, Z},
-    util::datacube::display_datacube,
+    util::fmt::DataCube,
 };
 use ndarray::Array3;
 use std::{
@@ -99,14 +99,14 @@ impl Display for Output {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.boundary, "Boundary");
         fmt_report!(fmt, self.cell_vol, "Cell volume (m^3)");
-        writeln!(fmt, "Emission data...")?;
-        display_datacube(fmt, &self.emission)?;
-        writeln!(fmt, "Energy data...")?;
-        display_datacube(fmt, &self.energy)?;
-        writeln!(fmt, "Absorbed energy data...")?;
-        display_datacube(fmt, &self.absorptions)?;
-        writeln!(fmt, "Shifted energy data...")?;
-        // fmt_report!(fmt, self.hist, "Histogram");
+        fmt_report!(fmt, DataCube::new(&self.emission), "Emission data");
+        fmt_report!(fmt, DataCube::new(&self.energy), "Energy data");
+        fmt_report!(
+            fmt,
+            DataCube::new(&self.absorptions),
+            "Absorbed energy data"
+        );
+        fmt_report!(fmt, DataCube::new(&self.shifts), "Shifted energy data");
         Ok(())
     }
 }

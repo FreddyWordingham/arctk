@@ -5,7 +5,7 @@ use crate::{
     geom::GridBuilder,
     ord::Build,
     sim::diffuse::{Parameters, Settings},
-    util::datacube::display_datacube,
+    util::fmt::Analyze,
 };
 use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
@@ -66,12 +66,9 @@ impl Display for ParametersBuilder {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid settings");
-        write!(fmt, "{:>32} : ", "diffusion coefficients")?;
-        display_datacube(fmt, &self.coeffs)?;
-        write!(fmt, "{:>32} : ", "initial values")?;
-        display_datacube(fmt, &self.init)?;
-        write!(fmt, "{:>32} : ", "sources/sinks")?;
-        display_datacube(fmt, &self.sources)?;
+        fmt_report!(fmt, self.coeffs.display(), "diffusion coefficients");
+        fmt_report!(fmt, self.init.display(), "initial values");
+        fmt_report!(fmt, self.sources.display(), "sources/sinks");
         Ok(())
     }
 }

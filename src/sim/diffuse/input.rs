@@ -1,6 +1,6 @@
 //! Simulation input.
 
-use crate::{fmt_report, geom::Grid, sim::diffuse::Settings, util::datacube::display_datacube};
+use crate::{fmt_report, geom::Grid, sim::diffuse::Settings, util::fmt::Analyze};
 use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
@@ -39,10 +39,8 @@ impl Display for Input<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
-        write!(fmt, "{:>32} : ", "diffusion coefficients")?;
-        display_datacube(fmt, self.coeffs)?;
-        write!(fmt, "{:>32} : ", "sources/sinks")?;
-        display_datacube(fmt, self.sources)?;
+        fmt_report!(fmt, self.coeffs.display(), "diffusion coefficients");
+        fmt_report!(fmt, self.sources.display(), "sources/sinks");
         fmt_report!(fmt, self.grid, "measurement grid");
         fmt_report!(fmt, self.sett, "settings");
         Ok(())

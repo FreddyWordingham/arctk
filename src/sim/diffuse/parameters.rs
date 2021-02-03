@@ -1,6 +1,6 @@
 //! Runtime parameters.
 
-use crate::{fmt_report, geom::Grid, sim::diffuse::Settings, util::datacube::display_datacube};
+use crate::{fmt_report, geom::Grid, sim::diffuse::Settings, util::fmt::Analyze};
 use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
@@ -46,10 +46,8 @@ impl Display for Parameters {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid");
-        write!(fmt, "{:>32} : ", "initial values")?;
-        display_datacube(fmt, &self.init)?;
-        write!(fmt, "{:>32} : ", "diffusion coefficients")?;
-        display_datacube(fmt, &self.coeffs)?;
+        fmt_report!(fmt, self.init.display(), "initial values");
+        fmt_report!(fmt, self.coeffs.display(), "diffusion coefficients");
         Ok(())
     }
 }

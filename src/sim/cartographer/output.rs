@@ -5,7 +5,7 @@ use crate::{
     fmt_report,
     fs::Save,
     ord::{Register, X, Y, Z},
-    util::datacube::display_datacube,
+    util::fmt::Analyze,
 };
 use ndarray::Array3;
 use std::{
@@ -71,16 +71,13 @@ impl Display for Output<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        let max = self.void.len() as f64;
         for (name, index) in self.mat_reg.set().map().iter() {
             let map = &self.mats[*index];
             fmt_report!(fmt, index, &format!("{} data", name));
             fmt_report!(fmt, map.sum() / map.len() as f64 * 100.0, "volume (%)");
-            fmt_report!(fmt, name, display_datacube(fmt, map)?);
+            fmt_report!(fmt, map.display(), "map");
         }
-        writeln!(fmt, "*VOID* data...")?;
-        // fmt_report!(fmt, "void\t{}%", self.void.sum() / max * 100.0);
-        display_datacube(fmt, &self.void)?;
+        fmt_report!(fmt, "VOID", self.void.display());
         Ok(())
     }
 }

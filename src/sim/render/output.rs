@@ -7,7 +7,7 @@ use crate::{
     img::{Colour, Gradient, Image},
     ord::{X, Y},
     report,
-    util::{fmt::datacube::display_datasquare, gradient::to_string},
+    util::{fmt::DataSquare, gradient::to_string},
 };
 use ndarray::Array2;
 use ndarray_stats::QuantileExt;
@@ -93,12 +93,9 @@ impl Display for Output<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        writeln!(fmt, "Time data...")?;
-        display_datasquare(fmt, &self.time)?;
-        writeln!(fmt, "Light data...")?;
-        display_datasquare(fmt, &self.light)?;
-        writeln!(fmt, "Shadow data...")?;
-        display_datasquare(fmt, &self.shadow)?;
+        fmt_report!(fmt, "Time data", DataSquare::new(&self.time));
+        fmt_report!(fmt, "Light data", DataSquare::new(&self.light));
+        fmt_report!(fmt, "Shadow data", DataSquare::new(&self.shadow));
         fmt_report!(fmt, to_string(self.grad, 32), "gradient");
         Ok(())
     }
