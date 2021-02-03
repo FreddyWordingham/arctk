@@ -6,7 +6,6 @@ use crate::{math::Pos3, phys::Photon};
 /// Perform a peel off event.
 #[inline]
 #[must_use]
-pub const fn peel_off(mut _phot: Photon, _pos: Pos3) -> Option<f64> {
+pub fn peel_off(mut _phot: Photon, _pos: Pos3) -> Option<f64> {
     unimplemented!();
-    None
 }
