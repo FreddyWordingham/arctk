@@ -71,5 +71,9 @@ pub fn raman(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
                 travel(&mut data, &mut phot, &env, index, bump_dist);
             }
         }
+
+        if phot.weight() <= 0.0 {
+            break;
+        }
     }
 }
