@@ -50,7 +50,7 @@
     },
 
     cap     : {
-        attr: 'air_to_SC',
+        attr: 'air_to_tumour',
         mesh: [["res/objs/matcher/cap.obj"], {scale:1.0e-3}]
     },
     base    : {
