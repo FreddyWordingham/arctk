@@ -8,6 +8,7 @@ use crate::{
     math::Pos3,
     ord::{X, Y, Z},
     report,
+    util::fmt::Analyze,
 };
 use ndarray::Array3;
 use ndarray_stats::QuantileExt;
@@ -62,24 +63,7 @@ impl Operation {
 
         match *self {
             Self::Info(ref data) => {
-                let res = data.raw_dim();
-                report!(
-                    &format!("[{} x {} x {}]", res[X], res[Y], res[Z]),
-                    "Resolution"
-                );
-                report!(data.len(), "Length");
-
-                let max = *data
-                    .max()
-                    .unwrap_or_else(|_| panic!("Failed to determine maximum value."));
-                let min = *data
-                    .min()
-                    .unwrap_or_else(|_| panic!("Failed to determine minimum value."));
-                let sum = data.sum();
-                report!(min, "Minimum");
-                report!(max, "Maximum");
-                report!(sum, "Sum");
-                report!(sum / data.len() as f64, "Average");
+                report!(data.display(), "data");
                 Ok(())
             }
             Self::Zero(res) => Array3::<f64>::zeros(res).save(&path.with_extension("nc")),
