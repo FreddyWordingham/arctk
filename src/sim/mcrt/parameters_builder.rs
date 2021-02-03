@@ -5,7 +5,7 @@ use crate::{
     geom::{GridBuilder, SurfaceLinker, TreeSettings},
     ord::{Build, Set},
     phys::{LightLinkerBuilder, MaterialBuilder},
-    sim::mcrt::{AttributeLinkerLinker, DetectorSetup, EngineBuilder, Parameters, Settings},
+    sim::mcrt::{AttributeLinker, EngineBuilder, Parameters, Settings},
 };
 use std::fmt::{Display, Error, Formatter};
 
@@ -20,11 +20,9 @@ pub struct ParametersBuilder {
     /// Surfaces.
     surfs: Set<SurfaceLinker>,
     /// Attributes.
-    attrs: Set<AttributeLinkerLinker>,
+    attrs: Set<AttributeLinker>,
     /// Materials.
     mats: Set<MaterialBuilder>,
-    /// Detectors.
-    detectors: Set<DetectorSetup>,
     /// Main light.
     light: LightLinkerBuilder,
     /// Engine selection.
@@ -41,9 +39,8 @@ impl ParametersBuilder {
         tree: TreeSettings,
         grid: GridBuilder,
         surfs: Set<SurfaceLinker>,
-        attrs: Set<AttributeLinkerLinker>,
+        attrs: Set<AttributeLinker>,
         mats: Set<MaterialBuilder>,
-        detectors: Set<DetectorSetup>,
         light: LightLinkerBuilder,
         engine: EngineBuilder,
     ) -> Self {
@@ -54,7 +51,6 @@ impl ParametersBuilder {
             surfs,
             attrs,
             mats,
-            detectors,
             light,
             engine,
         }
@@ -72,13 +68,10 @@ impl Build for ParametersBuilder {
         let surfs = self.surfs;
         let attrs = self.attrs;
         let mats = self.mats.build();
-        let detectors = self.detectors;
         let light = self.light.build();
         let engine = self.engine.build();
 
-        Self::Inst::new(
-            sett, tree, grid, surfs, attrs, mats, detectors, light, engine,
-        )
+        Self::Inst::new(sett, tree, grid, surfs, attrs, mats, light, engine)
     }
 }
 
@@ -92,7 +85,6 @@ impl Display for ParametersBuilder {
         fmt_report!(fmt, self.surfs, "surfaces");
         fmt_report!(fmt, self.attrs, "attributes");
         fmt_report!(fmt, self.mats, "materials");
-        fmt_report!(fmt, self.detectors, "detectors");
         fmt_report!(fmt, self.light, "light");
         fmt_report!(fmt, self.engine, "engine");
         Ok(())

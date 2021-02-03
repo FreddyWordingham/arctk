@@ -6,9 +6,11 @@ use crate::{
     phys::Material,
     sim::mcrt::Attribute,
 };
+use arctk_attr::file;
 use std::fmt::{Display, Formatter};
 
 /// Surface attribute setup.
+#[file]
 pub enum AttributeLinker {
     /// Material interface, inside material name, outside material name.
     Interface(Name, Name),

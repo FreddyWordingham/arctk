@@ -40,8 +40,6 @@ fn main() {
     report!(grid, "measurement grid");
     let mats = params.mats;
     report!(mats, "materials");
-    let detectors = params.detectors;
-    report!(detectors, "detectors");
 
     sub_section(term_width, "Registration");
     let spec_reg = Register::new(params.attrs.requires());
@@ -55,8 +53,6 @@ fn main() {
     report!(light, "light");
     let attrs = params
         .attrs
-        .link(spec_reg.set())
-        .expect("Failed to link spectrometers to attributes.")
         .link(&mats)
         .expect("Failed to link materials to attributes.");
     report!(attrs, "attributes");

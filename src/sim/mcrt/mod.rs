@@ -2,8 +2,6 @@
 
 pub mod attribute;
 pub mod attribute_linker;
-pub mod attribute_linker_linker;
-pub mod detector_setup;
 pub mod engine;
 pub mod engine_builder;
 pub mod engines;
@@ -21,7 +19,6 @@ pub mod surface;
 pub mod travel;
 
 pub use self::{
-    attribute::*, attribute_linker::*, attribute_linker_linker::*, detector_setup::*, engine::*,
-    engine_builder::*, event::*, input::*, output::*, parameters::*, parameters_builder::*,
-    parameters_builder_loader::*, run::*, settings::*,
+    attribute::*, attribute_linker::*, engine::*, engine_builder::*, event::*, input::*, output::*,
+    parameters::*, parameters_builder::*, parameters_builder_loader::*, run::*, settings::*,
 };
