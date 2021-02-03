@@ -122,74 +122,44 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
-<span id="122">122</span>
-<span id="123">123</span>
-<span id="124">124</span>
-<span id="125">125</span>
-<span id="126">126</span>
-<span id="127">127</span>
-<span id="128">128</span>
-<span id="129">129</span>
-<span id="130">130</span>
-<span id="131">131</span>
-<span id="132">132</span>
-<span id="133">133</span>
-<span id="134">134</span>
-<span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
-<span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Operation implementation.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">data</span>::<span class="ident">Table</span>,
     <span class="ident">err</span>::<span class="ident">Error</span>,
-    <span class="ident">fmt_report</span>, <span class="ident">fmt_reports</span>,
     <span class="ident">fs</span>::<span class="ident">Save</span>,
     <span class="ident">geom</span>::<span class="ident">Grid</span>,
     <span class="ident">math</span>::<span class="ident">Pos3</span>,
     <span class="ident">ord</span>::{<span class="ident">X</span>, <span class="ident">Y</span>, <span class="ident">Z</span>},
-    <span class="ident">util</span>::<span class="ident">datacube</span>::<span class="ident">display_datacube</span>,
+    <span class="ident">report</span>,
+    <span class="ident">util</span>::<span class="ident">fmt</span>::<span class="ident">Analyze</span>,
 };
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array3</span>;
 <span class="kw">use</span> <span class="ident">ndarray_stats</span>::<span class="ident">QuantileExt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>},
-    <span class="ident">path</span>::<span class="ident">Path</span>,
-};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 
 <span class="doccomment">/// Possible operation enumeration.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Operation</span> {
     <span class="doccomment">/// Report information about data cube.</span>
     <span class="ident">Info</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
-    <span class="doccomment">/// Generate a zero cube of the giver resolution.</span>
+    <span class="doccomment">/// Generate a zero cube of the given resolution.</span>
     <span class="ident">Zero</span>([<span class="ident">usize</span>; <span class="number">3</span>]),
-    <span class="doccomment">/// Generate a unit cube of the giver resolution.</span>
+    <span class="doccomment">/// Generate a unit cube of the given resolution.</span>
     <span class="ident">Unit</span>([<span class="ident">usize</span>; <span class="number">3</span>]),
+    <span class="doccomment">/// Generate a zero cube, with a point at the center, of the given resolution.</span>
+    <span class="ident">Point</span>([<span class="ident">usize</span>; <span class="number">3</span>]),
+    <span class="doccomment">/// Generate a partially filled cube, with a range of indices, within the given resolution.</span>
+    <span class="ident">Fill</span> {
+        <span class="doccomment">/// Total resolution.</span>
+        <span class="ident">res</span>: [<span class="ident">usize</span>; <span class="number">3</span>],
+        <span class="doccomment">/// Minimum inclusive filling bound.</span>
+        <span class="ident">mins</span>: [<span class="ident">usize</span>; <span class="number">3</span>],
+        <span class="doccomment">/// Maximum inclusive filling bound.</span>
+        <span class="ident">maxs</span>: [<span class="ident">usize</span>; <span class="number">3</span>],
+    },
+    <span class="doccomment">/// Remove one cube from another.</span>
+    <span class="ident">Remove</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Sum cubes together.</span>
     <span class="ident">Sum</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Add a value to the data cube.</span>
@@ -213,41 +183,53 @@
     <span class="doccomment">/// or if a sampling point can not be located within the grid.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">expect_used</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">name</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="ident">name</span>);
+
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Info</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">data</span>
-                    .<span class="ident">max</span>()
-                    .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Failed to determine maximum value.&quot;</span>));
-                <span class="kw">let</span> <span class="ident">min</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">data</span>
-                    .<span class="ident">min</span>()
-                    .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Failed to determine minimum value.&quot;</span>));
-                <span class="kw">let</span> <span class="ident">sum</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">sum</span>();
-                <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Minimum value: {}&quot;</span>, <span class="ident">min</span>);
-                <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Maximum value: {}&quot;</span>, <span class="ident">max</span>);
-                <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Sum     value: {}&quot;</span>, <span class="ident">sum</span>);
-                <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Average value: {}&quot;</span>, <span class="ident">sum</span> <span class="op">/</span> <span class="ident">data</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f64</span>);
-                <span class="comment">// (data / max).save(&amp;out_dir.join(&quot;output.nc&quot;))</span>
+                <span class="macro">report</span><span class="macro">!</span>(<span class="ident">data</span>.<span class="ident">display</span>(), <span class="string">&quot;data&quot;</span>);
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="self">Self</span>::<span class="ident">Zero</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Array3</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">zeros</span>(<span class="ident">res</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.nc&quot;</span>)),
-            <span class="self">Self</span>::<span class="ident">Unit</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">Array3</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">zeros</span>(<span class="ident">res</span>) <span class="op">+</span> <span class="number">1.0</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Zero</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Array3</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">zeros</span>(<span class="ident">res</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Unit</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">Array3</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">zeros</span>(<span class="ident">res</span>) <span class="op">+</span> <span class="number">1.0</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Point</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">zeros</span>(<span class="ident">res</span>);
+                <span class="ident">a</span>[[<span class="ident">res</span>[<span class="ident">X</span>] <span class="op">/</span> <span class="number">2</span>, <span class="ident">res</span>[<span class="ident">Y</span>] <span class="op">/</span> <span class="number">2</span>, <span class="ident">res</span>[<span class="ident">Z</span>] <span class="op">/</span> <span class="number">2</span>]] <span class="op">=</span> <span class="number">1.0</span>;
+                <span class="ident">a</span>
+            }
+            .<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Fill</span> { <span class="ident">res</span>, <span class="ident">mins</span>, <span class="ident">maxs</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">zeros</span>(<span class="ident">res</span>);
+                <span class="kw">for</span> <span class="ident">zi</span> <span class="kw">in</span> <span class="ident">mins</span>[<span class="ident">Z</span>]..<span class="op">=</span><span class="ident">maxs</span>[<span class="ident">Z</span>] {
+                    <span class="kw">for</span> <span class="ident">yi</span> <span class="kw">in</span> <span class="ident">mins</span>[<span class="ident">Y</span>]..<span class="op">=</span><span class="ident">maxs</span>[<span class="ident">Y</span>] {
+                        <span class="kw">for</span> <span class="ident">xi</span> <span class="kw">in</span> <span class="ident">mins</span>[<span class="ident">X</span>]..<span class="op">=</span><span class="ident">maxs</span>[<span class="ident">X</span>] {
+                            <span class="ident">a</span>[[<span class="ident">xi</span>, <span class="ident">yi</span>, <span class="ident">zi</span>]] <span class="op">=</span> <span class="number">1.0</span>;
+                        }
+                    }
+                }
+                <span class="ident">a</span>
+            }
+            .<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Remove</span>(<span class="kw-2">ref</span> <span class="ident">data_a</span>, <span class="kw-2">ref</span> <span class="ident">data_b</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                (<span class="ident">data_a</span> <span class="op">-</span> <span class="ident">data_b</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>))
+            }
             <span class="self">Self</span>::<span class="ident">Sum</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">base</span> <span class="op">=</span> <span class="ident">data</span>[<span class="number">0</span>].<span class="ident">clone</span>();
                 <span class="kw">for</span> <span class="ident">d</span> <span class="kw">in</span> <span class="ident">data</span>.<span class="ident">iter</span>().<span class="ident">skip</span>(<span class="number">1</span>) {
                     <span class="ident">base</span> <span class="op">+</span><span class="op">=</span> <span class="ident">d</span>;
                 }
-                <span class="ident">base</span>.<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.nc&quot;</span>))
+                <span class="ident">base</span>.<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>))
             }
-            <span class="self">Self</span>::<span class="ident">Add</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">+</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.nc&quot;</span>)),
-            <span class="self">Self</span>::<span class="ident">Sub</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">-</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.nc&quot;</span>)),
-            <span class="self">Self</span>::<span class="ident">Mult</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">*</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.nc&quot;</span>)),
-            <span class="self">Self</span>::<span class="ident">Div</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">/</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Add</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">+</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Sub</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">-</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Mult</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">*</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">Div</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">/</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
             <span class="self">Self</span>::<span class="ident">Norm</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">data</span>
                     .<span class="ident">max</span>()
                     .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Failed to determine maximum value.&quot;</span>));
-                (<span class="ident">data</span> <span class="op">/</span> <span class="ident">max</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.nc&quot;</span>))
+                (<span class="ident">data</span> <span class="op">/</span> <span class="ident">max</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>))
             }
             <span class="self">Self</span>::<span class="ident">Sample</span>(<span class="kw-2">ref</span> <span class="ident">points</span>, <span class="kw-2">ref</span> <span class="ident">data</span>, <span class="kw-2">ref</span> <span class="ident">grid</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">weights</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">points</span>.<span class="ident">len</span>());
@@ -257,69 +239,7 @@
                         .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Failed to place point within grid.&quot;</span>));
                     <span class="ident">weights</span>.<span class="ident">push</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">data</span>[<span class="ident">index</span>]]);
                 }
-                <span class="ident">Table</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;weight&quot;</span>.<span class="ident">to_string</span>()], <span class="ident">weights</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;output.csv&quot;</span>))
-            }
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Operation</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Info</span>(<span class="kw-2">ref</span> <span class="ident">cube</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Information...&quot;</span>)<span class="question-mark">?</span>;
-                <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="ident">cube</span>)<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(())
-            }
-            <span class="self">Self</span>::<span class="ident">Zero</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Zero: [{} x {} x {}]&quot;</span>, <span class="ident">res</span>[<span class="ident">X</span>], <span class="ident">res</span>[<span class="ident">Y</span>], <span class="ident">res</span>[<span class="ident">Z</span>])
-            }
-            <span class="self">Self</span>::<span class="ident">Unit</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Unit: [{} x {} x {}]&quot;</span>, <span class="ident">res</span>[<span class="ident">X</span>], <span class="ident">res</span>[<span class="ident">Y</span>], <span class="ident">res</span>[<span class="ident">Z</span>])
-            }
-            <span class="self">Self</span>::<span class="ident">Sum</span>(<span class="kw-2">ref</span> <span class="ident">cubes</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Sum...&quot;</span>)<span class="question-mark">?</span>;
-                <span class="kw">for</span> <span class="ident">cube</span> <span class="kw">in</span> <span class="ident">cubes</span> {
-                    <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="ident">cube</span>)<span class="question-mark">?</span>;
-                }
-                <span class="prelude-val">Ok</span>(())
-            }
-            <span class="self">Self</span>::<span class="ident">Add</span>(<span class="kw-2">ref</span> <span class="ident">cube</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Add...&quot;</span>)<span class="question-mark">?</span>;
-                <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="ident">cube</span>)<span class="question-mark">?</span>;
-                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">x</span>, <span class="string">&quot;x&quot;</span>);
-                <span class="prelude-val">Ok</span>(())
-            }
-            <span class="self">Self</span>::<span class="ident">Sub</span>(<span class="kw-2">ref</span> <span class="ident">cube</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Subtract...&quot;</span>)<span class="question-mark">?</span>;
-                <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="ident">cube</span>)<span class="question-mark">?</span>;
-                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">x</span>, <span class="string">&quot;x&quot;</span>);
-                <span class="prelude-val">Ok</span>(())
-            }
-            <span class="self">Self</span>::<span class="ident">Mult</span>(<span class="kw-2">ref</span> <span class="ident">cube</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Multiply...&quot;</span>)<span class="question-mark">?</span>;
-                <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="ident">cube</span>)<span class="question-mark">?</span>;
-                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">x</span>, <span class="string">&quot;x&quot;</span>);
-                <span class="prelude-val">Ok</span>(())
-            }
-            <span class="self">Self</span>::<span class="ident">Div</span>(<span class="kw-2">ref</span> <span class="ident">cube</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Divide...&quot;</span>)<span class="question-mark">?</span>;
-                <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="ident">cube</span>)<span class="question-mark">?</span>;
-                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">x</span>, <span class="string">&quot;x&quot;</span>);
-                <span class="prelude-val">Ok</span>(())
-            }
-            <span class="self">Self</span>::<span class="ident">Norm</span>(<span class="kw-2">ref</span> <span class="ident">cube</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Normalise...&quot;</span>)<span class="question-mark">?</span>;
-                <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="ident">cube</span>)<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(())
-            }
-            <span class="self">Self</span>::<span class="ident">Sample</span>(<span class="kw-2">ref</span> <span class="ident">points</span>, <span class="kw-2">ref</span> <span class="ident">cube</span>, <span class="kw-2">ref</span> <span class="ident">grid</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Normalise...&quot;</span>)<span class="question-mark">?</span>;
-                <span class="macro">fmt_reports</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">points</span>, <span class="string">&quot;sampling points&quot;</span>);
-                <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="ident">cube</span>)<span class="question-mark">?</span>;
-                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">grid</span>, <span class="string">&quot;grid&quot;</span>);
-                <span class="prelude-val">Ok</span>(())
+                <span class="ident">Table</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;weight&quot;</span>.<span class="ident">to_string</span>()], <span class="ident">weights</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;csv&quot;</span>))
             }
         }
     }

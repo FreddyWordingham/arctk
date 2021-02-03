@@ -60,7 +60,7 @@
 
     <span class="comment">// The remaining weight is scattered.</span>
     <span class="kw">let</span> <span class="ident">phi</span> <span class="op">=</span> <span class="ident">sample_henyey_greenstein</span>(<span class="ident">rng</span>, <span class="ident">env</span>.<span class="ident">asym</span>());
-    <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="ident">PI</span> <span class="op">*</span> <span class="number">2.0</span>);
+    <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>..(<span class="ident">PI</span> <span class="op">*</span> <span class="number">2.0</span>));
     <span class="ident">phot</span>.<span class="ident">ray_mut</span>().<span class="ident">rotate</span>(<span class="ident">phi</span>, <span class="ident">theta</span>);
 }
 
@@ -81,7 +81,7 @@
 
     <span class="comment">// The remaining weight is scattered.</span>
     <span class="kw">let</span> <span class="ident">phi</span> <span class="op">=</span> <span class="ident">sample_henyey_greenstein</span>(<span class="ident">rng</span>, <span class="ident">env</span>.<span class="ident">asym</span>());
-    <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="ident">PI</span> <span class="op">*</span> <span class="number">2.0</span>);
+    <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>..(<span class="ident">PI</span> <span class="op">*</span> <span class="number">2.0</span>));
     <span class="ident">phot</span>.<span class="ident">ray_mut</span>().<span class="ident">rotate</span>(<span class="ident">phi</span>, <span class="ident">theta</span>);
 }
 </pre></div>

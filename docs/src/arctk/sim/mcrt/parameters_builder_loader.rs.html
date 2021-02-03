@@ -63,7 +63,7 @@
     <span class="ident">geom</span>::{<span class="ident">GridBuilder</span>, <span class="ident">SurfaceLinkerLoader</span>, <span class="ident">TreeSettings</span>},
     <span class="ident">ord</span>::<span class="ident">Set</span>,
     <span class="ident">phys</span>::{<span class="ident">LightLinkerBuilderLoader</span>, <span class="ident">MaterialBuilder</span>},
-    <span class="ident">sim</span>::<span class="ident">mcrt</span>::{<span class="ident">AttributeLinker</span>, <span class="ident">EngineBuilder</span>, <span class="ident">ParametersBuilder</span>, <span class="ident">Settings</span>},
+    <span class="ident">sim</span>::<span class="ident">mcrt</span>::{<span class="ident">AttributeLinkerLinker</span>, <span class="ident">EngineBuilder</span>, <span class="ident">ParametersBuilder</span>, <span class="ident">Settings</span>},
 };
 <span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">file</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
@@ -80,7 +80,7 @@
     <span class="doccomment">/// Surfaces.</span>
     <span class="ident">surfs</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">SurfaceLinkerLoader</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Attributes.</span>
-    <span class="ident">attrs</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">AttributeLinker</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">attrs</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">AttributeLinkerLinker</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Materials.</span>
     <span class="ident">mats</span>: <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">MaterialBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Main light.</span>

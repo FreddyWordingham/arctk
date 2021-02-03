@@ -287,7 +287,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ray</span> {
-        <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="self">self</span>.<span class="ident">area</span>);
+        <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>..<span class="self">self</span>.<span class="ident">area</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total_area</span> <span class="op">=</span> <span class="number">0.0</span>;
         <span class="kw">for</span> <span class="ident">tri</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">tris</span> {
             <span class="ident">total_area</span> <span class="op">+</span><span class="op">=</span> <span class="ident">tri</span>.<span class="ident">tri</span>().<span class="ident">area</span>();

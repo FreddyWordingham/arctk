@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["display_datacube","Write a datacubes properties to a given formatter."],["display_datasquare","Write a datasquares properties to a given formatter."]]});

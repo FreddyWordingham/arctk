@@ -55,7 +55,7 @@
     <span class="doccomment">/// if the instance can not be serialised or if the file can&#39;t be written to.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Saving: {}&quot;</span>, <span class="ident">path</span>.<span class="ident">display</span>());
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;[SAVE] {}&quot;</span>, <span class="ident">path</span>.<span class="ident">display</span>());
 
         <span class="self">self</span>.<span class="ident">save_data</span>(<span class="ident">path</span>)
     }
@@ -66,7 +66,7 @@
 <span class="doccomment">/// if the instance can not be serialised into json or if the file can&#39;t be written to.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_json</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Serialize</span><span class="op">&gt;</span>(<span class="ident">instance</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
-    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;saving: {}&quot;</span>, <span class="ident">path</span>.<span class="ident">display</span>());
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;[SAVE] {}&quot;</span>, <span class="ident">path</span>.<span class="ident">display</span>());
     <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">to_string</span>(<span class="ident">instance</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(<span class="ident">write</span>(<span class="ident">path</span>, <span class="ident">s</span>)<span class="question-mark">?</span>)
 }

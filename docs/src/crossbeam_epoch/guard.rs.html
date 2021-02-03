@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/crossbeam-epoch-0.9.1/src/guard.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>guard.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/crossbeam-epoch-0.8.2/src/guard.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>guard.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
 <link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../crossbeam_epoch/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
@@ -515,16 +515,29 @@
 <span id="512">512</span>
 <span id="513">513</span>
 <span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">mem</span>;
 
-<span class="kw">use</span> <span class="ident">scopeguard</span>::<span class="ident">defer</span>;
-
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">atomic</span>::<span class="ident">Shared</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">collector</span>::<span class="ident">Collector</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">deferred</span>::<span class="ident">Deferred</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">internal</span>::<span class="ident">Local</span>;
+<span class="kw">use</span> <span class="ident">atomic</span>::<span class="ident">Shared</span>;
+<span class="kw">use</span> <span class="ident">collector</span>::<span class="ident">Collector</span>;
+<span class="kw">use</span> <span class="ident">deferred</span>::<span class="ident">Deferred</span>;
+<span class="kw">use</span> <span class="ident">internal</span>::<span class="ident">Local</span>;
 
 <span class="doccomment">/// A guard that keeps the current thread pinned.</span>
 <span class="doccomment">///</span>
@@ -548,7 +561,7 @@
 <span class="doccomment">/// For example:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// use crossbeam_epoch::{self as epoch, Atomic};</span>
+<span class="doccomment">/// use crossbeam_epoch::{self as epoch, Atomic, Owned};</span>
 <span class="doccomment">/// use std::sync::atomic::Ordering::SeqCst;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Create a heap-allocated number.</span>
@@ -584,7 +597,7 @@
 <span class="doccomment">/// assert!(!epoch::is_pinned());</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`pin`]: super::pin</span>
+<span class="doccomment">/// [`pin`]: fn.pin.html</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Guard</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">local</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Local</span>,
 }
@@ -605,6 +618,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// If this method is called from an [`unprotected`] guard, the function will simply be</span>
     <span class="doccomment">/// executed immediately.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`unprotected`]: fn.unprotected.html</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">defer</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
@@ -703,6 +718,8 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`unprotected`]: fn.unprotected.html</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">defer_unchecked</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>)
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
@@ -782,7 +799,9 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">defer_destroy</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`unprotected`]: fn.unprotected.html</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">defer_destroy</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ptr</span>: <span class="ident">Shared</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) {
         <span class="self">self</span>.<span class="ident">defer_unchecked</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="ident">ptr</span>.<span class="ident">into_owned</span>());
     }
 
@@ -801,11 +820,15 @@
     <span class="doccomment">/// use crossbeam_epoch as epoch;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let guard = &amp;epoch::pin();</span>
-    <span class="doccomment">/// guard.defer(move || {</span>
-    <span class="doccomment">///     println!(&quot;This better be printed as soon as possible!&quot;);</span>
-    <span class="doccomment">/// });</span>
+    <span class="doccomment">/// unsafe {</span>
+    <span class="doccomment">///     guard.defer(move || {</span>
+    <span class="doccomment">///         println!(&quot;This better be printed as soon as possible!&quot;);</span>
+    <span class="doccomment">///     });</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// guard.flush();</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`unprotected`]: fn.unprotected.html</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">local</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">local</span>.<span class="ident">as_ref</span>() } {
             <span class="ident">local</span>.<span class="ident">flush</span>(<span class="self">self</span>);
@@ -826,6 +849,8 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use crossbeam_epoch::{self as epoch, Atomic};</span>
     <span class="doccomment">/// use std::sync::atomic::Ordering::SeqCst;</span>
+    <span class="doccomment">/// use std::thread;</span>
+    <span class="doccomment">/// use std::time::Duration;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Atomic::new(777);</span>
     <span class="doccomment">/// let mut guard = epoch::pin();</span>
@@ -839,6 +864,8 @@
     <span class="doccomment">///     assert_eq!(unsafe { p.as_ref() }, Some(&amp;777));</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`unprotected`]: fn.unprotected.html</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">repin</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">local</span>) <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">local</span>.<span class="ident">as_ref</span>() } {
             <span class="ident">local</span>.<span class="ident">repin</span>();
@@ -875,6 +902,8 @@
     <span class="doccomment">///     assert_eq!(unsafe { p.as_ref() }, Some(&amp;777));</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`unprotected`]: fn.unprotected.html</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">repin_after</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
@@ -909,10 +938,12 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use crossbeam_epoch as epoch;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// let guard1 = epoch::pin();</span>
-    <span class="doccomment">/// let guard2 = epoch::pin();</span>
+    <span class="doccomment">/// let mut guard1 = epoch::pin();</span>
+    <span class="doccomment">/// let mut guard2 = epoch::pin();</span>
     <span class="doccomment">/// assert!(guard1.collector() == guard2.collector());</span>
     <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`unprotected`]: fn.unprotected.html</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Collector</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">local</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">local</span><span class="op">|</span> <span class="ident">local</span>.<span class="ident">collector</span>()) }
     }
@@ -928,7 +959,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Guard</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">pad</span>(<span class="string">&quot;Guard { .. }&quot;</span>)
     }
 }
@@ -1016,19 +1047,18 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`Atomic`]: super::Atomic</span>
-<span class="doccomment">/// [`defer`]: Guard::defer</span>
+<span class="doccomment">/// [`Atomic`]: struct.Atomic.html</span>
+<span class="doccomment">/// [`defer`]: struct.Guard.html#method.defer</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unprotected</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Guard</span> {
-    <span class="comment">// An unprotected guard is just a `Guard` with its field `local` set to null.</span>
-    <span class="comment">// We make a newtype over `Guard` because `Guard` isn&#39;t `Sync`, so can&#39;t be directly stored in</span>
-    <span class="comment">// a `static`</span>
-    <span class="kw">struct</span> <span class="ident">GuardWrapper</span>(<span class="ident">Guard</span>);
-    <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">GuardWrapper</span> {}
-    <span class="kw">static</span> <span class="ident">UNPROTECTED</span>: <span class="ident">GuardWrapper</span> <span class="op">=</span> <span class="ident">GuardWrapper</span>(<span class="ident">Guard</span> {
-        <span class="ident">local</span>: <span class="ident">core</span>::<span class="ident">ptr</span>::<span class="ident">null</span>(),
-    });
-    <span class="kw-2">&amp;</span><span class="ident">UNPROTECTED</span>.<span class="number">0</span>
+    <span class="comment">// HACK(stjepang): An unprotected guard is just a `Guard` with its field `local` set to null.</span>
+    <span class="comment">// Since this function returns a `&#39;static` reference to a `Guard`, we must return a reference</span>
+    <span class="comment">// to a global guard. However, it&#39;s not possible to create a `static` `Guard` because it does</span>
+    <span class="comment">// not implement `Sync`. To get around the problem, we create a static `usize` initialized to</span>
+    <span class="comment">// zero and then transmute it into a `Guard`. This is safe because `usize` and `Guard`</span>
+    <span class="comment">// (consisting of a single pointer) have the same representation in memory.</span>
+    <span class="kw">static</span> <span class="ident">UNPROTECTED</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">0</span>;
+    <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="kw-2">&amp;</span><span class="ident">UNPROTECTED</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Guard</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "crossbeam_epoch";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

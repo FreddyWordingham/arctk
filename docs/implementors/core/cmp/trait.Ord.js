@@ -6,7 +6,7 @@ implementors["cocoa"] = [{"text":"impl Ord for NSApplicationPresentationOptions"
 implementors["console"] = [{"text":"impl Ord for Attribute","synthetic":false,"types":[]}];
 implementors["core_foundation"] = [{"text":"impl Ord for CFDate","synthetic":false,"types":[]},{"text":"impl Ord for CFNumber","synthetic":false,"types":[]}];
 implementors["core_graphics"] = [{"text":"impl Ord for CGEventFlags","synthetic":false,"types":[]},{"text":"impl Ord for CGGradientDrawingOptions","synthetic":false,"types":[]}];
-implementors["crossbeam_epoch"] = [{"text":"impl&lt;T:&nbsp;?Sized + Pointable, '_&gt; Ord for Shared&lt;'_, T&gt;","synthetic":false,"types":[]}];
+implementors["crossbeam_epoch"] = [{"text":"impl&lt;'g, T&gt; Ord for Shared&lt;'g, T&gt;","synthetic":false,"types":[]}];
 implementors["deflate"] = [{"text":"impl Ord for Compression","synthetic":false,"types":[]},{"text":"impl Ord for MatchingType","synthetic":false,"types":[]}];
 implementors["either"] = [{"text":"impl&lt;L:&nbsp;Ord, R:&nbsp;Ord&gt; Ord for Either&lt;L, R&gt;","synthetic":false,"types":[]}];
 implementors["generic_array"] = [{"text":"impl&lt;T:&nbsp;Ord, N&gt; Ord for GenericArray&lt;T, N&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;N: ArrayLength&lt;T&gt;,&nbsp;</span>","synthetic":false,"types":[]}];

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DataSquare","Two-dimensional array analysis structure."]]});

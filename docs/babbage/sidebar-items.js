@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["initialisation","Initialise the input arguments."],["input","Retrieve the input parameters file structure."],["main","Main program function."],["run","Run the operation."]]});
+initSidebarItems({"constant":[["BACKUP_TERM_WIDTH","Backup print width if the terminal width can not be determined."]],"fn":[["initialisation","Initialise the input arguments."],["main","Main program function."],["run","Run the operations and save their results."]]});

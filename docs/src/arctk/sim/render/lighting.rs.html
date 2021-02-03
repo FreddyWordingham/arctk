@@ -184,7 +184,7 @@
     <span class="kw-2">*</span><span class="ident">light_ray</span>.<span class="ident">dir_mut</span>() <span class="op">=</span> <span class="ident">sun_dir</span>;
 
     <span class="kw">let</span> <span class="ident">solar</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">samples</span>, <span class="ident">rad</span>)) <span class="op">=</span> <span class="ident">input</span>.<span class="ident">shader</span>.<span class="ident">soft_shadow_samples</span>() {
-        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>);
+        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>..(<span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>));
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span> <span class="op">=</span> <span class="number">0.0</span>;
         <span class="kw">for</span> <span class="ident">n</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">samples</span> {
             <span class="kw">let</span> (<span class="ident">r</span>, <span class="ident">theta</span>) <span class="op">=</span> <span class="ident">rand_circle_point</span>(<span class="ident">n</span>, <span class="ident">samples</span>);
@@ -198,7 +198,7 @@
     };
 
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">samples</span>, <span class="ident">power</span>)) <span class="op">=</span> <span class="ident">input</span>.<span class="ident">shader</span>.<span class="ident">ambient_shadow_samples</span>() {
-        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>);
+        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>..(<span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>));
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total</span> <span class="op">=</span> <span class="number">0.0</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">norm_ray</span> <span class="op">=</span> <span class="ident">Ray</span>::<span class="ident">new</span>(<span class="kw-2">*</span><span class="ident">ray</span>.<span class="ident">pos</span>(), <span class="kw-2">*</span><span class="ident">norm</span>);
         <span class="ident">norm_ray</span>.<span class="ident">travel</span>(<span class="ident">bump_dist</span>);

@@ -103,7 +103,6 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
-<span id="103">103</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Output data structure.</span>
 
@@ -114,7 +113,7 @@
     <span class="ident">img</span>::{<span class="ident">Colour</span>, <span class="ident">Gradient</span>, <span class="ident">Image</span>},
     <span class="ident">ord</span>::{<span class="ident">X</span>, <span class="ident">Y</span>},
     <span class="ident">report</span>,
-    <span class="ident">util</span>::{<span class="ident">fmt</span>::<span class="ident">datacube</span>::<span class="ident">display_datasquare</span>, <span class="ident">gradient</span>::<span class="ident">to_string</span>},
+    <span class="ident">util</span>::{<span class="ident">fmt</span>::<span class="ident">DataSquare</span>, <span class="ident">gradient</span>::<span class="ident">to_string</span>},
 };
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array2</span>;
 <span class="kw">use</span> <span class="ident">ndarray_stats</span>::<span class="ident">QuantileExt</span>;
@@ -159,6 +158,8 @@
     }
 }
 
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">Output</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {}
+
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Output</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
@@ -198,12 +199,9 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Time data...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="ident">display_datasquare</span>(<span class="ident">fmt</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time</span>)<span class="question-mark">?</span>;
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Light data...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="ident">display_datasquare</span>(<span class="ident">fmt</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">light</span>)<span class="question-mark">?</span>;
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Shadow data...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="ident">display_datasquare</span>(<span class="ident">fmt</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shadow</span>)<span class="question-mark">?</span>;
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Time data&quot;</span>, <span class="ident">DataSquare</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time</span>));
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Light data&quot;</span>, <span class="ident">DataSquare</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">light</span>));
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Shadow data&quot;</span>, <span class="ident">DataSquare</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shadow</span>));
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">to_string</span>(<span class="self">self</span>.<span class="ident">grad</span>, <span class="number">32</span>), <span class="string">&quot;gradient&quot;</span>);
         <span class="prelude-val">Ok</span>(())
     }

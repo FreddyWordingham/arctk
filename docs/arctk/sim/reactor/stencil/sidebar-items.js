@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["grad","Gradient-type stencil structure."]]});

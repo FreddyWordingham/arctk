@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Parameters","Runtime parameters."]]});
+initSidebarItems({"struct":[["Parameters","Loadable runtime parameters."]]});

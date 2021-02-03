@@ -62,14 +62,6 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
-<span id="62">62</span>
-<span id="63">63</span>
-<span id="64">64</span>
-<span id="65">65</span>
-<span id="66">66</span>
-<span id="67">67</span>
-<span id="68">68</span>
-<span id="69">69</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Material builder.</span>
 
@@ -99,16 +91,8 @@
     <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span> {
         <span class="kw">let</span> <span class="ident">ref_index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ref_index</span>.<span class="ident">build</span>();
         <span class="kw">let</span> <span class="ident">scat_coeff</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scat_coeff</span>.<span class="ident">build</span>();
-        <span class="kw">let</span> <span class="ident">abs_coeff</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">abs_coeff</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">abs_coeff</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">abs_coeff</span>.<span class="ident">build</span>())
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        };
-        <span class="kw">let</span> <span class="ident">shift_coeff</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">shift_coeff</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shift_coeff</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">shift_coeff</span>.<span class="ident">build</span>())
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        };
+        <span class="kw">let</span> <span class="ident">abs_coeff</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">abs_coeff</span>.<span class="ident">map</span>(<span class="ident">Build</span>::<span class="ident">build</span>);
+        <span class="kw">let</span> <span class="ident">shift_coeff</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shift_coeff</span>.<span class="ident">map</span>(<span class="ident">Build</span>::<span class="ident">build</span>);
         <span class="kw">let</span> <span class="ident">asym_fact</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">asym_fact</span>.<span class="ident">build</span>();
 
         <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new</span>(<span class="ident">ref_index</span>, <span class="ident">scat_coeff</span>, <span class="ident">abs_coeff</span>, <span class="ident">shift_coeff</span>, <span class="ident">asym_fact</span>)
@@ -122,14 +106,14 @@
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">ref_index</span>, <span class="string">&quot;refractive index&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">scat_coeff</span>, <span class="string">&quot;scattering coefficient (m^-1)&quot;</span>);
 
-        <span class="kw">let</span> <span class="ident">abs_coeff</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">abs_coeff</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shift_coeff</span> {
+        <span class="kw">let</span> <span class="ident">abs_coeff</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">abs_coeff</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shift_coeff</span> {
             <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">abs_coeff</span>)
         } <span class="kw">else</span> {
             <span class="string">&quot;NONE&quot;</span>.<span class="ident">to_string</span>()
         };
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">abs_coeff</span>, <span class="string">&quot;absorption coefficient (m^-1)&quot;</span>);
 
-        <span class="kw">let</span> <span class="ident">shift_coeff</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">shift_coeff</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shift_coeff</span> {
+        <span class="kw">let</span> <span class="ident">shift_coeff</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">shift_coeff</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shift_coeff</span> {
             <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">shift_coeff</span>)
         } <span class="kw">else</span> {
             <span class="string">&quot;NONE&quot;</span>.<span class="ident">to_string</span>()

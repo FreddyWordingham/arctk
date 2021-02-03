@@ -172,7 +172,7 @@
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Beam</span>(<span class="kw-2">ref</span> <span class="ident">ray</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ray</span>.<span class="ident">clone</span>(),
             <span class="self">Self</span>::<span class="ident">Points</span>(<span class="kw-2">ref</span> <span class="ident">ps</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">Ray</span>::<span class="ident">new</span>(<span class="ident">ps</span>[<span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="ident">ps</span>.<span class="ident">len</span>())], <span class="ident">rand_isotropic_dir</span>(<span class="ident">rng</span>))
+                <span class="ident">Ray</span>::<span class="ident">new</span>(<span class="ident">ps</span>[<span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>..<span class="ident">ps</span>.<span class="ident">len</span>())], <span class="ident">rand_isotropic_dir</span>(<span class="ident">rng</span>))
             }
             <span class="self">Self</span>::<span class="ident">WeightedPoints</span>(<span class="kw-2">ref</span> <span class="ident">ps</span>, <span class="kw-2">ref</span> <span class="ident">ws</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen</span>();

@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["input","Simulation input."],["parameters","Runtime parameters."],["parameters_builder","Buildable parameters."],["parameters_builder_loader","Loadable parameters."],["run","Simulation control functions."],["settings","Reactor settings."],["stencil","Diffusion stencils module."]]});

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.1/src/geometry/rotation.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>rotation.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.24.1/src/geometry/rotation.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>rotation.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -566,6 +566,49 @@
 <span id="565">565</span>
 <span id="566">566</span>
 <span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
 <span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">One</span>, <span class="ident">Zero</span>};
@@ -592,6 +635,36 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">geometry</span>::<span class="ident">Point</span>;
 
 <span class="doccomment">/// A rotation matrix.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is also known as an element of a Special Orthogonal (SO) group.</span>
+<span class="doccomment">/// The `Rotation` type can either represent a 2D or 3D rotation, represented as a matrix.</span>
+<span class="doccomment">/// For a rotation based on quaternions, see [`UnitQuaternion`](crate::UnitQuaternion) instead.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Note that instead of using the [`Rotation`](crate::Rotation) type in your code directly, you should use one</span>
+<span class="doccomment">/// of its aliases: [`Rotation2`](crate::Rotation2), or [`Rotation3`](crate::Rotation3). Though</span>
+<span class="doccomment">/// keep in mind that all the documentation of all the methods of these aliases will also appears on</span>
+<span class="doccomment">/// this page.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Construction</span>
+<span class="doccomment">/// * [Identity &lt;span style=&quot;float:right;&quot;&gt;`identity`&lt;/span&gt;](#identity)</span>
+<span class="doccomment">/// * [From a 2D rotation angle &lt;span style=&quot;float:right;&quot;&gt;`new`…&lt;/span&gt;](#construction-from-a-2d-rotation-angle)</span>
+<span class="doccomment">/// * [From an existing 2D matrix or rotations &lt;span style=&quot;float:right;&quot;&gt;`from_matrix`, `rotation_between`, `powf`…&lt;/span&gt;](#construction-from-an-existing-2d-matrix-or-rotations)</span>
+<span class="doccomment">/// * [From a 3D axis and/or angles &lt;span style=&quot;float:right;&quot;&gt;`new`, `from_euler_angles`, `from_axis_angle`…&lt;/span&gt;](#construction-from-a-3d-axis-andor-angles)</span>
+<span class="doccomment">/// * [From a 3D eye position and target point &lt;span style=&quot;float:right;&quot;&gt;`look_at`, `look_at_lh`, `rotation_between`…&lt;/span&gt;](#construction-from-a-3d-eye-position-and-target-point)</span>
+<span class="doccomment">/// * [From an existing 3D matrix or rotations &lt;span style=&quot;float:right;&quot;&gt;`from_matrix`, `rotation_between`, `powf`…&lt;/span&gt;](#construction-from-an-existing-3d-matrix-or-rotations)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Transformation and composition</span>
+<span class="doccomment">/// Note that transforming vectors and points can be done by multiplication, e.g., `rotation * point`.</span>
+<span class="doccomment">/// Composing an rotation with another transformation can also be done by multiplication or division.</span>
+<span class="doccomment">/// * [3D axis and angle extraction &lt;span style=&quot;float:right;&quot;&gt;`angle`, `euler_angles`, `scaled_axis`, `angle_to`…&lt;/span&gt;](#3d-axis-and-angle-extraction)</span>
+<span class="doccomment">/// * [2D angle extraction &lt;span style=&quot;float:right;&quot;&gt;`angle`, `angle_to`…&lt;/span&gt;](#2d-angle-extraction)</span>
+<span class="doccomment">/// * [Transformation of a vector or a point &lt;span style=&quot;float:right;&quot;&gt;`transform_vector`, `inverse_transform_point`…&lt;/span&gt;](#transformation-of-a-vector-or-a-point)</span>
+<span class="doccomment">/// * [Transposition and inversion &lt;span style=&quot;float:right;&quot;&gt;`transpose`, `inverse`…&lt;/span&gt;](#transposition-and-inversion)</span>
+<span class="doccomment">/// * [Interpolation &lt;span style=&quot;float:right;&quot;&gt;`slerp`…&lt;/span&gt;](#interpolation)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Conversion</span>
+<span class="doccomment">/// * [Conversion to a matrix &lt;span style=&quot;float:right;&quot;&gt;`matrix`, `to_homogeneous`…&lt;/span&gt;](#conversion-to-a-matrix)</span>
+<span class="doccomment">///</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>
@@ -680,6 +753,44 @@
     }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span> <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+{
+    <span class="doccomment">/// Creates a new rotation from the given square matrix.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The matrix squareness is checked but not its orthonormality.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::{Rotation2, Rotation3, Matrix2, Matrix3};</span>
+    <span class="doccomment">/// # use std::f32;</span>
+    <span class="doccomment">/// let mat = Matrix3::new(0.8660254, -0.5,      0.0,</span>
+    <span class="doccomment">///                        0.5,       0.8660254, 0.0,</span>
+    <span class="doccomment">///                        0.0,       0.0,       1.0);</span>
+    <span class="doccomment">/// let rot = Rotation3::from_matrix_unchecked(mat);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(*rot.matrix(), mat);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mat = Matrix2::new(0.8660254, -0.5,</span>
+    <span class="doccomment">///                        0.5,       0.8660254);</span>
+    <span class="doccomment">/// let rot = Rotation2::from_matrix_unchecked(mat);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// assert_eq!(*rot.matrix(), mat);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix_unchecked</span>(<span class="ident">matrix</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="macro">assert</span><span class="macro">!</span>(
+            <span class="ident">matrix</span>.<span class="ident">is_square</span>(),
+            <span class="string">&quot;Unable to create a rotation from a non-square matrix.&quot;</span>
+        );
+
+        <span class="self">Self</span> { <span class="ident">matrix</span> }
+    }
+}
+
+<span class="doccomment">/// # Conversion to a matrix</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span> <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
@@ -794,39 +905,13 @@
 
         <span class="ident">res</span>
     }
+}
 
-    <span class="doccomment">/// Creates a new rotation from the given square matrix.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The matrix squareness is checked but not its orthonormality.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// # use nalgebra::{Rotation2, Rotation3, Matrix2, Matrix3};</span>
-    <span class="doccomment">/// # use std::f32;</span>
-    <span class="doccomment">/// let mat = Matrix3::new(0.8660254, -0.5,      0.0,</span>
-    <span class="doccomment">///                        0.5,       0.8660254, 0.0,</span>
-    <span class="doccomment">///                        0.0,       0.0,       1.0);</span>
-    <span class="doccomment">/// let rot = Rotation3::from_matrix_unchecked(mat);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(*rot.matrix(), mat);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let mat = Matrix2::new(0.8660254, -0.5,</span>
-    <span class="doccomment">///                        0.5,       0.8660254);</span>
-    <span class="doccomment">/// let rot = Rotation2::from_matrix_unchecked(mat);</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// assert_eq!(*rot.matrix(), mat);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix_unchecked</span>(<span class="ident">matrix</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(
-            <span class="ident">matrix</span>.<span class="ident">is_square</span>(),
-            <span class="string">&quot;Unable to create a rotation from a non-square matrix.&quot;</span>
-        );
-
-        <span class="self">Self</span> { <span class="ident">matrix</span> }
-    }
-
+<span class="doccomment">/// # Transposition and inversion</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span> <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+{
     <span class="doccomment">/// Transposes `self`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Same as `.inverse()` because the inverse of a rotation matrix is its transform.</span>
@@ -930,6 +1015,7 @@
     }
 }
 
+<span class="doccomment">/// # Transformation of a vector or a point</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span> <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">N</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,

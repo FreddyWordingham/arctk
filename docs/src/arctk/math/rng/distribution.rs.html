@@ -121,12 +121,12 @@
     <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">asym</span>.<span class="ident">abs</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="number">1.0</span>);
 
     <span class="kw">if</span> <span class="ident">asym</span>.<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="number">1.0e-6</span> {
-        <span class="kw">return</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="op">-</span><span class="number">1.0_f64</span>, <span class="number">1.0</span>).<span class="ident">acos</span>();
+        <span class="kw">return</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="op">-</span><span class="number">1.0_f64</span>..<span class="number">1.0</span>).<span class="ident">acos</span>();
     }
 
     <span class="kw">let</span> <span class="ident">asym_sq</span> <span class="op">=</span> <span class="ident">asym</span> <span class="op">*</span> <span class="ident">asym</span>;
 
-    <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> (<span class="number">1.0</span> <span class="op">-</span> <span class="ident">asym_sq</span>) <span class="op">/</span> <span class="ident">asym</span>.<span class="ident">mul_add</span>(<span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="op">-</span><span class="number">1.0</span>, <span class="number">1.0</span>), <span class="number">1.0</span>);
+    <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> (<span class="number">1.0</span> <span class="op">-</span> <span class="ident">asym_sq</span>) <span class="op">/</span> <span class="ident">asym</span>.<span class="ident">mul_add</span>(<span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="op">-</span><span class="number">1.0</span>..<span class="number">1.0</span>), <span class="number">1.0</span>);
     ((<span class="number">1.0</span> <span class="op">+</span> <span class="ident">asym_sq</span> <span class="op">-</span> (<span class="ident">a</span> <span class="op">*</span> <span class="ident">a</span>)) <span class="op">/</span> (<span class="number">2.0</span> <span class="op">*</span> <span class="ident">asym</span>)).<span class="ident">acos</span>()
 }
 
@@ -134,8 +134,8 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sample_normal</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-    <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> (<span class="op">-</span><span class="number">2.0</span> <span class="op">*</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0_f64</span>, <span class="number">1.0</span>).<span class="ident">ln</span>()).<span class="ident">sqrt</span>();
-    <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>);
+    <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> (<span class="op">-</span><span class="number">2.0</span> <span class="op">*</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0_f64</span>..<span class="number">1.0</span>).<span class="ident">ln</span>()).<span class="ident">sqrt</span>();
+    <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>..(<span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>));
 
     <span class="comment">// Z = Some(a * theta.sin()); // Using mutable static will lead to data race; we waste the the other value :(.</span>
 
@@ -155,8 +155,8 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rand_isotropic_dir</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Dir3</span> {
-    <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>, <span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>);
-    <span class="kw">let</span> <span class="ident">z</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="op">-</span><span class="number">1.0</span>, <span class="number">1.0</span>);
+    <span class="kw">let</span> <span class="ident">theta</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0.0</span>..(<span class="number">2.0</span> <span class="op">*</span> <span class="ident">PI</span>));
+    <span class="kw">let</span> <span class="ident">z</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="op">-</span><span class="number">1.0</span>..<span class="number">1.0</span>);
 
     <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> (<span class="number">1.0</span> <span class="op">-</span> (<span class="ident">z</span> <span class="op">*</span> <span class="ident">z</span>)).<span class="ident">sqrt</span>();
 

@@ -71,7 +71,7 @@
     <span class="doccomment">/// Point.</span>
     <span class="ident">Point</span>(<span class="ident">f64</span>),
     <span class="doccomment">/// Points.</span>
-    <span class="ident">Points</span>(<span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
+    <span class="ident">Points</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Uniform range.</span>
     <span class="ident">Uniform</span>(<span class="ident">f64</span>, <span class="ident">f64</span>),
     <span class="doccomment">/// Linear function.</span>
@@ -89,7 +89,7 @@
     <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Point</span>(<span class="ident">p</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_point</span>(<span class="ident">p</span>),
-            <span class="self">Self</span>::<span class="ident">Points</span>(<span class="ident">ps</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_points</span>(<span class="ident">ps</span>),
+            <span class="self">Self</span>::<span class="ident">Points</span>(<span class="ident">ps</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_points</span>(<span class="ident">Array1</span>::<span class="ident">from</span>(<span class="ident">ps</span>)),
             <span class="self">Self</span>::<span class="ident">Uniform</span>(<span class="ident">min</span>, <span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_uniform</span>(<span class="ident">min</span>, <span class="ident">max</span>),
             <span class="self">Self</span>::<span class="ident">Linear</span>(<span class="ident">min</span>, <span class="ident">max</span>, <span class="ident">m</span>, <span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_linear</span>(<span class="ident">min</span>, <span class="ident">max</span>, <span class="ident">m</span>, <span class="ident">c</span>),
             <span class="self">Self</span>::<span class="ident">Gaussian</span>(<span class="ident">mu</span>, <span class="ident">sigma</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_gaussian</span>(<span class="ident">mu</span>, <span class="ident">sigma</span>),

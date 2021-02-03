@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["concentrations","Concentration builder structure."],["rate","Rate structure."],["rate_linker","Rate building structure."],["reaction","Reaction structure."],["reaction_linker","Reaction linker structure."],["reactor","Reactor structure."],["reactor_linker","Reactor linking structure."]]});
+initSidebarItems({"mod":[["rate","Rate structure."],["rate_linker","Rate building structure."],["reaction","Reaction structure."],["reaction_linker","Reaction linker structure."],["reactor","Reactor structure."],["reactor_linker","Reactor linking structure."]]});

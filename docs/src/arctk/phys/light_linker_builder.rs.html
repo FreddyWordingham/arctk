@@ -91,7 +91,7 @@
     <span class="doccomment">/// Construct a new instance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">power</span>: <span class="ident">f64</span>, <span class="ident">emit</span>: <span class="ident">Emitter</span>, <span class="ident">spec</span>: <span class="ident">ProbabilityBuilder</span>, <span class="ident">mat</span>: <span class="ident">Name</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">power</span>: <span class="ident">f64</span>, <span class="ident">emit</span>: <span class="ident">Emitter</span>, <span class="ident">spec</span>: <span class="ident">ProbabilityBuilder</span>, <span class="ident">mat</span>: <span class="ident">Name</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">power</span>,
             <span class="ident">emit</span>,

@@ -102,24 +102,55 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 <span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Output data structure.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">access</span>, <span class="ident">clone</span>,
+    <span class="ident">data</span>::<span class="ident">Histogram</span>,
     <span class="ident">err</span>::<span class="ident">Error</span>,
     <span class="ident">fmt_report</span>,
     <span class="ident">fs</span>::<span class="ident">Save</span>,
     <span class="ident">geom</span>::<span class="ident">Cube</span>,
-    <span class="ident">ord</span>::{<span class="ident">X</span>, <span class="ident">Y</span>, <span class="ident">Z</span>},
-    <span class="ident">util</span>::<span class="ident">fmt</span>::<span class="ident">datacube</span>::<span class="ident">display_datacube</span>,
+    <span class="ident">ord</span>::{<span class="ident">Register</span>, <span class="ident">X</span>, <span class="ident">Y</span>, <span class="ident">Z</span>},
+    <span class="ident">util</span>::<span class="ident">fmt</span>::<span class="ident">DataCube</span>,
 };
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array3</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">ops</span>::<span class="ident">AddAssign</span>, <span class="ident">path</span>::<span class="ident">Path</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{
+    <span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>},
+    <span class="ident">ops</span>::<span class="ident">AddAssign</span>,
+    <span class="ident">path</span>::<span class="ident">Path</span>,
+};
 
 <span class="doccomment">/// MCRT output data.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Output</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Output</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Spectrometer name register.</span>
+    <span class="ident">spec_reg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Register</span>,
     <span class="doccomment">/// Measured volume.</span>
     <span class="ident">boundary</span>: <span class="ident">Cube</span>,
     <span class="doccomment">/// Cell volume [m^3].</span>
@@ -132,16 +163,23 @@
     <span class="kw">pub</span> <span class="ident">absorptions</span>: <span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Wavelength shifts.</span>
     <span class="kw">pub</span> <span class="ident">shifts</span>: <span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Spectrometer data.</span>
+    <span class="kw">pub</span> <span class="ident">specs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Histogram</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">Output</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Output</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="macro">access</span><span class="macro">!</span>(<span class="ident">boundary</span>, <span class="ident">Cube</span>);
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">cell_vol</span>, <span class="ident">f64</span>);
 
     <span class="doccomment">/// Construct a new instance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">boundary</span>: <span class="ident">Cube</span>, <span class="ident">res</span>: [<span class="ident">usize</span>; <span class="number">3</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
+        <span class="ident">spec_reg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Register</span>,
+        <span class="ident">boundary</span>: <span class="ident">Cube</span>,
+        <span class="ident">res</span>: [<span class="ident">usize</span>; <span class="number">3</span>],
+        <span class="ident">specs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Histogram</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">res</span>[<span class="ident">X</span>] <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">res</span>[<span class="ident">Y</span>] <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">res</span>[<span class="ident">Z</span>] <span class="op">&gt;</span> <span class="number">0</span>);
@@ -149,27 +187,33 @@
         <span class="kw">let</span> <span class="ident">cell_vol</span> <span class="op">=</span> <span class="ident">boundary</span>.<span class="ident">vol</span>() <span class="op">/</span> (<span class="ident">res</span>[<span class="ident">X</span>] <span class="op">*</span> <span class="ident">res</span>[<span class="ident">Y</span>] <span class="op">*</span> <span class="ident">res</span>[<span class="ident">Z</span>]) <span class="kw">as</span> <span class="ident">f64</span>;
 
         <span class="self">Self</span> {
+            <span class="ident">spec_reg</span>,
             <span class="ident">boundary</span>,
             <span class="ident">cell_vol</span>,
             <span class="ident">emission</span>: <span class="ident">Array3</span>::<span class="ident">zeros</span>(<span class="ident">res</span>),
             <span class="ident">energy</span>: <span class="ident">Array3</span>::<span class="ident">zeros</span>(<span class="ident">res</span>),
             <span class="ident">absorptions</span>: <span class="ident">Array3</span>::<span class="ident">zeros</span>(<span class="ident">res</span>),
             <span class="ident">shifts</span>: <span class="ident">Array3</span>::<span class="ident">zeros</span>(<span class="ident">res</span>),
+            <span class="ident">specs</span>,
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Output</span> {
+<span class="kw">impl</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Output</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) {
         <span class="self">self</span>.<span class="ident">emission</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">rhs</span>.<span class="ident">emission</span>;
         <span class="self">self</span>.<span class="ident">energy</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">rhs</span>.<span class="ident">energy</span>;
         <span class="self">self</span>.<span class="ident">absorptions</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">rhs</span>.<span class="ident">absorptions</span>;
         <span class="self">self</span>.<span class="ident">shifts</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">rhs</span>.<span class="ident">shifts</span>;
+
+        <span class="kw">for</span> (<span class="ident">a</span>, <span class="ident">b</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">specs</span>.<span class="ident">iter_mut</span>().<span class="ident">zip</span>(<span class="kw-2">&amp;</span><span class="ident">rhs</span>.<span class="ident">specs</span>) {
+            <span class="kw-2">*</span><span class="ident">a</span> <span class="op">+</span><span class="op">=</span> <span class="ident">b</span>;
+        }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Save</span> <span class="kw">for</span> <span class="ident">Output</span> {
+<span class="kw">impl</span> <span class="ident">Save</span> <span class="kw">for</span> <span class="ident">Output</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">save_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;emission_density.nc&quot;</span>);
@@ -184,23 +228,29 @@
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;shift_density.nc&quot;</span>);
         (<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shifts</span> <span class="op">/</span> <span class="self">self</span>.<span class="ident">cell_vol</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>)<span class="question-mark">?</span>;
 
+        <span class="kw">for</span> (<span class="ident">name</span>, <span class="ident">index</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">spec_reg</span>.<span class="ident">set</span>().<span class="ident">map</span>().<span class="ident">iter</span>() {
+            <span class="self">self</span>.<span class="ident">specs</span>[<span class="kw-2">*</span><span class="ident">index</span>].<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;spectrometer_{}.csv&quot;</span>, <span class="ident">name</span>)))<span class="question-mark">?</span>;
+        }
+
         <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Output</span> {
+<span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Output</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">boundary</span>, <span class="string">&quot;Boundary&quot;</span>);
-        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">cell_vol</span>, <span class="string">&quot;Cell volume (m^3)&quot;</span>);
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Emission data...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">emission</span>)<span class="question-mark">?</span>;
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Energy data...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">energy</span>)<span class="question-mark">?</span>;
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Absorbed energy data...&quot;</span>)<span class="question-mark">?</span>;
-        <span class="ident">display_datacube</span>(<span class="ident">fmt</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">absorptions</span>)<span class="question-mark">?</span>;
-        <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Shifted energy data...&quot;</span>)<span class="question-mark">?</span>;
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">spec_reg</span>, <span class="string">&quot;spectrometer register&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">boundary</span>, <span class="string">&quot;boundary&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">cell_vol</span>, <span class="string">&quot;cell volume (m^3)&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">DataCube</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">emission</span>), <span class="string">&quot;emission data&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">DataCube</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">energy</span>), <span class="string">&quot;energy data&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(
+            <span class="ident">fmt</span>,
+            <span class="ident">DataCube</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">absorptions</span>),
+            <span class="string">&quot;absorbed energy data&quot;</span>
+        );
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">DataCube</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shifts</span>), <span class="string">&quot;shifted energy data&quot;</span>);
         <span class="prelude-val">Ok</span>(())
     }
 }

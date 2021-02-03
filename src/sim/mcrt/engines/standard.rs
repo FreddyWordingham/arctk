@@ -70,5 +70,9 @@ pub fn standard(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut da
                 travel(&mut data, &mut phot, &env, index, bump_dist);
             }
         }
+
+        if phot.weight() <= 0.0 {
+            break;
+        }
     }
 }

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Input","Reactor simulation resources conglomerate."]]});
