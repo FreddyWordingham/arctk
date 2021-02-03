@@ -58,24 +58,24 @@
         mesh: [["res/objs/matcher/base.obj"], {scale:1.0e-3}]
     },
 
-    // det_0   : {
-    //     attr: 'spectrometer_0',
-    //     mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,0.1e-3]}]
-    // },
-    // det_1    : {
-    //     attr: 'spectrometer_1',
-    //     mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,0.2e-3]}]
-    // },
-    // det_2    : {
-    //     attr: 'spectrometer_2',
-    //     mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,0.3e-3]}]
-    // },
-    // det_3    : {
-    //     attr: 'spectrometer_3',
-    //     mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,0.4e-3]}]
-    // },
-    // det_4    : {
-    //     attr: 'spectrometer_4',
-    //     mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,0.5e-3]}]
-    // },
+    det_0   : {
+        attr: 'spectrometer_0',
+        mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,-0.1e-3]}]
+    },
+    det_1    : {
+        attr: 'spectrometer_1',
+        mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,-0.2e-3]}]
+    },
+    det_2    : {
+        attr: 'spectrometer_2',
+        mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,-0.3e-3]}]
+    },
+    det_3    : {
+        attr: 'spectrometer_3',
+        mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,-0.4e-3]}]
+    },
+    det_4    : {
+        attr: 'spectrometer_4',
+        mesh: [["res/objs/matcher/cap.obj"], {scale:0.5e-3, trans:[0.0,0.0,-0.5e-3]}]
+    },
 }
