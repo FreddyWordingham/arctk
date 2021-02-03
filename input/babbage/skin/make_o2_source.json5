@@ -1,6 +1,6 @@
 
 {
-    ops: [
+    ops: [ // THIS WILL NOT PLACE O2 INSIDE THE TUMOUR
         [
             "proto_o2_map",
             { Sum     : [

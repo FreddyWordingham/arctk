@@ -2,7 +2,7 @@
     ops: [
         [
             "pos_map",
-            { Add       : ["../output/unit.nc", 1.0] }
+            { Add       : ["../output/map_{tumour}.nc", 1.0] }
         ],
         [
             "mult_map",
