@@ -35,4 +35,11 @@ impl Photon {
             power,
         }
     }
+
+    /// Set the weight to zero.
+    #[inline]
+    #[must_use]
+    pub fn kill(&mut self) {
+        self.weight = 0.0;
+    }
 }

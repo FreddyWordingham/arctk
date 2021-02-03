@@ -11,5 +11,7 @@
     LE_to_tumour        : { Interface   : ['tumour',                    'living_epidermis'] },
     PD_to_tumour        : { Interface   : ['tumour',                    'papillary_dermis'] },
     UBND_to_tumour      : { Interface   : ['tumour',                    'upper_blood_net_dermis'] },
-    dermis_to_tumour    : { Interface   : ['tumour',                    'dermis'] }
+    dermis_to_tumour    : { Interface   : ['tumour',                    'dermis'] },
+
+    spectrometer_0      : { Detector    : [[400e-9, 700e-9], 100] },
 }

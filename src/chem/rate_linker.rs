@@ -40,7 +40,7 @@ impl<'a> Link<'a, usize> for RateLinker {
     }
 
     #[inline]
-    fn link(self, reg: &'a Set<usize>) -> Result<Self::Inst, Error> {
+    fn link(self, reg: &'a mut Set<usize>) -> Result<Self::Inst, Error> {
         let mut orders = Vec::with_capacity(self.1.len());
         for (name, m) in self.1 {
             orders.push((

@@ -17,7 +17,7 @@ pub fn surface(
     env: &mut Local,
     data: &mut Output,
 ) {
-    match *hit.tag() {
+    match hit.tag() {
         Attribute::Interface(inside, outside) => {
             // Reference materials.
             let (curr_mat, next_mat) = if hit.side().is_inside() {
@@ -57,10 +57,8 @@ pub fn surface(
             *phot.weight_mut() *= abs;
             *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
         }
-        Attribute::Detector(_det) => {
-            // data.hist
-            //     .try_collect_weight(phot.wavelength(), phot.weight());
-            // *phot.weight_mut() = 0.0;
+        Attribute::Detector(det) => {
+            det.detect(phot);
         }
     }
 }

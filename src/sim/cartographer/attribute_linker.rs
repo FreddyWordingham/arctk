@@ -29,7 +29,7 @@ impl Link<'_, usize> for AttributeLinker {
     }
 
     #[inline]
-    fn link(self, reg: &Set<usize>) -> Result<Self::Inst, Error> {
+    fn link(self, reg: &mut Set<usize>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Interface(ref inside, ref outside) => Attribute::Interface(
                 *reg.get(inside).unwrap_or_else(|| {

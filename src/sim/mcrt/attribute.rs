@@ -10,21 +10,30 @@ pub enum Attribute<'a> {
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
     /// Detector.
-    Detector(&'a Detector),
+    Detector(&'a mut Detector),
 }
 
 impl Display for Attribute<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
-        match *self {
+        match self {
+            // Self::Interface(in_mat, out_mat) => {
+            //     write!(fmt, "Interface: {} :| {}", in_mat, out_mat)
+            // }
+            // Self::Mirror(abs) => {
+            //     write!(fmt, "Mirror: {}% abs", abs * 100.0)
+            // }
+            // Self::Detector(det) => {
+            //     write!(fmt, "Spectrometer: {}", det)
+            // }
             Self::Interface(in_mat, out_mat) => {
-                write!(fmt, "Interface: {} :| {}", in_mat, out_mat)
+                write!(fmt, "Interface")
             }
             Self::Mirror(abs) => {
-                write!(fmt, "Mirror: {}% abs", abs * 100.0)
+                write!(fmt, "Mirror")
             }
             Self::Detector(det) => {
-                write!(fmt, "Spectrometer: {}", det)
+                write!(fmt, "Spectrometer")
             }
         }
     }

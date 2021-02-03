@@ -1,6 +1,6 @@
 //! Optical detectors.
 
-use crate::{data::Histogram, err::Error, fmt_report, fs::Save};
+use crate::{data::Histogram, err::Error, fmt_report, fs::Save, phys::Photon};
 use std::{
     fmt::{Display, Formatter},
     path::Path,
@@ -10,6 +10,18 @@ use std::{
 pub enum Detector {
     /// Spectrometer.
     Spectrometer(Histogram),
+}
+
+impl Detector {
+    /// Detect a mutable photon.
+    #[inline]
+    #[must_use]
+    pub fn detect(&mut self, phot: &mut Photon) {
+        match self {
+            Self::Spectrometer(hist) => hist.try_collect_weight(phot.wavelength(), phot.weight()),
+        }
+        phot.kill();
+    }
 }
 
 impl Save for Detector {

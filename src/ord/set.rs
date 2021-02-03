@@ -80,6 +80,13 @@ impl<T> Set<T> {
         self.0.get(name)
     }
 
+    /// Get a mutable value from the map.
+    #[inline]
+    #[must_use]
+    pub fn get_mut(&mut self, name: &Name) -> Option<&mut T> {
+        self.0.get_mut(name)
+    }
+
     /// Reference the internal map.
     #[inline]
     #[must_use]
@@ -157,7 +164,7 @@ impl<'a, T, S: Link<'a, T>> Link<'a, T> for Set<S> {
     }
 
     #[inline]
-    fn link(self, set: &'a Set<T>) -> Result<Self::Inst, Error> {
+    fn link(self, set: &'a mut Set<T>) -> Result<Self::Inst, Error> {
         let mut list = Vec::with_capacity(self.0.len());
         for (name, val) in self.0 {
             list.push((name, val.link(set)?));

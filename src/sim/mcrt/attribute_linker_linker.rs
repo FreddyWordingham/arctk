@@ -31,13 +31,13 @@ impl<'a> Link<'a, Detector> for AttributeLinkerLinker {
     }
 
     #[inline]
-    fn link(self, detectors: &'a Set<Detector>) -> Result<Self::Inst, Error> {
+    fn link(self, detectors: &'a mut Set<Detector>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Interface(inside, outside) => Self::Inst::Interface(inside, outside),
             Self::Mirror(r) => Self::Inst::Mirror(r),
             Self::Detector(ref name) => Self::Inst::Detector(
                 detectors
-                    .get(name)
+                    .get_mut(name)
                     .unwrap_or_else(|| panic!("Failed to link attribute-detector key: {}", name)),
             ),
         })

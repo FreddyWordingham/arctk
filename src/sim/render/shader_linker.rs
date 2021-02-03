@@ -45,7 +45,7 @@ impl<'a> Link<'a, Gradient> for ShaderLinker {
     }
 
     #[inline]
-    fn link(self, reg: &'a Set<Gradient>) -> Result<Self::Inst, Error> {
+    fn link(self, reg: &'a mut Set<Gradient>) -> Result<Self::Inst, Error> {
         let soft_shadow_samples = if let Some((n, alpha)) = self.soft_shadow_samples {
             Some((n, alpha.to_radians()))
         } else {

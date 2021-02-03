@@ -15,7 +15,7 @@ pub enum AttributeLinker<'a> {
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
     /// Spectrometer.
-    Detector(&'a Detector),
+    Detector(&'a mut Detector),
 }
 
 impl<'a> Link<'a, Material> for AttributeLinker<'a> {
@@ -30,7 +30,7 @@ impl<'a> Link<'a, Material> for AttributeLinker<'a> {
     }
 
     #[inline]
-    fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
+    fn link(self, mats: &'a mut Set<Material>) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Interface(ref inside, ref outside) => Self::Inst::Interface(
                 mats.get(inside).unwrap_or_else(|| {
@@ -56,7 +56,7 @@ impl<'a> Display for AttributeLinker<'a> {
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
             }
-            Self::Detector(detector) => {
+            Self::Detector(ref detector) => {
                 write!(fmt, "Detector: {}", detector)
             }
         }
