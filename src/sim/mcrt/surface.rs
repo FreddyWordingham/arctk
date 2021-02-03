@@ -18,7 +18,7 @@ pub fn surface(
     data: &mut Output,
 ) {
     match *hit.tag() {
-        Attribute::Interface(ref inside, ref outside) => {
+        Attribute::Interface(inside, outside) => {
             // Reference materials.
             let (curr_mat, next_mat) = if hit.side().is_inside() {
                 (inside, outside)
