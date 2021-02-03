@@ -6,7 +6,7 @@ use crate::{
     geom::{GridBuilder, SurfaceLinkerLoader, TreeSettings},
     ord::Set,
     phys::{LightLinkerBuilderLoader, MaterialBuilder},
-    sim::mcrt::{AttributeLinker, EngineBuilder, ParametersBuilder, Settings},
+    sim::mcrt::{AttributeLinker, DetectorBuilder, EngineBuilder, ParametersBuilder, Settings},
 };
 use arctk_attr::file;
 use std::path::Path;
@@ -26,6 +26,8 @@ pub struct ParametersBuilderLoader {
     attrs: Redirect<Set<AttributeLinker>>,
     /// Materials.
     mats: Redirect<Set<Redirect<MaterialBuilder>>>,
+    /// Detectors.
+    detectors: Redirect<Set<DetectorBuilder>>,
     /// Main light.
     light: Redirect<LightLinkerBuilderLoader>,
     /// Engine selection.
@@ -43,6 +45,7 @@ impl Load for ParametersBuilderLoader {
         let surfs = self.surfs.load(in_dir)?.load(in_dir)?;
         let attrs = self.attrs.load(in_dir)?;
         let mats = self.mats.load(in_dir)?.load(in_dir)?;
+        let detectors = self.detectors.load(in_dir)?;
         let light = self.light.load(in_dir)?.load(in_dir)?;
         let engine = self.engine;
 

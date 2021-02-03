@@ -1,9 +1,11 @@
 //! Optical detector builders.
 
 use crate::{data::Histogram, fmt_report, ord::Build, sim::mcrt::Detector, tools::Range};
+use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
 
 /// Detectors.
+#[file]
 pub enum DetectorBuilder {
     /// Spectrometer.
     Spectrometer([f64; 2], u64),
