@@ -17,8 +17,8 @@ pub fn surface(
     env: &mut Local,
     data: &mut Output,
 ) {
-    match hit.tag() {
-        Attribute::Interface(inside, outside) => {
+    match *hit.tag() {
+        Attribute::Interface(ref inside, ref outside) => {
             // Reference materials.
             let (curr_mat, next_mat) = if hit.side().is_inside() {
                 (inside, outside)
@@ -58,7 +58,7 @@ pub fn surface(
             *phot.ray_mut().dir_mut() = Crossing::calc_ref_dir(phot.ray().dir(), hit.side().norm());
         }
         Attribute::Spectrometer(id) => {
-            data.specs[*id].try_collect_weight(phot.wavelength(), phot.weight());
+            data.specs[id].try_collect_weight(phot.wavelength(), phot.weight());
             *phot.weight_mut() = 0.0;
         }
     }

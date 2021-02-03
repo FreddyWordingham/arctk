@@ -17,7 +17,7 @@ impl Display for Attribute<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         match *self {
-            Self::Interface(ref in_mat, ref out_mat) => {
+            Self::Interface(in_mat, out_mat) => {
                 write!(fmt, "Interface: {} :| {}", in_mat, out_mat)
             }
             Self::Mirror(abs) => {
