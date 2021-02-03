@@ -40,6 +40,8 @@ fn main() {
     report!(grid, "measurement grid");
     let mats = params.mats;
     report!(mats, "materials");
+    let detectors = params.detectors;
+    report!(detectors, "detectors");
 
     sub_section(term_width, "Linking");
     let light = params
