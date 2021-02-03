@@ -13,5 +13,5 @@
     UBND_to_tumour      : { Interface   : ['tumour',                    'upper_blood_net_dermis'] },
     dermis_to_tumour    : { Interface   : ['tumour',                    'dermis'] },
 
-    spectrometer_0      : { Detector    : [[400e-9, 700e-9], 100] },
+    spectrometer_0      : { Spectrometer    : 'spec_0' },
 }
