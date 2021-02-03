@@ -1,0 +1,30 @@
+{
+    sett    : { There   : "flask/settings.json5" },
+    init    : { Here    : [
+            ["ALA", 1.0],
+            ["O2", 1.0]
+    ] },
+    sources    : { Here    : [
+            ["UDENS", 0.1],
+            ["O2", 0.02],
+    ] },
+    reactor: { Here     : [
+        {
+            rate        : [0.01, [["ALA", 1]]],
+            reactants   : [["ALA", 4]],
+            products    : [["PPIX", 1]]
+        },
+        {
+            rate        : [0.5, [["PPIX", 1], ["O2", 1], ["UDENS", 1]]],
+            reactants   : [
+                ["PPIX", 1],
+                ["O2", 1],
+                ["UDENS", 1],
+            ],
+            products    : [
+                ["PPIX", 0.95],
+                ["RADICAL", 1],
+            ]
+        }
+    ] }
+}
