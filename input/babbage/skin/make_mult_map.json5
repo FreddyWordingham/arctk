@@ -1,12 +1,8 @@
 {
     ops: [
         [
-            "unit",
-            { Unit      : [31, 31, 31] }
-        ],
-        [
             "pos_map",
-            { Sum     : ["../output/unit.nc", "../output/map_{tumour}.nc"] }
+            { Add       : ["../output/unit.nc", 1.0] }
         ],
         [
             "mult_map",
@@ -14,7 +10,7 @@
         ],
         [
             "info",
-            { Info    : "../output/mult_map.nc" }
+            { Info      : "../output/mult_map.nc" }
         ]
     ]
 }

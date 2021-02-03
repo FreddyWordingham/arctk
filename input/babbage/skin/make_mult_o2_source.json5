@@ -1,0 +1,21 @@
+
+{
+    ops: [
+        [
+            "proto_o2_map",
+            { Sum     : [
+                "../output/map_{stratum_corneum}.nc",
+                "../output/map_{upper_blood_net_dermis}.nc",
+                "../output/map_{deep_blood_net_dermis}.nc",
+            ] }
+        ],
+        [
+            "o2_map",
+            { Mult      : ["../output/proto_o2_map.nc", 1.234] }
+        ],
+        [
+            "info",
+            { Info    : "../output/o2_map.nc" }
+        ]
+    ]
+}
