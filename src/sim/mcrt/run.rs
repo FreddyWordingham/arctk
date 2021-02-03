@@ -15,7 +15,7 @@ use std::sync::{Arc, Mutex};
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
+pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, Error> {
     let pb = ProgressBar::new("Multi-threaded", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
@@ -38,7 +38,7 @@ pub fn multi_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]
-pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
+pub fn single_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, Error> {
     let pb = ProgressBar::new("Single-threaded", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
@@ -49,7 +49,7 @@ pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output {
+fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) -> Output<'a> {
     let res = *input.grid.res();
 
     let mut spectrometers = Vec::with_capacity(input.spec_reg.len());
@@ -57,7 +57,12 @@ fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output
         spectrometers.push(Histogram::new(400e-9, 800e-9, 100));
     }
 
-    let mut data = Output::new(input.grid.boundary().clone(), res, spectrometers);
+    let mut data = Output::new(
+        input.spec_reg,
+        input.grid.boundary().clone(),
+        res,
+        spectrometers,
+    );
 
     let mut rng = thread_rng();
 

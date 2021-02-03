@@ -7,7 +7,7 @@ use crate::{
     fmt_report,
     fs::Save,
     geom::Cube,
-    ord::{X, Y, Z},
+    ord::{Register, X, Y, Z},
     util::fmt::DataCube,
 };
 use ndarray::Array3;
@@ -18,7 +18,9 @@ use std::{
 };
 
 /// MCRT output data.
-pub struct Output {
+pub struct Output<'a> {
+    /// Spectrometer name register.
+    spec_reg: &'a Register,
     /// Measured volume.
     boundary: Cube,
     /// Cell volume [m^3].
@@ -35,14 +37,19 @@ pub struct Output {
     pub specs: Vec<Histogram>,
 }
 
-impl Output {
+impl<'a> Output<'a> {
     access!(boundary, Cube);
     clone!(cell_vol, f64);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(boundary: Cube, res: [usize; 3], specs: Vec<Histogram>) -> Self {
+    pub fn new(
+        spec_reg: &'a Register,
+        boundary: Cube,
+        res: [usize; 3],
+        specs: Vec<Histogram>,
+    ) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
         debug_assert!(res[Z] > 0);
@@ -50,6 +57,7 @@ impl Output {
         let cell_vol = boundary.vol() / (res[X] * res[Y] * res[Z]) as f64;
 
         Self {
+            spec_reg,
             boundary,
             cell_vol,
             emission: Array3::zeros(res),
@@ -61,7 +69,7 @@ impl Output {
     }
 }
 
-impl AddAssign<&Self> for Output {
+impl AddAssign<&Self> for Output<'_> {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
         self.emission += &rhs.emission;
@@ -75,7 +83,7 @@ impl AddAssign<&Self> for Output {
     }
 }
 
-impl Save for Output {
+impl Save for Output<'_> {
     #[inline]
     fn save_data(&self, out_dir: &Path) -> Result<(), Error> {
         let path = out_dir.join("emission_density.nc");
@@ -97,20 +105,21 @@ impl Save for Output {
     }
 }
 
-impl Display for Output {
+impl Display for Output<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        fmt_report!(fmt, self.boundary, "Boundary");
-        fmt_report!(fmt, self.cell_vol, "Cell volume (m^3)");
-        fmt_report!(fmt, DataCube::new(&self.emission), "Emission data");
-        fmt_report!(fmt, DataCube::new(&self.energy), "Energy data");
+        fmt_report!(fmt, self.spec_reg, "spectrometer register");
+        fmt_report!(fmt, self.boundary, "boundary");
+        fmt_report!(fmt, self.cell_vol, "cell volume (m^3)");
+        fmt_report!(fmt, DataCube::new(&self.emission), "emission data");
+        fmt_report!(fmt, DataCube::new(&self.energy), "energy data");
         fmt_report!(
             fmt,
             DataCube::new(&self.absorptions),
-            "Absorbed energy data"
+            "absorbed energy data"
         );
-        fmt_report!(fmt, DataCube::new(&self.shifts), "Shifted energy data");
+        fmt_report!(fmt, DataCube::new(&self.shifts), "shifted energy data");
         Ok(())
     }
 }
