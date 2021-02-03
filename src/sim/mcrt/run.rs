@@ -51,11 +51,13 @@ pub fn single_thread(engine: Engine, input: &Input) -> Result<Output, Error> {
 #[must_use]
 fn thread(engine: Engine, input: &Input, pb: &Arc<Mutex<ProgressBar>>) -> Output {
     let res = *input.grid.res();
-    let mut data = Output::new(
-        input.grid.boundary().clone(),
-        res,
-        Histogram::new(400e-9, 800e-9, 40),
-    );
+
+    let mut spectrometers = Vec::with_capacity(input.spec_reg.len());
+    for _ in 0..input.spec_reg.len() {
+        spectrometers.push(Histogram::new(400e-9, 800e-9, 100));
+    }
+
+    let mut data = Output::new(input.grid.boundary().clone(), res, spectrometers);
 
     let mut rng = thread_rng();
 
