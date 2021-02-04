@@ -19,13 +19,13 @@ TITLE_LABEL = "Spectral Intensity"
 X_AXIS_LABEL = "Wavelength (m)"
 Y_AXIS_LABEL = "Count"
 
-COLS_SMALL = ["r-",
-              "m-",
-              "b-",
-              "c-",
-              "g-",
-              "y-",
-              "k-"]
+COLS_SMALL = ["r.",
+              "m.",
+              "b.",
+              "c.",
+              "g.",
+              "y.",
+              "k."]
 COLS_LARGE = ["#FF0000",
               "#800000",
               "#FFFF00",
