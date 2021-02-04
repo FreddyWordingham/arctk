@@ -1,20 +1,28 @@
 {
     tree        : { There   : 'misc/tree/t5_d2.json5' },
     grid        : { There   : 'misc/grid/5mm_31.json5' },
-    sett        : { There   : 'mcrt/settings.json5' },
     engine      : "Standard",
+    sett        : { Here    : {
+        num_phot            : 1e6,
+        block_size          : 1e2,
+        bump_dist           : 1e-9,
+        loop_limit          : 1e6,
+        min_weight          : 0.05,
+        roulette_barrels    : 8,
+    } },
     light       : { Here    : {
         power   : 1.0,
         emit    : { Surface: [['res/objs/test/circle.obj'], {scale: 1.0e-3, trans: [0.0, 0.0, -2.0e-3]}] },
         spec    : { Here: {
             // Point: 6.3e-7,
-            // Gaussian: [
-            //     600e-9, 50e-9
+            Linear : [
+                500e-9, 600e-9,
+                1e7, -5
+            ],
+            // LinearSpline: [
+            //     [500e-9, 600e-9],
+            //     [0.0, 1.0]
             // ]
-            LinearSpline: [
-                [400e-9, 450e-9, 500e-9, 550e-9, 600e-9],
-                [0.5, 1.5, 0.5, 1.5, 0.5, 1.5]
-            ]
         }},
         mat     : "air"
     } },
