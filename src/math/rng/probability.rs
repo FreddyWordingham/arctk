@@ -46,6 +46,8 @@ pub enum Probability {
         /// Cumulative distribution function.
         cdf: Formula,
     },
+    /// Linear spline.
+    LinearSpline {},
 }
 
 impl Probability {
@@ -121,6 +123,13 @@ impl Probability {
         }
     }
 
+    /// Construct a new linear spline instance.
+    #[inline]
+    #[must_use]
+    pub fn new_linear_spline(_xs: Array1<f64>, _ps: &Array1<f64>) -> Self {
+        Self::LinearSpline {}
+    }
+
     /// Sample a number from the described distribution.
     #[inline]
     #[must_use]
@@ -134,6 +143,7 @@ impl Probability {
             }
             Self::Gaussian { ref mu, ref sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
             Self::ConstantSpline { ref cdf } => cdf.y(rng.gen()),
+            Self::LinearSpline {} => 420.0e-9,
         }
     }
 }
@@ -148,6 +158,7 @@ impl Display for Probability {
             Self::Linear { .. } => "Linear",
             Self::Gaussian { .. } => "Gaussian",
             Self::ConstantSpline { .. } => "Constant Spline",
+            Self::LinearSpline { .. } => "Linear Spline",
         };
         write!(fmt, "{}", kind)
     }
