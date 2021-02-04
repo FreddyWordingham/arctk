@@ -10,6 +10,13 @@ use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
+/// Spectrometer minimum range value.
+const SPECTROMETER_MIN: f64 = 400e-9;
+/// Spectrometer maximum range value.
+const SPECTROMETER_MAX: f64 = 800e-9;
+/// Spectrometer resolution.
+const SPECTROMETER_BINS: u64 = 40;
+
 /// Run a multi-threaded MCRT simulation.
 /// # Errors
 /// if the progress bar can not be locked.
@@ -54,7 +61,11 @@ fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) ->
 
     let mut spectrometers = Vec::with_capacity(input.spec_reg.len());
     for _ in 0..input.spec_reg.len() {
-        spectrometers.push(Histogram::new(400e-9, 800e-9, 100));
+        spectrometers.push(Histogram::new(
+            SPECTROMETER_MIN,
+            SPECTROMETER_MAX,
+            SPECTROMETER_BINS,
+        ));
     }
 
     let mut data = Output::new(

@@ -1,3 +1,4 @@
 {   // Surface attributes.
-    spectrometer_0  : { Spectrometer    : 'spec' }
+    spectrometer_0  : { Spectrometer    : 'spec_x' },
+    spectrometer_1  : { Spectrometer    : 'spec_y' }
 }
