@@ -57,20 +57,18 @@ pub fn peel_off(input: &Input, mut phot: Photon, env: &Local, pos: Pos3) -> Opti
 
             // Do something at the collision point.
             match *hit.tag() {
-                Attribute::Interface(ref inside, ref outside) => {
+                Attribute::Interface(inside, outside) => {
                     // Determine far side material.
                     inter_coeff = if hit.side().is_inside() {
                         outside.sample_environment(phot.wavelength()).inter_coeff()
                     } else {
                         inside.sample_environment(phot.wavelength()).inter_coeff()
                     };
+                    phot.ray_mut().travel(bump_dist);
+                    prob *= (-bump_dist * inter_coeff).exp();
                 }
                 Attribute::Mirror(..) | Attribute::Spectrometer(..) => return None,
             }
-
-        // phot.ray_mut().travel(hit.dist() + bump_dist);
-        // prob *= (-hit.dist() * inter_coeff).exp();
-        // env
         } else {
             prob *= (-tar_dist * inter_coeff).exp();
             return Some(prob);
