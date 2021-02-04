@@ -15,7 +15,7 @@ const SPECTROMETER_MIN: f64 = 400e-9;
 /// Spectrometer maximum range value.
 const SPECTROMETER_MAX: f64 = 800e-9;
 /// Spectrometer resolution.
-const SPECTROMETER_BINS: u64 = 40;
+const SPECTROMETER_BINS: u64 = 400;
 
 /// Run a multi-threaded MCRT simulation.
 /// # Errors
