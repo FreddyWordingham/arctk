@@ -14,14 +14,12 @@ pub enum ProbabilityBuilder {
     Points(Vec<f64>),
     /// Uniform range.
     Uniform(f64, f64),
-    /// Linear function.
-    Linear(f64, f64, f64, f64),
+    /// Linear function: xs, ps.
+    Linear([f64; 2], [f64; 2]),
     /// Gaussian distribution.
     Gaussian(f64, f64),
     /// Constant spline.
     ConstantSpline(Vec<f64>, Vec<f64>),
-    /// Linear spline.
-    LinearSpline(Vec<f64>, Vec<f64>),
 }
 
 impl Build for ProbabilityBuilder {
@@ -32,14 +30,11 @@ impl Build for ProbabilityBuilder {
         match self {
             Self::Point(p) => Self::Inst::new_point(p),
             Self::Points(ps) => Self::Inst::new_points(Array1::from(ps)),
+            Self::Linear(xs, ps) => Self::Inst::new_linear(Array1::from(xs), Array1::from(ps)),
             Self::Uniform(min, max) => Self::Inst::new_uniform(min, max),
-            Self::Linear(min, max, m, c) => Self::Inst::new_linear(min, max, m, c),
             Self::Gaussian(mu, sigma) => Self::Inst::new_gaussian(mu, sigma),
             Self::ConstantSpline(xs, ps) => {
                 Self::Inst::new_constant_spline(Array1::from(xs), &Array1::from(ps))
-            }
-            Self::LinearSpline(xs, ps) => {
-                Self::Inst::new_linear_spline(Array1::from(xs), &Array1::from(ps))
             }
         }
     }
@@ -55,7 +50,7 @@ impl Display for ProbabilityBuilder {
             Self::Linear { .. } => "Linear",
             Self::Gaussian { .. } => "Gaussian",
             Self::ConstantSpline { .. } => "Constant Spline",
-            Self::LinearSpline { .. } => "Linear Spline",
+            // Self::LinearSpline { .. } => "Linear Spline",
         };
         write!(fmt, "{}", kind)
     }
