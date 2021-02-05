@@ -13,20 +13,21 @@
     light       : { Here    : {
         power   : 1.0,
         emit    : { Surface: [['res/objs/test/circle.obj'], {scale: 1.0e-3, trans: [0.0, 0.0, -2.0e-3]}] },
-        spec    : { Here: {
-            // Point: 6.3e-7,
-            // Uniform : [
-            //     500e-9, 600e-9,
-            // ],
-            // Linear : [
-            //     [300e-9, 600e-9],
-            //     [2.0, 4.0]
-            // ],
-            LinearSpline: [
-                [300e-9, 350e-9, 400e-9, 450e-9, 500e-9, 550e-9, 600e-9],
-                [0.0, 1.0, 0.5, 1.5, 0.5, 1.0, 0.0]
-            ]
-        }},
+        // spec    : { Here: {
+        //     // Point: 6.3e-7,
+        //     // Uniform : [
+        //     //     500e-9, 600e-9,
+        //     // ],
+        //     // Linear : [
+        //     //     [300e-9, 600e-9],
+        //     //     [2.0, 4.0]
+        //     // ],
+        //     LinearSpline: [
+        //         [300e-9, 350e-9, 400e-9, 450e-9, 500e-9, 550e-9, 600e-9],
+        //         [0.0, 1.0, 0.5, 1.5, 0.5, 1.0, 0.0]
+        //     ]
+        // }},
+        spec    : { There: 'res/spec/aktilite.json5' },
         mat     : "air"
     } },
     mats        : { Here    : {
