@@ -68,11 +68,14 @@ fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) ->
         ));
     }
 
+    let ccds = vec![];
+
     let mut data = Output::new(
         input.spec_reg,
         input.grid.boundary().clone(),
         res,
         spectrometers,
+        ccds,
     );
 
     let mut rng = thread_rng();

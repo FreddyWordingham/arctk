@@ -7,6 +7,7 @@ use crate::{
     fmt_report,
     fs::Save,
     geom::Cube,
+    img::Image,
     ord::{Register, X, Y, Z},
     util::fmt::DataCube,
 };
@@ -35,6 +36,8 @@ pub struct Output<'a> {
     pub shifts: Array3<f64>,
     /// Spectrometer data.
     pub specs: Vec<Histogram>,
+    /// CCD data.
+    pub ccds: Vec<Image>,
 }
 
 impl<'a> Output<'a> {
@@ -49,6 +52,7 @@ impl<'a> Output<'a> {
         boundary: Cube,
         res: [usize; 3],
         specs: Vec<Histogram>,
+        ccds: Vec<Image>,
     ) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
@@ -65,6 +69,7 @@ impl<'a> Output<'a> {
             absorptions: Array3::zeros(res),
             shifts: Array3::zeros(res),
             specs,
+            ccds,
         }
     }
 }
@@ -78,6 +83,10 @@ impl AddAssign<&Self> for Output<'_> {
         self.shifts += &rhs.shifts;
 
         for (a, b) in self.specs.iter_mut().zip(&rhs.specs) {
+            *a += b;
+        }
+
+        for (a, b) in self.ccds.iter_mut().zip(&rhs.ccds) {
             *a += b;
         }
     }
