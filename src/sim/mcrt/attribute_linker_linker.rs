@@ -4,6 +4,7 @@ use crate::{
     err::Error,
     ord::{Link, Name, Set},
     sim::mcrt::AttributeLinker,
+    tools::Range,
 };
 use arctk_attr::file;
 use std::fmt::{Display, Formatter};
@@ -15,8 +16,8 @@ pub enum AttributeLinkerLinker {
     Interface(Name, Name),
     /// Partially reflective mirror, reflection fraction.
     Mirror(f64),
-    /// Spectrometer id.
-    Spectrometer(Name),
+    /// Spectrometer id, range, resolution.
+    Spectrometer(Name, [f64; 2], u64),
 }
 
 impl<'a> Link<'a, usize> for AttributeLinkerLinker {
@@ -26,7 +27,7 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinker {
     fn requires(&self) -> Vec<Name> {
         match *self {
             Self::Interface(..) | Self::Mirror(..) => vec![],
-            Self::Spectrometer(ref id) => vec![id.clone()],
+            Self::Spectrometer(ref id, ..) => vec![id.clone()],
         }
     }
 
@@ -35,7 +36,7 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinker {
         Ok(match self {
             Self::Interface(inside, outside) => Self::Inst::Interface(inside, outside),
             Self::Mirror(r) => Self::Inst::Mirror(r),
-            Self::Spectrometer(id) => Self::Inst::Spectrometer(
+            Self::Spectrometer(id, ..) => Self::Inst::Spectrometer(
                 *reg.get(&id)
                     .unwrap_or_else(|| panic!("Failed to link attribute-spectrometer key: {}", id)),
             ),
@@ -53,8 +54,14 @@ impl Display for AttributeLinkerLinker {
             Self::Mirror(abs) => {
                 write!(fmt, "Mirror: {}% abs", abs * 100.0)
             }
-            Self::Spectrometer(ref id) => {
-                write!(fmt, "Spectrometer: {}", id)
+            Self::Spectrometer(ref id, [min, max], bins) => {
+                write!(
+                    fmt,
+                    "Spectrometer: {} {} ({})",
+                    id,
+                    Range::new(min, max),
+                    bins
+                )
             }
         }
     }

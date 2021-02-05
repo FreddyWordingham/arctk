@@ -34,7 +34,7 @@
         air : { There    : 'res/mats/misc/air.json5' }
     } },
     attrs       : { Here    : {
-            spectrometer    : { Spectrometer    : 'spec' },
+            spectrometer    : { Spectrometer    : ['spec', 400] },
     } },
     surfs       : { Here    : {
         det_0   : {
