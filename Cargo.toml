@@ -1,6 +1,6 @@
 [package]
 name = "arctk"
-version = "1.0.4"
+version = "1.0.5"
 authors = ["Freddy Wordingham <fjmw201@exeter.ac.uk>"]
 description = "Physics simulation library and binaries"
 repository = "https://github.com/FreddyWordingham/arctk"
