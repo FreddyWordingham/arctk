@@ -5,10 +5,10 @@ use arctk::{
     args,
     data::Histogram,
     fs::{File, Load, Save},
-    geom::Tree,
-    ord::{Build, Link, Register},
+    geom::{Grid, Tree},
+    ord::{Build, Link, Register, Set},
     report,
-    sim::mcrt::{run, Input, Output, Parameters, ParametersBuilderLoader},
+    sim::mcrt::{run, AttributeLinkerLinker, Input, Output, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -46,6 +46,8 @@ fn main() {
     let spec_reg = Register::new(params.attrs.requires());
     report!(spec_reg, "spectrometer register");
 
+    let output = gen_base_output(&grid, &spec_reg, &params.attrs);
+
     sub_section(term_width, "Linking");
     let light = params
         .light
@@ -73,8 +75,7 @@ fn main() {
     let input = Input::new(&spec_reg, &mats, &attrs, &light, &tree, &grid, &sett);
     report!(input, "input");
 
-    let output = gen_base_output(&input);
-    let data = run::multi_thread(engine, &input, output).expect("Failed to run cartographer.");
+    let data = run::multi_thread(engine, &input, &output).expect("Failed to run cartographer.");
 
     section(term_width, "Saving");
     report!(data, "data");
@@ -126,31 +127,24 @@ fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Para
 }
 
 /// Generate the base output instance.
-fn gen_base_output<'a>(input: &'a Input) -> Output<'a> {
-    let res = *input.grid.res();
+fn gen_base_output<'a>(
+    grid: &Grid,
+    spec_reg: &'a Register,
+    attrs: &Set<AttributeLinkerLinker>,
+) -> Output<'a> {
+    let res = *grid.res();
 
-    /// Spectrometer minimum range value.
-    const SPECTROMETER_MIN: f64 = 300e-9;
-    /// Spectrometer maximum range value.
-    const SPECTROMETER_MAX: f64 = 700e-9;
-    /// Spectrometer resolution.
-    const SPECTROMETER_BINS: u64 = 400;
-    let mut spectrometers = Vec::with_capacity(input.spec_reg.len());
-    for _ in 0..input.spec_reg.len() {
-        spectrometers.push(Histogram::new(
-            SPECTROMETER_MIN,
-            SPECTROMETER_MAX,
-            SPECTROMETER_BINS,
-        ));
+    let mut spectrometers = Vec::with_capacity(spec_reg.len());
+    for attr in attrs.values() {
+        match attr {
+            AttributeLinkerLinker::Spectrometer(_name, [min, max], bins) => {
+                spectrometers.push(Histogram::new(*min, *max, *bins))
+            }
+            _ => {}
+        }
     }
 
     let ccds = vec![];
 
-    Output::new(
-        input.spec_reg,
-        input.grid.boundary().clone(),
-        res,
-        spectrometers,
-        ccds,
-    )
+    Output::new(spec_reg, grid.boundary().clone(), res, spectrometers, ccds)
 }

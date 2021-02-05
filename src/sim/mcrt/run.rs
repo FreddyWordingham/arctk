@@ -17,7 +17,7 @@ use std::sync::{Arc, Mutex};
 pub fn multi_thread<'a>(
     engine: Engine,
     input: &'a Input,
-    output: Output<'a>,
+    output: &Output<'a>,
 ) -> Result<Output<'a>, Error> {
     let pb = ProgressBar::new("Multi-threaded", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
