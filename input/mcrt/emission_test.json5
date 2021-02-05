@@ -15,12 +15,13 @@
         emit    : { Surface: [['res/objs/test/circle.obj'], {scale: 1.0e-3, trans: [0.0, 0.0, -2.0e-3]}] },
         spec    : { Here: {
             // Point: 6.3e-7,
-            Uniform : [
-                500e-9, 600e-9,
-            ],
+            // Uniform : [
+            //     500e-9, 600e-9,
+            // ],
             Linear : [
-                [500e-9, 600e-9],
+                [650e-9, 750e-9],
                 [0.0, 1.0]
+                // [0.0, 1.0]
             ],
             // LinearSpline: [
             //     [500e-9, 600e-9],

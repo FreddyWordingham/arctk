@@ -1,6 +1,6 @@
 //! Probability builder.
 
-use crate::{math::Probability, ord::Build};
+use crate::{math::Probability, ord::Build, tools::Range};
 use arctk_attr::file;
 use ndarray::Array1;
 use std::fmt::{Display, Error, Formatter};
@@ -30,7 +30,7 @@ impl Build for ProbabilityBuilder {
         match self {
             Self::Point(p) => Self::Inst::new_point(p),
             Self::Points(ps) => Self::Inst::new_points(Array1::from(ps)),
-            Self::Linear(xs, ps) => Self::Inst::new_linear(Array1::from(xs), Array1::from(ps)),
+            Self::Linear(xs, ps) => Self::Inst::new_linear(xs, ps),
             Self::Uniform(min, max) => Self::Inst::new_uniform(min, max),
             Self::Gaussian(mu, sigma) => Self::Inst::new_gaussian(mu, sigma),
             Self::ConstantSpline(xs, ps) => {

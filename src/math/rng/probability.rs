@@ -18,6 +18,19 @@ pub enum Probability {
         /// Possible values.
         cs: Array1<f64>,
     },
+    /// Linear.
+    Linear {
+        /// X values.
+        xs: [f64; 2],
+        /// Gradient.
+        grad: f64,
+        /// Y-intercept.
+        intercept: f64,
+        /// Integration constant offset.
+        offset: f64,
+        /// Area beneath line in range.
+        area: f64,
+    },
     /// Uniform range.
     Uniform {
         /// Minimum value.
@@ -63,6 +76,28 @@ impl Probability {
         Self::Uniform { min, max }
     }
 
+    /// Construct a new linear instance.
+    #[inline]
+    #[must_use]
+    pub fn new_linear([x0, x1]: [f64; 2], [p0, p1]: [f64; 2]) -> Self {
+        let dx = x1 - x0;
+        let dp = p1 - p0;
+
+        let grad = dp / dx;
+        let intercept = p0 - (grad * x0);
+        let offset = (0.5 * grad * x0).mul_add(x0, intercept * x0);
+
+        let area = 0.5 * (p0 + p1) * (x1 - x0);
+
+        Self::Linear {
+            xs: [x0, x1],
+            grad,
+            intercept,
+            offset,
+            area,
+        }
+    }
+
     /// Construct a new gaussian instance.
     #[inline]
     #[must_use]
@@ -103,6 +138,28 @@ impl Probability {
             Self::Point { ref c } => *c,
             Self::Points { ref cs } => cs[rng.gen_range(0..cs.len())],
             Self::Uniform { ref min, ref max } => rng.gen_range(*min..*max),
+            Self::Linear {
+                xs,
+                grad,
+                intercept,
+                offset,
+                area,
+            } => {
+                let r = rng.gen_range(0.0..1.0);
+                if grad <= 0.0 {
+                    let ans = -((((2.0 * grad * ((r * area) + offset)) + (intercept * intercept))
+                        .sqrt()
+                        + intercept)
+                        / grad);
+                    (2.0 * xs[1]) - ans
+                } else {
+                    let ans = (((2.0 * grad * ((r * area) + offset)) + (intercept * intercept))
+                        .sqrt()
+                        - intercept)
+                        / grad;
+                    ans
+                }
+            }
             Self::Gaussian { ref mu, ref sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
             Self::ConstantSpline { ref cdf } => cdf.y(rng.gen()),
         }
@@ -116,6 +173,7 @@ impl Display for Probability {
             Self::Point { .. } => "Point",
             Self::Points { .. } => "Points",
             Self::Uniform { .. } => "Uniform",
+            Self::Linear { .. } => "Linear",
             Self::Gaussian { .. } => "Gaussian",
             Self::ConstantSpline { .. } => "Constant Spline",
         };
