@@ -145,15 +145,17 @@ impl Probability {
                 offset,
                 area,
             } => {
-                let r = rng.gen_range(0.0..1.0);
+                let r = rng.gen_range(0.0..1.0_f64);
                 if grad <= 0.0 {
-                    let ans = -((((2.0 * grad * ((r * area) + offset)) + (intercept * intercept))
+                    let ans = -(((2.0 * grad)
+                        .mul_add(r.mul_add(area, offset), intercept * intercept)
                         .sqrt()
                         + intercept)
                         / grad);
                     (2.0 * xs[1]) - ans
                 } else {
-                    let ans = (((2.0 * grad * ((r * area) + offset)) + (intercept * intercept))
+                    let ans = ((2.0 * grad)
+                        .mul_add(r.mul_add(area, offset), intercept * intercept)
                         .sqrt()
                         - intercept)
                         / grad;

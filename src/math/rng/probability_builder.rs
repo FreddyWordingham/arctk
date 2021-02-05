@@ -1,6 +1,6 @@
 //! Probability builder.
 
-use crate::{math::Probability, ord::Build, tools::Range};
+use crate::{math::Probability, ord::Build};
 use arctk_attr::file;
 use ndarray::Array1;
 use std::fmt::{Display, Error, Formatter};
