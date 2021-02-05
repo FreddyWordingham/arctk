@@ -156,7 +156,7 @@ impl Probability {
         let mut intercepts = Vec::with_capacity(xs.len() - 1);
         let mut offsets = Vec::with_capacity(xs.len() - 1);
         let mut areas = Vec::with_capacity(xs.len() - 1);
-        let mut cdf = Vec::with_capacity(xs.len() - 1);
+        let mut cdf = Vec::with_capacity(xs.len());
         let mut total = 0.0;
         for ((x_curr, x_next), (p_curr, p_next)) in xs
             .iter()
@@ -218,7 +218,31 @@ impl Probability {
             }
             Self::Gaussian { ref mu, ref sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
             Self::ConstantSpline { ref cdf } => cdf.y(rng.gen()),
-            Self::LinearSpline { .. } => 123e-9,
+            Self::LinearSpline {
+                ref grads,
+                ref intercepts,
+                ref offsets,
+                ref areas,
+                ref cdf,
+            } => {
+                let a = rng.gen_range(0.0..1.0);
+                for (index, c) in cdf.iter().enumerate() {
+                    if a < *c {
+                        let grad = grads[index];
+                        let intercept = intercepts[index];
+                        let offset = offsets[index];
+                        let area = areas[index];
+
+                        let r = rng.gen_range(0.0..1.0_f64);
+                        return ((2.0 * grad)
+                            .mul_add(r.mul_add(area, offset), intercept * intercept)
+                            .sqrt()
+                            - intercept)
+                            / grad;
+                    }
+                }
+                0.0
+            }
         }
     }
 }

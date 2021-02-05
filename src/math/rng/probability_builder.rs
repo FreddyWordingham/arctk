@@ -20,6 +20,8 @@ pub enum ProbabilityBuilder {
     Gaussian(f64, f64),
     /// Constant spline.
     ConstantSpline(Vec<f64>, Vec<f64>),
+    /// Linear spline.
+    LinearSpline(Vec<f64>, Vec<f64>),
 }
 
 impl Build for ProbabilityBuilder {
@@ -36,6 +38,9 @@ impl Build for ProbabilityBuilder {
             Self::ConstantSpline(xs, ps) => {
                 Self::Inst::new_constant_spline(Array1::from(xs), &Array1::from(ps))
             }
+            Self::LinearSpline(xs, ps) => {
+                Self::Inst::new_linear_spline(Array1::from(xs), &Array1::from(ps))
+            }
         }
     }
 }
@@ -50,7 +55,7 @@ impl Display for ProbabilityBuilder {
             Self::Linear { .. } => "Linear",
             Self::Gaussian { .. } => "Gaussian",
             Self::ConstantSpline { .. } => "Constant Spline",
-            // Self::LinearSpline { .. } => "Linear Spline",
+            Self::LinearSpline { .. } => "Linear Spline",
         };
         write!(fmt, "{}", kind)
     }
