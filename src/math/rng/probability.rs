@@ -20,8 +20,6 @@ pub enum Probability {
     },
     /// Linear.
     Linear {
-        /// X values.
-        xs: [f64; 2],
         /// Gradient.
         grad: f64,
         /// Y-intercept.
@@ -49,6 +47,19 @@ pub enum Probability {
     ConstantSpline {
         /// Cumulative distribution function.
         cdf: Formula,
+    },
+    /// Linear spline.
+    LinearSpline {
+        /// Gradients.
+        grads: Array1<f64>,
+        /// Y-intercepts.
+        intercepts: Array1<f64>,
+        /// Integration constant offsets.
+        offsets: Array1<f64>,
+        /// Area beneath line in each range.
+        areas: Array1<f64>,
+        /// Cumulative distribution function.
+        cdf: Array1<f64>,
     },
 }
 
@@ -94,7 +105,6 @@ impl Probability {
         let area = 0.5 * (p0 + p1) * (x1 - x0);
 
         Self::Linear {
-            xs: [x0, x1],
             grad,
             intercept,
             offset,
@@ -134,6 +144,57 @@ impl Probability {
         }
     }
 
+    /// Construct a new linear spline instance.
+    #[inline]
+    #[must_use]
+    pub fn new_linear_spline(xs: Array1<f64>, ps: &Array1<f64>) -> Self {
+        debug_assert!(xs.len() > 1);
+        debug_assert!(xs.len() == ps.len());
+        debug_assert!(ps.iter().all(|p| *p >= 0.0));
+
+        let mut grads = Vec::with_capacity(xs.len() - 1);
+        let mut intercepts = Vec::with_capacity(xs.len() - 1);
+        let mut offsets = Vec::with_capacity(xs.len() - 1);
+        let mut areas = Vec::with_capacity(xs.len() - 1);
+        let mut cdf = Vec::with_capacity(xs.len() - 1);
+        let mut total = 0.0;
+        for ((x_curr, x_next), (p_curr, p_next)) in xs
+            .iter()
+            .zip(xs.iter().skip(1))
+            .zip(ps.iter().zip(ps.iter().skip(1)))
+        {
+            let dx = *x_next - *x_curr;
+            let dp = *p_next - *p_curr;
+
+            let grad = dp / dx;
+            let intercept = *p_curr - (grad * *x_curr);
+            let offset = if *x_curr < *x_next {
+                (0.5 * grad * *x_curr).mul_add(*x_curr, intercept * *x_curr)
+            } else {
+                (0.5 * grad * *x_next).mul_add(*x_next, intercept * *x_next)
+            };
+            let area = 0.5 * (*p_curr + *p_next) * (*x_next - *x_curr);
+
+            grads.push(grad);
+            intercepts.push(intercept);
+            offsets.push(offset);
+            areas.push(area);
+
+            total += area;
+            cdf.push(total);
+        }
+        let mut cdf = Array1::from(cdf);
+        cdf /= total;
+
+        Self::LinearSpline {
+            grads: Array1::from(grads),
+            intercepts: Array1::from(intercepts),
+            offsets: Array1::from(offsets),
+            areas: Array1::from(areas),
+            cdf,
+        }
+    }
+
     /// Sample a number from the described distribution.
     #[inline]
     #[must_use]
@@ -143,32 +204,12 @@ impl Probability {
             Self::Points { ref cs } => cs[rng.gen_range(0..cs.len())],
             Self::Uniform { ref min, ref max } => rng.gen_range(*min..*max),
             Self::Linear {
-                xs,
                 grad,
                 intercept,
                 offset,
                 area,
             } => {
                 let r = rng.gen_range(0.0..1.0_f64);
-                // if grad > 0.0 {
-                //     let ans = ((2.0 * grad)
-                //         .mul_add(r.mul_add(area, offset), intercept * intercept)
-                //         .sqrt()
-                //         - intercept)
-                //         / grad;
-                //     ans
-                // } else if grad < 0.0 {
-                //     let ans = ((2.0 * grad)
-                //         .mul_add(r.mul_add(area, offset), intercept * intercept)
-                //         .sqrt()
-                //         + intercept)
-                //         / -grad;
-                //     // ((2.0 * xs[0]) - (xs[1] - xs[0])) - ans
-                //     (2.0 * xs[1]) - ans
-                // // ans
-                // } else {
-                //     xs[0] + (r * (xs[1] - xs[0]))
-                // }
                 ((2.0 * grad)
                     .mul_add(r.mul_add(area, offset), intercept * intercept)
                     .sqrt()
@@ -177,6 +218,7 @@ impl Probability {
             }
             Self::Gaussian { ref mu, ref sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
             Self::ConstantSpline { ref cdf } => cdf.y(rng.gen()),
+            Self::LinearSpline { .. } => 123e-9,
         }
     }
 }
@@ -191,6 +233,7 @@ impl Display for Probability {
             Self::Linear { .. } => "Linear",
             Self::Gaussian { .. } => "Gaussian",
             Self::ConstantSpline { .. } => "Constant Spline",
+            Self::LinearSpline { .. } => "Linear Spline",
         };
         write!(fmt, "{}", kind)
     }
