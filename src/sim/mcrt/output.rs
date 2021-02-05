@@ -19,6 +19,7 @@ use std::{
 };
 
 /// MCRT output data.
+#[derive(Clone)]
 pub struct Output<'a> {
     /// Spectrometer name register.
     spec_reg: &'a Register,

@@ -3,11 +3,12 @@
 
 use arctk::{
     args,
+    data::Histogram,
     fs::{File, Load, Save},
     geom::Tree,
     ord::{Build, Link, Register},
     report,
-    sim::mcrt::{run, Input, Parameters, ParametersBuilderLoader},
+    sim::mcrt::{run, Input, Output, Parameters, ParametersBuilderLoader},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -71,7 +72,9 @@ fn main() {
     section(term_width, "Running");
     let input = Input::new(&spec_reg, &mats, &attrs, &light, &tree, &grid, &sett);
     report!(input, "input");
-    let data = run::multi_thread(engine, &input).expect("Failed to run cartographer.");
+
+    let output = gen_base_output(&input);
+    let data = run::multi_thread(engine, &input, output).expect("Failed to run cartographer.");
 
     section(term_width, "Saving");
     report!(data, "data");
@@ -120,4 +123,34 @@ fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Para
     report!(params, "parameters");
 
     params
+}
+
+/// Generate the base output instance.
+fn gen_base_output<'a>(input: &'a Input) -> Output<'a> {
+    let res = *input.grid.res();
+
+    /// Spectrometer minimum range value.
+    const SPECTROMETER_MIN: f64 = 300e-9;
+    /// Spectrometer maximum range value.
+    const SPECTROMETER_MAX: f64 = 700e-9;
+    /// Spectrometer resolution.
+    const SPECTROMETER_BINS: u64 = 400;
+    let mut spectrometers = Vec::with_capacity(input.spec_reg.len());
+    for _ in 0..input.spec_reg.len() {
+        spectrometers.push(Histogram::new(
+            SPECTROMETER_MIN,
+            SPECTROMETER_MAX,
+            SPECTROMETER_BINS,
+        ));
+    }
+
+    let ccds = vec![];
+
+    Output::new(
+        input.spec_reg,
+        input.grid.boundary().clone(),
+        res,
+        spectrometers,
+        ccds,
+    )
 }

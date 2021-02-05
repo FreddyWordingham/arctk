@@ -1,7 +1,6 @@
 //! Simulation control functions.
 
 use crate::{
-    data::Histogram,
     err::Error,
     sim::mcrt::{Engine, Input, Output},
     tools::ProgressBar,
@@ -10,26 +9,23 @@ use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
-/// Spectrometer minimum range value.
-const SPECTROMETER_MIN: f64 = 300e-9;
-/// Spectrometer maximum range value.
-const SPECTROMETER_MAX: f64 = 700e-9;
-/// Spectrometer resolution.
-const SPECTROMETER_BINS: u64 = 400;
-
 /// Run a multi-threaded MCRT simulation.
 /// # Errors
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, Error> {
+pub fn multi_thread<'a>(
+    engine: Engine,
+    input: &'a Input,
+    output: Output<'a>,
+) -> Result<Output<'a>, Error> {
     let pb = ProgressBar::new("Multi-threaded", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
     let threads: Vec<_> = (0..num_cpus::get()).collect();
     let mut out: Vec<_> = threads
         .par_iter()
-        .map(|_id| thread(engine, input, &Arc::clone(&pb)))
+        .map(|_id| thread(engine, input, output.clone(), &Arc::clone(&pb)))
         .collect();
     pb.lock()?.finish_with_message("Simulation complete.");
 
@@ -45,39 +41,27 @@ pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, 
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]
-pub fn single_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, Error> {
+pub fn single_thread<'a>(
+    engine: Engine,
+    input: &'a Input,
+    output: Output<'a>,
+) -> Result<Output<'a>, Error> {
     let pb = ProgressBar::new("Single-threaded", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
-    Ok(thread(engine, input, &pb))
+    Ok(thread(engine, input, output, &pb))
 }
 
 /// Thread control function.
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) -> Output<'a> {
-    let res = *input.grid.res();
-
-    let mut spectrometers = Vec::with_capacity(input.spec_reg.len());
-    for _ in 0..input.spec_reg.len() {
-        spectrometers.push(Histogram::new(
-            SPECTROMETER_MIN,
-            SPECTROMETER_MAX,
-            SPECTROMETER_BINS,
-        ));
-    }
-
-    let ccds = vec![];
-
-    let mut data = Output::new(
-        input.spec_reg,
-        input.grid.boundary().clone(),
-        res,
-        spectrometers,
-        ccds,
-    );
-
+fn thread<'a>(
+    engine: Engine,
+    input: &'a Input,
+    mut output: Output<'a>,
+    pb: &Arc<Mutex<ProgressBar>>,
+) -> Output<'a> {
     let mut rng = thread_rng();
 
     let phot_energy = input.light.power() / input.sett.num_phot() as f64;
@@ -91,9 +75,9 @@ fn thread<'a>(engine: Engine, input: &'a Input, pb: &Arc<Mutex<ProgressBar>>) ->
     } {
         for _ in start..end {
             let phot = input.light.emit(&mut rng, phot_energy);
-            engine(input, &mut rng, phot, &mut data);
+            engine(input, &mut rng, phot, &mut output);
         }
     }
 
-    data
+    output
 }

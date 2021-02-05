@@ -17,6 +17,7 @@ use std::{
 };
 
 /// Static range, constant bin width, Histogram.
+#[derive(Clone)]
 pub struct Histogram {
     /// Binner.
     binner: Binner,

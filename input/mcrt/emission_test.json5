@@ -34,11 +34,11 @@
         air : { There    : 'res/mats/misc/air.json5' }
     } },
     attrs       : { Here    : {
-            spectrometer    : { Spectrometer    : ['spec', 400] },
+            det_0    : { Spectrometer    : ['spec', [300e-9, 700e-9], 400] },
     } },
     surfs       : { Here    : {
-        det_0   : {
-            attr: 'spectrometer',
+        det_0_surface   : {
+            attr: 'det_0',
             mesh: [["res/objs/test/circle.obj"], {scale:2.0e-3, trans:[0.0,0.0,2.0e-3]}]
         }
     } },

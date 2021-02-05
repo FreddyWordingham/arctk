@@ -9,6 +9,7 @@ use ndarray::Array2;
 use std::ops::AddAssign;
 
 /// Image builder.
+#[derive(Clone)]
 pub struct Image {
     /// Pixel data.
     pixels: Array2<Colour>,
