@@ -35,6 +35,7 @@
     } },
     attrs       : { Here    : {
             det_0    : { Spectrometer    : ['spec', [300e-9, 700e-9], 400] },
+            det_1    : { Spectrometer    : ['neg_spec', [-700e-9, -300e-9], 400] },
     } },
     surfs       : { Here    : {
         det_0_surface   : {

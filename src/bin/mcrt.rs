@@ -135,12 +135,16 @@ fn gen_base_output<'a>(
     let res = *grid.res();
 
     let mut spectrometers = Vec::with_capacity(spec_reg.len());
-    for attr in attrs.values() {
-        match attr {
-            AttributeLinkerLinker::Spectrometer(_name, [min, max], bins) => {
-                spectrometers.push(Histogram::new(*min, *max, *bins))
+    for (name, id) in spec_reg.set().map().iter() {
+        for attr in attrs.values() {
+            match attr {
+                AttributeLinkerLinker::Spectrometer(spec_name, [min, max], bins) => {
+                    if name == spec_name {
+                        spectrometers.push(Histogram::new(*min, *max, *bins));
+                    }
+                }
+                _ => {}
             }
-            _ => {}
         }
     }
 
