@@ -85,7 +85,11 @@ impl Probability {
 
         let grad = dp / dx;
         let intercept = p0 - (grad * x0);
-        let offset = (0.5 * grad * x0).mul_add(x0, intercept * x0);
+        let offset = if x0 < x1 {
+            (0.5 * grad * x0).mul_add(x0, intercept * x0)
+        } else {
+            (0.5 * grad * x1).mul_add(x1, intercept * x1)
+        };
 
         let area = 0.5 * (p0 + p1) * (x1 - x0);
 
@@ -146,21 +150,30 @@ impl Probability {
                 area,
             } => {
                 let r = rng.gen_range(0.0..1.0_f64);
-                if grad <= 0.0 {
-                    let ans = -(((2.0 * grad)
-                        .mul_add(r.mul_add(area, offset), intercept * intercept)
-                        .sqrt()
-                        + intercept)
-                        / grad);
-                    (2.0 * xs[1]) - ans
-                } else {
-                    let ans = ((2.0 * grad)
-                        .mul_add(r.mul_add(area, offset), intercept * intercept)
-                        .sqrt()
-                        - intercept)
-                        / grad;
-                    ans
-                }
+                // if grad > 0.0 {
+                //     let ans = ((2.0 * grad)
+                //         .mul_add(r.mul_add(area, offset), intercept * intercept)
+                //         .sqrt()
+                //         - intercept)
+                //         / grad;
+                //     ans
+                // } else if grad < 0.0 {
+                //     let ans = ((2.0 * grad)
+                //         .mul_add(r.mul_add(area, offset), intercept * intercept)
+                //         .sqrt()
+                //         + intercept)
+                //         / -grad;
+                //     // ((2.0 * xs[0]) - (xs[1] - xs[0])) - ans
+                //     (2.0 * xs[1]) - ans
+                // // ans
+                // } else {
+                //     xs[0] + (r * (xs[1] - xs[0]))
+                // }
+                ((2.0 * grad)
+                    .mul_add(r.mul_add(area, offset), intercept * intercept)
+                    .sqrt()
+                    - intercept)
+                    / grad
             }
             Self::Gaussian { ref mu, ref sigma } => distribution::sample_gaussian(rng, *mu, *sigma),
             Self::ConstantSpline { ref cdf } => cdf.y(rng.gen()),

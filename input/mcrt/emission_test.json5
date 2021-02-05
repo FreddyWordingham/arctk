@@ -3,7 +3,7 @@
     grid        : { There   : 'misc/grid/5mm_31.json5' },
     engine      : "Standard",
     sett        : { Here    : {
-        num_phot            : 1e6,
+        num_phot            : 1e5,
         block_size          : 1e2,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
@@ -19,9 +19,8 @@
             //     500e-9, 600e-9,
             // ],
             Linear : [
-                [650e-9, 750e-9],
-                [0.0, 1.0]
-                // [0.0, 1.0]
+                [300e-9, 600e-9],
+                [2.0, 4.0]
             ],
             // LinearSpline: [
             //     [500e-9, 600e-9],

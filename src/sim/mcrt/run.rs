@@ -11,11 +11,11 @@ use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
 /// Spectrometer minimum range value.
-const SPECTROMETER_MIN: f64 = 400e-9;
+const SPECTROMETER_MIN: f64 = -1000e-9;
 /// Spectrometer maximum range value.
-const SPECTROMETER_MAX: f64 = 800e-9;
+const SPECTROMETER_MAX: f64 = 1000e-9;
 /// Spectrometer resolution.
-const SPECTROMETER_BINS: u64 = 400;
+const SPECTROMETER_BINS: u64 = 2000;
 
 /// Run a multi-threaded MCRT simulation.
 /// # Errors
