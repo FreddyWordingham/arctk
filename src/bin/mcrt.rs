@@ -130,17 +130,25 @@ fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Para
 fn gen_base_output<'a>(
     grid: &Grid,
     spec_reg: &'a Register,
+    img_reg: &'a Register,
     attrs: &Set<AttributeLinkerLinker>,
 ) -> Output<'a> {
     let res = *grid.res();
 
-    let mut spectrometers = Vec::with_capacity(spec_reg.len());
-    for (name, id) in spec_reg.set().map().iter() {
+    let mut specs = Vec::with_capacity(spec_reg.len());
+    let mut imgs = vec![];
+
+    for name in spec_reg.set().map().keys() {
         for attr in attrs.values() {
             match attr {
                 AttributeLinkerLinker::Spectrometer(spec_name, [min, max], bins) => {
                     if name == spec_name {
-                        spectrometers.push(Histogram::new(*min, *max, *bins));
+                        specs.push(Histogram::new(*min, *max, *bins));
+                    }
+                }
+                AttributeLinkerLinker::Imager(img_name, width, res, forward) => {
+                    if name == img_name {
+                        // imgs.push(Histogram::new(*min, *max, *bins));
                     }
                 }
                 _ => {}
@@ -148,7 +156,5 @@ fn gen_base_output<'a>(
         }
     }
 
-    let ccds = vec![];
-
-    Output::new(spec_reg, grid.boundary().clone(), res, spectrometers, ccds)
+    Output::new(spec_reg, grid.boundary().clone(), res, specs, imgs)
 }
