@@ -2,7 +2,9 @@
 
 use crate::{
     err::Error,
-    ord::{Link, Name, Set},
+    fmt_report,
+    math::Vec3,
+    ord::{Link, Name, Set, X, Y},
     sim::mcrt::AttributeLinker,
     tools::Range,
 };
@@ -10,6 +12,7 @@ use arctk_attr::file;
 use std::fmt::{Display, Formatter};
 
 /// Surface attribute setup.
+/// Handles detector linking.
 #[file]
 pub enum AttributeLinkerLinker {
     /// Material interface, inside material name, outside material name.
@@ -18,6 +21,8 @@ pub enum AttributeLinkerLinker {
     Mirror(f64),
     /// Spectrometer id, range, resolution.
     Spectrometer(Name, [f64; 2], u64),
+    /// Imager id, horizontal size, resolution, forward direction.
+    Imager(Name, f64, [u64; 2], Vec3),
 }
 
 impl<'a> Link<'a, usize> for AttributeLinkerLinker {
@@ -26,8 +31,9 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinker {
     #[inline]
     fn requires(&self) -> Vec<Name> {
         match *self {
-            Self::Interface(..) | Self::Mirror(..) => vec![],
+            Self::Interface(..) | Self::Mirror(..) | Self::Imager => vec![],
             Self::Spectrometer(ref id, ..) => vec![id.clone()],
+            Self::Imager(ref id, ..) => vec![id.clone()],
         }
     }
 
@@ -39,6 +45,10 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinker {
             Self::Spectrometer(id, ..) => Self::Inst::Spectrometer(
                 *reg.get(&id)
                     .unwrap_or_else(|| panic!("Failed to link attribute-spectrometer key: {}", id)),
+            ),
+            Self::Imager(id, ..) => Self::Inst::Spectrometer(
+                *reg.get(&id)
+                    .unwrap_or_else(|| panic!("Failed to link attribute-imager key: {}", id)),
             ),
         })
     }
@@ -62,6 +72,14 @@ impl Display for AttributeLinkerLinker {
                     Range::new(min, max),
                     bins
                 )
+            }
+            Self::Imager(ref id, width, res, dir) => {
+                writeln!(fmt, "Imager: ...")?;
+                fmt_report!(fmt, id, "name");
+                fmt_report!(fmt, width, "width (m)");
+                fmt_report!(fmt, &format!("[{} x {}]", res[X], res[Y]), "resolution");
+                fmt_report!(fmt, dir, "direction");
+                Ok(())
             }
         }
     }
