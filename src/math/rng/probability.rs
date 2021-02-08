@@ -147,7 +147,7 @@ impl Probability {
     /// Construct a new linear spline instance.
     #[inline]
     #[must_use]
-    pub fn new_linear_spline(xs: Array1<f64>, ps: &Array1<f64>) -> Self {
+    pub fn new_linear_spline(xs: &Array1<f64>, ps: &Array1<f64>) -> Self {
         debug_assert!(xs.len() > 1);
         debug_assert!(xs.len() == ps.len());
         debug_assert!(ps.iter().all(|p| *p >= 0.0));

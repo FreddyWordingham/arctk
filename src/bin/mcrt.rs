@@ -163,13 +163,10 @@ fn gen_base_output<'a>(
     let mut specs = Vec::with_capacity(spec_reg.len());
     for name in spec_reg.set().map().keys() {
         for attr in attrs.values() {
-            match attr {
-                Attr::Spectrometer(spec_name, [min, max], bins) => {
-                    if name == spec_name {
-                        specs.push(Histogram::new(*min, *max, *bins));
-                    }
+            if let Attr::Spectrometer(spec_name, [min, max], bins) = attr {
+                if name == spec_name {
+                    specs.push(Histogram::new(*min, *max, *bins));
                 }
-                _ => {}
             }
         }
     }
@@ -177,13 +174,10 @@ fn gen_base_output<'a>(
     let mut imgs = Vec::with_capacity(img_reg.len());
     for name in img_reg.set().map().keys() {
         for attr in attrs.values() {
-            match attr {
-                Attr::Imager(img_name, res, _width, _center, _forward) => {
-                    if name == img_name {
-                        imgs.push(Image::new_blank(*res, Colour::new(0.0, 0.0, 0.0, 1.0)));
-                    }
+            if let Attr::Imager(img_name, res, _width, _center, _forward) = attr {
+                if name == img_name {
+                    imgs.push(Image::new_blank(*res, Colour::new(0.0, 0.0, 0.0, 1.0)));
                 }
-                _ => {}
             }
         }
     }

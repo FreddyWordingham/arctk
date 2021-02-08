@@ -39,7 +39,7 @@ impl Build for ProbabilityBuilder {
                 Self::Inst::new_constant_spline(Array1::from(xs), &Array1::from(ps))
             }
             Self::LinearSpline(xs, ps) => {
-                Self::Inst::new_linear_spline(Array1::from(xs), &Array1::from(ps))
+                Self::Inst::new_linear_spline(&Array1::from(xs), &Array1::from(ps))
             }
         }
     }

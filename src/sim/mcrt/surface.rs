@@ -89,7 +89,7 @@ fn wavelength_to_col(wavelength: f64) -> Colour {
     let gamma = 0.8;
 
     let (r, g, b) = if wavelength >= 380.0e-9 && wavelength <= 440.0e-9 {
-        let attenuation = 0.7f64.mul_add((wavelength - 380.0e-9) / (440.0e-9 - 380.0e-9), 0.3);
+        let attenuation = 0.7_f64.mul_add((wavelength - 380.0e-9) / (440.0e-9 - 380.0e-9), 0.3);
         (
             ((-(wavelength - 440.0e-9) / (440.0e-9 - 380.0e-9)) * attenuation).powf(gamma),
             0.0,
@@ -120,7 +120,7 @@ fn wavelength_to_col(wavelength: f64) -> Colour {
             0.0,
         )
     } else if wavelength >= 645.0e-9 && wavelength <= 750.0e-9 {
-        let attenuation = 0.7f64.mul_add((750.0e-9 - wavelength) / (750.0e-9 - 645.0e-9), 0.3);
+        let attenuation = 0.7_f64.mul_add((750.0e-9 - wavelength) / (750.0e-9 - 645.0e-9), 0.3);
         (attenuation.powf(gamma), 0.0, 0.0)
     } else {
         (0.0, 0.0, 0.0)

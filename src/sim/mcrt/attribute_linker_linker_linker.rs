@@ -39,8 +39,10 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinker {
         Ok(match self {
             Self::Interface(inside, outside) => Self::Inst::Interface(inside, outside),
             Self::Mirror(r) => Self::Inst::Mirror(r),
-            Self::Spectrometer(name, range, res) => Self::Inst::Spectrometer(name, range, res),
-            Self::Imager(id, _res, width, center, forward) => Self::Inst::Imager(
+            Self::Spectrometer(name, range, resolution) => {
+                Self::Inst::Spectrometer(name, range, resolution)
+            }
+            Self::Imager(id, _resolution, width, center, forward) => Self::Inst::Imager(
                 *reg.get(&id)
                     .unwrap_or_else(|| panic!("Failed to link attribute-imager key: {}", id)),
                 width,
