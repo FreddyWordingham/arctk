@@ -3,7 +3,7 @@
     grid        : { There   : 'misc/grid/5m_101.json5' },
     engine      : "Standard",
     sett        : { Here    : {
-        num_phot            : 1e5,
+        num_phot            : 1e7,
         block_size          : 1e3,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
@@ -26,8 +26,8 @@
     } },
     attrs       : { Here    : {
             glass   : { Interface   : ['glass', 'air'] },
-            // imager  : { Interface   : ['glass', 'air'] },
-            imager  : { Spectrometer    : ['spec', [0.0, 1000.0e-9], 1000] },
+            // imager  : { Spectrometer    : ['spec', [0.0, 1000.0e-9], 1000] },
+            imager  : { Imager  : ['img', 2.0, [100, 100], [-1,0,0]] },
     } },
     surfs       : { Here    : {
         centerpiece : {

@@ -1,6 +1,6 @@
 //! Optical attributes.
 
-use crate::phys::Material;
+use crate::{fmt_report, geom::Orient, phys::Material};
 use std::fmt::{Display, Error, Formatter};
 
 /// Surface attributes.
@@ -11,8 +11,8 @@ pub enum Attribute<'a> {
     Mirror(f64),
     /// Spectrometer detector.
     Spectrometer(usize),
-    /// Imager detector.
-    Imager(usize),
+    /// Imager detector id, width, orientation.
+    Imager(usize, f64, Orient),
 }
 
 impl Display for Attribute<'_> {
@@ -28,8 +28,12 @@ impl Display for Attribute<'_> {
             Self::Spectrometer(id) => {
                 write!(fmt, "Spectrometer: {}", id)
             }
-            Self::Imager(id) => {
-                write!(fmt, "Imager: {}", id)
+            Self::Imager(ref id, width, ref orient) => {
+                writeln!(fmt, "Imager: ...")?;
+                fmt_report!(fmt, id, "name");
+                fmt_report!(fmt, width, "width (m)");
+                fmt_report!(fmt, orient, "orientation");
+                Ok(())
             }
         }
     }

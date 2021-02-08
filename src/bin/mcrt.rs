@@ -9,7 +9,10 @@ use arctk::{
     img::{Colour, Image},
     ord::{Build, Link, Register, Set},
     report,
-    sim::mcrt::{run, AttributeLinkerLinker, Input, Output, Parameters, ParametersBuilderLoader},
+    sim::mcrt::{
+        run, AttributeLinkerLinkerLinker as Attr, Input, Output, Parameters,
+        ParametersBuilderLoader,
+    },
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -55,6 +58,8 @@ fn main() {
     report!(light, "light");
     let attrs = params
         .attrs
+        .link(img_reg.set())
+        .expect("Failed to link imagers to attributes.")
         .link(spec_reg.set())
         .expect("Failed to link spectrometers to attributes.")
         .link(&mats)
@@ -126,13 +131,13 @@ fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Para
 }
 
 /// Generate the detector registers.
-fn gen_detector_registers(attrs: &Set<AttributeLinkerLinker>) -> (Register, Register) {
+fn gen_detector_registers(attrs: &Set<Attr>) -> (Register, Register) {
     let mut spec_names = Vec::new();
     let mut img_names = Vec::new();
     for attr in attrs.map().values() {
         match *attr {
-            AttributeLinkerLinker::Spectrometer(ref name, ..) => spec_names.push(name.clone()),
-            AttributeLinkerLinker::Imager(ref name, ..) => img_names.push(name.clone()),
+            Attr::Spectrometer(ref name, ..) => spec_names.push(name.clone()),
+            Attr::Imager(ref name, ..) => img_names.push(name.clone()),
             _ => {}
         }
     }
@@ -151,7 +156,7 @@ fn gen_base_output<'a>(
     grid: &Grid,
     spec_reg: &'a Register,
     img_reg: &'a Register,
-    attrs: &Set<AttributeLinkerLinker>,
+    attrs: &Set<Attr>,
 ) -> Output<'a> {
     let res = *grid.res();
 
@@ -159,7 +164,7 @@ fn gen_base_output<'a>(
     for name in spec_reg.set().map().keys() {
         for attr in attrs.values() {
             match attr {
-                AttributeLinkerLinker::Spectrometer(spec_name, [min, max], bins) => {
+                Attr::Spectrometer(spec_name, [min, max], bins) => {
                     if name == spec_name {
                         specs.push(Histogram::new(*min, *max, *bins));
                     }
@@ -173,7 +178,7 @@ fn gen_base_output<'a>(
     for name in img_reg.set().map().keys() {
         for attr in attrs.values() {
             match attr {
-                AttributeLinkerLinker::Imager(img_name, _width, res, _forward) => {
+                Attr::Imager(img_name, res, _width, _center, _forward) => {
                     if name == img_name {
                         imgs.push(Image::new_blank(*res, Colour::new(0.0, 0.0, 0.0, 1.0)));
                     }

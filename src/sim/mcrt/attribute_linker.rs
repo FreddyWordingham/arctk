@@ -1,16 +1,16 @@
-//! Attribute second-stage linker.
+//! Attribute third-stage material linker.
 
 use crate::{
     err::Error,
+    fmt_report,
+    geom::Orient,
     ord::{Link, Name, Set},
     phys::Material,
     sim::mcrt::Attribute,
 };
-use arctk_attr::file;
 use std::fmt::{Display, Formatter};
 
 /// Surface attribute setup.
-#[file]
 pub enum AttributeLinker {
     /// Material interface, inside material name, outside material name.
     Interface(Name, Name),
@@ -18,8 +18,8 @@ pub enum AttributeLinker {
     Mirror(f64),
     /// Spectrometer id.
     Spectrometer(usize),
-    /// Imager id.
-    Imager(usize),
+    /// Imager id, width, right and upward axes.
+    Imager(usize, f64, Orient),
 }
 
 impl<'a> Link<'a, Material> for AttributeLinker {
@@ -46,7 +46,7 @@ impl<'a> Link<'a, Material> for AttributeLinker {
             ),
             Self::Mirror(r) => Self::Inst::Mirror(r),
             Self::Spectrometer(id) => Self::Inst::Spectrometer(id),
-            Self::Imager(id) => Self::Inst::Imager(id),
+            Self::Imager(id, width, orient) => Self::Inst::Imager(id, width, orient),
         })
     }
 }
@@ -64,8 +64,12 @@ impl Display for AttributeLinker {
             Self::Spectrometer(id) => {
                 write!(fmt, "Spectrometer: {}", id)
             }
-            Self::Imager(id) => {
-                write!(fmt, "Imager: {}", id)
+            Self::Imager(ref id, width, ref orient) => {
+                writeln!(fmt, "Imager: ...")?;
+                fmt_report!(fmt, id, "name");
+                fmt_report!(fmt, width, "width (m)");
+                fmt_report!(fmt, orient, "orientation");
+                Ok(())
             }
         }
     }
