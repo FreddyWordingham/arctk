@@ -3,6 +3,7 @@
 use crate::{
     geom::Hit,
     img::Colour,
+    ord::{X, Y},
     phys::{Crossing, Local, Photon},
     sim::mcrt::{Attribute, Output},
 };
@@ -62,10 +63,18 @@ pub fn surface(
             data.specs[id].try_collect_weight(phot.wavelength(), phot.weight());
             phot.kill();
         }
-        Attribute::Imager(id, _width, ref _orient) => {
-            let pixel = [10, 20];
-            data.imgs[id].pixels_mut()[pixel] +=
-                wavelength_to_col(phot.wavelength()) * phot.weight() as f32;
+        Attribute::Imager(id, width, ref orient) => {
+            let projection = orient.pos() - phot.ray().pos();
+            let x = ((orient.right().dot(&projection) / width) + 1.0) / 2.0;
+            let y = ((orient.up().dot(&projection) / width) + 1.0) / 2.0;
+
+            if x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0 {
+                let res = data.imgs[id].pixels().raw_dim();
+                data.imgs[id].pixels_mut()
+                    [[(res[X] as f64 * x) as usize, (res[Y] as f64 * y) as usize]] +=
+                    wavelength_to_col(phot.wavelength()) * phot.weight() as f32;
+            }
+
             phot.kill();
         }
     }

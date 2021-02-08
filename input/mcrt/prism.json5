@@ -3,8 +3,8 @@
     grid        : { There   : 'misc/grid/5m_101.json5' },
     engine      : "Standard",
     sett        : { Here    : {
-        num_phot            : 1e3,
-        block_size          : 1e1,
+        num_phot            : 1e5,
+        block_size          : 1e3,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
         min_weight          : 0.05,
@@ -12,10 +12,11 @@
     } },
     light       : { Here    : {
         power   : 1.0,
-        emit    : { Surface: [['res/objs/test/prism/light.obj'], null] },
+        emit    : { Surface: [['res/objs/test/prism/line_light.obj'], null] },
         spec    : { Here: {
+            // Point : 440e-9,
             Uniform : [
-                400e-9, 700e-9,
+                440e-9, 700e-9,
             ],
         }},
         mat     : "air"
@@ -26,8 +27,7 @@
     } },
     attrs       : { Here    : {
             glass   : { Interface   : ['glass', 'air'] },
-            // imager  : { Spectrometer    : ['spec', [0.0, 1000.0e-9], 1000] },
-            imager  : { Imager  : ['img', [100, 100], 2.0, [2,0,0], [-1,0,0]] },
+            imager  : { Imager  : ['img', [1000, 1000], 1.0, [2,0,0], [1,0,0]] },
     } },
     surfs       : { Here    : {
         centerpiece : {
