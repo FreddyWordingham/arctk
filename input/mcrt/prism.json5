@@ -30,13 +30,13 @@
             imager  : { Spectrometer    : ['spec', [0.0, 1000.0e-9], 1000] },
     } },
     surfs       : { Here    : {
-        // centerpiece : {
-        //     attr: 'glass',
-        //     mesh: [["res/objs/test/prism/prism.obj"], null]
-        // },
+        centerpiece : {
+            attr: 'glass',
+            mesh: [["res/objs/test/prism/prism.obj"], null]
+        },
         screen      : {
             attr: 'imager',
-            mesh: [["res/objs/test/prism/screen.obj"], null]
+            mesh: [["res/objs/test/prism/screen.obj"], {trans:[1.5, 0.0, 0.0]} ]
         }
     } },
 }
