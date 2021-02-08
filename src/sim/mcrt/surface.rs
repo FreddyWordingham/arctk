@@ -71,6 +71,9 @@ pub fn surface(
     }
 }
 
+/// Determine the colour for a given wavelength.
+#[inline]
+#[must_use]
 fn wavelength_to_col(wavelength: f64) -> Colour {
     debug_assert!(wavelength > 0.0);
 
