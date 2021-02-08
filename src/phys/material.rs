@@ -47,7 +47,7 @@ impl Material {
     #[inline]
     #[must_use]
     pub fn sample_environment(&self, w: f64) -> Local {
-        let index = self.ref_index.y(w);
+        let ref_index = self.ref_index.y(w);
 
         let scat = self.scat_coeff.y(w);
 
@@ -62,7 +62,7 @@ impl Material {
             .map_or(0.0, |shift_coeff_formula| shift_coeff_formula.y(w));
         let g = self.asym_fact.y(w);
 
-        Local::new(index, scat, abs, shift, g)
+        Local::new(ref_index, scat, abs, shift, g)
     }
 }
 

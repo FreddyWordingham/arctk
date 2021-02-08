@@ -1,0 +1,41 @@
+{
+    tree        : { There   : 'misc/tree/t5_d2.json5' },
+    grid        : { There   : 'misc/grid/5m_101.json5' },
+    engine      : "Standard",
+    sett        : { Here    : {
+        num_phot            : 1e5,
+        block_size          : 1e2,
+        bump_dist           : 1e-9,
+        loop_limit          : 1e6,
+        min_weight          : 0.05,
+        roulette_barrels    : 8,
+    } },
+    light       : { Here    : {
+        power   : 1.0,
+        emit    : { Surface: [['res/objs/test/circle.obj'], {scale: 1.0e-2, trans: [-2.0, 0.0, 0.0], rot: [0.0, 90.0, 0.0]}] },
+        spec    : { Here: {
+            Uniform : [
+                400e-9, 700e-9,
+            ],
+        }},
+        mat     : "air"
+    } },
+    mats        : { Here    : {
+        air     : { There    : 'res/mats/misc/air.json5' },
+        fog     : { There    : 'res/mats/misc/fog.json5' },
+        glass   : { There    : 'res/mats/misc/refractive_glass.json5' }
+    } },
+    attrs       : { Here    : {
+            glass   : { Interface   : ['glass', 'air'] },
+    } },
+    surfs       : { Here    : {
+        centerpiece : {
+            attr: 'glass',
+            mesh: [["res/objs/test/cube.obj"], null]
+        },
+        // det_0_surface   : {
+        //     attr: 'det_0',
+        //     mesh: [["res/objs/test/circle.obj"], {scale:2.0e-3, trans:[0.0,0.0,2.0e-3]}]
+        // }
+    } },
+}
