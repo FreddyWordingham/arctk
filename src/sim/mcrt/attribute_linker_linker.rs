@@ -42,7 +42,7 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinker {
                 *reg.get(&id)
                     .unwrap_or_else(|| panic!("Failed to link attribute-spectrometer key: {}", id)),
             ),
-            Self::Imager(id, ..) => Self::Inst::Spectrometer(
+            Self::Imager(id, ..) => Self::Inst::Imager(
                 *reg.get(&id)
                     .unwrap_or_else(|| panic!("Failed to link attribute-imager key: {}", id)),
             ),
