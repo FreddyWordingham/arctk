@@ -22,7 +22,7 @@ pub enum AttributeLinkerLinker {
     /// Spectrometer id, range, resolution.
     Spectrometer(Name, [f64; 2], u64),
     /// Imager id, horizontal size, resolution, forward direction.
-    Imager(Name, f64, [u64; 2], Vec3),
+    Imager(Name, f64, [usize; 2], Vec3),
 }
 
 impl<'a> Link<'a, usize> for AttributeLinkerLinker {

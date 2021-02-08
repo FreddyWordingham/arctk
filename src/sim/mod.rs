@@ -15,6 +15,7 @@ pub mod flask;
 pub mod reactor;
 
 #[cfg(feature = "netcdf")]
+#[cfg(feature = "png")]
 pub mod mcrt;
 
 #[cfg(feature = "png")]

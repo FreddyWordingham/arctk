@@ -31,7 +31,11 @@ impl Orient {
     #[must_use]
     pub fn new(ray: Ray) -> Self {
         let (pos, forward) = ray.destruct();
-        let right = Dir3::new_normalize(forward.cross(&Vec3::z_axis()));
+        let right = if forward.z.abs() <= 0.9 {
+            Dir3::new_normalize(forward.cross(&Vec3::z_axis())) // Universal up is z-axis.
+        } else {
+            Dir3::new_normalize(forward.cross(&Vec3::x_axis())) // If facing along z-axis, compute relative up using x-axis.
+        };
         let up = Dir3::new_normalize(right.cross(&forward));
 
         Self {

@@ -23,6 +23,8 @@ use std::{
 pub struct Output<'a> {
     /// Spectrometer name register.
     spec_reg: &'a Register,
+    /// Imager name register.
+    img_reg: &'a Register,
     /// Measured volume.
     boundary: Cube,
     /// Cell volume [m^3].
@@ -37,8 +39,8 @@ pub struct Output<'a> {
     pub shifts: Array3<f64>,
     /// Spectrometer data.
     pub specs: Vec<Histogram>,
-    /// CCD data.
-    pub ccds: Vec<Image>,
+    /// Image data.
+    pub imgs: Vec<Image>,
 }
 
 impl<'a> Output<'a> {
@@ -50,10 +52,11 @@ impl<'a> Output<'a> {
     #[must_use]
     pub fn new(
         spec_reg: &'a Register,
+        img_reg: &'a Register,
         boundary: Cube,
         res: [usize; 3],
         specs: Vec<Histogram>,
-        ccds: Vec<Image>,
+        imgs: Vec<Image>,
     ) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
@@ -63,6 +66,7 @@ impl<'a> Output<'a> {
 
         Self {
             spec_reg,
+            img_reg,
             boundary,
             cell_vol,
             emission: Array3::zeros(res),
@@ -70,7 +74,7 @@ impl<'a> Output<'a> {
             absorptions: Array3::zeros(res),
             shifts: Array3::zeros(res),
             specs,
-            ccds,
+            imgs,
         }
     }
 }
@@ -87,7 +91,7 @@ impl AddAssign<&Self> for Output<'_> {
             *a += b;
         }
 
-        for (a, b) in self.ccds.iter_mut().zip(&rhs.ccds) {
+        for (a, b) in self.imgs.iter_mut().zip(&rhs.imgs) {
             *a += b;
         }
     }
@@ -112,6 +116,10 @@ impl Save for Output<'_> {
             self.specs[*index].save(&out_dir.join(&format!("spectrometer_{}.csv", name)))?;
         }
 
+        for (name, index) in self.img_reg.set().map().iter() {
+            self.imgs[*index].save(&out_dir.join(&format!("img_{}.csv", name)))?;
+        }
+
         Ok(())
     }
 }
@@ -121,6 +129,7 @@ impl Display for Output<'_> {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.spec_reg, "spectrometer register");
+        fmt_report!(fmt, self.img_reg, "imager register");
         fmt_report!(fmt, self.boundary, "boundary");
         fmt_report!(fmt, self.cell_vol, "cell volume (m^3)");
         fmt_report!(fmt, DataCube::new(&self.emission), "emission data");

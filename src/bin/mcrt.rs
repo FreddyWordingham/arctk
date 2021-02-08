@@ -6,6 +6,7 @@ use arctk::{
     data::Histogram,
     fs::{File, Load, Save},
     geom::{Grid, Tree},
+    img::{Colour, Image},
     ord::{Build, Link, Register, Set},
     report,
     sim::mcrt::{run, AttributeLinkerLinker, Input, Output, Parameters, ParametersBuilderLoader},
@@ -169,12 +170,12 @@ fn gen_base_output<'a>(
     }
 
     let mut imgs = Vec::with_capacity(img_reg.len());
-    for name in spec_reg.set().map().keys() {
+    for name in img_reg.set().map().keys() {
         for attr in attrs.values() {
             match attr {
-                AttributeLinkerLinker::Imager(img_name, width, res, forward) => {
+                AttributeLinkerLinker::Imager(img_name, _width, res, _forward) => {
                     if name == img_name {
-                        // imgs.push(Histogram::new(*min, *max, *bins));
+                        imgs.push(Image::new_blank(*res, Colour::new(0.0, 0.0, 0.0, 1.0)));
                     }
                 }
                 _ => {}
@@ -182,5 +183,5 @@ fn gen_base_output<'a>(
         }
     }
 
-    Output::new(spec_reg, grid.boundary().clone(), res, specs, imgs)
+    Output::new(spec_reg, img_reg, grid.boundary().clone(), res, specs, imgs)
 }
