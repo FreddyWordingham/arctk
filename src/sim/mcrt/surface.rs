@@ -2,6 +2,7 @@
 
 use crate::{
     geom::Hit,
+    img::Colour,
     phys::{Crossing, Local, Photon},
     sim::mcrt::{Attribute, Output},
 };
@@ -60,5 +61,49 @@ pub fn surface(
         Attribute::Spectrometer(id) => {
             data.specs[id].try_collect_weight(phot.wavelength(), phot.weight());
         }
+        Attribute::Imager(id) => {
+            let pixel = [10, 20];
+            data.imgs[id].pixels_mut()[pixel] +=
+                wavelength_to_col(phot.wavelength()) * phot.weight() as f32;
+        }
     }
+}
+
+fn wavelength_to_col(wavelength: f64) -> Colour {
+    debug_assert!(wavelength > 0.0);
+
+    let gamma = 0.8;
+
+    let (r, g, b) = if wavelength >= 380.0e-9 && wavelength <= 440.0e-9 {
+        let attenuation = 0.3 + (0.7 * ((wavelength - 380.0e-9) / (440.0e-9 - 380.0e-9)));
+        (
+            ((-(wavelength - 440.0e-9) / (440.0e-9 - 380.0e-9)) * attenuation).powf(gamma),
+            0.0,
+            attenuation.powf(gamma),
+        )
+    }
+    // elif wavelength >= 440 and wavelength <= 490:
+    //     R = 0.0
+    //     G = ((wavelength - 440) / (490 - 440)) ** gamma
+    //     B = 1.0
+    // elif wavelength >= 490 and wavelength <= 510:
+    //     R = 0.0
+    //     G = 1.0
+    //     B = (-(wavelength - 510) / (510 - 490)) ** gamma
+    // elif wavelength >= 510 and wavelength <= 580:
+    //     R = ((wavelength - 510) / (580 - 510)) ** gamma
+    //     G = 1.0
+    //     B = 0.0
+    // elif wavelength >= 580 and wavelength <= 645:
+    //     R = 1.0
+    //     G = (-(wavelength - 645) / (645 - 580)) ** gamma
+    //     B = 0.0
+    else if wavelength >= 645.0e-9 && wavelength <= 750.0e-9 {
+        let attenuation = 0.3 + (0.7 * ((750.0e-9 - wavelength) / (750.0e-9 - 645.0e-9)));
+        (attenuation.powf(gamma), 0.0, 0.0)
+    } else {
+        (0.0, 0.0, 0.0)
+    };
+
+    Colour::new(r as f32, g as f32, b as f32, 1.0)
 }
