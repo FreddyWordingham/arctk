@@ -25,28 +25,6 @@ pub enum AttributeLinkerLinker {
     Imager(Name, f64, [u64; 2], Vec3),
 }
 
-impl AttributeLinkerLinker {
-    /// Get a list of spectrometer names used.
-    #[must_use]
-    #[inline]
-    fn requires_spectrometers(&self) -> Vec<Name> {
-        match *self {
-            Self::Spectrometer(ref id, ..) => vec![id.clone()],
-            _ => vec![],
-        }
-    }
-
-    /// Get a list of imager names used.
-    #[must_use]
-    #[inline]
-    fn requires_imagers(&self) -> Vec<Name> {
-        match *self {
-            Self::Imager(ref id, ..) => vec![id.clone()],
-            _ => vec![],
-        }
-    }
-}
-
 impl<'a> Link<'a, usize> for AttributeLinkerLinker {
     type Inst = AttributeLinker;
 

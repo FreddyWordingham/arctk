@@ -43,10 +43,8 @@ fn main() {
     report!(mats, "materials");
 
     sub_section(term_width, "Registration");
-    let spec_reg = Register::new(params.attrs.requires());
-    report!(spec_reg, "spectrometer register");
-
-    let output = gen_base_output(&grid, &spec_reg, &params.attrs);
+    let (spec_reg, img_reg) = gen_detector_registers(&params.attrs);
+    let output = gen_base_output(&grid, &spec_reg, &img_reg, &params.attrs);
 
     sub_section(term_width, "Linking");
     let light = params
@@ -124,6 +122,27 @@ fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Para
     report!(params, "parameters");
 
     params
+}
+
+/// Generate the detector registers.
+fn gen_detector_registers(attrs: &Set<AttributeLinkerLinker>) -> (Register, Register) {
+    let mut spec_names = Vec::new();
+    let mut img_names = Vec::new();
+    for attr in attrs.map().values() {
+        match *attr {
+            AttributeLinkerLinker::Spectrometer(ref name, ..) => spec_names.push(name.clone()),
+            AttributeLinkerLinker::Imager(ref name, ..) => img_names.push(name.clone()),
+            _ => {}
+        }
+    }
+
+    let spec_reg = Register::new(spec_names);
+    report!(spec_reg, "spectrometer register");
+
+    let img_reg = Register::new(img_names);
+    report!(img_reg, "imager register");
+
+    (spec_reg, img_reg)
 }
 
 /// Generate the base output instance.
