@@ -60,11 +60,13 @@ pub fn surface(
         }
         Attribute::Spectrometer(id) => {
             data.specs[id].try_collect_weight(phot.wavelength(), phot.weight());
+            phot.kill();
         }
         Attribute::Imager(id) => {
             let pixel = [10, 20];
             data.imgs[id].pixels_mut()[pixel] +=
                 wavelength_to_col(phot.wavelength()) * phot.weight() as f32;
+            phot.kill();
         }
     }
 }
