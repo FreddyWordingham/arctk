@@ -11,6 +11,8 @@ pub enum Attribute<'a> {
     Mirror(f64),
     /// Spectrometer detector.
     Spectrometer(usize),
+    /// Imager detector.
+    Imager(usize),
 }
 
 impl Display for Attribute<'_> {
@@ -25,6 +27,9 @@ impl Display for Attribute<'_> {
             }
             Self::Spectrometer(id) => {
                 write!(fmt, "Spectrometer: {}", id)
+            }
+            Self::Imager(id) => {
+                write!(fmt, "Imager: {}", id)
             }
         }
     }
