@@ -14,7 +14,7 @@ impl Register {
     #[inline]
     #[must_use]
     pub fn new(mut names: Vec<Name>) -> Self {
-        debug_assert!(!names.is_empty());
+        // debug_assert!(!names.is_empty());
 
         names.sort();
         names.dedup();

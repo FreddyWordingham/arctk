@@ -22,7 +22,7 @@ impl<T> Set<T> {
     #[inline]
     #[must_use]
     pub fn new(map: Map<Name, T>) -> Self {
-        debug_assert!(!map.is_empty());
+        // debug_assert!(!map.is_empty());
 
         Self(map)
     }

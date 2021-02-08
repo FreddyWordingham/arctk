@@ -155,8 +155,6 @@ fn gen_base_output<'a>(
     let res = *grid.res();
 
     let mut specs = Vec::with_capacity(spec_reg.len());
-    let mut imgs = vec![];
-
     for name in spec_reg.set().map().keys() {
         for attr in attrs.values() {
             match attr {
@@ -165,6 +163,15 @@ fn gen_base_output<'a>(
                         specs.push(Histogram::new(*min, *max, *bins));
                     }
                 }
+                _ => {}
+            }
+        }
+    }
+
+    let mut imgs = Vec::with_capacity(img_reg.len());
+    for name in spec_reg.set().map().keys() {
+        for attr in attrs.values() {
+            match attr {
                 AttributeLinkerLinker::Imager(img_name, width, res, forward) => {
                     if name == img_name {
                         // imgs.push(Histogram::new(*min, *max, *bins));
