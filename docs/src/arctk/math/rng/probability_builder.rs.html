@@ -57,6 +57,12 @@
 <span id="54">54</span>
 <span id="55">55</span>
 <span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Probability builder.</span>
 
@@ -74,12 +80,14 @@
     <span class="ident">Points</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Uniform range.</span>
     <span class="ident">Uniform</span>(<span class="ident">f64</span>, <span class="ident">f64</span>),
-    <span class="doccomment">/// Linear function.</span>
-    <span class="ident">Linear</span>(<span class="ident">f64</span>, <span class="ident">f64</span>, <span class="ident">f64</span>, <span class="ident">f64</span>),
+    <span class="doccomment">/// Linear function: xs, ps.</span>
+    <span class="ident">Linear</span>([<span class="ident">f64</span>; <span class="number">2</span>], [<span class="ident">f64</span>; <span class="number">2</span>]),
     <span class="doccomment">/// Gaussian distribution.</span>
     <span class="ident">Gaussian</span>(<span class="ident">f64</span>, <span class="ident">f64</span>),
     <span class="doccomment">/// Constant spline.</span>
     <span class="ident">ConstantSpline</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Linear spline.</span>
+    <span class="ident">LinearSpline</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
 }
 
 <span class="kw">impl</span> <span class="ident">Build</span> <span class="kw">for</span> <span class="ident">ProbabilityBuilder</span> {
@@ -90,11 +98,14 @@
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Point</span>(<span class="ident">p</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_point</span>(<span class="ident">p</span>),
             <span class="self">Self</span>::<span class="ident">Points</span>(<span class="ident">ps</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_points</span>(<span class="ident">Array1</span>::<span class="ident">from</span>(<span class="ident">ps</span>)),
+            <span class="self">Self</span>::<span class="ident">Linear</span>(<span class="ident">xs</span>, <span class="ident">ps</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_linear</span>(<span class="ident">xs</span>, <span class="ident">ps</span>),
             <span class="self">Self</span>::<span class="ident">Uniform</span>(<span class="ident">min</span>, <span class="ident">max</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_uniform</span>(<span class="ident">min</span>, <span class="ident">max</span>),
-            <span class="self">Self</span>::<span class="ident">Linear</span>(<span class="ident">min</span>, <span class="ident">max</span>, <span class="ident">m</span>, <span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_linear</span>(<span class="ident">min</span>, <span class="ident">max</span>, <span class="ident">m</span>, <span class="ident">c</span>),
             <span class="self">Self</span>::<span class="ident">Gaussian</span>(<span class="ident">mu</span>, <span class="ident">sigma</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_gaussian</span>(<span class="ident">mu</span>, <span class="ident">sigma</span>),
             <span class="self">Self</span>::<span class="ident">ConstantSpline</span>(<span class="ident">xs</span>, <span class="ident">ps</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_constant_spline</span>(<span class="ident">Array1</span>::<span class="ident">from</span>(<span class="ident">xs</span>), <span class="kw-2">&amp;</span><span class="ident">Array1</span>::<span class="ident">from</span>(<span class="ident">ps</span>))
+            }
+            <span class="self">Self</span>::<span class="ident">LinearSpline</span>(<span class="ident">xs</span>, <span class="ident">ps</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">new_linear_spline</span>(<span class="kw-2">&amp;</span><span class="ident">Array1</span>::<span class="ident">from</span>(<span class="ident">xs</span>), <span class="kw-2">&amp;</span><span class="ident">Array1</span>::<span class="ident">from</span>(<span class="ident">ps</span>))
             }
         }
     }
@@ -110,6 +121,7 @@
             <span class="self">Self</span>::<span class="ident">Linear</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Linear&quot;</span>,
             <span class="self">Self</span>::<span class="ident">Gaussian</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Gaussian&quot;</span>,
             <span class="self">Self</span>::<span class="ident">ConstantSpline</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Constant Spline&quot;</span>,
+            <span class="self">Self</span>::<span class="ident">LinearSpline</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Linear Spline&quot;</span>,
         };
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">kind</span>)
     }

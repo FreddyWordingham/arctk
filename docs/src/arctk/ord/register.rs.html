@@ -86,7 +86,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">names</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Name</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">names</span>.<span class="ident">is_empty</span>());
+        <span class="comment">// debug_assert!(!names.is_empty());</span>
 
         <span class="ident">names</span>.<span class="ident">sort</span>();
         <span class="ident">names</span>.<span class="ident">dedup</span>();

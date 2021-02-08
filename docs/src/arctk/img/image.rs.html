@@ -46,6 +46,7 @@
 <span id="43">43</span>
 <span id="44">44</span>
 <span id="45">45</span>
+<span id="46">46</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Image alias.</span>
 
@@ -58,6 +59,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">AddAssign</span>;
 
 <span class="doccomment">/// Image builder.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Image</span> {
     <span class="doccomment">/// Pixel data.</span>
     <span class="ident">pixels</span>: <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">Colour</span><span class="op">&gt;</span>,

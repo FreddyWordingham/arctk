@@ -62,26 +62,45 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Attribute first-stage linker.</span>
+<span class="doccomment">//! Attribute second-stage spectrometer linker.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">err</span>::<span class="ident">Error</span>,
+    <span class="ident">fmt_report</span>,
+    <span class="ident">geom</span>::<span class="ident">Orient</span>,
     <span class="ident">ord</span>::{<span class="ident">Link</span>, <span class="ident">Name</span>, <span class="ident">Set</span>},
     <span class="ident">sim</span>::<span class="ident">mcrt</span>::<span class="ident">AttributeLinker</span>,
+    <span class="ident">tools</span>::<span class="ident">Range</span>,
 };
-<span class="kw">use</span> <span class="ident">arctk_attr</span>::<span class="ident">file</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>};
 
 <span class="doccomment">/// Surface attribute setup.</span>
-<span class="attribute">#[<span class="ident">file</span>]</span>
+<span class="doccomment">/// Handles detector linking.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">AttributeLinkerLinker</span> {
     <span class="doccomment">/// Material interface, inside material name, outside material name.</span>
     <span class="ident">Interface</span>(<span class="ident">Name</span>, <span class="ident">Name</span>),
     <span class="doccomment">/// Partially reflective mirror, reflection fraction.</span>
     <span class="ident">Mirror</span>(<span class="ident">f64</span>),
-    <span class="doccomment">/// Spectrometer id.</span>
-    <span class="ident">Spectrometer</span>(<span class="ident">Name</span>),
+    <span class="doccomment">/// Spectrometer id, range, resolution.</span>
+    <span class="ident">Spectrometer</span>(<span class="ident">Name</span>, [<span class="ident">f64</span>; <span class="number">2</span>], <span class="ident">u64</span>),
+    <span class="doccomment">/// Imager id, horizontal size, orientation.</span>
+    <span class="ident">Imager</span>(<span class="ident">usize</span>, <span class="ident">f64</span>, <span class="ident">Orient</span>),
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">usize</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AttributeLinkerLinker</span> {
@@ -89,10 +108,7 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">requires</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Name</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Interface</span>(..) <span class="op">|</span> <span class="self">Self</span>::<span class="ident">Mirror</span>(..) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[],
-            <span class="self">Self</span>::<span class="ident">Spectrometer</span>(<span class="kw-2">ref</span> <span class="ident">id</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">id</span>.<span class="ident">clone</span>()],
-        }
+        <span class="macro">vec</span><span class="macro">!</span>[]
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -100,10 +116,11 @@
         <span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Interface</span>(<span class="ident">inside</span>, <span class="ident">outside</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Interface</span>(<span class="ident">inside</span>, <span class="ident">outside</span>),
             <span class="self">Self</span>::<span class="ident">Mirror</span>(<span class="ident">r</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Mirror</span>(<span class="ident">r</span>),
-            <span class="self">Self</span>::<span class="ident">Spectrometer</span>(<span class="ident">id</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Spectrometer</span>(
+            <span class="self">Self</span>::<span class="ident">Spectrometer</span>(<span class="ident">id</span>, ..) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Spectrometer</span>(
                 <span class="kw-2">*</span><span class="ident">reg</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">id</span>)
                     .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Failed to link attribute-spectrometer key: {}&quot;</span>, <span class="ident">id</span>)),
             ),
+            <span class="self">Self</span>::<span class="ident">Imager</span>(<span class="ident">id</span>, <span class="ident">width</span>, <span class="ident">orient</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Imager</span>(<span class="ident">id</span>, <span class="ident">width</span>, <span class="ident">orient</span>),
         })
     }
 }
@@ -118,8 +135,21 @@
             <span class="self">Self</span>::<span class="ident">Mirror</span>(<span class="ident">abs</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Mirror: {}% abs&quot;</span>, <span class="ident">abs</span> <span class="op">*</span> <span class="number">100.0</span>)
             }
-            <span class="self">Self</span>::<span class="ident">Spectrometer</span>(<span class="kw-2">ref</span> <span class="ident">id</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Spectrometer: {}&quot;</span>, <span class="ident">id</span>)
+            <span class="self">Self</span>::<span class="ident">Spectrometer</span>(<span class="kw-2">ref</span> <span class="ident">id</span>, [<span class="ident">min</span>, <span class="ident">max</span>], <span class="ident">bins</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">write</span><span class="macro">!</span>(
+                    <span class="ident">fmt</span>,
+                    <span class="string">&quot;Spectrometer: {} {} ({})&quot;</span>,
+                    <span class="ident">id</span>,
+                    <span class="ident">Range</span>::<span class="ident">new</span>(<span class="ident">min</span>, <span class="ident">max</span>),
+                    <span class="ident">bins</span>
+                )
+            }
+            <span class="self">Self</span>::<span class="ident">Imager</span>(<span class="kw-2">ref</span> <span class="ident">id</span>, <span class="ident">width</span>, <span class="kw-2">ref</span> <span class="ident">orient</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Imager: ...&quot;</span>)<span class="question-mark">?</span>;
+                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">id</span>, <span class="string">&quot;name&quot;</span>);
+                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">width</span>, <span class="string">&quot;width (m)&quot;</span>);
+                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">orient</span>, <span class="string">&quot;orientation&quot;</span>);
+                <span class="prelude-val">Ok</span>(())
             }
         }
     }

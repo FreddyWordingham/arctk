@@ -32,10 +32,19 @@
 <span id="29">29</span>
 <span id="30">30</span>
 <span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Optical attributes.</span>
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">phys</span>::<span class="ident">Material</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">fmt_report</span>, <span class="ident">geom</span>::<span class="ident">Orient</span>, <span class="ident">phys</span>::<span class="ident">Material</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Error</span>, <span class="ident">Formatter</span>};
 
 <span class="doccomment">/// Surface attributes.</span>
@@ -46,13 +55,15 @@
     <span class="ident">Mirror</span>(<span class="ident">f64</span>),
     <span class="doccomment">/// Spectrometer detector.</span>
     <span class="ident">Spectrometer</span>(<span class="ident">usize</span>),
+    <span class="doccomment">/// Imager detector id, width, orientation.</span>
+    <span class="ident">Imager</span>(<span class="ident">usize</span>, <span class="ident">f64</span>, <span class="ident">Orient</span>),
 }
 
 <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">fmt</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Interface</span>(<span class="kw-2">ref</span> <span class="ident">in_mat</span>, <span class="kw-2">ref</span> <span class="ident">out_mat</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="self">Self</span>::<span class="ident">Interface</span>(<span class="ident">in_mat</span>, <span class="ident">out_mat</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Interface: {} :| {}&quot;</span>, <span class="ident">in_mat</span>, <span class="ident">out_mat</span>)
             }
             <span class="self">Self</span>::<span class="ident">Mirror</span>(<span class="ident">abs</span>) <span class="op">=</span><span class="op">&gt;</span> {
@@ -60,6 +71,13 @@
             }
             <span class="self">Self</span>::<span class="ident">Spectrometer</span>(<span class="ident">id</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Spectrometer: {}&quot;</span>, <span class="ident">id</span>)
+            }
+            <span class="self">Self</span>::<span class="ident">Imager</span>(<span class="kw-2">ref</span> <span class="ident">id</span>, <span class="ident">width</span>, <span class="kw-2">ref</span> <span class="ident">orient</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Imager: ...&quot;</span>)<span class="question-mark">?</span>;
+                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">id</span>, <span class="string">&quot;name&quot;</span>);
+                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">width</span>, <span class="string">&quot;width (m)&quot;</span>);
+                <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">orient</span>, <span class="string">&quot;orientation&quot;</span>);
+                <span class="prelude-val">Ok</span>(())
             }
         }
     }

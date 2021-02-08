@@ -144,7 +144,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sample_environment</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">w</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Local</span> {
-        <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ref_index</span>.<span class="ident">y</span>(<span class="ident">w</span>);
+        <span class="kw">let</span> <span class="ident">ref_index</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ref_index</span>.<span class="ident">y</span>(<span class="ident">w</span>);
 
         <span class="kw">let</span> <span class="ident">scat</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scat_coeff</span>.<span class="ident">y</span>(<span class="ident">w</span>);
 
@@ -159,7 +159,7 @@
             .<span class="ident">map_or</span>(<span class="number">0.0</span>, <span class="op">|</span><span class="ident">shift_coeff_formula</span><span class="op">|</span> <span class="ident">shift_coeff_formula</span>.<span class="ident">y</span>(<span class="ident">w</span>));
         <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">asym_fact</span>.<span class="ident">y</span>(<span class="ident">w</span>);
 
-        <span class="ident">Local</span>::<span class="ident">new</span>(<span class="ident">index</span>, <span class="ident">scat</span>, <span class="ident">abs</span>, <span class="ident">shift</span>, <span class="ident">g</span>)
+        <span class="ident">Local</span>::<span class="ident">new</span>(<span class="ident">ref_index</span>, <span class="ident">scat</span>, <span class="ident">abs</span>, <span class="ident">shift</span>, <span class="ident">g</span>)
     }
 }
 
