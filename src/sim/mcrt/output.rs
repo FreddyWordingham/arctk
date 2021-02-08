@@ -117,7 +117,7 @@ impl Save for Output<'_> {
         }
 
         for (name, index) in self.img_reg.set().map().iter() {
-            self.imgs[*index].save(&out_dir.join(&format!("img_{}.csv", name)))?;
+            self.imgs[*index].save(&out_dir.join(&format!("img_{}.png", name)))?;
         }
 
         Ok(())

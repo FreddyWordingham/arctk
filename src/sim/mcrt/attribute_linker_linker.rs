@@ -19,7 +19,7 @@ pub enum AttributeLinkerLinker {
     Mirror(f64),
     /// Spectrometer id, range, resolution.
     Spectrometer(Name, [f64; 2], u64),
-    /// Imager id, horizontal size, resolution, forward direction.
+    /// Imager id, horizontal size, orientation.
     Imager(usize, f64, Orient),
 }
 

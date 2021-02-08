@@ -18,7 +18,7 @@ pub enum AttributeLinker {
     Mirror(f64),
     /// Spectrometer id.
     Spectrometer(usize),
-    /// Imager id, width, right and upward axes.
+    /// Imager id, width, orientation.
     Imager(usize, f64, Orient),
 }
 
