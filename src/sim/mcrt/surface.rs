@@ -83,24 +83,31 @@ fn wavelength_to_col(wavelength: f64) -> Colour {
             0.0,
             attenuation.powf(gamma),
         )
-    }
-    // elif wavelength >= 440 and wavelength <= 490:
-    //     R = 0.0
-    //     G = ((wavelength - 440) / (490 - 440)) ** gamma
-    //     B = 1.0
-    // elif wavelength >= 490 and wavelength <= 510:
-    //     R = 0.0
-    //     G = 1.0
-    //     B = (-(wavelength - 510) / (510 - 490)) ** gamma
-    // elif wavelength >= 510 and wavelength <= 580:
-    //     R = ((wavelength - 510) / (580 - 510)) ** gamma
-    //     G = 1.0
-    //     B = 0.0
-    // elif wavelength >= 580 and wavelength <= 645:
-    //     R = 1.0
-    //     G = (-(wavelength - 645) / (645 - 580)) ** gamma
-    //     B = 0.0
-    else if wavelength >= 645.0e-9 && wavelength <= 750.0e-9 {
+    } else if wavelength >= 440.0e-9 && wavelength <= 490.0e-9 {
+        (
+            0.0,
+            ((wavelength - 440.0e-9) / (490.0e-9 - 440.0e-9)).powf(gamma),
+            1.0,
+        )
+    } else if wavelength >= 490.0e-9 && wavelength <= 510.0e-9 {
+        (
+            0.0,
+            1.0,
+            (-(wavelength - 510.0e-9) / (510.0e-9 - 490.0e-9)).powf(gamma),
+        )
+    } else if wavelength >= 510.0e-9 && wavelength <= 580.0e-9 {
+        (
+            ((wavelength - 510.0e-9) / (580.0e-9 - 510.0e-9)).powf(gamma),
+            1.0,
+            0.0,
+        )
+    } else if wavelength >= 580.0e-9 && wavelength <= 645.0e-9 {
+        (
+            1.0,
+            (-(wavelength - 645.0e-9) / (645.0e-9 - 580.0e-9)).powf(gamma),
+            0.0,
+        )
+    } else if wavelength >= 645.0e-9 && wavelength <= 750.0e-9 {
         let attenuation = 0.3 + (0.7 * ((750.0e-9 - wavelength) / (750.0e-9 - 645.0e-9)));
         (attenuation.powf(gamma), 0.0, 0.0)
     } else {
