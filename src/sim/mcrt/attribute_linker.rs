@@ -18,6 +18,8 @@ pub enum AttributeLinker {
     Mirror(f64),
     /// Spectrometer id.
     Spectrometer(usize),
+    /// Imager id.
+    Imager(usize),
 }
 
 impl<'a> Link<'a, Material> for AttributeLinker {
@@ -27,7 +29,7 @@ impl<'a> Link<'a, Material> for AttributeLinker {
     fn requires(&self) -> Vec<Name> {
         match *self {
             Self::Interface(ref inside, ref outside) => vec![inside.clone(), outside.clone()],
-            Self::Mirror(..) | Self::Spectrometer(..) => vec![],
+            Self::Mirror(..) | Self::Spectrometer(..) | Self::Imager(..) => vec![],
         }
     }
 
@@ -44,6 +46,7 @@ impl<'a> Link<'a, Material> for AttributeLinker {
             ),
             Self::Mirror(r) => Self::Inst::Mirror(r),
             Self::Spectrometer(id) => Self::Inst::Spectrometer(id),
+            Self::Imager(id) => Self::Inst::Imager(id),
         })
     }
 }
@@ -60,6 +63,9 @@ impl Display for AttributeLinker {
             }
             Self::Spectrometer(id) => {
                 write!(fmt, "Spectrometer: {}", id)
+            }
+            Self::Imager(id) => {
+                write!(fmt, "Imager: {}", id)
             }
         }
     }
