@@ -12,10 +12,4 @@
     PD_to_tumour        : { Interface   : ['tumour',                    'papillary_dermis'] },
     UBND_to_tumour      : { Interface   : ['tumour',                    'upper_blood_net_dermis'] },
     dermis_to_tumour    : { Interface   : ['tumour',                    'dermis'] },
-
-    spectrometer_0      : { Spectrometer    : 'spec_0' },
-    spectrometer_1      : { Spectrometer    : 'spec_1' },
-    spectrometer_2      : { Spectrometer    : 'spec_2' },
-    spectrometer_3      : { Spectrometer    : 'spec_3' },
-    spectrometer_4      : { Spectrometer    : 'spec_4' }
 }

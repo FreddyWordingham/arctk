@@ -1,6 +1,0 @@
-{
-    block_size  : 1e4,
-    bump_dist   : 1e-9,
-    loop_limit  : 1e6,
-    min_weight  : 1e-2,
-}

@@ -1,7 +1,0 @@
-{
-    sett    : { There   : "diffuse/settings.json5" },
-    grid    : { There   : 'misc/grid/10cm_31.json5' },
-    init    : "../output/point_50deg.nc",
-    // sources : "../output/point_50deg.nc",
-    coeffs  : "../output/tenth.nc",
-}

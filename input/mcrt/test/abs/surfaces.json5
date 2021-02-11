@@ -1,6 +1,0 @@
-{
-    cube : {
-        mesh    : [["res/objs/test/cube.obj"], null],
-        attr    : 'black'
-    },
-}
