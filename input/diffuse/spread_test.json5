@@ -1,6 +1,6 @@
 {
     sett    : { Here    : {
-        time        :   1e-3,
+        time        :   1e-2,
         dumps       :   1e2,
         quality     :   0.99
     } },
