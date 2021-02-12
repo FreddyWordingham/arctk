@@ -26,7 +26,7 @@
     } },
     attrs       : { Here    : {
             water   : { Interface   : ['water', 'air'] },
-            imager  : { Imager  : ['img', [1080, 1080], 8.0e-3, [-3.0e-3, 0, 0], [1, 0, 0]] },
+            imager  : { Imager  : ['img', [1080, 1080], 4.0e-3, [-3.0e-3, 0, 0], [1, 0, 0]] },
     } },
     surfs       : { Here    : {
         centerpiece : {
@@ -35,7 +35,7 @@
         },
         screen      : {
             attr: 'imager',
-            mesh: [["res/objs/rainbow/screen.obj"], { trans:[-2.45e-3, 0.0, 0.0], scale: 8.0e-3 } ]
+            mesh: [["res/objs/rainbow/screen.obj"], { trans:[-2.45e-3, 0.0, 0.0], scale: 4.0e-3 } ]
         }
     } },
 }
