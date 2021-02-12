@@ -22,20 +22,20 @@
     } },
     mats        : { Here    : {
         air     : { There    : 'res/mats/misc/air.json5' },
-        glass   : { There    : 'res/mats/misc/refractive_glass.json5' }
+        water   : { There    : 'res/mats/misc/water.json5' }
     } },
     attrs       : { Here    : {
-            glass   : { Interface   : ['glass', 'air'] },
-            imager  : { Imager  : ['img', [1080, 1080], 4.0e-3, [-3.0e-3, 0, 0], [1, 0, 0]] },
+            water   : { Interface   : ['water', 'air'] },
+            imager  : { Imager  : ['img', [1080, 1080], 8.0e-3, [-3.0e-3, 0, 0], [1, 0, 0]] },
     } },
     surfs       : { Here    : {
         centerpiece : {
-            attr: 'glass',
+            attr: 'water',
             mesh: [["res/objs/rainbow/smooth_sphere.obj"], { scale: 1.0e-3 } ]
         },
         screen      : {
             attr: 'imager',
-            mesh: [["res/objs/rainbow/screen.obj"], { trans:[-2.45e-3, 0.0, 0.0], scale: 4.0e-3 } ]
+            mesh: [["res/objs/rainbow/screen.obj"], { trans:[-2.45e-3, 0.0, 0.0], scale: 8.0e-3 } ]
         }
     } },
 }
