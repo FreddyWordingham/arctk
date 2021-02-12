@@ -1,0 +1,10 @@
+{
+    sett    : { Here    : {
+        time        :   1e-3,
+        dumps       :   1e2,
+        quality     :   0.99
+    } },
+    grid    : { There   : 'misc/grid/10cm_31.json5' },
+    init    : "res/maps/test/point_50_31.nc",
+    coeffs  : "res/maps/test/tenth_31.nc",
+}
