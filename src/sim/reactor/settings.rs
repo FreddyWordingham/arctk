@@ -35,7 +35,6 @@ impl Settings {
         debug_assert!(quality > 0.0);
         debug_assert!(quality < 1.0);
         debug_assert!(min_time < time);
-        debug_assert!(block_size < 0);
 
         Self {
             time,

@@ -5,6 +5,7 @@ use crate::{
     err::Error,
     fs::Save,
     math::Vec3,
+    ord::{X, Y, Z},
     sim::reactor::{stencil, Input},
     tools::ProgressBar,
 };
@@ -79,7 +80,7 @@ pub fn integrate(
     let mut pb = ProgressBar::new("Diffusion-Reaction", num_steps);
     for _ in 0..num_steps {
         // First reaction half-step.
-        // values = react(input, values, dt / 2.0);
+        values = react(input, values, dt / 2.0)?;
 
         // Full diffusion step.
         let values_rates = diffuse(input, values, rates, voxel_size_sq, dt)?;
@@ -88,7 +89,7 @@ pub fn integrate(
         // Potentially check for -ve values here (from sink terms).
 
         // Last reaction half-step.
-        // values = react(input, values, dt / 2.0);
+        values = react(input, values, dt / 2.0)?;
 
         pb.tick();
     }
@@ -180,45 +181,74 @@ fn diffuse_impl(
 /// Reaction calculation function.
 #[allow(clippy::expect_used)]
 #[inline]
+fn react(input: &Input, values: Array4<f64>, time: f64) -> Result<Array4<f64>, Error> {
+    debug_assert!(time > 0.0);
+
+    let pb = ProgressBar::new("Multi-threaded", values.len() / input.specs.len());
+    let pb = Arc::new(Mutex::new(pb));
+
+    let values = Mutex::new(values);
+
+    let threads: Vec<_> = (0..num_cpus::get()).collect();
+    let _out: Vec<_> = threads
+        .par_iter()
+        .map(|_id| react_impl(input, &values, time, &Arc::clone(&pb)))
+        .collect();
+
+    Ok(values.into_inner().expect("Failed to unwrap values array."))
+}
+
+/// Reaction calculation function.
+#[allow(clippy::expect_used)]
+#[inline]
 #[must_use]
-fn react(input: &Input, mut values: Array4<f64>, time: f64) -> Array4<f64> {
+fn react_impl(input: &Input, values: &Mutex<Array4<f64>>, time: f64, pb: &Arc<Mutex<ProgressBar>>) {
     debug_assert!(time > 0.0);
 
     let [rs, rx, ry, rz] = [
-        values.shape()[0],
-        values.shape()[1],
-        values.shape()[2],
-        values.shape()[3],
+        input.specs.len(),
+        input.grid.res()[X],
+        input.grid.res()[Y],
+        input.grid.res()[Z],
     ];
 
     let mut concs = Array1::zeros(rs);
     let mut ks = [concs.clone(), concs.clone(), concs.clone(), concs.clone()];
-    for xi in 0..rx {
-        for yi in 0..ry {
-            for zi in 0..rz {
-                for si in 0..rs {
-                    concs[si] = values[[si, xi, yi, zi]] + MIN_POSITIVE;
-                }
 
-                let concs_ks = evolve_rk4(
-                    input.reactor,
-                    concs,
-                    ks,
-                    time * input.multipliers[[xi, yi, zi]],
-                    input.sett.quality(),
-                    input.sett.min_time(),
-                );
-                concs = concs_ks.0;
-                ks = concs_ks.1;
+    let block_size = input.sett.block_size();
+    while let Some((start, end)) = {
+        let mut pb = pb.lock().expect("Could not lock progress bar.");
+        let b = pb.block(block_size);
+        std::mem::drop(pb);
+        b
+    } {
+        for n in start..end {
+            let xi = n % rx;
+            let yi = (n / rx) % ry;
+            let zi = n / (rx * ry);
 
-                for si in 0..rs {
-                    values[[si, xi, yi, zi]] = concs[si] - MIN_POSITIVE;
-                }
+            for si in 0..rs {
+                concs[si] = values.lock().expect("Could not lock values array.")[[si, xi, yi, zi]]
+                    + MIN_POSITIVE;
+            }
+
+            let concs_ks = evolve_rk4(
+                input.reactor,
+                concs,
+                ks,
+                time * input.multipliers[[xi, yi, zi]],
+                input.sett.quality(),
+                input.sett.min_time(),
+            );
+            concs = concs_ks.0;
+            ks = concs_ks.1;
+
+            for si in 0..rs {
+                values.lock().expect("Could not lock values array.")[[si, xi, yi, zi]] =
+                    concs[si] - MIN_POSITIVE;
             }
         }
     }
-
-    values
 }
 
 /// Evolve forward the given amount of time.
