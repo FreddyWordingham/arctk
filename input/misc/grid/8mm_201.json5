@@ -3,5 +3,5 @@
         mins: [-4.0e-3, -4.0e-3, -4.0e-3],  // Minimum bound.
         maxs: [ 4.0e-3,  4.0e-3,  4.0e-3],  // Maximum bound.
     },
-    res: [41, 41, 41],                   // Sampling resolution in [x,y,z].
+    res: [201, 201, 201],                   // Sampling resolution in [x,y,z].
 }
