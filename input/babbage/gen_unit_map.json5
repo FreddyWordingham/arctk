@@ -1,0 +1,12 @@
+{
+    ops: [
+        [
+            "unit",
+            { Unit  : [41, 41, 41] }
+        ],
+        [
+            "info",
+            { Info    : "../output/unit.nc" }
+        ]
+    ]
+}
