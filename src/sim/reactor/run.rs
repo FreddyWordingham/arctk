@@ -11,7 +11,6 @@ use crate::{
 use ndarray::{Array1, Array4, Axis};
 use ndarray_stats::QuantileExt;
 use rayon::prelude::*;
-use std::cell::UnsafeCell;
 use std::sync::{Arc, Mutex};
 use std::{f64::MIN_POSITIVE, path::PathBuf};
 
@@ -63,7 +62,6 @@ pub fn multi_thread(
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-#[must_use]
 pub fn integrate(
     input: &Input,
     mut values: Array4<f64>,
