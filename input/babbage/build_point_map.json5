@@ -1,0 +1,17 @@
+
+{
+    ops: [
+        [
+            "point",
+            { Point   : [41, 41, 41] }
+        ],
+        [
+            "point",
+            { Mult    : ["../output/point.nc", 50.0] }
+        ],
+        [
+            "info",
+            { Info    : "../output/point.nc" }
+        ]
+    ]
+}
