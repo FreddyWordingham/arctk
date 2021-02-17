@@ -15,6 +15,8 @@ pub struct Settings {
     quality: f64,
     /// Minimum timestep (s).
     min_time: f64,
+    /// Block size.
+    block_size: usize,
 }
 
 impl Settings {
@@ -22,22 +24,25 @@ impl Settings {
     clone!(dumps, usize);
     clone!(quality, f64);
     clone!(min_time, f64);
+    clone!(block_size, usize);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(time: f64, dumps: usize, quality: f64, min_time: f64) -> Self {
+    pub fn new(time: f64, dumps: usize, quality: f64, min_time: f64, block_size: usize) -> Self {
         debug_assert!(time > 0.0);
         debug_assert!(dumps > 0);
         debug_assert!(quality > 0.0);
         debug_assert!(quality < 1.0);
         debug_assert!(min_time < time);
+        debug_assert!(block_size < 0);
 
         Self {
             time,
             dumps,
             quality,
             min_time,
+            block_size,
         }
     }
 }

@@ -10,9 +10,6 @@ use crate::{
 };
 use ndarray::{Array1, Array4, Axis};
 use ndarray_stats::QuantileExt;
-use rayon::prelude::*;
-use std::cell::UnsafeCell;
-use std::sync::{Arc, Mutex};
 use std::{f64::MIN_POSITIVE, path::PathBuf};
 
 /// Run a single-threaded reaction-diffusion simulation.
@@ -20,7 +17,7 @@ use std::{f64::MIN_POSITIVE, path::PathBuf};
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn multi_thread(
+pub fn single_thread(
     out_dir: &PathBuf,
     input: &Input,
     mut values: Array4<f64>,
@@ -44,7 +41,7 @@ pub fn multi_thread(
     let step_time = input.sett.time() / steps as f64;
     let mut rates = Array4::zeros(values.raw_dim());
     for n in 0..steps {
-        let vr = integrate(input, values, rates, &voxel_size_sq, step_time, dt)?;
+        let vr = integrate(input, values, rates, &voxel_size_sq, step_time, dt);
         values = vr.0;
         rates = vr.1;
 
@@ -71,7 +68,7 @@ pub fn integrate(
     voxel_size_sq: &Vec3,
     time: f64,
     tar_dt: f64,
-) -> Result<(Array4<f64>, Array4<f64>), Error> {
+) -> (Array4<f64>, Array4<f64>) {
     debug_assert!(time > 0.0);
     debug_assert!(tar_dt > 0.0);
 
@@ -81,22 +78,22 @@ pub fn integrate(
     let mut pb = ProgressBar::new("Diffusion-Reaction", num_steps);
     for _ in 0..num_steps {
         // First reaction half-step.
-        // values = react(input, values, dt / 2.0);
+        values = react(input, values, dt / 2.0);
 
         // Full diffusion step.
-        let values_rates = diffuse(input, values, rates, voxel_size_sq, dt)?;
+        let values_rates = diffuse(input, values, rates, voxel_size_sq, dt);
         values = values_rates.0;
         rates = values_rates.1;
         // Potentially check for -ve values here (from sink terms).
 
         // Last reaction half-step.
-        // values = react(input, values, dt / 2.0);
+        values = react(input, values, dt / 2.0);
 
         pb.tick();
     }
     pb.finish_with_message("Step complete.");
 
-    Ok((values, rates))
+    (values, rates)
 }
 
 /// Diffusion rate calculation function.
@@ -105,78 +102,35 @@ pub fn integrate(
 fn diffuse(
     input: &Input,
     mut values: Array4<f64>,
-    rates: Array4<f64>,
+    mut rates: Array4<f64>,
     voxel_size_sq: &Vec3,
     time: f64,
-) -> Result<(Array4<f64>, Array4<f64>), Error> {
-    let pb = ProgressBar::new("Multi-threaded", values.len() / input.specs.len());
-    let pb = Arc::new(Mutex::new(pb));
-
-    let rates = Mutex::new(rates);
-
-    let threads: Vec<_> = (0..num_cpus::get()).collect();
-    let _out: Vec<_> = threads
-        .par_iter()
-        .map(|_id| {
-            diffuse_impl(
-                input,
-                &values,
-                &rates,
-                voxel_size_sq,
-                time,
-                &Arc::clone(&pb),
-            )
-        })
-        .collect();
-    // pb.lock()?.finish_with_message("Simulation complete.");
-
-    let rates = rates.into_inner().expect("Failed to unwrap rates array.");
-
-    values += &(&rates * time);
-
-    Ok((values, rates))
-}
-
-/// Diffusion rate calculation function.
-#[allow(clippy::expect_used)]
-#[inline]
-fn diffuse_impl(
-    input: &Input,
-    values: &Array4<f64>,
-    rates: &Mutex<Array4<f64>>,
-    voxel_size_sq: &Vec3,
-    time: f64,
-    pb: &Arc<Mutex<ProgressBar>>,
-) {
+) -> (Array4<f64>, Array4<f64>) {
     debug_assert!(time > 0.0);
 
-    let [rs, rx, ry, _rz] = [
+    let [rs, rx, ry, rz] = [
         values.shape()[0],
         values.shape()[1],
         values.shape()[2],
         values.shape()[3],
     ];
 
-    let block_size = input.sett.block_size();
-    while let Some((start, end)) = {
-        let mut pb = pb.lock().expect("Could not lock progress bar.");
-        let b = pb.block(block_size);
-        std::mem::drop(pb);
-        b
-    } {
-        for n in start..end {
-            let xi = n % rx;
-            let yi = (n / rx) % ry;
-            let zi = n / (rx * ry);
-
-            for si in 0..rs {
-                let index = [si, xi, yi, zi];
-                let stencil = stencil::Grad::new(index, values);
-                rates.lock().expect("Could not lock rate array.")[index] =
-                    stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
+    for xi in 0..rx {
+        for yi in 0..ry {
+            for zi in 0..rz {
+                for si in 0..rs {
+                    let index = [si, xi, yi, zi];
+                    let stencil = stencil::Grad::new(index, &values);
+                    rates[index] =
+                        stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
+                }
             }
         }
     }
+
+    values += &(&rates * time);
+
+    (values, rates)
 }
 
 /// Reaction calculation function.

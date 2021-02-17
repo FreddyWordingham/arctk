@@ -79,7 +79,7 @@ fn main() {
 
     section(term_width, "Running");
     let _data =
-        run::single_thread(&out_dir, &input, values).expect("Failed to run reactor simulation.");
+        run::multi_thread(&out_dir, &input, values).expect("Failed to run reactor simulation.");
 
     // section(term_width, "Saving");
     // data.save(&out_dir.join("final.nc"))
