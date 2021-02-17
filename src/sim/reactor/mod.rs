@@ -10,6 +10,6 @@ pub mod settings;
 pub mod stencil;
 
 pub use self::{
-    input::*, parameters::*, parameters_builder::*, parameters_builder_loader::*, run::*,
-    settings::*, stencil::*,
+    input::*, parameters::*, parameters_builder::*, parameters_builder_loader::*, settings::*,
+    stencil::*,
 };
