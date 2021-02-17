@@ -1,0 +1,17 @@
+
+{
+    ops: [
+        [
+            "unit",
+            { Unit  : [41, 41, 41] }
+        ],
+        [
+            "tenth",
+            { Mult    : ["../output/unit.nc", 0.1] }
+        ],
+        [
+            "info",
+            { Info    : "../output/tenth.nc" }
+        ]
+    ]
+}
