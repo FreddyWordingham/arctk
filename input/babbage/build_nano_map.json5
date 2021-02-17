@@ -1,0 +1,16 @@
+{
+    ops: [
+        [
+            "unit",
+            { Unit  : [41, 41, 41] }
+        ],
+        [
+            "nano",
+            { Mult    : ["../output/unit.nc", 1.0e-9] }
+        ],
+        [
+            "info",
+            { Info    : "../output/nano.nc" }
+        ]
+    ]
+}
