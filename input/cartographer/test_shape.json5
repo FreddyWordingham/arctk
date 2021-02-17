@@ -1,0 +1,20 @@
+{
+    tree    : { There   : 'misc/tree/t5_d6.json5' },
+    grid    : { There   : 'misc/grid/8mm_201.json5' },
+    sett    : { Here    : {
+        block_size      : 1e3,
+        bump_dist       : 1e-9,
+        loop_limit      : 1e4,
+        caster          : { Radiant: 101 },
+        super_sampling  : { Uniform: [4, 4, 4] }
+    } },
+    surfs   : { Here    : {
+        centerpiece     : {
+            attr: 'air_to_plastic',
+            mesh: [['res/objs/shapes/torus.obj'], { scale:2.0e-3 } ]
+        },
+    } },
+    attrs   : { Here   : {
+        air_to_plastic  : { Interface   : ['plastic', 'air'] },
+    } },
+}
