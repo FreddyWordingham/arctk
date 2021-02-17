@@ -23,12 +23,10 @@
     a5 : { Opaque   : 'crystal_clear' },
     a6 : { Opaque   : 'dania' },
     a7 : { Opaque   : 'dark_ocean' },
-
     r0 : { Opaque   : 'harvey' },
     r1 : { Opaque   : 'jshine' },
     r2 : { Opaque   : 'king_yna' },
     r3 : { Opaque   : 'rainbow_blue' },
-
     c0 : { Opaque   : 'wiretap' },
     b0 : { Opaque   : 'starfall' },
 
