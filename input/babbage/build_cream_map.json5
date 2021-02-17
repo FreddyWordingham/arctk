@@ -1,0 +1,17 @@
+
+{
+    ops: [ // THIS WILL NOT PLACE O2 INSIDE THE TUMOUR
+        [
+            "cream_unit",
+            { Norm  : "../output/cartographer/matcher/map_{cream}.nc" }
+        ],
+        [
+            "cream_unit",
+            { Mult      : ["../output/cream_unit.nc", 1.0e-9] }
+        ],
+        [
+            "info",
+            { Info    : "../output/cream_unit.nc" }
+        ]
+    ]
+}
