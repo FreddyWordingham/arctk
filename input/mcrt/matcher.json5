@@ -1,0 +1,17 @@
+{
+    tree        : { There   : 'misc/tree/t5_d8.json5' },
+    grid        : { There   : 'misc/grid/8mm_41.json5' },
+    engine      : "Standard",
+    sett        : { Here    : {
+        num_phot            : 1e7,
+        block_size          : 1e5,
+        bump_dist           : 1e-9,
+        loop_limit          : 1e6,
+        min_weight          : 0.05,
+        roulette_barrels    : 8,
+    } },
+    light   : { There   : 'models/matcher/light.json5' },
+    mats    : { There   : 'models/matcher/materials.json5' },
+    attrs   : { There   : 'models/matcher/attributes.json5' },
+    surfs   : { There   : 'models/matcher/surfaces.json5' },
+}
