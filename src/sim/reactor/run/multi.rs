@@ -201,7 +201,6 @@ fn react(input: &Input, values: Array4<f64>, time: f64) -> Result<Array4<f64>, E
 /// Reaction calculation function.
 #[allow(clippy::expect_used)]
 #[inline]
-#[must_use]
 fn react_impl(input: &Input, values: &Mutex<Array4<f64>>, time: f64, pb: &Arc<Mutex<ProgressBar>>) {
     debug_assert!(time > 0.0);
 
