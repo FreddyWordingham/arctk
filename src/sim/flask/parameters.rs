@@ -7,10 +7,12 @@ use std::fmt::{Display, Error, Formatter};
 pub struct Parameters {
     /// Simulation specific settings.
     pub sett: Settings,
-    /// Initial concentrations.
+    /// Initial values.
     pub init: ArrayLinker,
-    /// Sources/sinks.
+    /// Sources.
     pub sources: ArrayLinker,
+    /// Sinks.
+    pub sinks: ArrayLinker,
     /// Reactions.
     pub reactor: ReactorLinker,
 }
@@ -23,12 +25,14 @@ impl Parameters {
         sett: Settings,
         init: ArrayLinker,
         sources: ArrayLinker,
+        sinks: ArrayLinker,
         reactor: ReactorLinker,
     ) -> Self {
         Self {
             sett,
             init,
             sources,
+            sinks,
             reactor,
         }
     }
@@ -40,7 +44,8 @@ impl Display for Parameters {
         writeln!(fmt, "...")?;
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.init, "initial values");
-        fmt_report!(fmt, self.sources, "sources/sinks");
+        fmt_report!(fmt, self.sources, "sources");
+        fmt_report!(fmt, self.sinks, "sinks");
         fmt_report!(fmt, self.reactor, "reactor");
         Ok(())
     }
