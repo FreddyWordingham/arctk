@@ -49,8 +49,8 @@ fn main() {
     let sources = params
         .sources
         .link(spec_reg.set())
-        .expect("Failed to link species to sources/sinks.");
-    report!(sources, "sources/sinks");
+        .expect("Failed to link species to sources.");
+    report!(sources, "sources");
 
     let reactor = params
         .reactor

@@ -11,8 +11,6 @@ pub struct Parameters {
     pub init: ArrayLinker,
     /// Sources.
     pub sources: ArrayLinker,
-    /// Sinks.
-    pub sinks: ArrayLinker,
     /// Reactions.
     pub reactor: ReactorLinker,
 }
@@ -25,14 +23,12 @@ impl Parameters {
         sett: Settings,
         init: ArrayLinker,
         sources: ArrayLinker,
-        sinks: ArrayLinker,
         reactor: ReactorLinker,
     ) -> Self {
         Self {
             sett,
             init,
             sources,
-            sinks,
             reactor,
         }
     }
@@ -45,7 +41,6 @@ impl Display for Parameters {
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.init, "initial values");
         fmt_report!(fmt, self.sources, "sources");
-        fmt_report!(fmt, self.sinks, "sinks");
         fmt_report!(fmt, self.reactor, "reactor");
         Ok(())
     }

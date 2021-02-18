@@ -19,8 +19,6 @@ pub struct ParametersLoader {
     init: ArrayLinker,
     /// Sources.
     sources: ArrayLinker,
-    /// Sinks.
-    sinks: ArrayLinker,
     /// Reactions.
     reactor: Redirect<ReactorLinker>,
 }
@@ -33,9 +31,8 @@ impl Load for ParametersLoader {
         let sett = self.sett.load(in_dir)?;
         let init = self.init;
         let sources = self.sources;
-        let sinks = self.sinks;
         let reactor = self.reactor.load(in_dir)?;
 
-        Ok(Self::Inst::new(sett, init, sources, sinks, reactor))
+        Ok(Self::Inst::new(sett, init, sources, reactor))
     }
 }

@@ -8,7 +8,7 @@ use std::fmt::{Display, Error, Formatter};
 pub struct Input<'a> {
     /// Register of known species.
     pub specs: &'a Register,
-    /// Sources/sinks.
+    /// Sources.
     pub sources: &'a Array1<f64>,
     /// Reactor processor.
     pub reactor: &'a Reactor,
