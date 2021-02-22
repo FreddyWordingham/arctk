@@ -1,0 +1,16 @@
+{
+    grid    : { There   : 'misc/grid/8mm_41.json5' },
+    sett    : { Here    : {
+        time        :   1800,                           // Total integration time (s).
+        dumps       :   1e1,                            // Intermient outputs.
+        block_size  :   1e3,
+        quality     :   0.8,                            // Quality parameter (0-1).
+        min_time    :   1.0e-9,                         // Minimum reaction time step size (s).
+    } },
+    coeffs_values_sources   : { Here    : {
+        "ALA":  ["misc/map/skin.nc", "misc/map/cream_unit.nc", null],
+        // "PpIX":  ["misc/map/skin.nc", "misc/map/nano_41.nc", null],
+    } },
+    multipliers : "misc/map/unit_41.nc",
+    reactor: { There    : 'misc/reactor/ppix.json5' }
+}

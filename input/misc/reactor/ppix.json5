@@ -1,0 +1,12 @@
+[
+    {   /// Char time: 15 min.
+        rate        : [0.00111111111,   [["ALA", 1]]],
+        reactants   : [["ALA", 4]],
+        products    : [["PpIX", 1]],
+    },
+    // {   /// Char time: 1 min.
+    //     rate        : [0.0166666667,    [["ALA", 1], ["Fe", 1]]],
+    //     reactants   : [["PpIX", 1], ["Fe", 1]],
+    //     products    : [["Haem", 1]],
+    // },
+]
