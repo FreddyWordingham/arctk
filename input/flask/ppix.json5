@@ -6,12 +6,13 @@
         min_time    :   1e-9
     } },
     init    : [
-            ["ALA", 1.0],
-            ["Udens", 1e-3],
+            ["ALA", 0.1],
+            ["Udens", 0.05],
+            ["O2", 0.02],
     ],
     sources : [
-            ["O2", 0.001],
-            ["Fe", 0.0001]
+            // ["O2", 0.001],
+            // ["Fe", 0.0001]
     ],
     reactor: { There    : 'misc/reactor/pdt.json5' }
 }
