@@ -41,6 +41,18 @@
                 "../output/scaled_upper_blood_net_dermis.nc",
             ] }
         ],
+        // [
+        //     "skin",
+        //     { Sum     : [
+        //         "../output/cartographer/matcher/map_{deep_blood_net_dermis}.nc",
+        //         "../output/cartographer/matcher/map_{dermis}.nc",
+        //         "../output/cartographer/matcher/map_{living_epidermis}.nc",
+        //         "../output/cartographer/matcher/map_{stratum_corneum}.nc",
+        //         "../output/cartographer/matcher/map_{subcutaneous_fat}.nc",
+        //         "../output/cartographer/matcher/map_{tumour}.nc",
+        //         "../output/cartographer/matcher/map_{upper_blood_net_dermis}.nc"
+        //     ] }
+        // ],
         [
             "info",
             { Info    : "../output/skin.nc" }

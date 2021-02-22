@@ -7,9 +7,9 @@
     } },
     init    : [
             ["ALA", 1.0],
+            ["Udens", 1e-3],
     ],
     sources : [
-            ["Udens", 1e-3],
             ["O2", 0.001],
             ["Fe", 0.0001]
     ],
@@ -33,6 +33,11 @@
             rate        : [10.0, [["ROS", 1]]],
             reactants   : [["ROS", 1]],
             products    : [["CD", 1]],
+        },
+        {
+            rate        : [0.01, [["O2", 1]]],
+            reactants   : [["O2", 1]],
+            products    : [["BIN", 1]],
         },
     ] }
 }
