@@ -13,11 +13,12 @@
     light       : { Here    : {
         power   : 1.0,
         emit    : { Surface: [['res/objs/absorption/circle.obj'], { scale: 0.5e-3, trans:[-2.01e-3, 0.0, 0.0] } ] },
-        spec    : { Here: {
-            Uniform : [
-                440e-9, 700e-9,
-            ],
-        } },
+        // spec    : { Here: {
+        //     Uniform : [
+        //         440e-9, 700e-9,
+        //     ],
+        // } },
+        spec    : { There   : 'misc/spectra/aktilite.json5' },
         mat     : "air"
     } },
     mats        : { Here    : {
