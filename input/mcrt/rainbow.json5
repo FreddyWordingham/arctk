@@ -1,6 +1,6 @@
 {
     tree        : { There   : 'misc/tree/t5_d6.json5' },
-    grid        : { There   : 'misc/grid/10mm_200.json5' },
+    grid        : { There   : 'misc/grid/10mm_201.json5' },
     engine      : "Standard",
     sett        : { Here    : {
         num_phot            : 1e7,
