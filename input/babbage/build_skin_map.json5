@@ -30,7 +30,7 @@
             { Mult      : ["../output/cartographer/matcher/map_{upper_blood_net_dermis}.nc", 2.0e-9] }
         ],
         [
-            "diff",
+            "skin",
             { Sum     : [
                 "../output/scaled_deep_blood_net_dermis.nc",
                 "../output/scaled_dermis.nc",
@@ -43,7 +43,7 @@
         ],
         [
             "info",
-            { Info    : "../output/diff.nc" }
+            { Info    : "../output/skin.nc" }
         ]
     ]
 }

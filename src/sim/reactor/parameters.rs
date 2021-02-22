@@ -49,7 +49,7 @@ impl Display for Parameters {
         fmt_report!(fmt, self.sett, "settings");
         fmt_report!(fmt, self.grid, "grid");
 
-        for (name, &(ref values, ref coeffs, ref sources)) in self.coeffs_values_sources.map() {
+        for (name, &(ref coeffs, ref values, ref sources)) in self.coeffs_values_sources.map() {
             fmt_report!(
                 fmt,
                 DataCube::new(coeffs),
