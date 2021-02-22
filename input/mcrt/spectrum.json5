@@ -18,7 +18,7 @@
         //         440e-9, 700e-9,
         //     ],
         // } },
-        spec    : { There   : 'misc/spectra/aktilite.json5' },
+        spec    : { There   : 'misc/spectra/waldmann.json5' },
         mat     : "air"
     } },
     mats        : { Here    : {
@@ -27,7 +27,7 @@
     } },
     attrs       : { Here    : {
             black   : { Interface       : ['black', 'air'] },
-            spectro : { Spectrometer    : ['main_spec', [300e-9, 800e-9], 500] },
+            spectro : { Spectrometer    : ['main_spec', [1e-9, 1001e-9], 500] },
     } },
     surfs       : { Here    : {
         centerpiece : {
