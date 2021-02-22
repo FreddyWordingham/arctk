@@ -8,13 +8,13 @@
         min_time    :   1.0e-9,                         // Minimum reaction time step size (s).
     } },
     coeffs_values_sources   : { Here    : {
-        "ALA":  ["misc/map/skin.nc", "misc/map/cream_unit.nc", null],
-        "Udens":  ["misc/map/zero.nc", "../output/mcrt/matcher/absorption_density.nc", null],
-        "O2":  ["misc/map/skin.nc", "misc/map/nano_41.nc", null],
-        "CD":  ["misc/map/skin.nc", "misc/map/nano_41.nc", null],
-        "PpIX":  ["misc/map/skin.nc", "misc/map/nano_41.nc", null],
-        "ROS":  ["misc/map/skin.nc", "misc/map/nano_41.nc", null],
+        "ALA":  ["misc/map/skin.nc", "misc/map/ala_diff.nc", null],
+        "PpIX":  ["misc/map/zero.nc", "misc/map/ppix_diff.nc", null],
+        "Udens":  ["misc/map/zero.nc", "misc/map/absorption_density.nc", null],
+        "O2":  ["misc/map/zero.nc", null, null],
+        "CD":  ["misc/map/zero.nc", null, null],
+        "ROS":  ["misc/map/zero.nc", null, null],
     } },
-    multipliers : "misc/map/unit_41.nc",
+    multipliers : "misc/map/tumour.nc",
     reactor: { There    : 'misc/reactor/pdt.json5' }
 }

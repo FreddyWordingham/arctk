@@ -9,7 +9,7 @@
     } },
     coeffs_values_sources   : { Here    : {
         "ALA":  ["misc/map/skin.nc", "misc/map/cream_unit.nc", null],
-        // "PpIX":  ["misc/map/skin.nc", "misc/map/nano_41.nc", null],
+        // "PpIX":  ["misc/map/skin.nc", null, null],
     } },
     multipliers : "misc/map/unit_41.nc",
     reactor: { There    : 'misc/reactor/ppix.json5' }
