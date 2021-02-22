@@ -2,6 +2,14 @@
 {
     ops: [ // THIS WILL NOT PLACE O2 INSIDE THE TUMOUR
         [
+            "base",
+            { Unit  : [41, 41, 41] }
+        ],
+        [
+            "base",
+            { Mult      : ["../output/cartographer/matcher/map_{deep_blood_net_dermis}.nc", 0.08] }
+        ],
+        [
             "scaled_deep_blood_net_dermis",
             { Mult      : ["../output/cartographer/matcher/map_{deep_blood_net_dermis}.nc", 0.08] }
         ],
