@@ -9,6 +9,7 @@
     } },
     coeffs_values_sources   : { Here    : {
         "ALA":  ["res/map/ala_diff_map.nc", "res/map/ala_init_map.nc", null],
+        "O2":  ["res/map/o2_diff_map.nc", null, "res/map/o2_source_map.nc"],
         // "PpIX":  ["misc/map/skin.nc", null, null],
     } },
     multipliers : "res/map/multipliers.nc",
