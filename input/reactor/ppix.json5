@@ -2,15 +2,15 @@
     grid    : { There   : 'misc/grid/8mm_41.json5' },
     sett    : { Here    : {
         time        :   1800,                           // Total integration time (s).
-        dumps       :   1e1,                            // Intermient outputs.
+        dumps       :   1e2,                            // Intermient outputs.
         block_size  :   1e3,
         quality     :   0.8,                            // Quality parameter (0-1).
         min_time    :   1.0e-9,                         // Minimum reaction time step size (s).
     } },
     coeffs_values_sources   : { Here    : {
-        "ALA":  ["misc/map/skin.nc", "misc/map/cream_unit.nc", null],
+        "ALA":  ["res/map/ala_diff_map.nc", "res/map/ala_init_map.nc", null],
         // "PpIX":  ["misc/map/skin.nc", null, null],
     } },
-    multipliers : "misc/map/unit_41.nc",
+    multipliers : "res/map/unit.nc",
     reactor: { There    : 'misc/reactor/ppix.json5' }
 }

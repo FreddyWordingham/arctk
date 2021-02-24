@@ -6,12 +6,12 @@
             { Norm  : "../output/cartographer/matcher/map_{cream}.nc" }
         ],
         [
-            "cream_unit",
-            { Mult      : ["../output/cream_unit.nc", 1.0e-9] }
+            "cream",
+            { Mult      : ["../output/cream_unit.nc", 7.17e20] }
         ],
         [
             "info",
-            { Info    : "../output/cream_unit.nc" }
+            { Info    : "../output/cream.nc" }
         ]
     ]
 }

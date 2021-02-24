@@ -3,31 +3,31 @@
     ops: [ // THIS WILL NOT PLACE O2 INSIDE THE TUMOUR
         [
             "scaled_deep_blood_net_dermis",
-            { Mult      : ["../output/cartographer/matcher/map_{deep_blood_net_dermis}.nc", 2.0e-9] }
+            { Mult      : ["../output/cartographer/matcher/map_{deep_blood_net_dermis}.nc", 5.5e-9] }
         ],
         [
             "scaled_dermis",
-            { Mult      : ["../output/cartographer/matcher/map_{dermis}.nc", 2.0e-9] }
+            { Mult      : ["../output/cartographer/matcher/map_{dermis}.nc", 5.5e-9] }
         ],
         [
             "scaled_living_epidermis",
-            { Mult      : ["../output/cartographer/matcher/map_{living_epidermis}.nc", 2.0e-9] }
+            { Mult      : ["../output/cartographer/matcher/map_{living_epidermis}.nc", 5.5e-9] }
         ],
         [
             "scaled_stratum_corneum",
-            { Mult      : ["../output/cartographer/matcher/map_{stratum_corneum}.nc", 2.0e-9] }
+            { Mult      : ["../output/cartographer/matcher/map_{stratum_corneum}.nc", 5.5e-9] }
         ],
         [
             "scaled_subcutaneous_fat",
-            { Mult      : ["../output/cartographer/matcher/map_{subcutaneous_fat}.nc", 2.0e-9] }
+            { Mult      : ["../output/cartographer/matcher/map_{subcutaneous_fat}.nc", 5.5e-9] }
         ],
         [
             "scaled_tumour",
-            { Mult      : ["../output/cartographer/matcher/map_{tumour}.nc", 2.0e-9] }
+            { Mult      : ["../output/cartographer/matcher/map_{tumour}.nc", 5.5e-9] }
         ],
         [
             "scaled_upper_blood_net_dermis",
-            { Mult      : ["../output/cartographer/matcher/map_{upper_blood_net_dermis}.nc", 2.0e-9] }
+            { Mult      : ["../output/cartographer/matcher/map_{upper_blood_net_dermis}.nc", 5.5e-9] }
         ],
         [
             "skin",
