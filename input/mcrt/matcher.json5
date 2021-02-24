@@ -3,8 +3,8 @@
     grid        : { There   : 'misc/grid/8mm_41.json5' },
     engine      : "Standard",
     sett        : { Here    : {
-        num_phot            : 1e7,
-        block_size          : 1e5,
+        num_phot            : 1e5,
+        block_size          : 1e3,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
         min_weight          : 0.05,
