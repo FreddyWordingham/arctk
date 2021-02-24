@@ -11,6 +11,6 @@
         "ALA":  ["res/map/ala_diff_map.nc", "res/map/ala_init_map.nc", null],
         // "PpIX":  ["misc/map/skin.nc", null, null],
     } },
-    multipliers : "res/map/unit.nc",
+    multipliers : "res/map/multipliers.nc",
     reactor: { There    : 'misc/reactor/ppix.json5' }
 }
