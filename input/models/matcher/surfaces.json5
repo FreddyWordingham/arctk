@@ -56,5 +56,10 @@
     base    : {
         attr: 'dermis_to_tumour',
         mesh: [["res/objs/matcher/base.obj"], {scale:1.0e-3}]
+    },
+
+    spectrometer    : {
+        attr: 'spectro',
+        mesh: [['res/objs/matcher/led.obj'], {scale: 1.0e-3, trans: [0.0, 0.0, 2.1e-3]}]
     }
 }

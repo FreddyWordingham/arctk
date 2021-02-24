@@ -12,4 +12,5 @@
     PD_to_tumour        : { Interface   : ['tumour',                    'papillary_dermis'] },
     UBND_to_tumour      : { Interface   : ['tumour',                    'upper_blood_net_dermis'] },
     dermis_to_tumour    : { Interface   : ['tumour',                    'dermis'] },
+    spectro : { Spectrometer    : ['main_spec', [100e-9, 1100e-9], 1000] },
 }
