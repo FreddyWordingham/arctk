@@ -28,7 +28,7 @@
         // res         : [2048, 2048],
         // ss_power    : 2
     } },
-    grads   : { There   : 'res/grads/collection.json5' },
-    attrs   : { There   : 'models/matcher/aesthetics.json5' },
-    surfs   : { There   : 'models/matcher/surfaces.json5' },
+    grads   : { There   : 'misc/grads/collection.json5' },
+    attrs   : { There   : 'models/tumour/aesthetics.json5' },
+    surfs   : { There   : 'models/tumour/surfaces.json5' },
 }
