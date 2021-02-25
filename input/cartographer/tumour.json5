@@ -1,0 +1,13 @@
+{
+    tree    : { There   : 'misc/tree/t5_d8.json5' },
+    grid    : { There   : 'misc/grid/8mm_41.json5' },
+    sett    : { Here    : {
+        block_size      : 1e3,
+        bump_dist       : 1e-9,
+        loop_limit      : 1e4,
+        caster          : { Radiant: 101 },
+        super_sampling  : { Uniform: [16, 16, 16] }
+    } },
+    surfs   : { There   : 'models/tumour/surfaces.json5' },
+    attrs   : { There   : 'models/tumour/attributes.json5' }
+}
