@@ -1,0 +1,15 @@
+{   // Surface attributes.
+    air_to_SC           : { Opaque   : 'amin' },
+    SC_to_LE            : { Opaque   : 'atlas' },
+    LE_to_PD            : { Opaque   : 'by_design' },
+    PD_to_UBND          : { Opaque   : 'citrus_peel' },
+    UBND_to_dermis      : { Opaque   : 'copper' },
+    dermis_to_DBND      : { Opaque   : 'crystal_clear' },
+    DBND_to_SF          : { Opaque   : 'dania' },
+    air_to_tumour       : { Opaque   : 'dark_ocean' },
+    SC_to_tumour        : { Opaque   : 'harvey' },
+    LE_to_tumour        : { Opaque   : 'jshine' },
+    PD_to_tumour        : { Opaque   : 'king_yna' },
+    UBND_to_tumour      : { Opaque   : 'rainbow_blue' },
+    dermis_to_tumour    : { Opaque   : 'starfall' },
+}

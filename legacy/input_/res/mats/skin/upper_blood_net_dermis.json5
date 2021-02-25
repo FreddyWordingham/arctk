@@ -1,0 +1,6 @@
+{
+    ref_index   : { Constant: 1.39      },
+    scat_coeff  : { Constant: 35.0e3    },
+    abs_coeff   : { Constant: 0.142e3   },
+    asym_fact   : { Constant: 0.95      }
+}

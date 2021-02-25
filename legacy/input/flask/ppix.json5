@@ -5,34 +5,14 @@
         quality     :   0.999,
         min_time    :   1e-9
     } },
-    init    : { Here    : [
-            ["ALA", 1.0],
-    ] },
-    sources : { Here    : [
-            ["Udens", 1e-3],
-            ["O2", 0.001],
-            ["Fe", 0.0001]
-    ] },
-    reactor: { Here     : [
-        {
-            rate        : [0.001, [["ALA", 1]]],
-            reactants   : [["ALA", 4]],
-            products    : [["PpIX", 1]],
-        },
-        {
-            rate        : [0.1, [["ALA", 1], ["Fe", 1]]],
-            reactants   : [["PpIX", 1], ["Fe", 1]],
-            products    : [["Haem", 1]],
-        },
-        {
-            rate        : [0.5, [["PpIX", 1], ["Udens", 1], ["O2", 1]]],
-            reactants   : [["PpIX", 1], ["Udens", 1], ["O2", 1]],
-            products    : [["PpIX", 0.9], ["ROS", 1]],
-        },
-        {
-            rate        : [10.0, [["ROS", 1]]],
-            reactants   : [["ROS", 1]],
-            products    : [["CD", 1]],
-        },
-    ] }
+    init    : [
+            ["ALA", 0.1],
+            ["Udens", 0.05],
+            ["O2", 0.02],
+    ],
+    sources : [
+            // ["O2", 0.001],
+            // ["Fe", 0.0001]
+    ],
+    reactor: { There    : 'misc/reactor/pdt.json5' }
 }
