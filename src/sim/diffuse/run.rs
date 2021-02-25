@@ -75,6 +75,9 @@ pub fn integrate(
     for _ in 0..num_steps {
         rates = calc_rates(input, &values, rates, voxel_size_sq);
         values += &(&rates * dt);
+
+        values.mapv_inplace(|x| if x < 0.0 { 0.0 } else { x });
+
         // Potentially check for -ve values here.
         pb.tick();
     }
@@ -103,7 +106,7 @@ fn calc_rates(
         let index = [xi, yi, zi];
 
         let stencil = stencil::Grad::new(index, values);
-        rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
+        rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
     }
 
     rates

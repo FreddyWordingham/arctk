@@ -3,7 +3,7 @@
     ops: [
         [
             "scaled_stratum_corneum",
-            { Mult      : ["../output/cartographer/skin/map_{stratum_corneum}.nc", 1.0] }
+            { Mult      : ["../output/cartographer/skin/map_{stratum_corneum}.nc", 10.0] }
         ],
         [
             "scaled_living_epidermis",
@@ -15,7 +15,7 @@
         ],
         [
             "scaled_upper_blood_net_dermis",
-            { Mult      : ["../output/cartographer/skin/map_{upper_blood_net_dermis}.nc", 10.0] }
+            { Mult      : ["../output/cartographer/skin/map_{upper_blood_net_dermis}.nc", 20.0] }
         ],
         [
             "scaled_dermis",
@@ -23,7 +23,7 @@
         ],
         [
             "scaled_deep_blood_net_dermis",
-            { Mult      : ["../output/cartographer/skin/map_{deep_blood_net_dermis}.nc", 10.0] }
+            { Mult      : ["../output/cartographer/skin/map_{deep_blood_net_dermis}.nc", 20.0] }
         ],
         [
             "scaled_subcutaneous_fat",
