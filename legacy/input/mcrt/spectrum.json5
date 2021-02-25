@@ -22,8 +22,8 @@
         mat     : "air"
     } },
     mats        : { Here    : {
-        air     : { There    : 'res/mats/misc/air.json5' },
-        black   : { There    : 'res/mats/misc/black.json5' }
+        air     : { There    : 'misc/mats/misc/air.json5' },
+        black   : { There    : 'misc/mats/misc/black.json5' }
     } },
     attrs       : { Here    : {
             black   : { Interface       : ['black', 'air'] },

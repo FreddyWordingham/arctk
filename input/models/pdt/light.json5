@@ -1,6 +1,6 @@
 {
     power   : 128.125e-3, // 82mW in a 8mm^2 plane.
-    emit    : { Surface : [['res/objs/matcher/led.obj'], {scale: 1.0e-3, trans: [0.0, 0.0, 2.0e-3]}] },
+    emit    : { Surface : [['res/objs/pdt/led.obj'], {scale: 1.0e-3, trans: [0.0, 0.0, 2.0e-3]}] },
     spec    : { There   : 'misc/spectra/aktilite.json5' },
     mat     : "air"
 }
