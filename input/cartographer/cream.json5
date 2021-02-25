@@ -8,6 +8,13 @@
         caster          : { Radiant: 101 },
         super_sampling  : { Uniform: [16, 16, 16] }
     } },
-    surfs   : { There   : 'models/skin/surfaces.json5' },
-    attrs   : { There   : 'models/skin/attributes.json5' }
+    surfs   : { Here    : {
+        centerpiece     : {
+            attr: 'air_to_cream',
+            mesh: [['res/objs/cream/disc.obj'], { scale:1.0e-3 } ]
+        },
+    } },
+    attrs   : { Here   : {
+        air_to_cream    : { Interface   : ['cream', 'air'] },
+    } },
 }
