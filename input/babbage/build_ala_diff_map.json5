@@ -30,7 +30,7 @@
             { Mult      : ["../output/cartographer/skin/map_{subcutaneous_fat}.nc", 3.33e-6] }
         ],
         [
-            "ala_diff_map",
+            "ala_diff",
             { Sum     : [
                 "../output/scaled_stratum_corneum.nc",
                 "../output/scaled_living_epidermis.nc",
@@ -43,7 +43,7 @@
         ],
         [
             "info",
-            { Info    : "../output/ala_diff_map.nc" }
+            { Info    : "../output/ala_diff.nc" }
         ]
     ]
 }

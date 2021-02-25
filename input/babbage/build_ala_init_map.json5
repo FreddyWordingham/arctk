@@ -6,12 +6,12 @@
             { Norm  : "../output/cartographer/cream/map_{cream}.nc" }
         ],
         [
-            "ala_init_map",
+            "ala_init",
             { Mult      : ["../output/cream_unit.nc", 7.17e20] }
         ],
         [
             "info",
-            { Info    : "../output/ala_init_map.nc" }
+            { Info    : "../output/ala_init.nc" }
         ]
     ]
 }
