@@ -11,7 +11,6 @@ use crate::{
     util::fmt::Analyze,
 };
 use ndarray::Array3;
-use ndarray_stats::QuantileExt;
 use std::path::Path;
 
 /// Possible operation enumeration.
@@ -100,12 +99,7 @@ impl Operation {
             Self::Sub(ref data, x) => (data - x).save(&path.with_extension("nc")),
             Self::Mult(ref data, x) => (data * x).save(&path.with_extension("nc")),
             Self::Div(ref data, x) => (data / x).save(&path.with_extension("nc")),
-            Self::Norm(ref data) => {
-                let max = *data
-                    .max()
-                    .unwrap_or_else(|_| panic!("Failed to determine maximum value."));
-                (data / max).save(&path.with_extension("nc"))
-            }
+            Self::Norm(ref data) => (data / data.sum()).save(&path.with_extension("nc")),
             Self::Sample(ref points, ref data, ref grid) => {
                 let mut weights = Vec::with_capacity(points.len());
                 for point in points {
