@@ -132,6 +132,7 @@
 <span id="129">129</span>
 <span id="130">130</span>
 <span id="131">131</span>
+<span id="132">132</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Reaction-diffusion simulation binary.</span>
 <span class="doccomment">//! Compute the time evolution of a set of reacting and diffusing species.</span>
@@ -214,7 +215,8 @@
 
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Running&quot;</span>);
     <span class="kw">let</span> <span class="ident">_data</span> <span class="op">=</span>
-        <span class="ident">run</span>::<span class="ident">single_thread</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>, <span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="ident">values</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to run reactor simulation.&quot;</span>);
+        <span class="comment">// run::single_thread(&amp;out_dir, &amp;input, values).expect(&quot;Failed to run reactor simulation.&quot;);</span>
+    <span class="ident">run</span>::<span class="ident">multi_thread</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>, <span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="ident">values</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to run reactor simulation.&quot;</span>);
 
     <span class="comment">// section(term_width, &quot;Saving&quot;);</span>
     <span class="comment">// data.save(&amp;out_dir.join(&quot;final.nc&quot;))</span>

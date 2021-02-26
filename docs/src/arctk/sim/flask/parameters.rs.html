@@ -58,9 +58,9 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Parameters</span> {
     <span class="doccomment">/// Simulation specific settings.</span>
     <span class="kw">pub</span> <span class="ident">sett</span>: <span class="ident">Settings</span>,
-    <span class="doccomment">/// Initial concentrations.</span>
+    <span class="doccomment">/// Initial values.</span>
     <span class="kw">pub</span> <span class="ident">init</span>: <span class="ident">ArrayLinker</span>,
-    <span class="doccomment">/// Sources/sinks.</span>
+    <span class="doccomment">/// Sources.</span>
     <span class="kw">pub</span> <span class="ident">sources</span>: <span class="ident">ArrayLinker</span>,
     <span class="doccomment">/// Reactions.</span>
     <span class="kw">pub</span> <span class="ident">reactor</span>: <span class="ident">ReactorLinker</span>,
@@ -91,7 +91,7 @@
         <span class="macro">writeln</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;...&quot;</span>)<span class="question-mark">?</span>;
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">sett</span>, <span class="string">&quot;settings&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">init</span>, <span class="string">&quot;initial values&quot;</span>);
-        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">sources</span>, <span class="string">&quot;sources/sinks&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">sources</span>, <span class="string">&quot;sources&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">reactor</span>, <span class="string">&quot;reactor&quot;</span>);
         <span class="prelude-val">Ok</span>(())
     }

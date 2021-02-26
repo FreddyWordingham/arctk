@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["integrate","Integrate forward a given amount of time."],["multi_thread","Run a single-threaded reaction-diffusion simulation."]]});

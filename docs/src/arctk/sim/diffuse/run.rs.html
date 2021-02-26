@@ -113,6 +113,7 @@
 <span id="110">110</span>
 <span id="111">111</span>
 <span id="112">112</span>
+<span id="113">113</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Simulation control functions.</span>
 
@@ -120,6 +121,7 @@
     <span class="ident">err</span>::<span class="ident">Error</span>,
     <span class="ident">fs</span>::<span class="ident">Save</span>,
     <span class="ident">math</span>::<span class="ident">Vec3</span>,
+    <span class="ident">ord</span>::{<span class="ident">X</span>, <span class="ident">Y</span>},
     <span class="ident">sim</span>::<span class="ident">diffuse</span>::{<span class="ident">stencil</span>, <span class="ident">Input</span>},
     <span class="ident">tools</span>::<span class="ident">ProgressBar</span>,
 };
@@ -190,10 +192,13 @@
     <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">num_steps</span> {
         <span class="ident">rates</span> <span class="op">=</span> <span class="ident">calc_rates</span>(<span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="ident">values</span>, <span class="ident">rates</span>, <span class="ident">voxel_size_sq</span>);
         <span class="ident">values</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span>(<span class="kw-2">&amp;</span><span class="ident">rates</span> <span class="op">*</span> <span class="ident">dt</span>);
+
+        <span class="ident">values</span>.<span class="ident">mapv_inplace</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span> <span class="number">0.0</span> { <span class="number">0.0</span> } <span class="kw">else</span> { <span class="ident">x</span> });
+
         <span class="comment">// Potentially check for -ve values here.</span>
         <span class="ident">pb</span>.<span class="ident">tick</span>();
     }
-    <span class="ident">pb</span>.<span class="ident">finish_with_message</span>(<span class="string">&quot;Simulation complete.&quot;</span>);
+    <span class="ident">pb</span>.<span class="ident">finish_with_message</span>(<span class="string">&quot;Step complete.&quot;</span>);
 
     (<span class="ident">values</span>, <span class="ident">rates</span>)
 }
@@ -209,19 +214,16 @@
     <span class="ident">voxel_size_sq</span>: <span class="kw-2">&amp;</span><span class="ident">Vec3</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">input</span>.<span class="ident">grid</span>.<span class="ident">res</span>();
-    <span class="kw">let</span> [<span class="ident">rx</span>, <span class="ident">ry</span>, <span class="ident">rz</span>] <span class="op">=</span> <span class="ident">res</span>;
 
-    <span class="kw">for</span> <span class="ident">xi</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">rx</span> {
-        <span class="kw">for</span> <span class="ident">yi</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">ry</span> {
-            <span class="kw">for</span> <span class="ident">zi</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">rz</span> {
-                <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> [<span class="ident">xi</span>, <span class="ident">yi</span>, <span class="ident">zi</span>];
+    <span class="kw">for</span> <span class="ident">n</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">values</span>.<span class="ident">len</span>() {
+        <span class="kw">let</span> <span class="ident">xi</span> <span class="op">=</span> <span class="ident">n</span> <span class="op">%</span> <span class="ident">res</span>[<span class="ident">X</span>];
+        <span class="kw">let</span> <span class="ident">yi</span> <span class="op">=</span> (<span class="ident">n</span> <span class="op">/</span> <span class="ident">res</span>[<span class="ident">X</span>]) <span class="op">%</span> <span class="ident">res</span>[<span class="ident">Y</span>];
+        <span class="kw">let</span> <span class="ident">zi</span> <span class="op">=</span> <span class="ident">n</span> <span class="op">/</span> (<span class="ident">res</span>[<span class="ident">X</span>] <span class="op">*</span> <span class="ident">res</span>[<span class="ident">Y</span>]);
 
-                <span class="comment">// let stencil = stencil::Reflect::new(index, values);</span>
-                <span class="kw">let</span> <span class="ident">stencil</span> <span class="op">=</span> <span class="ident">stencil</span>::<span class="ident">Grad</span>::<span class="ident">new</span>(<span class="ident">index</span>, <span class="ident">values</span>);
-                <span class="ident">rates</span>[<span class="ident">index</span>] <span class="op">=</span>
-                    <span class="ident">stencil</span>.<span class="ident">rate</span>(<span class="ident">input</span>.<span class="ident">coeffs</span>[<span class="ident">index</span>], <span class="ident">voxel_size_sq</span>) <span class="op">+</span> <span class="ident">input</span>.<span class="ident">sources</span>[<span class="ident">index</span>];
-            }
-        }
+        <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> [<span class="ident">xi</span>, <span class="ident">yi</span>, <span class="ident">zi</span>];
+
+        <span class="kw">let</span> <span class="ident">stencil</span> <span class="op">=</span> <span class="ident">stencil</span>::<span class="ident">Grad</span>::<span class="ident">new</span>(<span class="ident">index</span>, <span class="ident">values</span>);
+        <span class="ident">rates</span>[<span class="ident">index</span>] <span class="op">=</span> <span class="ident">stencil</span>.<span class="ident">rate</span>(<span class="ident">input</span>.<span class="ident">coeffs</span>[<span class="ident">index</span>], <span class="ident">voxel_size_sq</span>) <span class="op">+</span> <span class="ident">input</span>.<span class="ident">sources</span>[<span class="ident">index</span>];
     }
 
     <span class="ident">rates</span>

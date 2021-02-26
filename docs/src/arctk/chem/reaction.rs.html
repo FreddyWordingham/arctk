@@ -44,7 +44,7 @@
 <span class="doccomment">//! Reaction structure.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">chem</span>::<span class="ident">Rate</span>;
-<span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array1</span>;
+<span class="kw">use</span> <span class="ident">ndarray</span>::{<span class="ident">Array1</span>, <span class="ident">ArrayView1</span>};
 
 <span class="doccomment">/// Reaction.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
@@ -68,7 +68,7 @@
     <span class="doccomment">/// Determine the rate of change for each chemical within the system.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">concs</span>: <span class="kw-2">&amp;</span><span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">concs</span>: <span class="kw-2">&amp;</span><span class="ident">ArrayView1</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">rate</span>.<span class="ident">rate</span>(<span class="ident">concs</span>) <span class="op">*</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">coeffs</span>
     }
 
