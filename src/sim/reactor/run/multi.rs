@@ -12,8 +12,11 @@ use crate::{
 use ndarray::{Array1, Array2, Array4, Axis};
 use ndarray_stats::QuantileExt;
 use rayon::prelude::*;
-use std::sync::{Arc, Mutex};
-use std::{f64::MIN_POSITIVE, path::PathBuf};
+use std::{
+    f64::MIN_POSITIVE,
+    path::PathBuf,
+    sync::{Arc, Mutex},
+};
 
 /// Run a single-threaded reaction-diffusion simulation.
 /// # Errors
