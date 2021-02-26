@@ -3,7 +3,7 @@
     sett    : { Here    : {
         time        :   1800,                           // Total integration time (s).
         dumps       :   1e2,                            // Intermient outputs.
-        block_size  :   1e3,
+        block_size  :   1e2,
         quality     :   0.8,                            // Quality parameter (0-1).
         min_time    :   1.0e-9,                         // Minimum reaction time step size (s).
     } },

@@ -1,7 +1,7 @@
 //! Reactor structure.
 
 use crate::{chem::Rate, fmt_report};
-use ndarray::{Array1, Array2};
+use ndarray::{Array1, Array2, ArrayView1};
 use std::fmt::{Display, Error, Formatter};
 
 /// Complete reactor structure.
@@ -27,7 +27,7 @@ impl Reactor {
     /// Calculate the reaction rates.
     #[inline]
     #[must_use]
-    fn rates(&self, concs: &Array1<f64>) -> Array1<f64> {
+    fn rates(&self, concs: &ArrayView1<f64>) -> Array1<f64> {
         debug_assert!(concs.len() == self.coeffs.ncols());
 
         self.rates.iter().map(|r| r.rate(concs)).collect()
@@ -36,7 +36,7 @@ impl Reactor {
     /// Calculate the overall rate of change given the current concentrations.
     #[inline]
     #[must_use]
-    pub fn deltas(&self, concs: &Array1<f64>) -> Array1<f64> {
+    pub fn deltas(&self, concs: &ArrayView1<f64>) -> Array1<f64> {
         debug_assert!(concs.len() == self.coeffs.ncols());
 
         let rates = self.rates(concs);

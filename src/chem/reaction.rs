@@ -1,7 +1,7 @@
 //! Reaction structure.
 
 use crate::chem::Rate;
-use ndarray::Array1;
+use ndarray::{Array1, ArrayView1};
 
 /// Reaction.
 #[derive(Clone)]
@@ -25,7 +25,7 @@ impl Reaction {
     /// Determine the rate of change for each chemical within the system.
     #[inline]
     #[must_use]
-    pub fn rate(&self, concs: &Array1<f64>) -> Array1<f64> {
+    pub fn rate(&self, concs: &ArrayView1<f64>) -> Array1<f64> {
         self.rate.rate(concs) * &self.coeffs
     }
 

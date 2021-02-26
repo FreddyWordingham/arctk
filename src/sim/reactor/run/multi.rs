@@ -9,7 +9,7 @@ use crate::{
     sim::reactor::{stencil, Input},
     tools::ProgressBar,
 };
-use ndarray::{Array1, Array4, Axis};
+use ndarray::{Array1, Array2, Array4, Axis};
 use ndarray_stats::QuantileExt;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
@@ -66,7 +66,7 @@ pub fn multi_thread(
 pub fn integrate(
     input: &Input,
     mut values: Array4<f64>,
-    mut rates: Array4<f64>,
+    mut swap: Array4<f64>,
     voxel_size_sq: &Vec3,
     time: f64,
     tar_dt: f64,
@@ -80,22 +80,26 @@ pub fn integrate(
     let mut pb = ProgressBar::new("Diffusion-Reaction", num_steps);
     for _ in 0..num_steps {
         // First reaction half-step.
-        values = react(input, values, dt / 2.0)?;
+        let values_swap = react(input, values, swap, dt / 2.0)?;
+        values = values_swap.0;
+        swap = values_swap.1;
 
         // Full diffusion step.
-        let values_rates = diffuse(input, values, rates, voxel_size_sq, dt)?;
-        values = values_rates.0;
-        rates = values_rates.1;
+        let values_swap = diffuse(input, values, swap, voxel_size_sq, dt)?;
+        values = values_swap.0;
+        swap = values_swap.1;
         // Potentially check for -ve values here (from sink terms).
 
         // Last reaction half-step.
-        values = react(input, values, dt / 2.0)?;
+        let values_swap = react(input, values, swap, dt / 2.0)?;
+        values = values_swap.0;
+        swap = values_swap.1;
 
         pb.tick();
     }
     pb.finish_with_message("Step complete.");
 
-    Ok((values, rates))
+    Ok((values, swap))
 }
 
 /// Diffusion rate calculation function.
@@ -157,7 +161,7 @@ fn diffuse_impl(
     ];
 
     let block_size = input.sett.block_size();
-    let mut holder = ndarray::Array2::zeros([rs, block_size]);
+    let mut holder = Array2::zeros([rs, block_size]);
 
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
@@ -197,27 +201,42 @@ fn diffuse_impl(
 /// Reaction calculation function.
 #[allow(clippy::expect_used)]
 #[inline]
-fn react(input: &Input, values: Array4<f64>, time: f64) -> Result<Array4<f64>, Error> {
+fn react(
+    input: &Input,
+    values: Array4<f64>,
+    new_values: Array4<f64>,
+    time: f64,
+) -> Result<(Array4<f64>, Array4<f64>), Error> {
     debug_assert!(time > 0.0);
 
     let pb = ProgressBar::new("Multi-threaded", values.len() / input.specs.len());
     let pb = Arc::new(Mutex::new(pb));
 
-    let values = Mutex::new(values);
+    let new_values = Mutex::new(new_values);
 
     let threads: Vec<_> = (0..num_cpus::get()).collect();
     let _out: Vec<_> = threads
         .par_iter()
-        .map(|_id| react_impl(input, &values, time, &Arc::clone(&pb)))
+        .map(|_id| react_impl(input, &values, &new_values, time, &Arc::clone(&pb)))
         .collect();
 
-    Ok(values.into_inner().expect("Failed to unwrap values array."))
+    let new_values = new_values
+        .into_inner()
+        .expect("Failed to unwrap new values array.");
+
+    Ok((new_values, values))
 }
 
 /// Reaction calculation function.
 #[allow(clippy::expect_used)]
 #[inline]
-fn react_impl(input: &Input, values: &Mutex<Array4<f64>>, time: f64, pb: &Arc<Mutex<ProgressBar>>) {
+fn react_impl(
+    input: &Input,
+    values: &Array4<f64>,
+    new_values: &Mutex<Array4<f64>>,
+    time: f64,
+    pb: &Arc<Mutex<ProgressBar>>,
+) {
     debug_assert!(time > 0.0);
 
     let [rs, rx, ry, _rz] = [
@@ -227,10 +246,15 @@ fn react_impl(input: &Input, values: &Mutex<Array4<f64>>, time: f64, pb: &Arc<Mu
         input.grid.res()[Z],
     ];
 
-    let mut concs = Array1::zeros(rs);
-    let mut ks = [concs.clone(), concs.clone(), concs.clone(), concs.clone()];
-
     let block_size = input.sett.block_size();
+    let mut concs = Array2::zeros([rs, block_size]);
+    let mut ks: [Array1<f64>; 4] = [
+        Array1::zeros(rs),
+        Array1::zeros(rs),
+        Array1::zeros(rs),
+        Array1::zeros(rs),
+    ];
+
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
         let b = pb.block(block_size);
@@ -243,12 +267,12 @@ fn react_impl(input: &Input, values: &Mutex<Array4<f64>>, time: f64, pb: &Arc<Mu
             let zi = n / (rx * ry);
 
             for si in 0..rs {
-                concs[si] = values.lock().expect("Could not lock values array.")[[si, xi, yi, zi]]
-                    + MIN_POSITIVE;
+                concs[[si, n - start]] = values[[si, xi, yi, zi]] + MIN_POSITIVE;
             }
 
             let concs_ks = evolve_rk4(
                 input.reactor,
+                n - start,
                 concs,
                 ks,
                 time * input.multipliers[[xi, yi, zi]],
@@ -257,10 +281,16 @@ fn react_impl(input: &Input, values: &Mutex<Array4<f64>>, time: f64, pb: &Arc<Mu
             );
             concs = concs_ks.0;
             ks = concs_ks.1;
+        }
+
+        let mut new_values = new_values.lock().expect("Could not lock value array.");
+        for n in start..end {
+            let xi = n % rx;
+            let yi = (n / rx) % ry;
+            let zi = n / (rx * ry);
 
             for si in 0..rs {
-                values.lock().expect("Could not lock values array.")[[si, xi, yi, zi]] =
-                    concs[si] - MIN_POSITIVE;
+                new_values[[si, xi, yi, zi]] = concs[[si, n - start]] - MIN_POSITIVE;
             }
         }
     }
@@ -272,22 +302,25 @@ fn react_impl(input: &Input, values: &Mutex<Array4<f64>>, time: f64, pb: &Arc<Mu
 #[must_use]
 fn evolve_rk4(
     reactor: &Reactor,
-    mut concs: Array1<f64>,
-    mut ks: [Array1<f64>; 4],
+    n: usize,
+    mut concs: Array2<f64>,
+    mut rates: [Array1<f64>; 4],
     total_time: f64,
     quality: f64,
     min_time: f64,
-) -> (Array1<f64>, [Array1<f64>; 4]) {
+) -> (Array2<f64>, [Array1<f64>; 4]) {
     debug_assert!(total_time > 0.0);
     debug_assert!(quality > 0.0);
     debug_assert!(quality < 1.0);
     debug_assert!(min_time <= total_time);
 
+    let mut cs = concs.index_axis_mut(ndarray::Axis(1), n);
+
     let mut time = 0.0;
     while time < total_time {
-        ks[0] = reactor.deltas(&concs);
+        rates[0] = reactor.deltas(&cs.view());
 
-        let dt = ((&concs / &ks[0])
+        let dt = ((&cs / &rates[0])
             .max()
             .expect("Failed to determine minimum rate of change.")
             * quality)
@@ -296,13 +329,13 @@ fn evolve_rk4(
         let half_dt = dt * 0.5;
         let sixth_dt = dt / 6.0;
 
-        ks[1] = reactor.deltas(&(&concs + &(&ks[0] * half_dt)));
-        ks[2] = reactor.deltas(&(&concs + &(&ks[1] * half_dt)));
-        ks[3] = reactor.deltas(&(&concs + &(&ks[2] * dt)));
+        rates[1] = reactor.deltas(&(&cs + &(&rates[0] * half_dt)).view());
+        rates[2] = reactor.deltas(&(&cs + &(&rates[1] * half_dt)).view());
+        rates[3] = reactor.deltas(&(&cs + &(&rates[2] * dt)).view());
 
-        concs += &(&(&ks[0] + &(2.0 * (&ks[1] + &ks[2])) + &ks[3]) * sixth_dt);
+        cs += &(&(&rates[0] + &(2.0 * (&rates[1] + &rates[2])) + &rates[3]) * sixth_dt);
         time += dt;
     }
 
-    (concs, ks)
+    (concs, rates)
 }

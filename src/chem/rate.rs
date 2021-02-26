@@ -1,6 +1,6 @@
 //! Rate structure.
 
-use ndarray::{Array1, ArrayView1};
+use ndarray::ArrayView1;
 use std::fmt::{Display, Formatter};
 
 /// Rate of reaction.
@@ -37,7 +37,7 @@ impl Rate {
     /// Calculate the current rate given the current concentrations.
     #[inline]
     #[must_use]
-    pub fn rate(&self, concs: &Array1<f64>) -> f64 {
+    pub fn rate(&self, concs: &ArrayView1<f64>) -> f64 {
         let mut r = self.k;
 
         for &(c, m) in &self.orders {

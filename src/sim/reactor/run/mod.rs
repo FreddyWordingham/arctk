@@ -1,7 +1,7 @@
 //! Reactor running module.
 
 pub mod multi;
-pub mod single;
+// pub mod single;
 
 pub use self::multi::*;
-pub use self::single::*;
+// pub use self::single::*;

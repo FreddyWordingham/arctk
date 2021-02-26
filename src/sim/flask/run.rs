@@ -73,7 +73,7 @@ fn evolve_rk4(
     let mut k3;
     let mut k4;
     while time < total_time {
-        k1 = reactor.deltas(&values);
+        k1 = reactor.deltas(&values.view());
 
         let dt = ((&values / &k1)
             .map(|v| v.abs())
@@ -85,9 +85,9 @@ fn evolve_rk4(
         let half_dt = dt * 0.5;
         let sixth_dt = dt / 6.0;
 
-        k2 = reactor.deltas(&(&values + &(&k1 * half_dt)));
-        k3 = reactor.deltas(&(&values + &(&k2 * half_dt)));
-        k4 = reactor.deltas(&(&values + &(&k3 * dt)));
+        k2 = reactor.deltas(&(&values + &(&k1 * half_dt)).view());
+        k3 = reactor.deltas(&(&values + &(&k2 * half_dt)).view());
+        k4 = reactor.deltas(&(&values + &(&k3 * dt)).view());
 
         values += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
         values += &(sources * dt);
