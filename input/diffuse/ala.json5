@@ -6,6 +6,6 @@
         block_size  :   1e3,
         quality     :   0.8,                            // Quality parameter (0-1).
     } },
-    init    : "misc/map/ala_init.nc",                   // Initial value map.
     coeffs  : "misc/map/ala_diff.nc",                   // Diffusion coefficents.
+    init    : "misc/map/ala_init.nc",                   // Initial value map.
 }

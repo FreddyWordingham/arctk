@@ -1,0 +1,29 @@
+{
+    grid    : { There   : 'misc/grid/8mm_41.json5' },
+    sett    : { Here    : {
+        time        :   1800,                           // Total integration time (s).
+        dumps       :   1e2,                            // Intermient outputs.
+        block_size  :   1e3,
+        quality     :   0.8,                            // Quality parameter (0-1).
+        min_time    :   1.0e-9,                         // Minimum reaction time step size (s).
+    } },
+    coeffs_values_sources   : { Here    : {
+        "ALA"   :   [
+            "misc/map/ala_diff.nc",
+            "misc/map/ala_init.nc",
+            null
+        ],
+        // "O2"    :   [
+        //     "res/map/o2_diff_map.nc",
+        //     null,
+        //     "res/map/o2_source_map.nc"
+        // ],
+        // "PpIX"  :   [
+        //     "misc/map/skin.nc",
+        //     null,
+        //     null
+        // ],
+    } },
+    multipliers : "misc/map/multipliers.nc",
+    reactor: { There    : 'misc/reactor/ppix.json5' }
+}
