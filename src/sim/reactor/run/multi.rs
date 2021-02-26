@@ -186,13 +186,13 @@ fn diffuse_impl(
         }
 
         let mut rates = rates.lock().expect("Could not lock rate array.");
-        for n in 0..(end - start) {
+        for n in start..end {
             let xi = n % rx;
             let yi = (n / rx) % ry;
             let zi = n / (rx * ry);
 
             for si in 0..rs {
-                rates[[si, xi, yi, zi]] = holder[[si, n]];
+                rates[[si, xi, yi, zi]] = holder[[si, n - start]];
             }
         }
     }
