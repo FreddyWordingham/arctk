@@ -157,6 +157,8 @@ fn diffuse_impl(
     ];
 
     let block_size = input.sett.block_size();
+    let mut holder = ndarray::Array2::zeros([rs, block_size]);
+
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
         let b = pb.block(block_size);
@@ -171,8 +173,22 @@ fn diffuse_impl(
             for si in 0..rs {
                 let index = [si, xi, yi, zi];
                 let stencil = stencil::Grad::new(index, values);
-                rates.lock().expect("Could not lock rate array.")[index] =
+                // rates.lock().expect("Could not lock rate array.")[index] =
+                //     stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
+
+                holder[[si, n - start]] =
                     stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
+            }
+        }
+
+        let mut rates = rates.lock().expect("Could not lock rate array.");
+        for n in 0..(end - start) {
+            let xi = n % rx;
+            let yi = (n / rx) % ry;
+            let zi = n / (rx * ry);
+
+            for si in 0..rs {
+                rates[[si, xi, yi, zi]] = holder[[si, n]];
             }
         }
     }
