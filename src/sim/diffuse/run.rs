@@ -41,8 +41,8 @@ pub fn single_thread(
     let max_dt = min_voxel_size_sq / (8.0 * max_coeff);
     let dt = max_dt * (1.0 - input.sett.quality()).min(1.0).max(0.0);
 
-    let steps = input.sett.dumps() + 1;
-    let dump_step_time = input.sett.time() / steps as f64;
+    let steps = 1 + input.sett.dumps();
+    let step_time = input.sett.time() / steps as f64;
 
     // Allocation.
     let mut rates = Array3::zeros(*input.grid.res());
@@ -53,7 +53,7 @@ pub fn single_thread(
 
     // Time loop.
     for n in 0..steps {
-        let vr = diffuse(input, &voxel_size_sq, dump_step_time, dt, values, rates);
+        let vr = diffuse(input, &voxel_size_sq, step_time, dt, values, rates);
         values = vr.0;
         rates = vr.1;
 
@@ -82,8 +82,13 @@ pub fn diffuse(
     debug_assert!(dt > 0.0);
 
     // Constants.
-    let num_steps = (time / dt) as usize;
-    dt = time / num_steps as f64;
+    println!("<< time   : {}", time);
+    println!("<< dt     : {}", dt);
+    let steps = 1 + (time / dt) as usize;
+    println!(">> steps  : {}", steps);
+    dt = time / steps as f64;
+    println!(">> dt     : {}", dt);
+    println!(">> (*)    : {}", dt * steps as f64);
 
     // Threading.
     let pb = ProgressBar::new("Diffusing step", values.len());
@@ -92,11 +97,11 @@ pub fn diffuse(
     let threads: Vec<_> = (0..num_cpus::get()).collect();
 
     // Evolution.
-    for _n in 0..num_steps {
+    for _n in 0..steps {
         // Calculate diffusion rates.
         let _out: Vec<_> = threads
             .par_iter()
-            .map(|_id| diffuse_impl(input, voxel_size_sq, &values, &rates, &Arc::clone(&pb)))
+            .map(|_id| calc_diffuse_rates(input, voxel_size_sq, &values, &rates, &Arc::clone(&pb)))
             .collect();
 
         // Apply diffusion.
@@ -117,10 +122,10 @@ pub fn diffuse(
     (values, rates)
 }
 
-/// Diffusion actualisation function.
+/// Calculate the diffusion rates.
 #[allow(clippy::expect_used)]
 #[inline]
-fn diffuse_impl(
+fn calc_diffuse_rates(
     input: &Input,
     voxel_size_sq: &Vec3,
     values: &Array3<f64>,
@@ -134,7 +139,7 @@ fn diffuse_impl(
     // Allocation.
     let mut holder = Array1::zeros(block_size);
 
-    // Rates.
+    // Rate calculations.
     while let Some((start, end)) = {
         let mut pb = pb.lock().expect("Could not lock progress bar.");
         let b = pb.block(block_size);

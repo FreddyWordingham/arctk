@@ -4,14 +4,14 @@
         [
             "fill",
             { Fill  : {
-                res     :   [51, 101, 201],
-                mins    :   [0, 0, 0],
-                maxs    :   [1, 1, 1],
+                res     :   [101, 101, 101],
+                mins    :   [40, 40, 40],
+                maxs    :   [62, 62, 62],
             } }
         ],
         [
             "fill",
-            { Mult    : ["../output/fill.nc", 50.0] }
+            { Mult    : ["../output/fill.nc", 1.0] }
         ],
         [
             "info",
