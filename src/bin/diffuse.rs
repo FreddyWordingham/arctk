@@ -3,7 +3,7 @@
 
 use arctk::{
     args,
-    fs::{File, Load, Save},
+    fs::{File, Load},
     ord::Build,
     report,
     sim::diffuse::{run, Input, Parameters, ParametersBuilderLoader},
@@ -42,8 +42,7 @@ fn main() {
     report!(input, "input");
 
     section(term_width, "Running");
-    let data =
-        run::single_thread(&out_dir, &input, concs).expect("Failed to run diffuse simulation.");
+    run::single_thread(&input, concs, &out_dir).expect("Failed to run diffuse simulation.");
 
     section(term_width, "Finished");
 }

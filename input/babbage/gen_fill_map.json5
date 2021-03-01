@@ -1,0 +1,21 @@
+
+{
+    ops: [
+        [
+            "fill",
+            { Fill  : {
+                res     :   [51, 101, 201],
+                mins    :   [0, 0, 0],
+                maxs    :   [1, 1, 1],
+            } }
+        ],
+        [
+            "fill",
+            { Mult    : ["../output/fill.nc", 50.0] }
+        ],
+        [
+            "info",
+            { Info    : "../output/fill.nc" }
+        ]
+    ]
+}

@@ -55,7 +55,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
         // Tick.
         pb.tick();
     }
-    pb.finish_with_message("Integration complete.");
+    pb.finish_with_message("Reaction complete.");
 
     Ok(data)
 }

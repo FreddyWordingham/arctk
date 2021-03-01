@@ -1,11 +1,11 @@
 {
-    grid    : { There   : 'misc/grid/8mm_101.json5' },
+    grid    : { There   : 'misc/grid/test.json5' },
     sett    : { Here    : {
         time        :   1800,                           // Total integration time (s).
         dumps       :   1e2,                            // Intermient outputs.
-        block_size  :   1e1,
-        quality     :   0.1,                            // Quality parameter (0-1).
+        block_size  :   1e3,
+        quality     :   0.8,                            // Quality parameter (0-1).
     } },
-    init    : "misc/map/point.nc",                      // Initial value map.
+    init    : "misc/map/fill.nc",                      // Initial value map.
     coeffs  : "misc/map/nano.nc",                       // Diffusion coefficents.
 }
