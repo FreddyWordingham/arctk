@@ -110,16 +110,11 @@ fn diffuse(
     mut rates: Array3<f64>,
 ) -> Array3<f64> {
     // Constants.
-    let [rx, ry, _rz] = *input.grid.res();
+    let res = *input.grid.res();
 
     // Rates.
     for n in 0..values.len() {
-        let xi = n % rx;
-        let yi = (n / rx) % ry;
-        let zi = n / (rx * ry);
-
-        let index = [xi, yi, zi];
-
+        let index = crate::tools::index::linear_to_three_dim(n, &res);
         let stencil = stencil::Grad::new(index, values);
         rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
     }
