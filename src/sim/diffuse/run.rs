@@ -4,7 +4,6 @@ use crate::{
     err::Error,
     fs::Save,
     math::Vec3,
-    ord::{X, Y},
     sim::diffuse::{stencil, Input},
     tools::ProgressBar,
 };
@@ -83,11 +82,17 @@ pub fn integrate(
 
     let mut pb = ProgressBar::new("Diffusing", num_steps);
     for _ in 0..num_steps {
-        rates = calc_rates(input, &values, rates, voxel_size_sq);
+        // Evolve values.
+        rates = diffuse(voxel_size_sq, input, &values, rates);
         values += &(&rates * dt);
 
+        // Apply source terms.
+        values += &(input.sources * dt);
+
+        // Check for zero.
         values.mapv_inplace(|x| x.max(0.0));
 
+        // Progress.
         pb.tick();
     }
     pb.finish_with_message("Integration complete.");
@@ -95,27 +100,28 @@ pub fn integrate(
     (values, rates)
 }
 
-/// Diffusion rate calculation function.
+/// Diffusion-rate calculation function.
 #[allow(clippy::expect_used)]
 #[inline]
-#[must_use]
-fn calc_rates(
+fn diffuse(
+    voxel_size_sq: &Vec3,
     input: &Input,
     values: &Array3<f64>,
     mut rates: Array3<f64>,
-    voxel_size_sq: &Vec3,
 ) -> Array3<f64> {
-    let res = *input.grid.res();
+    // Constants.
+    let [rx, ry, _rz] = *input.grid.res();
 
+    // Rates.
     for n in 0..values.len() {
-        let xi = n % res[X];
-        let yi = (n / res[X]) % res[Y];
-        let zi = n / (res[X] * res[Y]);
+        let xi = n % rx;
+        let yi = (n / rx) % ry;
+        let zi = n / (rx * ry);
 
         let index = [xi, yi, zi];
 
         let stencil = stencil::Grad::new(index, values);
-        rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
+        rates[index] = stencil.rate(input.coeffs[index], voxel_size_sq);
     }
 
     rates

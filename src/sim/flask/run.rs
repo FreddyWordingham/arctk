@@ -34,8 +34,9 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
     // Time loop.
     let mut pb = ProgressBar::new("Reacting", steps);
     for n in 0..steps {
+        // React.
         let time = dt * (n + 1) as f64;
-        values = evolve_rk4(
+        values = react(
             values,
             input.sources,
             &mut rates,
@@ -45,11 +46,13 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
             min_time,
         );
 
+        // Record.
         data[[n + 1, 0]] = time;
         for (i, val) in values.iter().enumerate() {
             data[[n + 1, i + 1]] = *val;
         }
 
+        // Tick.
         pb.tick();
     }
     pb.finish_with_message("Integration complete.");
@@ -62,7 +65,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-fn evolve_rk4(
+fn react(
     mut values: Array1<f64>,
     sources: &Array1<f64>,
     rates: &mut [Array1<f64>; 4],
@@ -78,6 +81,7 @@ fn evolve_rk4(
 
     let mut time = 0.0;
     while time < total_time {
+        // Rates and dt.
         rates[0] = reactor.deltas(&values.view());
 
         let dt = (((&values + MIN_POSITIVE) / &rates[0])
@@ -94,13 +98,16 @@ fn evolve_rk4(
         rates[2] = reactor.deltas(&(&values + &(&rates[1] * half_dt)).view());
         rates[3] = reactor.deltas(&(&values + &(&rates[2] * dt)).view());
 
+        // Evolve values.
         values += &(&(&rates[0] + &(2.0 * (&rates[1] + &rates[2])) + &rates[3]) * sixth_dt);
+
+        // Apply source terms.
         values += &(sources * dt);
 
-        values.map_inplace(|elem| {
-            *elem = elem.max(0.0);
-        });
+        // Check for zero.
+        values.mapv_inplace(|x| x.max(0.0));
 
+        // Progress.
         time += dt;
     }
 
