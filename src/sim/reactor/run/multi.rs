@@ -180,9 +180,6 @@ fn diffuse_impl(
             for si in 0..rs {
                 let index = [si, xi, yi, zi];
                 let stencil = stencil::Grad::new(index, values);
-                // rates.lock().expect("Could not lock rate array.")[index] =
-                //     stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
-
                 holder[[si, n - start]] =
                     stencil.rate(input.coeffs[index], voxel_size_sq) + input.sources[index];
             }
