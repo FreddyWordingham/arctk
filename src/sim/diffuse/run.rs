@@ -22,6 +22,7 @@ pub fn single_thread(
     input: &Input,
     mut values: Array3<f64>,
 ) -> Result<Array3<f64>, Error> {
+    // Constants.
     let voxel_size = input.grid.voxel_size();
     let voxel_size_sq = Vec3::new(
         voxel_size.x * voxel_size.x,
@@ -40,14 +41,21 @@ pub fn single_thread(
     let steps = input.sett.dumps() + 1;
     let step_time = input.sett.time() / steps as f64;
 
+    // Allocation.
     let mut rates = Array3::zeros(*input.grid.res());
+
+    // Initial value write.
+    values.save(&out_dir.join(&format!("{:03}_diff.nc", 0)))?;
+    rates.save(&out_dir.join(&format!("{:03}_rate.nc", 0)))?;
+
+    // Time loop.
     for n in 0..steps {
         let vr = integrate(input, values, rates, &voxel_size_sq, step_time, dt);
         values = vr.0;
         rates = vr.1;
 
-        values.save(&out_dir.join(&format!("{:03}_diff.nc", n)))?;
-        rates.save(&out_dir.join(&format!("{:03}_rate.nc", n)))?;
+        values.save(&out_dir.join(&format!("{:03}_diff.nc", n + 1)))?;
+        rates.save(&out_dir.join(&format!("{:03}_rate.nc", n + 1)))?;
     }
 
     Ok(values)
@@ -78,7 +86,7 @@ pub fn integrate(
         rates = calc_rates(input, &values, rates, voxel_size_sq);
         values += &(&rates * dt);
 
-        values.mapv_inplace(|x| x.min(0.0));
+        values.mapv_inplace(|x| x.max(0.0));
 
         pb.tick();
     }
@@ -87,7 +95,7 @@ pub fn integrate(
     (values, rates)
 }
 
-/// Rate calculation function.
+/// Diffusion rate calculation function.
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]

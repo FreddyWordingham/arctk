@@ -10,11 +10,13 @@ use std::f64::MIN_POSITIVE;
 /// if the progress bar can not be locked.
 #[inline]
 pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error> {
+    // Constants.
     let steps = input.sett.dumps() + 1;
     let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
     let quality = 1.0 - input.sett.quality();
     let min_time = input.sett.min_time();
 
+    // Allocation.
     let mut data = Array2::zeros([steps + 1, values.len() + 1]);
     let mut rates = [
         Array1::zeros(values.len()),
@@ -23,11 +25,13 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
         Array1::zeros(values.len()),
     ];
 
+    // Initial value write.
     data[[0, 0]] = 0.0;
     for (i, val) in values.iter().enumerate() {
         data[[0, i + 1]] = *val;
     }
 
+    // Time loop.
     let mut pb = ProgressBar::new("Reacting", steps);
     for n in 0..steps {
         let time = dt * (n + 1) as f64;

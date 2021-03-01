@@ -45,10 +45,6 @@ fn main() {
     let data =
         run::single_thread(&out_dir, &input, concs).expect("Failed to run diffuse simulation.");
 
-    section(term_width, "Saving");
-    data.save(&out_dir.join("final.nc"))
-        .expect("Failed to save output data.");
-
     section(term_width, "Finished");
 }
 
