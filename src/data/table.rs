@@ -1,6 +1,7 @@
 //! Data table implementation.
 
 use crate::{access, err::Error, fs::Save};
+use ndarray::Array2;
 use std::{
     fmt::{Display, Formatter},
     fs::File,
@@ -41,6 +42,30 @@ impl<T> Table<T> {
     #[must_use]
     pub fn into_inner(self) -> Vec<Vec<T>> {
         self.rows
+    }
+}
+
+impl<T: Copy> Table<T> {
+    /// Construct a new instance from a two-dimensional array.
+    #[inline]
+    #[must_use]
+    pub fn new_from_array(headings: Vec<String>, values: Array2<T>) -> Self {
+        debug_assert!(!headings.is_empty());
+        debug_assert!(values.ncols() == headings.len());
+
+        let num_rows = values.nrows();
+        let num_cols = values.ncols();
+
+        let mut rows = Vec::with_capacity(num_rows);
+        for i in 0..num_rows {
+            let mut row = Vec::with_capacity(num_cols);
+            for j in 0..num_cols {
+                row.push(values[[i, j]]);
+            }
+            rows.push(row);
+        }
+
+        Self { headings, rows }
     }
 }
 

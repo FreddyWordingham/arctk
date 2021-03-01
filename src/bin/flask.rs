@@ -3,6 +3,7 @@
 
 use arctk::{
     args,
+    data::Table,
     fs::{File, Load, Save},
     ord::{Link, Register},
     report,
@@ -13,6 +14,7 @@ use arctk::{
         fmt::term,
     },
 };
+use ndarray::Array2;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -66,9 +68,7 @@ fn main() {
     let data = run(values, &input).expect("Failed to run flask simulation.");
 
     section(term_width, "Saving");
-    // report!(data, "data");
-    data.save(&out_dir.join("values.csv"))
-        .expect("Failed to save output data.");
+    save(&input, data, &out_dir);
 
     section(term_width, "Finished");
 }
@@ -109,4 +109,19 @@ fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Para
     report!(params, "parameters");
 
     params
+}
+
+/// Save the output data.
+fn save(input: &Input, data: Array2<f64>, out_dir: &Path) {
+    let names = input.specs.names_list();
+    let mut headings = Vec::with_capacity(1 + names.len());
+    headings.push("time".to_string());
+    for name in &names {
+        headings.push(name.as_string());
+    }
+
+    let table = Table::new_from_array(headings, data);
+    table
+        .save(&out_dir.join("values.csv"))
+        .expect("Failed to save output data.");
 }
