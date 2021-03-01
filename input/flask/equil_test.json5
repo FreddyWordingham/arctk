@@ -1,7 +1,7 @@
 {
     sett    : { Here    : {
         time        :   10.0,
-        dumps       :   100,
+        dumps       :   98,
         quality     :   0.99,
         min_time    :   1e-9
     } },
