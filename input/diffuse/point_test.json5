@@ -2,8 +2,8 @@
     grid    : { There   : 'misc/grid/8mm_101.json5' },
     sett    : { Here    : {
         time        :   18,                            // Total integration time (s).
-        dumps       :   99,                             // Intermient outputs.
-        // dumps       :   9,                             // Intermient outputs.
+        // dumps       :   99,                             // Intermient outputs.
+        dumps       :   9,                             // Intermient outputs.
         block_size  :   1e3,
         quality     :   0.9,                            // Quality parameter (0-1).
     } },

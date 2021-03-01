@@ -146,14 +146,14 @@ fn calc_diffuse_rates(
         std::mem::drop(pb);
         b
     } {
-        // Calculate values.
+        // Calculate rates.
         for n in start..end {
             let index = crate::tools::index::linear_to_three_dim(n, &res);
             let stencil = stencil::Grad::new(index, values);
             holder[n - start] = stencil.rate(input.coeffs[index], voxel_size_sq);
         }
 
-        // Apply values.
+        // Store rates.
         {
             let mut rates = rates.lock().expect("Could not lock rate array.");
             for n in start..end {
