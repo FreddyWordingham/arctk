@@ -80,7 +80,6 @@ pub fn integrate(
 
         values.mapv_inplace(|x| x.min(0.0));
 
-        // Potentially check for -ve values here.
         pb.tick();
     }
     pb.finish_with_message("Integration complete.");
