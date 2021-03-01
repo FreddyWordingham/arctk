@@ -23,6 +23,11 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
         Array1::zeros(values.len()),
     ];
 
+    data[[0, 0]] = 0.0;
+    for (i, val) in values.iter().enumerate() {
+        data[[0, i + 1]] = *val;
+    }
+
     let mut pb = ProgressBar::new("Integrating", steps);
     for n in 0..steps {
         let time = dt * n as f64;
@@ -36,9 +41,9 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
             min_time,
         );
 
-        data[[n, 0]] = time;
+        data[[n + 1, 0]] = time;
         for (i, val) in values.iter().enumerate() {
-            data[[n, i + 1]] = *val;
+            data[[n + 1, i + 1]] = *val;
         }
 
         pb.tick();
