@@ -16,11 +16,25 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
     let min_time = input.sett.min_time();
 
     let mut data = Array2::zeros([steps + 1, values.len() + 1]);
+    let mut rates = [
+        Array1::zeros(values.len()),
+        Array1::zeros(values.len()),
+        Array1::zeros(values.len()),
+        Array1::zeros(values.len()),
+    ];
 
     let mut pb = ProgressBar::new("Integrating", steps);
     for n in 0..steps {
         let time = dt * n as f64;
-        values = evolve_rk4(values, input.sources, input.reactor, dt, quality, min_time);
+        values = evolve_rk4(
+            values,
+            input.sources,
+            &mut rates,
+            input.reactor,
+            dt,
+            quality,
+            min_time,
+        );
 
         data[[n, 0]] = time;
         for (i, val) in values.iter().enumerate() {
@@ -40,6 +54,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
 fn evolve_rk4(
     mut values: Array1<f64>,
     sources: &Array1<f64>,
+    rates: &mut [Array1<f64>; 4],
     reactor: &Reactor,
     total_time: f64,
     quality: f64,
@@ -51,14 +66,10 @@ fn evolve_rk4(
     debug_assert!(min_time <= total_time);
 
     let mut time = 0.0;
-    let mut k1;
-    let mut k2;
-    let mut k3;
-    let mut k4;
     while time < total_time {
-        k1 = reactor.deltas(&values.view());
+        rates[0] = reactor.deltas(&values.view());
 
-        let dt = (((&values + MIN_POSITIVE) / &k1)
+        let dt = (((&values + MIN_POSITIVE) / &rates[0])
             .map(|v| v.abs())
             .min()
             .expect("Failed to determine minimum rate of change.")
@@ -68,11 +79,11 @@ fn evolve_rk4(
         let half_dt = dt * 0.5;
         let sixth_dt = dt / 6.0;
 
-        k2 = reactor.deltas(&(&values + &(&k1 * half_dt)).view());
-        k3 = reactor.deltas(&(&values + &(&k2 * half_dt)).view());
-        k4 = reactor.deltas(&(&values + &(&k3 * dt)).view());
+        rates[1] = reactor.deltas(&(&values + &(&rates[0] * half_dt)).view());
+        rates[2] = reactor.deltas(&(&values + &(&rates[1] * half_dt)).view());
+        rates[3] = reactor.deltas(&(&values + &(&rates[2] * dt)).view());
 
-        values += &(&(&k1 + &(2.0 * (k2 + k3)) + &k4) * sixth_dt);
+        values += &(&(&rates[0] + &(2.0 * (&rates[1] + &rates[2])) + &rates[3]) * sixth_dt);
         values += &(sources * dt);
 
         values.map_inplace(|elem| {
@@ -81,6 +92,8 @@ fn evolve_rk4(
 
         time += dt;
     }
+
+    // k1 = ();
 
     values
 }

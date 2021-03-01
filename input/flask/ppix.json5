@@ -2,7 +2,7 @@
     sett    : { Here    : {
         time        :   1800.0,
         dumps       :   1e3,
-        quality     :   0.999,
+        quality     :   0.99999,
         min_time    :   1e-9
     } },
     init    : [
