@@ -37,13 +37,15 @@ pub fn single_thread(
     let max_dt = min_voxel_size_sq / (8.0 * max_coeff);
     let dt = max_dt * (1.0 - input.sett.quality()).min(1.0).max(0.0);
 
-    let steps = input.sett.dumps();
+    let steps = input.sett.dumps() + 1;
     let step_time = input.sett.time() / steps as f64;
+
     let mut rates = Array3::zeros(*input.grid.res());
     for n in 0..steps {
         let vr = integrate(input, values, rates, &voxel_size_sq, step_time, dt);
         values = vr.0;
         rates = vr.1;
+
         values.save(&out_dir.join(&format!("{:03}_diff.nc", n)))?;
         rates.save(&out_dir.join(&format!("{:03}_rate.nc", n)))?;
     }
