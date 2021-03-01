@@ -6,9 +6,10 @@
         min_time    :   1e-9
     } },
     init    : [
+        ["A", 0.5],
     ],
     sources : [
-        ["A", 0.1],
+        ["A", -0.1],
     ],
     reactor: { Here     : [
         {
