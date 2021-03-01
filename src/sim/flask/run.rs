@@ -94,7 +94,5 @@ fn evolve_rk4(
         time += dt;
     }
 
-    // k1 = ();
-
     values
 }
