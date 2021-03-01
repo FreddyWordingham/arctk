@@ -49,7 +49,7 @@ impl<T: Copy> Table<T> {
     /// Construct a new instance from a two-dimensional array.
     #[inline]
     #[must_use]
-    pub fn new_from_array(headings: Vec<String>, values: Array2<T>) -> Self {
+    pub fn new_from_array(headings: Vec<String>, values: &Array2<T>) -> Self {
         debug_assert!(!headings.is_empty());
         debug_assert!(values.ncols() == headings.len());
 

@@ -10,8 +10,6 @@ use std::f64::MIN_POSITIVE;
 /// if the progress bar can not be locked.
 #[inline]
 pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error> {
-    values += MIN_POSITIVE;
-
     let steps = input.sett.dumps() + 1;
     let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
     let quality = 1.0 - input.sett.quality();
@@ -60,7 +58,7 @@ fn evolve_rk4(
     while time < total_time {
         k1 = reactor.deltas(&values.view());
 
-        let dt = ((&values / &k1)
+        let dt = (((&values + MIN_POSITIVE) / &k1)
             .map(|v| v.abs())
             .min()
             .expect("Failed to determine minimum rate of change.")
@@ -78,7 +76,7 @@ fn evolve_rk4(
         values += &(sources * dt);
 
         values.map_inplace(|elem| {
-            *elem = elem.max(MIN_POSITIVE);
+            *elem = elem.max(0.0);
         });
 
         time += dt;

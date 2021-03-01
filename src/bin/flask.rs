@@ -120,7 +120,7 @@ fn save(input: &Input, data: Array2<f64>, out_dir: &Path) {
         headings.push(name.as_string());
     }
 
-    let table = Table::new_from_array(headings, data);
+    let table = Table::new_from_array(headings, &data);
     table
         .save(&out_dir.join("values.csv"))
         .expect("Failed to save output data.");
