@@ -45,6 +45,7 @@ pub fn multi_thread(
 
     let steps = input.sett.dumps();
     let step_time = input.sett.time() / steps as f64;
+
     let mut rates = Array4::zeros(values.raw_dim());
     for n in 0..steps {
         let vr = integrate(input, values, rates, &voxel_size_sq, step_time, dt)?;
@@ -100,7 +101,7 @@ pub fn integrate(
 
         pb.tick();
     }
-    pb.finish_with_message("Step complete.");
+    pb.finish_with_message("Integration complete.");
 
     Ok((values, swap))
 }

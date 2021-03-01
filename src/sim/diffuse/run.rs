@@ -83,7 +83,7 @@ pub fn integrate(
         // Potentially check for -ve values here.
         pb.tick();
     }
-    pb.finish_with_message("Step complete.");
+    pb.finish_with_message("Integration complete.");
 
     (values, rates)
 }

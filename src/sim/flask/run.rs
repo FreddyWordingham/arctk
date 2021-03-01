@@ -28,7 +28,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
         data[[0, i + 1]] = *val;
     }
 
-    let mut pb = ProgressBar::new("Integrating", steps);
+    let mut pb = ProgressBar::new("Reacting", steps);
     for n in 0..steps {
         let time = dt * (n + 1) as f64;
         values = evolve_rk4(
@@ -48,6 +48,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
 
         pb.tick();
     }
+    pb.finish_with_message("Integration complete.");
 
     Ok(data)
 }
