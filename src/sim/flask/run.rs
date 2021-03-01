@@ -47,7 +47,8 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
     Ok(data)
 }
 
-/// Evolve forward the given amount of time.
+/// Evolve forward the given amount of time using RK4.
+/// Rates parameter prevents having to re-allocate for RK4 values.
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
