@@ -76,7 +76,7 @@ pub fn integrate(
         rates = calc_rates(input, &values, rates, voxel_size_sq);
         values += &(&rates * dt);
 
-        values.mapv_inplace(|x| if x < 0.0 { 0.0 } else { x });
+        values.mapv_inplace(|x| x.min(0.0));
 
         // Potentially check for -ve values here.
         pb.tick();

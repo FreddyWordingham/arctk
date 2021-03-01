@@ -30,7 +30,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
 
     let mut pb = ProgressBar::new("Integrating", steps);
     for n in 0..steps {
-        let time = dt * n as f64;
+        let time = dt * (n + 1) as f64;
         values = evolve_rk4(
             values,
             input.sources,
