@@ -105,6 +105,7 @@ pub fn diffuse(
             .collect();
 
         // Apply diffusion.
+        println!("** dt     : {}", dt);
         values += &(&(*rates.lock().expect("Could not lock rates array.")) * dt);
 
         // Apply source terms.
