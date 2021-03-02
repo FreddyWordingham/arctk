@@ -34,6 +34,7 @@ fn main() {
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
+    report!(sett, "settings");
 
     sub_section(term_width, "Registration");
     let mut spec_names = params.reactor.requires();
@@ -52,7 +53,7 @@ fn main() {
         .sources
         .link(spec_reg.set())
         .expect("Failed to link species to sources.");
-    report!(sources, "sources");
+    report!(sources, "sources/sinks");
 
     let reactor = params
         .reactor
