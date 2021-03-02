@@ -19,7 +19,7 @@ pub fn multi_thread<'a>(
     input: &'a Input,
     output: &Output<'a>,
 ) -> Result<Output<'a>, Error> {
-    let pb = ProgressBar::new("Multi-threaded", input.sett.num_phot());
+    let pb = ProgressBar::new("MCRT", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
     let threads: Vec<_> = (0..num_cpus::get()).collect();
@@ -35,21 +35,6 @@ pub fn multi_thread<'a>(
     }
 
     Ok(data)
-}
-
-/// Run a MCRT simulation using a single thread.
-/// # Errors
-/// if the progress bar can not be locked.
-#[inline]
-pub fn single_thread<'a>(
-    engine: Engine,
-    input: &'a Input,
-    output: Output<'a>,
-) -> Result<Output<'a>, Error> {
-    let pb = ProgressBar::new("Single-threaded", input.sett.num_phot());
-    let pb = Arc::new(Mutex::new(pb));
-
-    Ok(thread(engine, input, output, &pb))
 }
 
 /// Thread control function.

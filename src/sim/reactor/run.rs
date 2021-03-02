@@ -18,7 +18,7 @@ use std::{
     sync::{Arc, Mutex},
 };
 
-/// Run a single-threaded reaction-diffusion simulation.
+/// Run a multi-threaded reaction-diffusion simulation.
 /// # Errors
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
@@ -42,7 +42,7 @@ pub fn multi_thread(
         .max()
         .expect("Failed to determine maximum coefficient.");
     let max_diff_dt = min_voxel_size_sq / (8.0 * max_coeff);
-    let dt = max_diff_dt * (1.0 - input.sett.quality()).min(1.0).max(0.0);
+    let dt = max_diff_dt * (1.0 - input.sett.d_quality()).min(1.0).max(0.0);
 
     let steps = 1 + input.sett.dumps();
     let step_time = input.sett.time() / steps as f64;
@@ -58,17 +58,25 @@ pub fn multi_thread(
     }
 
     // Main integration loop.
+    // Evolution.
+    let mut pb = ProgressBar::new("Diffusion-Reaction", steps);
     for n in 0..steps {
+        // Evolve.
         let values_swap = evolve(input, &voxel_size_sq, step_time, dt, values, swap)?;
         values = values_swap.0;
         swap = values_swap.1;
 
+        // Record.
         for (name, si) in input.specs.set().map() {
             values
                 .index_axis(Axis(0), *si)
                 .save(&out_dir.join(&format!("{:03}_{}_diff.nc", n + 1, name)))?;
         }
+
+        // Tick.
+        pb.tick();
     }
+    pb.finish_with_message("Simulation complete.");
 
     Ok(values)
 }
@@ -97,7 +105,7 @@ pub fn evolve(
     let mut swap = Mutex::new(swap);
 
     // Evolution.
-    let mut pb = ProgressBar::new("Diffusion-Reaction", steps);
+    let mut pb = ProgressBar::new("Stepping", steps);
     for _n in 0..steps {
         // First reaction half-step.
         let values_swap = react(input, dt / 2.0, values, swap)?;
@@ -144,7 +152,8 @@ fn react(
 ) -> Result<(Array4<f64>, Array4<f64>), Error> {
     debug_assert!(dt > 0.0);
 
-    let spb = Arc::new(Mutex::new(SilentProgressBar::new(
+    let spb = Arc::new(Mutex::new(ProgressBar::new(
+        "Reacting",
         values.len() / input.specs.len(),
     )));
     let threads: Vec<_> = (0..num_cpus::get()).collect();
@@ -155,7 +164,7 @@ fn react(
 
     let new_values = new_values.into_inner()?;
 
-    Ok((values, new_values))
+    Ok((new_values, values))
 }
 
 /// Enact the reactions.
@@ -166,15 +175,15 @@ fn react_impl(
     values: &Array4<f64>,
     new_values: &Mutex<Array4<f64>>,
     dt: f64,
-    pb: &Arc<Mutex<SilentProgressBar>>,
+    pb: &Arc<Mutex<ProgressBar>>,
 ) {
     debug_assert!(dt > 0.0);
 
     // Constants.
     let num_specs = input.specs.len();
     let res = *input.grid.res();
-    let block_size = input.sett.block_size();
-    let fraction = 1.0 - input.sett.quality();
+    let block_size = input.sett.r_block_size();
+    let fraction = 1.0 - input.sett.r_quality();
     let min_time = input.sett.min_time();
 
     // Allocation.
@@ -293,7 +302,8 @@ fn diffuse(
     debug_assert!(dt > 0.0);
 
     // Calculate diffusion rates.
-    let spb = Arc::new(Mutex::new(SilentProgressBar::new(
+    let spb = Arc::new(Mutex::new(ProgressBar::new(
+        "Diffusing",
         values.len() / input.specs.len(),
     )));
     let threads: Vec<_> = (0..num_cpus::get()).collect();
@@ -316,12 +326,12 @@ fn calc_diffuse_rates(
     voxel_size_sq: &Vec3,
     values: &Array4<f64>,
     rates: &Mutex<Array4<f64>>,
-    pb: &Arc<Mutex<SilentProgressBar>>,
+    pb: &Arc<Mutex<ProgressBar>>,
 ) {
     // Constants.
     let num_specs = input.specs.len();
     let res = *input.grid.res();
-    let block_size = input.sett.block_size();
+    let block_size = input.sett.d_block_size();
 
     // Allocation.
     let mut holder = Array2::zeros([num_specs, block_size]);
