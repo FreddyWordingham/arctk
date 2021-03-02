@@ -53,7 +53,7 @@ pub fn multi_thread(
 
     // Time loop.
     for n in 0..steps {
-        let vr = diffuse(input, &voxel_size_sq, step_time, dt, values, rates);
+        let vr = evolve(input, &voxel_size_sq, step_time, dt, values, rates);
         values = vr.0;
         rates = vr.1;
 
@@ -70,7 +70,7 @@ pub fn multi_thread(
 #[allow(clippy::expect_used)]
 #[inline]
 #[must_use]
-pub fn diffuse(
+pub fn evolve(
     input: &Input,
     voxel_size_sq: &Vec3,
     time: f64,

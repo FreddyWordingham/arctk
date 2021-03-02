@@ -1,10 +1,10 @@
 {
-    grid    : { There   : 'misc/grid/8mm_41.json5' },
+    grid    : { There   : 'misc/grid/8mm_101.json5' },
     sett    : { Here    : {
         time        :   1800,                           // Total integration time (s).
         dumps       :   1e2,                            // Intermient outputs.
         block_size  :   1e2,
-        quality     :   0.8,                            // Quality parameter (0-1).
+        quality     :   0.01,                            // Quality parameter (0-1).
         min_time    :   1.0e-9,                         // Minimum reaction time step size (s).
     } },
     coeffs_values_sources   : { Here    : {
