@@ -79,7 +79,7 @@ fn main() {
 
     section(term_width, "Running");
     let _data =
-        run::multi_thread(&out_dir, &input, values).expect("Failed to run reactor simulation.");
+        run::multi_thread(&input, values, &out_dir).expect("Failed to run reactor simulation.");
 
     section(term_width, "Finished");
 }
