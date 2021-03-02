@@ -11,6 +11,7 @@ use arctk::{
         banner::{section, sub_section, title},
         dir,
         fmt::term,
+        Analyze,
     },
 };
 use std::{
@@ -32,17 +33,22 @@ fn main() {
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
     let sett = params.sett;
+    report!(sett, "settings");
     let grid = params.grid;
+    report!(grid, "measurement grid");
     let coeffs = params.coeffs;
+    report!(coeffs.display(), "diffusion coefficients (m^2/s)");
     let sources = params.sources;
-    let concs = params.init;
+    report!(sources.display(), "sources/sinks");
+    let values = params.init;
+    report!(values.display(), "initial values");
 
     sub_section(term_width, "Input");
     let input = Input::new(&coeffs, &sources, &grid, &sett);
     report!(input, "input");
 
     section(term_width, "Running");
-    run::multi_thread(&input, concs, &out_dir).expect("Failed to run diffuse simulation.");
+    run::multi_thread(&input, values, &out_dir).expect("Failed to run diffuse simulation.");
 
     section(term_width, "Finished");
 }
