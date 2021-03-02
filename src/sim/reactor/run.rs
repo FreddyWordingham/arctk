@@ -100,7 +100,7 @@ pub fn evolve(
     // Evolution.
     let mut pb = ProgressBar::new("Diffusion-Reaction", steps);
     for _n in 0..steps {
-        let values_swap = diffuse(input, voxel_size_sq, time, dt, values, swap)?;
+        let values_swap = diffuse(input, voxel_size_sq, dt, values, swap)?;
         values = values_swap.0;
         swap = values_swap.1;
 
