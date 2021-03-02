@@ -42,7 +42,7 @@ fn main() {
     report!(input, "input");
 
     section(term_width, "Running");
-    run::single_thread(&input, concs, &out_dir).expect("Failed to run diffuse simulation.");
+    run::multi_thread(&input, concs, &out_dir).expect("Failed to run diffuse simulation.");
 
     section(term_width, "Finished");
 }

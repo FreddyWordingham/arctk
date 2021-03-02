@@ -15,12 +15,12 @@ use std::{
     sync::{Arc, Mutex},
 };
 
-/// Run a single-threaded Diffuse simulation.
+/// Run a diffusion simulation.
 /// # Errors
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn single_thread(
+pub fn multi_thread(
     input: &Input,
     mut values: Array3<f64>,
     out_dir: &PathBuf,
