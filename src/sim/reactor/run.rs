@@ -57,6 +57,7 @@ pub fn multi_thread(
             .save(&out_dir.join(&format!("{:03}_{}_diff.nc", 0, name)))?;
     }
 
+    // Main integration loop.
     for n in 0..steps {
         let values_swap = evolve(input, &voxel_size_sq, step_time, dt, values, swap)?;
         values = values_swap.0;

@@ -51,7 +51,7 @@ pub fn multi_thread(
     values.save(&out_dir.join(&format!("{:03}_diff.nc", 0)))?;
     rates.save(&out_dir.join(&format!("{:03}_rate.nc", 0)))?;
 
-    // Time loop.
+    // Main integration loop.
     for n in 0..steps {
         let vr = evolve(input, &voxel_size_sq, step_time, dt, values, rates);
         values = vr.0;

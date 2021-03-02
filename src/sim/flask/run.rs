@@ -31,7 +31,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
         data[[0, i + 1]] = *val;
     }
 
-    // Time loop.
+    // Main integration loop.
     let mut pb = ProgressBar::new("Reacting", steps);
     for n in 0..steps {
         // React.
