@@ -1,0 +1,21 @@
+{
+    grid    : { There   : 'misc/grid/8mm_41.json5' },
+    sett    : { Here    : {
+        time        :   1800,                           // Total integration time (s).
+        dumps       :   1e2,                            // Intermient outputs.
+        block_size  :   1e2,
+        quality     :   0.8,                            // Quality parameter (0-1).
+        min_time    :   1.0e-9,                         // Minimum reaction time step size (s).
+    } },
+    coeffs_values_sources   : { Here    : {
+        "A"   :   [
+            "misc/map/nano.nc",
+            "misc/map/point.nc",
+            null
+        ],
+    } },
+    multipliers : "misc/map/multipliers.nc",
+    reactor: { Here : {
+
+    } }
+}

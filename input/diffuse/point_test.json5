@@ -6,6 +6,6 @@
         block_size  :   1e5,
         quality     :   0.09,                           // Quality parameter (0-1).
     } },
-    init    : "misc/map/point.nc",                      // Initial value map.
     coeffs  : "misc/map/nano.nc",                       // Diffusion coefficents.
+    init    : "misc/map/point.nc",                      // Initial value map.
 }
