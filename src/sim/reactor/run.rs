@@ -48,7 +48,7 @@ pub fn multi_thread(
     let step_time = input.sett.time() / steps as f64;
 
     // Allocation.
-    let mut rates = Array4::zeros(values.raw_dim());
+    let mut swap = Array4::zeros(values.raw_dim());
 
     // Initial value write.
     for (name, si) in input.specs.set().map() {
@@ -58,9 +58,9 @@ pub fn multi_thread(
     }
 
     for n in 0..steps {
-        let vr = evolve(input, &voxel_size_sq, step_time, dt, values, rates);
-        values = vr.0;
-        rates = vr.1;
+        let values_swap = evolve(input, &voxel_size_sq, step_time, dt, values, swap)?;
+        values = values_swap.0;
+        swap = values_swap.1;
 
         for (name, si) in input.specs.set().map() {
             values
@@ -84,8 +84,8 @@ pub fn evolve(
     time: f64,
     mut dt: f64,
     mut values: Array4<f64>,
-    rates: Array4<f64>,
-) -> (Array4<f64>, Array4<f64>) {
+    swap: Array4<f64>,
+) -> Result<(Array4<f64>, Array4<f64>), Error> {
     debug_assert!(time > 0.0);
     debug_assert!(dt > 0.0);
 
@@ -94,23 +94,14 @@ pub fn evolve(
     dt = time / steps as f64;
 
     // Threading.
-    let rates = Mutex::new(rates);
-    let threads: Vec<_> = (0..num_cpus::get()).collect();
+    let mut swap = Mutex::new(swap);
 
     // Evolution.
     let mut pb = ProgressBar::new("Diffusion-Reaction", steps);
     for _n in 0..steps {
-        // Calculate diffusion rates.
-        let spb = Arc::new(Mutex::new(SilentProgressBar::new(
-            values.len() / input.specs.len(),
-        )));
-        let _out: Vec<_> = threads
-            .par_iter()
-            .map(|_id| calc_diffuse_rates(input, voxel_size_sq, &values, &rates, &Arc::clone(&spb)))
-            .collect();
-
-        // Apply diffusion.
-        values += &(&(*rates.lock().expect("Could not lock rates array.")) * dt);
+        let values_swap = diffuse(input, voxel_size_sq, time, dt, values, swap)?;
+        values = values_swap.0;
+        swap = values_swap.1;
 
         // Apply source terms.
         values += &(input.sources * dt);
@@ -122,9 +113,37 @@ pub fn evolve(
         pb.tick();
     }
 
-    let rates = rates.into_inner().expect("Failed to unwrap rates array.");
+    // Unwrapping.
+    let swap = swap.into_inner()?;
 
-    (values, rates)
+    Ok((values, swap))
+}
+
+/// Enact the diffusion process.
+/// Swap space is used to store the local diffusion rate.
+fn diffuse(
+    input: &Input,
+    voxel_size_sq: &Vec3,
+    dt: f64,
+    mut values: Array4<f64>,
+    rates: Mutex<Array4<f64>>,
+) -> Result<(Array4<f64>, Mutex<Array4<f64>>), Error> {
+    debug_assert!(dt > 0.0);
+
+    // Calculate diffusion rates.
+    let spb = Arc::new(Mutex::new(SilentProgressBar::new(
+        values.len() / input.specs.len(),
+    )));
+    let threads: Vec<_> = (0..num_cpus::get()).collect();
+    let _out: Vec<_> = threads
+        .par_iter()
+        .map(|_id| calc_diffuse_rates(input, voxel_size_sq, &values, &rates, &Arc::clone(&spb)))
+        .collect();
+
+    // Apply diffusion.
+    values += &(&(*rates.lock()?) * dt);
+
+    Ok((values, rates))
 }
 
 /// Calculate the diffusion rates.
