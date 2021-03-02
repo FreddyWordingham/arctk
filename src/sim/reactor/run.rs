@@ -7,7 +7,7 @@ use crate::{
     math::Vec3,
     ord::{X, Y, Z},
     sim::reactor::{stencil, Input},
-    tools::{ProgressBar, SilentProgressBar},
+    tools::ProgressBar,
 };
 use ndarray::{Array1, Array2, Array4, Axis};
 use ndarray_stats::QuantileExt;
@@ -74,6 +74,7 @@ pub fn multi_thread(
         }
 
         // Tick.
+        println!();
         pb.tick();
     }
     pb.finish_with_message("Simulation complete.");

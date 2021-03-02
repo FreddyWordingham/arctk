@@ -155,6 +155,7 @@ fn calc_diffuse_rates(
                 let index = crate::tools::index::linear_to_three_dim(n, &res);
                 rates[index] = holder[n - start];
             }
+            std::mem::drop(rates);
         }
     }
 }
