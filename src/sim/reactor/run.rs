@@ -78,7 +78,6 @@ pub fn multi_thread(
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
 #[inline]
-#[must_use]
 pub fn evolve(
     input: &Input,
     voxel_size_sq: &Vec3,
