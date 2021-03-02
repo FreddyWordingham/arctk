@@ -1,7 +1,0 @@
-{
-    spectrometer : {
-        // mesh    : [["res/objs/test/cube.obj"], {scale:1.0e-3}],
-        mesh    : [["res/objs/test/cube.obj"], null],
-        attr    : 'spec'
-    },
-}

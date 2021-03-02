@@ -1,3 +1,0 @@
-{   // Surface attributes.
-    glass   : { Interface   : ['glass', 'air'] },
-}

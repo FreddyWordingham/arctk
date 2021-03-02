@@ -1,9 +1,0 @@
-{   // Monte Carlo radiative transfer settings.
-    num_phot            : 1e4,      // Total number of photons to simulate.
-    block_size          : 1e3,      // Number of photons to run before requesting more.
-    bump_dist           : 1e-9,    // Distance to move past boundary collisions.
-    loop_limit          : 1e6,      // Total number of iterations allowed.
-    min_weight          : 5e-2,     // Minimum weight to consider before roulette.
-    roulette_barrels    : 8,        // Reciprocal chance of being show when playing roulette.
-    init_mat            : 'fog',    // Initial material obersevred by photons.
-}

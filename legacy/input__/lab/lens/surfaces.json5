@@ -1,6 +1,0 @@
-{
-    lens_front  : {
-        mesh    : [["res/objs/lens/lens_front.obj", "res/objs/lens/lens_back.obj"], null],
-        attr    : 'glass'
-    },
-}

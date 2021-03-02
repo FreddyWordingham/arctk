@@ -1,7 +1,0 @@
-{   // Sampling grid settings.
-    boundary: {                             // Boundary limits.
-        mins: [-4.0e-3, -4.0e-3, -4.0e-3],  // Minimum bound.
-        maxs: [ 4.0e-3,  4.0e-3,  4.0e-3],  // Maximum bound.
-    },
-    res: [201, 201, 201],                   // Sampling resolution in [x,y,z].
-}

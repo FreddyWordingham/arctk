@@ -1,6 +1,0 @@
-{
-    power   : 1.0,
-    emit    : { Surface: [['res/objs/skin/led.obj'], {scale: 1.0e-6, trans:[0,0,-1e-4]}] },
-    spec    : { Here: {Point: 6.3e-7}},
-    mat     : "fog"
-}

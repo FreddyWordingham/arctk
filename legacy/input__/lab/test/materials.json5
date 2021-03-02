@@ -1,4 +1,0 @@
-{   // List of material resources used.
-    fog                 : { There    : 'res/mats/misc/fog.json5' },
-    air                 : { There    : 'res/mats/misc/air.json5' },
-}

@@ -1,5 +1,0 @@
-{
-    ref_index   : { Line    : [0.7, 1.0e6]  },
-    scat_coeff  : { Constant: 1.0e-6        },
-    asym_fact   : { Constant: 0.001         }
-}
