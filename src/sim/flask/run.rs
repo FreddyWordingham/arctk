@@ -13,7 +13,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
     // Constants.
     let steps = input.sett.dumps() + 1;
     let dt = input.sett.time() / (input.sett.dumps() + 1) as f64;
-    let quality = 1.0 - input.sett.quality();
+    let fraction = 1.0 - input.sett.quality();
     let min_time = input.sett.min_time();
 
     // Allocation.
@@ -42,7 +42,7 @@ pub fn run(mut values: Array1<f64>, input: &Input) -> Result<Array2<f64>, Error>
             &mut rates,
             input.reactor,
             dt,
-            quality,
+            fraction,
             min_time,
         );
 
@@ -71,12 +71,12 @@ fn react(
     rates: &mut [Array1<f64>; 4],
     reactor: &Reactor,
     total_time: f64,
-    quality: f64,
+    fraction: f64,
     min_time: f64,
 ) -> Array1<f64> {
     debug_assert!(total_time > 0.0);
-    debug_assert!(quality > 0.0);
-    debug_assert!(quality < 1.0);
+    debug_assert!(fraction > 0.0);
+    debug_assert!(fraction < 1.0);
     debug_assert!(min_time <= total_time);
 
     let mut time = 0.0;
@@ -88,7 +88,7 @@ fn react(
             .map(|v| v.abs())
             .min()
             .expect("Failed to determine minimum rate of change.")
-            * quality)
+            * fraction)
             .max(min_time)
             .min(total_time - time);
         let half_dt = dt * 0.5;
