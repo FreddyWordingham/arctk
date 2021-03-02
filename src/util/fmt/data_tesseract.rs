@@ -9,6 +9,8 @@ use std::fmt::{Display, Error, Formatter};
 pub struct DataTesseract {
     /// Resolution.
     res: [usize; 4],
+    /// Sum of values.
+    sum: f64,
     /// Minimum value.
     min: f64,
     /// Maximum value.
@@ -39,6 +41,7 @@ impl DataTesseract {
 
         Self {
             res: [shape[0], shape[1], shape[2], shape[3]],
+            sum: data.sum(),
             min: *data.min().expect("Unable to determine minimum value."),
             max: *data.max().expect("Unable to determine maximum value."),
             ave,
@@ -64,6 +67,7 @@ impl Display for DataTesseract {
             self.res[0] * self.res[1] * self.res[2] * self.res[3],
             "length"
         );
+        fmt_report!(fmt, self.sum, "sum");
         fmt_report!(fmt, self.min, "minimum value");
         fmt_report!(fmt, self.max, "maximum value");
         fmt_report!(fmt, self.ave, "average value");

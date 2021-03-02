@@ -1,0 +1,21 @@
+
+{
+    ops: [
+        [
+            "info",
+            { Info    : "../output/diffuse/point/001_diff.nc" }
+        ],
+        [
+            "info",
+            { Info    : "../output/diffuse/point/010_diff.nc" }
+        ],
+        [
+            "info",
+            { Info    : "../output/diffuse/point/050_diff.nc" }
+        ],
+        [
+            "info",
+            { Info    : "../output/diffuse/point/100_diff.nc" }
+        ],
+    ]
+}

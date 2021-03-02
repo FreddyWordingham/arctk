@@ -13,6 +13,8 @@ use std::fmt::{Display, Error, Formatter};
 pub struct DataCube {
     /// Resolution.
     res: [usize; 3],
+    /// Sum of values.
+    sum: f64,
     /// Minimum value.
     min: f64,
     /// Maximum value.
@@ -43,6 +45,7 @@ impl DataCube {
 
         Self {
             res: [shape[X], shape[Y], shape[Z]],
+            sum: data.sum(),
             min: *data.min().expect("Unable to determine minimum value."),
             max: *data.max().expect("Unable to determine maximum value."),
             ave,
@@ -61,6 +64,7 @@ impl Display for DataCube {
             "resolution"
         );
         fmt_report!(fmt, self.res[X] * self.res[Y] * self.res[Z], "length");
+        fmt_report!(fmt, self.sum, "sum");
         fmt_report!(fmt, self.min, "minimum value");
         fmt_report!(fmt, self.max, "maximum value");
         fmt_report!(fmt, self.ave, "average value");
