@@ -9,7 +9,7 @@ use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
-/// Run a multi-threaded MCRT simulation.
+/// Run a multi-threaded Cartography simulation.
 /// # Errors
 /// if the progress bar can not be locked.
 #[allow(clippy::expect_used)]
@@ -33,7 +33,7 @@ pub fn multi_thread<'a>(input: &'a Input) -> Result<Output<'a>, Error> {
     Ok(data)
 }
 
-/// Run a MCRT simulation using a single thread.
+/// Run a Cartography simulation using a single thread.
 /// # Errors
 /// if the progress bar can not be locked.
 #[inline]
