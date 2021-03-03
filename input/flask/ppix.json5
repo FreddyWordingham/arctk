@@ -10,11 +10,12 @@
     ],
     sources : [
     ],
-    reactor: { Here : [
-        {   /// Char time: 15 min.
-            rate        : [0.00111111111,   [["ALA", 1]]],
-            reactants   : [["ALA", 4]],
-            products    : [["PpIX", 1]],
-        },
-    ] }
+    // reactor: { Here : [
+    //     {   /// Char time: 15 min.
+    //         rate        : [0.00111111111,   [["ALA", 1]]],
+    //         reactants   : [["ALA", 4]],
+    //         products    : [["PpIX", 1]],
+    //     },
+    // ] }
+    reactor: { There    : 'misc/reactor/ppix.json5' }
 }
