@@ -1,0 +1,5 @@
+{   // Adaptive-tree settings.
+    tar_tris    : 5,    // Target num triangles per leaf cell.
+    max_depth   : 6,    // Maximum tree splitting depth.
+    padding     : 0.01, // Fraction to increase leaf cells dimensions during detection.
+}
