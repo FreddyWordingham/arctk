@@ -1,0 +1,20 @@
+{
+    sett    : { Here    : {
+        time        :   1800.0,
+        dumps       :   118,
+        quality     :   0.99,
+        min_time    :   1e-9
+    } },
+    init    : [
+            ["ALA", 1.0],
+    ],
+    sources : [
+    ],
+    reactor: { Here : [
+        {   /// Char time: 15 min.
+            rate        : [0.00111111111,   [["ALA", 1]]],
+            reactants   : [["ALA", 4]],
+            products    : [["PpIX", 1]],
+        },
+    ] }
+}

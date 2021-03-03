@@ -1,0 +1,27 @@
+[
+    {   /// Char time: 15 min.
+        rate        : [0.00111111111,   [["ALA", 1]]],
+        reactants   : [["ALA", 4]],
+        products    : [["PpIX", 1]],
+    },
+    // {   /// Char time: 1 min.
+    //     rate        : [0.0166666667,    [["ALA", 1], ["Fe", 1]]],
+    //     reactants   : [["PpIX", 1], ["Fe", 1]],
+    //     products    : [["Haem", 1]],
+    // },
+    {   /// Char time: 1 min.
+        rate        : [0.0166666667,    [["PpIX", 1], ["Udens", 1], ["O2", 1]]],
+        reactants   : [["PpIX", 1], ["O2", 1]],
+        products    : [["PpIX", 0.9998], ["ROS", 1]],
+    },
+    {   /// Char time: 0.1 sec.
+        rate        : [10.0, [["ROS", 1]]],
+        reactants   : [["ROS", 0.01]],
+        products    : [["CD", 1]],
+    },
+    // {
+    //     rate        : [0.01, [["O2", 1]]],
+    //     reactants   : [["O2", 1]],
+    //     products    : [["BIN", 1]],
+    // }
+]
