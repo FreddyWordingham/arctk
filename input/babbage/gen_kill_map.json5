@@ -1,0 +1,13 @@
+
+{
+    ops: [
+        [
+            "kill",
+            { Div   : ["../output/reactor/pdt/100_{ROS}.nc", 1.0e17] }
+        ],
+        [
+            "info",
+            { Info    : "../output/kill.nc" }
+        ]
+    ]
+}
