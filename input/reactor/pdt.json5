@@ -25,6 +25,11 @@
             "misc/map/oxy_init.nc",
             "misc/map/oxy_source.nc"
         ],
+        "Udens"  :   [
+            "misc/map/zero.nc",
+            "misc/map/udens.nc",
+            null
+        ],
     } },
     multipliers : "misc/map/multipliers.nc",
     reactor: { There    : 'misc/reactor/pdt.json5' }
