@@ -10,8 +10,8 @@
     //     products    : [["Haem", 1]],
     // },
     {   /// Char time: 1 min.
-        rate        : [0.0166666667,    [["PpIX", 1], ["Udens", 1], ["O2", 1]]],
-        reactants   : [["PpIX", 1], ["O2", 1]],
+        rate        : [0.0166666667,    [["PpIX", 1], ["Udens", 1], ["Oxy", 1]]],
+        reactants   : [["PpIX", 1], ["Oxy", 1]],
         products    : [["PpIX", 0.9998], ["ROS", 1]],
     },
     // {   /// Char time: 0.1 sec.
