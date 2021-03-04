@@ -34,6 +34,10 @@ pub enum OperationBuilder {
     Mult(Array3<f64>, f64),
     /// Divide the datacube by the value.
     Div(Array3<f64>, f64),
+    /// Piecewise multiply a datacube by another.
+    PiecewiseMult(Array3<f64>, Array3<f64>),
+    /// Piecewise divide a datacube by another.
+    PiecewiseDiv(Array3<f64>, Array3<f64>),
     /// Normalise a data cube.
     Norm(Array3<f64>),
     /// Sample the locations for their values. (Points, DataCube, Grid).
@@ -57,6 +61,8 @@ impl Build for OperationBuilder {
             Self::Sub(cube, x) => Self::Inst::Sub(cube, x),
             Self::Mult(cube, x) => Self::Inst::Mult(cube, x),
             Self::Div(cube, x) => Self::Inst::Div(cube, x),
+            Self::PiecewiseMult(a, b) => Self::Inst::PiecewiseMult(a, b),
+            Self::PiecewiseDiv(a, b) => Self::Inst::PiecewiseDiv(a, b),
             Self::Norm(cube) => Self::Inst::Norm(cube),
             Self::Sample(points, cube, grid_builder) => {
                 Self::Inst::Sample(points, cube, grid_builder.build())

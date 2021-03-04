@@ -44,6 +44,10 @@ pub enum Operation {
     Mult(Array3<f64>, f64),
     /// Divide the datacube by the value.
     Div(Array3<f64>, f64),
+    /// Piecewise multiply a datacube by another.
+    PiecewiseMult(Array3<f64>, Array3<f64>),
+    /// Piecewise divide a datacube by another.
+    PiecewiseDiv(Array3<f64>, Array3<f64>),
     /// Normalise a data cube.
     Norm(Array3<f64>),
     /// Sample the locations for their values. (Points, DataCube, Grid).
@@ -100,6 +104,8 @@ impl Operation {
             Self::Mult(ref data, x) => (data * x).save(&path.with_extension("nc")),
             Self::Div(ref data, x) => (data / x).save(&path.with_extension("nc")),
             Self::Norm(ref data) => (data / data.sum()).save(&path.with_extension("nc")),
+            Self::PiecewiseMult(ref a, ref b) => (a * b).save(&path.with_extension("nc")),
+            Self::PiecewiseDiv(ref a, ref b) => (a / b).save(&path.with_extension("nc")),
             Self::Sample(ref points, ref data, ref grid) => {
                 let mut weights = Vec::with_capacity(points.len());
                 for point in points {

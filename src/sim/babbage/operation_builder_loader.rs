@@ -50,6 +50,10 @@ pub enum OperationBuilderLoader {
     Mult(PathBuf, f64),
     /// Divide the datacube by the value.
     Div(PathBuf, f64),
+    /// Piecewise multiply a datacube by another.
+    PiecewiseMult(PathBuf, PathBuf),
+    /// Piecewise divide a datacube by another.
+    PiecewiseDiv(PathBuf, PathBuf),
     /// Normalise a data cube.
     Norm(PathBuf),
     /// Sample the locations for their values. (Points, DataCube, Grid).
@@ -97,6 +101,16 @@ impl Load for OperationBuilderLoader {
             Self::Div(data_path, x) => {
                 let cube = Array3::new_from_file(&in_dir.join(data_path))?;
                 Self::Inst::Div(cube, x)
+            }
+            Self::PiecewiseDiv(data_a_path, data_b_path) => {
+                let a = Array3::new_from_file(&in_dir.join(data_a_path))?;
+                let b = Array3::new_from_file(&in_dir.join(data_b_path))?;
+                Self::Inst::Remove(a, b)
+            }
+            Self::PiecewiseMult(data_a_path, data_b_path) => {
+                let a = Array3::new_from_file(&in_dir.join(data_a_path))?;
+                let b = Array3::new_from_file(&in_dir.join(data_b_path))?;
+                Self::Inst::Remove(a, b)
             }
             Self::Norm(data_path) => {
                 let cube = Array3::new_from_file(&in_dir.join(data_path))?;
@@ -169,6 +183,22 @@ impl Display for OperationBuilderLoader {
             }
             Self::Div(ref data_path, x) => {
                 write!(fmt, "Divide: {} / {}", data_path.display(), x)
+            }
+            Self::PiecewiseMult(ref data_a_path, ref data_b_path) => {
+                write!(
+                    fmt,
+                    "Piecewise multiply: {} * {}",
+                    data_a_path.display(),
+                    data_b_path.display(),
+                )
+            }
+            Self::PiecewiseDiv(ref data_a_path, ref data_b_path) => {
+                write!(
+                    fmt,
+                    "Piecewise divide: {} / {}",
+                    data_a_path.display(),
+                    data_b_path.display(),
+                )
             }
             Self::Norm(ref data_path) => {
                 write!(fmt, "Normalise: {}", data_path.display())
