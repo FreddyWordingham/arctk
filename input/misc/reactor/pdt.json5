@@ -14,11 +14,11 @@
         reactants   : [["PpIX", 1], ["O2", 1]],
         products    : [["PpIX", 0.9998], ["ROS", 1]],
     },
-    {   /// Char time: 0.1 sec.
-        rate        : [10.0, [["ROS", 1]]],
-        reactants   : [["ROS", 0.01]],
-        products    : [["CD", 1]],
-    },
+    // {   /// Char time: 0.1 sec.
+    //     rate        : [10.0, [["ROS", 1]]],
+    //     reactants   : [["ROS", 0.01]],
+    //     products    : [["CD", 1]],
+    // },
     // {
     //     rate        : [0.01, [["O2", 1]]],
     //     reactants   : [["O2", 1]],

@@ -1,0 +1,13 @@
+
+{
+    ops: [
+        [
+            "udens",
+            { Mult      : ["../output/mcrt/tumour/absorption_density.nc", 0.01] }
+        ],
+        [
+            "info",
+            { Info    : "../output/udens.nc" }
+        ]
+    ]
+}
