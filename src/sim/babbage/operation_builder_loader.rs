@@ -105,12 +105,12 @@ impl Load for OperationBuilderLoader {
             Self::PiecewiseDiv(data_a_path, data_b_path) => {
                 let a = Array3::new_from_file(&in_dir.join(data_a_path))?;
                 let b = Array3::new_from_file(&in_dir.join(data_b_path))?;
-                Self::Inst::Remove(a, b)
+                Self::Inst::PiecewiseDiv(a, b)
             }
             Self::PiecewiseMult(data_a_path, data_b_path) => {
                 let a = Array3::new_from_file(&in_dir.join(data_a_path))?;
                 let b = Array3::new_from_file(&in_dir.join(data_b_path))?;
-                Self::Inst::Remove(a, b)
+                Self::Inst::PiecewiseMult(a, b)
             }
             Self::Norm(data_path) => {
                 let cube = Array3::new_from_file(&in_dir.join(data_path))?;
