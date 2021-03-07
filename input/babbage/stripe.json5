@@ -1,0 +1,9 @@
+
+{
+    ops: [
+        [
+            "stripe",
+            { Stripe    : "../output/diffuse/point_test/001_diff.nc" }
+        ]
+    ]
+}
