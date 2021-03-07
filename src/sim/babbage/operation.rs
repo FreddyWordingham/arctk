@@ -17,6 +17,8 @@ use std::path::Path;
 pub enum Operation {
     /// Report information about data cube.
     Info(Array3<f64>),
+    /// Sample the center of a datacube.
+    Stripe(Array3<f64>),
     /// Generate a zero cube of the given resolution.
     Zero([usize; 3]),
     /// Generate a unit cube of the given resolution.
@@ -68,6 +70,18 @@ impl Operation {
             Self::Info(ref data) => {
                 report!(data.display(), "data");
                 Ok(())
+            }
+            Self::Stripe(ref data) => {
+                let res = data.raw_dim();
+                let [rx, ry, rz] = [res[X], res[Y], res[Z]];
+
+                let mut samples = Vec::with_capacity(rz);
+                for n in 0..rz {
+                    let index = [rx / 2, ry / 2, n];
+                    samples.push(vec![n as f64, data[index]]);
+                }
+                Table::new(vec!["z".to_string(), "value".to_string()], samples)
+                    .save(&path.with_extension("csv"))
             }
             Self::Zero(res) => Array3::<f64>::zeros(res).save(&path.with_extension("nc")),
             Self::Unit(res) => (Array3::<f64>::zeros(res) + 1.0).save(&path.with_extension("nc")),

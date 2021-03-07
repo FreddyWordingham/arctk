@@ -23,6 +23,8 @@ use std::{
 pub enum OperationBuilderLoader {
     /// Report information about a data cube.
     Info(PathBuf),
+    /// Sample the center of a datacube.
+    Stripe(PathBuf),
     /// Generate a zero cube of the given resolution.
     Zero([usize; 3]),
     /// Generate a unit cube of the given resolution.
@@ -69,6 +71,10 @@ impl Load for OperationBuilderLoader {
             Self::Info(data_path) => {
                 let cube = Array3::new_from_file(&in_dir.join(data_path))?;
                 Self::Inst::Info(cube)
+            }
+            Self::Stripe(data_path) => {
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
+                Self::Inst::Stripe(cube)
             }
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
@@ -140,6 +146,9 @@ impl Display for OperationBuilderLoader {
         match *self {
             Self::Info(ref data_path) => {
                 write!(fmt, "Information: {}", data_path.display())
+            }
+            Self::Stripe(ref data_path) => {
+                write!(fmt, "Stripe: {}", data_path.display())
             }
             Self::Zero(res) => {
                 write!(fmt, "Zero: [{} x {} x {}]", res[X], res[Y], res[Z])

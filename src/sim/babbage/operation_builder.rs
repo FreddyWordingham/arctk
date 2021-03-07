@@ -7,6 +7,8 @@ use ndarray::Array3;
 pub enum OperationBuilder {
     /// Report information about data cube.
     Info(Array3<f64>),
+    /// Sample the center of a datacube.
+    Stripe(Array3<f64>),
     /// Generate a zero cube of the given resolution.
     Zero([usize; 3]),
     /// Generate a unit cube of the given resolution.
@@ -51,6 +53,7 @@ impl Build for OperationBuilder {
     fn build(self) -> Self::Inst {
         match self {
             Self::Info(cube) => Self::Inst::Info(cube),
+            Self::Stripe(cube) => Self::Inst::Stripe(cube),
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
             Self::Point(res) => Self::Inst::Point(res),
