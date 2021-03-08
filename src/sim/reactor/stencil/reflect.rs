@@ -96,7 +96,7 @@ impl Reflect {
     }
 }
 
-impl Display for Grad {
+impl Display for Reflect {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
