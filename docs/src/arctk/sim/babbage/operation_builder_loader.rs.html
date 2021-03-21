@@ -186,6 +186,45 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Operation implementation.</span>
 
@@ -212,6 +251,8 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">OperationBuilderLoader</span> {
     <span class="doccomment">/// Report information about a data cube.</span>
     <span class="ident">Info</span>(<span class="ident">PathBuf</span>),
+    <span class="doccomment">/// Sample the center of a datacube.</span>
+    <span class="ident">Stripe</span>(<span class="ident">PathBuf</span>),
     <span class="doccomment">/// Generate a zero cube of the given resolution.</span>
     <span class="ident">Zero</span>([<span class="ident">usize</span>; <span class="number">3</span>]),
     <span class="doccomment">/// Generate a unit cube of the given resolution.</span>
@@ -239,6 +280,10 @@
     <span class="ident">Mult</span>(<span class="ident">PathBuf</span>, <span class="ident">f64</span>),
     <span class="doccomment">/// Divide the datacube by the value.</span>
     <span class="ident">Div</span>(<span class="ident">PathBuf</span>, <span class="ident">f64</span>),
+    <span class="doccomment">/// Piecewise multiply a datacube by another.</span>
+    <span class="ident">PiecewiseMult</span>(<span class="ident">PathBuf</span>, <span class="ident">PathBuf</span>),
+    <span class="doccomment">/// Piecewise divide a datacube by another.</span>
+    <span class="ident">PiecewiseDiv</span>(<span class="ident">PathBuf</span>, <span class="ident">PathBuf</span>),
     <span class="doccomment">/// Normalise a data cube.</span>
     <span class="ident">Norm</span>(<span class="ident">PathBuf</span>),
     <span class="doccomment">/// Sample the locations for their values. (Points, DataCube, Grid).</span>
@@ -254,6 +299,10 @@
             <span class="self">Self</span>::<span class="ident">Info</span>(<span class="ident">data_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">cube</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">data_path</span>))<span class="question-mark">?</span>;
                 <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Info</span>(<span class="ident">cube</span>)
+            }
+            <span class="self">Self</span>::<span class="ident">Stripe</span>(<span class="ident">data_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">cube</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">data_path</span>))<span class="question-mark">?</span>;
+                <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Stripe</span>(<span class="ident">cube</span>)
             }
             <span class="self">Self</span>::<span class="ident">Zero</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Zero</span>(<span class="ident">res</span>),
             <span class="self">Self</span>::<span class="ident">Unit</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Unit</span>(<span class="ident">res</span>),
@@ -287,6 +336,16 @@
                 <span class="kw">let</span> <span class="ident">cube</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">data_path</span>))<span class="question-mark">?</span>;
                 <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Div</span>(<span class="ident">cube</span>, <span class="ident">x</span>)
             }
+            <span class="self">Self</span>::<span class="ident">PiecewiseDiv</span>(<span class="ident">data_a_path</span>, <span class="ident">data_b_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">data_a_path</span>))<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">data_b_path</span>))<span class="question-mark">?</span>;
+                <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">PiecewiseDiv</span>(<span class="ident">a</span>, <span class="ident">b</span>)
+            }
+            <span class="self">Self</span>::<span class="ident">PiecewiseMult</span>(<span class="ident">data_a_path</span>, <span class="ident">data_b_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">data_a_path</span>))<span class="question-mark">?</span>;
+                <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">data_b_path</span>))<span class="question-mark">?</span>;
+                <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">PiecewiseMult</span>(<span class="ident">a</span>, <span class="ident">b</span>)
+            }
             <span class="self">Self</span>::<span class="ident">Norm</span>(<span class="ident">data_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">cube</span> <span class="op">=</span> <span class="ident">Array3</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">data_path</span>))<span class="question-mark">?</span>;
                 <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Norm</span>(<span class="ident">cube</span>)
@@ -315,6 +374,9 @@
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Info</span>(<span class="kw-2">ref</span> <span class="ident">data_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Information: {}&quot;</span>, <span class="ident">data_path</span>.<span class="ident">display</span>())
+            }
+            <span class="self">Self</span>::<span class="ident">Stripe</span>(<span class="kw-2">ref</span> <span class="ident">data_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Stripe: {}&quot;</span>, <span class="ident">data_path</span>.<span class="ident">display</span>())
             }
             <span class="self">Self</span>::<span class="ident">Zero</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Zero: [{} x {} x {}]&quot;</span>, <span class="ident">res</span>[<span class="ident">X</span>], <span class="ident">res</span>[<span class="ident">Y</span>], <span class="ident">res</span>[<span class="ident">Z</span>])
@@ -358,6 +420,22 @@
             }
             <span class="self">Self</span>::<span class="ident">Div</span>(<span class="kw-2">ref</span> <span class="ident">data_path</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Divide: {} / {}&quot;</span>, <span class="ident">data_path</span>.<span class="ident">display</span>(), <span class="ident">x</span>)
+            }
+            <span class="self">Self</span>::<span class="ident">PiecewiseMult</span>(<span class="kw-2">ref</span> <span class="ident">data_a_path</span>, <span class="kw-2">ref</span> <span class="ident">data_b_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">write</span><span class="macro">!</span>(
+                    <span class="ident">fmt</span>,
+                    <span class="string">&quot;Piecewise multiply: {} * {}&quot;</span>,
+                    <span class="ident">data_a_path</span>.<span class="ident">display</span>(),
+                    <span class="ident">data_b_path</span>.<span class="ident">display</span>(),
+                )
+            }
+            <span class="self">Self</span>::<span class="ident">PiecewiseDiv</span>(<span class="kw-2">ref</span> <span class="ident">data_a_path</span>, <span class="kw-2">ref</span> <span class="ident">data_b_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">write</span><span class="macro">!</span>(
+                    <span class="ident">fmt</span>,
+                    <span class="string">&quot;Piecewise divide: {} / {}&quot;</span>,
+                    <span class="ident">data_a_path</span>.<span class="ident">display</span>(),
+                    <span class="ident">data_b_path</span>.<span class="ident">display</span>(),
+                )
             }
             <span class="self">Self</span>::<span class="ident">Norm</span>(<span class="kw-2">ref</span> <span class="ident">data_path</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Normalise: {}&quot;</span>, <span class="ident">data_path</span>.<span class="ident">display</span>())

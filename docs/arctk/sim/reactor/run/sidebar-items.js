@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["multi","Simulation control functions."]]});
+initSidebarItems({"fn":[["evolve","Integrate forward a given amount of time."],["multi_thread","Run a multi-threaded reaction-diffusion simulation."]]});

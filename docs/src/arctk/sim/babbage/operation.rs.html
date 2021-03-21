@@ -116,6 +116,26 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Operation implementation.</span>
 
@@ -136,6 +156,8 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Operation</span> {
     <span class="doccomment">/// Report information about data cube.</span>
     <span class="ident">Info</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Sample the center of a datacube.</span>
+    <span class="ident">Stripe</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Generate a zero cube of the given resolution.</span>
     <span class="ident">Zero</span>([<span class="ident">usize</span>; <span class="number">3</span>]),
     <span class="doccomment">/// Generate a unit cube of the given resolution.</span>
@@ -163,6 +185,10 @@
     <span class="ident">Mult</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">f64</span>),
     <span class="doccomment">/// Divide the datacube by the value.</span>
     <span class="ident">Div</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">f64</span>),
+    <span class="doccomment">/// Piecewise multiply a datacube by another.</span>
+    <span class="ident">PiecewiseMult</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Piecewise divide a datacube by another.</span>
+    <span class="ident">PiecewiseDiv</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Normalise a data cube.</span>
     <span class="ident">Norm</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Sample the locations for their values. (Points, DataCube, Grid).</span>
@@ -183,6 +209,18 @@
             <span class="self">Self</span>::<span class="ident">Info</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="macro">report</span><span class="macro">!</span>(<span class="ident">data</span>.<span class="ident">display</span>(), <span class="string">&quot;data&quot;</span>);
                 <span class="prelude-val">Ok</span>(())
+            }
+            <span class="self">Self</span>::<span class="ident">Stripe</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">raw_dim</span>();
+                <span class="kw">let</span> [<span class="ident">rx</span>, <span class="ident">ry</span>, <span class="ident">rz</span>] <span class="op">=</span> [<span class="ident">res</span>[<span class="ident">X</span>], <span class="ident">res</span>[<span class="ident">Y</span>], <span class="ident">res</span>[<span class="ident">Z</span>]];
+
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">samples</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">rz</span>);
+                <span class="kw">for</span> <span class="ident">n</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">rz</span> {
+                    <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> [<span class="ident">rx</span> <span class="op">/</span> <span class="number">2</span>, <span class="ident">ry</span> <span class="op">/</span> <span class="number">2</span>, <span class="ident">n</span>];
+                    <span class="ident">samples</span>.<span class="ident">push</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span>, <span class="ident">data</span>[<span class="ident">index</span>]]);
+                }
+                <span class="ident">Table</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;z&quot;</span>.<span class="ident">to_string</span>(), <span class="string">&quot;value&quot;</span>.<span class="ident">to_string</span>()], <span class="ident">samples</span>)
+                    .<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;csv&quot;</span>))
             }
             <span class="self">Self</span>::<span class="ident">Zero</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Array3</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">zeros</span>(<span class="ident">res</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
             <span class="self">Self</span>::<span class="ident">Unit</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">Array3</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">zeros</span>(<span class="ident">res</span>) <span class="op">+</span> <span class="number">1.0</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
@@ -219,6 +257,8 @@
             <span class="self">Self</span>::<span class="ident">Mult</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">*</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
             <span class="self">Self</span>::<span class="ident">Div</span>(<span class="kw-2">ref</span> <span class="ident">data</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">/</span> <span class="ident">x</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
             <span class="self">Self</span>::<span class="ident">Norm</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">data</span> <span class="op">/</span> <span class="ident">data</span>.<span class="ident">sum</span>()).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">PiecewiseMult</span>(<span class="kw-2">ref</span> <span class="ident">a</span>, <span class="kw-2">ref</span> <span class="ident">b</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">a</span> <span class="op">*</span> <span class="ident">b</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
+            <span class="self">Self</span>::<span class="ident">PiecewiseDiv</span>(<span class="kw-2">ref</span> <span class="ident">a</span>, <span class="kw-2">ref</span> <span class="ident">b</span>) <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">a</span> <span class="op">/</span> <span class="ident">b</span>).<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">with_extension</span>(<span class="string">&quot;nc&quot;</span>)),
             <span class="self">Self</span>::<span class="ident">Sample</span>(<span class="kw-2">ref</span> <span class="ident">points</span>, <span class="kw-2">ref</span> <span class="ident">data</span>, <span class="kw-2">ref</span> <span class="ident">grid</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">weights</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">points</span>.<span class="ident">len</span>());
                 <span class="kw">for</span> <span class="ident">point</span> <span class="kw">in</span> <span class="ident">points</span> {

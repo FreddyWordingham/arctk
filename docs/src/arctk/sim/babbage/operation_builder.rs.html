@@ -67,6 +67,15 @@
 <span id="64">64</span>
 <span id="65">65</span>
 <span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Operation builder.</span>
 
@@ -77,6 +86,8 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">OperationBuilder</span> {
     <span class="doccomment">/// Report information about data cube.</span>
     <span class="ident">Info</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Sample the center of a datacube.</span>
+    <span class="ident">Stripe</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Generate a zero cube of the given resolution.</span>
     <span class="ident">Zero</span>([<span class="ident">usize</span>; <span class="number">3</span>]),
     <span class="doccomment">/// Generate a unit cube of the given resolution.</span>
@@ -104,6 +115,10 @@
     <span class="ident">Mult</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">f64</span>),
     <span class="doccomment">/// Divide the datacube by the value.</span>
     <span class="ident">Div</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">f64</span>),
+    <span class="doccomment">/// Piecewise multiply a datacube by another.</span>
+    <span class="ident">PiecewiseMult</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// Piecewise divide a datacube by another.</span>
+    <span class="ident">PiecewiseDiv</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Normalise a data cube.</span>
     <span class="ident">Norm</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>),
     <span class="doccomment">/// Sample the locations for their values. (Points, DataCube, Grid).</span>
@@ -117,6 +132,7 @@
     <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span>::<span class="ident">Info</span>(<span class="ident">cube</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Info</span>(<span class="ident">cube</span>),
+            <span class="self">Self</span>::<span class="ident">Stripe</span>(<span class="ident">cube</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Stripe</span>(<span class="ident">cube</span>),
             <span class="self">Self</span>::<span class="ident">Zero</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Zero</span>(<span class="ident">res</span>),
             <span class="self">Self</span>::<span class="ident">Unit</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Unit</span>(<span class="ident">res</span>),
             <span class="self">Self</span>::<span class="ident">Point</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Point</span>(<span class="ident">res</span>),
@@ -127,6 +143,8 @@
             <span class="self">Self</span>::<span class="ident">Sub</span>(<span class="ident">cube</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Sub</span>(<span class="ident">cube</span>, <span class="ident">x</span>),
             <span class="self">Self</span>::<span class="ident">Mult</span>(<span class="ident">cube</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Mult</span>(<span class="ident">cube</span>, <span class="ident">x</span>),
             <span class="self">Self</span>::<span class="ident">Div</span>(<span class="ident">cube</span>, <span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Div</span>(<span class="ident">cube</span>, <span class="ident">x</span>),
+            <span class="self">Self</span>::<span class="ident">PiecewiseMult</span>(<span class="ident">a</span>, <span class="ident">b</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">PiecewiseMult</span>(<span class="ident">a</span>, <span class="ident">b</span>),
+            <span class="self">Self</span>::<span class="ident">PiecewiseDiv</span>(<span class="ident">a</span>, <span class="ident">b</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">PiecewiseDiv</span>(<span class="ident">a</span>, <span class="ident">b</span>),
             <span class="self">Self</span>::<span class="ident">Norm</span>(<span class="ident">cube</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Norm</span>(<span class="ident">cube</span>),
             <span class="self">Self</span>::<span class="ident">Sample</span>(<span class="ident">points</span>, <span class="ident">cube</span>, <span class="ident">grid_builder</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="self">Self</span>::<span class="ident">Inst</span>::<span class="ident">Sample</span>(<span class="ident">points</span>, <span class="ident">cube</span>, <span class="ident">grid_builder</span>.<span class="ident">build</span>())

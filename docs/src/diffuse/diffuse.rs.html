@@ -96,13 +96,14 @@
 <span id="93">93</span>
 <span id="94">94</span>
 <span id="95">95</span>
+<span id="96">96</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Diffusion simulation binary.</span>
 <span class="doccomment">//! Compute the time evolution of a volume of diffusing species.</span>
 
 <span class="kw">use</span> <span class="ident">arctk</span>::{
     <span class="ident">args</span>,
-    <span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">Load</span>, <span class="ident">Save</span>},
+    <span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">Load</span>},
     <span class="ident">ord</span>::<span class="ident">Build</span>,
     <span class="ident">report</span>,
     <span class="ident">sim</span>::<span class="ident">diffuse</span>::{<span class="ident">run</span>, <span class="ident">Input</span>, <span class="ident">Parameters</span>, <span class="ident">ParametersBuilderLoader</span>},
@@ -110,6 +111,7 @@
         <span class="ident">banner</span>::{<span class="ident">section</span>, <span class="ident">sub_section</span>, <span class="ident">title</span>},
         <span class="ident">dir</span>,
         <span class="ident">fmt</span>::<span class="ident">term</span>,
+        <span class="ident">Analyze</span>,
     },
 };
 <span class="kw">use</span> <span class="ident">std</span>::{
@@ -131,22 +133,22 @@
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Input&quot;</span>);
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Reconstruction&quot;</span>);
     <span class="kw">let</span> <span class="ident">sett</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">sett</span>;
+    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">sett</span>, <span class="string">&quot;settings&quot;</span>);
     <span class="kw">let</span> <span class="ident">grid</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">grid</span>;
+    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">grid</span>, <span class="string">&quot;measurement grid&quot;</span>);
     <span class="kw">let</span> <span class="ident">coeffs</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">coeffs</span>;
+    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">coeffs</span>.<span class="ident">display</span>(), <span class="string">&quot;diffusion coefficients (m^2/s)&quot;</span>);
     <span class="kw">let</span> <span class="ident">sources</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">sources</span>;
-    <span class="kw">let</span> <span class="ident">concs</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">init</span>;
+    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">sources</span>.<span class="ident">display</span>(), <span class="string">&quot;sources/sinks&quot;</span>);
+    <span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">init</span>;
+    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">values</span>.<span class="ident">display</span>(), <span class="string">&quot;initial values&quot;</span>);
 
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Input&quot;</span>);
     <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">Input</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">coeffs</span>, <span class="kw-2">&amp;</span><span class="ident">sources</span>, <span class="kw-2">&amp;</span><span class="ident">grid</span>, <span class="kw-2">&amp;</span><span class="ident">sett</span>);
     <span class="macro">report</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="string">&quot;input&quot;</span>);
 
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Running&quot;</span>);
-    <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span>
-        <span class="ident">run</span>::<span class="ident">single_thread</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>, <span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="ident">concs</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to run diffuse simulation.&quot;</span>);
-
-    <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Saving&quot;</span>);
-    <span class="ident">data</span>.<span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="ident">out_dir</span>.<span class="ident">join</span>(<span class="string">&quot;final.nc&quot;</span>))
-        .<span class="ident">expect</span>(<span class="string">&quot;Failed to save output data.&quot;</span>);
+    <span class="ident">run</span>::<span class="ident">multi_thread</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="ident">values</span>, <span class="kw-2">&amp;</span><span class="ident">out_dir</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to run diffuse simulation.&quot;</span>);
 
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Finished&quot;</span>);
 }

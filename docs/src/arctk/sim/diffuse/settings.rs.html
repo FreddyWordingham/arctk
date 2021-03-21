@@ -50,6 +50,12 @@
 <span id="47">47</span>
 <span id="48">48</span>
 <span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Diffuse settings.</span>
 
@@ -66,26 +72,31 @@
     <span class="ident">dumps</span>: <span class="ident">usize</span>,
     <span class="doccomment">/// Quality parameter \[0:1\].</span>
     <span class="ident">quality</span>: <span class="ident">f64</span>,
+    <span class="doccomment">/// Number of photons to simulate in each thread block.</span>
+    <span class="ident">block_size</span>: <span class="ident">usize</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Settings</span> {
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">time</span>, <span class="ident">f64</span>);
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">dumps</span>, <span class="ident">usize</span>);
     <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">quality</span>, <span class="ident">f64</span>);
+    <span class="macro">clone</span><span class="macro">!</span>(<span class="ident">block_size</span>, <span class="ident">usize</span>);
 
     <span class="doccomment">/// Construct a new instance.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">time</span>: <span class="ident">f64</span>, <span class="ident">dumps</span>: <span class="ident">usize</span>, <span class="ident">quality</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">time</span>: <span class="ident">f64</span>, <span class="ident">dumps</span>: <span class="ident">usize</span>, <span class="ident">quality</span>: <span class="ident">f64</span>, <span class="ident">block_size</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">time</span> <span class="op">&gt;</span> <span class="number">0.0</span>);
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">dumps</span> <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">quality</span> <span class="op">&gt;</span> <span class="number">0.0</span>);
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">quality</span> <span class="op">&lt;</span> <span class="number">1.0</span>);
+        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">block_size</span> <span class="op">&gt;</span> <span class="number">0</span>);
 
         <span class="self">Self</span> {
             <span class="ident">time</span>,
             <span class="ident">dumps</span>,
             <span class="ident">quality</span>,
+            <span class="ident">block_size</span>,
         }
     }
 }
@@ -97,6 +108,7 @@
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">time</span>, <span class="string">&quot;integration time (s)&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">dumps</span>, <span class="string">&quot;intermediate dumps&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">quality</span>, <span class="string">&quot;quality parameter&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">block_size</span>, <span class="string">&quot;block size&quot;</span>);
         <span class="prelude-val">Ok</span>(())
     }
 }

@@ -81,6 +81,10 @@
 <span id="78">78</span>
 <span id="79">79</span>
 <span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Datacube formatting functions.</span>
 
@@ -97,6 +101,8 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DataSquare</span> {
     <span class="doccomment">/// Resolution.</span>
     <span class="ident">res</span>: [<span class="ident">usize</span>; <span class="number">2</span>],
+    <span class="doccomment">/// Sum of values.</span>
+    <span class="ident">sum</span>: <span class="ident">f64</span>,
     <span class="doccomment">/// Minimum value.</span>
     <span class="ident">min</span>: <span class="ident">f64</span>,
     <span class="doccomment">/// Maximum value.</span>
@@ -127,6 +133,7 @@
 
         <span class="self">Self</span> {
             <span class="ident">res</span>: [<span class="ident">shape</span>[<span class="ident">X</span>], <span class="ident">shape</span>[<span class="ident">Y</span>]],
+            <span class="ident">sum</span>: <span class="ident">data</span>.<span class="ident">sum</span>(),
             <span class="ident">min</span>: <span class="kw-2">*</span><span class="ident">data</span>.<span class="ident">min</span>().<span class="ident">expect</span>(<span class="string">&quot;Unable to determine minimum value.&quot;</span>),
             <span class="ident">max</span>: <span class="kw-2">*</span><span class="ident">data</span>.<span class="ident">max</span>().<span class="ident">expect</span>(<span class="string">&quot;Unable to determine maximum value.&quot;</span>),
             <span class="ident">ave</span>,
@@ -145,6 +152,7 @@
             <span class="string">&quot;resolution&quot;</span>
         );
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">X</span>] <span class="op">*</span> <span class="self">self</span>.<span class="ident">res</span>[<span class="ident">Y</span>], <span class="string">&quot;length&quot;</span>);
+        <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">sum</span>, <span class="string">&quot;sum&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">min</span>, <span class="string">&quot;minimum value&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">max</span>, <span class="string">&quot;maximum value&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">ave</span>, <span class="string">&quot;average value&quot;</span>);

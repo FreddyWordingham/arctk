@@ -84,7 +84,7 @@
 <span class="kw">use</span> <span class="ident">rayon</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::{<span class="ident">Arc</span>, <span class="ident">Mutex</span>};
 
-<span class="doccomment">/// Run a multi-threaded MCRT simulation.</span>
+<span class="doccomment">/// Run a multi-threaded Cartography simulation.</span>
 <span class="doccomment">/// # Errors</span>
 <span class="doccomment">/// if the progress bar can not be locked.</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">expect_used</span>)]</span>
@@ -108,7 +108,7 @@
     <span class="prelude-val">Ok</span>(<span class="ident">data</span>)
 }
 
-<span class="doccomment">/// Run a MCRT simulation using a single thread.</span>
+<span class="doccomment">/// Run a Cartography simulation using a single thread.</span>
 <span class="doccomment">/// # Errors</span>
 <span class="doccomment">/// if the progress bar can not be locked.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
