@@ -21,7 +21,7 @@ pub struct ParametersBuilderLoader {
     /// Measurement grid settings.
     grid: Redirect<GridBuilder>,
     /// List of diffusion coefficients, initial values, and sources/sinks.
-    coeffs_values_sources: Redirect<Set<(PathBuf, Option<PathBuf>, Option<PathBuf>)>>,
+    coeffs_values_sources: Redirect<Set<(Option<PathBuf>, Option<PathBuf>, Option<PathBuf>)>>,
     /// Reaction rate multiplier map.
     multipliers: PathBuf,
     /// Reactions.
@@ -35,23 +35,28 @@ impl Load for ParametersBuilderLoader {
     fn load(self, in_dir: &Path) -> Result<Self::Inst, Error> {
         let sett = self.sett.load(in_dir)?;
         let grid = self.grid.load(in_dir)?;
+        let res = *grid.res();
 
         let coeffs_values_sources = self.coeffs_values_sources.load(in_dir)?;
 
         let mut list = Vec::with_capacity(coeffs_values_sources.len());
-        for (name, (coeff_path, value_path, source_path)) in coeffs_values_sources {
-            let coeffs = Array3::new_from_file(&in_dir.join(coeff_path))?;
+        for (name, (coeffs_path, value_path, source_path)) in coeffs_values_sources {
+            let coeffs = if let Some(coeffs) = coeffs_path {
+                Array3::new_from_file(&in_dir.join(coeffs))?
+            } else {
+                Array3::zeros(res)
+            };
 
             let values = if let Some(values) = value_path {
                 Array3::new_from_file(&in_dir.join(values))?
             } else {
-                Array3::zeros(coeffs.raw_dim())
+                Array3::zeros(res)
             };
 
             let sources = if let Some(sources) = source_path {
                 Array3::new_from_file(&in_dir.join(sources))?
             } else {
-                Array3::zeros(coeffs.raw_dim())
+                Array3::zeros(res)
             };
 
             list.push((name, (coeffs, values, sources)));
