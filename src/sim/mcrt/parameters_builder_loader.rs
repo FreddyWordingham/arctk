@@ -33,7 +33,7 @@ pub struct ParametersBuilderLoader {
     /// Engine selection.
     engine: EngineBuilder,
     /// Optional fluorophore properties.
-    shifts_conc_spec: Option<(PathBuf, FormulaBuilder)>,
+    shifts_conc_spec: Option<(PathBuf, Redirect<FormulaBuilder>)>,
 }
 
 impl Load for ParametersBuilderLoader {
@@ -50,7 +50,10 @@ impl Load for ParametersBuilderLoader {
         let light = self.light.load(in_dir)?.load(in_dir)?;
         let engine = self.engine;
         let shifts_conc_spec = if let Some((concs, spec)) = self.shifts_conc_spec {
-            Some((Array3::new_from_file(&in_dir.join(concs))?, spec))
+            Some((
+                Array3::new_from_file(&in_dir.join(concs))?,
+                spec.load(in_dir)?,
+            ))
         } else {
             None
         };
