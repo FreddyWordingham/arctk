@@ -69,16 +69,30 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Simulation input.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">fmt_report</span>,
     <span class="ident">geom</span>::{<span class="ident">Grid</span>, <span class="ident">Tree</span>},
+    <span class="ident">math</span>::<span class="ident">Formula</span>,
     <span class="ident">ord</span>::{<span class="ident">Register</span>, <span class="ident">Set</span>},
     <span class="ident">phys</span>::{<span class="ident">Light</span>, <span class="ident">Material</span>},
     <span class="ident">sim</span>::<span class="ident">mcrt</span>::{<span class="ident">Attribute</span>, <span class="ident">Settings</span>},
+    <span class="ident">util</span>::<span class="ident">fmt</span>::<span class="ident">Analyze</span>,
 };
+<span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array3</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Display</span>, <span class="ident">Error</span>, <span class="ident">Formatter</span>};
 
 <span class="doccomment">/// MCRT simulation resources conglomerate.</span>
@@ -97,6 +111,8 @@
     <span class="kw">pub</span> <span class="ident">grid</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Grid</span>,
     <span class="doccomment">/// General settings.</span>
     <span class="kw">pub</span> <span class="ident">sett</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Settings</span>,
+    <span class="doccomment">/// Optional fluorophore properties (concentration map, absorption spectra).</span>
+    <span class="kw">pub</span> <span class="ident">shifts_conc_spec</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Formula</span>)<span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Input</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
@@ -111,6 +127,7 @@
         <span class="ident">tree</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Tree</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&gt;</span>,
         <span class="ident">grid</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Grid</span>,
         <span class="ident">sett</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Settings</span>,
+        <span class="ident">shifts_conc_spec</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">Formula</span>)<span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">spec_reg</span>,
@@ -120,6 +137,7 @@
             <span class="ident">tree</span>,
             <span class="ident">grid</span>,
             <span class="ident">sett</span>,
+            <span class="ident">shifts_conc_spec</span>,
         }
     }
 }
@@ -135,6 +153,10 @@
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">tree</span>, <span class="string">&quot;hit-scan tree&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">grid</span>, <span class="string">&quot;measurement grid&quot;</span>);
         <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="self">self</span>.<span class="ident">sett</span>, <span class="string">&quot;settings&quot;</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">shifts_conc_spec</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">shifts_conc_spec</span> {
+            <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">shifts_conc_spec</span>.<span class="number">0</span>.<span class="ident">display</span>(), <span class="string">&quot;Fluorophore map&quot;</span>);
+            <span class="macro">fmt_report</span><span class="macro">!</span>(<span class="ident">fmt</span>, <span class="ident">shifts_conc_spec</span>.<span class="number">1</span>, <span class="string">&quot;Fluorophore absorption spectra&quot;</span>);
+        }
         <span class="prelude-val">Ok</span>(())
     }
 }

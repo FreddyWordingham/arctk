@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.24.1/src/linalg/decomposition.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>decomposition.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.25.3/src/linalg/decomposition.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>decomposition.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -231,12 +231,38 @@
 <span id="230">230</span>
 <span id="231">231</span>
 <span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">Storage</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">Allocator</span>, <span class="ident">Bidiagonal</span>, <span class="ident">Cholesky</span>, <span class="ident">ComplexField</span>, <span class="ident">DefaultAllocator</span>, <span class="ident">Dim</span>, <span class="ident">DimDiff</span>, <span class="ident">DimMin</span>,
-    <span class="ident">DimMinimum</span>, <span class="ident">DimSub</span>, <span class="ident">FullPivLU</span>, <span class="ident">Hessenberg</span>, <span class="ident">Matrix</span>, <span class="ident">Schur</span>, <span class="ident">SymmetricEigen</span>, <span class="ident">SymmetricTridiagonal</span>,
-    <span class="ident">LU</span>, <span class="ident">QR</span>, <span class="ident">SVD</span>, <span class="ident">U1</span>,
+    <span class="ident">Allocator</span>, <span class="ident">Bidiagonal</span>, <span class="ident">Cholesky</span>, <span class="ident">ColPivQR</span>, <span class="ident">ComplexField</span>, <span class="ident">DefaultAllocator</span>, <span class="ident">Dim</span>, <span class="ident">DimDiff</span>,
+    <span class="ident">DimMin</span>, <span class="ident">DimMinimum</span>, <span class="ident">DimSub</span>, <span class="ident">FullPivLU</span>, <span class="ident">Hessenberg</span>, <span class="ident">Matrix</span>, <span class="ident">RealField</span>, <span class="ident">Schur</span>, <span class="ident">SymmetricEigen</span>,
+    <span class="ident">SymmetricTridiagonal</span>, <span class="ident">LU</span>, <span class="ident">QR</span>, <span class="ident">SVD</span>, <span class="ident">U1</span>, <span class="ident">UDU</span>,
 };
 
 <span class="doccomment">/// # Rectangular matrix decomposition</span>
@@ -247,8 +273,9 @@
 <span class="doccomment">/// | Decomposition            | Factors             | Details |</span>
 <span class="doccomment">/// | -------------------------|---------------------|--------------|</span>
 <span class="doccomment">/// | QR                       | `Q * R`             | `Q` is an unitary matrix, and `R` is upper-triangular. |</span>
+<span class="doccomment">/// | QR with column pivoting  | `Q * R * P⁻¹`       | `Q` is an unitary matrix, and `R` is upper-triangular. `P` is a permutation matrix. |</span>
 <span class="doccomment">/// | LU with partial pivoting | `P⁻¹ * L * U`       | `L` is lower-triangular with a diagonal filled with `1` and `U` is upper-triangular. `P` is a permutation matrix. |</span>
-<span class="doccomment">/// | LU with full pivoting    | `P⁻¹ * L * U ~ Q⁻¹` | `L` is lower-triangular with a diagonal filled with `1` and `U` is upper-triangular. `P` and `Q` are permutation matrices. |</span>
+<span class="doccomment">/// | LU with full pivoting    | `P⁻¹ * L * U * Q⁻¹` | `L` is lower-triangular with a diagonal filled with `1` and `U` is upper-triangular. `P` and `Q` are permutation matrices. |</span>
 <span class="doccomment">/// | SVD                      | `U * Σ * Vᵀ`        | `U` and `V` are two orthogonal matrices and `Σ` is a diagonal matrix containing the singular values. |</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">ComplexField</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Computes the bidiagonalization using householder reflections.</span>
@@ -292,6 +319,18 @@
         <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
         <span class="ident">QR</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">into_owned</span>())
+    }
+
+    <span class="doccomment">/// Computes the QR decomposition (with column pivoting) of this matrix.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">col_piv_qr</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ColPivQR</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">R</span>: <span class="ident">DimMin</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
+        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>
+            <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span><span class="op">&gt;</span>
+            <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">DimMinimum</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    {
+        <span class="ident">ColPivQR</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">into_owned</span>())
     }
 
     <span class="doccomment">/// Computes the Singular Value Decomposition using implicit shift.</span>
@@ -355,6 +394,7 @@
 <span class="doccomment">/// | -------------------------|---------------------------|--------------|</span>
 <span class="doccomment">/// | Hessenberg               | `Q * H * Qᵀ`             | `Q` is a unitary matrix and `H` an upper-Hessenberg matrix. |</span>
 <span class="doccomment">/// | Cholesky                 | `L * Lᵀ`                 | `L` is a lower-triangular matrix. |</span>
+<span class="doccomment">/// | UDU                      | `U * D * Uᵀ`             | `U` is a upper-triangular matrix, and `D` a diagonal matrix. |</span>
 <span class="doccomment">/// | Schur decomposition      | `Q * T * Qᵀ`             | `Q` is an unitary matrix and `T` a quasi-upper-triangular matrix. |</span>
 <span class="doccomment">/// | Symmetric eigendecomposition | `Q ~ Λ ~ Qᵀ`   | `Q` is an unitary matrix, and `Λ` is a real diagonal matrix. |</span>
 <span class="doccomment">/// | Symmetric tridiagonalization | `Q ~ T ~ Qᵀ`   | `Q` is an unitary matrix, and `T` is a tridiagonal matrix. |</span>
@@ -368,6 +408,18 @@
         <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
     {
         <span class="ident">Cholesky</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">into_owned</span>())
+    }
+
+    <span class="doccomment">/// Attempts to compute the UDU decomposition of this matrix.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The input matrix `self` is assumed to be symmetric and this decomposition will only read</span>
+    <span class="doccomment">/// the upper-triangular part of `self`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">udu</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UDU</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">N</span>: <span class="ident">RealField</span>,
+        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+    {
+        <span class="ident">UDU</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">into_owned</span>())
     }
 
     <span class="doccomment">/// Computes the Hessenberg decomposition of this matrix using householder reflections.</span>

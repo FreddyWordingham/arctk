@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["raman","Laura's photon-lifetime engine function."],["standard","Photon-lifetime engine function."]]});
+initSidebarItems({"mod":[["fluorophore","Photon-lifetime engine function."],["raman","Laura's photon-lifetime engine function."],["standard","Photon-lifetime engine function."]]});

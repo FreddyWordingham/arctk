@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.24.1/src/geometry/similarity_construction.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>similarity_construction.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.25.3/src/geometry/similarity_construction.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>similarity_construction.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -352,6 +352,58 @@
 <span id="351">351</span>
 <span id="352">352</span>
 <span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;arbitrary&quot;</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">storage</span>::<span class="ident">Owned</span>;
@@ -359,19 +411,22 @@
 <span class="kw">use</span> <span class="ident">quickcheck</span>::{<span class="ident">Arbitrary</span>, <span class="ident">Gen</span>};
 
 <span class="kw">use</span> <span class="ident">num</span>::<span class="ident">One</span>;
-<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">Standard</span>};
-<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand-no-std&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">rand</span>::{
+    <span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">Standard</span>},
+    <span class="ident">Rng</span>,
+};
 
-<span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">scalar</span>::<span class="ident">RealField</span>;
+<span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">scalar</span>::<span class="ident">SupersetOf</span>;
 <span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">simd</span>::<span class="ident">SimdRealField</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">allocator</span>::<span class="ident">Allocator</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">dimension</span>::{<span class="ident">DimName</span>, <span class="ident">U2</span>, <span class="ident">U3</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::{<span class="ident">DefaultAllocator</span>, <span class="ident">Vector2</span>, <span class="ident">Vector3</span>};
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">geometry</span>::{
-    <span class="ident">AbstractRotation</span>, <span class="ident">Isometry</span>, <span class="ident">Point</span>, <span class="ident">Point3</span>, <span class="ident">Rotation2</span>, <span class="ident">Rotation3</span>, <span class="ident">Similarity</span>, <span class="ident">Translation</span>,
-    <span class="ident">UnitComplex</span>, <span class="ident">UnitQuaternion</span>,
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">AbstractRotation</span>, <span class="ident">Isometry</span>, <span class="ident">Point</span>, <span class="ident">Point3</span>, <span class="ident">Rotation2</span>, <span class="ident">Rotation3</span>, <span class="ident">Scalar</span>, <span class="ident">Similarity</span>,
+    <span class="ident">Translation</span>, <span class="ident">UnitComplex</span>, <span class="ident">UnitQuaternion</span>,
 };
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">R</span><span class="op">&gt;</span>
@@ -414,7 +469,8 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">R</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand-no-std&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="kw">crate</span>::<span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">R</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
 <span class="kw">where</span>
     <span class="ident">R</span>: <span class="ident">AbstractRotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
     <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
@@ -462,14 +518,14 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;arbitrary&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>: <span class="ident">DimName</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="ident">Arbitrary</span> <span class="kw">for</span> <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">R</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">Arbitrary</span> <span class="op">+</span> <span class="ident">Send</span>,
-    <span class="ident">N</span>::<span class="ident">Element</span>: <span class="ident">RealField</span>,
+    <span class="ident">N</span>: <span class="kw">crate</span>::<span class="ident">RealField</span> <span class="op">+</span> <span class="ident">Arbitrary</span> <span class="op">+</span> <span class="ident">Send</span>,
+    <span class="ident">N</span>::<span class="ident">Element</span>: <span class="kw">crate</span>::<span class="ident">RealField</span>,
     <span class="ident">R</span>: <span class="ident">AbstractRotation</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Arbitrary</span> <span class="op">+</span> <span class="ident">Send</span>,
     <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
     <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">Send</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">arbitrary</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Gen</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span>: <span class="ident">N</span> <span class="op">=</span> <span class="ident">Arbitrary</span>::<span class="ident">arbitrary</span>(<span class="ident">rng</span>);
         <span class="kw">while</span> <span class="ident">s</span>.<span class="ident">is_zero</span>() {
             <span class="ident">s</span> <span class="op">=</span> <span class="ident">Arbitrary</span>::<span class="ident">arbitrary</span>(<span class="ident">rng</span>)
@@ -510,6 +566,22 @@
             <span class="ident">scaling</span>,
         )
     }
+
+    <span class="doccomment">/// Cast the components of `self` to another type.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::SimilarityMatrix2;</span>
+    <span class="doccomment">/// let sim = SimilarityMatrix2::&lt;f64&gt;::identity();</span>
+    <span class="doccomment">/// let sim2 = sim.cast::&lt;f32&gt;();</span>
+    <span class="doccomment">/// assert_eq!(sim2, SimilarityMatrix2::&lt;f32&gt;::identity());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">To</span>: <span class="ident">Scalar</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">To</span>, <span class="ident">U2</span>, <span class="ident">Rotation2</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">To</span>, <span class="ident">U2</span>, <span class="ident">Rotation2</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span><span class="op">&gt;</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
+    }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">UnitComplex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>
@@ -536,12 +608,28 @@
             <span class="ident">scaling</span>,
         )
     }
+
+    <span class="doccomment">/// Cast the components of `self` to another type.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::Similarity2;</span>
+    <span class="doccomment">/// let sim = Similarity2::&lt;f64&gt;::identity();</span>
+    <span class="doccomment">/// let sim2 = sim.cast::&lt;f32&gt;();</span>
+    <span class="doccomment">/// assert_eq!(sim2, Similarity2::&lt;f32&gt;::identity());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">To</span>: <span class="ident">Scalar</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">To</span>, <span class="ident">U2</span>, <span class="ident">UnitComplex</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">To</span>, <span class="ident">U2</span>, <span class="ident">UnitComplex</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span><span class="op">&gt;</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
+    }
 }
 
 <span class="comment">// 3D rotation.</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">similarity_construction_impl</span>(
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span>: <span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&gt;</span>
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span>: <span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>
         <span class="kw">where</span> <span class="ident">N</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span> {
             <span class="doccomment">/// Creates a new similarity from a translation, rotation axis-angle, and scaling</span>
             <span class="doccomment">/// factor.</span>
@@ -571,7 +659,23 @@
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">translation</span>: <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">axisangle</span>: <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">scaling</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
             {
-                <span class="self">Self</span>::<span class="ident">from_isometry</span>(<span class="ident">Isometry</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">translation</span>, <span class="ident">axisangle</span>), <span class="ident">scaling</span>)
+                <span class="self">Self</span>::<span class="ident">from_isometry</span>(<span class="ident">Isometry</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">translation</span>, <span class="ident">axisangle</span>), <span class="ident">scaling</span>)
+            }
+
+            <span class="doccomment">/// Cast the components of `self` to another type.</span>
+            <span class="doccomment">///</span>
+            <span class="doccomment">/// # Example</span>
+            <span class="doccomment">/// ```</span>
+            <span class="doccomment">/// # use nalgebra::Similarity3;</span>
+            <span class="doccomment">/// let sim = Similarity3::&lt;f64&gt;::identity();</span>
+            <span class="doccomment">/// let sim2 = sim.cast::&lt;f32&gt;();</span>
+            <span class="doccomment">/// assert_eq!(sim2, Similarity3::&lt;f32&gt;::identity());</span>
+            <span class="doccomment">/// ```</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">To</span>: <span class="ident">Scalar</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">To</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span><span class="op">&gt;</span>
+            <span class="kw">where</span>
+                <span class="ident">Similarity</span><span class="op">&lt;</span><span class="ident">To</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span><span class="op">&gt;</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
+            {
+                <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
             }
 
             <span class="doccomment">/// Creates an similarity that corresponds to a scaling factor and a local frame of</span>
@@ -612,7 +716,7 @@
                                       <span class="ident">up</span>:     <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
                                       <span class="ident">scaling</span>: <span class="ident">N</span>)
                                       <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-                <span class="self">Self</span>::<span class="ident">from_isometry</span>(<span class="ident">Isometry</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&gt;</span>::<span class="ident">face_towards</span>(<span class="ident">eye</span>, <span class="ident">target</span>, <span class="ident">up</span>), <span class="ident">scaling</span>)
+                <span class="self">Self</span>::<span class="ident">from_isometry</span>(<span class="ident">Isometry</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">face_towards</span>(<span class="ident">eye</span>, <span class="ident">target</span>, <span class="ident">up</span>), <span class="ident">scaling</span>)
             }
 
             <span class="doccomment">/// Deprecated: Use [SimilarityMatrix3::face_towards] instead.</span>
@@ -660,7 +764,7 @@
                               <span class="ident">up</span>:      <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
                               <span class="ident">scaling</span>: <span class="ident">N</span>)
                               <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-                <span class="self">Self</span>::<span class="ident">from_isometry</span>(<span class="ident">Isometry</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&gt;</span>::<span class="ident">look_at_rh</span>(<span class="ident">eye</span>, <span class="ident">target</span>, <span class="ident">up</span>), <span class="ident">scaling</span>)
+                <span class="self">Self</span>::<span class="ident">from_isometry</span>(<span class="ident">Isometry</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">U3</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">look_at_rh</span>(<span class="ident">eye</span>, <span class="ident">target</span>, <span class="ident">up</span>), <span class="ident">scaling</span>)
             }
 
             <span class="doccomment">/// Builds a left-handed look-at view matrix including a scaling factor.</span>
@@ -698,13 +802,13 @@
                               <span class="ident">up</span>:      <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
                               <span class="ident">scaling</span>: <span class="ident">N</span>)
                               <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-                <span class="self">Self</span>::<span class="ident">from_isometry</span>(<span class="ident">Isometry</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">_</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&gt;</span>::<span class="ident">look_at_lh</span>(<span class="ident">eye</span>, <span class="ident">target</span>, <span class="ident">up</span>), <span class="ident">scaling</span>)
+                <span class="self">Self</span>::<span class="ident">from_isometry</span>(<span class="ident">Isometry</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">_</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Rot</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">look_at_lh</span>(<span class="ident">eye</span>, <span class="ident">target</span>, <span class="ident">up</span>), <span class="ident">scaling</span>)
             }
         }
     }
 );
 
-<span class="macro">similarity_construction_impl</span><span class="macro">!</span>(<span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>);
-<span class="macro">similarity_construction_impl</span><span class="macro">!</span>(<span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>);
+<span class="macro">similarity_construction_impl</span><span class="macro">!</span>(<span class="ident">Rotation3</span>);
+<span class="macro">similarity_construction_impl</span><span class="macro">!</span>(<span class="ident">UnitQuaternion</span>);
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "nalgebra";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.24.1/src/geometry/quaternion_construction.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>quaternion_construction.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.25.3/src/geometry/quaternion_construction.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>quaternion_construction.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -856,6 +856,56 @@
 <span id="855">855</span>
 <span id="856">856</span>
 <span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;arbitrary&quot;</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">dimension</span>::<span class="ident">U4</span>;
@@ -864,11 +914,15 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;arbitrary&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">quickcheck</span>::{<span class="ident">Arbitrary</span>, <span class="ident">Gen</span>};
 
-<span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">One</span>, <span class="ident">Zero</span>};
-<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">OpenClosed01</span>, <span class="ident">Standard</span>};
-<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand-no-std&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">rand</span>::{
+    <span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">OpenClosed01</span>, <span class="ident">Standard</span>},
+    <span class="ident">Rng</span>,
+};
 
-<span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">scalar</span>::<span class="ident">RealField</span>;
+<span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">One</span>, <span class="ident">Zero</span>};
+
+<span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">scalar</span>::{<span class="ident">RealField</span>, <span class="ident">SupersetOf</span>};
 <span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">simd</span>::<span class="ident">SimdBool</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">dimension</span>::<span class="ident">U3</span>;
@@ -903,6 +957,22 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">w</span>: <span class="ident">N</span>, <span class="ident">i</span>: <span class="ident">N</span>, <span class="ident">j</span>: <span class="ident">N</span>, <span class="ident">k</span>: <span class="ident">N</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">Vector4</span>::<span class="ident">new</span>(<span class="ident">i</span>, <span class="ident">j</span>, <span class="ident">k</span>, <span class="ident">w</span>))
+    }
+
+    <span class="doccomment">/// Cast the components of `self` to another type.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::Quaternion;</span>
+    <span class="doccomment">/// let q = Quaternion::new(1.0f64, 2.0, 3.0, 4.0);</span>
+    <span class="doccomment">/// let q2 = q.cast::&lt;f32&gt;();</span>
+    <span class="doccomment">/// assert_eq!(q2, Quaternion::new(1.0f32, 2.0, 3.0, 4.0));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">To</span>: <span class="ident">Scalar</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">To</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
     }
 }
 
@@ -1003,6 +1073,7 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand-no-std&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Quaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
 <span class="kw">where</span>
     <span class="ident">Standard</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
@@ -1019,7 +1090,7 @@
     <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U4</span><span class="op">&gt;</span>: <span class="ident">Send</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">arbitrary</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Gen</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(
             <span class="ident">N</span>::<span class="ident">arbitrary</span>(<span class="ident">g</span>),
             <span class="ident">N</span>::<span class="ident">arbitrary</span>(<span class="ident">g</span>),
@@ -1051,6 +1122,23 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new_unchecked</span>(<span class="ident">Quaternion</span>::<span class="ident">identity</span>())
+    }
+
+    <span class="doccomment">/// Cast the components of `self` to another type.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use nalgebra::UnitQuaternion;</span>
+    <span class="doccomment">/// # use approx::assert_relative_eq;</span>
+    <span class="doccomment">/// let q = UnitQuaternion::from_euler_angles(1.0f64, 2.0, 3.0);</span>
+    <span class="doccomment">/// let q2 = q.cast::&lt;f32&gt;();</span>
+    <span class="doccomment">/// assert_relative_eq!(q2, UnitQuaternion::from_euler_angles(1.0f32, 2.0, 3.0), epsilon = 1.0e-6);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cast</span><span class="op">&lt;</span><span class="ident">To</span>: <span class="ident">Scalar</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">To</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Creates a new quaternion from a unit vector (the rotation axis) and an angle</span>
@@ -1123,6 +1211,17 @@
         );
 
         <span class="self">Self</span>::<span class="ident">new_unchecked</span>(<span class="ident">q</span>)
+    }
+
+    <span class="doccomment">/// Builds an unit quaternion from a basis assumed to be orthonormal.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// In order to get a valid unit-quaternion, the input must be an</span>
+    <span class="doccomment">/// orthonormal basis, i.e., all vectors are normalized, and the are</span>
+    <span class="doccomment">/// all orthogonal to each other. These invariants are not checked</span>
+    <span class="doccomment">/// by this method.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_basis_unchecked</span>(<span class="ident">basis</span>: <span class="kw-2">&amp;</span>[<span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>; <span class="number">3</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">rot</span> <span class="op">=</span> <span class="ident">Rotation3</span>::<span class="ident">from_basis_unchecked</span>(<span class="ident">basis</span>);
+        <span class="self">Self</span>::<span class="ident">from_rotation_matrix</span>(<span class="kw-2">&amp;</span><span class="ident">rot</span>)
     }
 
     <span class="doccomment">/// Builds an unit quaternion from a rotation matrix.</span>
@@ -1660,6 +1759,7 @@
     }
 }
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand-no-std&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
 <span class="kw">where</span>
     <span class="ident">N</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
@@ -1693,7 +1793,7 @@
     <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span><span class="op">&gt;</span>: <span class="ident">Send</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">arbitrary</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">Gen</span><span class="op">&gt;</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">arbitrary</span>(<span class="ident">g</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Gen</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">axisangle</span> <span class="op">=</span> <span class="ident">Vector3</span>::<span class="ident">arbitrary</span>(<span class="ident">g</span>);
         <span class="self">Self</span>::<span class="ident">from_scaled_axis</span>(<span class="ident">axisangle</span>)
     }

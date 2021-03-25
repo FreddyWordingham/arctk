@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.24.1/src/geometry/translation_conversion.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>translation_conversion.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.25.3/src/geometry/translation_conversion.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>translation_conversion.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -262,6 +262,32 @@
 <span id="261">261</span>
 <span id="262">262</span>
 <span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">One</span>, <span class="ident">Zero</span>};
 
@@ -274,6 +300,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">geometry</span>::{
     <span class="ident">AbstractRotation</span>, <span class="ident">Isometry</span>, <span class="ident">Similarity</span>, <span class="ident">SuperTCategoryOf</span>, <span class="ident">TAffine</span>, <span class="ident">Transform</span>, <span class="ident">Translation</span>,
+    <span class="ident">Translation3</span>, <span class="ident">UnitDualQuaternion</span>, <span class="ident">UnitQuaternion</span>,
 };
 
 <span class="comment">/*
@@ -282,6 +309,7 @@
  *
  * Translation -&gt; Translation
  * Translation -&gt; Isometry
+ * Translation3 -&gt; UnitDualQuaternion
  * Translation -&gt; Similarity
  * Translation -&gt; Transform
  * Translation -&gt; Matrix (homogeneous)
@@ -331,6 +359,30 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">from_superset_unchecked</span>(<span class="ident">iso</span>: <span class="kw-2">&amp;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N2</span>, <span class="ident">D</span>, <span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_superset_unchecked</span>(<span class="kw-2">&amp;</span><span class="ident">iso</span>.<span class="ident">translation</span>)
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N1</span>, <span class="ident">N2</span><span class="op">&gt;</span> <span class="ident">SubsetOf</span><span class="op">&lt;</span><span class="ident">UnitDualQuaternion</span><span class="op">&lt;</span><span class="ident">N2</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Translation3</span><span class="op">&lt;</span><span class="ident">N1</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">N1</span>: <span class="ident">RealField</span>,
+    <span class="ident">N2</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="ident">N1</span><span class="op">&gt;</span>,
+{
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">to_superset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UnitDualQuaternion</span><span class="op">&lt;</span><span class="ident">N2</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">dq</span> <span class="op">=</span> <span class="ident">UnitDualQuaternion</span>::<span class="op">&lt;</span><span class="ident">N1</span><span class="op">&gt;</span>::<span class="ident">from_parts</span>(<span class="self">self</span>.<span class="ident">clone</span>(), <span class="ident">UnitQuaternion</span>::<span class="ident">identity</span>());
+        <span class="ident">dq</span>.<span class="ident">to_superset</span>()
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">is_in_subset</span>(<span class="ident">dq</span>: <span class="kw-2">&amp;</span><span class="ident">UnitDualQuaternion</span><span class="op">&lt;</span><span class="ident">N2</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">crate</span>::<span class="ident">is_convertible</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Translation</span><span class="op">&lt;</span><span class="ident">N1</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">dq</span>.<span class="ident">translation</span>())
+            <span class="op">&amp;&amp;</span> <span class="ident">dq</span>.<span class="ident">rotation</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">UnitQuaternion</span>::<span class="ident">identity</span>()
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">from_superset_unchecked</span>(<span class="ident">dq</span>: <span class="kw-2">&amp;</span><span class="ident">UnitDualQuaternion</span><span class="op">&lt;</span><span class="ident">N2</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">dq</span>: <span class="ident">UnitDualQuaternion</span><span class="op">&lt;</span><span class="ident">N1</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">convert_ref_unchecked</span>(<span class="ident">dq</span>);
+        <span class="ident">dq</span>.<span class="ident">translation</span>()
     }
 }
 
