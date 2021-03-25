@@ -45,6 +45,10 @@ fn main() {
     report!(grid, "measurement grid");
     let mats = params.mats;
     report!(mats, "materials");
+    let shifts_conc_spec = params.shifts_conc_spec;
+    if shifts_conc_spec.is_some() {
+        report!(mats, "Shift properties loaded.");
+    }
 
     sub_section(term_width, "Registration");
     let (spec_reg, img_reg) = gen_detector_registers(&params.attrs);
@@ -76,7 +80,7 @@ fn main() {
     report!(tree, "hit-scan tree");
 
     section(term_width, "Running");
-    let input = Input::new(&spec_reg, &mats, &attrs, &light, &tree, &grid, &sett);
+    let input = Input::new(&spec_reg, &mats, &attrs, &light, &tree, &grid, &sett, &None);
     report!(input, "input");
 
     let data = run::multi_thread(engine, &input, &output).expect("Failed to run cartographer.");

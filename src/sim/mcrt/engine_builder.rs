@@ -14,6 +14,8 @@ pub enum EngineBuilder {
     Standard,
     /// Raman sampling engine.
     Raman,
+    /// Fluorophore engine.
+    Fluorophore,
 }
 
 impl Build for EngineBuilder {
@@ -24,6 +26,7 @@ impl Build for EngineBuilder {
         match self {
             Self::Standard => engines::standard,
             Self::Raman => engines::raman,
+            Self::Fluorophore => engines::fluorophore,
         }
     }
 }
@@ -34,6 +37,7 @@ impl Display for EngineBuilder {
         match *self {
             Self::Standard => write!(fmt, "Standard"),
             Self::Raman => write!(fmt, "Raman"),
+            Self::Fluorophore => write!(fmt, "Raman"),
         }
     }
 }

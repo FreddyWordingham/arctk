@@ -3,10 +3,13 @@
 use crate::{
     fmt_report,
     geom::{GridBuilder, SurfaceLinker, TreeSettings},
+    math::FormulaBuilder,
     ord::{Build, Set},
     phys::{LightLinkerBuilder, MaterialBuilder},
     sim::mcrt::{AttributeLinkerLinkerLinker, EngineBuilder, Parameters, Settings},
+    util::Analyze,
 };
+use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
 /// Buildable runtime parameters.
@@ -27,6 +30,8 @@ pub struct ParametersBuilder {
     light: LightLinkerBuilder,
     /// Engine selection.
     engine: EngineBuilder,
+    /// Optional fluorophore properties.
+    shifts_conc_spec: Option<(Array3<f64>, FormulaBuilder)>,
 }
 
 impl ParametersBuilder {
@@ -43,6 +48,7 @@ impl ParametersBuilder {
         mats: Set<MaterialBuilder>,
         light: LightLinkerBuilder,
         engine: EngineBuilder,
+        shifts_conc_spec: Option<(Array3<f64>, FormulaBuilder)>,
     ) -> Self {
         Self {
             sett,
@@ -53,6 +59,7 @@ impl ParametersBuilder {
             mats,
             light,
             engine,
+            shifts_conc_spec,
         }
     }
 }
@@ -70,8 +77,23 @@ impl Build for ParametersBuilder {
         let mats = self.mats.build();
         let light = self.light.build();
         let engine = self.engine.build();
+        let shifts_conc_spec = if let Some((concs, spec)) = self.shifts_conc_spec {
+            Some((concs, spec.build()))
+        } else {
+            None
+        };
 
-        Self::Inst::new(sett, tree, grid, surfs, attrs, mats, light, engine)
+        Self::Inst::new(
+            sett,
+            tree,
+            grid,
+            surfs,
+            attrs,
+            mats,
+            light,
+            engine,
+            shifts_conc_spec,
+        )
     }
 }
 
@@ -87,6 +109,10 @@ impl Display for ParametersBuilder {
         fmt_report!(fmt, self.mats, "materials");
         fmt_report!(fmt, self.light, "light");
         fmt_report!(fmt, self.engine, "engine");
+        if let Some((concs, spec)) = &self.shifts_conc_spec {
+            fmt_report!(fmt, concs.display(), "Fluorophore map");
+            fmt_report!(fmt, spec, "Fluorophore absorption spectra");
+        }
         Ok(())
     }
 }
