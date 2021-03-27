@@ -21,7 +21,7 @@ use std::{
 #[file]
 #[derive(Clone)]
 pub enum OperationBuilderLoader {
-    /// Report information about a data cube.
+    /// Report information about a datacube.
     Info(PathBuf),
     /// Sample the center of a datacube.
     Stripe(PathBuf),
@@ -44,20 +44,22 @@ pub enum OperationBuilderLoader {
     Remove(PathBuf, PathBuf),
     /// Sum cubes together.
     Sum(Vec<PathBuf>),
-    /// Add a value to the data cube.
+    /// Add a value to the datacube.
     Add(PathBuf, f64),
-    /// Subtract a value from the data cube.
+    /// Subtract a value from the datacube.
     Sub(PathBuf, f64),
     /// Multiply the datacube by the value.
     Mult(PathBuf, f64),
     /// Divide the datacube by the value.
     Div(PathBuf, f64),
+    /// Normalise a datacube.
+    Norm(PathBuf),
+    /// Clamp the values within datacube.
+    Clamp(PathBuf, f64, f64),
     /// Piecewise multiply a datacube by another.
     PiecewiseMult(PathBuf, PathBuf),
     /// Piecewise divide a datacube by another.
     PiecewiseDiv(PathBuf, PathBuf),
-    /// Normalise a data cube.
-    Norm(PathBuf),
     /// Sample the locations for their values. (Points, DataCube, Grid).
     Sample(PathBuf, PathBuf, Redirect<GridBuilder>),
 }
@@ -108,6 +110,14 @@ impl Load for OperationBuilderLoader {
                 let cube = Array3::new_from_file(&in_dir.join(data_path))?;
                 Self::Inst::Div(cube, x)
             }
+            Self::Norm(data_path) => {
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
+                Self::Inst::Norm(cube)
+            }
+            Self::Clamp(data_path, min, max) => {
+                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
+                Self::Inst::Clamp(cube,min,max)
+            }
             Self::PiecewiseDiv(data_a_path, data_b_path) => {
                 let a = Array3::new_from_file(&in_dir.join(data_a_path))?;
                 let b = Array3::new_from_file(&in_dir.join(data_b_path))?;
@@ -117,10 +127,6 @@ impl Load for OperationBuilderLoader {
                 let a = Array3::new_from_file(&in_dir.join(data_a_path))?;
                 let b = Array3::new_from_file(&in_dir.join(data_b_path))?;
                 Self::Inst::PiecewiseMult(a, b)
-            }
-            Self::Norm(data_path) => {
-                let cube = Array3::new_from_file(&in_dir.join(data_path))?;
-                Self::Inst::Norm(cube)
             }
             Self::Sample(points_path, data_path, grid) => {
                 let table = Table::new_from_file(&in_dir.join(points_path))?;
@@ -193,6 +199,12 @@ impl Display for OperationBuilderLoader {
             Self::Div(ref data_path, x) => {
                 write!(fmt, "Divide: {} / {}", data_path.display(), x)
             }
+            Self::Norm(ref data_path) => {
+                write!(fmt, "Normalise: {}", data_path.display())
+            }
+            Self::Clamp(ref data_path,min,max) => {
+                write!(fmt, "Clamp: {} between [{}-{}]", data_path.display(),min,max)
+            }
             Self::PiecewiseMult(ref data_a_path, ref data_b_path) => {
                 write!(
                     fmt,
@@ -208,9 +220,6 @@ impl Display for OperationBuilderLoader {
                     data_a_path.display(),
                     data_b_path.display(),
                 )
-            }
-            Self::Norm(ref data_path) => {
-                write!(fmt, "Normalise: {}", data_path.display())
             }
             Self::Sample(ref points_path, ref data_path, ref grid) => {
                 writeln!(fmt, "Sample...")?;

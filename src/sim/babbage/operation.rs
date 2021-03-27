@@ -15,7 +15,7 @@ use std::path::Path;
 
 /// Possible operation enumeration.
 pub enum Operation {
-    /// Report information about data cube.
+    /// Report information about datacube.
     Info(Array3<f64>),
     /// Sample the center of a datacube.
     Stripe(Array3<f64>),
@@ -38,20 +38,22 @@ pub enum Operation {
     Remove(Array3<f64>, Array3<f64>),
     /// Sum cubes together.
     Sum(Vec<Array3<f64>>),
-    /// Add a value to the data cube.
+    /// Add a value to the datacube.
     Add(Array3<f64>, f64),
-    /// Subtract a value from the data cube.
+    /// Subtract a value from the datacube.
     Sub(Array3<f64>, f64),
     /// Multiply the datacube by the value.
     Mult(Array3<f64>, f64),
     /// Divide the datacube by the value.
     Div(Array3<f64>, f64),
+    /// Normalise a datacube.
+    Norm(Array3<f64>),
+        /// Clamp the values within datacube.
+        Clamp(Array3<f64>, f64, f64),
     /// Piecewise multiply a datacube by another.
     PiecewiseMult(Array3<f64>, Array3<f64>),
     /// Piecewise divide a datacube by another.
     PiecewiseDiv(Array3<f64>, Array3<f64>),
-    /// Normalise a data cube.
-    Norm(Array3<f64>),
     /// Sample the locations for their values. (Points, DataCube, Grid).
     Sample(Vec<Pos3>, Array3<f64>, Grid),
 }
@@ -118,6 +120,7 @@ impl Operation {
             Self::Mult(ref data, x) => (data * x).save(&path.with_extension("nc")),
             Self::Div(ref data, x) => (data / x).save(&path.with_extension("nc")),
             Self::Norm(ref data) => (data / data.sum()).save(&path.with_extension("nc")),
+            Self::Clamp(ref data,min,max) => (data.mapv(|v| v.clamp(min,max))).save(&path.with_extension("nc")),
             Self::PiecewiseMult(ref a, ref b) => (a * b).save(&path.with_extension("nc")),
             Self::PiecewiseDiv(ref a, ref b) => (a / b).save(&path.with_extension("nc")),
             Self::Sample(ref points, ref data, ref grid) => {

@@ -5,7 +5,7 @@ use ndarray::Array3;
 
 /// Possible operation enumeration.
 pub enum OperationBuilder {
-    /// Report information about data cube.
+    /// Report information about datacube.
     Info(Array3<f64>),
     /// Sample the center of a datacube.
     Stripe(Array3<f64>),
@@ -28,20 +28,22 @@ pub enum OperationBuilder {
     Remove(Array3<f64>, Array3<f64>),
     /// Sum cubes together.
     Sum(Vec<Array3<f64>>),
-    /// Add a value to the data cube.
+    /// Add a value to the datacube.
     Add(Array3<f64>, f64),
-    /// Subtract a value from the data cube.
+    /// Subtract a value from the datacube.
     Sub(Array3<f64>, f64),
     /// Multiply the datacube by the value.
     Mult(Array3<f64>, f64),
     /// Divide the datacube by the value.
     Div(Array3<f64>, f64),
+    /// Normalise a datacube.
+    Norm(Array3<f64>),
+    /// Clamp the values within datacube.
+    Clamp(Array3<f64>, f64, f64),
     /// Piecewise multiply a datacube by another.
     PiecewiseMult(Array3<f64>, Array3<f64>),
     /// Piecewise divide a datacube by another.
     PiecewiseDiv(Array3<f64>, Array3<f64>),
-    /// Normalise a data cube.
-    Norm(Array3<f64>),
     /// Sample the locations for their values. (Points, DataCube, Grid).
     Sample(Vec<Pos3>, Array3<f64>, GridBuilder),
 }
@@ -64,9 +66,10 @@ impl Build for OperationBuilder {
             Self::Sub(cube, x) => Self::Inst::Sub(cube, x),
             Self::Mult(cube, x) => Self::Inst::Mult(cube, x),
             Self::Div(cube, x) => Self::Inst::Div(cube, x),
+            Self::Norm(cube) => Self::Inst::Norm(cube),
+            Self::Clamp(cube,min,max) => Self::Inst::Clamp(cube,min,max),
             Self::PiecewiseMult(a, b) => Self::Inst::PiecewiseMult(a, b),
             Self::PiecewiseDiv(a, b) => Self::Inst::PiecewiseDiv(a, b),
-            Self::Norm(cube) => Self::Inst::Norm(cube),
             Self::Sample(points, cube, grid_builder) => {
                 Self::Inst::Sample(points, cube, grid_builder.build())
             }
