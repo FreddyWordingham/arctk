@@ -91,9 +91,9 @@ pub fn photo(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
     ];
     let cam_pos = input.cam_pos.unwrap();
     let aspect = res[X] as f64 / res[Y] as f64;
-    let fov = 45.0_f64.to_radians();
+    let fov = 95.0_f64.to_radians();
     let view = Mat4::look_at_rh(&cam_pos, &input.grid.boundary().centre(), &Vec3::z_axis());
-    let proj = Mat4::new_perspective(aspect, fov, 0.1, 100.0);
+    let proj = Mat4::new_perspective(aspect, fov, bump_dist, 2.0 * nalgebra::distance(&cam_pos, &input.grid.boundary().centre()));
     let mvp = proj * view;
     let phot_col = wavelength_to_rbg(phot.wavelength());
 
@@ -140,12 +140,15 @@ pub fn photo(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
                     let [x, y] = project(phot.ray().pos(), &mvp, res);
                     if x < res[X] && y < res[Y] {
                         if let Some(weight) = peel_off(&input, phot.clone(), &env, cam_pos) {
-                            data.photos[0].pixels_mut()[[x, y]] += Colour::new(
-                                phot_col[0] as f32,
-                                phot_col[1] as f32,
-                                phot_col[2] as f32,
-                                (phot.weight() * weight) as f32,
-                            );
+                            if weight > 0.0 {
+                                data.photos[0].pixels_mut()[[x, y]] += Colour::new(
+                                    phot_col[0] as f32,
+                                    phot_col[1] as f32,
+                                    phot_col[2] as f32,
+                                    1.0,
+                                ) * (phot.weight() * weight)
+                                    as f32;
+                            }
                         }
                     }
                 }
