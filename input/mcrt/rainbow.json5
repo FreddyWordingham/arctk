@@ -31,5 +31,5 @@
             mesh: [["res/objs/test/cube.obj"], { trans: [3.0, -400.0, 2.0] } ]
         }
     } },
-    cam_pos: [ 0.0, 50.0, 0.0]
+    cam_pos: [ 1.0, 1.0, 1.0]
 }
