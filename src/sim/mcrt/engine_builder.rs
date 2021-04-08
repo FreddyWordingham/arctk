@@ -16,6 +16,8 @@ pub enum EngineBuilder {
     Raman,
     /// Fluorophore engine.
     Fluorophore,
+    /// Photo capture engine.
+    Photo,
 }
 
 impl Build for EngineBuilder {
@@ -27,6 +29,7 @@ impl Build for EngineBuilder {
             Self::Standard => engines::standard,
             Self::Raman => engines::raman,
             Self::Fluorophore => engines::fluorophore,
+            Self::Photo => engines::photo,
         }
     }
 }
@@ -38,6 +41,7 @@ impl Display for EngineBuilder {
             Self::Standard => write!(fmt, "Standard"),
             Self::Raman => write!(fmt, "Raman"),
             Self::Fluorophore => write!(fmt, "Raman"),
+            Self::Photo => write!(fmt, "Photo"),
         }
     }
 }

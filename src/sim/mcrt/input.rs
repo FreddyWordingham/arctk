@@ -3,7 +3,7 @@
 use crate::{
     fmt_report,
     geom::{Grid, Tree},
-    math::Formula,
+    math::{Formula, Pos3},
     ord::{Register, Set},
     phys::{Light, Material},
     sim::mcrt::{Attribute, Settings},
@@ -30,6 +30,8 @@ pub struct Input<'a> {
     pub sett: &'a Settings,
     /// Optional fluorophore properties (concentration map, absorption spectra).
     pub shifts_conc_spec: &'a Option<(Array3<f64>, Formula)>,
+    /// Optional camera position.
+    pub cam_pos: &'a Option<Pos3>,
 }
 
 impl<'a> Input<'a> {
@@ -45,6 +47,7 @@ impl<'a> Input<'a> {
         grid: &'a Grid,
         sett: &'a Settings,
         shifts_conc_spec: &'a Option<(Array3<f64>, Formula)>,
+        cam_pos: &'a Option<Pos3>,
     ) -> Self {
         Self {
             spec_reg,
@@ -55,6 +58,7 @@ impl<'a> Input<'a> {
             grid,
             sett,
             shifts_conc_spec,
+            cam_pos,
         }
     }
 }
@@ -73,6 +77,9 @@ impl Display for Input<'_> {
         if let Some(shifts_conc_spec) = self.shifts_conc_spec {
             fmt_report!(fmt, shifts_conc_spec.0.display(), "Fluorophore map");
             fmt_report!(fmt, shifts_conc_spec.1, "Fluorophore absorption spectra");
+        }
+        if let Some(cam_pos) = self.cam_pos {
+            fmt_report!(fmt, cam_pos, "Camera position");
         }
         Ok(())
     }

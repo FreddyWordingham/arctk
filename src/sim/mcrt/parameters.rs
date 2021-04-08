@@ -3,7 +3,7 @@
 use crate::{
     fmt_report,
     geom::{Grid, SurfaceLinker, TreeSettings},
-    math::Formula,
+    math::{Formula, Pos3},
     ord::Set,
     phys::{LightLinker, Material},
     sim::mcrt::{AttributeLinkerLinkerLinker, Engine, Settings},
@@ -32,6 +32,8 @@ pub struct Parameters {
     pub engine: Engine,
     /// Optional fluorophore properties.
     pub shifts_conc_spec: Option<(Array3<f64>, Formula)>,
+    /// Optional camera position.
+    pub cam_pos: Option<Pos3>,
 }
 
 impl Parameters {
@@ -49,6 +51,7 @@ impl Parameters {
         light: LightLinker,
         engine: Engine,
         shifts_conc_spec: Option<(Array3<f64>, Formula)>,
+        cam_pos: Option<Pos3>,
     ) -> Self {
         Self {
             sett,
@@ -60,6 +63,7 @@ impl Parameters {
             light,
             engine,
             shifts_conc_spec,
+            cam_pos
         }
     }
 }
@@ -79,6 +83,9 @@ impl Display for Parameters {
         if let Some(shifts_conc_spec) = &self.shifts_conc_spec {
             fmt_report!(fmt, shifts_conc_spec.0.display(), "Fluorophore map");
             fmt_report!(fmt, shifts_conc_spec.1, "Fluorophore absorption spectra");
+        }
+        if let Some(cam_pos) = &self.cam_pos {
+            fmt_report!(fmt, cam_pos, "camera position (m)");
         }
         Ok(())
     }

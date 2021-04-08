@@ -3,7 +3,7 @@
 use crate::{
     fmt_report,
     geom::{GridBuilder, SurfaceLinker, TreeSettings},
-    math::FormulaBuilder,
+    math::{FormulaBuilder, Pos3},
     ord::{Build, Set},
     phys::{LightLinkerBuilder, MaterialBuilder},
     sim::mcrt::{AttributeLinkerLinkerLinker, EngineBuilder, Parameters, Settings},
@@ -32,6 +32,8 @@ pub struct ParametersBuilder {
     engine: EngineBuilder,
     /// Optional fluorophore properties.
     shifts_conc_spec: Option<(Array3<f64>, FormulaBuilder)>,
+    /// Optional camera position.
+    cam_pos: Option<Pos3>,
 }
 
 impl ParametersBuilder {
@@ -49,6 +51,7 @@ impl ParametersBuilder {
         light: LightLinkerBuilder,
         engine: EngineBuilder,
         shifts_conc_spec: Option<(Array3<f64>, FormulaBuilder)>,
+        cam_pos: Option<Pos3>,
     ) -> Self {
         Self {
             sett,
@@ -60,6 +63,7 @@ impl ParametersBuilder {
             light,
             engine,
             shifts_conc_spec,
+            cam_pos,
         }
     }
 }
@@ -82,6 +86,7 @@ impl Build for ParametersBuilder {
         } else {
             None
         };
+        let cam_pos = self.cam_pos;
 
         Self::Inst::new(
             sett,
@@ -93,6 +98,7 @@ impl Build for ParametersBuilder {
             light,
             engine,
             shifts_conc_spec,
+            cam_pos,
         )
     }
 }
@@ -112,6 +118,9 @@ impl Display for ParametersBuilder {
         if let Some((concs, spec)) = &self.shifts_conc_spec {
             fmt_report!(fmt, concs.display(), "Fluorophore map");
             fmt_report!(fmt, spec, "Fluorophore absorption spectra");
+        }
+        if let Some(cam_pos) = &self.cam_pos {
+            fmt_report!(fmt, cam_pos, "camera position (m)");
         }
         Ok(())
     }

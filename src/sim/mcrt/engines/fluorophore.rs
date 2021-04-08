@@ -1,4 +1,4 @@
-//! Fluorophore support engine function.
+//! Fluorophore supporting engine function.
 
 use crate::{
     geom::Trace,

@@ -47,7 +47,11 @@ fn main() {
     report!(mats, "materials");
     let shifts_conc_spec = params.shifts_conc_spec;
     if shifts_conc_spec.is_some() {
-        report!(mats, "Shift properties loaded.");
+        report!(mats, "Shift properties loaded");
+    }
+    let cam_pos = params.cam_pos;
+    if let Some(cam_pos) = cam_pos {
+        report!(cam_pos, "Camera position");
     }
 
     sub_section(term_width, "Registration");
@@ -89,6 +93,7 @@ fn main() {
         &grid,
         &sett,
         &shifts_conc_spec,
+        &cam_pos,
     );
     report!(input, "input");
 

@@ -10,8 +10,8 @@ use nalgebra::distance;
 /// Minimum weight before discarding during peel-off.
 const THRESHOLD: f64 = 1.0e-6;
 
+/// Perform a peel-off event.
 /// Calculate the change in weight over a give flight towards a given point.
-/// Perform a peel off event.
 #[inline]
 #[must_use]
 pub fn peel_off(input: &Input, mut phot: Photon, env: &Local, pos: Pos3) -> Option<f64> {

@@ -4,7 +4,7 @@ use crate::{
     err::Error,
     fs::{File, Load, Redirect},
     geom::{GridBuilder, SurfaceLinkerLoader, TreeSettings},
-    math::FormulaBuilder,
+    math::{FormulaBuilder, Pos3},
     ord::Set,
     phys::{LightLinkerBuilderLoader, MaterialBuilder},
     sim::mcrt::{AttributeLinkerLinkerLinker, EngineBuilder, ParametersBuilder, Settings},
@@ -34,6 +34,8 @@ pub struct ParametersBuilderLoader {
     engine: EngineBuilder,
     /// Optional fluorophore properties.
     shifts_conc_spec: Option<(PathBuf, Redirect<FormulaBuilder>)>,
+    /// Optional camera position.
+    cam_pos: Option<Pos3>,
 }
 
 impl Load for ParametersBuilderLoader {
@@ -57,6 +59,7 @@ impl Load for ParametersBuilderLoader {
         } else {
             None
         };
+        let cam_pos = self.cam_pos;
 
         Ok(Self::Inst::new(
             sett,
@@ -68,6 +71,7 @@ impl Load for ParametersBuilderLoader {
             light,
             engine,
             shifts_conc_spec,
+            cam_pos,
         ))
     }
 }

@@ -2,7 +2,7 @@
 
 use nalgebra::{
     Point2, Point3, Point4, Rotation2, Rotation3, Similarity2, Similarity3, Unit, Vector2, Vector3,
-    Vector4,
+    Vector4, Matrix2, Matrix3, Matrix4,
 };
 
 /// Two-dimensional real-number vector alias.
@@ -12,12 +12,26 @@ pub type Vec3 = Vector3<f64>;
 /// Four-dimensional real-number vector alias.
 pub type Vec4 = Vector4<f64>;
 
+/// Two-by-two dimensional real-number matrix alias.
+pub type Mat2 = Matrix2<f64>;
+/// Three-by-three dimensional real-number matrix alias.
+pub type Mat3 = Matrix3<f64>;
+/// Four-by-four dimensional real-number matrix alias.
+pub type Mat4 = Matrix4<f64>;
+
 /// Two-dimensional discrete-number vector alias.
 pub type Vec2I = Vector2<i32>;
 /// Three-dimensional discrete-number vector alias.
 pub type Vec3I = Vector3<i32>;
 /// Four-dimensional discrete-number vector alias.
 pub type Vec4I = Vector4<i32>;
+
+/// Two-by-two dimensional discrete-number matrix alias.
+pub type Mat2I = Matrix2<i32>;
+/// Three-by-three dimensional discrete-number matrix alias.
+pub type Mat3I = Matrix3<i32>;
+/// Four-by-four dimensional discrete-number matrix alias.
+pub type Mat4I = Matrix4<i32>;
 
 /// Normalised two-dimensional vector alias.
 pub type Dir2 = Unit<Vector2<f64>>;
