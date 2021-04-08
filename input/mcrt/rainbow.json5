@@ -4,7 +4,7 @@
     engine      : "Photo",
     sett        : { Here    : {
         num_phot            : 1e4,
-        block_size          : 1e2,
+        block_size          : 1e1,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
         min_weight          : 0.05,

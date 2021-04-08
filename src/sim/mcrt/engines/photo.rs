@@ -13,7 +13,49 @@ use crate::{
 };
 use rand::{rngs::ThreadRng, Rng};
 
-// Transform the point position into pixel coordinates.
+/// Generate the RGB components of a given wavelength.
+pub fn wavelength_to_rbg(mut wavelength: f64) -> [f64; 3] {
+    let gamma = 0.8;
+    wavelength *= 1.0e9;
+
+    if wavelength >= 380.0 && wavelength <= 440.0 {
+        let a = 0.3 + (0.7 * (wavelength - 380.0) / (440.0 - 380.0));
+        let r = ((-(wavelength - 440.0) / (440.0 - 380.0)) * a).powf(gamma);
+        let g = 0.0;
+        let b = a.powf(gamma);
+        return [r, g, b];
+    } else if wavelength >= 440.0 && wavelength <= 490.0 {
+        let r = 0.0;
+        let g = ((wavelength - 440.0) / (490.0 - 440.0)).powf(gamma);
+        let b = 1.0;
+        return [r, g, b];
+    } else if wavelength >= 490.0 && wavelength <= 510.0 {
+        let r = 0.0;
+        let g = 1.0;
+        let b = (-(wavelength - 510.0) / (510.0 - 490.0)).powf(gamma);
+        return [r, g, b];
+    } else if wavelength >= 510.0 && wavelength <= 580.0 {
+        let r = ((wavelength - 510.0) / (580.0 - 510.0)).powf(gamma);
+        let g = 1.0;
+        let b = 0.0;
+        return [r, g, b];
+    } else if wavelength >= 580.0 && wavelength <= 645.0 {
+        let r = 1.0;
+        let g = (-(wavelength - 645.0) / (645.0 - 580.0)).powf(gamma);
+        let b = 0.0;
+        return [r, g, b];
+    } else if wavelength >= 645.0 && wavelength <= 750.0 {
+        let a = 0.3 + (0.7 * (750.0 - wavelength) / (750.0 - 645.0));
+        let r = a.powf(gamma);
+        let g = 0.0;
+        let b = 0.0;
+        return [r, g, b];
+    } else {
+        return [1.0, 0.0, 1.0];
+    }
+}
+
+/// Transform the point position into pixel coordinates.
 pub fn project(pos: &Pos3, mvp: &Mat4, res: [usize; 2]) -> [usize; 2] {
     let p = mvp * pos.to_homogeneous();
 
@@ -53,6 +95,7 @@ pub fn photo(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
     let view = Mat4::look_at_rh(&cam_pos, &input.grid.boundary().centre(), &Vec3::z_axis());
     let proj = Mat4::new_perspective(aspect, fov, 0.1, 100.0);
     let mvp = proj * view;
+    let phot_col = wavelength_to_rbg(phot.wavelength());
 
     // Initialisation.
     let mat = input.light.mat();
@@ -97,8 +140,12 @@ pub fn photo(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
                     let [x, y] = project(phot.ray().pos(), &mvp, res);
                     if x < res[X] && y < res[Y] {
                         if let Some(weight) = peel_off(&input, phot.clone(), &env, cam_pos) {
-                            data.photos[0].pixels_mut()[[x, y]] +=
-                                Colour::new(1.0, 1.0, 1.0, (phot.weight() * weight) as f32);
+                            data.photos[0].pixels_mut()[[x, y]] += Colour::new(
+                                phot_col[0] as f32,
+                                phot_col[1] as f32,
+                                phot_col[2] as f32,
+                                (phot.weight() * weight) as f32,
+                            );
                         }
                     }
                 }
