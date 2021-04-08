@@ -67,7 +67,7 @@ impl Build for OperationBuilder {
             Self::Mult(cube, x) => Self::Inst::Mult(cube, x),
             Self::Div(cube, x) => Self::Inst::Div(cube, x),
             Self::Norm(cube) => Self::Inst::Norm(cube),
-            Self::Clamp(cube,min,max) => Self::Inst::Clamp(cube,min,max),
+            Self::Clamp(cube, min, max) => Self::Inst::Clamp(cube, min, max),
             Self::PiecewiseMult(a, b) => Self::Inst::PiecewiseMult(a, b),
             Self::PiecewiseDiv(a, b) => Self::Inst::PiecewiseDiv(a, b),
             Self::Sample(points, cube, grid_builder) => {

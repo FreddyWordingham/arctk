@@ -63,7 +63,7 @@ impl Parameters {
             light,
             engine,
             shifts_conc_spec,
-            cam_pos
+            cam_pos,
         }
     }
 }

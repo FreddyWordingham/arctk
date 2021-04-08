@@ -116,7 +116,7 @@ impl Load for OperationBuilderLoader {
             }
             Self::Clamp(data_path, min, max) => {
                 let cube = Array3::new_from_file(&in_dir.join(data_path))?;
-                Self::Inst::Clamp(cube,min,max)
+                Self::Inst::Clamp(cube, min, max)
             }
             Self::PiecewiseDiv(data_a_path, data_b_path) => {
                 let a = Array3::new_from_file(&in_dir.join(data_a_path))?;
@@ -202,8 +202,14 @@ impl Display for OperationBuilderLoader {
             Self::Norm(ref data_path) => {
                 write!(fmt, "Normalise: {}", data_path.display())
             }
-            Self::Clamp(ref data_path,min,max) => {
-                write!(fmt, "Clamp: {} between [{}-{}]", data_path.display(),min,max)
+            Self::Clamp(ref data_path, min, max) => {
+                write!(
+                    fmt,
+                    "Clamp: {} between [{}-{}]",
+                    data_path.display(),
+                    min,
+                    max
+                )
             }
             Self::PiecewiseMult(ref data_a_path, ref data_b_path) => {
                 write!(

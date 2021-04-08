@@ -1,8 +1,8 @@
 //! Aliases.
 
 use nalgebra::{
-    Point2, Point3, Point4, Rotation2, Rotation3, Similarity2, Similarity3, Unit, Vector2, Vector3,
-    Vector4, Matrix2, Matrix3, Matrix4,
+    Matrix2, Matrix3, Matrix4, Point2, Point3, Point4, Rotation2, Rotation3, Similarity2,
+    Similarity3, Unit, Vector2, Vector3, Vector4,
 };
 
 /// Two-dimensional real-number vector alias.

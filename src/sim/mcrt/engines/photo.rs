@@ -1,33 +1,37 @@
 //! Photo imaging photon-lifetime engine function.
 
 use crate::{
-    geom::Trace,
-    phys::{ Photon},math::{Pos3, Mat4},
-    sim::mcrt::{scatter::scatter, peel_off::peel_off, surface::surface, travel::travel, Event, Input, Output},
+    geom::{ Trace},
+    img::Colour,
+    math::{ Mat4, Pos3, Vec3},
+    ord::{X, Y},
+    phys::Photon,
+    sim::mcrt::{
+        peel_off::peel_off, scatter::scatter, surface::surface, travel::travel, Event, Input,
+        Output,
+    },
 };
+use nalgebra::Perspective3;
 use rand::{rngs::ThreadRng, Rng};
 
+// Transform the point position into pixel coordinates.
+pub fn project(pos: &Pos3, view: &Mat4, proj: &Perspective3<f64>, res: [usize; 2]) -> [usize; 2] {
+    // let p = proj.project_point(pos);
+    // let p = view * p.to_homogeneous();
+    let p = view * pos.to_homogeneous();
+    let p = proj.as_matrix() * p;
 
-pub fn compute_pixel_coordinates(
-    pos: Pos3,
-    cam_to_world: Mat4,
-) {
+    let x = (res[X] as f64 * (p.x + 1.0) * 0.5) as usize;
+    let y = (res[Y] as f64 * (p.y + 1.0) * 0.5) as usize;
 
+    [x, y]
 }
 
 /// Simulate the life of a single photon
 /// with the potential to absorbed by a fluorophore species.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn photo(
-    input: &Input,
-    mut rng: &mut ThreadRng,
-    mut phot: Photon,
-    mut data: &mut Output,
-) {
-    // Camera data.
-    let cam_pos = input.cam_pos.unwrap();
-
+pub fn photo(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data: &mut Output) {
     // Check photon is within the grid.
     if let Some(index) = input.grid.gen_index(phot.ray().pos()) {
         data.emission[index] += phot.power() * phot.weight();
@@ -41,6 +45,22 @@ pub fn photo(
     let min_weight = input.sett.min_weight();
     let roulette_barrels = input.sett.roulette_barrels() as f64;
     let roulette_survive_prob = 1.0 / roulette_barrels;
+
+    // Camera data.
+    let res = [
+        data.photos[0].pixels().raw_dim()[X],
+        data.photos[0].pixels().raw_dim()[Y],
+    ];
+    let cam_pos = input.cam_pos.unwrap();
+    let aspect = res[X] as f64 / res[Y] as f64;
+    let view = Mat4::look_at_rh(&cam_pos, &input.grid.boundary().centre(), &Vec3::z_axis());
+    let fovy = 30.0_f64.to_radians();
+    let proj = Perspective3::new(
+        aspect,
+        fovy,
+        0.1,
+        100.0
+    );
 
     // Initialisation.
     let mat = input.light.mat();
@@ -80,9 +100,14 @@ pub fn photo(
             Event::Scattering(dist) => {
                 travel(&mut data, &mut phot, &env, index, dist);
 
-                {   // Capture.
-                    if let Some(x) = peel_off(&input, phot.clone(), &env, cam_pos) {
-
+                {
+                    // Capture.
+                    let [x, y] = project(phot.ray().pos(), &view, &proj, res);
+                    if x < res[X] && y < res[Y] {
+                        if let Some(weight) = peel_off(&input, phot.clone(), &env, cam_pos) {
+                            data.photos[0].pixels_mut()[[x, y]] +=
+                                Colour::new(1.0, 1.0, 1.0, (phot.weight() * weight) as f32);
+                        }
                     }
                 }
 

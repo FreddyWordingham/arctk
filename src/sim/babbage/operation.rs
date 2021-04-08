@@ -48,8 +48,8 @@ pub enum Operation {
     Div(Array3<f64>, f64),
     /// Normalise a datacube.
     Norm(Array3<f64>),
-        /// Clamp the values within datacube.
-        Clamp(Array3<f64>, f64, f64),
+    /// Clamp the values within datacube.
+    Clamp(Array3<f64>, f64, f64),
     /// Piecewise multiply a datacube by another.
     PiecewiseMult(Array3<f64>, Array3<f64>),
     /// Piecewise divide a datacube by another.
@@ -120,7 +120,9 @@ impl Operation {
             Self::Mult(ref data, x) => (data * x).save(&path.with_extension("nc")),
             Self::Div(ref data, x) => (data / x).save(&path.with_extension("nc")),
             Self::Norm(ref data) => (data / data.sum()).save(&path.with_extension("nc")),
-            Self::Clamp(ref data,min,max) => (data.mapv(|v| v.clamp(min,max))).save(&path.with_extension("nc")),
+            Self::Clamp(ref data, min, max) => {
+                (data.mapv(|v| v.clamp(min, max))).save(&path.with_extension("nc"))
+            }
             Self::PiecewiseMult(ref a, ref b) => (a * b).save(&path.with_extension("nc")),
             Self::PiecewiseDiv(ref a, ref b) => (a / b).save(&path.with_extension("nc")),
             Self::Sample(ref points, ref data, ref grid) => {

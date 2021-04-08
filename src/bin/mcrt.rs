@@ -200,5 +200,21 @@ fn gen_base_output<'a>(
         }
     }
 
-    Output::new(spec_reg, img_reg, grid.boundary().clone(), res, specs, imgs)
+    let mut photos = Vec::with_capacity(1);
+    for _n in 0..1 {
+        photos.push(Image::new_blank(
+            [1024, 1024],
+            Colour::new(0.0, 0.0, 0.0, 1.0),
+        ));
+    }
+
+    Output::new(
+        spec_reg,
+        img_reg,
+        grid.boundary().clone(),
+        res,
+        specs,
+        imgs,
+        photos,
+    )
 }
