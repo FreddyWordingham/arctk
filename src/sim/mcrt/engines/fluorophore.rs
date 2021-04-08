@@ -1,4 +1,4 @@
-//! Photon-lifetime engine function.
+//! Fluorophore support engine function.
 
 use crate::{
     geom::Trace,
@@ -7,7 +7,8 @@ use crate::{
 };
 use rand::{rngs::ThreadRng, Rng};
 
-/// Simulate the a fluorophore medium.
+/// Simulate the life of a single photon
+/// with the potential to absorbed by a fluorophore species.
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn fluorophore(

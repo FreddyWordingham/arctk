@@ -1,4 +1,4 @@
-//! Laura's photon-lifetime engine function.
+//! Laura's Raman photon-lifetime engine function.
 
 use crate::{
     geom::Trace,

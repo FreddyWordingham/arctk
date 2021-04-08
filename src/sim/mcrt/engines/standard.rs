@@ -1,4 +1,4 @@
-//! Photon-lifetime engine function.
+//! Standard photon-lifetime engine function.
 
 use crate::{
     geom::Trace,
