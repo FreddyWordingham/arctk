@@ -15,23 +15,23 @@
     clippy::cast_precision_loss,
     clippy::cast_sign_loss,
     clippy::else_if_without_else,
+    clippy::exhaustive_enums,
+    clippy::exhaustive_structs,
     clippy::float_arithmetic,
     clippy::implicit_return,
     clippy::indexing_slicing,
     clippy::integer_arithmetic,
     clippy::integer_division,
+    clippy::missing_panics_doc,
     clippy::module_name_repetitions,
     clippy::modulo_arithmetic,
     clippy::multiple_crate_versions,
     clippy::multiple_inherent_impl,
-    clippy::panic,
     clippy::panic_in_result_fn,
+    clippy::panic,
     clippy::print_stdout,
     clippy::unreachable,
-    clippy::unwrap_used,
-    clippy::missing_panics_doc,
-    clippy::exhaustive_enums,
-    clippy::exhaustive_structs
+    clippy::unwrap_used
 )]
 
 pub mod chem;
