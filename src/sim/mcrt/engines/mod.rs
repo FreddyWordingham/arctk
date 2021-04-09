@@ -2,4 +2,4 @@
 
 pub mod standard;
 
-pub use self::{standard::*};
+pub use self::standard::*;

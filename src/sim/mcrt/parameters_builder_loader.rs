@@ -2,14 +2,14 @@
 
 use crate::{
     err::Error,
-    fs::{ Load, Redirect},
+    fs::{Load, Redirect},
     geom::{GridBuilder, SurfaceLinkerLoader, TreeSettings},
     ord::Set,
     phys::{LightLinkerBuilderLoader, MaterialBuilder},
     sim::mcrt::{AttributeLinkerLinkerLinker, EngineBuilder, ParametersBuilder, Settings},
 };
 use arctk_attr::file;
-use std::path::{Path};
+use std::path::Path;
 
 /// Loadable runtime parameters.
 #[file]
@@ -47,14 +47,7 @@ impl Load for ParametersBuilderLoader {
         let engine = self.engine;
 
         Ok(Self::Inst::new(
-            sett,
-            tree,
-            grid,
-            surfs,
-            attrs,
-            mats,
-            light,
-            engine,
+            sett, tree, grid, surfs, attrs, mats, light, engine,
         ))
     }
 }

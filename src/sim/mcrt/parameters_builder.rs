@@ -71,16 +71,7 @@ impl Build for ParametersBuilder {
         let light = self.light.build();
         let engine = self.engine.build();
 
-        Self::Inst::new(
-            sett,
-            tree,
-            grid,
-            surfs,
-            attrs,
-            mats,
-            light,
-            engine,
-        )
+        Self::Inst::new(sett, tree, grid, surfs, attrs, mats, light, engine)
     }
 }
 
