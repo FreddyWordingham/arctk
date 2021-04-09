@@ -11,7 +11,7 @@ use ndarray::{Array1, Array3};
 use ndarray_stats::QuantileExt;
 use rayon::prelude::*;
 use std::{
-    path::PathBuf,
+    path::Path,
     sync::{Arc, Mutex},
 };
 
@@ -23,7 +23,7 @@ use std::{
 pub fn multi_thread(
     input: &Input,
     mut values: Array3<f64>,
-    out_dir: &PathBuf,
+    out_dir: &Path,
 ) -> Result<Array3<f64>, Error> {
     // Constants.
     let voxel_size = input.grid.voxel_size();

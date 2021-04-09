@@ -3,13 +3,10 @@
 use crate::{
     fmt_report,
     geom::{GridBuilder, SurfaceLinker, TreeSettings},
-    math::{FormulaBuilder, Pos3},
     ord::{Build, Set},
     phys::{LightLinkerBuilder, MaterialBuilder},
     sim::mcrt::{AttributeLinkerLinkerLinker, EngineBuilder, Parameters, Settings},
-    util::Analyze,
 };
-use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
 /// Buildable runtime parameters.
@@ -30,10 +27,6 @@ pub struct ParametersBuilder {
     light: LightLinkerBuilder,
     /// Engine selection.
     engine: EngineBuilder,
-    /// Optional fluorophore properties.
-    shifts_conc_spec: Option<(Array3<f64>, FormulaBuilder)>,
-    /// Optional camera position.
-    cam_pos: Option<Pos3>,
 }
 
 impl ParametersBuilder {
@@ -50,8 +43,6 @@ impl ParametersBuilder {
         mats: Set<MaterialBuilder>,
         light: LightLinkerBuilder,
         engine: EngineBuilder,
-        shifts_conc_spec: Option<(Array3<f64>, FormulaBuilder)>,
-        cam_pos: Option<Pos3>,
     ) -> Self {
         Self {
             sett,
@@ -62,8 +53,6 @@ impl ParametersBuilder {
             mats,
             light,
             engine,
-            shifts_conc_spec,
-            cam_pos,
         }
     }
 }
@@ -81,12 +70,6 @@ impl Build for ParametersBuilder {
         let mats = self.mats.build();
         let light = self.light.build();
         let engine = self.engine.build();
-        let shifts_conc_spec = if let Some((concs, spec)) = self.shifts_conc_spec {
-            Some((concs, spec.build()))
-        } else {
-            None
-        };
-        let cam_pos = self.cam_pos;
 
         Self::Inst::new(
             sett,
@@ -97,8 +80,6 @@ impl Build for ParametersBuilder {
             mats,
             light,
             engine,
-            shifts_conc_spec,
-            cam_pos,
         )
     }
 }
@@ -115,13 +96,6 @@ impl Display for ParametersBuilder {
         fmt_report!(fmt, self.mats, "materials");
         fmt_report!(fmt, self.light, "light");
         fmt_report!(fmt, self.engine, "engine");
-        if let Some((concs, spec)) = &self.shifts_conc_spec {
-            fmt_report!(fmt, concs.display(), "Fluorophore map");
-            fmt_report!(fmt, spec, "Fluorophore absorption spectra");
-        }
-        if let Some(cam_pos) = &self.cam_pos {
-            fmt_report!(fmt, cam_pos, "camera position (m)");
-        }
         Ok(())
     }
 }

@@ -104,14 +104,14 @@ impl Display for ShaderLinker {
         let soft_shadow_samples = if let Some((n, alpha)) = self.soft_shadow_samples {
             format!("{} samples, angle (deg) {}", n, alpha)
         } else {
-            "OFF".to_string()
+            "OFF".to_owned()
         };
         fmt_report!(fmt, soft_shadow_samples, "soft shadowing");
 
         let ambient_shadow_samples = if let Some((n, p)) = self.ambient_shadow_samples {
             format!("{} samples, power {}", n, p)
         } else {
-            "OFF".to_string()
+            "OFF".to_owned()
         };
         fmt_report!(fmt, ambient_shadow_samples, "ambient shadowing");
         fmt_report!(fmt, &format!("{}", self.sky_grad), "sky gradient");

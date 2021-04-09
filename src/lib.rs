@@ -29,7 +29,10 @@
     clippy::panic_in_result_fn,
     clippy::print_stdout,
     clippy::unreachable,
-    clippy::unwrap_used
+    clippy::unwrap_used,
+    clippy::missing_panics_doc,
+    clippy::exhaustive_enums,
+    clippy::exhaustive_structs
 )]
 
 pub mod chem;
@@ -45,8 +48,3 @@ pub mod phys;
 pub mod sim;
 pub mod tools;
 pub mod util;
-
-#[cfg(feature = "rltk")]
-#[cfg(feature = "specs")]
-#[cfg(feature = "specs-derive")]
-pub mod game;

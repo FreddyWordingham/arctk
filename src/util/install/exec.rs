@@ -15,5 +15,5 @@ pub fn name() -> Result<String, Error> {
         .ok_or("Missing filename.")?
         .to_str()
         .ok_or("Missing string.")?
-        .to_string())
+        .to_owned())
 }

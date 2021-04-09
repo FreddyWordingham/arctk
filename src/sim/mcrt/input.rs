@@ -3,13 +3,10 @@
 use crate::{
     fmt_report,
     geom::{Grid, Tree},
-    math::{Formula, Pos3},
     ord::{Register, Set},
     phys::{Light, Material},
     sim::mcrt::{Attribute, Settings},
-    util::fmt::Analyze,
 };
-use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
 
 /// MCRT simulation resources conglomerate.
@@ -28,10 +25,6 @@ pub struct Input<'a> {
     pub grid: &'a Grid,
     /// General settings.
     pub sett: &'a Settings,
-    /// Optional fluorophore properties (concentration map, absorption spectra).
-    pub shifts_conc_spec: &'a Option<(Array3<f64>, Formula)>,
-    /// Optional camera position.
-    pub cam_pos: &'a Option<Pos3>,
 }
 
 impl<'a> Input<'a> {
@@ -46,8 +39,6 @@ impl<'a> Input<'a> {
         tree: &'a Tree<Attribute>,
         grid: &'a Grid,
         sett: &'a Settings,
-        shifts_conc_spec: &'a Option<(Array3<f64>, Formula)>,
-        cam_pos: &'a Option<Pos3>,
     ) -> Self {
         Self {
             spec_reg,
@@ -57,8 +48,6 @@ impl<'a> Input<'a> {
             tree,
             grid,
             sett,
-            shifts_conc_spec,
-            cam_pos,
         }
     }
 }
@@ -74,13 +63,6 @@ impl Display for Input<'_> {
         fmt_report!(fmt, self.tree, "hit-scan tree");
         fmt_report!(fmt, self.grid, "measurement grid");
         fmt_report!(fmt, self.sett, "settings");
-        if let Some(shifts_conc_spec) = self.shifts_conc_spec {
-            fmt_report!(fmt, shifts_conc_spec.0.display(), "Fluorophore map");
-            fmt_report!(fmt, shifts_conc_spec.1, "Fluorophore absorption spectra");
-        }
-        if let Some(cam_pos) = self.cam_pos {
-            fmt_report!(fmt, cam_pos, "Camera position");
-        }
         Ok(())
     }
 }

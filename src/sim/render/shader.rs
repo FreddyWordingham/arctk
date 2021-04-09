@@ -122,14 +122,14 @@ impl Display for Shader<'_> {
         let soft_shadow_samples = if let Some((n, alpha)) = self.soft_shadow_samples {
             format!("{} samples, angle (deg) {}", n, alpha.to_degrees())
         } else {
-            "OFF".to_string()
+            "OFF".to_owned()
         };
         fmt_report!(fmt, soft_shadow_samples, "soft shadowing");
 
         let ambient_shadow_samples = if let Some((n, p)) = self.ambient_shadow_samples {
             format!("{} samples, power {}", n, p)
         } else {
-            "OFF".to_string()
+            "OFF".to_owned()
         };
         fmt_report!(fmt, ambient_shadow_samples, "ambient shadowing");
         fmt_report!(fmt, to_string(self.sky_grad, 32), "sky gradient");

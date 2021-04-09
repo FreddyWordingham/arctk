@@ -68,7 +68,7 @@ pub fn surface(
             let x = ((orient.right().dot(&projection) / width) + 1.0) / 2.0;
             let y = ((orient.up().dot(&projection) / width) + 1.0) / 2.0;
 
-            if x >= 0.0 && x <= 1.0 && y >= 0.0 && y <= 1.0 {
+            if (0.0..=1.0).contains(&x) && (0.0..=1.0).contains(&y) {
                 let res = data.imgs[id].pixels().raw_dim();
                 data.imgs[id].pixels_mut()
                     [[(res[X] as f64 * x) as usize, (res[Y] as f64 * y) as usize]] +=
@@ -88,38 +88,38 @@ fn wavelength_to_col(wavelength: f64) -> Colour {
 
     let gamma = 0.8;
 
-    let (r, g, b) = if wavelength >= 380.0e-9 && wavelength <= 440.0e-9 {
+    let (r, g, b) = if (380.0e-9..=440.0e-9).contains(&wavelength) {
         let attenuation = 0.7_f64.mul_add((wavelength - 380.0e-9) / (440.0e-9 - 380.0e-9), 0.3);
         (
             ((-(wavelength - 440.0e-9) / (440.0e-9 - 380.0e-9)) * attenuation).powf(gamma),
             0.0,
             attenuation.powf(gamma),
         )
-    } else if wavelength >= 440.0e-9 && wavelength <= 490.0e-9 {
+    } else if (440.0e-9..=490.0e-9).contains(&wavelength) {
         (
             0.0,
             ((wavelength - 440.0e-9) / (490.0e-9 - 440.0e-9)).powf(gamma),
             1.0,
         )
-    } else if wavelength >= 490.0e-9 && wavelength <= 510.0e-9 {
+    } else if (490.0e-9..=510.0e-9).contains(&wavelength) {
         (
             0.0,
             1.0,
             (-(wavelength - 510.0e-9) / (510.0e-9 - 490.0e-9)).powf(gamma),
         )
-    } else if wavelength >= 510.0e-9 && wavelength <= 580.0e-9 {
+    } else if (510.0e-9..=580.0e-9).contains(&wavelength) {
         (
             ((wavelength - 510.0e-9) / (580.0e-9 - 510.0e-9)).powf(gamma),
             1.0,
             0.0,
         )
-    } else if wavelength >= 580.0e-9 && wavelength <= 645.0e-9 {
+    } else if (580.0e-9..=645.0e-9).contains(&wavelength) {
         (
             1.0,
             (-(wavelength - 645.0e-9) / (645.0e-9 - 580.0e-9)).powf(gamma),
             0.0,
         )
-    } else if wavelength >= 645.0e-9 && wavelength <= 750.0e-9 {
+    } else if (645.0e-9..=750.0e-9).contains(&wavelength) {
         let attenuation = 0.7_f64.mul_add((750.0e-9 - wavelength) / (750.0e-9 - 645.0e-9), 0.3);
         (attenuation.powf(gamma), 0.0, 0.0)
     } else {

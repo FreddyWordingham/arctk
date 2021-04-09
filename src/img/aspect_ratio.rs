@@ -6,6 +6,7 @@ use std::fmt::{Display, Formatter, Result};
 /// Aspect-ratio enumeration.
 #[file]
 #[derive(Clone)]
+#[allow(clippy::upper_case_acronyms)]
 pub enum AspectRatio {
     /// Square. 1:1.
     Square,

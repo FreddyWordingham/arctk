@@ -44,14 +44,14 @@ impl Display for MaterialBuilder {
         let abs_coeff = if let Some(ref abs_coeff) = self.shift_coeff {
             format!("{}", abs_coeff)
         } else {
-            "NONE".to_string()
+            "NONE".to_owned()
         };
         fmt_report!(fmt, abs_coeff, "absorption coefficient (m^-1)");
 
         let shift_coeff = if let Some(ref shift_coeff) = self.shift_coeff {
             format!("{}", shift_coeff)
         } else {
-            "NONE".to_string()
+            "NONE".to_owned()
         };
         fmt_report!(fmt, shift_coeff, "shift coefficient (m^-1)");
 

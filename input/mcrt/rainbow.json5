@@ -31,10 +31,10 @@
             attr: 'glass',
             mesh: [["res/objs/test/prism.obj"], { trans: [0.0, 0.0, 0.75], rot:[0.0, 40.0, 0.0], scale:0.25 } ]
         },
-        boom : {
-            attr: 'glass',
-            mesh: [["res/objs/test/boom.obj"], { trans: [0.0, 0.0, 0.5] } ]
-        }
+        // boom : {
+        //     attr: 'glass',
+        //     mesh: [["res/objs/test/boom.obj"], { trans: [0.0, 0.0, 0.5] } ]
+        // }
     } },
-    cam_pos: [ 4.0, 8.0, 4.0]
+    cam_pos: [ 0.0, 4.0, 0.0]
 }

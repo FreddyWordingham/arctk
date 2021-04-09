@@ -89,7 +89,7 @@ impl Display for CameraBuilder {
         let ss_power = if let Some(n) = self.ss_power {
             format!("{} sub-samples", n * n)
         } else {
-            "OFF".to_string()
+            "OFF".to_owned()
         };
         fmt_report!(fmt, ss_power, "super sampling");
 

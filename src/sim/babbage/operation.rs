@@ -82,7 +82,7 @@ impl Operation {
                     let index = [rx / 2, ry / 2, n];
                     samples.push(vec![n as f64, data[index]]);
                 }
-                Table::new(vec!["z".to_string(), "value".to_string()], samples)
+                Table::new(vec!["z".to_owned(), "value".to_owned()], samples)
                     .save(&path.with_extension("csv"))
             }
             Self::Zero(res) => Array3::<f64>::zeros(res).save(&path.with_extension("nc")),
@@ -133,7 +133,7 @@ impl Operation {
                         .unwrap_or_else(|| panic!("Failed to place point within grid."));
                     weights.push(vec![data[index]]);
                 }
-                Table::new(vec!["weight".to_string()], weights).save(&path.with_extension("csv"))
+                Table::new(vec!["weight".to_owned()], weights).save(&path.with_extension("csv"))
             }
         }
     }

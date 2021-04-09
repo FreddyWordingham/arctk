@@ -2,16 +2,14 @@
 
 use crate::{
     err::Error,
-    fs::{File, Load, Redirect},
+    fs::{ Load, Redirect},
     geom::{GridBuilder, SurfaceLinkerLoader, TreeSettings},
-    math::{FormulaBuilder, Pos3},
     ord::Set,
     phys::{LightLinkerBuilderLoader, MaterialBuilder},
     sim::mcrt::{AttributeLinkerLinkerLinker, EngineBuilder, ParametersBuilder, Settings},
 };
 use arctk_attr::file;
-use ndarray::Array3;
-use std::path::{Path, PathBuf};
+use std::path::{Path};
 
 /// Loadable runtime parameters.
 #[file]
@@ -32,10 +30,6 @@ pub struct ParametersBuilderLoader {
     light: Redirect<LightLinkerBuilderLoader>,
     /// Engine selection.
     engine: EngineBuilder,
-    /// Optional fluorophore properties.
-    shifts_conc_spec: Option<(PathBuf, Redirect<FormulaBuilder>)>,
-    /// Optional camera position.
-    cam_pos: Option<Pos3>,
 }
 
 impl Load for ParametersBuilderLoader {
@@ -51,15 +45,6 @@ impl Load for ParametersBuilderLoader {
         let mats = self.mats.load(in_dir)?.load(in_dir)?;
         let light = self.light.load(in_dir)?.load(in_dir)?;
         let engine = self.engine;
-        let shifts_conc_spec = if let Some((concs, spec)) = self.shifts_conc_spec {
-            Some((
-                Array3::new_from_file(&in_dir.join(concs))?,
-                spec.load(in_dir)?,
-            ))
-        } else {
-            None
-        };
-        let cam_pos = self.cam_pos;
 
         Ok(Self::Inst::new(
             sett,
@@ -70,8 +55,6 @@ impl Load for ParametersBuilderLoader {
             mats,
             light,
             engine,
-            shifts_conc_spec,
-            cam_pos,
         ))
     }
 }
