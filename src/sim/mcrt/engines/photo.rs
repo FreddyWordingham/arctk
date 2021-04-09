@@ -57,6 +57,7 @@ pub fn wavelength_to_rbg(mut wavelength: f64) -> [f64; 3] {
 
 /// Transform the point position into pixel coordinates.
 pub fn project(pos: &Pos3, mvp: &Mat4, res: [usize; 2]) -> [usize; 2] {
+    // let p = mvp * pos.to_homogeneous();
     let p = mvp * pos.to_homogeneous();
 
     let x = (res[X] as f64 * (p.x + 1.0) * 0.5) as usize;
@@ -91,10 +92,19 @@ pub fn photo(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data:
     ];
     let cam_pos = input.cam_pos.unwrap();
     let aspect = res[X] as f64 / res[Y] as f64;
-    let fov = 95.0_f64.to_radians();
+    let fov = 120.0_f64.to_radians();
+
+    let model = crate::math::Mat4::identity();
+    // let model = nalgebra::Translation3::new(cam_pos.x, cam_pos.y, cam_pos.z).to_homogeneous(); //* self.rotation.matrix();
+    // let model = model.try_inverse().unwrap();
     let view = Mat4::look_at_rh(&cam_pos, &input.grid.boundary().centre(), &Vec3::z_axis());
-    let proj = Mat4::new_perspective(aspect, fov, bump_dist, 2.0 * nalgebra::distance(&cam_pos, &input.grid.boundary().centre()));
-    let mvp = proj * view;
+    let proj = Mat4::new_perspective(
+        aspect,
+        fov,
+        0.1,
+        10.0,
+    );
+    let mvp = proj * view * model;
     let phot_col = wavelength_to_rbg(phot.wavelength());
 
     // Initialisation.

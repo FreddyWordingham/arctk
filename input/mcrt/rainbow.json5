@@ -1,6 +1,6 @@
 {
     tree        : { There   : 'misc/tree/t5_d6.json5' },
-    grid        : { There   : 'misc/grid/20m_80.json5' },
+    grid        : { There   : 'misc/grid/8m_80.json5' },
     engine      : "Photo",
     sett        : { Here    : {
         num_phot            : 1e7,
@@ -29,8 +29,12 @@
     surfs       : { Here    : {
         centerpiece : {
             attr: 'glass',
-            mesh: [["res/objs/test/prism.obj"], { trans: [0.0, 0.0, 1.0], rot:[0.0, 40.0, 0.0] } ]
+            mesh: [["res/objs/test/prism.obj"], { trans: [0.0, 0.0, 0.75], rot:[0.0, 40.0, 0.0], scale:0.25 } ]
+        },
+        boom : {
+            attr: 'glass',
+            mesh: [["res/objs/test/boom.obj"], { trans: [0.0, 0.0, 0.5] } ]
         }
     } },
-    cam_pos: [ 20.0, 20.0, 20.0]
+    cam_pos: [ 4.0, 8.0, 4.0]
 }
