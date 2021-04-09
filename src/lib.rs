@@ -1,6 +1,6 @@
 //! Library core.
-
 #![warn(
+    unused_extern_crates,
     clippy::all,
     clippy::cargo,
     clippy::missing_docs_in_private_items,
