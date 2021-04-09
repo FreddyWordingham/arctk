@@ -5,7 +5,7 @@ use arctk::{
     args,
     fs::File,
     report,
-    sim::powder::Parameters,
+    sim::powder::{Input, Parameters},
     util::{
         banner::{section, sub_section, title},
         dir,
@@ -26,10 +26,10 @@ fn main() {
     title(term_width, "Powder");
 
     let (in_dir, _out_dir, params_path) = initialisation(term_width);
-    let _params = load_parameters(term_width, &in_dir, &params_path);
+    let params = load_parameters(term_width, &in_dir, &params_path);
 
     section(term_width, "Running");
-    let input = Input::new();
+    let input = Input::new(&params.sett);
     report!(input, "input");
     let data = run::single_thread(&input).expect("Failed to run simulation.");
 
