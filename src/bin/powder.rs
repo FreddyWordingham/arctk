@@ -29,6 +29,9 @@ fn main() {
     let _params = load_parameters(term_width, &in_dir, &params_path);
 
     section(term_width, "Running");
+    let input = Input::new();
+    report!(input, "input");
+    let data = run::single_thread(&input).expect("Failed to run simulation.");
 
     section(term_width, "Finished");
 }
