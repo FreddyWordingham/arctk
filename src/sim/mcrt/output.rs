@@ -41,8 +41,6 @@ pub struct Output<'a> {
     pub specs: Vec<Histogram>,
     /// Image data.
     pub imgs: Vec<Image>,
-    /// Photo data.
-    pub photos: Vec<Image>,
 }
 
 impl<'a> Output<'a> {
@@ -59,7 +57,6 @@ impl<'a> Output<'a> {
         res: [usize; 3],
         specs: Vec<Histogram>,
         imgs: Vec<Image>,
-        photos: Vec<Image>,
     ) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
@@ -78,7 +75,6 @@ impl<'a> Output<'a> {
             shifts: Array3::zeros(res),
             specs,
             imgs,
-            photos,
         }
     }
 }
@@ -96,10 +92,6 @@ impl AddAssign<&Self> for Output<'_> {
         }
 
         for (a, b) in self.imgs.iter_mut().zip(&rhs.imgs) {
-            *a += b;
-        }
-
-        for (a, b) in self.photos.iter_mut().zip(&rhs.photos) {
             *a += b;
         }
     }
@@ -126,10 +118,6 @@ impl Save for Output<'_> {
 
         for (name, index) in self.img_reg.set().map().iter() {
             self.imgs[*index].save(&out_dir.join(&format!("img_{}.png", name)))?;
-        }
-
-        for (index, photo) in self.photos.iter().enumerate() {
-            photo.save(&out_dir.join(&format!("photo_{}.png", index)))?;
         }
 
         Ok(())

@@ -190,13 +190,5 @@ fn gen_base_output<'a>(
         ));
     }
 
-    Output::new(
-        spec_reg,
-        img_reg,
-        grid.boundary().clone(),
-        res,
-        specs,
-        imgs,
-        photos,
-    )
+    Output::new(spec_reg, img_reg, grid.boundary().clone(), res, specs, imgs)
 }
