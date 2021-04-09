@@ -18,7 +18,5 @@ pub mod reactor;
 #[cfg(feature = "png")]
 pub mod mcrt;
 
-pub mod powder;
-
 #[cfg(feature = "png")]
 pub mod render;
