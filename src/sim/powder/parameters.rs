@@ -15,7 +15,7 @@ impl Parameters {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(sett: Settings) -> Self {
+    pub const fn new(sett: Settings) -> Self {
         Self { sett }
     }
 }
