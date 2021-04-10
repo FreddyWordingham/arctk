@@ -1,6 +1,10 @@
 //! Loadable Engine selection.
 
-use crate::{err::Error, fs::Load, sim::mcrt::EngineBuilder};
+use crate::{
+    err::Error,
+    fs::Load,
+    sim::mcrt::{EngineBuilder, FrameBuilder},
+};
 use arctk_attr::file;
 use std::{
     fmt::{Display, Formatter},
@@ -12,6 +16,8 @@ use std::{
 pub enum EngineBuilderLoader {
     /// Standard sampling engine.
     Standard,
+    /// Photography engine.
+    Photo(Vec<FrameBuilder>),
 }
 
 impl Load for EngineBuilderLoader {

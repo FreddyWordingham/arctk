@@ -56,7 +56,7 @@ impl Build for CameraBuilder {
 
     #[inline]
     fn build(self) -> Self::Inst {
-        Camera::new(
+        Self::Inst::new(
             Orient::new_tar(self.pos, &self.tar),
             self.fov.to_radians(),
             self.res,
