@@ -17,7 +17,7 @@ impl Engine {
     /// Run the engine for a single photon.
     #[inline]
     pub fn run(&self, input: &Input, data: &mut Output, rng: &mut ThreadRng, phot: Photon) {
-        match self {
+        match *self {
             Self::Standard => engines::standard(input, data, rng, phot),
         }
     }
