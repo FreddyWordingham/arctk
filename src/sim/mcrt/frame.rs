@@ -1,6 +1,7 @@
 //! Simulation input.
 
 use crate::{
+    access,
     math::{Mat4, Pos3},
     ord::{X, Y},
 };
@@ -18,6 +19,8 @@ pub struct Frame {
 }
 
 impl Frame {
+    access!(res, [usize; 2]);
+
     /// Construct a new instance.
     #[inline]
     #[must_use]

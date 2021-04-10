@@ -10,7 +10,7 @@ use arctk::{
     ord::{Build, Link, Register, Set},
     report,
     sim::mcrt::{
-        run, AttributeLinkerLinkerLinker as Attr, Input, Output, Parameters,
+        run, AttributeLinkerLinkerLinker as Attr, Engine, Input, Output, Parameters,
         ParametersBuilderLoader,
     },
     util::{
@@ -38,7 +38,7 @@ fn main() {
     section(term_width, "Input");
     sub_section(term_width, "Reconstruction");
     let engine = params.engine;
-    report!("{* POINTER SET *}", "engine");
+    report!(engine, "engine");
     let sett = params.sett;
     report!(sett, "settings");
     let grid = params.grid;
@@ -47,8 +47,8 @@ fn main() {
     report!(mats, "materials");
 
     sub_section(term_width, "Registration");
-    let (spec_reg, img_reg) = gen_detector_registers(&params.attrs);
-    let output = gen_base_output(&grid, &spec_reg, &img_reg, &params.attrs);
+    let (spec_reg, img_reg) = gen_detector_registers(&engine, &params.attrs);
+    let output = gen_base_output(&engine, &grid, &spec_reg, &img_reg, &params.attrs);
 
     sub_section(term_width, "Linking");
     let light = params
@@ -131,9 +131,18 @@ fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Para
 }
 
 /// Generate the detector registers.
-fn gen_detector_registers(attrs: &Set<Attr>) -> (Register, Register) {
+fn gen_detector_registers(engine: &Engine, attrs: &Set<Attr>) -> (Register, Register) {
     let mut spec_names = Vec::new();
     let mut img_names = Vec::new();
+
+    // Engines.
+    if let Engine::Photo(frames) = engine {
+        for name in frames.map().keys() {
+            img_names.push(name.clone());
+        }
+    }
+
+    // Attributes.
     for attr in attrs.map().values() {
         match *attr {
             Attr::Spectrometer(ref name, ..) => spec_names.push(name.clone()),
@@ -153,6 +162,7 @@ fn gen_detector_registers(attrs: &Set<Attr>) -> (Register, Register) {
 
 /// Generate the base output instance.
 fn gen_base_output<'a>(
+    engine: &Engine,
     grid: &Grid,
     spec_reg: &'a Register,
     img_reg: &'a Register,
@@ -173,22 +183,28 @@ fn gen_base_output<'a>(
 
     let mut imgs = Vec::with_capacity(img_reg.len());
     for name in img_reg.set().map().keys() {
+        // Engines.
+        if let Engine::Photo(frames) = engine {
+            for (photo_name, frame) in frames.map() {
+                if name == photo_name {
+                    imgs.push(Image::new_blank(
+                        *frame.res(),
+                        Colour::new(0.0, 0.0, 0.0, 1.0),
+                    ));
+                    continue;
+                }
+            }
+        }
+
+        // Attributes
         for attr in attrs.values() {
             if let Attr::Imager(img_name, res, _width, _center, _forward) = attr {
                 if name == img_name {
                     imgs.push(Image::new_blank(*res, Colour::new(0.0, 0.0, 0.0, 1.0)));
+                    continue;
                 }
             }
         }
     }
-
-    let mut photos = Vec::with_capacity(1);
-    for _n in 0..1 {
-        photos.push(Image::new_blank(
-            [1024, 1024],
-            Colour::new(0.0, 0.0, 0.0, 1.0),
-        ));
-    }
-
     Output::new(spec_reg, img_reg, grid.boundary().clone(), res, specs, imgs)
 }

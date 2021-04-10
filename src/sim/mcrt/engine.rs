@@ -1,6 +1,7 @@
 //! Engine function handler.
 
 use crate::{
+    ord::Set,
     phys::Photon,
     sim::mcrt::{engines, Frame, Input, Output},
 };
@@ -12,7 +13,7 @@ pub enum Engine {
     /// Standard sampling engine.
     Standard,
     /// Photography engine.
-    Photo(Vec<Frame>),
+    Photo(Set<Frame>),
 }
 
 impl Engine {

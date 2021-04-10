@@ -1,7 +1,7 @@
 //! Engine selection.
 
 use crate::{
-    ord::Build,
+    ord::{Build, Set},
     sim::mcrt::{Engine, FrameBuilder},
 };
 use std::fmt::{Display, Error, Formatter};
@@ -11,7 +11,7 @@ pub enum EngineBuilder {
     /// Standard sampling engine.
     Standard,
     /// Photography engine.
-    Photo(Vec<FrameBuilder>),
+    Photo(Set<FrameBuilder>),
 }
 
 impl Build for EngineBuilder {
@@ -21,13 +21,7 @@ impl Build for EngineBuilder {
     fn build(self) -> Self::Inst {
         match self {
             Self::Standard => Self::Inst::Standard,
-            Self::Photo(frames) => {
-                let mut fs = Vec::with_capacity(frames.len());
-                for frame in frames {
-                    fs.push(frame.build());
-                }
-                Self::Inst::Photo(fs)
-            }
+            Self::Photo(frames) => Self::Inst::Photo(frames.build()),
         }
     }
 }

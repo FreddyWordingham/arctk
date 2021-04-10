@@ -3,6 +3,7 @@
 use crate::{
     err::Error,
     fs::Load,
+    ord::Set,
     sim::mcrt::{EngineBuilder, FrameBuilder},
 };
 use arctk_attr::file;
@@ -17,7 +18,7 @@ pub enum EngineBuilderLoader {
     /// Standard sampling engine.
     Standard,
     /// Photography engine.
-    Photo(Vec<FrameBuilder>),
+    Photo(Set<FrameBuilder>),
 }
 
 impl Load for EngineBuilderLoader {
