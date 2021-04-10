@@ -1,7 +1,14 @@
 {
     tree        : { There   : 'misc/tree/t5_d8.json5' },
     grid        : { There   : 'misc/grid/10m_128.json5' },
-    engine      : "Standard",
+    engine      : { Photo   : [
+        {
+            pos :   [0,-4,0],
+            tar :   [0,0,0],
+            fov :   45.0,
+            res :   [256, 256],
+        }
+    ] },
     sett        : { Here    : {
         num_phot            : 1e6,
         block_size          : 1e3,
