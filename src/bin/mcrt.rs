@@ -79,7 +79,7 @@ fn main() {
     let input = Input::new(&spec_reg, &mats, &attrs, &light, &tree, &grid, &sett);
     report!(input, "input");
 
-    let data = run::multi_thread(engine, &input, &output).expect("Failed to run cartographer.");
+    let data = run::multi_thread(&engine, &input, &output).expect("Failed to run cartographer.");
 
     section(term_width, "Saving");
     report!(data, "data");

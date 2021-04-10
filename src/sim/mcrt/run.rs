@@ -15,7 +15,7 @@ use std::sync::{Arc, Mutex};
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn multi_thread<'a>(
-    engine: Engine,
+    engine: &Engine,
     input: &'a Input,
     output: &Output<'a>,
 ) -> Result<Output<'a>, Error> {
