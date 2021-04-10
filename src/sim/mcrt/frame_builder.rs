@@ -35,7 +35,7 @@ impl Build for FrameBuilder {
         let view = Mat4::look_at_rh(&self.pos, &self.tar, &Vec3::z_axis());
         let aspect_ratio = self.res[X] as f64 / self.res[Y] as f64;
         let fovy = self.fov / aspect_ratio;
-        let proj = Mat4::new_perspective(aspect_ratio, fovy, 0.1, 100.0);
+        let proj = Mat4::new_perspective(aspect_ratio, fovy, NEAR_CLIP, FAR_CLIP);
 
         Self::Inst::new(model, view, proj, self.res)
     }

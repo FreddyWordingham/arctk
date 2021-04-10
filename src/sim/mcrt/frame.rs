@@ -39,6 +39,9 @@ impl Frame {
     pub fn transform(&self, pos: &Pos3) -> [usize; 2] {
         let p = self.model * self.view * self.proj * pos.to_homogeneous();
 
-        [p.x as usize, p.y as usize]
+        [
+            ((p.x + 1.0) * 0.5 * self.res[X] as f64) as usize,
+            ((p.y + 1.0) * 0.5 * self.res[Y] as f64) as usize,
+        ]
     }
 }

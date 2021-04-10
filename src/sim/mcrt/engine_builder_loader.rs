@@ -27,6 +27,7 @@ impl Load for EngineBuilderLoader {
     fn load(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
         Ok(match self {
             Self::Standard => Self::Inst::Standard,
+            Self::Photo(frames) => Self::Inst::Photo(frames),
         })
     }
 }
@@ -34,8 +35,9 @@ impl Load for EngineBuilderLoader {
 impl Display for EngineBuilderLoader {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
-        match *self {
+        match self {
             Self::Standard => write!(fmt, "Standard"),
+            Self::Photo(ref frames) => write!(fmt, "Photography ({})", frames.len()),
         }
     }
 }
