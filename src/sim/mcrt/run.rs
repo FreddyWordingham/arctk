@@ -25,7 +25,7 @@ pub fn multi_thread<'a>(
     let threads: Vec<_> = (0..num_cpus::get()).collect();
     let mut out: Vec<_> = threads
         .par_iter()
-        .map(|_id| thread(&engine, input, output.clone(), &Arc::clone(&pb)))
+        .map(|_id| thread(engine, input, output.clone(), &Arc::clone(&pb)))
         .collect();
     pb.lock()?.finish_with_message("Simulation complete.");
 

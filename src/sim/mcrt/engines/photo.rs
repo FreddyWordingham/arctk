@@ -78,7 +78,7 @@ pub fn photo(
                 // Capture.
                 for (name, frame) in frames.map() {
                     if let Some([x, y]) = frame.transform(phot.ray().pos()) {
-                        if let Some(weight) = peel_off(&input, phot.clone(), &env, *frame.pos()) {
+                        if let Some(weight) = peel_off(input, phot.clone(), &env, *frame.pos()) {
                             let idx = data.img_reg().set().map()[name];
                             data.imgs[idx].pixels_mut()[[x, y]] += Colour::new(
                                 phot_col[0] as f32,
@@ -107,43 +107,45 @@ pub fn photo(
 }
 
 /// Generate the RGB components of a given wavelength.
+#[inline]
+#[must_use]
 pub fn wavelength_to_rbg(mut wavelength: f64) -> [f64; 3] {
     let gamma = 0.8;
     wavelength *= 1.0e9;
 
-    if wavelength >= 380.0 && wavelength <= 440.0 {
+    if (380.0..440.0).contains(&wavelength) {
         let a = 0.3 + (0.7 * (wavelength - 380.0) / (440.0 - 380.0));
         let r = ((-(wavelength - 440.0) / (440.0 - 380.0)) * a).powf(gamma);
         let g = 0.0;
         let b = a.powf(gamma);
         return [r, g, b];
-    } else if wavelength >= 440.0 && wavelength <= 490.0 {
+    } else if (440.0..490.0).contains(&wavelength) {
         let r = 0.0;
         let g = ((wavelength - 440.0) / (490.0 - 440.0)).powf(gamma);
         let b = 1.0;
         return [r, g, b];
-    } else if wavelength >= 490.0 && wavelength <= 510.0 {
+    } else if (490.0..510.0).contains(&wavelength) {
         let r = 0.0;
         let g = 1.0;
         let b = (-(wavelength - 510.0) / (510.0 - 490.0)).powf(gamma);
         return [r, g, b];
-    } else if wavelength >= 510.0 && wavelength <= 580.0 {
+    } else if (510.0..580.0).contains(&wavelength) {
         let r = ((wavelength - 510.0) / (580.0 - 510.0)).powf(gamma);
         let g = 1.0;
         let b = 0.0;
         return [r, g, b];
-    } else if wavelength >= 580.0 && wavelength <= 645.0 {
+    } else if (580.0..645.0).contains(&wavelength) {
         let r = 1.0;
         let g = (-(wavelength - 645.0) / (645.0 - 580.0)).powf(gamma);
         let b = 0.0;
         return [r, g, b];
-    } else if wavelength >= 645.0 && wavelength <= 750.0 {
+    } else if (645.0..750.0).contains(&wavelength) {
         let a = 0.3 + (0.7 * (750.0 - wavelength) / (750.0 - 645.0));
         let r = a.powf(gamma);
         let g = 0.0;
         let b = 0.0;
         return [r, g, b];
-    } else {
-        return [1.0, 0.0, 1.0];
     }
+
+    [1.0, 0.0, 1.0]
 }
