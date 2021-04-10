@@ -10,7 +10,7 @@ use rand::{rngs::ThreadRng, Rng};
 /// Simulate the life of a single photon.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn standard(input: &Input, mut rng: &mut ThreadRng, mut phot: Photon, mut data: &mut Output) {
+pub fn standard(input: &Input, mut data: &mut Output, mut rng: &mut ThreadRng, mut phot: Photon) {
     // Check photon is within the grid.
     if let Some(index) = input.grid.gen_index(phot.ray().pos()) {
         data.emission[index] += phot.power() * phot.weight();

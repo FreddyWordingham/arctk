@@ -1,14 +1,9 @@
 //! Engine selection.
 
-use crate::{
-    ord::Build,
-    sim::mcrt::{engines, Engine},
-};
-use arctk_attr::file;
+use crate::{ord::Build, sim::mcrt::Engine};
 use std::fmt::{Display, Error, Formatter};
 
 /// Engine selection.
-#[file]
 pub enum EngineBuilder {
     /// Standard sampling engine.
     Standard,
@@ -20,7 +15,7 @@ impl Build for EngineBuilder {
     #[inline]
     fn build(self) -> Self::Inst {
         match self {
-            Self::Standard => engines::standard,
+            Self::Standard => Self::Inst::Standard,
         }
     }
 }

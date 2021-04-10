@@ -6,6 +6,7 @@ pub mod attribute_linker_linker;
 pub mod attribute_linker_linker_linker;
 pub mod engine;
 pub mod engine_builder;
+pub mod engine_builder_loader;
 pub mod engines;
 pub mod event;
 pub mod input;
@@ -22,6 +23,7 @@ pub mod travel;
 
 pub use self::{
     attribute::*, attribute_linker::*, attribute_linker_linker::*,
-    attribute_linker_linker_linker::*, engine::*, engine_builder::*, event::*, input::*, output::*,
-    parameters::*, parameters_builder::*, parameters_builder_loader::*, run::*, settings::*,
+    attribute_linker_linker_linker::*, engine::*, engine_builder::*, engine_builder_loader::*,
+    event::*, input::*, output::*, parameters::*, parameters_builder::*,
+    parameters_builder_loader::*, run::*, settings::*,
 };

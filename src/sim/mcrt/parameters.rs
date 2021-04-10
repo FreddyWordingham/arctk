@@ -34,7 +34,7 @@ impl Parameters {
     #[allow(clippy::too_many_arguments)]
     #[must_use]
     #[inline]
-    pub fn new(
+    pub const fn new(
         sett: Settings,
         tree: TreeSettings,
         grid: Grid,
@@ -68,7 +68,7 @@ impl Display for Parameters {
         fmt_report!(fmt, self.attrs, "attributes");
         fmt_report!(fmt, self.mats, "materials");
         fmt_report!(fmt, self.light, "light");
-        fmt_report!(fmt, "{* POINTER LOADED *}", "engine");
+        fmt_report!(fmt, self.engine, "engine");
         Ok(())
     }
 }

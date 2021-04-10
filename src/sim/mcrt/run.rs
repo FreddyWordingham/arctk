@@ -25,7 +25,7 @@ pub fn multi_thread<'a>(
     let threads: Vec<_> = (0..num_cpus::get()).collect();
     let mut out: Vec<_> = threads
         .par_iter()
-        .map(|_id| thread(engine, input, output.clone(), &Arc::clone(&pb)))
+        .map(|_id| thread(&engine, input, output.clone(), &Arc::clone(&pb)))
         .collect();
     pb.lock()?.finish_with_message("Simulation complete.");
 
@@ -42,7 +42,7 @@ pub fn multi_thread<'a>(
 #[inline]
 #[must_use]
 fn thread<'a>(
-    engine: Engine,
+    engine: &Engine,
     input: &'a Input,
     mut output: Output<'a>,
     pb: &Arc<Mutex<ProgressBar>>,
@@ -60,7 +60,7 @@ fn thread<'a>(
     } {
         for _ in start..end {
             let phot = input.light.emit(&mut rng, phot_energy);
-            engine(input, &mut rng, phot, &mut output);
+            engine.run(input, &mut output, &mut rng, phot);
         }
     }
 
