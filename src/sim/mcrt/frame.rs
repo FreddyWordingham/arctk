@@ -44,7 +44,7 @@ impl Frame {
     #[inline]
     #[must_use]
     pub fn transform(&self, pos: &Pos3) -> Option<[usize; 2]> {
-        let p = self.model * self.view * self.proj * pos.to_homogeneous();
+        let p = self.proj * self.view * self.model * pos.to_homogeneous();
 
         if !(-1.0..1.0).contains(&p.x) || !(-1.0..1.0).contains(&p.y) {
             return None;
