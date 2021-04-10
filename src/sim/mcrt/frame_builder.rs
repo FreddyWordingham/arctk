@@ -37,6 +37,6 @@ impl Build for FrameBuilder {
         let fovy = self.fov.to_radians() / aspect_ratio;
         let proj = Mat4::new_perspective(aspect_ratio, fovy, NEAR_CLIP, FAR_CLIP);
 
-        Self::Inst::new(model, view, proj, self.res)
+        Self::Inst::new(self.pos, model, view, proj, self.res)
     }
 }

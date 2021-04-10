@@ -44,6 +44,8 @@ pub struct Output<'a> {
 }
 
 impl<'a> Output<'a> {
+    access!(spec_reg, Register);
+    access!(img_reg, Register);
     access!(boundary, Cube);
     clone!(cell_vol, f64);
 

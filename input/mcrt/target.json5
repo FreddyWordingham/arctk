@@ -3,9 +3,21 @@
     grid        : { There   : 'misc/grid/10m_128.json5' },
     engine      : { Photo   : {
         photo_1 : {
-            pos :   [0,-4,0],
+            pos :   [0,-8,0],
             tar :   [0,0,0],
             fov :   45.0,
+            res :   [256, 256],
+        },
+        photo_2 : {
+            pos :   [0,-8,0],
+            tar :   [0,0,0],
+            fov :   90.0,
+            res :   [256, 256],
+        },
+        photo_3 : {
+            pos :   [0,-8,0],
+            tar :   [0,0,0],
+            fov :   135.0,
             res :   [256, 256],
         },
     } },
@@ -23,7 +35,7 @@
         spec    : { Here    : {
             Uniform :   [450.0e-9, 850.0e-9]
         } },
-        mat     : "air"
+        mat     : "fog"
     } },
     mats        : { Here    : {
         air     : { There    : 'res/mats/misc/air.json5' },
@@ -31,7 +43,7 @@
         glass   : { There    : 'res/mats/misc/glass.json5' }
     } },
     attrs       : { Here    : {
-        glass     : { Interface   : ['glass', 'air'] },
+        glass     : { Interface   : ['glass', 'fog'] },
     } },
     surfs       : { Here    : {
         target  : {

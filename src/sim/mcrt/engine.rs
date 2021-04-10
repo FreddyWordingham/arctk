@@ -22,7 +22,7 @@ impl Engine {
     pub fn run(&self, input: &Input, data: &mut Output, rng: &mut ThreadRng, phot: Photon) {
         match self {
             Self::Standard => engines::standard(input, data, rng, phot),
-            Self::Photo(ref _frames) => engines::standard(input, data, rng, phot),
+            Self::Photo(ref frames) => engines::photo(frames, input, data, rng, phot),
         }
     }
 }
@@ -36,6 +36,3 @@ impl Display for Engine {
         }
     }
 }
-
-// /// MCRT sampling engine function type.
-// pub type Engine<T> = fn(info: &T, input: &Input, &mut ThreadRng, phot: Photon, data: &mut Output);
