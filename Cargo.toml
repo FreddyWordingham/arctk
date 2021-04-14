@@ -101,7 +101,7 @@ overflow-checks = true
 # [RELEASE]
 # Release profile: "cargo build --release"
 opt-level = 3
-debug = false
+debug = true
 rpath = false
 lto = "fat"
 debug-assertions = false

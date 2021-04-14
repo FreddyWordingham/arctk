@@ -3,12 +3,13 @@
 use crate::{
     data::Table,
     err::Error,
-    fs::{File, Load},
-    geom::{Emitter, MeshLoader, Ray},
+    fs::{File, Load, Redirect},
+    geom::{Emitter, GridBuilder, MeshLoader, Ray},
     math::{Dir3, Pos3},
-    ord::{X, Y, Z},
+    ord::{X, Y, Z, Build},
 };
 use arctk_attr::file;
+use ndarray::Array3;
 use std::{
     fmt::{Display, Formatter},
     path::{Path, PathBuf},
@@ -25,6 +26,8 @@ pub enum EmitterLoader {
     WeightedPoints(PathBuf, PathBuf),
     /// Surface mesh.
     Surface(MeshLoader),
+    /// Volume map.
+    Volume(PathBuf, Redirect<GridBuilder>),
 }
 
 impl Load for EmitterLoader {
@@ -58,6 +61,9 @@ impl Load for EmitterLoader {
                 Self::Inst::new_weighted_points(points, &weights)
             }
             Self::Surface(mesh) => Self::Inst::new_surface(mesh.load(in_dir)?),
+            Self::Volume(map, grid) => {
+                Self::Inst::new_volume(Array3::load(&in_dir.join(map))?, grid.load(in_dir)?.build())
+            }
         })
     }
 }
@@ -70,6 +76,7 @@ impl Display for EmitterLoader {
             Self::Points { .. } => "Points",
             Self::WeightedPoints { .. } => "WeightedPoints",
             Self::Surface { .. } => "Surface",
+            Self::Volume { .. } => "Volume",
         };
         write!(fmt, "{}", kind)
     }

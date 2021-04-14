@@ -1,14 +1,15 @@
 //! Optical material.
 
 use crate::{
-    geom::{Emit, Mesh, Ray},
+    geom::{Emit, Grid, Mesh, Ray},
     math::{rand_isotropic_dir, Pos3},
+    tools::linear_to_three_dim
 };
+use ndarray::Array3;
 use rand::Rng;
 use std::fmt::{Display, Error, Formatter};
 
 /// Ray emission structure.
-#[derive(Clone)]
 pub enum Emitter {
     /// Single beam.
     Beam(Ray),
@@ -18,6 +19,8 @@ pub enum Emitter {
     WeightedPoints(Vec<Pos3>, Vec<f64>),
     /// Surface mesh.
     Surface(Mesh),
+    /// Volume map.
+    Volume(Array3<f64>, Grid),
 }
 
 impl Emitter {
@@ -62,6 +65,13 @@ impl Emitter {
         Self::Surface(mesh)
     }
 
+    /// Construct a new volume instance.
+    #[inline]
+    #[must_use]
+    pub const fn new_volume(map: Array3<f64>, grid: Grid) -> Self {
+        Self::Volume(map, grid)
+    }
+
     /// Emit a new ray.
     #[inline]
     #[must_use]
@@ -81,6 +91,20 @@ impl Emitter {
                 unreachable!("Failed to determine weighted point to emit from.");
             }
             Self::Surface(ref mesh) => mesh.cast(rng),
+            Self::Volume(ref map, ref grid) => {
+                let r = rng.gen_range(0.0..map.sum());
+                let mut total = 0.0;
+                for n in 0..map.len() {
+                    let index = linear_to_three_dim(n, grid.res());
+                    total += map[index];
+                    if total >= r {
+                        let pos = grid.gen_voxel(&index).rand_pos( rng);
+                        let dir = crate::math::rng::rand_isotropic_dir( rng);
+                        return Ray::new(pos, dir);
+                    }
+                }
+                panic!("Failed to emit ray from volume.")
+            }
         }
     }
 }
@@ -93,6 +117,7 @@ impl Display for Emitter {
             Self::Points { .. } => "Points",
             Self::WeightedPoints { .. } => "WeightedPoints",
             Self::Surface { .. } => "Surface",
+            Self::Volume { .. } => "Volume",
         };
         write!(fmt, "{}", kind)
     }

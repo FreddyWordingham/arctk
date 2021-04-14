@@ -48,15 +48,12 @@ impl<'a> Link<'a, Material> for LightLinker {
 
     #[inline]
     fn link(self, mats: &'a Set<Material>) -> Result<Self::Inst, Error> {
-        let power = self.power;
-        let emitter = self.emitter.clone();
-        let spec = self.spec.clone();
-        // let mat = mats
-        //     .get(&self.mat)
-        //     .unwrap_or_else(|| panic!("Failed to link light-material key: {}", &self.mat));
         let mat = mats
             .get(&self.mat)
             .unwrap_or_else(|| panic!("Failed to link light-material key: {}", &self.mat));
+        let power = self.power;
+        let emitter = self.emitter;
+        let spec = self.spec;
 
         Ok(Self::Inst::new(power, emitter, spec, mat))
     }
