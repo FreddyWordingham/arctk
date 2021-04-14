@@ -3,7 +3,7 @@
 use crate::{
     geom::{Emit, Grid, Mesh, Ray},
     math::{rand_isotropic_dir, Pos3},
-    tools::linear_to_three_dim
+    tools::linear_to_three_dim,
 };
 use ndarray::Array3;
 use rand::Rng;
@@ -68,7 +68,10 @@ impl Emitter {
     /// Construct a new volume instance.
     #[inline]
     #[must_use]
-    pub const fn new_volume(map: Array3<f64>, grid: Grid) -> Self {
+    pub fn new_volume(map: Array3<f64>, grid: Grid) -> Self {
+        debug_assert!(map.sum() > 0.0);
+        debug_assert!(map.len() > 0);
+
         Self::Volume(map, grid)
     }
 
@@ -98,8 +101,8 @@ impl Emitter {
                     let index = linear_to_three_dim(n, grid.res());
                     total += map[index];
                     if total >= r {
-                        let pos = grid.gen_voxel(&index).rand_pos( rng);
-                        let dir = crate::math::rng::rand_isotropic_dir( rng);
+                        let pos = grid.gen_voxel(&index).rand_pos(rng);
+                        let dir = rand_isotropic_dir(rng);
                         return Ray::new(pos, dir);
                     }
                 }

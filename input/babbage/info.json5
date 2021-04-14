@@ -15,11 +15,11 @@
         // ],
         [
             "info",
-            { Info    : "../output/cartographer/skin/map_void.nc" }
+            { Info    : "../output/absorption_density.nc" }
         ],
-        [
-            "info",
-            { Info    : "../output/cartographer/tumour/map_void.nc" }
-        ],
+        // [
+        //     "info",
+        //     { Info    : "../output/cartographer/tumour/map_void.nc" }
+        // ],
     ]
 }
