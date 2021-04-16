@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["comp","Component module."],["ent","Entity module."],["parts","Game paths module."],["state","Game state."],["sys","System module."]]});

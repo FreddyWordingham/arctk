@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/approx-0.3.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/approx-0.4.0/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../approx/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../approx/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -385,6 +385,12 @@
 <span id="382">382</span>
 <span id="383">383</span>
 <span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Copyright 2015 Brendan Zabarauskas</span>
 <span class="comment">//</span>
@@ -404,8 +410,8 @@
 <span class="doccomment">//! based types, using either relative difference, or units in the last place (ULPs)</span>
 <span class="doccomment">//! comparisons.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! You can also use the `approx_{eq, ne}!` `assert_approx_{eq, ne}!` macros to test for equality</span>
-<span class="doccomment">//! using a more positional style.</span>
+<span class="doccomment">//! You can also use the `*_{eq, ne}!` and `assert_*_{eq, ne}!` macros to test for equality using a</span>
+<span class="doccomment">//! more positional style:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! #[macro_use]</span>
@@ -433,7 +439,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Implementing approximate equality for custom types</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The `ApproxEq` trait allows approximate equalities to be implemented on types, based on the</span>
+<span class="doccomment">//! The `*Eq` traits allow approximate equalities to be implemented on types, based on the</span>
 <span class="doccomment">//! fundamental floating point implementations.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! For example, we might want to be able to do approximate assertions on a complex number type:</span>
@@ -480,9 +486,9 @@
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! To do this we can implement `AbsDiffEq`, `RelativeEq` and `UlpsEq` generically in terms of a</span>
-<span class="doccomment">//! type parameter that also implements `ApproxEq`, `RelativeEq` and `UlpsEq` respectively. This</span>
-<span class="doccomment">//! means that we can make comparisons for either `Complex&lt;f32&gt;` or `Complex&lt;f64&gt;`:</span>
+<span class="doccomment">//! To do this we can implement [`AbsDiffEq`], [`RelativeEq`] and [`UlpsEq`] generically in terms</span>
+<span class="doccomment">//! of a type parameter that also implements `AbsDiffEq`, `RelativeEq` and `UlpsEq` respectively.</span>
+<span class="doccomment">//! This means that we can make comparisons for either `Complex&lt;f32&gt;` or `Complex&lt;f64&gt;`:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! # use approx::{AbsDiffEq, RelativeEq, UlpsEq};</span>
@@ -536,11 +542,11 @@
 <span class="doccomment">//! Floating point is hard! Thanks goes to these links for helping to make things a _little_</span>
 <span class="doccomment">//! easier to understand:</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! - [Comparing Floating Point Numbers, 2012 Edition]</span>
-<span class="doccomment">//!   (https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/)</span>
+<span class="doccomment">//! - [Comparing Floating Point Numbers, 2012 Edition](</span>
+<span class="doccomment">//!   https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/)</span>
 <span class="doccomment">//! - [The Floating Point Guide - Comparison](http://floating-point-gui.de/errors/comparison/)</span>
-<span class="doccomment">//! - [What Every Computer Scientist Should Know About Floating-Point Arithmetic]</span>
-<span class="doccomment">//!   (https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html)</span>
+<span class="doccomment">//! - [What Every Computer Scientist Should Know About Floating-Point Arithmetic](</span>
+<span class="doccomment">//!   https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html)</span>
 
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
 
@@ -611,12 +617,14 @@
 
     <span class="doccomment">/// Peform the equality comparison</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eq</span>(<span class="self">self</span>, <span class="ident">lhs</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">A</span>::<span class="ident">abs_diff_eq</span>(<span class="ident">lhs</span>, <span class="ident">rhs</span>, <span class="self">self</span>.<span class="ident">epsilon</span>)
     }
 
     <span class="doccomment">/// Peform the inequality comparison</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ne</span>(<span class="self">self</span>, <span class="ident">lhs</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">A</span>::<span class="ident">abs_diff_ne</span>(<span class="ident">lhs</span>, <span class="ident">rhs</span>, <span class="self">self</span>.<span class="ident">epsilon</span>)
     }
@@ -687,12 +695,14 @@
 
     <span class="doccomment">/// Peform the equality comparison</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eq</span>(<span class="self">self</span>, <span class="ident">lhs</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">A</span>::<span class="ident">relative_eq</span>(<span class="ident">lhs</span>, <span class="ident">rhs</span>, <span class="self">self</span>.<span class="ident">epsilon</span>, <span class="self">self</span>.<span class="ident">max_relative</span>)
     }
 
     <span class="doccomment">/// Peform the inequality comparison</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ne</span>(<span class="self">self</span>, <span class="ident">lhs</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">A</span>::<span class="ident">relative_ne</span>(<span class="ident">lhs</span>, <span class="ident">rhs</span>, <span class="self">self</span>.<span class="ident">epsilon</span>, <span class="self">self</span>.<span class="ident">max_relative</span>)
     }
@@ -760,15 +770,18 @@
 
     <span class="doccomment">/// Peform the equality comparison</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">eq</span>(<span class="self">self</span>, <span class="ident">lhs</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">A</span>::<span class="ident">ulps_eq</span>(<span class="ident">lhs</span>, <span class="ident">rhs</span>, <span class="self">self</span>.<span class="ident">epsilon</span>, <span class="self">self</span>.<span class="ident">max_ulps</span>)
     }
 
     <span class="doccomment">/// Peform the inequality comparison</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ne</span>(<span class="self">self</span>, <span class="ident">lhs</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>, <span class="ident">rhs</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">A</span>::<span class="ident">ulps_ne</span>(<span class="ident">lhs</span>, <span class="ident">rhs</span>, <span class="self">self</span>.<span class="ident">epsilon</span>, <span class="self">self</span>.<span class="ident">max_ulps</span>)
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "approx";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="approx" data-search-js="../../search-index.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

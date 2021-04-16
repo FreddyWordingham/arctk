@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Bivec2","A bivector in 2d space."],["Bivec3","A bivector in 3d space."],["WBivec2","A bivector in 2d space."],["WBivec3","A bivector in 3d space."]]});

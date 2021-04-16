@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["photo","Photograph the life of a single photon."],["wavelength_to_rbg","Generate the RGB components of a given wavelength."]]});

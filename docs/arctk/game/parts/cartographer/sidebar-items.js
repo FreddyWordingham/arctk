@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["caves","Forest map builder."],["forest","Forest map builder."]]});

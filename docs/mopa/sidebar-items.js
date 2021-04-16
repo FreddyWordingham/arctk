@@ -1,1 +1,0 @@
-initSidebarItems({"macro":[["mopafy","The macro for implementing all the `Any` methods on your own trait."]],"trait":[["Any","A type to emulate dynamic typing."]]});

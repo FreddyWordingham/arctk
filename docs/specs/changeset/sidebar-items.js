@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["ChangeSet","Change set that can be collected from an iterator, and joined on for easy application to components."]]});

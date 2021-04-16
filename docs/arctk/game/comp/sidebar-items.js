@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["player","Player controllable component."],["position","Position component."],["renderable","Position component."],["viewshed","Observable area."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Zone","Zone of the map."]]});

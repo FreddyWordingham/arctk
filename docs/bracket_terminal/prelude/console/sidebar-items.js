@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["CharacterTranslationMode",""],["TextAlign",""]],"fn":[["log",""]],"struct":[["Tile","The internal storage type for tiles in a simple console."]],"trait":[["Console","Trait that must be implemented by console types."]]});

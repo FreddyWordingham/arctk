@@ -1,1 +1,1 @@
-initSidebarItems({"type":[["Engine","MCRT sampling engine function type."]]});
+initSidebarItems({"enum":[["Engine","Engine selection."]]});

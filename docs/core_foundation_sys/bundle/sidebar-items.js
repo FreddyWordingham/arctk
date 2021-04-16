@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["CFBundleCopyExecutableURL",""],["CFBundleCopyPrivateFrameworksURL",""],["CFBundleCopySharedSupportURL",""],["CFBundleCreate",""],["CFBundleGetBundleWithIdentifier",""],["CFBundleGetFunctionPointerForName",""],["CFBundleGetInfoDictionary",""],["CFBundleGetMainBundle",""],["CFBundleGetTypeID",""]],"struct":[["__CFBundle",""]],"type":[["CFBundleRef",""]]});

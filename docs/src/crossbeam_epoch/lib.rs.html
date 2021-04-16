@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/crossbeam-epoch-0.8.2/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/crossbeam-epoch-0.9.3/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../crossbeam_epoch/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../crossbeam_epoch/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -109,6 +109,85 @@
 <span id="106">106</span>
 <span id="107">107</span>
 <span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Epoch-based memory reclamation.</span>
 <span class="doccomment">//!</span>
@@ -151,7 +230,7 @@
 <span class="doccomment">//! pinned participants get unpinned. Such objects can be stored into a thread-local or global</span>
 <span class="doccomment">//! storage, where they are kept until the right time for their destruction comes.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! There is a global shared instance of garbage queue. You can [`defer`] the execution of an</span>
+<span class="doccomment">//! There is a global shared instance of garbage queue. You can [`defer`](Guard::defer) the execution of an</span>
 <span class="doccomment">//! arbitrary function until the global epoch is advanced enough. Most notably, concurrent data</span>
 <span class="doccomment">//! structures may defer the deallocation of an object.</span>
 <span class="doccomment">//!</span>
@@ -159,41 +238,117 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! For majority of use cases, just use the default garbage collector by invoking [`pin`]. If you</span>
 <span class="doccomment">//! want to create your own garbage collector, use the [`Collector`] API.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [`Atomic`]: struct.Atomic.html</span>
-<span class="doccomment">//! [`Collector`]: struct.Collector.html</span>
-<span class="doccomment">//! [`Shared`]: struct.Shared.html</span>
-<span class="doccomment">//! [`pin`]: fn.pin.html</span>
-<span class="doccomment">//! [`defer`]: struct.Guard.html#method.defer</span>
 
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_debug_implementations</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">test</span>(
+    <span class="ident">no_crate_inject</span>,
+    <span class="ident">attr</span>(
+        <span class="ident">deny</span>(<span class="ident">warnings</span>, <span class="ident">rust_2018_idioms</span>),
+        <span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">unused_assignments</span>, <span class="ident">unused_variables</span>)
+    )
+))]</span>
+<span class="attribute">#![<span class="ident">warn</span>(
+    <span class="ident">missing_docs</span>,
+    <span class="ident">missing_debug_implementations</span>,
+    <span class="ident">rust_2018_idioms</span>,
+    <span class="ident">unreachable_pub</span>
+)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;nightly&quot;</span>, <span class="ident">feature</span>(<span class="ident">cfg_target_has_atomic</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;nightly&quot;</span>, <span class="ident">feature</span>(<span class="ident">const_fn</span>))]</span>
 
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">cfg_if</span>;
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">core</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">crossbeam_loom</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">loom_crate</span> <span class="kw">as</span> <span class="ident">loom</span>;
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">maybe_uninit</span>;
+<span class="kw">use</span> <span class="ident">cfg_if</span>::<span class="ident">cfg_if</span>;
 
-<span class="macro">cfg_if</span><span class="macro">!</span> {
-    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span> {
-        <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
-    } <span class="kw">else</span> <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> {
-        <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">std</span> <span class="kw">as</span> <span class="ident">alloc</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">crossbeam_loom</span>)]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>, <span class="ident">dead_code</span>)]</span>
+<span class="kw">mod</span> <span class="ident">primitive</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">cell</span> {
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">loom</span>::<span class="ident">cell</span>::<span class="ident">UnsafeCell</span>;
     }
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">sync</span> {
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">atomic</span> {
+            <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">Ordering</span>;
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">loom</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">AtomicUsize</span>;
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">fence</span>(<span class="ident">ord</span>: <span class="ident">Ordering</span>) {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ordering</span>::<span class="ident">Acquire</span> <span class="op">=</span> <span class="ident">ord</span> {
+                } <span class="kw">else</span> {
+                    <span class="comment">// FIXME: loom only supports acquire fences at the moment.</span>
+                    <span class="comment">// https://github.com/tokio-rs/loom/issues/117</span>
+                    <span class="comment">// let&#39;s at least not panic...</span>
+                    <span class="comment">// this may generate some false positives (`SeqCst` is stronger than `Acquire`</span>
+                    <span class="comment">// for example), and some false negatives (`Relaxed` is weaker than `Acquire`),</span>
+                    <span class="comment">// but it&#39;s the best we can do for the time being.</span>
+                }
+                <span class="ident">loom</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">fence</span>(<span class="ident">Ordering</span>::<span class="ident">Acquire</span>)
+            }
+
+            <span class="comment">// FIXME: loom does not support compiler_fence at the moment.</span>
+            <span class="comment">// https://github.com/tokio-rs/loom/issues/117</span>
+            <span class="comment">// we use fence as a stand-in for compiler_fence for the time being.</span>
+            <span class="comment">// this may miss some races since fence is stronger than compiler_fence,</span>
+            <span class="comment">// but it&#39;s the best we can do for the time being.</span>
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="self">self</span>::<span class="ident">fence</span> <span class="kw">as</span> <span class="ident">compiler_fence</span>;
+        }
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">loom</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
+    }
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">loom</span>::<span class="ident">lazy_static</span>;
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">loom</span>::<span class="ident">thread_local</span>;
+}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">crossbeam_loom</span>))]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>, <span class="ident">dead_code</span>)]</span>
+<span class="kw">mod</span> <span class="ident">primitive</span> {
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">cell</span> {
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+        <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(::<span class="ident">core</span>::<span class="ident">cell</span>::<span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+
+        <span class="comment">// loom&#39;s UnsafeCell has a slightly different API than the standard library UnsafeCell.</span>
+        <span class="comment">// Since we want the rest of the code to be agnostic to whether it&#39;s running under loom or</span>
+        <span class="comment">// not, we write this small wrapper that provides the loom-supported API for the standard</span>
+        <span class="comment">// library UnsafeCell. This is also what the loom documentation recommends:</span>
+        <span class="comment">// https://github.com/tokio-rs/loom#handling-loom-api-differences</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">data</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+                <span class="ident">UnsafeCell</span>(::<span class="ident">core</span>::<span class="ident">cell</span>::<span class="ident">UnsafeCell</span>::<span class="ident">new</span>(<span class="ident">data</span>))
+            }
+
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">with</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span> {
+                <span class="ident">f</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">get</span>())
+            }
+
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">with_mut</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span> {
+                <span class="ident">f</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">get</span>())
+            }
+        }
+    }
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">sync</span> {
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">atomic</span> {
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">compiler_fence</span>;
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">fence</span>;
+            <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">AtomicUsize</span>;
+        }
+        <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;nightly&quot;</span>, <span class="ident">cfg</span>(<span class="ident">target_has_atomic</span> <span class="op">=</span> <span class="string">&quot;ptr&quot;</span>))]</span>
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
+    }
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">thread_local</span>;
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="ident">lazy_static</span>;
 }
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;nightly&quot;</span>, <span class="ident">cfg</span>(<span class="ident">target_has_atomic</span> <span class="op">=</span> <span class="string">&quot;ptr&quot;</span>))]</span>
 <span class="macro">cfg_if</span><span class="macro">!</span> {
-    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span> {
-        <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">crossbeam_utils</span>;
-        <span class="attribute">#[<span class="ident">macro_use</span>]</span>
-        <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">memoffset</span>;
-        <span class="attribute">#[<span class="ident">macro_use</span>]</span>
-        <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">scopeguard</span>;
+    <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span> {
+        <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alloc</span>;
 
         <span class="kw">mod</span> <span class="ident">atomic</span>;
         <span class="kw">mod</span> <span class="ident">collector</span>;
@@ -203,20 +358,24 @@
         <span class="kw">mod</span> <span class="ident">internal</span>;
         <span class="kw">mod</span> <span class="ident">sync</span>;
 
-        <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">atomic</span>::{<span class="ident">Atomic</span>, <span class="ident">CompareAndSetError</span>, <span class="ident">CompareAndSetOrdering</span>, <span class="ident">Owned</span>, <span class="ident">Pointer</span>, <span class="ident">Shared</span>};
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">atomic</span>::{
+            <span class="ident">Pointable</span>, <span class="ident">Atomic</span>, <span class="ident">CompareExchangeError</span>,
+            <span class="ident">Owned</span>, <span class="ident">Pointer</span>, <span class="ident">Shared</span>,
+        };
         <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">collector</span>::{<span class="ident">Collector</span>, <span class="ident">LocalHandle</span>};
         <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">guard</span>::{<span class="ident">unprotected</span>, <span class="ident">Guard</span>};
+
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
+        <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">atomic</span>::{<span class="ident">CompareAndSetError</span>, <span class="ident">CompareAndSetOrdering</span>};
     }
 }
 
 <span class="macro">cfg_if</span><span class="macro">!</span> {
     <span class="kw">if</span> <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span> {
-        <span class="attribute">#[<span class="ident">macro_use</span>]</span>
-        <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazy_static</span>;
-
         <span class="kw">mod</span> <span class="ident">default</span>;
         <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">default</span>::{<span class="ident">default_collector</span>, <span class="ident">is_pinned</span>, <span class="ident">pin</span>};
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "crossbeam_epoch";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="crossbeam_epoch" data-search-js="../../search-index.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
