@@ -3,7 +3,7 @@
 use crate::{
     geom::Trace,
     math::Formula,
-    phys::{Photon , Local},
+    phys::{Local, Photon},
     sim::mcrt::{scatter::scatter, surface::surface, travel::travel, Event, Input, Output},
 };
 use ndarray::Array3;

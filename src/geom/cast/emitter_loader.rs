@@ -61,9 +61,10 @@ impl Load for EmitterLoader {
                 Self::Inst::new_weighted_points(points, &weights)
             }
             Self::Surface(mesh) => Self::Inst::new_surface(mesh.load(in_dir)?),
-            Self::Volume(map, grid) => {
-                Self::Inst::new_volume(Array3::load(&in_dir.join(map))?, grid.load(in_dir)?.build())
-            }
+            Self::Volume(map, grid) => Self::Inst::new_volume(
+                Array3::new_from_file(&in_dir.join(map))?,
+                grid.load(in_dir)?.build(),
+            ),
         })
     }
 }
