@@ -3,7 +3,7 @@
 use crate::{
     geom::Trace,
     math::Formula,
-    phys::Photon,
+    phys::{Photon , Local},
     sim::mcrt::{scatter::scatter, surface::surface, travel::travel, Event, Input, Output},
 };
 use ndarray::Array3;
@@ -13,8 +13,8 @@ use rand::{rngs::ThreadRng, Rng};
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn fluorescence(
-    _shift_map: &Array3<f64>,
-    _conc_spec: &Formula,
+    flu_concs: &Array3<f64>,
+    flu_spec: &Formula,
     input: &Input,
     mut data: &mut Output,
     mut rng: &mut ThreadRng,
@@ -35,8 +35,10 @@ pub fn fluorescence(
     let roulette_survive_prob = 1.0 / roulette_barrels;
 
     // Initialisation.
+    let mu_shift = flu_spec.y(phot.wavelength());
     let mat = input.light.mat();
-    let mut env = mat.sample_environment(phot.wavelength());
+    let mut local = mat.sample_environment(phot.wavelength());
+    let mut env;
 
     // Main event loop.
     let mut num_loops = 0;
@@ -57,6 +59,15 @@ pub fn fluorescence(
             *phot.weight_mut() *= roulette_barrels;
         }
 
+        // Local variable modifications.
+        env = Local::new(
+            local.ref_index(),
+            local.scat_coeff(),
+            local.abs_coeff(),
+            local.shift_coeff() + (mu_shift * flu_concs[index]),
+            local.asym(),
+        );
+
         // Interaction distances.
         let voxel_dist = voxel
             .dist(phot.ray())
@@ -75,7 +86,7 @@ pub fn fluorescence(
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());
-                surface(&mut rng, &hit, &mut phot, &mut env, &mut data);
+                surface(&mut rng, &hit, &mut phot, &mut local, &mut data);
                 travel(&mut data, &mut phot, &env, index, bump_dist);
             }
         }
