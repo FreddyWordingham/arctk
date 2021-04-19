@@ -9,6 +9,7 @@ use crate::{
 use rand::Rng;
 
 /// Triangle.
+#[derive(Clone)]
 pub struct Triangle {
     /// Vertex points.
     verts: [Pos3; 3],
@@ -98,7 +99,7 @@ impl Triangle {
         let rel_pos = ray.pos() - verts[ALPHA];
         let u = inv_e1_dot_d_cross_e2 * rel_pos.dot(&d_cross_e2);
 
-        if (u < 0.0) || (u > 1.0) {
+        if !(0.0..=1.0).contains(&u) {
             return None;
         }
 

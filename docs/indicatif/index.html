@@ -1,5 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `indicatif` crate."><meta name="keywords" content="rust, rustlang, rust-lang, indicatif"><title>indicatif - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../indicatif/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate indicatif</p><div class='block version'><p>Version 0.15.0</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all indicatif's items</p></a><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'indicatif', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/indicatif/lib.rs.html#1-201' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>indicatif</a></span></h1><div class='docblock'><p>indicatif is a library for Rust that helps you build command line
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="indicatif is a library for Rust that helps you build command line interfaces that report progress to users.  It comes with various tools and utilities for formatting anything that indicates progress."><meta name="keywords" content="rust, rustlang, rust-lang, indicatif"><title>indicatif - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../indicatif/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate indicatif</p><div class="block version"><p>Version 0.15.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all indicatif's items</p></a><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class="location"></p><div id="sidebar-vars" data-name="indicatif" data-ty="mod" data-relpath="../"></div></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="">indicatif</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/indicatif/lib.rs.html#1-201" title="goto source code">[src]</a></span></h1><div class="docblock"><p>indicatif is a library for Rust that helps you build command line
 interfaces that report progress to users.  It comes with various
 tools and utilities for formatting anything that indicates progress.</p>
 <p>Platform support:</p>
@@ -32,7 +34,7 @@ tools and utilities for formatting anything that indicates progress.</p>
 </ul>
 <h1 id="progress-bars-and-spinners" class="section-header"><a href="#progress-bars-and-spinners">Progress Bars and Spinners</a></h1>
 <p>indicatif comes with a <code>ProgressBar</code> type that supports both bounded
-progress bar uses as well as unbounded &quot;spinner&quot; type progress reports.
+progress bar uses as well as unbounded “spinner” type progress reports.
 Progress bars are <code>Sync</code> and <code>Send</code> objects which means that they are
 internally locked and can be passed from thread to thread.</p>
 <p>Additionally a <code>MultiProgress</code> utility is provided that can manage
@@ -80,13 +82,13 @@ associated with an iterator. For example:</p>
 methods to configure the number of elements in the iterator or change
 the progress bar style. Indicatif also has optional support for parallel
 iterators with <a href="https://github.com/rayon-rs/rayon">Rayon</a>. In your
-<code>cargo.toml</code>, use the &quot;rayon&quot; feature:</p>
+<code>cargo.toml</code>, use the “rayon” feature:</p>
 <pre><code class="language-toml">[dependencies]
 indicatif = {version = &quot;*&quot;, features = [&quot;rayon&quot;]}
 </code></pre>
 <p>And then use it like this:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="kw">use</span> <span class="ident">indicatif</span>::<span class="ident">ParallelProgressIterator</span>;
 <span class="kw">use</span> <span class="ident">rayon</span>::<span class="ident">iter</span>::{<span class="ident">ParallelIterator</span>, <span class="ident">IntoParallelRefIterator</span>};
 
@@ -114,7 +116,7 @@ as primary style color and blue as alternative style color.
 Alternative styles are currently only used for progress bars.</p>
 <p>Example configuration:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="ident">bar</span>.<span class="ident">set_style</span>(<span class="ident">ProgressStyle</span>::<span class="ident">default_bar</span>()
     .<span class="ident">template</span>(<span class="string">&quot;[{elapsed_precise}] {bar:40.cyan/blue} {pos:&gt;7}/{len:7} {msg}&quot;</span>)
     .<span class="ident">progress_chars</span>(<span class="string">&quot;##-&quot;</span>));</pre></div>
@@ -147,7 +149,7 @@ template functionality.  The template can be set by changing a
 <p>There are some formatting wrappers for showing elapsed time and
 file sizes for human users:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Instant</span>;
 <span class="kw">use</span> <span class="ident">indicatif</span>::{<span class="ident">HumanDuration</span>, <span class="ident">HumanBytes</span>};
 
@@ -159,19 +161,20 @@ file sizes for human users:</p>
 <li><code>rayon</code>: adds rayon support</li>
 <li><code>improved_unicode</code>: adds improved unicode support (graphemes, better width calculation)</li>
 </ul>
-</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table><tr class='module-item'><td><a class="struct" href="struct.BinaryBytes.html" title='indicatif::BinaryBytes struct'>BinaryBytes</a></td><td class='docblock-short'><p>Formats bytes for human readability using ISO/IEC prefixes</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.DecimalBytes.html" title='indicatif::DecimalBytes struct'>DecimalBytes</a></td><td class='docblock-short'><p>Formats bytes for human readability using SI prefixes</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.FormattedDuration.html" title='indicatif::FormattedDuration struct'>FormattedDuration</a></td><td class='docblock-short'><p>Wraps an std duration for human basic formatting.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.HumanBytes.html" title='indicatif::HumanBytes struct'>HumanBytes</a></td><td class='docblock-short'><p>Formats bytes for human readability</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.HumanDuration.html" title='indicatif::HumanDuration struct'>HumanDuration</a></td><td class='docblock-short'><p>Wraps an std duration for human readable formatting.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.MultiProgress.html" title='indicatif::MultiProgress struct'>MultiProgress</a></td><td class='docblock-short'><p>Manages multiple progress bars from different threads.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.ProgressBar.html" title='indicatif::ProgressBar struct'>ProgressBar</a></td><td class='docblock-short'><p>A progress bar or spinner.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.ProgressBarIter.html" title='indicatif::ProgressBarIter struct'>ProgressBarIter</a></td><td class='docblock-short'><p>Wraps an iterator to display its progress.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.ProgressBarWrap.html" title='indicatif::ProgressBarWrap struct'>ProgressBarWrap</a></td><td class='docblock-short'><p>wraps an io-object, either a Reader or a Writer (or both).</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.ProgressDrawTarget.html" title='indicatif::ProgressDrawTarget struct'>ProgressDrawTarget</a></td><td class='docblock-short'><p>Target for draw operations</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.ProgressStyle.html" title='indicatif::ProgressStyle struct'>ProgressStyle</a></td><td class='docblock-short'><p>Controls the rendering style of progress bars.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.WeakProgressBar.html" title='indicatif::WeakProgressBar struct'>WeakProgressBar</a></td><td class='docblock-short'><p>A weak reference to a <code>ProgressBar</code>.</p>
-</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
-<table><tr class='module-item'><td><a class="trait" href="trait.ProgressIterator.html" title='indicatif::ProgressIterator trait'>ProgressIterator</a></td><td class='docblock-short'><p>Wraps an iterator to display its progress.</p>
-</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "indicatif";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
+</div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.BinaryBytes.html" title="indicatif::BinaryBytes struct">BinaryBytes</a></td><td class="docblock-short"><p>Formats bytes for human readability using ISO/IEC prefixes</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.DecimalBytes.html" title="indicatif::DecimalBytes struct">DecimalBytes</a></td><td class="docblock-short"><p>Formats bytes for human readability using SI prefixes</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.FormattedDuration.html" title="indicatif::FormattedDuration struct">FormattedDuration</a></td><td class="docblock-short"><p>Wraps an std duration for human basic formatting.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.HumanBytes.html" title="indicatif::HumanBytes struct">HumanBytes</a></td><td class="docblock-short"><p>Formats bytes for human readability</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.HumanDuration.html" title="indicatif::HumanDuration struct">HumanDuration</a></td><td class="docblock-short"><p>Wraps an std duration for human readable formatting.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.MultiProgress.html" title="indicatif::MultiProgress struct">MultiProgress</a></td><td class="docblock-short"><p>Manages multiple progress bars from different threads.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgressBar.html" title="indicatif::ProgressBar struct">ProgressBar</a></td><td class="docblock-short"><p>A progress bar or spinner.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgressBarIter.html" title="indicatif::ProgressBarIter struct">ProgressBarIter</a></td><td class="docblock-short"><p>Wraps an iterator to display its progress.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgressBarWrap.html" title="indicatif::ProgressBarWrap struct">ProgressBarWrap</a></td><td class="docblock-short"><p>wraps an io-object, either a Reader or a Writer (or both).</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgressDrawTarget.html" title="indicatif::ProgressDrawTarget struct">ProgressDrawTarget</a></td><td class="docblock-short"><p>Target for draw operations</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ProgressStyle.html" title="indicatif::ProgressStyle struct">ProgressStyle</a></td><td class="docblock-short"><p>Controls the rendering style of progress bars.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.WeakProgressBar.html" title="indicatif::WeakProgressBar struct">WeakProgressBar</a></td><td class="docblock-short"><p>A weak reference to a <code>ProgressBar</code>.</p>
+</td></tr></table><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<table><tr class="module-item"><td><a class="trait" href="trait.ProgressIterator.html" title="indicatif::ProgressIterator trait">ProgressIterator</a></td><td class="docblock-short"><p>Wraps an iterator to display its progress.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="indicatif" data-search-js="../search-index.js"></div>
+    <script src="../main.js"></script></body></html>

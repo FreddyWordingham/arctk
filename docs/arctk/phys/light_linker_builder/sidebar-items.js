@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LightLinkerBuilder","Buildable light structure."]]});

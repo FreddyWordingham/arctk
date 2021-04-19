@@ -1,12 +1,11 @@
 //! Transform form implementation.
 
-use crate::{err::Error, file::Build, math::Vec3};
-use arctk_attr::load;
+use crate::{math::Vec3, ord::Build};
+use arctk_attr::file;
 use nalgebra::{Translation3, UnitQuaternion};
-use std::path::Path;
 
 /// Loadable transform structure.
-#[load]
+#[file]
 #[derive(Clone)]
 pub struct Trans3Builder {
     /// Optional translation to apply.
@@ -21,7 +20,7 @@ impl Build for Trans3Builder {
     type Inst = crate::math::Trans3;
 
     #[inline]
-    fn build(self, _in_dir: &Path) -> Result<Self::Inst, Error> {
+    fn build(self) -> Self::Inst {
         let trans = self
             .trans
             .unwrap_or_else(|| Translation3::new(0.0, 0.0, 0.0));
@@ -35,6 +34,6 @@ impl Build for Trans3Builder {
 
         let scale = self.scale.unwrap_or(1.0);
 
-        Ok(Self::Inst::from_parts(trans, rot, scale))
+        Self::Inst::from_parts(trans, rot, scale)
     }
 }

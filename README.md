@@ -6,15 +6,8 @@ Numerical simulations of physical systems - library and example binaries
 ![minimum rustc 1.47](https://img.shields.io/badge/rustc-1.47+-red.svg)
 [![Build Status](https://travis-ci.org/FreddyWordingham/arctk.svg?branch=master)](https://travis-ci.org/FreddyWordingham/arctk)
 
-Examples of ARCTK in use:
+Look in the /src/bin directory to see examples of ARCTK in use.
 
+Or check out the standalone render engine:
 [Antler render engine](https://github.com/FreddyWordingham/antler)
 <!-- [Antler render engine](https://crates.io/crates/antler) -->
-
-[MCRT tool](https://github.com/FreddyWordingham/mcrt)
-
-[Cartograph tool](https://github.com/FreddyWordingham/cartograph)
-
-[Diffusion tool](https://github.com/FreddyWordingham/diffuse)
-
-[Kinetics tool](https://github.com/FreddyWordingham/reactor)

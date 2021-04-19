@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["banner","Banner printing functions."],["gradient","Gradient formatting function."],["report","Reporting functions."]]});
+initSidebarItems({"mod":[["analyze","Display trait."],["banner","Banner printing functions."],["data_cube","Datacube formatting functions."],["data_square","Datacube formatting functions."],["data_tesseract","Datacube formatting functions."],["gradient","Gradient formatting function."],["report","Reporting functions."],["term","Terminal width calculation function."]]});

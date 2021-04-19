@@ -1,7 +1,7 @@
 //! Red-Green-Blue colour representation.
 
 /// RGB format.
-pub enum RGB {
+pub enum Rgb {
     /// Red channel.
     Red,
     /// Green channel.
@@ -11,10 +11,10 @@ pub enum RGB {
 }
 
 /// Red convenience indexing constant.
-pub const RED: usize = RGB::Red as usize;
+pub const RED: usize = Rgb::Red as usize;
 
 /// Green convenience indexing constant.
-pub const GREEN: usize = RGB::Green as usize;
+pub const GREEN: usize = Rgb::Green as usize;
 
 /// Blue convenience indexing constant.
-pub const BLUE: usize = RGB::Blue as usize;
+pub const BLUE: usize = Rgb::Blue as usize;

@@ -1,26 +1,45 @@
 //! Engine selection.
 
-use crate::sim::mcrt::{engine, Engine};
-use arctk_attr::load;
+use crate::{
+    math::FormulaBuilder,
+    ord::{Build, Set},
+    sim::mcrt::{Engine, FrameBuilder},
+};
+use ndarray::Array3;
+use std::fmt::{Display, Error, Formatter};
 
 /// Engine selection.
-#[load]
-#[derive(Clone)]
 pub enum EngineBuilder {
-    /// Basic sampling engine.
-    Basic,
-    /// Raman specialised engine.
-    Raman,
+    /// Standard sampling engine.
+    Standard,
+    /// Photography engine.
+    Photo(Set<FrameBuilder>),
+    /// Fluorescence engine.
+    Fluorescence(Array3<f64>, FormulaBuilder),
 }
 
-impl EngineBuilder {
-    /// Retrieve a handle to the engine function.
+impl Build for EngineBuilder {
+    type Inst = Engine;
+
     #[inline]
-    #[must_use]
-    pub fn build(self) -> Engine {
+    fn build(self) -> Self::Inst {
         match self {
-            Self::Basic => engine::basic::sample,
-            Self::Raman => engine::raman::sample,
+            Self::Standard => Self::Inst::Standard,
+            Self::Photo(frames) => Self::Inst::Photo(frames.build()),
+            Self::Fluorescence(shift_map, conc_spec) => {
+                Self::Inst::Fluorescence(shift_map, conc_spec.build())
+            }
+        }
+    }
+}
+
+impl Display for EngineBuilder {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        match *self {
+            Self::Standard => write!(fmt, "Standard"),
+            Self::Photo(ref frames) => write!(fmt, "Photography ({})", frames.len()),
+            Self::Fluorescence(..) => write!(fmt, "Fluorescence"),
         }
     }
 }

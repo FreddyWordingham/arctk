@@ -1,169 +1,210 @@
-//! MCRT binary.
+//! Monte-Carlo radiative transfer simulation binary.
+//! Compute the radiative field for a given set of setup and light source.
 
 use arctk::{
     args,
-    file::{Build, Load, Redirect, Save},
-    geom::{Grid, GridBuilder, Mesh, MeshBuilder, Tree, TreeBuilder},
-    ord::{Key, Set},
+    data::Histogram,
+    fs::{File, Load, Save},
+    geom::{Grid, Tree},
+    img::{Colour, Image},
+    ord::{Build, Link, Register, Set},
+    report,
     sim::mcrt::{
-        run, Attributes, Data, Engine, EngineBuilder, Light, LightBuilder, Material,
-        MaterialBuilder, Settings, Universe,
+        run, AttributeLinkerLinkerLinker as Attr, Engine, Input, Output, Parameters,
+        ParametersBuilderLoader,
     },
-    util::{banner, dir},
+    util::{
+        banner::{section, sub_section, title},
+        dir,
+        fmt::term,
+    },
 };
-use arctk_attr::input;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
 };
 
-/// Input parameters.
-#[input]
-struct Parameters {
-    /// Adaptive mesh settings.
-    tree: TreeBuilder,
-    /// Regular grid settings.
-    grid: GridBuilder,
-    /// MCRT runtime settings.
-    sett: Settings,
-    /// Surfaces set.
-    surfs: Set<Key, MeshBuilder>,
-    /// Attributes set.
-    attrs: Set<Key, Attributes>,
-    /// Materials set.
-    mats: Set<Key, Redirect<MaterialBuilder>>,
-    /// Light form.
-    light: LightBuilder,
-    /// Engine selection.
-    engine: EngineBuilder,
-}
+/// Backup print width if the terminal width can not be determined.
+const BACKUP_TERM_WIDTH: usize = 80;
 
+/// Main program function.
 fn main() {
-    let term_width = arctk::util::term::width().unwrap_or(80);
-    banner::title("MCRT", term_width);
+    let term_width = term::width(BACKUP_TERM_WIDTH);
+    title(term_width, "MCRT");
 
-    let (params_path, in_dir, out_dir) = init(term_width);
+    let (in_dir, out_dir, params_path) = initialisation(term_width);
+    let params = load_parameters(term_width, &in_dir, &params_path);
 
-    let params = input(term_width, &in_dir, &params_path);
+    section(term_width, "Input");
+    sub_section(term_width, "Reconstruction");
+    let engine = params.engine;
+    report!(engine, "engine");
+    let sett = params.sett;
+    report!(sett, "settings");
+    let grid = params.grid;
+    report!(grid, "measurement grid");
+    let mats = params.mats;
+    report!(mats, "materials");
 
-    let (tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light, engine) =
-        build(term_width, &in_dir, params);
+    sub_section(term_width, "Registration");
+    let (spec_reg, img_reg) = gen_detector_registers(&engine, &params.attrs);
+    let output = gen_base_output(&engine, &grid, &spec_reg, &img_reg, &params.attrs);
 
-    let (tree, grid) = grow(term_width, tree_sett, grid_sett, &surfs);
-
-    let input = Universe::new(&tree, &grid, &mcrt_sett, &surfs, &attrs, &mats);
-    let output = simulate(term_width, engine, &input, &light);
-
-    banner::section("Saving", term_width);
-    output.save(&out_dir).expect("Failed to save output data.");
-
-    banner::section("Finished", term_width);
-}
-
-/// Initialise the command line arguments and directories.
-fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
-    banner::section("Initialisation", term_width);
-    banner::sub_section("Command line arguments", term_width);
-    args!(bin_path: PathBuf;
-        params_path: PathBuf
-    );
-    println!("{:>32} : {}", "binary path", bin_path.display());
-    println!("{:>32} : {}", "parameters path", params_path.display());
-
-    banner::sub_section("Directories", term_width);
-    let cwd = current_dir().expect("Failed to determine current working directory.");
-    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
-        .expect("Failed to initialise directories.");
-    println!("{:>32} : {}", "input directory", in_dir.display());
-    println!("{:>32} : {}", "output directory", out_dir.display());
-
-    (params_path, in_dir, out_dir)
-}
-
-/// Load the input files.
-fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
-    banner::section("Input", term_width);
-    banner::sub_section("Parameters", term_width);
-    let path = in_dir.join(params_path);
-
-    Parameters::load(&path).expect("Failed to load parameters file.")
-}
-
-/// Build instances.
-#[allow(clippy::type_complexity)]
-fn build(
-    term_width: usize,
-    in_dir: &Path,
-    params: Parameters,
-) -> (
-    TreeBuilder,
-    GridBuilder,
-    Settings,
-    Set<Key, Mesh>,
-    Set<Key, Attributes>,
-    Set<Key, Material>,
-    Light,
-    Engine,
-) {
-    banner::section("Building", term_width);
-    banner::sub_section("Adaptive Tree Settings", term_width);
-    let tree_sett = params.tree;
-
-    banner::sub_section("Grid Settings", term_width);
-    let grid_sett = params.grid;
-
-    banner::sub_section("MCRT Settings", term_width);
-    let mcrt_sett = params.sett;
-
-    banner::sub_section("Surfaces", term_width);
+    sub_section(term_width, "Linking");
+    let light = params
+        .light
+        .link(&mats)
+        .expect("Failed to link materials to light.");
+    report!(light, "light");
+    let attrs = params
+        .attrs
+        .link(img_reg.set())
+        .expect("Failed to link imagers to attributes.")
+        .link(spec_reg.set())
+        .expect("Failed to link spectrometers to attributes.")
+        .link(&mats)
+        .expect("Failed to link materials to attributes.");
+    report!(attrs, "attributes");
     let surfs = params
         .surfs
-        .build(in_dir)
-        .expect("Failed to build surfaces.");
+        .link(&attrs)
+        .expect("Failed to link attribute to surfaces.");
+    report!(surfs, "surfaces");
 
-    banner::sub_section("Attributes", term_width);
-    let attrs = params.attrs;
+    sub_section(term_width, "Growing");
+    let tree = Tree::new(&params.tree, &surfs);
+    report!(tree, "hit-scan tree");
 
-    banner::sub_section("Materials", term_width);
-    let mats = params
-        .mats
-        .build(in_dir)
-        .expect("Failed to remove redirections in materials.")
-        .build(in_dir)
-        .expect("Failed to build materials.");
+    section(term_width, "Running");
+    let input = Input::new(&spec_reg, &mats, &attrs, &light, &tree, &grid, &sett);
+    report!(input, "input");
 
-    banner::sub_section("Light", term_width);
-    let light = params.light.build(in_dir).expect("Failed to build light.");
+    let data = run::multi_thread(&engine, &input, &output).expect("Failed to run cartographer.");
 
-    banner::sub_section("Engine", term_width);
-    let engine = params.engine.build();
+    section(term_width, "Saving");
+    report!(data, "data");
+    data.save(&out_dir).expect("Failed to save output data.");
 
-    (
-        tree_sett, grid_sett, mcrt_sett, surfs, attrs, mats, light, engine,
-    )
+    section(term_width, "Finished");
 }
 
-/// Grow domains.
-fn grow(
-    term_width: usize,
-    tree_sett: TreeBuilder,
-    grid_sett: GridBuilder,
-    surfs: &Set<Key, Mesh>,
-) -> (Tree<&Key>, Grid) {
-    banner::section("Growing", term_width);
+/// Initialise the input arguments.
+fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
+    section(term_width, "Initialisation");
+    sub_section(term_width, "args");
+    args!(
+        bin_path: PathBuf;
+        input_dir: PathBuf;
+        output_dir: PathBuf;
+        params_path: PathBuf
+    );
+    report!(bin_path.display(), "binary path");
+    report!(input_dir.display(), "relative input path");
+    report!(output_dir.display(), "relative output path");
+    report!(params_path.display(), "parameters");
 
-    banner::sub_section("Adaptive Tree", term_width);
-    let tree = tree_sett.build(&surfs);
+    sub_section(term_width, "directories");
+    let cwd = current_dir().expect("Failed to determine current working directory.");
+    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join(input_dir)), Some(cwd.join(output_dir)))
+        .expect("Failed to initialise directories.");
+    report!(in_dir.display(), "input directory");
+    report!(out_dir.display(), "output directory");
 
-    banner::sub_section("Regular Grid", term_width);
-    let grid = grid_sett.build();
-
-    (tree, grid)
+    (in_dir, out_dir, params_path)
 }
 
-/// Run the simulation.
-fn simulate(term_width: usize, engine: Engine, uni: &Universe, light: &Light) -> Data {
-    banner::section("Simulating", term_width);
-    // run::single_thread(engine, &uni, &light).expect("Failed to complete simulation.")
-    run::multi_thread(engine, &uni, &light).expect("Failed to complete simulation.")
+/// Load the required files and form the input parameters.
+fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
+    section(term_width, "Parameters");
+    sub_section(term_width, "Loading");
+    let builder = ParametersBuilderLoader::new_from_file(&in_dir.join(&params_path))
+        .expect("Failed to load parameters file.")
+        .load(&in_dir)
+        .expect("Failed to load parameter resource files.");
+    report!(builder, "builder");
+
+    sub_section(term_width, "Building");
+    let params = builder.build();
+    report!(params, "parameters");
+
+    params
+}
+
+/// Generate the detector registers.
+fn gen_detector_registers(engine: &Engine, attrs: &Set<Attr>) -> (Register, Register) {
+    let mut spec_names = Vec::new();
+    let mut img_names = Vec::new();
+
+    // Engines.
+    if let Engine::Photo(frames) = engine {
+        for name in frames.map().keys() {
+            img_names.push(name.clone());
+        }
+    }
+
+    // Attributes.
+    for attr in attrs.map().values() {
+        match *attr {
+            Attr::Spectrometer(ref name, ..) => spec_names.push(name.clone()),
+            Attr::Imager(ref name, ..) => img_names.push(name.clone()),
+            _ => {}
+        }
+    }
+
+    let spec_reg = Register::new(spec_names);
+    report!(spec_reg, "spectrometer register");
+
+    let img_reg = Register::new(img_names);
+    report!(img_reg, "imager register");
+
+    (spec_reg, img_reg)
+}
+
+/// Generate the base output instance.
+fn gen_base_output<'a>(
+    engine: &Engine,
+    grid: &Grid,
+    spec_reg: &'a Register,
+    img_reg: &'a Register,
+    attrs: &Set<Attr>,
+) -> Output<'a> {
+    let res = *grid.res();
+
+    let mut specs = Vec::with_capacity(spec_reg.len());
+    for name in spec_reg.set().map().keys() {
+        for attr in attrs.values() {
+            if let Attr::Spectrometer(spec_name, [min, max], bins) = attr {
+                if name == spec_name {
+                    specs.push(Histogram::new(*min, *max, *bins));
+                }
+            }
+        }
+    }
+
+    let mut imgs = Vec::with_capacity(img_reg.len());
+    for name in img_reg.set().map().keys() {
+        // Engines.
+        if let Engine::Photo(frames) = engine {
+            for (photo_name, frame) in frames.map() {
+                if name == photo_name {
+                    imgs.push(Image::new_blank(
+                        *frame.res(),
+                        Colour::new(0.0, 0.0, 0.0, 1.0),
+                    ));
+                    continue;
+                }
+            }
+        }
+
+        // Attributes
+        for attr in attrs.values() {
+            if let Attr::Imager(img_name, res, _width, _center, _forward) = attr {
+                if name == img_name {
+                    imgs.push(Image::new_blank(*res, Colour::new(0.0, 0.0, 0.0, 1.0)));
+                    continue;
+                }
+            }
+        }
+    }
+    Output::new(spec_reg, img_reg, grid.boundary().clone(), res, specs, imgs)
 }

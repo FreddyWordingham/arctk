@@ -1,14 +1,12 @@
-//! Chemical kinetics.
+//! Chemical kinetics module.
 
-pub mod conc_builder;
-// pub mod flask;
-// pub mod flask_builder;
 pub mod rate;
-pub mod rate_builder;
+pub mod rate_linker;
 pub mod reaction;
-pub mod reaction_builder;
+pub mod reaction_linker;
 pub mod reactor;
+pub mod reactor_linker;
 
 pub use self::{
-    conc_builder::*, rate::*, rate_builder::*, reaction::*, reaction_builder::*, reactor::*,
+    rate::*, rate_linker::*, reaction::*, reaction_linker::*, reactor::*, reactor_linker::*,
 };

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Reactor","Total reactor structure."]]});
+initSidebarItems({"struct":[["Reactor","Complete reactor structure."]]});

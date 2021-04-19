@@ -1,5 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.13.1/src/logspace.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>logspace.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ndarray/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.15.1/src/logspace.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>logspace.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../ndarray/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -150,6 +152,7 @@
 <span id="149">149</span>
 <span id="150">150</span>
 <span id="151">151</span>
+<span id="152">152</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Copyright 2014-2016 bluss and ndarray developers.</span>
 <span class="comment">//</span>
@@ -158,6 +161,7 @@
 <span class="comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
 <span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
+<span class="attribute">#![<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 
 <span class="doccomment">/// An iterator of a sequence of logarithmically spaced number.</span>
@@ -179,20 +183,20 @@
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">F</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">index</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">len</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">index</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="comment">// Calculate the value just like numpy.linspace does</span>
             <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">index</span>;
-            <span class="self">self</span>.<span class="ident">index</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="self">self</span>.<span class="ident">index</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             <span class="kw">let</span> <span class="ident">exponent</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">start</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">step</span> <span class="op">*</span> <span class="ident">F</span>::<span class="ident">from</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>();
             <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">sign</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">base</span>.<span class="ident">powf</span>(<span class="ident">exponent</span>))
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">index</span>;
         (<span class="ident">n</span>, <span class="prelude-val">Some</span>(<span class="ident">n</span>))
     }
@@ -203,12 +207,12 @@
     <span class="ident">F</span>: <span class="ident">Float</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">index</span> <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">len</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">index</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="comment">// Calculate the value just like numpy.linspace does</span>
-            <span class="self">self</span>.<span class="ident">len</span> <span class="op">-=</span> <span class="number">1</span>;
+            <span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
             <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>;
             <span class="kw">let</span> <span class="ident">exponent</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">start</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">step</span> <span class="op">*</span> <span class="ident">F</span>::<span class="ident">from</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>();
             <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">sign</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">base</span>.<span class="ident">powf</span>(<span class="ident">exponent</span>))
@@ -229,7 +233,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// **Panics** if converting `n - 1` to type `F` fails.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">logspace</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">base</span>: <span class="ident">F</span>, <span class="ident">a</span>: <span class="ident">F</span>, <span class="ident">b</span>: <span class="ident">F</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Logspace</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">logspace</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">base</span>: <span class="ident">F</span>, <span class="ident">a</span>: <span class="ident">F</span>, <span class="ident">b</span>: <span class="ident">F</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Logspace</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">F</span>: <span class="ident">Float</span>,
 {
@@ -276,7 +280,7 @@
     <span class="kw">fn</span> <span class="ident">iter_forward</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">logspace</span>(<span class="number">10.0f64</span>, <span class="number">0.0</span>, <span class="number">3.0</span>, <span class="number">4</span>);
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>() <span class="op">==</span> (<span class="number">4</span>, <span class="prelude-val">Some</span>(<span class="number">4</span>)));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>() <span class="op">=</span><span class="op">=</span> (<span class="number">4</span>, <span class="prelude-val">Some</span>(<span class="number">4</span>)));
 
         <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">iter</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>() <span class="op">-</span> <span class="number">1e0</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="number">1e-5</span>);
         <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">iter</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>() <span class="op">-</span> <span class="number">1e1</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="number">1e-5</span>);
@@ -284,14 +288,14 @@
         <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">iter</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>() <span class="op">-</span> <span class="number">1e3</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="number">1e-5</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next</span>().<span class="ident">is_none</span>());
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>() <span class="op">==</span> (<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>)));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>() <span class="op">=</span><span class="op">=</span> (<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>)));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">iter_backward</span>() {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">logspace</span>(<span class="number">10.0f64</span>, <span class="number">0.0</span>, <span class="number">3.0</span>, <span class="number">4</span>);
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>() <span class="op">==</span> (<span class="number">4</span>, <span class="prelude-val">Some</span>(<span class="number">4</span>)));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>() <span class="op">=</span><span class="op">=</span> (<span class="number">4</span>, <span class="prelude-val">Some</span>(<span class="number">4</span>)));
 
         <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">iter</span>.<span class="ident">next_back</span>().<span class="ident">unwrap</span>() <span class="op">-</span> <span class="number">1e3</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="number">1e-5</span>);
         <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">iter</span>.<span class="ident">next_back</span>().<span class="ident">unwrap</span>() <span class="op">-</span> <span class="number">1e2</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="number">1e-5</span>);
@@ -299,8 +303,9 @@
         <span class="macro">assert</span><span class="macro">!</span>((<span class="ident">iter</span>.<span class="ident">next_back</span>().<span class="ident">unwrap</span>() <span class="op">-</span> <span class="number">1e0</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="number">1e-5</span>);
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">next_back</span>().<span class="ident">is_none</span>());
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>() <span class="op">==</span> (<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>)));
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">iter</span>.<span class="ident">size_hint</span>() <span class="op">=</span><span class="op">=</span> (<span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">0</span>)));
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "ndarray";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ndarray" data-search-js="../../search-index.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

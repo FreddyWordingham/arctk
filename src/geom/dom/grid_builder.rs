@@ -1,14 +1,15 @@
 //! Regular-Cartesian grid builder.
 
 use crate::{
-    access,
+    access, fmt_report,
     geom::{Cube, Grid},
-    ord::{X, Y, Z},
+    ord::{Build, X, Y, Z},
 };
-use arctk_attr::load;
+use arctk_attr::file;
+use std::fmt::{Display, Formatter};
 
 /// Grid builder.
-#[load]
+#[file]
 #[derive(Clone)]
 pub struct GridBuilder {
     /// Boundary.
@@ -32,17 +33,33 @@ impl GridBuilder {
         Self { boundary, res }
     }
 
-    /// Build a Grid instance.
-    #[inline]
-    #[must_use]
-    pub fn build(self) -> Grid {
-        Grid::new(self.boundary, self.res)
-    }
-
     /// Determine the total number of cells.
     #[inline]
     #[must_use]
-    pub const fn total_cells(&self) -> usize {
+    pub const fn num_cells(&self) -> usize {
         self.res[X] * self.res[Y] * self.res[Z]
+    }
+}
+
+impl Build for GridBuilder {
+    type Inst = Grid;
+
+    #[inline]
+    fn build(self) -> Grid {
+        Grid::new(self.boundary, self.res)
+    }
+}
+
+impl Display for GridBuilder {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.boundary, "boundary");
+        fmt_report!(
+            fmt,
+            &format!("[{} x {} x {}]", self.res[X], self.res[Y], self.res[Z]),
+            "resolution"
+        );
+        Ok(())
     }
 }

@@ -1,6 +1,7 @@
 //! Binner implementation.
 
 use crate::{access, clone, tools::Range};
+use std::fmt::{Display, Error, Formatter};
 
 /// One-dimensional binning structure.
 #[derive(Debug, Clone, PartialEq)]
@@ -51,5 +52,12 @@ impl Binner {
         } else {
             None
         }
+    }
+}
+
+impl Display for Binner {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        write!(fmt, "[{}] ({})", self.range, self.bins)
     }
 }

@@ -1,0 +1,25 @@
+
+{
+    ops: [
+        // [
+        //     "info",
+        //     { Info    : "../output/diffuse/point/001_diff.nc" }
+        // ],
+        // [
+        //     "info",
+        //     { Info    : "../output/diffuse/point/010_diff.nc" }
+        // ],
+        // [
+        //     "info",
+        //     { Info    : "../output/diffuse/point/050_diff.nc" }
+        // ],
+        [
+            "info",
+            { Info    : "../output/absorption_density.nc" }
+        ],
+        // [
+        //     "info",
+        //     { Info    : "../output/cartographer/tumour/map_void.nc" }
+        // ],
+    ]
+}

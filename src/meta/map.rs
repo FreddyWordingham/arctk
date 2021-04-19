@@ -5,7 +5,7 @@
 macro_rules! map {
     ($($key:expr => $val:expr), *) => {
         {
-            let mut map = std::collections::BTreeMap::new();
+            let mut map = crate::ord::Map::new();
             $(map.insert($key, $val);)*
             map
         }

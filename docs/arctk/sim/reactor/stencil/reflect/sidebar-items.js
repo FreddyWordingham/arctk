@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Reflect","Reflective stencil implementation."]]});

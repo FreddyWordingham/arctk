@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/geometry/transform.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>transform.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.26.1/src/geometry/transform.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>transform.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -603,21 +603,42 @@
 <span id="602">602</span>
 <span id="603">603</span>
 <span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">Serialize</span>, <span class="ident">Serializer</span>};
 
 <span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">scalar</span>::<span class="ident">RealField</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">allocator</span>::<span class="ident">Allocator</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">dimension</span>::{<span class="ident">DimName</span>, <span class="ident">DimNameAdd</span>, <span class="ident">DimNameSum</span>, <span class="ident">U1</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">dimension</span>::{<span class="ident">DimNameAdd</span>, <span class="ident">DimNameSum</span>, <span class="ident">U1</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">storage</span>::<span class="ident">Owned</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::{<span class="ident">DefaultAllocator</span>, <span class="ident">MatrixN</span>, <span class="ident">VectorN</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::{<span class="ident">Const</span>, <span class="ident">DefaultAllocator</span>, <span class="ident">DimName</span>, <span class="ident">OMatrix</span>, <span class="ident">SVector</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">geometry</span>::<span class="ident">Point</span>;
 
@@ -628,16 +649,16 @@
     <span class="doccomment">/// Indicates whether a `Transform` with the category `Self` has a bottom-row different from</span>
     <span class="doccomment">/// `0 0 .. 1`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">has_normalizer</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">has_normalizer</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="bool-val">true</span>
     }
 
     <span class="doccomment">/// Checks that the given matrix is a valid homogeneous representation of an element of the</span>
     <span class="doccomment">/// category `Self`.</span>
-    <span class="kw">fn</span> <span class="ident">check_homogeneous_invariants</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
+    <span class="kw">fn</span> <span class="ident">check_homogeneous_invariants</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>
     <span class="kw">where</span>
-        <span class="ident">N</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
-        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>;
+        <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
+        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// Traits that gives the `Transform` category that is compatible with the result of the</span>
@@ -677,10 +698,10 @@
 
 <span class="kw">impl</span> <span class="ident">TCategory</span> <span class="kw">for</span> <span class="ident">TGeneral</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">check_homogeneous_invariants</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
+    <span class="kw">fn</span> <span class="ident">check_homogeneous_invariants</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>
     <span class="kw">where</span>
-        <span class="ident">N</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
-        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+        <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
+        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
     {
         <span class="bool-val">true</span>
     }
@@ -688,10 +709,10 @@
 
 <span class="kw">impl</span> <span class="ident">TCategory</span> <span class="kw">for</span> <span class="ident">TProjective</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">check_homogeneous_invariants</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
+    <span class="kw">fn</span> <span class="ident">check_homogeneous_invariants</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>
     <span class="kw">where</span>
-        <span class="ident">N</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
-        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+        <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
+        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
     {
         <span class="ident">mat</span>.<span class="ident">is_invertible</span>()
     }
@@ -699,25 +720,25 @@
 
 <span class="kw">impl</span> <span class="ident">TCategory</span> <span class="kw">for</span> <span class="ident">TAffine</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">has_normalizer</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">has_normalizer</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="bool-val">false</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">check_homogeneous_invariants</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>
+    <span class="kw">fn</span> <span class="ident">check_homogeneous_invariants</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>
     <span class="kw">where</span>
-        <span class="ident">N</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
-        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+        <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
+        <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="ident">last</span> <span class="op">=</span> <span class="ident">D</span>::<span class="ident">dim</span>() <span class="op">-</span> <span class="number">1</span>;
         <span class="ident">mat</span>.<span class="ident">is_invertible</span>()
-            <span class="op">&amp;&amp;</span> <span class="ident">mat</span>[(<span class="ident">last</span>, <span class="ident">last</span>)] <span class="op">==</span> <span class="ident">N</span>::<span class="ident">one</span>()
+            <span class="op">&amp;&amp;</span> <span class="ident">mat</span>[(<span class="ident">last</span>, <span class="ident">last</span>)] <span class="op">=</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">one</span>()
             <span class="op">&amp;&amp;</span> (<span class="number">0</span>..<span class="ident">last</span>).<span class="ident">all</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">mat</span>[(<span class="ident">last</span>, <span class="ident">i</span>)].<span class="ident">is_zero</span>())
     }
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">category_mul_impl</span>(
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>: <span class="ident">ident</span> <span class="op">*</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>: <span class="ident">ident</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>: <span class="ident">ty</span>);<span class="op">*</span> $(;)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {$(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>: <span class="ident">ident</span> <span class="op">*</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>: <span class="ident">ident</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>: <span class="ident">ty</span>);<span class="op">*</span> $(;)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {$(
         <span class="kw">impl</span> <span class="ident">TCategoryMul</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span> {
             <span class="kw">type</span> <span class="ident">Representative</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">c</span>;
         }
@@ -731,20 +752,20 @@
 
 <span class="macro">category_mul_impl</span><span class="macro">!</span>(
 <span class="comment">//  TGeneral * TGeneral    =&gt; TGeneral;</span>
-    <span class="ident">TGeneral</span> <span class="op">*</span> <span class="ident">TProjective</span> <span class="op">=&gt;</span> <span class="ident">TGeneral</span>;
-    <span class="ident">TGeneral</span> <span class="op">*</span> <span class="ident">TAffine</span>     <span class="op">=&gt;</span> <span class="ident">TGeneral</span>;
+    <span class="ident">TGeneral</span> <span class="op">*</span> <span class="ident">TProjective</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TGeneral</span>;
+    <span class="ident">TGeneral</span> <span class="op">*</span> <span class="ident">TAffine</span>     <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TGeneral</span>;
 
-    <span class="ident">TProjective</span> <span class="op">*</span> <span class="ident">TGeneral</span>    <span class="op">=&gt;</span> <span class="ident">TGeneral</span>;
+    <span class="ident">TProjective</span> <span class="op">*</span> <span class="ident">TGeneral</span>    <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TGeneral</span>;
 <span class="comment">//  TProjective * TProjective =&gt; TProjective;</span>
-    <span class="ident">TProjective</span> <span class="op">*</span> <span class="ident">TAffine</span>     <span class="op">=&gt;</span> <span class="ident">TProjective</span>;
+    <span class="ident">TProjective</span> <span class="op">*</span> <span class="ident">TAffine</span>     <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TProjective</span>;
 
-    <span class="ident">TAffine</span> <span class="op">*</span> <span class="ident">TGeneral</span>    <span class="op">=&gt;</span> <span class="ident">TGeneral</span>;
-    <span class="ident">TAffine</span> <span class="op">*</span> <span class="ident">TProjective</span> <span class="op">=&gt;</span> <span class="ident">TProjective</span>;
+    <span class="ident">TAffine</span> <span class="op">*</span> <span class="ident">TGeneral</span>    <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TGeneral</span>;
+    <span class="ident">TAffine</span> <span class="op">*</span> <span class="ident">TProjective</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">TProjective</span>;
 <span class="comment">//  TAffine * TAffine     =&gt; TAffine;</span>
 );
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">super_tcategory_impl</span>(
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>: <span class="ident">ident</span> <span class="op">&gt;=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>: <span class="ident">ident</span>);<span class="op">*</span> $(;)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {$(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>: <span class="ident">ident</span> <span class="op">&gt;</span><span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span>: <span class="ident">ident</span>);<span class="op">*</span> $(;)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {$(
         <span class="kw">impl</span> <span class="ident">SuperTCategoryOf</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">b</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span> { }
     )<span class="kw-2">*</span>}
 );
@@ -752,9 +773,9 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">SuperTCategoryOf</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span> {}
 
 <span class="macro">super_tcategory_impl</span><span class="macro">!</span>(
-    <span class="ident">TGeneral</span>    <span class="op">&gt;=</span> <span class="ident">TProjective</span>;
-    <span class="ident">TGeneral</span>    <span class="op">&gt;=</span> <span class="ident">TAffine</span>;
-    <span class="ident">TProjective</span> <span class="op">&gt;=</span> <span class="ident">TAffine</span>;
+    <span class="ident">TGeneral</span>    <span class="op">&gt;</span><span class="op">=</span> <span class="ident">TProjective</span>;
+    <span class="ident">TGeneral</span>    <span class="op">&gt;</span><span class="op">=</span> <span class="ident">TAffine</span>;
+    <span class="ident">TProjective</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">TAffine</span>;
 );
 
 <span class="doccomment">/// A transformation matrix in homogeneous coordinates.</span>
@@ -763,47 +784,51 @@
 <span class="doccomment">/// 3D transformation.</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
-    <span class="ident">matrix</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">matrix</span>: <span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">_phantom</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
 }
 
-<span class="comment">// FIXME</span>
-<span class="comment">// impl&lt;N: RealField + hash::Hash, D: DimNameAdd&lt;U1&gt; + hash::Hash, C: TCategory&gt; hash::Hash for Transform&lt;N, D, C&gt;</span>
-<span class="comment">//     where DefaultAllocator: Allocator&lt;N, DimNameSum&lt;D, U1&gt;, DimNameSum&lt;D, U1&gt;&gt;,</span>
-<span class="comment">//           Owned&lt;N, DimNameSum&lt;D, U1&gt;, DimNameSum&lt;D, U1&gt;&gt;: hash::Hash {</span>
+<span class="comment">// TODO</span>
+<span class="comment">// impl&lt;T: RealField + hash::Hash, D: DimNameAdd&lt;U1&gt; + hash::Hash, C: TCategory&gt; hash::Hash for Transform&lt;T, C, D&gt;</span>
+<span class="comment">//     where DefaultAllocator: Allocator&lt;T, DimNameSum&lt;Const&lt;D&gt;, U1&gt;, DimNameSum&lt;Const&lt;D&gt;, U1&gt;&gt;,</span>
+<span class="comment">//           Owned&lt;T, DimNameSum&lt;Const&lt;D&gt;, U1&gt;, DimNameSum&lt;Const&lt;D&gt;, U1&gt;&gt;: hash::Hash {</span>
 <span class="comment">//     fn hash&lt;H: hash::Hasher&gt;(&amp;self, state: &amp;mut H) {</span>
 <span class="comment">//         self.matrix.hash(state);</span>
 <span class="comment">//     }</span>
 <span class="comment">// }</span>
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Copy</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">Copy</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Copy</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
-    <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>: <span class="ident">Copy</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>: <span class="ident">Copy</span>,
 {
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Transform</span>::<span class="ident">from_matrix_unchecked</span>(<span class="self">self</span>.<span class="ident">matrix</span>.<span class="ident">clone</span>())
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize&quot;</span>)]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
-    <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>: <span class="ident">Serialize</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>: <span class="ident">Serialize</span>,
 {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
@@ -811,45 +836,54 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize&quot;</span>)]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
-    <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>: <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">Des</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">Des</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Des</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">Des</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">Des</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Des</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">Des</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> <span class="ident">matrix</span> <span class="op">=</span> <span class="ident">MatrixN</span>::<span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">matrix</span> <span class="op">=</span> <span class="ident">OMatrix</span>::<span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">deserialize</span>(
+            <span class="ident">deserializer</span>,
+        )<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">Transform</span>::<span class="ident">from_matrix_unchecked</span>(<span class="ident">matrix</span>))
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">Eq</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span> <span class="op">+</span> <span class="ident">Eq</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">right</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">matrix</span> <span class="op">==</span> <span class="ident">right</span>.<span class="ident">matrix</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">right</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">matrix</span> <span class="op">=</span><span class="op">=</span> <span class="ident">right</span>.<span class="ident">matrix</span>
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Creates a new transformation from the given homogeneous matrix. The transformation category</span>
     <span class="doccomment">/// of `Self` is not checked to be verified by the given matrix.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix_unchecked</span>(<span class="ident">matrix</span>: <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_matrix_unchecked</span>(
+        <span class="ident">matrix</span>: <span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Transform</span> {
             <span class="ident">matrix</span>,
             <span class="ident">_phantom</span>: <span class="ident">PhantomData</span>,
@@ -869,7 +903,7 @@
     <span class="doccomment">/// assert_eq!(t.into_inner(), m);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">matrix</span>
     }
 
@@ -877,7 +911,7 @@
     <span class="doccomment">/// Deprecated: Use [Transform::into_inner] instead.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.into_inner()` instead&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unwrap</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unwrap</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">matrix</span>
     }
 
@@ -894,7 +928,7 @@
     <span class="doccomment">/// assert_eq!(*t.matrix(), m);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matrix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matrix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">matrix</span>
     }
 
@@ -921,7 +955,9 @@
     <span class="doccomment">/// assert_eq!(*t.matrix(), expected);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matrix_mut_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matrix_mut_unchecked</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">matrix</span>
     }
 
@@ -932,7 +968,7 @@
     <span class="doccomment">/// `TAffine` because not all projective transformations are affine (the other way-round is</span>
     <span class="doccomment">/// valid though).</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_category</span><span class="op">&lt;</span><span class="ident">CNew</span>: <span class="ident">SuperTCategoryOf</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;&gt;</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">CNew</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_category</span><span class="op">&lt;</span><span class="ident">CNew</span>: <span class="ident">SuperTCategoryOf</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">CNew</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="ident">Transform</span>::<span class="ident">from_matrix_unchecked</span>(<span class="self">self</span>.<span class="ident">matrix</span>)
     }
 
@@ -941,7 +977,7 @@
     <span class="attribute">#[<span class="ident">deprecated</span>(
         <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;This method is redundant with automatic `Copy` and the `.clone()` method and will be removed in a future release.&quot;</span>
     )]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clone_owned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clone_owned</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="ident">Transform</span>::<span class="ident">from_matrix_unchecked</span>(<span class="self">self</span>.<span class="ident">matrix</span>.<span class="ident">clone_owned</span>())
     }
 
@@ -958,7 +994,7 @@
     <span class="doccomment">/// assert_eq!(t.into_inner(), m);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_homogeneous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_homogeneous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">matrix</span>().<span class="ident">clone_owned</span>()
     }
 
@@ -987,7 +1023,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use try_inverse_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">matrix</span>.<span class="ident">try_inverse</span>() {
             <span class="prelude-val">Some</span>(<span class="ident">Transform</span>::<span class="ident">from_matrix_unchecked</span>(<span class="ident">m</span>))
         } <span class="kw">else</span> {
@@ -1013,11 +1049,11 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;Did you mean to use inverse_mut()?&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">C</span>: <span class="ident">SubTCategoryOf</span><span class="op">&lt;</span><span class="ident">TProjective</span><span class="op">&gt;</span>,
     {
-        <span class="comment">// FIXME: specialize for TAffine?</span>
+        <span class="comment">// TODO: specialize for TAffine?</span>
         <span class="ident">Transform</span>::<span class="ident">from_matrix_unchecked</span>(<span class="self">self</span>.<span class="ident">matrix</span>.<span class="ident">try_inverse</span>().<span class="ident">unwrap</span>())
     }
 
@@ -1046,7 +1082,7 @@
     <span class="doccomment">/// assert!(!t.try_inverse_mut());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">matrix</span>.<span class="ident">try_inverse_mut</span>()
     }
 
@@ -1076,20 +1112,20 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">N</span>: <span class="ident">RealField</span>,
+    <span class="ident">T</span>: <span class="ident">RealField</span>,
     <span class="ident">C</span>: <span class="ident">TCategory</span>,
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>
-        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>
-        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>
-        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>
+        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="comment">// + Allocator&lt;T, D, D&gt;</span>
+                                                  <span class="comment">// + Allocator&lt;T, D&gt;</span>
 {
     <span class="doccomment">/// Transform the given point by this transformation.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the same as the multiplication `self * pt`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="ident">pt</span>
     }
 
@@ -1098,24 +1134,24 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the same as the multiplication `self * v`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">transform_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">SVector</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SVector</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="self">self</span> <span class="op">*</span> <span class="ident">v</span>
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
     <span class="ident">C</span>: <span class="ident">SubTCategoryOf</span><span class="op">&lt;</span><span class="ident">TProjective</span><span class="op">&gt;</span>,
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>
-        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>
-        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>
-        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>
+        <span class="op">+</span> <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="comment">// + Allocator&lt;T, D, D&gt;</span>
+                                                  <span class="comment">// + Allocator&lt;T, D&gt;</span>
 {
     <span class="doccomment">/// Transform the given point by the inverse of this transformation.</span>
     <span class="doccomment">/// This may be cheaper than inverting the transformation and transforming</span>
     <span class="doccomment">/// the point.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">clone</span>().<span class="ident">inverse</span>() <span class="op">*</span> <span class="ident">pt</span>
     }
 
@@ -1123,49 +1159,54 @@
     <span class="doccomment">/// This may be cheaper than inverting the transformation and transforming</span>
     <span class="doccomment">/// the vector.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">VectorN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inverse_transform_vector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">SVector</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SVector</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">clone</span>().<span class="ident">inverse</span>() <span class="op">*</span> <span class="ident">v</span>
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">TGeneral</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">TGeneral</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
     <span class="doccomment">/// A mutable reference to underlying matrix. Use `.matrix_mut_unchecked` instead if this</span>
     <span class="doccomment">/// transformation category is not `TGeneral`.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matrix_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">MatrixN</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">matrix_mut</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">matrix_mut_unchecked</span>()
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">AbsDiffEq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">AbsDiffEq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">N</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
-    <span class="kw">type</span> <span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">Epsilon</span>;
+    <span class="kw">type</span> <span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">T</span>::<span class="ident">Epsilon</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
-        <span class="ident">N</span>::<span class="ident">default_epsilon</span>()
+    <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
+        <span class="ident">T</span>::<span class="ident">default_epsilon</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">matrix</span>.<span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">matrix</span>, <span class="ident">epsilon</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">RelativeEq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">RelativeEq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">N</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_max_relative</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
-        <span class="ident">N</span>::<span class="ident">default_max_relative</span>()
+    <span class="kw">fn</span> <span class="ident">default_max_relative</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
+        <span class="ident">T</span>::<span class="ident">default_max_relative</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1174,24 +1215,25 @@
         <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
         <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>,
         <span class="ident">max_relative</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">matrix</span>
             .<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">matrix</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>)
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">RealField</span>, <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">UlpsEq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">C</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">RealField</span>, <span class="ident">C</span>: <span class="ident">TCategory</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">UlpsEq</span> <span class="kw">for</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">N</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
-    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+    <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span>,
+    <span class="ident">DefaultAllocator</span>: <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>, <span class="ident">U1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-&gt;</span> <span class="ident">u32</span> {
-        <span class="ident">N</span>::<span class="ident">default_max_ulps</span>()
+    <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+        <span class="ident">T</span>::<span class="ident">default_max_ulps</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">matrix</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">matrix</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>)
     }
 }
@@ -1209,4 +1251,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "nalgebra";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="nalgebra" data-search-js="../../../search-index.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

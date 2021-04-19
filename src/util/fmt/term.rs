@@ -7,8 +7,11 @@ use terminal_size::terminal_size;
 /// # Errors
 /// if the terminal width can not be determined.
 #[inline]
-pub fn width() -> Result<usize, String> {
-    let ts = terminal_size().ok_or("Failed to determine terminal width.")?;
-
-    Ok((ts.0).0 as usize)
+#[must_use]
+pub fn width(default: usize) -> usize {
+    if let Some((width, _)) = terminal_size() {
+        width.0 as usize
+    } else {
+        default
+    }
 }

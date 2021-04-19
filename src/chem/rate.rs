@@ -1,6 +1,7 @@
 //! Rate structure.
 
-use ndarray::Array1;
+use ndarray::ArrayView1;
+use std::fmt::{Display, Formatter};
 
 /// Rate of reaction.
 #[derive(Debug, Clone)]
@@ -22,10 +23,21 @@ impl Rate {
         Self { k, orders }
     }
 
+    /// Get the total order of the reaction.
+    #[inline]
+    #[must_use]
+    pub fn order(&self) -> f64 {
+        let mut p = 0.0;
+        for &(_, c) in &self.orders {
+            p += c;
+        }
+        p
+    }
+
     /// Calculate the current rate given the current concentrations.
     #[inline]
     #[must_use]
-    pub fn rate(&self, concs: &Array1<f64>) -> f64 {
+    pub fn rate(&self, concs: &ArrayView1<f64>) -> f64 {
         let mut r = self.k;
 
         for &(c, m) in &self.orders {
@@ -33,5 +45,34 @@ impl Rate {
         }
 
         r
+    }
+
+    /// Calculate the current rate given the current concentrations.
+    #[inline]
+    #[must_use]
+    pub fn rate_m(&self, concs: &ArrayView1<f64>) -> f64 {
+        let mut r = self.k;
+
+        for &(c, m) in &self.orders {
+            r *= concs[c].powf(m);
+        }
+
+        r
+    }
+}
+
+impl Display for Rate {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        write!(fmt, "{}", self.k)?;
+
+        if !self.orders.is_empty() {
+            write!(fmt, " *")?;
+            for &(c, m) in &self.orders {
+                write!(fmt, " {}^{}", c, m)?;
+            }
+        }
+
+        Ok(())
     }
 }

@@ -1,0 +1,13 @@
+
+{
+    ops: [
+        [
+            "zero",
+            {   Zero  :   [101, 101, 101] }
+        ],
+        [
+            "info",
+            { Info    : "../output/zero.nc" }
+        ]
+    ]
+}

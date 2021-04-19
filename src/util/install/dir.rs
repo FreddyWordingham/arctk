@@ -18,14 +18,14 @@ pub fn root() -> Result<PathBuf, std::env::VarError> {
 
 /// Initialise the current working directory.
 #[inline]
-fn input_dir(dir: &PathBuf) -> Result<PathBuf, std::io::Error> {
+fn input_dir(dir: &Path) -> Result<PathBuf, std::io::Error> {
     set_current_dir(dir)?;
     current_dir()
 }
 
 /// Create an output directory.
 #[inline]
-fn output_dir(dir: &PathBuf) -> Result<PathBuf, std::io::Error> {
+fn output_dir(dir: &Path) -> Result<PathBuf, std::io::Error> {
     create_dir_all(dir)?;
     Ok(dir.to_path_buf())
 }

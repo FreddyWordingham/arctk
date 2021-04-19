@@ -3,13 +3,21 @@
 use crate::{
     access,
     err::Error,
-    file::Save,
+    fmt_report,
+    fs::Save,
     tools::{Binner, Range},
 };
 use ndarray::Array1;
-use std::{fs::File, io::Write, ops::AddAssign, path::Path};
+use std::{
+    fmt::{Display, Formatter},
+    fs::File,
+    io::Write,
+    ops::AddAssign,
+    path::Path,
+};
 
 /// Static range, constant bin width, Histogram.
+#[derive(Clone)]
 pub struct Histogram {
     /// Binner.
     binner: Binner,
@@ -92,7 +100,7 @@ impl AddAssign<&Self> for Histogram {
 
 impl Save for Histogram {
     #[inline]
-    fn save(&self, path: &Path) -> Result<(), Error> {
+    fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = File::create(path)?;
 
         let mut center = self.binner.range().min();
@@ -102,6 +110,15 @@ impl Save for Histogram {
             writeln!(file, "{:>32}, {:<32}", center, count)?;
         }
 
+        Ok(())
+    }
+}
+
+impl Display for Histogram {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        fmt_report!(fmt, self.binner, "binner");
+        fmt_report!(fmt, self.counts.sum(), "total counts");
         Ok(())
     }
 }

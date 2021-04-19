@@ -1,31 +1,39 @@
 //! Data table implementation.
 
-use crate::{access, clone, err::Error, file::Save};
-use std::{fmt::Display, fs::File, io::Write, ops::AddAssign, path::Path};
+use crate::{access, err::Error, fs::Save};
+use ndarray::Array2;
+use std::{
+    fmt::{Display, Formatter},
+    fs::File,
+    io::Write,
+    ops::AddAssign,
+    path::Path,
+};
 
 /// Table of row data.
 pub struct Table<T> {
+    /// Data headings.
+    headings: Vec<String>,
     /// Count data.
     rows: Vec<Vec<T>>,
-    /// Number of columns.
-    num_cols: usize,
 }
 
 impl<T> Table<T> {
     access!(rows, Vec<Vec<T>>);
-    clone!(num_cols, usize);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(rows: Vec<Vec<T>>) -> Self {
+    pub fn new(headings: Vec<String>, rows: Vec<Vec<T>>) -> Self {
+        debug_assert!(!headings.is_empty());
         debug_assert!(!rows.is_empty());
-        let num_cols = rows[0].len();
+
+        let num_cols = headings.len();
         for row in &rows {
             debug_assert!(row.len() == num_cols);
         }
 
-        Self { rows, num_cols }
+        Self { headings, rows }
     }
 
     /// Deconstruct the table and yield the inner rows vector.
@@ -37,11 +45,35 @@ impl<T> Table<T> {
     }
 }
 
+impl<T: Copy> Table<T> {
+    /// Construct a new instance from a two-dimensional array.
+    #[inline]
+    #[must_use]
+    pub fn new_from_array(headings: Vec<String>, values: &Array2<T>) -> Self {
+        debug_assert!(!headings.is_empty());
+        debug_assert!(values.ncols() == headings.len());
+
+        let num_rows = values.nrows();
+        let num_cols = values.ncols();
+
+        let mut rows = Vec::with_capacity(num_rows);
+        for i in 0..num_rows {
+            let mut row = Vec::with_capacity(num_cols);
+            for j in 0..num_cols {
+                row.push(values[[i, j]]);
+            }
+            rows.push(row);
+        }
+
+        Self { headings, rows }
+    }
+}
+
 impl<T: AddAssign + Clone> AddAssign<&Self> for Table<T> {
     #[inline]
     fn add_assign(&mut self, rhs: &Self) {
+        debug_assert!(self.headings == rhs.headings);
         debug_assert!(self.rows.len() == rhs.rows.len());
-        debug_assert!(self.num_cols == rhs.num_cols);
 
         for (lhs, rhs) in self.rows.iter_mut().zip(&rhs.rows) {
             for (l, r) in lhs.iter_mut().zip(rhs) {
@@ -53,19 +85,32 @@ impl<T: AddAssign + Clone> AddAssign<&Self> for Table<T> {
 
 impl<T: Display> Save for Table<T> {
     #[inline]
-    fn save(&self, path: &Path) -> Result<(), Error> {
+    fn save_data(&self, path: &Path) -> Result<(), Error> {
         let mut file = File::create(path)?;
+        write!(file, "{}", self)?;
+        Ok(())
+    }
+}
+
+impl<T: Display> Display for Table<T> {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        write!(fmt, "{}", self.headings[0])?;
+        for heading in self.headings.iter().skip(1) {
+            write!(fmt, ",{}", heading)?;
+        }
+        writeln!(fmt)?;
 
         for row in &self.rows {
             let mut iter = row.iter();
             if let Some(x) = iter.next() {
-                write!(file, "{:>32}", x)?;
+                write!(fmt, "{:>32}", x)?;
             }
 
             for x in iter {
-                write!(file, ", {:>32}", x)?;
+                write!(fmt, ", {:>32}", x)?;
             }
-            writeln!(file)?;
+            writeln!(fmt)?;
         }
 
         Ok(())

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Frame","Real-space to frame-space transformer."]]});

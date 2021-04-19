@@ -1,0 +1,40 @@
+{
+    tree        : { There   : 'misc/tree/t5_d6.json5' },
+    grid        : { There   : 'misc/grid/8m_80.json5' },
+    engine      : "Photo",
+    sett        : { Here    : {
+        num_phot            : 1e7,
+        block_size          : 1e5,
+        bump_dist           : 1e-9,
+        loop_limit          : 1e6,
+        min_weight          : 0.05,
+        roulette_barrels    : 8,
+    } },
+    light   : { Here    : {
+        power   : 1.0,
+        emit    : { Surface : [['res/objs/test/square.obj'], {scale:1e-2}] },
+        spec    : { Here    : {
+            Uniform :   [450.0e-9, 850.0e-9]
+        } },
+        mat     : "fog"
+    } },
+    mats        : { Here    : {
+        air     : { There    : 'res/mats/misc/air.json5' },
+        fog     : { There    : 'res/mats/misc/fog.json5' },
+        glass   : { There    : 'res/mats/misc/glass.json5' }
+    } },
+    attrs       : { Here    : {
+        glass     : { Interface   : ['glass', 'fog'] },
+    } },
+    surfs       : { Here    : {
+        centerpiece : {
+            attr: 'glass',
+            mesh: [["res/objs/test/prism.obj"], { trans: [0.0, 0.0, 0.75], rot:[0.0, 40.0, 0.0], scale:0.25 } ]
+        },
+        // boom : {
+        //     attr: 'glass',
+        //     mesh: [["res/objs/test/boom.obj"], { trans: [0.0, 0.0, 0.5] } ]
+        // }
+    } },
+    cam_pos: [ 0.0, 4.0, 0.0]
+}

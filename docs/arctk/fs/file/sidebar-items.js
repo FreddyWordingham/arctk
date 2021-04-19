@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["File","Types implementing this trait can be loaded from a file."]]});

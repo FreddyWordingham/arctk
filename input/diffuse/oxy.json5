@@ -1,0 +1,11 @@
+{
+    grid    : { There   : 'misc/grid/8mm_80.json5' },
+    sett    : { Here    : {
+        time        :   1800,                           // Total integration time (s).
+        dumps       :   98,                             // Intermient outputs.
+        block_size  :   1e4,
+        quality     :   0.1,                            // Quality parameter (0-1).
+    } },
+    coeffs  : "misc/map/oxy_diff.nc",                   // Diffusion coefficents.
+    sources : "misc/map/oxy_source.nc",                 // Source/sink value map.
+}

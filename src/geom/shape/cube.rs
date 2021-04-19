@@ -1,18 +1,22 @@
 //! Axis-aligned-bounding-box implementation.
 
 use crate::{
-    access,
+    access, fmt_report,
     geom::{Collide, Mesh, Ray, Side, Trace},
-    math::{Pos3, Vec3},
+    math::{Dir3, Pos3, Vec3},
     ord::{X, Y, Z},
+    tools::Range,
 };
-use arctk_attr::load;
+use arctk_attr::file;
 use rand::Rng;
-use std::cmp::Ordering;
+use std::{
+    cmp::Ordering,
+    fmt::{Display, Formatter},
+};
 
 /// Axis-aligned bounding box geometry.
 /// Used for spatial partitioning.
-#[load]
+#[file]
 #[derive(Clone)]
 pub struct Cube {
     /// Minimum bound.
@@ -206,9 +210,9 @@ impl Cube {
     pub fn rand_pos<R: Rng>(&self, rng: &mut R) -> Pos3 {
         let widths = self.widths();
 
-        let x = self.mins.x + rng.gen_range(0.0, widths.x);
-        let y = self.mins.y + rng.gen_range(0.0, widths.y);
-        let z = self.mins.z + rng.gen_range(0.0, widths.z);
+        let x = self.mins.x + rng.gen_range(0.0..widths.x);
+        let y = self.mins.y + rng.gen_range(0.0..widths.y);
+        let z = self.mins.z + rng.gen_range(0.0..widths.z);
 
         Pos3::new(x, y, z)
     }
@@ -280,8 +284,48 @@ impl Trace for Cube {
 
     #[inline]
     #[must_use]
-    fn dist_side(&self, _ray: &Ray) -> Option<(f64, Side)> {
-        // TODO: Think of an efficient way to do this.
-        unimplemented!("Tell me (Freddy) if you need this.");
+    fn dist_side(&self, ray: &Ray) -> Option<(f64, Side)> {
+        if let Some(dist) = self.dist(ray) {
+            let hit = ray.pos() + (dist * ray.dir().as_ref());
+            let relative = hit - self.centre();
+
+            let xy = relative.y / relative.x;
+            let zy = relative.z / relative.y;
+
+            let unit_range = Range::new(-1.0, 1.0);
+            let norm = Dir3::new_normalize(if unit_range.contains(xy) {
+                Vec3::new(1.0_f64.copysign(relative.x), 0.0, 0.0)
+            } else if unit_range.contains(zy) {
+                Vec3::new(0.0, 1.0_f64.copysign(relative.y), 0.0)
+            } else {
+                Vec3::new(0.0, 0.0, 1.0_f64.copysign(relative.z))
+            });
+
+            return Some((dist, Side::new(ray.dir(), norm)));
+        }
+
+        None
+    }
+}
+
+impl Display for Cube {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(
+            fmt,
+            &format!("({}, {}, {})", self.mins.x, self.mins.y, self.mins.z),
+            "mins (m)"
+        );
+        fmt_report!(
+            fmt,
+            &format!("({}, {}, {})", self.maxs.x, self.maxs.y, self.maxs.z),
+            "maxs (m)"
+        );
+        let c = self.centre();
+        fmt_report!(fmt, &format!("({}, {}, {})", c.x, c.y, c.z), "center (m)");
+        fmt_report!(fmt, self.area(), "area (m^2)");
+        fmt_report!(fmt, self.vol(), "volume (m^3)");
+        Ok(())
     }
 }

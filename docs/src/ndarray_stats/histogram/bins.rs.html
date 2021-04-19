@@ -1,5 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-stats-0.3.0/src/histogram/bins.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>bins.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ndarray_stats/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-stats-0.5.0/src/histogram/bins.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>bins.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ndarray_stats/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -413,46 +415,159 @@
 <span id="412">412</span>
 <span id="413">413</span>
 <span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>, <span class="ident">clippy</span>::<span class="ident">all</span>, <span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
+
 <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Index</span>, <span class="ident">Range</span>};
 
-<span class="doccomment">/// `Edges` is a sorted collection of `A` elements used</span>
-<span class="doccomment">/// to represent the boundaries of intervals ([`Bins`]) on</span>
-<span class="doccomment">/// a 1-dimensional axis.</span>
+<span class="doccomment">/// A sorted collection of type `A` elements used to represent the boundaries of intervals, i.e.</span>
+<span class="doccomment">/// [`Bins`] on a 1-dimensional axis.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [`Bins`]: struct.Bins.html</span>
-<span class="doccomment">/// # Example:</span>
+<span class="doccomment">/// **Note** that all intervals are left-closed and right-open. See examples below.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// use ndarray_stats::histogram::{Edges, Bins};</span>
+<span class="doccomment">/// use ndarray_stats::histogram::{Bins, Edges};</span>
 <span class="doccomment">/// use noisy_float::types::n64;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// let unit_edges = Edges::from(vec![n64(0.), n64(1.)]);</span>
 <span class="doccomment">/// let unit_interval = Bins::new(unit_edges);</span>
-<span class="doccomment">/// // left inclusive</span>
+<span class="doccomment">/// // left-closed</span>
 <span class="doccomment">/// assert_eq!(</span>
 <span class="doccomment">///     unit_interval.range_of(&amp;n64(0.)).unwrap(),</span>
 <span class="doccomment">///     n64(0.)..n64(1.),</span>
 <span class="doccomment">/// );</span>
-<span class="doccomment">/// // right exclusive</span>
+<span class="doccomment">/// // right-open</span>
 <span class="doccomment">/// assert_eq!(</span>
 <span class="doccomment">///     unit_interval.range_of(&amp;n64(1.)),</span>
 <span class="doccomment">///     None</span>
 <span class="doccomment">/// );</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`Bins`]: struct.Bins.html</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Ord</span><span class="op">&gt;</span> {
     <span class="ident">edges</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Ord</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Get an `Edges` instance from a `Vec&lt;A&gt;`:</span>
-    <span class="doccomment">/// the vector will be sorted in increasing order</span>
-    <span class="doccomment">/// using an unstable sorting algorithm and duplicates</span>
-    <span class="doccomment">/// will be removed.</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Ord</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Converts a `Vec&lt;A&gt;` into an `Edges&lt;A&gt;`, consuming the edges.</span>
+    <span class="doccomment">/// The vector will be sorted in increasing order using an unstable sorting algorithm, with</span>
+    <span class="doccomment">/// duplicates removed.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// # Current implementation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The current sorting algorithm is the same as [`std::slice::sort_unstable()`][sort],</span>
+    <span class="doccomment">/// which is based on [pattern-defeating quicksort][pdqsort].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This sort is unstable (i.e., may reorder equal elements), in-place (i.e., does not allocate)</span>
+    <span class="doccomment">/// , and O(n log n) worst-case.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray::array;</span>
@@ -465,7 +580,10 @@
     <span class="doccomment">///     15</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw-2">mut</span> <span class="ident">edges</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [sort]: https://doc.rust-lang.org/stable/std/primitive.slice.html#method.sort_unstable</span>
+    <span class="doccomment">/// [pdqsort]: https://github.com/orlp/pdqsort</span>
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw-2">mut</span> <span class="ident">edges</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="comment">// sort the array in-place</span>
         <span class="ident">edges</span>.<span class="ident">sort_unstable</span>();
         <span class="comment">// remove duplicates</span>
@@ -474,12 +592,20 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Ord</span> <span class="op">+</span> <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Get an `Edges` instance from a `Array1&lt;A&gt;`:</span>
-    <span class="doccomment">/// the array elements will be sorted in increasing order</span>
-    <span class="doccomment">/// using an unstable sorting algorithm and duplicates will be removed.</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Ord</span> <span class="op">+</span> <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Converts an `Array1&lt;A&gt;` into an `Edges&lt;A&gt;`, consuming the 1-dimensional array.</span>
+    <span class="doccomment">/// The array will be sorted in increasing order using an unstable sorting algorithm, with</span>
+    <span class="doccomment">/// duplicates removed.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// # Current implementation</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The current sorting algorithm is the same as [`std::slice::sort_unstable()`][sort],</span>
+    <span class="doccomment">/// which is based on [pattern-defeating quicksort][pdqsort].</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This sort is unstable (i.e., may reorder equal elements), in-place (i.e., does not allocate)</span>
+    <span class="doccomment">/// , and O(n log n) worst-case.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray_stats::histogram::Edges;</span>
@@ -491,7 +617,10 @@
     <span class="doccomment">///     10</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">edges</span>: <span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [sort]: https://doc.rust-lang.org/stable/std/primitive.slice.html#method.sort_unstable</span>
+    <span class="doccomment">/// [pdqsort]: https://github.com/orlp/pdqsort</span>
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">edges</span>: <span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">to_vec</span>();
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">edges</span>)
     }
@@ -500,11 +629,13 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Ord</span><span class="op">&gt;</span> <span class="ident">Index</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">A</span>;
 
-    <span class="doccomment">/// Get the `i`-th edge.</span>
+    <span class="doccomment">/// Returns a reference to the `i`-th edge in `self`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Panics** if the index `i` is out of bounds.</span>
+    <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// Panics if the index `i` is out of bounds.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray_stats::histogram::Edges;</span>
@@ -515,15 +646,15 @@
     <span class="doccomment">///     5</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Output</span> {
+    <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Output</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">edges</span>[<span class="ident">i</span>]
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Ord</span><span class="op">&gt;</span> <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Number of edges in `self`.</span>
+    <span class="doccomment">/// Returns the number of edges in `self`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray_stats::histogram::Edges;</span>
@@ -535,14 +666,33 @@
     <span class="doccomment">///     3</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">len</span>()
     }
 
-    <span class="doccomment">/// Borrow an immutable reference to the edges as a 1-dimensional</span>
-    <span class="doccomment">/// array view.</span>
+    <span class="doccomment">/// Returns `true` if `self` contains no edges.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use ndarray_stats::histogram::Edges;</span>
+    <span class="doccomment">/// use noisy_float::types::{N64, n64};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let edges = Edges::&lt;N64&gt;::from(vec![]);</span>
+    <span class="doccomment">/// assert_eq!(edges.is_empty(), true);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let edges = Edges::from(vec![n64(0.), n64(2.), n64(5.)]);</span>
+    <span class="doccomment">/// assert_eq!(edges.is_empty(), false);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">is_empty</span>()
+    }
+
+    <span class="doccomment">/// Returns an immutable 1-dimensional array view of edges.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray::array;</span>
@@ -554,55 +704,61 @@
     <span class="doccomment">///     array![0, 3, 5].view()</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_array_view</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ArrayView1</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_array_view</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayView1</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span><span class="op">&gt;</span> {
         <span class="ident">ArrayView1</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">edges</span>)
     }
 
-    <span class="doccomment">/// Given `value`, it returns an option:</span>
-    <span class="doccomment">/// - `Some((left, right))`, where `right=left+1`, if there are two consecutive edges in</span>
-    <span class="doccomment">/// `self` such that `self[left] &lt;= value &lt; self[right]`;</span>
+    <span class="doccomment">/// Returns indices of two consecutive `edges` in `self`, if the interval they represent</span>
+    <span class="doccomment">/// contains the given `value`, or returns `None` otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// That is to say, it returns</span>
+    <span class="doccomment">/// - `Some((left, right))`, where `left` and `right` are the indices of two consecutive edges</span>
+    <span class="doccomment">/// in `self` and `right == left + 1`, if `self[left] &lt;= value &lt; self[right]`;</span>
     <span class="doccomment">/// - `None`, otherwise.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray_stats::histogram::Edges;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let edges = Edges::from(vec![0, 2, 3]);</span>
+    <span class="doccomment">/// // `1` is in the interval [0, 2), whose indices are (0, 1)</span>
     <span class="doccomment">/// assert_eq!(</span>
     <span class="doccomment">///     edges.indices_of(&amp;1),</span>
     <span class="doccomment">///     Some((0, 1))</span>
     <span class="doccomment">/// );</span>
+    <span class="doccomment">/// // `5` is not in any of intervals</span>
     <span class="doccomment">/// assert_eq!(</span>
     <span class="doccomment">///     edges.indices_of(&amp;5),</span>
     <span class="doccomment">///     None</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indices_of</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indices_of</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
         <span class="comment">// binary search for the correct bin</span>
         <span class="kw">let</span> <span class="ident">n_edges</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">len</span>();
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">binary_search</span>(<span class="ident">value</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">i</span>) <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="ident">n_edges</span> <span class="op">-</span> <span class="number">1</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-            <span class="prelude-val">Ok</span>(<span class="ident">i</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>((<span class="ident">i</span>, <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>)),
-            <span class="prelude-val">Err</span>(<span class="ident">i</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">i</span> {
-                <span class="number">0</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-                <span class="ident">j</span> <span class="kw">if</span> <span class="ident">j</span> <span class="op">==</span> <span class="ident">n_edges</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-                <span class="ident">j</span> <span class="op">=&gt;</span> <span class="prelude-val">Some</span>((<span class="ident">j</span> <span class="op">-</span> <span class="number">1</span>, <span class="ident">j</span>)),
+            <span class="prelude-val">Ok</span>(<span class="ident">i</span>) <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="ident">n_edges</span> <span class="op">-</span> <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Ok</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>((<span class="ident">i</span>, <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>)),
+            <span class="prelude-val">Err</span>(<span class="ident">i</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">i</span> {
+                <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+                <span class="ident">j</span> <span class="kw">if</span> <span class="ident">j</span> <span class="op">=</span><span class="op">=</span> <span class="ident">n_edges</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+                <span class="ident">j</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>((<span class="ident">j</span> <span class="op">-</span> <span class="number">1</span>, <span class="ident">j</span>)),
             },
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Returns an iterator over the `edges` in `self`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">A</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">iter</span>()
     }
 }
 
-<span class="doccomment">/// `Bins` is a sorted collection of non-overlapping</span>
-<span class="doccomment">/// 1-dimensional intervals.</span>
+<span class="doccomment">/// A sorted collection of non-overlapping 1-dimensional intervals.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// All intervals are left-inclusive and right-exclusive.</span>
+<span class="doccomment">/// **Note** that all intervals are left-closed and right-open.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # Example:</span>
+<span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// use ndarray_stats::histogram::{Edges, Bins};</span>
@@ -627,16 +783,18 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Ord</span><span class="op">&gt;</span> <span class="ident">Bins</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Given a collection of [`Edges`], it returns the corresponding `Bins` instance.</span>
+    <span class="doccomment">/// Returns a `Bins` instance where each bin corresponds to two consecutive members of the given</span>
+    <span class="doccomment">/// [`Edges`], consuming the edges.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [`Edges`]: struct.Edges.html</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">edges</span>: <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">edges</span>: <span class="ident">Edges</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Bins</span> { <span class="ident">edges</span> }
     }
 
-    <span class="doccomment">/// Returns the number of bins.</span>
+    <span class="doccomment">/// Returns the number of bins in `self`.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray_stats::histogram::{Edges, Bins};</span>
@@ -649,18 +807,46 @@
     <span class="doccomment">///     2</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">len</span>() {
-            <span class="number">0</span> <span class="op">=&gt;</span> <span class="number">0</span>,
-            <span class="ident">n</span> <span class="op">=&gt;</span> <span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>,
+            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
+            <span class="ident">n</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>,
         }
     }
 
-    <span class="doccomment">/// Given `value`, it returns:</span>
-    <span class="doccomment">/// - `Some(i)`, if the `i`-th bin in `self` contains `value`;</span>
-    <span class="doccomment">/// - `None`, if `value` does not belong to any of the bins in `self`.</span>
+    <span class="doccomment">/// Returns `true` if the number of bins is zero, i.e. if the number of edges is 0 or 1.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use ndarray_stats::histogram::{Edges, Bins};</span>
+    <span class="doccomment">/// use noisy_float::types::{N64, n64};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// // At least 2 edges is needed to represent 1 interval</span>
+    <span class="doccomment">/// let edges = Edges::from(vec![n64(0.), n64(1.), n64(3.)]);</span>
+    <span class="doccomment">/// let bins = Bins::new(edges);</span>
+    <span class="doccomment">/// assert_eq!(bins.is_empty(), false);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// // No valid interval == Empty</span>
+    <span class="doccomment">/// let edges = Edges::&lt;N64&gt;::from(vec![]);</span>
+    <span class="doccomment">/// let bins = Bins::new(edges);</span>
+    <span class="doccomment">/// assert_eq!(bins.is_empty(), true);</span>
+    <span class="doccomment">/// let edges = Edges::from(vec![n64(0.)]);</span>
+    <span class="doccomment">/// let bins = Bins::new(edges);</span>
+    <span class="doccomment">/// assert_eq!(bins.is_empty(), true);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
+    }
+
+    <span class="doccomment">/// Returns the index of the bin in `self` that contains the given `value`,</span>
+    <span class="doccomment">/// or returns `None` if `value` does not belong to any bins in `self`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Basic usage:</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray_stats::histogram::{Edges, Bins};</span>
@@ -668,41 +854,57 @@
     <span class="doccomment">/// let edges = Edges::from(vec![0, 2, 4, 6]);</span>
     <span class="doccomment">/// let bins = Bins::new(edges);</span>
     <span class="doccomment">/// let value = 1;</span>
+    <span class="doccomment">/// // The first bin [0, 2) contains `1`</span>
     <span class="doccomment">/// assert_eq!(</span>
     <span class="doccomment">///     bins.index_of(&amp;1),</span>
     <span class="doccomment">///     Some(0)</span>
     <span class="doccomment">/// );</span>
+    <span class="doccomment">/// // No bin contains 100</span>
     <span class="doccomment">/// assert_eq!(</span>
-    <span class="doccomment">///     bins.index(bins.index_of(&amp;1).unwrap()),</span>
-    <span class="doccomment">///     0..2</span>
+    <span class="doccomment">///     bins.index_of(&amp;100),</span>
+    <span class="doccomment">///     None</span>
+    <span class="doccomment">/// )</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Chaining [`Bins::index`] and [`Bins::index_of`] to get the boundaries of the bin containing</span>
+    <span class="doccomment">/// the value:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// # use ndarray_stats::histogram::{Edges, Bins};</span>
+    <span class="doccomment">/// # let edges = Edges::from(vec![0, 2, 4, 6]);</span>
+    <span class="doccomment">/// # let bins = Bins::new(edges);</span>
+    <span class="doccomment">/// # let value = 1;</span>
+    <span class="doccomment">/// assert_eq!(</span>
+    <span class="doccomment">///     // using `Option::map` to avoid panic on index out-of-bounds</span>
+    <span class="doccomment">///     bins.index_of(&amp;1).map(|i| bins.index(i)),</span>
+    <span class="doccomment">///     Some(0..2)</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index_of</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index_of</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">indices_of</span>(<span class="ident">value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">t</span>.<span class="number">0</span>)
     }
 
-    <span class="doccomment">/// Given `value`, it returns:</span>
-    <span class="doccomment">/// - `Some(left_edge..right_edge)`, if there exists a bin in `self` such that</span>
-    <span class="doccomment">///  `left_edge &lt;= value &lt; right_edge`;</span>
-    <span class="doccomment">/// - `None`, otherwise.</span>
+    <span class="doccomment">/// Returns a range as the bin which contains the given `value`, or returns `None` otherwise.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray_stats::histogram::{Edges, Bins};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let edges = Edges::from(vec![0, 2, 4, 6]);</span>
     <span class="doccomment">/// let bins = Bins::new(edges);</span>
+    <span class="doccomment">/// // [0, 2) contains `1`</span>
     <span class="doccomment">/// assert_eq!(</span>
     <span class="doccomment">///     bins.range_of(&amp;1),</span>
     <span class="doccomment">///     Some(0..2)</span>
     <span class="doccomment">/// );</span>
+    <span class="doccomment">/// // `10` is not in any interval</span>
     <span class="doccomment">/// assert_eq!(</span>
     <span class="doccomment">///     bins.range_of(&amp;10),</span>
     <span class="doccomment">///     None</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">range_of</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">range_of</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span>,
     {
@@ -713,11 +915,13 @@
         })
     }
 
-    <span class="doccomment">/// Get the `i`-th bin.</span>
+    <span class="doccomment">/// Returns a range as the bin at the given `index` position.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// **Panics** if `index` is out of bounds.</span>
+    <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example:</span>
+    <span class="doccomment">/// Panics if `index` is out of bounds.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use ndarray_stats::histogram::{Edges, Bins};</span>
@@ -729,7 +933,8 @@
     <span class="doccomment">///     5..10</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Range</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Range</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Clone</span>,
     {
@@ -746,13 +951,13 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">edges_tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Array1</span>, <span class="ident">Edges</span>};
     <span class="kw">use</span> <span class="ident">quickcheck_macros</span>::<span class="ident">quickcheck</span>;
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">BTreeSet</span>;
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
-    <span class="kw">fn</span> <span class="ident">check_sorted_from_vec</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">check_sorted_from_vec</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">v</span>);
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">len</span>();
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">1</span>..<span class="ident">n</span> {
@@ -764,7 +969,7 @@
     }
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
-    <span class="kw">fn</span> <span class="ident">check_sorted_from_array</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">check_sorted_from_array</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array1</span>::<span class="ident">from</span>(<span class="ident">v</span>);
         <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">a</span>);
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">len</span>();
@@ -777,10 +982,10 @@
     }
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
-    <span class="kw">fn</span> <span class="ident">edges_are_right_exclusive</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">edges_are_right_open</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">v</span>);
         <span class="kw">let</span> <span class="ident">view</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">as_array_view</span>();
-        <span class="kw">if</span> <span class="ident">view</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">view</span>.<span class="ident">is_empty</span>() {
             <span class="bool-val">true</span>
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">last</span> <span class="op">=</span> <span class="ident">view</span>[<span class="ident">view</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>];
@@ -789,39 +994,40 @@
     }
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
-    <span class="kw">fn</span> <span class="ident">edges_are_left_inclusive</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">edges_are_left_closed</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">v</span>);
-        <span class="kw">match</span> <span class="ident">edges</span>.<span class="ident">len</span>() {
-            <span class="number">1</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> {
-                <span class="kw">let</span> <span class="ident">view</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">as_array_view</span>();
-                <span class="kw">if</span> <span class="ident">view</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
-                    <span class="bool-val">true</span>
-                } <span class="kw">else</span> {
-                    <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">view</span>[<span class="number">0</span>];
-                    <span class="ident">edges</span>.<span class="ident">indices_of</span>(<span class="kw-2">&amp;</span><span class="ident">first</span>).<span class="ident">is_some</span>()
-                }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="number">1</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">len</span>() {
+            <span class="bool-val">true</span>
+        } <span class="kw">else</span> {
+            <span class="kw">let</span> <span class="ident">view</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">as_array_view</span>();
+            <span class="kw">if</span> <span class="ident">view</span>.<span class="ident">is_empty</span>() {
+                <span class="bool-val">true</span>
+            } <span class="kw">else</span> {
+                <span class="kw">let</span> <span class="ident">first</span> <span class="op">=</span> <span class="ident">view</span>[<span class="number">0</span>];
+                <span class="ident">edges</span>.<span class="ident">indices_of</span>(<span class="kw-2">&amp;</span><span class="ident">first</span>).<span class="ident">is_some</span>()
             }
         }
     }
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
-    <span class="kw">fn</span> <span class="ident">edges_are_deduped</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">needless_pass_by_value</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">edges_are_deduped</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">unique_elements</span> <span class="op">=</span> <span class="ident">BTreeSet</span>::<span class="ident">from_iter</span>(<span class="ident">v</span>.<span class="ident">iter</span>());
         <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">v</span>.<span class="ident">clone</span>());
         <span class="kw">let</span> <span class="ident">view</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">as_array_view</span>();
         <span class="kw">let</span> <span class="ident">unique_edges</span> <span class="op">=</span> <span class="ident">BTreeSet</span>::<span class="ident">from_iter</span>(<span class="ident">view</span>.<span class="ident">iter</span>());
-        <span class="ident">unique_edges</span> <span class="op">==</span> <span class="ident">unique_elements</span>
+        <span class="ident">unique_edges</span> <span class="op">=</span><span class="op">=</span> <span class="ident">unique_elements</span>
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">bins_tests</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Bins</span>, <span class="ident">Edges</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">should_panic</span>]</span>
-    <span class="kw">fn</span> <span class="ident">get_panics_for_out_of_bound_indexes</span>() {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_must_use</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">get_panics_for_out_of_bounds_indexes</span>() {
         <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>]);
         <span class="kw">let</span> <span class="ident">bins</span> <span class="op">=</span> <span class="ident">Bins</span>::<span class="ident">new</span>(<span class="ident">edges</span>);
         <span class="comment">// we need at least two edges to make a valid bin!</span>
@@ -829,4 +1035,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "ndarray_stats";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ndarray_stats" data-search-js="../../../search-index.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

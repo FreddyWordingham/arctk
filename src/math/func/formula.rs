@@ -1,7 +1,8 @@
 //! Formula implementation.
 
-use crate::ord::is_ascending;
+use crate::math::is_ascending;
 use ndarray::Array1;
+use std::fmt::{Display, Error, Formatter};
 
 /// Mathematical formulae accepting a single scalar argument.
 #[derive(Debug, Clone)]
@@ -189,5 +190,20 @@ impl Formula {
                 ys[ys.len() - 1]
             }
         }
+    }
+}
+
+impl Display for Formula {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        let kind = match *self {
+            Self::Constant { .. } => "Constant",
+            Self::Line { .. } => "Line",
+            Self::Bifurcation { .. } => "Bifurcation",
+            Self::ConstantSpline { .. } => "Constant Spline",
+            Self::LinearSpline { .. } => "Linear Spline",
+            Self::QuadraticSpline { .. } => "Quadrati Spline",
+        };
+        write!(fmt, "{}", kind)
     }
 }

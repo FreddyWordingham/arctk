@@ -1,92 +1,78 @@
-//! Operation implementation.
+//! Operation builder.
 
-use super::Operation;
-use crate::{
-    data::Table,
-    err::Error,
-    file::{Build, Load, Redirect},
-    geom::GridBuilder,
-    math::Pos3,
-    ord::{X, Y, Z},
-};
-use arctk_attr::load;
+use crate::{geom::GridBuilder, math::Pos3, ord::Build, sim::babbage::Operation};
 use ndarray::Array3;
-use std::path::{Path, PathBuf};
 
 /// Possible operation enumeration.
-#[load]
-#[derive(Clone)]
 pub enum OperationBuilder {
-    /// Generate a zero cube of the giver resolution.
+    /// Report information about datacube.
+    Info(Array3<f64>),
+    /// Sample the center of a datacube.
+    Stripe(Array3<f64>),
+    /// Generate a zero cube of the given resolution.
     Zero([usize; 3]),
-    /// Generate a unit cube of the giver resolution.
+    /// Generate a unit cube of the given resolution.
     Unit([usize; 3]),
+    /// Generate a zero cube, with a point at the center, of the given resolution.
+    Point([usize; 3]),
+    /// Generate a partially filled cube, with a range of indices, within the given resolution.
+    Fill {
+        /// Total resolution.
+        res: [usize; 3],
+        /// Minimum inclusive filling bound.
+        mins: [usize; 3],
+        /// Maximum inclusive filling bound.
+        maxs: [usize; 3],
+    },
+    /// Remove one cube from another.
+    Remove(Array3<f64>, Array3<f64>),
     /// Sum cubes together.
-    Sum(Vec<PathBuf>),
-    /// Add a value to the data cube.
-    Add(PathBuf, f64),
-    /// Subtract a value from the data cube.
-    Sub(PathBuf, f64),
+    Sum(Vec<Array3<f64>>),
+    /// Add a value to the datacube.
+    Add(Array3<f64>, f64),
+    /// Subtract a value from the datacube.
+    Sub(Array3<f64>, f64),
     /// Multiply the datacube by the value.
-    Mult(PathBuf, f64),
+    Mult(Array3<f64>, f64),
     /// Divide the datacube by the value.
-    Div(PathBuf, f64),
-    /// Normalise a data cube.
-    Norm(PathBuf),
+    Div(Array3<f64>, f64),
+    /// Normalise a datacube.
+    Norm(Array3<f64>),
+    /// Clamp the values within datacube.
+    Clamp(Array3<f64>, f64, f64),
+    /// Piecewise multiply a datacube by another.
+    PiecewiseMult(Array3<f64>, Array3<f64>),
+    /// Piecewise divide a datacube by another.
+    PiecewiseDiv(Array3<f64>, Array3<f64>),
     /// Sample the locations for their values. (Points, DataCube, Grid).
-    Sample(PathBuf, PathBuf, Redirect<GridBuilder>),
+    Sample(Vec<Pos3>, Array3<f64>, GridBuilder),
 }
 
 impl Build for OperationBuilder {
     type Inst = Operation;
 
-    /// Build a usable instance.
     #[inline]
-    fn build(self, in_dir: &Path) -> Result<Self::Inst, Error> {
-        Ok(match self {
+    fn build(self) -> Self::Inst {
+        match self {
+            Self::Info(cube) => Self::Inst::Info(cube),
+            Self::Stripe(cube) => Self::Inst::Stripe(cube),
             Self::Zero(res) => Self::Inst::Zero(res),
             Self::Unit(res) => Self::Inst::Unit(res),
-            Self::Sum(data_paths) => {
-                let mut cubes = Vec::with_capacity(data_paths.len());
-                for d in &data_paths {
-                    cubes.push(Array3::load(&in_dir.join(d))?);
-                }
-                Self::Inst::Sum(cubes)
+            Self::Point(res) => Self::Inst::Point(res),
+            Self::Fill { res, mins, maxs } => Self::Inst::Fill { res, mins, maxs },
+            Self::Remove(a, b) => Self::Inst::Remove(a, b),
+            Self::Sum(cubes) => Self::Inst::Sum(cubes),
+            Self::Add(cube, x) => Self::Inst::Add(cube, x),
+            Self::Sub(cube, x) => Self::Inst::Sub(cube, x),
+            Self::Mult(cube, x) => Self::Inst::Mult(cube, x),
+            Self::Div(cube, x) => Self::Inst::Div(cube, x),
+            Self::Norm(cube) => Self::Inst::Norm(cube),
+            Self::Clamp(cube, min, max) => Self::Inst::Clamp(cube, min, max),
+            Self::PiecewiseMult(a, b) => Self::Inst::PiecewiseMult(a, b),
+            Self::PiecewiseDiv(a, b) => Self::Inst::PiecewiseDiv(a, b),
+            Self::Sample(points, cube, grid_builder) => {
+                Self::Inst::Sample(points, cube, grid_builder.build())
             }
-            Self::Add(data_path, x) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
-                Self::Inst::Add(cube, x)
-            }
-            Self::Sub(data_path, x) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
-                Self::Inst::Sub(cube, x)
-            }
-            Self::Mult(data_path, x) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
-                Self::Inst::Mult(cube, x)
-            }
-            Self::Div(data_path, x) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
-                Self::Inst::Div(cube, x)
-            }
-            Self::Norm(data_path) => {
-                let cube = Array3::load(&in_dir.join(data_path))?;
-                Self::Inst::Norm(cube)
-            }
-            Self::Sample(points_path, data_path, grid) => {
-                let table = Table::load(&in_dir.join(points_path))?;
-                let points = table
-                    .into_inner()
-                    .iter()
-                    .map(|row| Pos3::new(row[X], row[Y], row[Z]))
-                    .collect();
-
-                let data_cube = Array3::load(&in_dir.join(data_path))?;
-
-                let grid = grid.build(in_dir)?.build();
-
-                Self::Inst::Sample(points, data_cube, grid)
-            }
-        })
+        }
     }
 }

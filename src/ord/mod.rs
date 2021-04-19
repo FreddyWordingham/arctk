@@ -1,10 +1,12 @@
 //! Ordering module.
 
-pub mod key;
+pub mod array_linker;
+pub mod build;
+pub mod link;
 pub mod list;
+pub mod map;
 pub mod name;
 pub mod register;
 pub mod set;
-pub mod sort;
 
-pub use self::{key::*, list::*, name::*, register::*, set::*, sort::*};
+pub use self::{array_linker::*, build::*, link::*, list::*, map::*, name::*, register::*, set::*};

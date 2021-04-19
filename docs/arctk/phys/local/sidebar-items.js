@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Local","Localised optical environment properties."]]});

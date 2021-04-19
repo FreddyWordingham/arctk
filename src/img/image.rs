@@ -2,32 +2,33 @@
 
 use crate::{
     access,
+    img::Colour,
     ord::{X, Y},
 };
 use ndarray::Array2;
-use palette::LinSrgba;
 use std::ops::AddAssign;
 
 /// Image builder.
+#[derive(Clone)]
 pub struct Image {
     /// Pixel data.
-    pixels: Array2<LinSrgba>,
+    pixels: Array2<Colour>,
 }
 
 impl Image {
-    access!(pixels, pixels_mut, Array2<LinSrgba>);
+    access!(pixels, pixels_mut, Array2<Colour>);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub const fn new(pixels: Array2<LinSrgba>) -> Self {
+    pub const fn new(pixels: Array2<Colour>) -> Self {
         Self { pixels }
     }
 
     /// Construct a new blank instance.
     #[inline]
     #[must_use]
-    pub fn new_blank(res: [usize; 2], base: LinSrgba) -> Self {
+    pub fn new_blank(res: [usize; 2], base: Colour) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
 

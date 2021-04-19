@@ -1,77 +1,77 @@
-//! Datacube manipulation.
+//! Datacube manipulation engine binary.
+//! Produce some data from some other data.
 
 use arctk::{
     args,
-    file::{Build, Load},
-    sim::babbage::{Operation, OperationBuilder},
-    util::{banner, dir},
+    err::Error,
+    fs::{File, Load},
+    ord::Build,
+    report,
+    sim::babbage::Parameters,
+    util::{
+        banner::{section, sub_section, title},
+        dir,
+        fmt::term,
+    },
 };
-use arctk_attr::input;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
 };
 
-// Input parameters.
-#[input]
-struct Parameters {
-    /// Operation to perform.
-    op: OperationBuilder,
+/// Backup print width if the terminal width can not be determined.
+const BACKUP_TERM_WIDTH: usize = 80;
+
+/// Main program function.
+fn main() {
+    let term_width = term::width(BACKUP_TERM_WIDTH);
+    title(term_width, "Babbage");
+
+    let (in_dir, out_dir, params_path) = initialisation(term_width);
+    let params = Parameters::new_from_file(&in_dir.join(&params_path))
+        .expect("Failed to load parameters file.");
+    run(term_width, params, &in_dir, &out_dir).expect("Running operations failed.");
+
+    section(term_width, "Finished");
 }
 
-/// Main function.
-pub fn main() {
-    let term_width = arctk::util::term::width().unwrap_or(80);
-    banner::title("BABBAGE", term_width);
-
-    let (params_path, in_dir, out_dir) = init(term_width);
-
-    let params = input(term_width, &in_dir, &params_path);
-
-    let op = build(term_width, &in_dir, params);
-
-    banner::section("Operation", term_width);
-    op.run(&out_dir)
-        .expect("Operation failed... we'll get 'em next time.");
-
-    banner::section("Finished", term_width);
-}
-
-/// Initialise the command line arguments and directories.
-fn init(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
-    banner::section("Initialisation", term_width);
-    banner::sub_section("Command line arguments", term_width);
-    args!(bin_path: PathBuf;
+/// Initialise the input arguments.
+fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
+    section(term_width, "Initialisation");
+    sub_section(term_width, "args");
+    args!(
+        bin_path: PathBuf;
+        input_dir: PathBuf;
+        output_dir: PathBuf;
         params_path: PathBuf
     );
-    println!("{:>32} : {}", "binary path", bin_path.display());
-    println!("{:>32} : {}", "parameters path", params_path.display());
+    report!(bin_path.display(), "binary path");
+    report!(input_dir.display(), "relative input path");
+    report!(output_dir.display(), "relative output path");
+    report!(params_path.display(), "parameters");
 
-    banner::sub_section("Directories", term_width);
+    sub_section(term_width, "directories");
     let cwd = current_dir().expect("Failed to determine current working directory.");
-    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join("input")), Some(cwd.join("output")))
+    let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join(input_dir)), Some(cwd.join(output_dir)))
         .expect("Failed to initialise directories.");
-    println!("{:>32} : {}", "input directory", in_dir.display());
-    println!("{:>32} : {}", "output directory", out_dir.display());
+    report!(in_dir.display(), "input directory");
+    report!(out_dir.display(), "output directory");
 
-    (params_path, in_dir, out_dir)
+    (in_dir, out_dir, params_path)
 }
 
-/// Load the input files.
-fn input(term_width: usize, in_dir: &Path, params_path: &Path) -> Parameters {
-    banner::section("Input", term_width);
-    banner::sub_section("Parameters", term_width);
-    let path = in_dir.join(params_path);
+/// Run the operations and save their results.
+fn run(term_width: usize, params: Parameters, in_dir: &Path, out_dir: &Path) -> Result<(), Error> {
+    section(term_width, "Running");
 
-    Parameters::load(&path).expect("Failed to load parameters file.")
-}
+    for (name, op) in &params.ops {
+        sub_section(term_width, &format!("Operation {}", name));
+        report!(op, "operation");
+        op.clone()
+            .load(in_dir)?
+            .build()
+            .run(&out_dir, name.to_string())?;
+    }
 
-/// Build instances.
-#[allow(clippy::let_and_return)]
-fn build(term_width: usize, in_dir: &Path, params: Parameters) -> Operation {
-    banner::section("Building", term_width);
-    banner::sub_section("Operation", term_width);
-    let op = params.op.build(in_dir).expect("Failed to build operation.");
-
-    op
+    Ok(())
 }

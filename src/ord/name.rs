@@ -1,14 +1,24 @@
-//! Name trait.
+//! Name type.
 
-use crate::{err::Error, ord::Register};
+use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Error, Formatter};
 
-/// Types implementing this trait can be built at runtime from an input structure with names rather than indices.
-pub trait Name {
-    /// Type to be constructed.
-    type Inst;
+/// Human-readable identifier type.
+#[derive(Debug, PartialEq, Clone, Eq, PartialOrd, Ord, Deserialize, Serialize)]
+pub struct Name(String);
 
-    /// Build the instance type by registering the names as indices.
-    /// # Errors
-    /// if a component could not be named successfully.
-    fn reg(self, reg: &Register) -> Result<Self::Inst, Error>;
+impl Name {
+    /// Get the name as a string.
+    #[inline]
+    #[must_use]
+    pub fn as_string(&self) -> String {
+        self.0.clone()
+    }
+}
+
+impl Display for Name {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        write!(fmt, "{{{}}}", self.0)
+    }
 }

@@ -33,7 +33,7 @@ pub enum Error {
     MinMax(ndarray_stats::errors::MinMaxError),
     /// NetCDF io error.
     #[cfg(feature = "netcdf")]
-    NetCDF(netcdf::error::Error),
+    NetCdf(netcdf::error::Error),
 }
 
 macro_rules! impl_from_for_err {
@@ -50,7 +50,7 @@ macro_rules! impl_from_for_err {
 impl From<&str> for Error {
     #[inline]
     fn from(err: &str) -> Self {
-        Self::Text(err.to_string())
+        Self::Text(err.to_owned())
     }
 }
 
@@ -74,7 +74,7 @@ impl_from_for_err!(Self::WritePng, png::EncodingError);
 impl_from_for_err!(Self::InvalidShape, ndarray::ShapeError);
 impl_from_for_err!(Self::MinMax, ndarray_stats::errors::MinMaxError);
 #[cfg(feature = "netcdf")]
-impl_from_for_err!(Self::NetCDF, netcdf::error::Error);
+impl_from_for_err!(Self::NetCdf, netcdf::error::Error);
 
 impl Debug for Error {
     #[inline]
@@ -98,11 +98,11 @@ impl Debug for Error {
                 Self::InvalidShape { .. } => "Invalid array shape",
                 Self::MinMax { .. } => "MinMax",
                 #[cfg(feature = "netcdf")]
-                Self::NetCDF { .. } => "NetCDF IO",
+                Self::NetCdf { .. } => "NetCDF IO",
             },
             match *self {
                 Self::Text { 0: ref err } => format!("{:?}", err),
-                Self::Parallel => "Parallelisation fail".to_string(),
+                Self::Parallel => "Parallelisation fail".to_owned(),
                 Self::Format { 0: ref err } => format!("{:?}", err),
                 Self::EnvVar { 0: ref err } => format!("{:?}", err),
                 Self::LoadFile { 0: ref err } => format!("{:?}", err),
@@ -116,7 +116,7 @@ impl Debug for Error {
                 Self::InvalidShape { 0: ref err } => format!("{:?}", err),
                 Self::MinMax { 0: ref err } => format!("{:?}", err),
                 #[cfg(feature = "netcdf")]
-                Self::NetCDF { 0: ref err } => format!("{:?}", err),
+                Self::NetCdf { 0: ref err } => format!("{:?}", err),
             }
         )
     }

@@ -1,11 +1,12 @@
 //! Regular Cartesian-grid cell scheme.
 
 use crate::{
-    access,
+    access, fmt_report,
     geom::Cube,
     math::{Pos3, Vec3},
     ord::{X, Y, Z},
 };
+use std::fmt::{Display, Formatter};
 
 /// Regular Cartesian-grid structure.
 pub struct Grid {
@@ -52,7 +53,7 @@ impl Grid {
     /// Determine the total number of cells.
     #[inline]
     #[must_use]
-    pub const fn total_cells(&self) -> usize {
+    pub const fn num_cells(&self) -> usize {
         self.res[X] * self.res[Y] * self.res[Z]
     }
 
@@ -70,26 +71,6 @@ impl Grid {
                 (((p.y - mins.y) / (maxs.y - mins.y)) * self.res[Y] as f64).floor() as usize,
                 (((p.z - mins.z) / (maxs.z - mins.z)) * self.res[Z] as f64).floor() as usize,
             ])
-        } else {
-            None
-        }
-    }
-
-    /// If the given position is contained within the grid,
-    /// generate the index and voxel for the given position within the grid.
-    #[inline]
-    #[must_use]
-    pub fn gen_index_voxel(&self, p: &Pos3) -> Option<([usize; 3], Cube)> {
-        if let Some(index) = self.gen_index(p) {
-            let mut min = *self.boundary.mins();
-            min.x += self.voxel_size[X] * index[X] as f64;
-            min.y += self.voxel_size[Y] * index[Y] as f64;
-            min.z += self.voxel_size[Z] * index[Z] as f64;
-
-            let boundary = Cube::new(min, min + self.voxel_size);
-            debug_assert!(boundary.contains(p));
-
-            Some((index, boundary))
         } else {
             None
         }
@@ -119,5 +100,47 @@ impl Grid {
         let mins = Pos3::new(x, y, z);
 
         Cube::new(mins, mins + self.voxel_size)
+    }
+
+    /// If the given position is contained within the grid,
+    /// generate the index and voxel for the given position within the grid.
+    #[inline]
+    #[must_use]
+    pub fn gen_index_voxel(&self, p: &Pos3) -> Option<([usize; 3], Cube)> {
+        if let Some(index) = self.gen_index(p) {
+            let mut min = *self.boundary.mins();
+            min.x += self.voxel_size[X] * index[X] as f64;
+            min.y += self.voxel_size[Y] * index[Y] as f64;
+            min.z += self.voxel_size[Z] * index[Z] as f64;
+
+            let boundary = Cube::new(min, min + self.voxel_size);
+            debug_assert!(boundary.contains(p));
+
+            Some((index, boundary))
+        } else {
+            None
+        }
+    }
+}
+
+impl Display for Grid {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.boundary, "boundary");
+        fmt_report!(
+            fmt,
+            &format!("[{} x {} x {}]", self.res[X], self.res[Y], self.res[Z]),
+            "resolution"
+        );
+        fmt_report!(
+            fmt,
+            &format!(
+                "({}, {}, {})",
+                self.voxel_size.x, self.voxel_size.y, self.voxel_size.z
+            ),
+            "voxel size"
+        );
+        Ok(())
     }
 }

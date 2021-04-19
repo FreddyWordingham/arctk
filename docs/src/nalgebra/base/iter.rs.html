@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.23.0/src/base/iter.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iter.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.26.1/src/base/iter.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>iter.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -351,9 +351,56 @@
 <span id="350">350</span>
 <span id="351">351</span>
 <span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Matrix iterators.</span>
 
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FusedIterator</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 
@@ -362,9 +409,9 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::{<span class="ident">Matrix</span>, <span class="ident">MatrixSlice</span>, <span class="ident">MatrixSliceMut</span>, <span class="ident">Scalar</span>};
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">iterator</span> {
-    (<span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span>:<span class="ident">ident</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span>:<span class="ident">ident</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ptr</span>: <span class="ident">ident</span> <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ptr</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ref</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SRef</span>: <span class="ident">ty</span>) <span class="op">=&gt;</span> {
+    (<span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span>:<span class="ident">ident</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span>:<span class="ident">ident</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ptr</span>: <span class="ident">ident</span> <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ptr</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ref</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SRef</span>: <span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="doccomment">/// An iterator through a dense matrix with arbitrary strides matrix.</span>
-        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
             <span class="ident">ptr</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ptr</span>,
             <span class="ident">inner_ptr</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ptr</span>,
             <span class="ident">inner_end</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ptr</span>,
@@ -373,11 +420,11 @@
             <span class="ident">_phantoms</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ref</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span>)<span class="op">&gt;</span>,
         }
 
-        <span class="comment">// FIXME: we need to specialize for the case where the matrix storage is owned (in which</span>
+        <span class="comment">// TODO: we need to specialize for the case where the matrix storage is owned (in which</span>
         <span class="comment">// case the iterator is trivial because it does not have any stride).</span>
-        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
             <span class="doccomment">/// Creates a new iterator for the given matrix storage.</span>
-            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">storage</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SRef</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">storage</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SRef</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> <span class="ident">storage</span>.<span class="ident">shape</span>();
                 <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> <span class="ident">storage</span>.<span class="ident">strides</span>();
                 <span class="kw">let</span> <span class="ident">inner_offset</span> <span class="op">=</span> <span class="ident">shape</span>.<span class="number">0</span>.<span class="ident">value</span>() <span class="op">*</span> <span class="ident">strides</span>.<span class="number">0</span>.<span class="ident">value</span>();
@@ -391,42 +438,42 @@
                 <span class="comment">// This pointer will never actually get used</span>
                 <span class="comment">// if our size is &#39;0&#39;, so it&#39;s fine to use</span>
                 <span class="comment">// &#39;ptr&#39; for both the start and end.</span>
-                <span class="kw">let</span> <span class="ident">inner_end</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
+                <span class="kw">let</span> <span class="ident">inner_end</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                     <span class="ident">ptr</span>
                 } <span class="kw">else</span> {
                     <span class="comment">// Safety:</span>
                     <span class="comment">// If &#39;size&#39; is non-zero, we know that &#39;ptr&#39;</span>
                     <span class="comment">// is not dangling, and &#39;inner_offset&#39; must lie</span>
                     <span class="comment">// within the allocation</span>
-                    <span class="kw">unsafe</span> { <span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">inner_offset</span> <span class="kw">as</span> <span class="ident">isize</span>) }
+                    <span class="kw">unsafe</span> { <span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">inner_offset</span>) }
                 };
 
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span> {
-                    <span class="ident">ptr</span>: <span class="ident">ptr</span>,
+                    <span class="ident">ptr</span>,
                     <span class="ident">inner_ptr</span>: <span class="ident">ptr</span>,
                     <span class="ident">inner_end</span>,
                     <span class="ident">size</span>: <span class="ident">shape</span>.<span class="number">0</span>.<span class="ident">value</span>() <span class="op">*</span> <span class="ident">shape</span>.<span class="number">1</span>.<span class="ident">value</span>(),
-                    <span class="ident">strides</span>: <span class="ident">strides</span>,
+                    <span class="ident">strides</span>,
                     <span class="ident">_phantoms</span>: <span class="ident">PhantomData</span>,
                 }
             }
         }
 
-        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Iterator</span>
-            <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Iterator</span>
+            <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
         {
             <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ref</span>;
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ref</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ref</span><span class="op">&gt;</span> {
                 <span class="kw">unsafe</span> {
-                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">size</span> <span class="op">==</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
                         <span class="prelude-val">None</span>
                     } <span class="kw">else</span> {
-                        <span class="self">self</span>.<span class="ident">size</span> <span class="op">-=</span> <span class="number">1</span>;
+                        <span class="self">self</span>.<span class="ident">size</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
 
                         <span class="comment">// Jump to the next outer dimension if needed.</span>
-                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">ptr</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">inner_end</span> {
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">ptr</span> <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">inner_end</span> {
                             <span class="kw">let</span> <span class="ident">stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="number">1</span>.<span class="ident">value</span>() <span class="kw">as</span> <span class="ident">isize</span>;
                             <span class="comment">// This might go past the end of the allocation,</span>
                             <span class="comment">// depending on the value of &#39;size&#39;. We use</span>
@@ -441,13 +488,13 @@
                         <span class="comment">// Go to the next element.</span>
                         <span class="kw">let</span> <span class="ident">old</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ptr</span>;
 
-                        <span class="kw">let</span> <span class="ident">stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="number">0</span>.<span class="ident">value</span>() <span class="kw">as</span> <span class="ident">isize</span>;
                         <span class="comment">// Don&#39;t offset `self.ptr` for the last element,</span>
                         <span class="comment">// as this will be out of bounds. Iteration is done</span>
                         <span class="comment">// at this point (the next call to `next` will return `None`)</span>
                         <span class="comment">// so this is not observable.</span>
-                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">size</span> <span class="op">!=</span> <span class="number">0</span> {
-                            <span class="self">self</span>.<span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">stride</span>);
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">size</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
+                            <span class="kw">let</span> <span class="ident">stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="number">0</span>.<span class="ident">value</span>();
+                            <span class="self">self</span>.<span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">add</span>(<span class="ident">stride</span>);
                         }
                         <span class="prelude-val">Some</span>(<span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">old</span>))
                     }
@@ -455,29 +502,74 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+            <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
                 (<span class="self">self</span>.<span class="ident">size</span>, <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">size</span>))
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+            <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
                 <span class="self">self</span>.<span class="ident">size_hint</span>().<span class="number">0</span>
             }
         }
 
-        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">ExactSizeIterator</span>
-            <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span>
+            <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
         {
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+            <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">Ref</span><span class="op">&gt;</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="kw">if</span> <span class="self">self</span>.<span class="ident">size</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                        <span class="prelude-val">None</span>
+                    } <span class="kw">else</span> {
+                        <span class="comment">// Pre-decrement `size` such that it now counts to the</span>
+                        <span class="comment">// element we want to return.</span>
+                        <span class="self">self</span>.<span class="ident">size</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
+
+                        <span class="comment">// Fetch strides</span>
+                        <span class="kw">let</span> <span class="ident">inner_stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="number">0</span>.<span class="ident">value</span>();
+                        <span class="kw">let</span> <span class="ident">outer_stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="number">1</span>.<span class="ident">value</span>();
+
+                        <span class="comment">// Compute number of rows</span>
+                        <span class="comment">// Division should be exact</span>
+                        <span class="kw">let</span> <span class="ident">inner_raw_size</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner_end</span>.<span class="ident">offset_from</span>(<span class="self">self</span>.<span class="ident">inner_ptr</span>) <span class="kw">as</span> <span class="ident">usize</span>;
+                        <span class="kw">let</span> <span class="ident">inner_size</span> <span class="op">=</span> <span class="ident">inner_raw_size</span> <span class="op">/</span> <span class="ident">inner_stride</span>;
+
+                        <span class="comment">// Compute rows and cols remaining</span>
+                        <span class="kw">let</span> <span class="ident">outer_remaining</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">size</span> <span class="op">/</span> <span class="ident">inner_size</span>;
+                        <span class="kw">let</span> <span class="ident">inner_remaining</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">size</span> <span class="op">%</span> <span class="ident">inner_size</span>;
+
+                        <span class="comment">// Compute pointer to last element</span>
+                        <span class="kw">let</span> <span class="ident">last</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">offset</span>(
+                            (<span class="ident">outer_remaining</span> <span class="op">*</span> <span class="ident">outer_stride</span> <span class="op">+</span> <span class="ident">inner_remaining</span> <span class="op">*</span> <span class="ident">inner_stride</span>)
+                                <span class="kw">as</span> <span class="ident">isize</span>,
+                        );
+
+                        <span class="comment">// We want either `&amp; *last` or `&amp;mut *last` here, depending</span>
+                        <span class="comment">// on the mutability of `$Ref`.</span>
+                        <span class="prelude-val">Some</span>(<span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">last</span>))
+                    }
+                }
+            }
+        }
+
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span>
+            <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+        {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
                 <span class="self">self</span>.<span class="ident">size</span>
             }
+        }
+
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">FusedIterator</span>
+            <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Name</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+        {
         }
     };
 }
 
-<span class="macro">iterator</span><span class="macro">!</span>(<span class="kw">struct</span> <span class="ident">MatrixIter</span> <span class="kw">for</span> <span class="ident">Storage</span>.<span class="ident">ptr</span> <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">N</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">N</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>);
-<span class="macro">iterator</span><span class="macro">!</span>(<span class="kw">struct</span> <span class="ident">MatrixIterMut</span> <span class="kw">for</span> <span class="ident">StorageMut</span>.<span class="ident">ptr_mut</span> <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">N</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">N</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">S</span>);
+<span class="macro">iterator</span><span class="macro">!</span>(<span class="kw">struct</span> <span class="ident">MatrixIter</span> <span class="kw">for</span> <span class="ident">Storage</span>.<span class="ident">ptr</span> <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>);
+<span class="macro">iterator</span><span class="macro">!</span>(<span class="kw">struct</span> <span class="ident">MatrixIterMut</span> <span class="kw">for</span> <span class="ident">StorageMut</span>.<span class="ident">ptr_mut</span> <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">T</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">S</span>);
 
 <span class="comment">/*
  *
@@ -486,25 +578,25 @@
  */</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="doccomment">/// An iterator through the rows of a matrix.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> {
-    <span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>,
     <span class="ident">curr</span>: <span class="ident">usize</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">RowIter</span> { <span class="ident">mat</span>, <span class="ident">curr</span>: <span class="number">0</span> }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MatrixSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">U1</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MatrixSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">U1</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">nrows</span>() {
             <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">row</span>(<span class="self">self</span>.<span class="ident">curr</span>);
-            <span class="self">self</span>.<span class="ident">curr</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="self">self</span>.<span class="ident">curr</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             <span class="prelude-val">Some</span>(<span class="ident">res</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -512,7 +604,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         (
             <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>,
             <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>),
@@ -520,29 +612,29 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">ExactSizeIterator</span>
-    <span class="kw">for</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span>
+    <span class="kw">for</span> <span class="ident">RowIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>
     }
 }
 
 <span class="doccomment">/// An iterator through the mutable rows of a matrix.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> {
-    <span class="ident">mat</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="ident">mat</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>,
     <span class="ident">curr</span>: <span class="ident">usize</span>,
-    <span class="ident">phantom</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">phantom</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">RowIterMut</span> {
             <span class="ident">mat</span>,
             <span class="ident">curr</span>: <span class="number">0</span>,
@@ -550,21 +642,21 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">nrows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">nrows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">mat</span>).<span class="ident">nrows</span>() }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Iterator</span>
-    <span class="kw">for</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Iterator</span>
+    <span class="kw">for</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MatrixSliceMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">U1</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MatrixSliceMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">U1</span>, <span class="ident">C</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">nrows</span>() {
             <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">mat</span>).<span class="ident">row_mut</span>(<span class="self">self</span>.<span class="ident">curr</span>) };
-            <span class="self">self</span>.<span class="ident">curr</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="self">self</span>.<span class="ident">curr</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             <span class="prelude-val">Some</span>(<span class="ident">res</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -572,21 +664,21 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         (<span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>, <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">ExactSizeIterator</span>
-    <span class="kw">for</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span>
+    <span class="kw">for</span> <span class="ident">RowIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>
     }
 }
@@ -598,27 +690,27 @@
  */</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="doccomment">/// An iterator through the columns of a matrix.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> {
-    <span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>,
     <span class="ident">curr</span>: <span class="ident">usize</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">ColumnIter</span> { <span class="ident">mat</span>, <span class="ident">curr</span>: <span class="number">0</span> }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Iterator</span>
-    <span class="kw">for</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Iterator</span>
+    <span class="kw">for</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MatrixSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">U1</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MatrixSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">U1</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">ncols</span>() {
             <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">column</span>(<span class="self">self</span>.<span class="ident">curr</span>);
-            <span class="self">self</span>.<span class="ident">curr</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="self">self</span>.<span class="ident">curr</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             <span class="prelude-val">Some</span>(<span class="ident">res</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -626,7 +718,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         (
             <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">ncols</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>,
             <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">ncols</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>),
@@ -634,29 +726,29 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">ncols</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">ExactSizeIterator</span>
-    <span class="kw">for</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span>
+    <span class="kw">for</span> <span class="ident">ColumnIter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">mat</span>.<span class="ident">ncols</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>
     }
 }
 
 <span class="doccomment">/// An iterator through the mutable columns of a matrix.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> {
-    <span class="ident">mat</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="ident">mat</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>,
     <span class="ident">curr</span>: <span class="ident">usize</span>,
-    <span class="ident">phantom</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">phantom</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">mat</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">ColumnIterMut</span> {
             <span class="ident">mat</span>,
             <span class="ident">curr</span>: <span class="number">0</span>,
@@ -664,21 +756,21 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">ncols</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">ncols</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">mat</span>).<span class="ident">ncols</span>() }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">Iterator</span>
-    <span class="kw">for</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Iterator</span>
+    <span class="kw">for</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 {
-    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MatrixSliceMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">U1</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MatrixSliceMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">U1</span>, <span class="ident">S</span>::<span class="ident">RStride</span>, <span class="ident">S</span>::<span class="ident">CStride</span><span class="op">&gt;</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">ncols</span>() {
             <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">mat</span>).<span class="ident">column_mut</span>(<span class="self">self</span>.<span class="ident">curr</span>) };
-            <span class="self">self</span>.<span class="ident">curr</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="self">self</span>.<span class="ident">curr</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             <span class="prelude-val">Some</span>(<span class="ident">res</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -686,23 +778,24 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
         (<span class="self">self</span>.<span class="ident">ncols</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>, <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">ncols</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">ncols</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;&gt;</span> <span class="ident">ExactSizeIterator</span>
-    <span class="kw">for</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Scalar</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span>
+    <span class="kw">for</span> <span class="ident">ColumnIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">ncols</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">curr</span>
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "nalgebra";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="nalgebra" data-search-js="../../../search-index.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

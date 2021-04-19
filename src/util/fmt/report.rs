@@ -1,142 +1,107 @@
 //! Reporting functions.
 
-use crate::err::Error;
-use std::fmt::{Display, Write};
-
-/// Length allocated to name printing.
-const NAME_LENGTH: usize = 32;
-
-/// Report the value of an object.
-/// # Errors
-/// if the object could not be written to a string.
-#[inline]
-pub fn obj<T: Display>(name: &str, obj: T) -> Result<String, Error> {
-    let mut s = String::new();
-    write!(s, "{}", obj)?;
-    if s.contains('\n') {
-        Ok(format!(
-            "{:>name_len$}   .\n  {}",
-            name,
-            s.replace('\n', "\n  "),
-            name_len = NAME_LENGTH
-        ))
-    } else {
-        Ok(format!(
-            "{:>name_len$} :  {}",
-            name,
-            s,
-            name_len = NAME_LENGTH
-        ))
-    }
-}
-
-/// Report the value of an object.
-/// # Errors
-/// if the object could not be written.
-#[inline]
-pub fn obj_units<T: Display>(name: &str, obj: T, units: &str) -> Result<String, Error> {
-    let mut s = String::new();
-    write!(s, "{}", obj)?;
-    if s.contains('\n') {
-        Ok(format!(
-            "{:>name_len$}  .\n  {} [{}]",
-            name,
-            s.replace('\n', "\n  "),
-            units,
-            name_len = NAME_LENGTH
-        ))
-    } else {
-        Ok(format!(
-            "{:>name_len$} :  {} [{}]",
-            name,
-            s,
-            units,
-            name_len = NAME_LENGTH
-        ))
-    }
-}
-
 /// Report an object and either its associated name, or a human readable string if supplied.
 #[macro_export]
 macro_rules! report {
     ($expression: expr) => {
-        println!(
-            "{}",
-            arctk::report::obj(stringify!($expression), $expression)
-                .expect("Could not write object.")
-        );
+        println!("{:>32} : {}", stringify!($expression), $expression);
     };
-
-    ($desc: expr, $expression: expr) => {
-        println!(
-            "{}",
-            arctk::report::obj($desc, $expression).expect("Could not write object.")
-        );
+    ($expression: expr, $desc: expr) => {
+        println!("{:>32} : {}", $desc, $expression);
     };
-
-    ($desc: expr, $expression: expr, $units: tt) => {
-        println!(
-            "{}",
-            arctk::report::obj_units($desc, $expression, $units).expect("Could not write object.")
-        );
+    ($expression: expr, $desc: expr, $units: expr) => {
+        println!("{:>32} : {} [{}]", $desc, $expression, $units);
     };
 }
 
-/// Write a list of items as a string.
-/// # Errors
-/// if a list item could not be written.
-#[inline]
-fn list_string<T: Display>(list: &[T]) -> Result<String, Error> {
-    let mut s = String::new();
-    for item in list {
-        write!(s, "{:>item_len$} ", item, item_len = NAME_LENGTH / 2)?;
-    }
-
-    if !s.is_empty() {
-        s.pop();
-    }
-
-    Ok(s)
-}
-
-/// Report a list of items.
-/// # Errors
-/// if a list item could not be written.
-#[inline]
-pub fn list<T: Display>(name: &str, list: &[T]) -> Result<String, Error> {
-    obj(name, list_string(list)?)
-}
-
-/// Report a list of items.
-/// # Errors
-/// if a list item could not be written.
-#[inline]
-pub fn list_units<T: Display>(name: &str, list: &[T], units: &str) -> Result<String, Error> {
-    obj_units(name, list_string(list)?, units)
-}
-
-/// Report a list of items with an associated name, or a human readable string if supplied.
+/// Report an iterable object and either its associated name, or a human readable string if supplied.
 #[macro_export]
-macro_rules! report_list {
+macro_rules! reports {
     ($expression: expr) => {
-        println!(
-            "{}",
-            arctk::report::list(stringify!($expression), $expression)
-                .expect("Could not write object.")
-        );
+        print!("{:>32} :", stringify!($expression));
+        for item in $expression {
+            print!(" {}", item);
+        }
+        println!();
     };
-
-    ($desc: expr, $expression: expr) => {
-        println!(
-            "{}",
-            arctk::report::list($desc, $expression).expect("Could not write object.")
-        );
+    ($expression: expr, $desc: expr) => {
+        print!("{:>32} :", $desc);
+        for item in $expression {
+            print!(" {}", item);
+        }
+        println!();
     };
+    ($expression: expr, $desc: expr, $units: expr) => {
+        print!("{:>32} :", $desc);
+        for item in $expression {
+            print!(" {}", item);
+        }
+        println!(" [{}]", $units);
+    };
+}
 
-    ($desc: expr, $expression: expr, $units: tt) => {
-        println!(
-            "{}",
-            arctk::report::list_units($desc, $expression, $units).expect("Could not write object.")
-        );
+/// Report an object and either its associated name, or a human readable string if supplied.
+#[macro_export]
+macro_rules! fmt_report {
+    ($fmt: expr, $expression: expr) => {
+        writeln!($fmt, "{:>32} : {}", stringify!($expression), $expression)?;
+    };
+    ($fmt: expr, $expression: expr, $desc: expr) => {
+        writeln!($fmt, "{:>32} : {}", $desc, $expression)?;
+    };
+    ($fmt: expr, $expression: expr, $desc: expr, $units: expr) => {
+        writeln!($fmt, "{:>32} : {} [{}]", $desc, $expression, $units)?;
+    };
+}
+
+// /// Report an iterable object and either its associated name, or a human readable string if supplied.
+// #[macro_export]
+// macro_rules! fmt_reports {
+//     ($fmt: expr, $expression: expr) => {
+//         write!($fmt, "{:>32} :", stringify!($expression))?;
+//         for item in $expression {
+//             write!($fmt, " {}", item)?;
+//         }
+//         writeln!($fmt)?;
+//     };
+//     ($fmt: expr, $expression: expr, $desc: expr) => {
+//         write!($fmt, "{:>32} :", $desc)?;
+//         for item in $expression {
+//             write!($fmt, " {}", item)?;
+//         }
+//         writeln!($fmt)?;
+//     };
+//     ($fmt: expr, $expression: expr, $desc: expr, $units: expr) => {
+//         write!($fmt, "{:>32} :", $desc)?;
+//         for item in $expression {
+//             write!($fmt, " {}", item)?;
+//         }
+//         writeln!($fmt, " [{}]", $units)?;
+//     };
+// }
+
+/// Report an iterable object and either its associated name, or a human readable string if supplied.
+#[macro_export]
+macro_rules! fmt_reports {
+    ($fmt: expr, $expression: expr) => {
+        write!($fmt, "{:>32} :", stringify!($expression))?;
+        for item in $expression {
+            write!($fmt, " {}", item)?;
+        }
+        writeln!($fmt)?;
+    };
+    ($fmt: expr, $expression: expr, $desc: expr) => {
+        write!($fmt, "{:>32} :", $desc)?;
+        for item in $expression {
+            write!($fmt, " {}", item)?;
+        }
+        writeln!($fmt)?;
+    };
+    ($fmt: expr, $expression: expr, $desc: expr, $units: expr) => {
+        write!($fmt, "{:>32} :", $desc)?;
+        for item in $expression {
+            write!($fmt, " {}", item)?;
+        }
+        writeln!($fmt, " [{}]", $units)?;
     };
 }

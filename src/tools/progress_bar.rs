@@ -5,19 +5,19 @@ pub struct ProgressBar {
     /// Graphics.
     pb: indicatif::ProgressBar,
     /// Current value.
-    count: u64,
+    count: usize,
     /// Total target value.
-    total: u64,
+    total: usize,
 }
 
 impl ProgressBar {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(msg: &str, total: u64) -> Self {
+    pub fn new(msg: &str, total: usize) -> Self {
         debug_assert!(total > 0);
 
-        let pb = indicatif::ProgressBar::new(total);
+        let pb = indicatif::ProgressBar::new(total as u64);
 
         pb.set_style(
             indicatif::ProgressStyle::default_bar()
@@ -45,7 +45,7 @@ impl ProgressBar {
     /// If there is not enough, return the remaining block.
     /// If there are none at all, return None.
     #[inline]
-    pub fn block(&mut self, size: u64) -> Option<(u64, u64)> {
+    pub fn block(&mut self, size: usize) -> Option<(usize, usize)> {
         debug_assert!(size > 0);
 
         if self.count >= self.total {
@@ -58,7 +58,7 @@ impl ProgressBar {
             let end = start + alloc;
 
             self.count += alloc;
-            self.pb.inc(alloc);
+            self.pb.inc(alloc as u64);
 
             Some((start, end))
         }

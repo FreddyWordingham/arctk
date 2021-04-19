@@ -1,68 +1,72 @@
 //! MCRT settings.
 
-use crate::{access, clone, math::Pos3, ord::Key};
-use arctk_attr::load;
+use crate::{clone, fmt_report};
+use arctk_attr::file;
+use std::fmt::{Display, Error, Formatter};
 
-/// MCRT settings structure.
-#[load]
+/// General settings structure.
+#[file]
 pub struct Settings {
-    /// Number of photons to simulate in each thread block.
-    block_size: u64,
     /// Number of photons to simulate.
-    num_phot: u64,
-    /// Bump distance [m].
+    num_phot: usize,
+    /// Number of photons to simulate in each thread block.
+    block_size: usize,
+    /// Bump distance (m).
     bump_dist: f64,
     /// Loop limit.
     loop_limit: u64,
-    /// Weight to perform roulette at.
-    roulette_weight: f64,
+    /// Minimum statistical weight to consider.
+    min_weight: f64,
     /// Number of roulette barrels.
     roulette_barrels: u64,
-    /// Initial emission material.
-    init_mat: Key,
-    /// Peel-off detector position.
-    detector_pos: Pos3,
 }
 
 impl Settings {
-    clone!(block_size, u64);
-    clone!(num_phot, u64);
+    clone!(num_phot, usize);
+    clone!(block_size, usize);
     clone!(bump_dist, f64);
     clone!(loop_limit, u64);
-    clone!(roulette_weight, f64);
+    clone!(min_weight, f64);
     clone!(roulette_barrels, u64);
-    access!(init_mat, Key);
-    access!(detector_pos, Pos3);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
     pub fn new(
-        block_size: u64,
-        num_phot: u64,
+        num_phot: usize,
+        block_size: usize,
         bump_dist: f64,
         loop_limit: u64,
-        roulette_weight: f64,
+        min_weight: f64,
         roulette_barrels: u64,
-        init_mat: Key,
-        detector_pos: Pos3,
     ) -> Self {
-        debug_assert!(block_size > 0);
         debug_assert!(num_phot > 0);
+        debug_assert!(block_size > 0);
         debug_assert!(bump_dist > 0.0);
-        debug_assert!(loop_limit > 0);
-        debug_assert!(roulette_weight >= 0.0);
-        debug_assert!(roulette_barrels > 0);
+        debug_assert!(min_weight >= 0.0);
+        debug_assert!(roulette_barrels > 1);
 
         Self {
-            block_size,
             num_phot,
+            block_size,
             bump_dist,
             loop_limit,
-            roulette_weight,
+            min_weight,
             roulette_barrels,
-            init_mat,
-            detector_pos,
         }
+    }
+}
+
+impl Display for Settings {
+    #[inline]
+    fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
+        writeln!(fmt, "...")?;
+        fmt_report!(fmt, self.num_phot, "num_phot");
+        fmt_report!(fmt, self.block_size, "block size");
+        fmt_report!(fmt, self.bump_dist, "bump distance (m)");
+        fmt_report!(fmt, self.loop_limit, "loop limit");
+        fmt_report!(fmt, self.min_weight, "minimum simulation weight");
+        fmt_report!(fmt, self.roulette_barrels, "roulette barrels");
+        Ok(())
     }
 }
