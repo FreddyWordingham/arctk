@@ -10,7 +10,7 @@ use crate::{
     tools::Range,
 };
 use ndarray::Array3;
-use std::{ops::AddAssign, path::Path};
+use std::{ops::AddAssign, path::Path, fs::File, fs::OpenOptions, io::Write};
 
 /// MCRT output data.
 pub struct Data {
@@ -100,7 +100,13 @@ impl Save for Data {
         println!("Saving: {}", path.display());
         (&self.shifts / self.cell_vol).save(&path)?;
 
+        let path = out_dir.join("Raman_weight.txt");
+        //self.total_raman_weight.save(&path)?;
+        //let mut file = OpenOptions::new().append(true).create(true).open(&path)?;
+        //println!("Saving: {}", path.display());
+        //writeln!(file, "{}", self.total_raman_weight)?;
         println!("Total Raman weight: {}", self.total_raman_weight);
+
         Ok(())
     }
 }

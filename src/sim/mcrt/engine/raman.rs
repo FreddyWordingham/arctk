@@ -1,6 +1,6 @@
 //! Raman specialised photon-lifetime engine function.
 
-use super::super::{peel_off, Attributes, Data, Event, Local, Photon, Sample, Universe};
+use super::super::{peel_off, simple_peel_off, Attributes, Data, Event, Local, Photon, Sample, Universe};
 use crate::{geom::Trace, math::sample_henyey_greenstein, phys::Crossing};
 use physical_constants::SPEED_OF_LIGHT_IN_VACUUM;
 use rand::{rngs::ThreadRng, Rng};
@@ -32,6 +32,7 @@ pub fn sample(rng: &mut ThreadRng, uni: &Universe, data: &mut Data, mut phot: Ph
 
     // Main loop.
     let mut loops = 0;
+
     while let Some((index, voxel)) = uni.grid.gen_index_voxel(phot.ray().pos()) {
         // Loop limit check.
         if loops >= loop_limit {
@@ -63,13 +64,17 @@ pub fn sample(rng: &mut ThreadRng, uni: &Universe, data: &mut Data, mut phot: Ph
             Event::Voxel(dist) => travel(data, index, &env, &mut phot, dist + bump_dist),
             Event::Scattering(dist) => {
                 scatter(rng, data, index, &env, &mut phot, dist);
-                if phot.wavelength() >= 900.0e-9 {
-                    if let Some(weight) =
-                        peel_off(&env, uni, phot.clone(), *uni.sett.detector_pos())
-                    {
-                        data.total_raman_weight += weight * phot.weight();
-                    }
-                }
+
+                //if phot.wavelength() >= 850.0e-9 {
+
+                    //if let Some(weight) =
+
+                        //peel_off(&env, uni, phot.clone(), *uni.sett.detector_pos())
+
+                    //{
+                        //data.total_raman_weight += weight * phot.weight() ;
+                    //}
+                //}
             }
             Event::Surface(hit) => {
                 // Move to the collision point.
@@ -78,7 +83,7 @@ pub fn sample(rng: &mut ThreadRng, uni: &Universe, data: &mut Data, mut phot: Ph
                 if let Some(attr) = uni.attrs.map().get(*hit.tag()) {
                     match *attr {
                         Attributes::Spectrometer => {
-                            data.spec.collect_weight(phot.wavelength(), phot.weight());
+                            data.spec.collect_weight(phot.wavelength(), phot.weight()*phot.power());
                         }
                         Attributes::Mirror => {
                             *phot.ray_mut().dir_mut() =

@@ -6,6 +6,7 @@ use crate::{
     math::{Dir3, Pos3},
     phys::Crossing,
 };
+use nalgebra::distance;
 
 /// Minimum weight before discarding.
 const THRESHOLD: f64 = 1.0e-6;
@@ -22,12 +23,13 @@ pub fn peel_off(env: &Local, uni: &Universe, mut phot: Photon, pos: Pos3) -> Opt
 
     let cos_ang = phot.ray().dir().dot(&dir);
     let mut prob = 0.5 * ((1.0 - g_sq) / (1.0 + g_sq - (2.0 * g * cos_ang)).powf(1.5));
+    
     if prob < THRESHOLD {
         return None;
     }
 
-    // let dist = distance(pos, phot.ray().pos());
-    // prob *= (-dist * env.inter_coeff()).exp();
+    //let dist = distance(&pos, phot.ray().pos());
+    //prob *= (-dist * env.inter_coeff()).exp();
 
     *phot.ray_mut().dir_mut() = dir;
 
@@ -92,6 +94,24 @@ pub fn peel_off(env: &Local, uni: &Universe, mut phot: Photon, pos: Pos3) -> Opt
             }
         }
     }
+
+    Some(prob)
+}
+
+pub fn simple_peel_off(env: &Local, uni: &Universe, mut phot: Photon, pos: Pos3) -> Option<f64> {
+    let g = env.asym();
+    let g_sq = g * g;
+
+    let dir = Dir3::new_normalize(pos - phot.ray().pos());
+
+    let cos_ang = phot.ray().dir().dot(&dir);
+    let mut prob = 0.5 * ((1.0 - g_sq) / (1.0 + g_sq - (2.0 * g * cos_ang)).powf(1.5));
+    if prob < THRESHOLD {
+        return None;
+    }
+
+    let dist = distance(&pos, phot.ray().pos());
+    prob *= (-dist * env.inter_coeff()).exp();
 
     Some(prob)
 }
