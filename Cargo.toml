@@ -43,7 +43,6 @@ serde = { version = "1.0.*", features = ["derive"] }
 serde_json = "1.0.*"
 slice-of-array = "0.3.*"
 terminal_size = "0.1.*"
-minifb = "0.19.*"
 
 [[bin]]
 name = "babbage"
