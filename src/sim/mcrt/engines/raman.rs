@@ -4,7 +4,7 @@ use crate::{
     geom::Trace,
     math::Pos3,
     phys::Photon,
-    sim::mcrt::{scatter::scatter, surface::surface, travel::travel, Event, Input, Output},
+    sim::mcrt::{scatter::shift_scatter, surface::surface, travel::travel, Event, Input, Output},
 };
 use rand::{rngs::ThreadRng, Rng};
 
@@ -12,7 +12,7 @@ use rand::{rngs::ThreadRng, Rng};
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn raman(
-    _pos: &Pos3,
+    _detector_pos: &Pos3,
     input: &Input,
     mut data: &mut Output,
     mut rng: &mut ThreadRng,
@@ -69,7 +69,14 @@ pub fn raman(
             Event::Voxel(dist) => travel(&mut data, &mut phot, &env, index, dist + bump_dist),
             Event::Scattering(dist) => {
                 travel(&mut data, &mut phot, &env, index, dist);
-                scatter(&mut rng, &mut phot, &env)
+
+                // Capture.
+                // let mut detected_weight = 0.0;
+                // if let Some(weight) = peel_off(input, phot.clone(), &env, *detector_pos) {
+                //     detected_weight += weight;
+                // }
+
+                shift_scatter(&mut rng, &mut phot, &env)
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());
