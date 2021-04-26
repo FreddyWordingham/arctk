@@ -11,6 +11,7 @@ use rand::rngs::ThreadRng;
 use std::fmt::{Display, Error, Formatter};
 
 /// Engine selection.
+#[allow(clippy::large_enum_variant)]
 pub enum Engine {
     /// Standard sampling engine.
     Standard,
@@ -31,7 +32,7 @@ impl Engine {
             Self::Raman(ref p) => engines::raman(p, input, data, rng, phot),
             Self::Photo(ref frames) => engines::photo(frames, input, data, rng, phot),
             Self::Fluorescence(ref shift_map, ref conc_spec) => {
-                engines::fluorescence(shift_map, conc_spec, input, data, rng, phot)
+                engines::fluorescence(shift_map, conc_spec, input, data, rng, phot);
             }
         }
     }

@@ -78,7 +78,7 @@ pub fn raman(
                 //     detected_weight += weight;
                 // }
 
-                shift_scatter(&mut rng, &mut phot, &env)
+                shift_scatter(&mut rng, &mut phot, &env);
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());

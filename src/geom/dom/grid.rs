@@ -62,18 +62,16 @@ impl Grid {
     #[inline]
     #[must_use]
     pub fn gen_index(&self, p: &Pos3) -> Option<[usize; 3]> {
-        if self.boundary.contains(p) {
+        self.boundary.contains(p).then(|| {
             let mins = self.boundary.mins();
             let maxs = self.boundary.maxs();
 
-            Some([
+            [
                 (((p.x - mins.x) / (maxs.x - mins.x)) * self.res[X] as f64).floor() as usize,
                 (((p.y - mins.y) / (maxs.y - mins.y)) * self.res[Y] as f64).floor() as usize,
                 (((p.z - mins.z) / (maxs.z - mins.z)) * self.res[Z] as f64).floor() as usize,
-            ])
-        } else {
-            None
-        }
+            ]
+        })
     }
 
     /// Generate the voxel for the given index.

@@ -91,7 +91,7 @@ pub fn photo(
                     };
                 }
 
-                scatter(&mut rng, &mut phot, &env)
+                scatter(&mut rng, &mut phot, &env);
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());

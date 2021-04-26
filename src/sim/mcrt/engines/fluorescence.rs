@@ -64,7 +64,7 @@ pub fn fluorescence(
             local.ref_index(),
             local.scat_coeff(),
             local.abs_coeff(),
-            local.shift_coeff() + (mu_shift * flu_concs[index]),
+            mu_shift.mul_add(flu_concs[index], local.shift_coeff()),
             local.asym(),
         );
 
@@ -82,7 +82,7 @@ pub fn fluorescence(
             Event::Voxel(dist) => travel(&mut data, &mut phot, &env, index, dist + bump_dist),
             Event::Scattering(dist) => {
                 travel(&mut data, &mut phot, &env, index, dist);
-                scatter(&mut rng, &mut phot, &env)
+                scatter(&mut rng, &mut phot, &env);
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());

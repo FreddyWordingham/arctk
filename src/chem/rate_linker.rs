@@ -47,7 +47,7 @@ impl<'a> Link<'a, usize> for RateLinker {
                 *reg.get(&name)
                     .unwrap_or_else(|| panic!("Failed to link rate-index: {}", name)),
                 m,
-            ))
+            ));
         }
 
         Ok(Rate::new(self.0, orders))

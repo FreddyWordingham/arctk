@@ -14,6 +14,7 @@
     clippy::cast_possible_wrap,
     clippy::cast_precision_loss,
     clippy::cast_sign_loss,
+    clippy::default_numeric_fallback,
     clippy::else_if_without_else,
     clippy::exhaustive_enums,
     clippy::exhaustive_structs,

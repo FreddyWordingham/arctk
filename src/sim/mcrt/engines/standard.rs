@@ -62,7 +62,7 @@ pub fn standard(input: &Input, mut data: &mut Output, mut rng: &mut ThreadRng, m
             Event::Voxel(dist) => travel(&mut data, &mut phot, &env, index, dist + bump_dist),
             Event::Scattering(dist) => {
                 travel(&mut data, &mut phot, &env, index, dist);
-                scatter(&mut rng, &mut phot, &env)
+                scatter(&mut rng, &mut phot, &env);
             }
             Event::Surface(hit) => {
                 travel(&mut data, &mut phot, &env, index, hit.dist());

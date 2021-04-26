@@ -47,11 +47,7 @@ impl Binner {
     #[inline]
     #[must_use]
     pub fn try_bin(&self, x: f64) -> Option<usize> {
-        if self.range.contains(x) {
-            Some(self.bin(x))
-        } else {
-            None
-        }
+        self.range.contains(x).then(|| self.bin(x))
     }
 }
 

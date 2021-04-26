@@ -41,8 +41,8 @@ impl Orient {
         Self {
             pos,
             forward,
-            up,
             right,
+            up,
         }
     }
 
@@ -57,8 +57,8 @@ impl Orient {
         Self {
             pos,
             forward,
-            up,
             right,
+            up,
         }
     }
 

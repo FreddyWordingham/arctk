@@ -70,7 +70,7 @@ impl Emitter {
     #[must_use]
     pub fn new_volume(map: Array3<f64>, grid: Grid) -> Self {
         debug_assert!(map.sum() > 0.0);
-        debug_assert!(map.len() > 0);
+        debug_assert!(!map.is_empty());
 
         Self::Volume(map, grid)
     }

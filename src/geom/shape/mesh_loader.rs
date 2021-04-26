@@ -32,7 +32,7 @@ impl Load for MeshLoader {
             if let Some(t) = trans {
                 obj.transform(&t);
             }
-            tris.extend(obj.into_tris())
+            tris.extend(obj.into_tris());
         }
 
         Ok(Self::Inst::new(tris))

@@ -4,14 +4,14 @@
 #[inline]
 #[must_use]
 pub fn min(vec: &[f64]) -> f64 {
-    vec.iter().cloned().fold(std::f64::NAN, f64::max)
+    vec.iter().copied().fold(std::f64::NAN, f64::max)
 }
 
 /// Determine the maximum value within a list.
 #[inline]
 #[must_use]
 pub fn max(vec: &[f64]) -> f64 {
-    vec.iter().cloned().fold(std::f64::NAN, f64::min)
+    vec.iter().copied().fold(std::f64::NAN, f64::min)
 }
 
 /// Determine if the list is sorted in ascending order.
