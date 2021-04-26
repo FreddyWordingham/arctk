@@ -14,7 +14,7 @@ use std::fmt::{Display, Error, Formatter};
 pub enum Engine {
     /// Standard sampling engine.
     Standard,
-    /// Ramanisation engine.
+    /// Raman engine.
     Raman,
     /// Photography engine.
     Photo(Set<Frame>),
