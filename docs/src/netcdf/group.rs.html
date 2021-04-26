@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/netcdf-0.6.1/src/group.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>group.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../netcdf/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../netcdf/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -325,14 +325,14 @@
 <span class="doccomment">//! All netcdf items belong in the root group, which can</span>
 <span class="doccomment">//! be interacted with to get the underlying data</span>
 
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">attribute</span>::<span class="ident">AttrValue</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">attribute</span>::<span class="ident">Attribute</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">dimension</span>::<span class="ident">Dimension</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">error</span>;
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">variable</span>::{<span class="ident">Numeric</span>, <span class="ident">Variable</span>, <span class="ident">VariableMut</span>};
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::attribute::AttrValue</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::attribute::Attribute</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::dimension::Dimension</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::error</span>;
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::variable</span>::{<span class="ident">Numeric</span>, <span class="ident">Variable</span>, <span class="ident">VariableMut</span>};
 <span class="kw">use</span> <span class="ident">netcdf_sys</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryInto</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
+<span class="kw">use</span> <span class="ident">std::convert::TryInto</span>;
+<span class="kw">use</span> <span class="ident">std::marker::PhantomData</span>;
 
 <span class="doccomment">/// Main component of the netcdf format. Holds all variables,</span>
 <span class="doccomment">/// attributes, and dimensions. A group can always see the parents items,</span>
@@ -345,15 +345,15 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Mutable access to a group</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">module_name_repetitions</span>)]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::module_name_repetitions</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GroupMut</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span>(
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span>,
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="kw-2">mut</span> <span class="ident">nc_type</span><span class="op">&gt;</span>,
 );
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">GroupMut</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> <span class="ident">std::ops::Deref</span> <span class="kw">for</span> <span class="ident">GroupMut</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Target</span> {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span><span class="ident">::Target</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -361,9 +361,9 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Name of the current group</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">name</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0_u8</span>; <span class="ident">NC_MAX_NAME</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">+</span> <span class="number">1</span>];
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">name</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="number">0_u8</span>; <span class="ident">NC_MAX_NAME</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">+</span> <span class="number">1</span>];
         <span class="kw">unsafe</span> {
-            <span class="ident">error</span>::<span class="ident">checked</span>(<span class="kw">super</span>::<span class="ident">with_lock</span>(<span class="op">|</span><span class="op">|</span> {
+            <span class="ident">error::checked</span>(<span class="kw">super</span><span class="ident">::with_lock</span>(<span class="op">|</span><span class="op">|</span> {
                 <span class="ident">nc_inq_grpname</span>(<span class="self">self</span>.<span class="ident">ncid</span>, <span class="ident">name</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>)
             }))
             .<span class="ident">unwrap</span>();
@@ -374,7 +374,7 @@
             .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">name</span>.<span class="ident">len</span>());
         <span class="ident">name</span>.<span class="ident">resize</span>(<span class="ident">zeropos</span>, <span class="number">0</span>);
 
-        <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">name</span>).<span class="ident">expect</span>(<span class="string">&quot;Group did not have a valid name&quot;</span>)
+        <span class="ident">String::from_utf8</span>(<span class="ident">name</span>).<span class="ident">expect</span>(<span class="string">&quot;Group did not have a valid name&quot;</span>)
     }
     <span class="doccomment">/// Internal ncid of the group</span>
     <span class="kw">fn</span> <span class="ident">id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">nc_type</span> {
@@ -386,28 +386,28 @@
     <span class="kw">where</span>
         <span class="lifetime">&#39;f</span>: <span class="lifetime">&#39;g</span>,
     {
-        <span class="ident">Variable</span>::<span class="ident">find_from_name</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>).<span class="ident">unwrap</span>()
+        <span class="ident">Variable::find_from_name</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>).<span class="ident">unwrap</span>()
     }
     <span class="doccomment">/// Iterate over all variables in a group</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">variables</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Variable</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="lifetime">&#39;f</span>: <span class="lifetime">&#39;g</span>,
     {
-        <span class="kw">super</span>::<span class="ident">variable</span>::<span class="ident">variables_at_ncid</span>(<span class="self">self</span>.<span class="ident">id</span>())
+        <span class="kw">super</span><span class="ident">::variable::variables_at_ncid</span>(<span class="self">self</span>.<span class="ident">id</span>())
             .<span class="ident">unwrap</span>()
-            .<span class="ident">map</span>(<span class="prelude-ty">Result</span>::<span class="ident">unwrap</span>)
+            .<span class="ident">map</span>(<span class="ident">Result::unwrap</span>)
     }
 
     <span class="doccomment">/// Get a single attribute</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="ident">Attribute</span>::<span class="ident">find_from_name</span>(<span class="self">self</span>.<span class="ident">ncid</span>, <span class="prelude-val">None</span>, <span class="ident">name</span>).<span class="ident">unwrap</span>()
+        <span class="ident">Attribute::find_from_name</span>(<span class="self">self</span>.<span class="ident">ncid</span>, <span class="prelude-val">None</span>, <span class="ident">name</span>).<span class="ident">unwrap</span>()
     }
     <span class="doccomment">/// Get all attributes in the group</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">attributes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Attribute</span><span class="op">&gt;</span> {
         <span class="comment">// Need to lock when reading the first attribute (per group)</span>
-        <span class="kw">crate</span>::<span class="ident">attribute</span>::<span class="ident">AttributeIterator</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">ncid</span>, <span class="prelude-val">None</span>)
+        <span class="kw">crate</span><span class="ident">::attribute::AttributeIterator::new</span>(<span class="self">self</span>.<span class="ident">ncid</span>, <span class="prelude-val">None</span>)
             .<span class="ident">unwrap</span>()
-            .<span class="ident">map</span>(<span class="prelude-ty">Result</span>::<span class="ident">unwrap</span>)
+            .<span class="ident">map</span>(<span class="ident">Result::unwrap</span>)
     }
 
     <span class="doccomment">/// Get a single dimension</span>
@@ -415,16 +415,16 @@
     <span class="kw">where</span>
         <span class="lifetime">&#39;f</span>: <span class="lifetime">&#39;g</span>,
     {
-        <span class="kw">super</span>::<span class="ident">dimension</span>::<span class="ident">dimension_from_name</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>).<span class="ident">unwrap</span>()
+        <span class="kw">super</span><span class="ident">::dimension::dimension_from_name</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>).<span class="ident">unwrap</span>()
     }
     <span class="doccomment">/// Iterator over all dimensions</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dimensions</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="lifetime">&#39;f</span>: <span class="lifetime">&#39;g</span>,
     {
-        <span class="kw">super</span>::<span class="ident">dimension</span>::<span class="ident">dimensions_from_location</span>(<span class="self">self</span>.<span class="ident">id</span>())
+        <span class="kw">super</span><span class="ident">::dimension::dimensions_from_location</span>(<span class="self">self</span>.<span class="ident">id</span>())
             .<span class="ident">unwrap</span>()
-            .<span class="ident">map</span>(<span class="prelude-ty">Result</span>::<span class="ident">unwrap</span>)
+            .<span class="ident">map</span>(<span class="ident">Result::unwrap</span>)
     }
 
     <span class="doccomment">/// Get a group</span>
@@ -444,9 +444,9 @@
     }
 
     <span class="doccomment">/// Return all types in this group</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">VariableType</span><span class="op">&gt;</span> {
-        <span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">all_at_location</span>(<span class="self">self</span>.<span class="ident">ncid</span>)
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">map</span>(<span class="prelude-ty">Result</span>::<span class="ident">unwrap</span>))
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">types</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::types::VariableType</span><span class="op">&gt;</span> {
+        <span class="kw">super</span><span class="ident">::types::all_at_location</span>(<span class="self">self</span>.<span class="ident">ncid</span>)
+            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">map</span>(<span class="ident">Result::unwrap</span>))
             .<span class="ident">unwrap</span>()
     }
 }
@@ -487,16 +487,16 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">size</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">OpaqueType</span><span class="op">&gt;</span> {
-        <span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">OpaqueType</span>::<span class="ident">add</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">size</span>)
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::types::OpaqueType</span><span class="op">&gt;</span> {
+        <span class="kw">super</span><span class="ident">::types::OpaqueType::add</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">size</span>)
     }
 
     <span class="doccomment">/// Add a variable length datatype</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_vlen_type</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Numeric</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">VlenType</span><span class="op">&gt;</span> {
-        <span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">VlenType</span>::<span class="ident">add</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>)
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::types::VlenType</span><span class="op">&gt;</span> {
+        <span class="kw">super</span><span class="ident">::types::VlenType::add</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>)
     }
 
     <span class="doccomment">/// Add an enum datatype</span>
@@ -504,41 +504,41 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">mappings</span>: <span class="kw-2">&amp;</span>[(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">T</span>)],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">EnumType</span><span class="op">&gt;</span> {
-        <span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">EnumType</span>::<span class="ident">add</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">mappings</span>)
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::types::EnumType</span><span class="op">&gt;</span> {
+        <span class="kw">super</span><span class="ident">::types::EnumType::add</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">mappings</span>)
     }
 
     <span class="doccomment">/// Build a compound type</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_compound_type</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">CompoundBuilder</span><span class="op">&gt;</span> {
-        <span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">CompoundType</span>::<span class="ident">add</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>)
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::types::CompoundBuilder</span><span class="op">&gt;</span> {
+        <span class="kw">super</span><span class="ident">::types::CompoundType::add</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>)
     }
 
     <span class="doccomment">/// Add an attribute to the group</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">val</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">val</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">AttrValue</span><span class="op">&gt;</span>,
     {
-        <span class="ident">Attribute</span>::<span class="ident">put</span>(<span class="self">self</span>.<span class="ident">ncid</span>, <span class="ident">NC_GLOBAL</span>, <span class="ident">name</span>, <span class="ident">val</span>.<span class="ident">into</span>())
+        <span class="ident">Attribute::put</span>(<span class="self">self</span>.<span class="ident">ncid</span>, <span class="ident">NC_GLOBAL</span>, <span class="ident">name</span>, <span class="ident">val</span>.<span class="ident">into</span>())
     }
 
     <span class="doccomment">/// Adds a dimension with the given name and size. A size of zero gives an unlimited dimension</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">super</span>::<span class="ident">dimension</span>::<span class="ident">add_dimension_at</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">len</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="ident">Dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">super</span><span class="ident">::dimension::add_dimension_at</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">len</span>)
     }
 
     <span class="doccomment">/// Adds a dimension with unbounded size</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_unlimited_dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_unlimited_dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="ident">Dimension</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">add_dimension</span>(<span class="ident">name</span>, <span class="number">0</span>)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_group_at</span>(<span class="ident">ncid</span>: <span class="ident">nc_type</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">byte_name</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">utils</span>::<span class="ident">short_name_to_bytes</span>(<span class="ident">name</span>)<span class="question-mark">?</span>;
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">add_group_at</span>(<span class="ident">ncid</span>: <span class="ident">nc_type</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">byte_name</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::utils::short_name_to_bytes</span>(<span class="ident">name</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">grpid</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">unsafe</span> {
-            <span class="ident">error</span>::<span class="ident">checked</span>(<span class="kw">super</span>::<span class="ident">with_lock</span>(<span class="op">|</span><span class="op">|</span> {
+            <span class="ident">error::checked</span>(<span class="kw">super</span><span class="ident">::with_lock</span>(<span class="op">|</span><span class="op">|</span> {
                 <span class="ident">nc_def_grp</span>(<span class="ident">ncid</span>, <span class="ident">byte_name</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">grpid</span>)
             }))<span class="question-mark">?</span>;
         }
@@ -553,11 +553,11 @@
     }
 
     <span class="doccomment">/// Add an empty group to the dataset</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_group</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">GroupMut</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_group</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="ident">GroupMut</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="lifetime">&#39;f</span>: <span class="lifetime">&#39;g</span>,
     {
-        <span class="self">Self</span>::<span class="ident">add_group_at</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>)
+        <span class="self">Self</span><span class="ident">::add_group_at</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>)
     }
 
     <span class="doccomment">/// Create a Variable into the dataset, with no data written into it</span>
@@ -568,32 +568,32 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">dims</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">VariableMut</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="ident">VariableMut</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Numeric</span>,
         <span class="lifetime">&#39;f</span>: <span class="lifetime">&#39;g</span>,
     {
-        <span class="ident">VariableMut</span>::<span class="ident">add_from_str</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">T</span>::<span class="ident">NCTYPE</span>, <span class="ident">name</span>, <span class="ident">dims</span>)
+        <span class="ident">VariableMut::add_from_str</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">T::NCTYPE</span>, <span class="ident">name</span>, <span class="ident">dims</span>)
     }
     <span class="doccomment">/// Adds a variable with a basic type of string</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_string_variable</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">dims</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">VariableMut</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="ident">VariableMut</span>::<span class="ident">add_from_str</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">NC_STRING</span>, <span class="ident">name</span>, <span class="ident">dims</span>)
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="ident">VariableMut</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="ident">VariableMut::add_from_str</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">NC_STRING</span>, <span class="ident">name</span>, <span class="ident">dims</span>)
     }
     <span class="doccomment">/// Adds a variable from a set of unique identifiers, recursing upwards</span>
     <span class="doccomment">/// from the current group if necessary.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_variable_from_identifiers</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">dims</span>: <span class="kw-2">&amp;</span>[<span class="kw">super</span>::<span class="ident">dimension</span>::<span class="ident">Identifier</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">VariableMut</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span>
+        <span class="ident">dims</span>: <span class="kw-2">&amp;</span>[<span class="kw">super</span><span class="ident">::dimension::Identifier</span>],
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="ident">VariableMut</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Numeric</span>,
     {
-        <span class="kw">super</span>::<span class="ident">variable</span>::<span class="ident">add_variable_from_identifiers</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">dims</span>, <span class="ident">T</span>::<span class="ident">NCTYPE</span>)
+        <span class="kw">super</span><span class="ident">::variable::add_variable_from_identifiers</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">dims</span>, <span class="ident">T::NCTYPE</span>)
     }
 
     <span class="doccomment">/// Create a variable with the specified type</span>
@@ -601,23 +601,23 @@
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;f</span> <span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">dims</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>],
-        <span class="ident">typ</span>: <span class="kw-2">&amp;</span><span class="kw">super</span>::<span class="ident">types</span>::<span class="ident">VariableType</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">VariableMut</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="ident">VariableMut</span>::<span class="ident">add_from_str</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">typ</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">dims</span>)
+        <span class="ident">typ</span>: <span class="kw-2">&amp;</span><span class="kw">super</span><span class="ident">::types::VariableType</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="ident">VariableMut</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="ident">VariableMut::add_from_str</span>(<span class="self">self</span>.<span class="ident">id</span>(), <span class="ident">typ</span>.<span class="ident">id</span>(), <span class="ident">name</span>, <span class="ident">dims</span>)
     }
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">groups_at_ncid</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span>(<span class="ident">ncid</span>: <span class="ident">nc_type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">groups_at_ncid</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span>(<span class="ident">ncid</span>: <span class="ident">nc_type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="kw">impl</span> <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">num_grps</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">unsafe</span> {
-        <span class="ident">error</span>::<span class="ident">checked</span>(<span class="kw">super</span>::<span class="ident">with_lock</span>(<span class="op">|</span><span class="op">|</span> {
-            <span class="ident">nc_inq_grps</span>(<span class="ident">ncid</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">num_grps</span>, <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null_mut</span>())
+        <span class="ident">error::checked</span>(<span class="kw">super</span><span class="ident">::with_lock</span>(<span class="op">|</span><span class="op">|</span> {
+            <span class="ident">nc_inq_grps</span>(<span class="ident">ncid</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">num_grps</span>, <span class="ident">std::ptr::null_mut</span>())
         }))<span class="question-mark">?</span>;
     }
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">grps</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">num_grps</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>];
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">grps</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="number">0</span>; <span class="ident">num_grps</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>];
     <span class="kw">unsafe</span> {
-        <span class="ident">error</span>::<span class="ident">checked</span>(<span class="kw">super</span>::<span class="ident">with_lock</span>(<span class="op">|</span><span class="op">|</span> {
-            <span class="ident">nc_inq_grps</span>(<span class="ident">ncid</span>, <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="ident">grps</span>.<span class="ident">as_mut_ptr</span>())
+        <span class="ident">error::checked</span>(<span class="kw">super</span><span class="ident">::with_lock</span>(<span class="op">|</span><span class="op">|</span> {
+            <span class="ident">nc_inq_grps</span>(<span class="ident">ncid</span>, <span class="ident">std::ptr::null_mut</span>(), <span class="ident">grps</span>.<span class="ident">as_mut_ptr</span>())
         }))<span class="question-mark">?</span>;
     }
     <span class="prelude-val">Ok</span>(<span class="ident">grps</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">id</span><span class="op">|</span> <span class="ident">Group</span> {
@@ -626,16 +626,16 @@
     }))
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">group_from_name</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span>(<span class="ident">ncid</span>: <span class="ident">nc_type</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">byte_name</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">utils</span>::<span class="ident">short_name_to_bytes</span>(<span class="ident">name</span>)<span class="question-mark">?</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">group_from_name</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span>(<span class="ident">ncid</span>: <span class="ident">nc_type</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">error::Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Group</span><span class="op">&lt;</span><span class="lifetime">&#39;f</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">byte_name</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::utils::short_name_to_bytes</span>(<span class="ident">name</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">grpid</span> <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-        <span class="kw">super</span>::<span class="ident">with_lock</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">nc_inq_grp_ncid</span>(<span class="ident">ncid</span>, <span class="ident">byte_name</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">grpid</span>))
+        <span class="kw">super</span><span class="ident">::with_lock</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">nc_inq_grp_ncid</span>(<span class="ident">ncid</span>, <span class="ident">byte_name</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">grpid</span>))
     };
     <span class="kw">if</span> <span class="ident">e</span> <span class="op">=</span><span class="op">=</span> <span class="ident">NC_ENOGRP</span> {
         <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
     } <span class="kw">else</span> {
-        <span class="ident">error</span>::<span class="ident">checked</span>(<span class="ident">e</span>)<span class="question-mark">?</span>;
+        <span class="ident">error::checked</span>(<span class="ident">e</span>)<span class="question-mark">?</span>;
     }
     <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">Group</span> {
         <span class="ident">ncid</span>: <span class="ident">grpid</span>,
@@ -643,5 +643,5 @@
     }))
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="netcdf" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="netcdf" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/bin/diffuse.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>diffuse.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../diffuse/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../diffuse/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
@@ -104,18 +104,18 @@
 <span class="kw">use</span> <span class="ident">arctk</span>::{
     <span class="ident">args</span>,
     <span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">Load</span>},
-    <span class="ident">ord</span>::<span class="ident">Build</span>,
+    <span class="ident">ord::Build</span>,
     <span class="ident">report</span>,
-    <span class="ident">sim</span>::<span class="ident">diffuse</span>::{<span class="ident">run</span>, <span class="ident">Input</span>, <span class="ident">Parameters</span>, <span class="ident">ParametersBuilderLoader</span>},
+    <span class="ident">sim::diffuse</span>::{<span class="ident">run</span>, <span class="ident">Input</span>, <span class="ident">Parameters</span>, <span class="ident">ParametersBuilderLoader</span>},
     <span class="ident">util</span>::{
         <span class="ident">banner</span>::{<span class="ident">section</span>, <span class="ident">sub_section</span>, <span class="ident">title</span>},
         <span class="ident">dir</span>,
-        <span class="ident">fmt</span>::<span class="ident">term</span>,
+        <span class="ident">fmt::term</span>,
         <span class="ident">Analyze</span>,
     },
 };
 <span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">env</span>::<span class="ident">current_dir</span>,
+    <span class="ident">env::current_dir</span>,
     <span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>},
 };
 
@@ -124,7 +124,7 @@
 
 <span class="doccomment">/// Main simulation function.</span>
 <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">term_width</span> <span class="op">=</span> <span class="ident">term</span>::<span class="ident">width</span>(<span class="ident">BACKUP_TERM_WIDTH</span>);
+    <span class="kw">let</span> <span class="ident">term_width</span> <span class="op">=</span> <span class="ident">term::width</span>(<span class="ident">BACKUP_TERM_WIDTH</span>);
     <span class="ident">title</span>(<span class="ident">term_width</span>, <span class="string">&quot;Diffuse&quot;</span>);
 
     <span class="kw">let</span> (<span class="ident">in_dir</span>, <span class="ident">out_dir</span>, <span class="ident">params_path</span>) <span class="op">=</span> <span class="ident">initialisation</span>(<span class="ident">term_width</span>);
@@ -133,22 +133,22 @@
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Input&quot;</span>);
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Reconstruction&quot;</span>);
     <span class="kw">let</span> <span class="ident">sett</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">sett</span>;
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">sett</span>, <span class="string">&quot;settings&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">sett</span>, <span class="string">&quot;settings&quot;</span>);
     <span class="kw">let</span> <span class="ident">grid</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">grid</span>;
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">grid</span>, <span class="string">&quot;measurement grid&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">grid</span>, <span class="string">&quot;measurement grid&quot;</span>);
     <span class="kw">let</span> <span class="ident">coeffs</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">coeffs</span>;
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">coeffs</span>.<span class="ident">display</span>(), <span class="string">&quot;diffusion coefficients (m^2/s)&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">coeffs</span>.<span class="ident">display</span>(), <span class="string">&quot;diffusion coefficients (m^2/s)&quot;</span>);
     <span class="kw">let</span> <span class="ident">sources</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">sources</span>;
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">sources</span>.<span class="ident">display</span>(), <span class="string">&quot;sources/sinks&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">sources</span>.<span class="ident">display</span>(), <span class="string">&quot;sources/sinks&quot;</span>);
     <span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">params</span>.<span class="ident">init</span>;
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">values</span>.<span class="ident">display</span>(), <span class="string">&quot;initial values&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">values</span>.<span class="ident">display</span>(), <span class="string">&quot;initial values&quot;</span>);
 
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Input&quot;</span>);
-    <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">Input</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">coeffs</span>, <span class="kw-2">&amp;</span><span class="ident">sources</span>, <span class="kw-2">&amp;</span><span class="ident">grid</span>, <span class="kw-2">&amp;</span><span class="ident">sett</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">input</span>, <span class="string">&quot;input&quot;</span>);
+    <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">Input::new</span>(<span class="kw-2">&amp;</span><span class="ident">coeffs</span>, <span class="kw-2">&amp;</span><span class="ident">sources</span>, <span class="kw-2">&amp;</span><span class="ident">grid</span>, <span class="kw-2">&amp;</span><span class="ident">sett</span>);
+    <span class="macro">report!</span>(<span class="ident">input</span>, <span class="string">&quot;input&quot;</span>);
 
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Running&quot;</span>);
-    <span class="ident">run</span>::<span class="ident">multi_thread</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="ident">values</span>, <span class="kw-2">&amp;</span><span class="ident">out_dir</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to run diffuse simulation.&quot;</span>);
+    <span class="ident">run::multi_thread</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>, <span class="ident">values</span>, <span class="kw-2">&amp;</span><span class="ident">out_dir</span>).<span class="ident">expect</span>(<span class="string">&quot;Failed to run diffuse simulation.&quot;</span>);
 
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Finished&quot;</span>);
 }
@@ -157,23 +157,23 @@
 <span class="kw">fn</span> <span class="ident">initialisation</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">PathBuf</span>, <span class="ident">PathBuf</span>, <span class="ident">PathBuf</span>) {
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Initialisation&quot;</span>);
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;args&quot;</span>);
-    <span class="macro">args</span><span class="macro">!</span>(
+    <span class="macro">args!</span>(
         <span class="ident">bin_path</span>: <span class="ident">PathBuf</span>;
-        <span class="ident">input_dir</span>: <span class="ident">PathBuf</span>;
         <span class="ident">output_dir</span>: <span class="ident">PathBuf</span>;
+        <span class="ident">input_dir</span>: <span class="ident">PathBuf</span>;
         <span class="ident">params_path</span>: <span class="ident">PathBuf</span>
     );
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">bin_path</span>.<span class="ident">display</span>(), <span class="string">&quot;binary path&quot;</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">input_dir</span>.<span class="ident">display</span>(), <span class="string">&quot;relative input path&quot;</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">output_dir</span>.<span class="ident">display</span>(), <span class="string">&quot;relative output path&quot;</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">params_path</span>.<span class="ident">display</span>(), <span class="string">&quot;parameters&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">bin_path</span>.<span class="ident">display</span>(), <span class="string">&quot;binary path&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">output_dir</span>.<span class="ident">display</span>(), <span class="string">&quot;relative output path&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">input_dir</span>.<span class="ident">display</span>(), <span class="string">&quot;relative input path&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">params_path</span>.<span class="ident">display</span>(), <span class="string">&quot;parameters&quot;</span>);
 
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;directories&quot;</span>);
     <span class="kw">let</span> <span class="ident">cwd</span> <span class="op">=</span> <span class="ident">current_dir</span>().<span class="ident">expect</span>(<span class="string">&quot;Failed to determine current working directory.&quot;</span>);
-    <span class="kw">let</span> (<span class="ident">in_dir</span>, <span class="ident">out_dir</span>) <span class="op">=</span> <span class="ident">dir</span>::<span class="ident">io_dirs</span>(<span class="prelude-val">Some</span>(<span class="ident">cwd</span>.<span class="ident">join</span>(<span class="ident">input_dir</span>)), <span class="prelude-val">Some</span>(<span class="ident">cwd</span>.<span class="ident">join</span>(<span class="ident">output_dir</span>)))
+    <span class="kw">let</span> (<span class="ident">in_dir</span>, <span class="ident">out_dir</span>) <span class="op">=</span> <span class="ident">dir::io_dirs</span>(<span class="prelude-val">Some</span>(<span class="ident">cwd</span>.<span class="ident">join</span>(<span class="ident">input_dir</span>)), <span class="prelude-val">Some</span>(<span class="ident">cwd</span>.<span class="ident">join</span>(<span class="ident">output_dir</span>)))
         .<span class="ident">expect</span>(<span class="string">&quot;Failed to initialise directories.&quot;</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">in_dir</span>.<span class="ident">display</span>(), <span class="string">&quot;input directory&quot;</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">out_dir</span>.<span class="ident">display</span>(), <span class="string">&quot;output directory&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">out_dir</span>.<span class="ident">display</span>(), <span class="string">&quot;output directory&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">in_dir</span>.<span class="ident">display</span>(), <span class="string">&quot;input directory&quot;</span>);
 
     (<span class="ident">in_dir</span>, <span class="ident">out_dir</span>, <span class="ident">params_path</span>)
 }
@@ -182,18 +182,18 @@
 <span class="kw">fn</span> <span class="ident">load_parameters</span>(<span class="ident">term_width</span>: <span class="ident">usize</span>, <span class="ident">in_dir</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">params_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Parameters</span> {
     <span class="ident">section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Parameters&quot;</span>);
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Loading&quot;</span>);
-    <span class="kw">let</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">ParametersBuilderLoader</span>::<span class="ident">new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="ident">params_path</span>))
+    <span class="kw">let</span> <span class="ident">builder</span> <span class="op">=</span> <span class="ident">ParametersBuilderLoader::new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="ident">params_path</span>))
         .<span class="ident">expect</span>(<span class="string">&quot;Failed to load parameters file.&quot;</span>)
         .<span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>)
         .<span class="ident">expect</span>(<span class="string">&quot;Failed to load parameter resource files.&quot;</span>);
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">builder</span>, <span class="string">&quot;builder&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">builder</span>, <span class="string">&quot;builder&quot;</span>);
 
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Building&quot;</span>);
     <span class="kw">let</span> <span class="ident">params</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">build</span>();
-    <span class="macro">report</span><span class="macro">!</span>(<span class="ident">params</span>, <span class="string">&quot;parameters&quot;</span>);
+    <span class="macro">report!</span>(<span class="ident">params</span>, <span class="string">&quot;parameters&quot;</span>);
 
     <span class="ident">params</span>
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="diffuse" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="diffuse" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

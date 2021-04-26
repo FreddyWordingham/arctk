@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/hdf5-sys-0.7.1/src/h5t.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>h5t.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../hdf5_sys/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../hdf5_sys/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -539,23 +539,23 @@
 <span id="536">536</span>
 <span id="537">537</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std::mem</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_bkg_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_class_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_cmd_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_conv_except_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_conv_ret_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_cset_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_direction_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_norm_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_order_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_pad_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_pers_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_sign_t</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">H5T_str_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_bkg_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_class_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_cmd_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_conv_except_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_conv_ret_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_cset_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_direction_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_norm_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_order_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_pad_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_pers_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_sign_t</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::H5T_str_t</span>::<span class="kw-2">*</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">internal_prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::internal_prelude</span>::<span class="kw-2">*</span>;
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Debug</span>)]</span>
@@ -640,7 +640,7 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5T_cset_t</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">H5T_cset_t</span>::<span class="ident">H5T_CSET_ASCII</span>
+        <span class="ident">H5T_cset_t::H5T_CSET_ASCII</span>
     }
 }
 
@@ -707,7 +707,7 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">H5T_cdata_t</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() }
+        <span class="kw">unsafe</span> { <span class="ident">mem::zeroed</span>() }
     }
 }
 
@@ -756,7 +756,7 @@
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">hvl_t</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">zeroed</span>() }
+        <span class="kw">unsafe</span> { <span class="ident">mem::zeroed</span>() }
     }
 }
 
@@ -875,100 +875,100 @@
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
 }
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">globals</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span><span class="ident">::globals</span>::<span class="kw-2">*</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">target_env</span> <span class="op">=</span> <span class="string">&quot;msvc&quot;</span>, <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;static&quot;</span>))))]</span>
 <span class="kw">mod</span> <span class="ident">globals</span> {
-    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">h5i</span>::<span class="ident">hid_t</span> <span class="kw">as</span> <span class="ident">id_t</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::h5i::hid_t</span> <span class="kw">as</span> <span class="ident">id_t</span>;
 
     <span class="comment">// Datatypes</span>
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_IEEE_F32BE</span>, <span class="ident">H5T_IEEE_F32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_IEEE_F32LE</span>, <span class="ident">H5T_IEEE_F32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_IEEE_F64BE</span>, <span class="ident">H5T_IEEE_F64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_IEEE_F64LE</span>, <span class="ident">H5T_IEEE_F64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I8BE</span>, <span class="ident">H5T_STD_I8BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I8LE</span>, <span class="ident">H5T_STD_I8LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I16BE</span>, <span class="ident">H5T_STD_I16BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I16LE</span>, <span class="ident">H5T_STD_I16LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I32BE</span>, <span class="ident">H5T_STD_I32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I32LE</span>, <span class="ident">H5T_STD_I32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I64BE</span>, <span class="ident">H5T_STD_I64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I64LE</span>, <span class="ident">H5T_STD_I64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U8BE</span>, <span class="ident">H5T_STD_U8BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U8LE</span>, <span class="ident">H5T_STD_U8LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U16BE</span>, <span class="ident">H5T_STD_U16BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U16LE</span>, <span class="ident">H5T_STD_U16LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U32BE</span>, <span class="ident">H5T_STD_U32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U32LE</span>, <span class="ident">H5T_STD_U32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U64BE</span>, <span class="ident">H5T_STD_U64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U64LE</span>, <span class="ident">H5T_STD_U64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B8BE</span>, <span class="ident">H5T_STD_B8BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B8LE</span>, <span class="ident">H5T_STD_B8LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B16BE</span>, <span class="ident">H5T_STD_B16BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B16LE</span>, <span class="ident">H5T_STD_B16LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B32BE</span>, <span class="ident">H5T_STD_B32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B32LE</span>, <span class="ident">H5T_STD_B32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B64BE</span>, <span class="ident">H5T_STD_B64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B64LE</span>, <span class="ident">H5T_STD_B64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_REF_OBJ</span>, <span class="ident">H5T_STD_REF_OBJ_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_REF_DSETREG</span>, <span class="ident">H5T_STD_REF_DSETREG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_UNIX_D32BE</span>, <span class="ident">H5T_UNIX_D32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_UNIX_D32LE</span>, <span class="ident">H5T_UNIX_D32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_UNIX_D64BE</span>, <span class="ident">H5T_UNIX_D64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_UNIX_D64LE</span>, <span class="ident">H5T_UNIX_D64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_C_S1</span>, <span class="ident">H5T_C_S1_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_FORTRAN_S1</span>, <span class="ident">H5T_FORTRAN_S1_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_VAX_F32</span>, <span class="ident">H5T_VAX_F32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_VAX_F64</span>, <span class="ident">H5T_VAX_F64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_SCHAR</span>, <span class="ident">H5T_NATIVE_SCHAR_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UCHAR</span>, <span class="ident">H5T_NATIVE_UCHAR_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_SHORT</span>, <span class="ident">H5T_NATIVE_SHORT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_USHORT</span>, <span class="ident">H5T_NATIVE_USHORT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT</span>, <span class="ident">H5T_NATIVE_INT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT</span>, <span class="ident">H5T_NATIVE_UINT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_LONG</span>, <span class="ident">H5T_NATIVE_LONG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_ULONG</span>, <span class="ident">H5T_NATIVE_ULONG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_LLONG</span>, <span class="ident">H5T_NATIVE_LLONG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_ULLONG</span>, <span class="ident">H5T_NATIVE_ULLONG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_FLOAT</span>, <span class="ident">H5T_NATIVE_FLOAT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_DOUBLE</span>, <span class="ident">H5T_NATIVE_DOUBLE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_LDOUBLE</span>, <span class="ident">H5T_NATIVE_LDOUBLE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_B8</span>, <span class="ident">H5T_NATIVE_B8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_B16</span>, <span class="ident">H5T_NATIVE_B16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_B32</span>, <span class="ident">H5T_NATIVE_B32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_B64</span>, <span class="ident">H5T_NATIVE_B64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_OPAQUE</span>, <span class="ident">H5T_NATIVE_OPAQUE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HADDR</span>, <span class="ident">H5T_NATIVE_HADDR_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HSIZE</span>, <span class="ident">H5T_NATIVE_HSIZE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HSSIZE</span>, <span class="ident">H5T_NATIVE_HSSIZE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HERR</span>, <span class="ident">H5T_NATIVE_HERR_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HBOOL</span>, <span class="ident">H5T_NATIVE_HBOOL_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT8</span>, <span class="ident">H5T_NATIVE_INT8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT8</span>, <span class="ident">H5T_NATIVE_UINT8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_LEAST8</span>, <span class="ident">H5T_NATIVE_INT_LEAST8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST8</span>, <span class="ident">H5T_NATIVE_UINT_LEAST8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_FAST8</span>, <span class="ident">H5T_NATIVE_INT_FAST8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_FAST8</span>, <span class="ident">H5T_NATIVE_UINT_FAST8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT16</span>, <span class="ident">H5T_NATIVE_INT16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT16</span>, <span class="ident">H5T_NATIVE_UINT16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_LEAST16</span>, <span class="ident">H5T_NATIVE_INT_LEAST16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST16</span>, <span class="ident">H5T_NATIVE_UINT_LEAST16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_FAST16</span>, <span class="ident">H5T_NATIVE_INT_FAST16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_FAST16</span>, <span class="ident">H5T_NATIVE_UINT_FAST16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT32</span>, <span class="ident">H5T_NATIVE_INT32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT32</span>, <span class="ident">H5T_NATIVE_UINT32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_LEAST32</span>, <span class="ident">H5T_NATIVE_INT_LEAST32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST32</span>, <span class="ident">H5T_NATIVE_UINT_LEAST32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_FAST32</span>, <span class="ident">H5T_NATIVE_INT_FAST32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_FAST32</span>, <span class="ident">H5T_NATIVE_UINT_FAST32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT64</span>, <span class="ident">H5T_NATIVE_INT64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT64</span>, <span class="ident">H5T_NATIVE_UINT64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_LEAST64</span>, <span class="ident">H5T_NATIVE_INT_LEAST64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST64</span>, <span class="ident">H5T_NATIVE_UINT_LEAST64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_FAST64</span>, <span class="ident">H5T_NATIVE_INT_FAST64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_FAST64</span>, <span class="ident">H5T_NATIVE_UINT_FAST64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_IEEE_F32BE</span>, <span class="ident">H5T_IEEE_F32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_IEEE_F32LE</span>, <span class="ident">H5T_IEEE_F32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_IEEE_F64BE</span>, <span class="ident">H5T_IEEE_F64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_IEEE_F64LE</span>, <span class="ident">H5T_IEEE_F64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I8BE</span>, <span class="ident">H5T_STD_I8BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I8LE</span>, <span class="ident">H5T_STD_I8LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I16BE</span>, <span class="ident">H5T_STD_I16BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I16LE</span>, <span class="ident">H5T_STD_I16LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I32BE</span>, <span class="ident">H5T_STD_I32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I32LE</span>, <span class="ident">H5T_STD_I32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I64BE</span>, <span class="ident">H5T_STD_I64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I64LE</span>, <span class="ident">H5T_STD_I64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U8BE</span>, <span class="ident">H5T_STD_U8BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U8LE</span>, <span class="ident">H5T_STD_U8LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U16BE</span>, <span class="ident">H5T_STD_U16BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U16LE</span>, <span class="ident">H5T_STD_U16LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U32BE</span>, <span class="ident">H5T_STD_U32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U32LE</span>, <span class="ident">H5T_STD_U32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U64BE</span>, <span class="ident">H5T_STD_U64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U64LE</span>, <span class="ident">H5T_STD_U64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B8BE</span>, <span class="ident">H5T_STD_B8BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B8LE</span>, <span class="ident">H5T_STD_B8LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B16BE</span>, <span class="ident">H5T_STD_B16BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B16LE</span>, <span class="ident">H5T_STD_B16LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B32BE</span>, <span class="ident">H5T_STD_B32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B32LE</span>, <span class="ident">H5T_STD_B32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B64BE</span>, <span class="ident">H5T_STD_B64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B64LE</span>, <span class="ident">H5T_STD_B64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_REF_OBJ</span>, <span class="ident">H5T_STD_REF_OBJ_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_REF_DSETREG</span>, <span class="ident">H5T_STD_REF_DSETREG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_UNIX_D32BE</span>, <span class="ident">H5T_UNIX_D32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_UNIX_D32LE</span>, <span class="ident">H5T_UNIX_D32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_UNIX_D64BE</span>, <span class="ident">H5T_UNIX_D64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_UNIX_D64LE</span>, <span class="ident">H5T_UNIX_D64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_C_S1</span>, <span class="ident">H5T_C_S1_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_FORTRAN_S1</span>, <span class="ident">H5T_FORTRAN_S1_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_VAX_F32</span>, <span class="ident">H5T_VAX_F32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_VAX_F64</span>, <span class="ident">H5T_VAX_F64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_SCHAR</span>, <span class="ident">H5T_NATIVE_SCHAR_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UCHAR</span>, <span class="ident">H5T_NATIVE_UCHAR_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_SHORT</span>, <span class="ident">H5T_NATIVE_SHORT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_USHORT</span>, <span class="ident">H5T_NATIVE_USHORT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT</span>, <span class="ident">H5T_NATIVE_INT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT</span>, <span class="ident">H5T_NATIVE_UINT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_LONG</span>, <span class="ident">H5T_NATIVE_LONG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_ULONG</span>, <span class="ident">H5T_NATIVE_ULONG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_LLONG</span>, <span class="ident">H5T_NATIVE_LLONG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_ULLONG</span>, <span class="ident">H5T_NATIVE_ULLONG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_FLOAT</span>, <span class="ident">H5T_NATIVE_FLOAT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_DOUBLE</span>, <span class="ident">H5T_NATIVE_DOUBLE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_LDOUBLE</span>, <span class="ident">H5T_NATIVE_LDOUBLE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_B8</span>, <span class="ident">H5T_NATIVE_B8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_B16</span>, <span class="ident">H5T_NATIVE_B16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_B32</span>, <span class="ident">H5T_NATIVE_B32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_B64</span>, <span class="ident">H5T_NATIVE_B64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_OPAQUE</span>, <span class="ident">H5T_NATIVE_OPAQUE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HADDR</span>, <span class="ident">H5T_NATIVE_HADDR_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HSIZE</span>, <span class="ident">H5T_NATIVE_HSIZE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HSSIZE</span>, <span class="ident">H5T_NATIVE_HSSIZE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HERR</span>, <span class="ident">H5T_NATIVE_HERR_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HBOOL</span>, <span class="ident">H5T_NATIVE_HBOOL_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT8</span>, <span class="ident">H5T_NATIVE_INT8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT8</span>, <span class="ident">H5T_NATIVE_UINT8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_LEAST8</span>, <span class="ident">H5T_NATIVE_INT_LEAST8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST8</span>, <span class="ident">H5T_NATIVE_UINT_LEAST8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_FAST8</span>, <span class="ident">H5T_NATIVE_INT_FAST8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_FAST8</span>, <span class="ident">H5T_NATIVE_UINT_FAST8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT16</span>, <span class="ident">H5T_NATIVE_INT16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT16</span>, <span class="ident">H5T_NATIVE_UINT16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_LEAST16</span>, <span class="ident">H5T_NATIVE_INT_LEAST16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST16</span>, <span class="ident">H5T_NATIVE_UINT_LEAST16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_FAST16</span>, <span class="ident">H5T_NATIVE_INT_FAST16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_FAST16</span>, <span class="ident">H5T_NATIVE_UINT_FAST16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT32</span>, <span class="ident">H5T_NATIVE_INT32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT32</span>, <span class="ident">H5T_NATIVE_UINT32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_LEAST32</span>, <span class="ident">H5T_NATIVE_INT_LEAST32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST32</span>, <span class="ident">H5T_NATIVE_UINT_LEAST32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_FAST32</span>, <span class="ident">H5T_NATIVE_INT_FAST32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_FAST32</span>, <span class="ident">H5T_NATIVE_UINT_FAST32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT64</span>, <span class="ident">H5T_NATIVE_INT64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT64</span>, <span class="ident">H5T_NATIVE_UINT64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_LEAST64</span>, <span class="ident">H5T_NATIVE_INT_LEAST64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST64</span>, <span class="ident">H5T_NATIVE_UINT_LEAST64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_FAST64</span>, <span class="ident">H5T_NATIVE_INT_FAST64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_FAST64</span>, <span class="ident">H5T_NATIVE_UINT_FAST64_g</span>);
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_REF</span>, <span class="ident">H5T_STD_REF_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_REF</span>, <span class="ident">H5T_STD_REF_g</span>);
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">target_env</span> <span class="op">=</span> <span class="string">&quot;msvc&quot;</span>, <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;static&quot;</span>)))]</span>
@@ -977,93 +977,93 @@
     <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">id_t</span> <span class="op">=</span> <span class="ident">usize</span>;
 
     <span class="comment">// Datatypes</span>
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_IEEE_F32BE</span>, <span class="ident">__imp_H5T_IEEE_F32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_IEEE_F32LE</span>, <span class="ident">__imp_H5T_IEEE_F32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_IEEE_F64BE</span>, <span class="ident">__imp_H5T_IEEE_F64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_IEEE_F64LE</span>, <span class="ident">__imp_H5T_IEEE_F64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I8BE</span>, <span class="ident">__imp_H5T_STD_I8BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I8LE</span>, <span class="ident">__imp_H5T_STD_I8LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I16BE</span>, <span class="ident">__imp_H5T_STD_I16BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I16LE</span>, <span class="ident">__imp_H5T_STD_I16LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I32BE</span>, <span class="ident">__imp_H5T_STD_I32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I32LE</span>, <span class="ident">__imp_H5T_STD_I32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I64BE</span>, <span class="ident">__imp_H5T_STD_I64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_I64LE</span>, <span class="ident">__imp_H5T_STD_I64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U8BE</span>, <span class="ident">__imp_H5T_STD_U8BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U8LE</span>, <span class="ident">__imp_H5T_STD_U8LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U16BE</span>, <span class="ident">__imp_H5T_STD_U16BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U16LE</span>, <span class="ident">__imp_H5T_STD_U16LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U32BE</span>, <span class="ident">__imp_H5T_STD_U32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U32LE</span>, <span class="ident">__imp_H5T_STD_U32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U64BE</span>, <span class="ident">__imp_H5T_STD_U64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_U64LE</span>, <span class="ident">__imp_H5T_STD_U64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B8BE</span>, <span class="ident">__imp_H5T_STD_B8BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B8LE</span>, <span class="ident">__imp_H5T_STD_B8LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B16BE</span>, <span class="ident">__imp_H5T_STD_B16BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B16LE</span>, <span class="ident">__imp_H5T_STD_B16LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B32BE</span>, <span class="ident">__imp_H5T_STD_B32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B32LE</span>, <span class="ident">__imp_H5T_STD_B32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B64BE</span>, <span class="ident">__imp_H5T_STD_B64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_B64LE</span>, <span class="ident">__imp_H5T_STD_B64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_REF_OBJ</span>, <span class="ident">__imp_H5T_STD_REF_OBJ_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_REF_DSETREG</span>, <span class="ident">__imp_H5T_STD_REF_DSETREG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_UNIX_D32BE</span>, <span class="ident">__imp_H5T_UNIX_D32BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_UNIX_D32LE</span>, <span class="ident">__imp_H5T_UNIX_D32LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_UNIX_D64BE</span>, <span class="ident">__imp_H5T_UNIX_D64BE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_UNIX_D64LE</span>, <span class="ident">__imp_H5T_UNIX_D64LE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_C_S1</span>, <span class="ident">__imp_H5T_C_S1_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_FORTRAN_S1</span>, <span class="ident">__imp_H5T_FORTRAN_S1_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_VAX_F32</span>, <span class="ident">__imp_H5T_VAX_F32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_VAX_F64</span>, <span class="ident">__imp_H5T_VAX_F64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_SCHAR</span>, <span class="ident">__imp_H5T_NATIVE_SCHAR_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UCHAR</span>, <span class="ident">__imp_H5T_NATIVE_UCHAR_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_SHORT</span>, <span class="ident">__imp_H5T_NATIVE_SHORT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_USHORT</span>, <span class="ident">__imp_H5T_NATIVE_USHORT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT</span>, <span class="ident">__imp_H5T_NATIVE_INT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT</span>, <span class="ident">__imp_H5T_NATIVE_UINT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_LONG</span>, <span class="ident">__imp_H5T_NATIVE_LONG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_ULONG</span>, <span class="ident">__imp_H5T_NATIVE_ULONG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_LLONG</span>, <span class="ident">__imp_H5T_NATIVE_LLONG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_ULLONG</span>, <span class="ident">__imp_H5T_NATIVE_ULLONG_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_FLOAT</span>, <span class="ident">__imp_H5T_NATIVE_FLOAT_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_DOUBLE</span>, <span class="ident">__imp_H5T_NATIVE_DOUBLE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_LDOUBLE</span>, <span class="ident">__imp_H5T_NATIVE_LDOUBLE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_B8</span>, <span class="ident">__imp_H5T_NATIVE_B8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_B16</span>, <span class="ident">__imp_H5T_NATIVE_B16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_B32</span>, <span class="ident">__imp_H5T_NATIVE_B32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_B64</span>, <span class="ident">__imp_H5T_NATIVE_B64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_OPAQUE</span>, <span class="ident">__imp_H5T_NATIVE_OPAQUE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HADDR</span>, <span class="ident">__imp_H5T_NATIVE_HADDR_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HSIZE</span>, <span class="ident">__imp_H5T_NATIVE_HSIZE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HSSIZE</span>, <span class="ident">__imp_H5T_NATIVE_HSSIZE_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HERR</span>, <span class="ident">__imp_H5T_NATIVE_HERR_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_HBOOL</span>, <span class="ident">__imp_H5T_NATIVE_HBOOL_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT8</span>, <span class="ident">__imp_H5T_NATIVE_INT8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT8</span>, <span class="ident">__imp_H5T_NATIVE_UINT8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_LEAST8</span>, <span class="ident">__imp_H5T_NATIVE_INT_LEAST8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST8</span>, <span class="ident">__imp_H5T_NATIVE_UINT_LEAST8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_FAST8</span>, <span class="ident">__imp_H5T_NATIVE_INT_FAST8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_FAST8</span>, <span class="ident">__imp_H5T_NATIVE_UINT_FAST8_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT16</span>, <span class="ident">__imp_H5T_NATIVE_INT16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT16</span>, <span class="ident">__imp_H5T_NATIVE_UINT16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_LEAST16</span>, <span class="ident">__imp_H5T_NATIVE_INT_LEAST16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST16</span>, <span class="ident">__imp_H5T_NATIVE_UINT_LEAST16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_FAST16</span>, <span class="ident">__imp_H5T_NATIVE_INT_FAST16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_FAST16</span>, <span class="ident">__imp_H5T_NATIVE_UINT_FAST16_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT32</span>, <span class="ident">__imp_H5T_NATIVE_INT32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT32</span>, <span class="ident">__imp_H5T_NATIVE_UINT32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_LEAST32</span>, <span class="ident">__imp_H5T_NATIVE_INT_LEAST32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST32</span>, <span class="ident">__imp_H5T_NATIVE_UINT_LEAST32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_FAST32</span>, <span class="ident">__imp_H5T_NATIVE_INT_FAST32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_FAST32</span>, <span class="ident">__imp_H5T_NATIVE_UINT_FAST32_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT64</span>, <span class="ident">__imp_H5T_NATIVE_INT64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT64</span>, <span class="ident">__imp_H5T_NATIVE_UINT64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_LEAST64</span>, <span class="ident">__imp_H5T_NATIVE_INT_LEAST64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST64</span>, <span class="ident">__imp_H5T_NATIVE_UINT_LEAST64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_INT_FAST64</span>, <span class="ident">__imp_H5T_NATIVE_INT_FAST64_g</span>);
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_NATIVE_UINT_FAST64</span>, <span class="ident">__imp_H5T_NATIVE_UINT_FAST64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_IEEE_F32BE</span>, <span class="ident">__imp_H5T_IEEE_F32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_IEEE_F32LE</span>, <span class="ident">__imp_H5T_IEEE_F32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_IEEE_F64BE</span>, <span class="ident">__imp_H5T_IEEE_F64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_IEEE_F64LE</span>, <span class="ident">__imp_H5T_IEEE_F64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I8BE</span>, <span class="ident">__imp_H5T_STD_I8BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I8LE</span>, <span class="ident">__imp_H5T_STD_I8LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I16BE</span>, <span class="ident">__imp_H5T_STD_I16BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I16LE</span>, <span class="ident">__imp_H5T_STD_I16LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I32BE</span>, <span class="ident">__imp_H5T_STD_I32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I32LE</span>, <span class="ident">__imp_H5T_STD_I32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I64BE</span>, <span class="ident">__imp_H5T_STD_I64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_I64LE</span>, <span class="ident">__imp_H5T_STD_I64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U8BE</span>, <span class="ident">__imp_H5T_STD_U8BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U8LE</span>, <span class="ident">__imp_H5T_STD_U8LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U16BE</span>, <span class="ident">__imp_H5T_STD_U16BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U16LE</span>, <span class="ident">__imp_H5T_STD_U16LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U32BE</span>, <span class="ident">__imp_H5T_STD_U32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U32LE</span>, <span class="ident">__imp_H5T_STD_U32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U64BE</span>, <span class="ident">__imp_H5T_STD_U64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_U64LE</span>, <span class="ident">__imp_H5T_STD_U64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B8BE</span>, <span class="ident">__imp_H5T_STD_B8BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B8LE</span>, <span class="ident">__imp_H5T_STD_B8LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B16BE</span>, <span class="ident">__imp_H5T_STD_B16BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B16LE</span>, <span class="ident">__imp_H5T_STD_B16LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B32BE</span>, <span class="ident">__imp_H5T_STD_B32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B32LE</span>, <span class="ident">__imp_H5T_STD_B32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B64BE</span>, <span class="ident">__imp_H5T_STD_B64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_B64LE</span>, <span class="ident">__imp_H5T_STD_B64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_REF_OBJ</span>, <span class="ident">__imp_H5T_STD_REF_OBJ_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_REF_DSETREG</span>, <span class="ident">__imp_H5T_STD_REF_DSETREG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_UNIX_D32BE</span>, <span class="ident">__imp_H5T_UNIX_D32BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_UNIX_D32LE</span>, <span class="ident">__imp_H5T_UNIX_D32LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_UNIX_D64BE</span>, <span class="ident">__imp_H5T_UNIX_D64BE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_UNIX_D64LE</span>, <span class="ident">__imp_H5T_UNIX_D64LE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_C_S1</span>, <span class="ident">__imp_H5T_C_S1_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_FORTRAN_S1</span>, <span class="ident">__imp_H5T_FORTRAN_S1_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_VAX_F32</span>, <span class="ident">__imp_H5T_VAX_F32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_VAX_F64</span>, <span class="ident">__imp_H5T_VAX_F64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_SCHAR</span>, <span class="ident">__imp_H5T_NATIVE_SCHAR_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UCHAR</span>, <span class="ident">__imp_H5T_NATIVE_UCHAR_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_SHORT</span>, <span class="ident">__imp_H5T_NATIVE_SHORT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_USHORT</span>, <span class="ident">__imp_H5T_NATIVE_USHORT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT</span>, <span class="ident">__imp_H5T_NATIVE_INT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT</span>, <span class="ident">__imp_H5T_NATIVE_UINT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_LONG</span>, <span class="ident">__imp_H5T_NATIVE_LONG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_ULONG</span>, <span class="ident">__imp_H5T_NATIVE_ULONG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_LLONG</span>, <span class="ident">__imp_H5T_NATIVE_LLONG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_ULLONG</span>, <span class="ident">__imp_H5T_NATIVE_ULLONG_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_FLOAT</span>, <span class="ident">__imp_H5T_NATIVE_FLOAT_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_DOUBLE</span>, <span class="ident">__imp_H5T_NATIVE_DOUBLE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_LDOUBLE</span>, <span class="ident">__imp_H5T_NATIVE_LDOUBLE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_B8</span>, <span class="ident">__imp_H5T_NATIVE_B8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_B16</span>, <span class="ident">__imp_H5T_NATIVE_B16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_B32</span>, <span class="ident">__imp_H5T_NATIVE_B32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_B64</span>, <span class="ident">__imp_H5T_NATIVE_B64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_OPAQUE</span>, <span class="ident">__imp_H5T_NATIVE_OPAQUE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HADDR</span>, <span class="ident">__imp_H5T_NATIVE_HADDR_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HSIZE</span>, <span class="ident">__imp_H5T_NATIVE_HSIZE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HSSIZE</span>, <span class="ident">__imp_H5T_NATIVE_HSSIZE_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HERR</span>, <span class="ident">__imp_H5T_NATIVE_HERR_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_HBOOL</span>, <span class="ident">__imp_H5T_NATIVE_HBOOL_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT8</span>, <span class="ident">__imp_H5T_NATIVE_INT8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT8</span>, <span class="ident">__imp_H5T_NATIVE_UINT8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_LEAST8</span>, <span class="ident">__imp_H5T_NATIVE_INT_LEAST8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST8</span>, <span class="ident">__imp_H5T_NATIVE_UINT_LEAST8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_FAST8</span>, <span class="ident">__imp_H5T_NATIVE_INT_FAST8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_FAST8</span>, <span class="ident">__imp_H5T_NATIVE_UINT_FAST8_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT16</span>, <span class="ident">__imp_H5T_NATIVE_INT16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT16</span>, <span class="ident">__imp_H5T_NATIVE_UINT16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_LEAST16</span>, <span class="ident">__imp_H5T_NATIVE_INT_LEAST16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST16</span>, <span class="ident">__imp_H5T_NATIVE_UINT_LEAST16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_FAST16</span>, <span class="ident">__imp_H5T_NATIVE_INT_FAST16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_FAST16</span>, <span class="ident">__imp_H5T_NATIVE_UINT_FAST16_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT32</span>, <span class="ident">__imp_H5T_NATIVE_INT32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT32</span>, <span class="ident">__imp_H5T_NATIVE_UINT32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_LEAST32</span>, <span class="ident">__imp_H5T_NATIVE_INT_LEAST32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST32</span>, <span class="ident">__imp_H5T_NATIVE_UINT_LEAST32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_FAST32</span>, <span class="ident">__imp_H5T_NATIVE_INT_FAST32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_FAST32</span>, <span class="ident">__imp_H5T_NATIVE_UINT_FAST32_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT64</span>, <span class="ident">__imp_H5T_NATIVE_INT64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT64</span>, <span class="ident">__imp_H5T_NATIVE_UINT64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_LEAST64</span>, <span class="ident">__imp_H5T_NATIVE_INT_LEAST64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_LEAST64</span>, <span class="ident">__imp_H5T_NATIVE_UINT_LEAST64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_INT_FAST64</span>, <span class="ident">__imp_H5T_NATIVE_INT_FAST64_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_NATIVE_UINT_FAST64</span>, <span class="ident">__imp_H5T_NATIVE_UINT_FAST64_g</span>);
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_12_0</span>)]</span>
-    <span class="macro">extern_static</span><span class="macro">!</span>(<span class="ident">H5T_STD_REF</span>, <span class="ident">__imp_H5T_STD_REF_g</span>);
+    <span class="macro">extern_static!</span>(<span class="ident">H5T_STD_REF</span>, <span class="ident">__imp_H5T_STD_REF_g</span>);
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">hdf5_1_10_0</span>)]</span>
@@ -1077,5 +1077,5 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">H5Treclaim</span>(<span class="ident">type_id</span>: <span class="ident">hid_t</span>, <span class="ident">space_id</span>: <span class="ident">hid_t</span>, <span class="ident">dxpl_id</span>: <span class="ident">hid_t</span>, <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">herr_t</span>;
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="hdf5_sys" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="hdf5_sys" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

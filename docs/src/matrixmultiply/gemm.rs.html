@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/matrixmultiply-0.3.0/src/gemm.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>gemm.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../matrixmultiply/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../matrixmultiply/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -502,25 +502,25 @@
 <span class="comment">// except according to those terms.</span>
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;std&quot;</span>)]</span>
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cell</span>::<span class="ident">UnsafeCell</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">min</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">size_of</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>;
+<span class="kw">use</span> <span class="ident">core::cell::UnsafeCell</span>;
+<span class="kw">use</span> <span class="ident">core::cmp::min</span>;
+<span class="kw">use</span> <span class="ident">core::mem::size_of</span>;
+<span class="kw">use</span> <span class="ident">core::ptr::copy_nonoverlapping</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">aligned_alloc</span>::<span class="ident">Alloc</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::aligned_alloc::Alloc</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ptr</span>::<span class="ident">Ptr</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">range_chunk</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="ident">round_up_to</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::ptr::Ptr</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::util::range_chunk</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::util::round_up_to</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">kernel</span>::<span class="ident">ConstNum</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">kernel</span>::<span class="ident">Element</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">kernel</span>::<span class="ident">GemmKernel</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">kernel</span>::<span class="ident">GemmSelect</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">threading</span>::{<span class="ident">get_thread_pool</span>, <span class="ident">ThreadPoolCtx</span>, <span class="ident">LoopThreadConfig</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sgemm_kernel</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dgemm_kernel</span>;
-<span class="kw">use</span> <span class="ident">rawpointer</span>::<span class="ident">PointerExt</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::kernel::ConstNum</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::kernel::Element</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::kernel::GemmKernel</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::kernel::GemmSelect</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::threading</span>::{<span class="ident">get_thread_pool</span>, <span class="ident">ThreadPoolCtx</span>, <span class="ident">LoopThreadConfig</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::sgemm_kernel</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dgemm_kernel</span>;
+<span class="kw">use</span> <span class="ident">rawpointer::PointerExt</span>;
 
 <span class="doccomment">/// General matrix multiplication (f32)</span>
 <span class="doccomment">///</span>
@@ -546,7 +546,7 @@
     <span class="ident">beta</span>: <span class="ident">f32</span>,
     <span class="ident">c</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">f32</span>, <span class="ident">rsc</span>: <span class="ident">isize</span>, <span class="ident">csc</span>: <span class="ident">isize</span>)
 {
-    <span class="ident">sgemm_kernel</span>::<span class="ident">detect</span>(<span class="ident">GemmParameters</span> { <span class="ident">m</span>, <span class="ident">k</span>, <span class="ident">n</span>,
+    <span class="ident">sgemm_kernel::detect</span>(<span class="ident">GemmParameters</span> { <span class="ident">m</span>, <span class="ident">k</span>, <span class="ident">n</span>,
                 <span class="ident">alpha</span>,
                 <span class="ident">a</span>, <span class="ident">rsa</span>, <span class="ident">csa</span>,
                 <span class="ident">b</span>, <span class="ident">rsb</span>, <span class="ident">csb</span>,
@@ -578,7 +578,7 @@
     <span class="ident">beta</span>: <span class="ident">f64</span>,
     <span class="ident">c</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">f64</span>, <span class="ident">rsc</span>: <span class="ident">isize</span>, <span class="ident">csc</span>: <span class="ident">isize</span>)
 {
-    <span class="ident">dgemm_kernel</span>::<span class="ident">detect</span>(<span class="ident">GemmParameters</span> { <span class="ident">m</span>, <span class="ident">k</span>, <span class="ident">n</span>,
+    <span class="ident">dgemm_kernel::detect</span>(<span class="ident">GemmParameters</span> { <span class="ident">m</span>, <span class="ident">k</span>, <span class="ident">n</span>,
                 <span class="ident">alpha</span>,
                 <span class="ident">a</span>, <span class="ident">rsa</span>, <span class="ident">csa</span>,
                 <span class="ident">b</span>, <span class="ident">rsb</span>, <span class="ident">csb</span>,
@@ -633,15 +633,15 @@
 <span class="kw">fn</span> <span class="ident">ensure_kernel_params</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>()
     <span class="kw">where</span> <span class="ident">K</span>: <span class="ident">GemmKernel</span>
 {
-    <span class="kw">let</span> <span class="ident">mr</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">MR</span>;
-    <span class="kw">let</span> <span class="ident">nr</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">NR</span>;
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">mr</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">8</span>);
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">nr</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">nr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">8</span>);
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">mr</span> <span class="op">*</span> <span class="ident">nr</span> <span class="op">*</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">K</span>::<span class="ident">Elem</span><span class="op">&gt;</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="number">8</span> <span class="op">*</span> <span class="number">4</span> <span class="op">*</span> <span class="number">8</span>);
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">K</span>::<span class="ident">align_to</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="number">32</span>);
+    <span class="kw">let</span> <span class="ident">mr</span> <span class="op">=</span> <span class="ident">K::MR</span>;
+    <span class="kw">let</span> <span class="ident">nr</span> <span class="op">=</span> <span class="ident">K::NR</span>;
+    <span class="macro">assert!</span>(<span class="ident">mr</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">8</span>);
+    <span class="macro">assert!</span>(<span class="ident">nr</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">nr</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">8</span>);
+    <span class="macro">assert!</span>(<span class="ident">mr</span> <span class="op">*</span> <span class="ident">nr</span> <span class="op">*</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">K::Elem</span><span class="op">&gt;</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="number">8</span> <span class="op">*</span> <span class="number">4</span> <span class="op">*</span> <span class="number">8</span>);
+    <span class="macro">assert!</span>(<span class="ident">K::align_to</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="number">32</span>);
     <span class="comment">// one row/col of the kernel is limiting the max align we can provide</span>
-    <span class="kw">let</span> <span class="ident">max_align</span> <span class="op">=</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">K</span>::<span class="ident">Elem</span><span class="op">&gt;</span>() <span class="op">*</span> <span class="ident">min</span>(<span class="ident">mr</span>, <span class="ident">nr</span>);
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">K</span>::<span class="ident">align_to</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">max_align</span>);
+    <span class="kw">let</span> <span class="ident">max_align</span> <span class="op">=</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">K::Elem</span><span class="op">&gt;</span>() <span class="op">*</span> <span class="ident">min</span>(<span class="ident">mr</span>, <span class="ident">nr</span>);
+    <span class="macro">assert!</span>(<span class="ident">K::align_to</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">max_align</span>);
 }
 
 <span class="doccomment">/// Implement matrix multiply using packed buffers and a microkernel</span>
@@ -651,24 +651,24 @@
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">never</span>)]</span>
 <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">gemm_loop</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>(
     <span class="ident">m</span>: <span class="ident">usize</span>, <span class="ident">k</span>: <span class="ident">usize</span>, <span class="ident">n</span>: <span class="ident">usize</span>,
-    <span class="ident">alpha</span>: <span class="ident">K</span>::<span class="ident">Elem</span>,
-    <span class="ident">a</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">K</span>::<span class="ident">Elem</span>, <span class="ident">rsa</span>: <span class="ident">isize</span>, <span class="ident">csa</span>: <span class="ident">isize</span>,
-    <span class="ident">b</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">K</span>::<span class="ident">Elem</span>, <span class="ident">rsb</span>: <span class="ident">isize</span>, <span class="ident">csb</span>: <span class="ident">isize</span>,
-    <span class="ident">beta</span>: <span class="ident">K</span>::<span class="ident">Elem</span>,
-    <span class="ident">c</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">K</span>::<span class="ident">Elem</span>, <span class="ident">rsc</span>: <span class="ident">isize</span>, <span class="ident">csc</span>: <span class="ident">isize</span>)
+    <span class="ident">alpha</span>: <span class="ident">K::Elem</span>,
+    <span class="ident">a</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">K::Elem</span>, <span class="ident">rsa</span>: <span class="ident">isize</span>, <span class="ident">csa</span>: <span class="ident">isize</span>,
+    <span class="ident">b</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">K::Elem</span>, <span class="ident">rsb</span>: <span class="ident">isize</span>, <span class="ident">csb</span>: <span class="ident">isize</span>,
+    <span class="ident">beta</span>: <span class="ident">K::Elem</span>,
+    <span class="ident">c</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">K::Elem</span>, <span class="ident">rsc</span>: <span class="ident">isize</span>, <span class="ident">csc</span>: <span class="ident">isize</span>)
     <span class="kw">where</span> <span class="ident">K</span>: <span class="ident">GemmKernel</span>
 {
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">m</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> <span class="op">|</span><span class="op">|</span> <span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">rsc</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">m</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> <span class="op">|</span><span class="op">|</span> <span class="ident">csc</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
+    <span class="macro">debug_assert!</span>(<span class="ident">m</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> <span class="op">|</span><span class="op">|</span> <span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">rsc</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
+    <span class="macro">debug_assert!</span>(<span class="ident">m</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">n</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span> <span class="op">|</span><span class="op">|</span> <span class="ident">csc</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>);
 
     <span class="comment">// if A or B have no elements, compute C ← βC and return</span>
     <span class="kw">if</span> <span class="ident">m</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">k</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">|</span><span class="op">|</span> <span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
         <span class="kw">return</span> <span class="ident">c_to_beta_c</span>(<span class="ident">m</span>, <span class="ident">n</span>, <span class="ident">beta</span>, <span class="ident">c</span>, <span class="ident">rsc</span>, <span class="ident">csc</span>);
     }
 
-    <span class="kw">let</span> <span class="ident">knc</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">nc</span>();
-    <span class="kw">let</span> <span class="ident">kkc</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">kc</span>();
-    <span class="kw">let</span> <span class="ident">kmc</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">mc</span>();
+    <span class="kw">let</span> <span class="ident">knc</span> <span class="op">=</span> <span class="ident">K::nc</span>();
+    <span class="kw">let</span> <span class="ident">kkc</span> <span class="op">=</span> <span class="ident">K::kc</span>();
+    <span class="kw">let</span> <span class="ident">kmc</span> <span class="op">=</span> <span class="ident">K::mc</span>();
     <span class="ident">ensure_kernel_params</span>::<span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>();
 
     <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Ptr</span>(<span class="ident">a</span>);
@@ -676,7 +676,7 @@
     <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Ptr</span>(<span class="ident">c</span>);
 
     <span class="kw">let</span> (<span class="ident">nthreads</span>, <span class="ident">tp</span>) <span class="op">=</span> <span class="ident">get_thread_pool</span>();
-    <span class="kw">let</span> <span class="ident">thread_config</span> <span class="op">=</span> <span class="ident">LoopThreadConfig</span>::<span class="ident">new</span>::<span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">m</span>, <span class="ident">k</span>, <span class="ident">n</span>, <span class="ident">nthreads</span>);
+    <span class="kw">let</span> <span class="ident">thread_config</span> <span class="op">=</span> <span class="ident">LoopThreadConfig::new</span>::<span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">m</span>, <span class="ident">k</span>, <span class="ident">n</span>, <span class="ident">nthreads</span>);
     <span class="kw">let</span> <span class="ident">nap</span> <span class="op">=</span> <span class="ident">thread_config</span>.<span class="ident">num_pack_a</span>();
 
     <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">packing_buffer</span>, <span class="ident">ap_size</span>) <span class="op">=</span> <span class="ident">make_packing_buffer</span>::<span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">m</span>, <span class="ident">k</span>, <span class="ident">n</span>, <span class="ident">nap</span>);
@@ -685,7 +685,7 @@
 
     <span class="comment">// LOOP 5: split n into nc parts (B, C)</span>
     <span class="kw">for</span> (<span class="ident">l5</span>, <span class="ident">nc</span>) <span class="kw">in</span> <span class="ident">range_chunk</span>(<span class="ident">n</span>, <span class="ident">knc</span>) {
-        <span class="macro">dprint</span><span class="macro">!</span>(<span class="string">&quot;LOOP 5, {}, nc={}&quot;</span>, <span class="ident">l5</span>, <span class="ident">nc</span>);
+        <span class="macro">dprint!</span>(<span class="string">&quot;LOOP 5, {}, nc={}&quot;</span>, <span class="ident">l5</span>, <span class="ident">nc</span>);
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">stride_offset</span>(<span class="ident">csb</span>, <span class="ident">knc</span> <span class="op">*</span> <span class="ident">l5</span>);
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">stride_offset</span>(<span class="ident">csc</span>, <span class="ident">knc</span> <span class="op">*</span> <span class="ident">l5</span>);
 
@@ -693,31 +693,31 @@
         <span class="comment">// This particular loop can&#39;t be parallelized because the</span>
         <span class="comment">// C chunk (writable) is shared between iterations.</span>
         <span class="kw">for</span> (<span class="ident">l4</span>, <span class="ident">kc</span>) <span class="kw">in</span> <span class="ident">range_chunk</span>(<span class="ident">k</span>, <span class="ident">kkc</span>) {
-            <span class="macro">dprint</span><span class="macro">!</span>(<span class="string">&quot;LOOP 4, {}, kc={}&quot;</span>, <span class="ident">l4</span>, <span class="ident">kc</span>);
+            <span class="macro">dprint!</span>(<span class="string">&quot;LOOP 4, {}, kc={}&quot;</span>, <span class="ident">l4</span>, <span class="ident">kc</span>);
             <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">stride_offset</span>(<span class="ident">rsb</span>, <span class="ident">kkc</span> <span class="op">*</span> <span class="ident">l4</span>);
             <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">stride_offset</span>(<span class="ident">csa</span>, <span class="ident">kkc</span> <span class="op">*</span> <span class="ident">l4</span>);
 
             <span class="comment">// Pack B -&gt; B~</span>
-            <span class="ident">pack</span>::<span class="op">&lt;</span><span class="ident">K</span>::<span class="ident">NRTy</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">kc</span>, <span class="ident">nc</span>, <span class="ident">bpp</span>.<span class="ident">ptr</span>(), <span class="ident">b</span>.<span class="ident">ptr</span>(), <span class="ident">csb</span>, <span class="ident">rsb</span>);
+            <span class="ident">pack</span>::<span class="op">&lt;</span><span class="ident">K::NRTy</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">kc</span>, <span class="ident">nc</span>, <span class="ident">bpp</span>.<span class="ident">ptr</span>(), <span class="ident">b</span>.<span class="ident">ptr</span>(), <span class="ident">csb</span>, <span class="ident">rsb</span>);
 
             <span class="comment">// First time writing to C, use user&#39;s `beta`, else accumulate</span>
-            <span class="kw">let</span> <span class="ident">betap</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">l4</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="ident">beta</span> } <span class="kw">else</span> { <span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span>::<span class="ident">one</span>() };
+            <span class="kw">let</span> <span class="ident">betap</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">l4</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="ident">beta</span> } <span class="kw">else</span> { <span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="ident">::one</span>() };
 
             <span class="comment">// LOOP 3: split m into mc parts (A, C)</span>
             <span class="ident">range_chunk</span>(<span class="ident">m</span>, <span class="ident">kmc</span>)
                 .<span class="ident">parallel</span>(<span class="ident">thread_config</span>.<span class="ident">loop3</span>, <span class="ident">tp</span>)
                 .<span class="ident">thread_local</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">i</span>, <span class="ident">_nt</span><span class="op">|</span> {
                     <span class="comment">// a packing buffer A~ per thread</span>
-                    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">nap</span>);
+                    <span class="macro">debug_assert!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">nap</span>);
                     <span class="ident">app</span>.<span class="ident">add</span>(<span class="ident">ap_size</span> <span class="op">*</span> <span class="ident">i</span>)
                 })
                 .<span class="ident">for_each</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">tp</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">app</span>, <span class="ident">l3</span>, <span class="ident">mc</span><span class="op">|</span> {
-                    <span class="macro">dprint</span><span class="macro">!</span>(<span class="string">&quot;LOOP 3, {}, mc={}&quot;</span>, <span class="ident">l3</span>, <span class="ident">mc</span>);
+                    <span class="macro">dprint!</span>(<span class="string">&quot;LOOP 3, {}, mc={}&quot;</span>, <span class="ident">l3</span>, <span class="ident">mc</span>);
                     <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">stride_offset</span>(<span class="ident">rsa</span>, <span class="ident">kmc</span> <span class="op">*</span> <span class="ident">l3</span>);
                     <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">stride_offset</span>(<span class="ident">rsc</span>, <span class="ident">kmc</span> <span class="op">*</span> <span class="ident">l3</span>);
 
                     <span class="comment">// Pack A -&gt; A~</span>
-                    <span class="ident">pack</span>::<span class="op">&lt;</span><span class="ident">K</span>::<span class="ident">MRTy</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">kc</span>, <span class="ident">mc</span>, <span class="ident">app</span>.<span class="ident">ptr</span>(), <span class="ident">a</span>.<span class="ident">ptr</span>(), <span class="ident">rsa</span>, <span class="ident">csa</span>);
+                    <span class="ident">pack</span>::<span class="op">&lt;</span><span class="ident">K::MRTy</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">kc</span>, <span class="ident">mc</span>, <span class="ident">app</span>.<span class="ident">ptr</span>(), <span class="ident">a</span>.<span class="ident">ptr</span>(), <span class="ident">rsa</span>, <span class="ident">csa</span>);
 
                     <span class="comment">// LOOP 2 and 1</span>
                     <span class="ident">gemm_packed</span>::<span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">nc</span>, <span class="ident">kc</span>, <span class="ident">mc</span>,
@@ -743,9 +743,9 @@
 <span class="comment">// Use thread local if we can; this is faster even in the single threaded case because</span>
 <span class="comment">// it is possible to skip zeroing out the array.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="macro">thread_local</span><span class="macro">!</span> {
+<span class="macro">thread_local!</span> {
     <span class="kw">static</span> <span class="ident">MASK_BUF</span>: <span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">MaskBuffer</span><span class="op">&gt;</span> <span class="op">=</span>
-        <span class="ident">UnsafeCell</span>::<span class="ident">new</span>(<span class="ident">MaskBuffer</span> { <span class="ident">buffer</span>: [<span class="number">0</span>; <span class="ident">KERNEL_MAX_SIZE</span>] });
+        <span class="ident">UnsafeCell::new</span>(<span class="ident">MaskBuffer</span> { <span class="ident">buffer</span>: [<span class="number">0</span>; <span class="ident">KERNEL_MAX_SIZE</span>] });
 }
 
 <span class="doccomment">/// Loops 1 and 2 around the µ-kernel</span>
@@ -756,17 +756,17 @@
 <span class="doccomment">/// + kc: columns of packed A / rows of packed B</span>
 <span class="doccomment">/// + mc: rows of packed A</span>
 <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">gemm_packed</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">nc</span>: <span class="ident">usize</span>, <span class="ident">kc</span>: <span class="ident">usize</span>, <span class="ident">mc</span>: <span class="ident">usize</span>,
-                         <span class="ident">alpha</span>: <span class="ident">K</span>::<span class="ident">Elem</span>,
-                         <span class="ident">app</span>: <span class="ident">Ptr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">K</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">bpp</span>: <span class="ident">Ptr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">K</span>::<span class="ident">Elem</span><span class="op">&gt;</span>,
-                         <span class="ident">beta</span>: <span class="ident">K</span>::<span class="ident">Elem</span>,
-                         <span class="ident">c</span>: <span class="ident">Ptr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">K</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">rsc</span>: <span class="ident">isize</span>, <span class="ident">csc</span>: <span class="ident">isize</span>,
+                         <span class="ident">alpha</span>: <span class="ident">K::Elem</span>,
+                         <span class="ident">app</span>: <span class="ident">Ptr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">K::Elem</span><span class="op">&gt;</span>, <span class="ident">bpp</span>: <span class="ident">Ptr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">K::Elem</span><span class="op">&gt;</span>,
+                         <span class="ident">beta</span>: <span class="ident">K::Elem</span>,
+                         <span class="ident">c</span>: <span class="ident">Ptr</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">K::Elem</span><span class="op">&gt;</span>, <span class="ident">rsc</span>: <span class="ident">isize</span>, <span class="ident">csc</span>: <span class="ident">isize</span>,
                          <span class="ident">tp</span>: <span class="ident">ThreadPoolCtx</span>, <span class="ident">thread_config</span>: <span class="ident">LoopThreadConfig</span>)
     <span class="kw">where</span> <span class="ident">K</span>: <span class="ident">GemmKernel</span>,
 {
-    <span class="kw">let</span> <span class="ident">mr</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">MR</span>;
-    <span class="kw">let</span> <span class="ident">nr</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">NR</span>;
+    <span class="kw">let</span> <span class="ident">mr</span> <span class="op">=</span> <span class="ident">K::MR</span>;
+    <span class="kw">let</span> <span class="ident">nr</span> <span class="op">=</span> <span class="ident">K::NR</span>;
     <span class="comment">// check for the mask buffer that fits 8 x 8 f32 and 8 x 4 f64 kernels and alignment</span>
-    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">mr</span> <span class="op">*</span> <span class="ident">nr</span> <span class="op">*</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">K</span>::<span class="ident">Elem</span><span class="op">&gt;</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">KERNEL_MAX_SIZE</span> <span class="op">&amp;&amp;</span> <span class="ident">K</span>::<span class="ident">align_to</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">KERNEL_MAX_ALIGN</span>);
+    <span class="macro">assert!</span>(<span class="ident">mr</span> <span class="op">*</span> <span class="ident">nr</span> <span class="op">*</span> <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">K::Elem</span><span class="op">&gt;</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">KERNEL_MAX_SIZE</span> <span class="op">&amp;&amp;</span> <span class="ident">K::align_to</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">KERNEL_MAX_ALIGN</span>);
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mask_buf</span> <span class="op">=</span> <span class="ident">MaskBuffer</span> { <span class="ident">buffer</span>: [<span class="number">0</span>; <span class="ident">KERNEL_MAX_SIZE</span>] };
@@ -778,15 +778,15 @@
             <span class="kw">let</span> <span class="ident">ptr</span>;
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
             {
-                <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">_nt</span>, <span class="number">1</span>);
+                <span class="macro">debug_assert_eq!</span>(<span class="ident">_nt</span>, <span class="number">1</span>);
                 <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">mask_buf</span>.<span class="ident">buffer</span>.<span class="ident">as_mut_ptr</span>();
             }
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
             {
                 <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">MASK_BUF</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">buf</span><span class="op">|</span> (<span class="kw-2">*</span><span class="ident">buf</span>.<span class="ident">get</span>()).<span class="ident">buffer</span>.<span class="ident">as_mut_ptr</span>());
             }
-            <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">%</span> <span class="ident">KERNEL_MAX_ALIGN</span>, <span class="number">0</span>);
-            <span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">K</span>::<span class="ident">Elem</span>
+            <span class="macro">debug_assert_eq!</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">%</span> <span class="ident">KERNEL_MAX_ALIGN</span>, <span class="number">0</span>);
+            <span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">K::Elem</span>
         })
         .<span class="ident">for_each</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">_tp</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">mask_ptr</span>, <span class="ident">l2</span>, <span class="ident">nr_</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">bpp</span> <span class="op">=</span> <span class="ident">bpp</span>.<span class="ident">stride_offset</span>(<span class="number">1</span>, <span class="ident">kc</span> <span class="op">*</span> <span class="ident">nr</span> <span class="op">*</span> <span class="ident">l2</span>);
@@ -800,13 +800,13 @@
                 <span class="comment">// GEMM KERNEL</span>
                 <span class="comment">// NOTE: For the rust kernels, it performs better to simply</span>
                 <span class="comment">// always use the masked kernel function!</span>
-                <span class="kw">if</span> <span class="ident">K</span>::<span class="ident">always_masked</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">nr_</span> <span class="op">&lt;</span> <span class="ident">nr</span> <span class="op">|</span><span class="op">|</span> <span class="ident">mr_</span> <span class="op">&lt;</span> <span class="ident">mr</span> {
+                <span class="kw">if</span> <span class="ident">K::always_masked</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">nr_</span> <span class="op">&lt;</span> <span class="ident">nr</span> <span class="op">|</span><span class="op">|</span> <span class="ident">mr_</span> <span class="op">&lt;</span> <span class="ident">mr</span> {
                     <span class="ident">masked_kernel</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">kc</span>, <span class="ident">alpha</span>, <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">app</span>.<span class="ident">ptr</span>(), <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">bpp</span>.<span class="ident">ptr</span>(),
                                           <span class="ident">beta</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">c</span>.<span class="ident">ptr</span>(), <span class="ident">rsc</span>, <span class="ident">csc</span>,
                                           <span class="ident">mr_</span>, <span class="ident">nr_</span>, <span class="ident">mask_ptr</span>);
                     <span class="kw">continue</span>;
                 } <span class="kw">else</span> {
-                    <span class="ident">K</span>::<span class="ident">kernel</span>(<span class="ident">kc</span>, <span class="ident">alpha</span>, <span class="ident">app</span>.<span class="ident">ptr</span>(), <span class="ident">bpp</span>.<span class="ident">ptr</span>(), <span class="ident">beta</span>, <span class="ident">c</span>.<span class="ident">ptr</span>(), <span class="ident">rsc</span>, <span class="ident">csc</span>);
+                    <span class="ident">K::kernel</span>(<span class="ident">kc</span>, <span class="ident">alpha</span>, <span class="ident">app</span>.<span class="ident">ptr</span>(), <span class="ident">bpp</span>.<span class="ident">ptr</span>(), <span class="ident">beta</span>, <span class="ident">c</span>.<span class="ident">ptr</span>(), <span class="ident">rsc</span>, <span class="ident">csc</span>);
                 }
             }
         });
@@ -822,28 +822,28 @@
 <span class="doccomment">/// na: Number of buffers to alloc for A</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Return packing buffer and size of A~ (The offset to B~ is A~ size times `na`).</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">make_packing_buffer</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">m</span>: <span class="ident">usize</span>, <span class="ident">k</span>: <span class="ident">usize</span>, <span class="ident">n</span>: <span class="ident">usize</span>, <span class="ident">na</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">Alloc</span><span class="op">&lt;</span><span class="ident">K</span>::<span class="ident">Elem</span><span class="op">&gt;</span>, <span class="ident">usize</span>)
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">make_packing_buffer</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">m</span>: <span class="ident">usize</span>, <span class="ident">k</span>: <span class="ident">usize</span>, <span class="ident">n</span>: <span class="ident">usize</span>, <span class="ident">na</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">Alloc</span><span class="op">&lt;</span><span class="ident">K::Elem</span><span class="op">&gt;</span>, <span class="ident">usize</span>)
     <span class="kw">where</span> <span class="ident">K</span>: <span class="ident">GemmKernel</span>,
 {
     <span class="comment">// max alignment requirement is a multiple of min(MR, NR) * sizeof&lt;Elem&gt;</span>
     <span class="comment">// because apack_size is a multiple of MR, start of b aligns fine</span>
-    <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">m</span>, <span class="ident">K</span>::<span class="ident">mc</span>());
-    <span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">k</span>, <span class="ident">K</span>::<span class="ident">kc</span>());
-    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">n</span>, <span class="ident">K</span>::<span class="ident">nc</span>());
+    <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">m</span>, <span class="ident">K::mc</span>());
+    <span class="kw">let</span> <span class="ident">k</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">k</span>, <span class="ident">K::kc</span>());
+    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">n</span>, <span class="ident">K::nc</span>());
     <span class="comment">// round up k, n to multiples of mr, nr</span>
     <span class="comment">// round up to multiple of kc</span>
-    <span class="macro">debug_assert_ne</span><span class="macro">!</span>(<span class="ident">na</span>, <span class="number">0</span>);
-    <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">na</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">128</span>);
-    <span class="kw">let</span> <span class="ident">apack_size</span> <span class="op">=</span> <span class="ident">k</span> <span class="op">*</span> <span class="ident">round_up_to</span>(<span class="ident">m</span>, <span class="ident">K</span>::<span class="ident">MR</span>);
-    <span class="kw">let</span> <span class="ident">bpack_size</span> <span class="op">=</span> <span class="ident">k</span> <span class="op">*</span> <span class="ident">round_up_to</span>(<span class="ident">n</span>, <span class="ident">K</span>::<span class="ident">NR</span>);
+    <span class="macro">debug_assert_ne!</span>(<span class="ident">na</span>, <span class="number">0</span>);
+    <span class="macro">debug_assert!</span>(<span class="ident">na</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">128</span>);
+    <span class="kw">let</span> <span class="ident">apack_size</span> <span class="op">=</span> <span class="ident">k</span> <span class="op">*</span> <span class="ident">round_up_to</span>(<span class="ident">m</span>, <span class="ident">K::MR</span>);
+    <span class="kw">let</span> <span class="ident">bpack_size</span> <span class="op">=</span> <span class="ident">k</span> <span class="op">*</span> <span class="ident">round_up_to</span>(<span class="ident">n</span>, <span class="ident">K::NR</span>);
     <span class="kw">let</span> <span class="ident">nelem</span> <span class="op">=</span> <span class="ident">apack_size</span> <span class="op">*</span> <span class="ident">na</span> <span class="op">+</span> <span class="ident">bpack_size</span>;
 
-    <span class="macro">dprint</span><span class="macro">!</span>(<span class="string">&quot;packed nelem={}, apack={}, bpack={},
+    <span class="macro">dprint!</span>(<span class="string">&quot;packed nelem={}, apack={}, bpack={},
              m={} k={} n={}, na={}&quot;</span>,
              <span class="ident">nelem</span>, <span class="ident">apack_size</span>, <span class="ident">bpack_size</span>,
              <span class="ident">m</span>,<span class="ident">k</span>,<span class="ident">n</span>, <span class="ident">na</span>);
 
-    (<span class="ident">Alloc</span>::<span class="ident">new</span>(<span class="ident">nelem</span>, <span class="ident">K</span>::<span class="ident">align_to</span>()), <span class="ident">apack_size</span>)
+    (<span class="ident">Alloc::new</span>(<span class="ident">nelem</span>, <span class="ident">K::align_to</span>()), <span class="ident">apack_size</span>)
 }
 
 <span class="doccomment">/// Pack matrix into `pack`</span>
@@ -861,7 +861,7 @@
     <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Element</span>,
           <span class="ident">MR</span>: <span class="ident">ConstNum</span>,
 {
-    <span class="kw">let</span> <span class="ident">mr</span> <span class="op">=</span> <span class="ident">MR</span>::<span class="ident">VALUE</span>;
+    <span class="kw">let</span> <span class="ident">mr</span> <span class="op">=</span> <span class="ident">MR::VALUE</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p</span> <span class="op">=</span> <span class="number">0</span>; <span class="comment">// offset into pack</span>
 
     <span class="kw">if</span> <span class="ident">rsa</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
@@ -891,7 +891,7 @@
         }
     }
 
-    <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span>::<span class="ident">zero</span>();
+    <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="ident">::zero</span>();
 
     <span class="comment">// Pad with zeros to multiple of kernel size (uneven mc)</span>
     <span class="kw">let</span> <span class="ident">rest</span> <span class="op">=</span> <span class="ident">mc</span> <span class="op">%</span> <span class="ident">mr</span>;
@@ -931,7 +931,7 @@
     <span class="kw">where</span> <span class="ident">K</span>: <span class="ident">GemmKernel</span><span class="op">&lt;</span><span class="ident">Elem</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span>: <span class="ident">Element</span>,
 {
     <span class="comment">// use column major order for `mask_buf`</span>
-    <span class="ident">K</span>::<span class="ident">kernel</span>(<span class="ident">k</span>, <span class="ident">alpha</span>, <span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">mask_buf</span>, <span class="number">1</span>, <span class="ident">K</span>::<span class="ident">MR</span> <span class="kw">as</span> <span class="ident">isize</span>);
+    <span class="ident">K::kernel</span>(<span class="ident">k</span>, <span class="ident">alpha</span>, <span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">T::zero</span>(), <span class="ident">mask_buf</span>, <span class="number">1</span>, <span class="ident">K::MR</span> <span class="kw">as</span> <span class="ident">isize</span>);
     <span class="ident">c_to_masked_ab_beta_c</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">K</span><span class="op">&gt;</span>(<span class="ident">beta</span>, <span class="ident">c</span>, <span class="ident">rsc</span>, <span class="ident">csc</span>, <span class="ident">rows</span>, <span class="ident">cols</span>, <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">mask_buf</span>);
 }
 
@@ -947,8 +947,8 @@
 {
     <span class="comment">// note: use separate function here with `&amp;T` argument for mask buf,</span>
     <span class="comment">// so that the compiler sees that `c` and `mask_buf` never alias.</span>
-    <span class="kw">let</span> <span class="ident">mr</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">MR</span>;
-    <span class="kw">let</span> <span class="ident">nr</span> <span class="op">=</span> <span class="ident">K</span>::<span class="ident">NR</span>;
+    <span class="kw">let</span> <span class="ident">mr</span> <span class="op">=</span> <span class="ident">K::MR</span>;
+    <span class="kw">let</span> <span class="ident">nr</span> <span class="op">=</span> <span class="ident">K::NR</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ab</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">mask_buf</span>;
     <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">nr</span> {
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">mr</span> {
@@ -977,7 +977,7 @@
             <span class="kw">let</span> <span class="ident">cptr</span> <span class="op">=</span> <span class="ident">c</span>.<span class="ident">stride_offset</span>(<span class="ident">rsc</span>, <span class="ident">i</span>)
                         .<span class="ident">stride_offset</span>(<span class="ident">csc</span>, <span class="ident">j</span>);
             <span class="kw">if</span> <span class="ident">beta</span>.<span class="ident">is_zero</span>() {
-                <span class="kw-2">*</span><span class="ident">cptr</span> <span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>(); <span class="comment">// initialize C</span>
+                <span class="kw-2">*</span><span class="ident">cptr</span> <span class="op">=</span> <span class="ident">T::zero</span>(); <span class="comment">// initialize C</span>
             } <span class="kw">else</span> {
                 <span class="kw-2">*</span><span class="ident">cptr</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">beta</span>;
             }
@@ -985,5 +985,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="matrixmultiply" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="matrixmultiply" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

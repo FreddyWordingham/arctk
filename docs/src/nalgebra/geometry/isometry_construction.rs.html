@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.26.1/src/geometry/isometry_construction.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>isometry_construction.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.26.1/src/geometry/isometry_construction.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>isometry_construction.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -469,21 +469,21 @@
 <span id="468">468</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;arbitrary&quot;</span>)]</span>
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::<span class="ident">storage</span>::<span class="ident">Owned</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::base::storage::Owned</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;arbitrary&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">quickcheck</span>::{<span class="ident">Arbitrary</span>, <span class="ident">Gen</span>};
 
-<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">One</span>;
+<span class="kw">use</span> <span class="ident">num::One</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand-no-std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">rand</span>::{
     <span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">Standard</span>},
     <span class="ident">Rng</span>,
 };
 
-<span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">scalar</span>::<span class="ident">SupersetOf</span>;
-<span class="kw">use</span> <span class="ident">simba</span>::<span class="ident">simd</span>::<span class="ident">SimdRealField</span>;
+<span class="kw">use</span> <span class="ident">simba::scalar::SupersetOf</span>;
+<span class="kw">use</span> <span class="ident">simba::simd::SimdRealField</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::{<span class="ident">Vector2</span>, <span class="ident">Vector3</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::base</span>::{<span class="ident">Vector2</span>, <span class="ident">Vector3</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">AbstractRotation</span>, <span class="ident">Isometry</span>, <span class="ident">Isometry2</span>, <span class="ident">Isometry3</span>, <span class="ident">IsometryMatrix2</span>, <span class="ident">IsometryMatrix3</span>, <span class="ident">Point</span>,
@@ -493,7 +493,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimdRealField</span>, <span class="ident">R</span>: <span class="ident">AbstractRotation</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
 {
     <span class="doccomment">/// Creates a new identity isometry.</span>
     <span class="doccomment">///</span>
@@ -512,7 +512,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="ident">Translation</span>::<span class="ident">identity</span>(), <span class="ident">R</span>::<span class="ident">identity</span>())
+        <span class="self">Self</span><span class="ident">::from_parts</span>(<span class="ident">Translation::identity</span>(), <span class="ident">R::identity</span>())
     }
 
     <span class="doccomment">/// The isometry that applies the rotation `r` with its axis passing through the point `p`.</span>
@@ -534,30 +534,30 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation_wrt_point</span>(<span class="ident">r</span>: <span class="ident">R</span>, <span class="ident">p</span>: <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">shift</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">transform_vector</span>(<span class="kw-2">&amp;</span><span class="op">-</span><span class="kw-2">&amp;</span><span class="ident">p</span>.<span class="ident">coords</span>);
-        <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="ident">Translation</span>::<span class="ident">from</span>(<span class="ident">shift</span> <span class="op">+</span> <span class="ident">p</span>.<span class="ident">coords</span>), <span class="ident">r</span>)
+        <span class="self">Self</span><span class="ident">::from_parts</span>(<span class="ident">Translation::from</span>(<span class="ident">shift</span> <span class="op">+</span> <span class="ident">p</span>.<span class="ident">coords</span>), <span class="ident">r</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimdRealField</span>, <span class="ident">R</span>: <span class="ident">AbstractRotation</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">One</span> <span class="kw">for</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
 {
     <span class="doccomment">/// Creates a new identity isometry.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">one</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">identity</span>()
+        <span class="self">Self</span><span class="ident">::identity</span>()
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rand-no-std&quot;</span>)]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="kw">crate</span>::<span class="ident">RealField</span>, <span class="ident">R</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="kw">crate</span><span class="ident">::RealField</span>, <span class="ident">R</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
 <span class="kw">where</span>
     <span class="ident">R</span>: <span class="ident">AbstractRotation</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span>,
     <span class="ident">Standard</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">G</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span> {
-        <span class="ident">Isometry</span>::<span class="ident">from_parts</span>(<span class="ident">rng</span>.<span class="ident">gen</span>(), <span class="ident">rng</span>.<span class="ident">gen</span>())
+        <span class="ident">Isometry::from_parts</span>(<span class="ident">rng</span>.<span class="ident">gen</span>(), <span class="ident">rng</span>.<span class="ident">gen</span>())
     }
 }
 
@@ -565,13 +565,13 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Arbitrary</span> <span class="kw">for</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">D</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">SimdRealField</span> <span class="op">+</span> <span class="ident">Arbitrary</span> <span class="op">+</span> <span class="ident">Send</span>,
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
     <span class="ident">R</span>: <span class="ident">AbstractRotation</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Arbitrary</span> <span class="op">+</span> <span class="ident">Send</span>,
-    <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="kw">crate</span>::<span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>: <span class="ident">Send</span>,
+    <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="kw">crate</span><span class="ident">::Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span>: <span class="ident">Send</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">arbitrary</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Gen</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="ident">Arbitrary</span>::<span class="ident">arbitrary</span>(<span class="ident">rng</span>), <span class="ident">Arbitrary</span>::<span class="ident">arbitrary</span>(<span class="ident">rng</span>))
+        <span class="self">Self</span><span class="ident">::from_parts</span>(<span class="ident">Arbitrary::arbitrary</span>(<span class="ident">rng</span>), <span class="ident">Arbitrary::arbitrary</span>(<span class="ident">rng</span>))
     }
 }
 
@@ -584,7 +584,7 @@
 <span class="doccomment">/// # Construction from a 2D vector and/or a rotation angle</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">IsometryMatrix2</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
 {
     <span class="doccomment">/// Creates a new 2D isometry from a translation and a rotation angle.</span>
     <span class="doccomment">///</span>
@@ -601,19 +601,19 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">translation</span>: <span class="ident">Vector2</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">angle</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="ident">Translation</span>::<span class="ident">from</span>(<span class="ident">translation</span>), <span class="ident">Rotation</span>::<span class="op">&lt;</span><span class="ident">T</span>, <span class="number">2</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">angle</span>))
+        <span class="self">Self</span><span class="ident">::from_parts</span>(<span class="ident">Translation::from</span>(<span class="ident">translation</span>), <span class="ident">Rotation</span>::<span class="op">&lt;</span><span class="ident">T</span>, <span class="number">2</span><span class="op">&gt;</span><span class="ident">::new</span>(<span class="ident">angle</span>))
     }
 
     <span class="doccomment">/// Creates a new isometry from the given translation coordinates.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">translation</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">Vector2</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>), <span class="ident">T</span>::<span class="ident">zero</span>())
+        <span class="self">Self</span><span class="ident">::new</span>(<span class="ident">Vector2::new</span>(<span class="ident">x</span>, <span class="ident">y</span>), <span class="ident">T::zero</span>())
     }
 
     <span class="doccomment">/// Creates a new isometry from the given rotation angle.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation</span>(<span class="ident">angle</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">Vector2</span>::<span class="ident">zeros</span>(), <span class="ident">angle</span>)
+        <span class="self">Self</span><span class="ident">::new</span>(<span class="ident">Vector2::zeros</span>(), <span class="ident">angle</span>)
     }
 
     <span class="doccomment">/// Cast the components of `self` to another type.</span>
@@ -629,13 +629,13 @@
     <span class="kw">where</span>
         <span class="ident">IsometryMatrix2</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
     {
-        <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
+        <span class="kw">crate</span><span class="ident">::convert</span>(<span class="self">self</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Isometry2</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
 {
     <span class="doccomment">/// Creates a new 2D isometry from a translation and a rotation angle.</span>
     <span class="doccomment">///</span>
@@ -652,22 +652,22 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">translation</span>: <span class="ident">Vector2</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">angle</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_parts</span>(
-            <span class="ident">Translation</span>::<span class="ident">from</span>(<span class="ident">translation</span>),
-            <span class="ident">UnitComplex</span>::<span class="ident">from_angle</span>(<span class="ident">angle</span>),
+        <span class="self">Self</span><span class="ident">::from_parts</span>(
+            <span class="ident">Translation::from</span>(<span class="ident">translation</span>),
+            <span class="ident">UnitComplex::from_angle</span>(<span class="ident">angle</span>),
         )
     }
 
     <span class="doccomment">/// Creates a new isometry from the given translation coordinates.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">translation</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="ident">Translation2</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>), <span class="ident">UnitComplex</span>::<span class="ident">identity</span>())
+        <span class="self">Self</span><span class="ident">::from_parts</span>(<span class="ident">Translation2::new</span>(<span class="ident">x</span>, <span class="ident">y</span>), <span class="ident">UnitComplex::identity</span>())
     }
 
     <span class="doccomment">/// Creates a new isometry from the given rotation angle.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation</span>(<span class="ident">angle</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">Vector2</span>::<span class="ident">zeros</span>(), <span class="ident">angle</span>)
+        <span class="self">Self</span><span class="ident">::new</span>(<span class="ident">Vector2::zeros</span>(), <span class="ident">angle</span>)
     }
 
     <span class="doccomment">/// Cast the components of `self` to another type.</span>
@@ -683,12 +683,12 @@
     <span class="kw">where</span>
         <span class="ident">Isometry2</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
     {
-        <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
+        <span class="kw">crate</span><span class="ident">::convert</span>(<span class="self">self</span>)
     }
 }
 
 <span class="comment">// 3D rotation.</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">basic_isometry_construction_impl</span>(
+<span class="macro">macro_rules!</span> <span class="ident">basic_isometry_construction_impl</span>(
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId</span>: <span class="ident">ident</span> <span class="op">&lt;</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotParams</span>: <span class="ident">ident</span>),<span class="kw-2">*</span><span class="op">&gt;</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="doccomment">/// Creates a new isometry from a translation and a rotation axis-angle.</span>
         <span class="doccomment">///</span>
@@ -716,26 +716,26 @@
         <span class="doccomment">/// ```</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
         <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">translation</span>: <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">axisangle</span>: <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-            <span class="self">Self</span>::<span class="ident">from_parts</span>(
-                <span class="ident">Translation</span>::<span class="ident">from</span>(<span class="ident">translation</span>),
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId</span>::<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotParams</span>),<span class="kw-2">*</span><span class="op">&gt;</span>::<span class="ident">from_scaled_axis</span>(<span class="ident">axisangle</span>))
+            <span class="self">Self</span><span class="ident">::from_parts</span>(
+                <span class="ident">Translation::from</span>(<span class="ident">translation</span>),
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId</span>::<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotParams</span>),<span class="kw-2">*</span><span class="op">&gt;</span><span class="ident">::from_scaled_axis</span>(<span class="ident">axisangle</span>))
         }
 
         <span class="doccomment">/// Creates a new isometry from the given translation coordinates.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
         <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">translation</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>, <span class="ident">z</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-            <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="ident">Translation3</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId</span>::<span class="ident">identity</span>())
+            <span class="self">Self</span><span class="ident">::from_parts</span>(<span class="ident">Translation3::new</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId::identity</span>())
         }
 
         <span class="doccomment">/// Creates a new isometry from the given rotation angle.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
         <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rotation</span>(<span class="ident">axisangle</span>: <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-            <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">Vector3</span>::<span class="ident">zeros</span>(), <span class="ident">axisangle</span>)
+            <span class="self">Self</span><span class="ident">::new</span>(<span class="ident">Vector3::zeros</span>(), <span class="ident">axisangle</span>)
         }
     }
 );
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">look_at_isometry_construction_impl</span>(
+<span class="macro">macro_rules!</span> <span class="ident">look_at_isometry_construction_impl</span>(
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId</span>: <span class="ident">ident</span> <span class="op">&lt;</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotParams</span>: <span class="ident">ident</span>),<span class="kw-2">*</span><span class="op">&gt;</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="doccomment">/// Creates an isometry that corresponds to the local frame of an observer standing at the</span>
         <span class="doccomment">/// point `eye` and looking toward `target`.</span>
@@ -773,9 +773,9 @@
                             <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
                             <span class="ident">up</span>:     <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)
                             <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-            <span class="self">Self</span>::<span class="ident">from_parts</span>(
-                <span class="ident">Translation</span>::<span class="ident">from</span>(<span class="ident">eye</span>.<span class="ident">coords</span>.<span class="ident">clone</span>()),
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId</span>::<span class="ident">face_towards</span>(<span class="kw-2">&amp;</span>(<span class="ident">target</span> <span class="op">-</span> <span class="ident">eye</span>), <span class="ident">up</span>))
+            <span class="self">Self</span><span class="ident">::from_parts</span>(
+                <span class="ident">Translation::from</span>(<span class="ident">eye</span>.<span class="ident">coords</span>.<span class="ident">clone</span>()),
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId::face_towards</span>(<span class="kw-2">&amp;</span>(<span class="ident">target</span> <span class="op">-</span> <span class="ident">eye</span>), <span class="ident">up</span>))
         }
 
         <span class="doccomment">/// Deprecated: Use [Isometry::face_towards] instead.</span>
@@ -784,7 +784,7 @@
                                   <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
                                   <span class="ident">up</span>:     <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)
                                   <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-            <span class="self">Self</span>::<span class="ident">face_towards</span>(<span class="ident">eye</span>, <span class="ident">target</span>, <span class="ident">up</span>)
+            <span class="self">Self</span><span class="ident">::face_towards</span>(<span class="ident">eye</span>, <span class="ident">target</span>, <span class="ident">up</span>)
         }
 
         <span class="doccomment">/// Builds a right-handed look-at view matrix.</span>
@@ -824,10 +824,10 @@
                           <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
                           <span class="ident">up</span>:     <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)
                           <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-            <span class="kw">let</span> <span class="ident">rotation</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId</span>::<span class="ident">look_at_rh</span>(<span class="kw-2">&amp;</span>(<span class="ident">target</span> <span class="op">-</span> <span class="ident">eye</span>), <span class="ident">up</span>);
+            <span class="kw">let</span> <span class="ident">rotation</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId::look_at_rh</span>(<span class="kw-2">&amp;</span>(<span class="ident">target</span> <span class="op">-</span> <span class="ident">eye</span>), <span class="ident">up</span>);
             <span class="kw">let</span> <span class="ident">trans</span>    <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">rotation</span> <span class="op">*</span> (<span class="op">-</span><span class="ident">eye</span>);
 
-            <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="ident">Translation</span>::<span class="ident">from</span>(<span class="ident">trans</span>.<span class="ident">coords</span>), <span class="ident">rotation</span>)
+            <span class="self">Self</span><span class="ident">::from_parts</span>(<span class="ident">Translation::from</span>(<span class="ident">trans</span>.<span class="ident">coords</span>), <span class="ident">rotation</span>)
         }
 
         <span class="doccomment">/// Builds a left-handed look-at view matrix.</span>
@@ -867,10 +867,10 @@
                           <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
                           <span class="ident">up</span>:     <span class="kw-2">&amp;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>)
                           <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-            <span class="kw">let</span> <span class="ident">rotation</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId</span>::<span class="ident">look_at_lh</span>(<span class="kw-2">&amp;</span>(<span class="ident">target</span> <span class="op">-</span> <span class="ident">eye</span>), <span class="ident">up</span>);
+            <span class="kw">let</span> <span class="ident">rotation</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">RotId::look_at_lh</span>(<span class="kw-2">&amp;</span>(<span class="ident">target</span> <span class="op">-</span> <span class="ident">eye</span>), <span class="ident">up</span>);
             <span class="kw">let</span> <span class="ident">trans</span>    <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">rotation</span> <span class="op">*</span> (<span class="op">-</span><span class="ident">eye</span>);
 
-            <span class="self">Self</span>::<span class="ident">from_parts</span>(<span class="ident">Translation</span>::<span class="ident">from</span>(<span class="ident">trans</span>.<span class="ident">coords</span>), <span class="ident">rotation</span>)
+            <span class="self">Self</span><span class="ident">::from_parts</span>(<span class="ident">Translation::from</span>(<span class="ident">trans</span>.<span class="ident">coords</span>), <span class="ident">rotation</span>)
         }
     }
 );
@@ -878,9 +878,9 @@
 <span class="doccomment">/// # Construction from a 3D vector and/or an axis-angle</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Isometry3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
 {
-    <span class="macro">basic_isometry_construction_impl</span><span class="macro">!</span>(<span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+    <span class="macro">basic_isometry_construction_impl!</span>(<span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 
     <span class="doccomment">/// Cast the components of `self` to another type.</span>
     <span class="doccomment">///</span>
@@ -895,15 +895,15 @@
     <span class="kw">where</span>
         <span class="ident">Isometry3</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
     {
-        <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
+        <span class="kw">crate</span><span class="ident">::convert</span>(<span class="self">self</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">IsometryMatrix3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
 {
-    <span class="macro">basic_isometry_construction_impl</span><span class="macro">!</span>(<span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+    <span class="macro">basic_isometry_construction_impl!</span>(<span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 
     <span class="doccomment">/// Cast the components of `self` to another type.</span>
     <span class="doccomment">///</span>
@@ -918,24 +918,24 @@
     <span class="kw">where</span>
         <span class="ident">IsometryMatrix3</span><span class="op">&lt;</span><span class="ident">To</span><span class="op">&gt;</span>: <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>,
     {
-        <span class="kw">crate</span>::<span class="ident">convert</span>(<span class="self">self</span>)
+        <span class="kw">crate</span><span class="ident">::convert</span>(<span class="self">self</span>)
     }
 }
 
 <span class="doccomment">/// # Construction from a 3D eye position and target point</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">Isometry3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
 {
-    <span class="macro">look_at_isometry_construction_impl</span><span class="macro">!</span>(<span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+    <span class="macro">look_at_isometry_construction_impl!</span>(<span class="ident">UnitQuaternion</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SimdRealField</span><span class="op">&gt;</span> <span class="ident">IsometryMatrix3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>::<span class="ident">Element</span>: <span class="ident">SimdRealField</span>,
+    <span class="ident">T::Element</span>: <span class="ident">SimdRealField</span>,
 {
-    <span class="macro">look_at_isometry_construction_impl</span><span class="macro">!</span>(<span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
+    <span class="macro">look_at_isometry_construction_impl!</span>(<span class="ident">Rotation3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="nalgebra" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="nalgebra" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

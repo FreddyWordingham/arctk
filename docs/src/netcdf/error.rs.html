@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/netcdf-0.6.1/src/error.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>error.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../netcdf/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../netcdf/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -155,10 +155,10 @@
 <span class="doccomment">//! This module contains conversion traits and the result type</span>
 <span class="doccomment">//! used in this crate.</span>
 
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">similar_names</span>)]</span>
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">nc_type</span>;
-<span class="kw">use</span> <span class="ident">netcdf_sys</span>::<span class="ident">nc_strerror</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">num</span>::<span class="ident">TryFromIntError</span>;
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy::similar_names</span>)]</span>
+<span class="kw">use</span> <span class="kw">super</span><span class="ident">::nc_type</span>;
+<span class="kw">use</span> <span class="ident">netcdf_sys::nc_strerror</span>;
+<span class="kw">use</span> <span class="ident">std::num::TryFromIntError</span>;
 
 <span class="doccomment">/// Various error types that can occur in this crate</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
@@ -198,108 +198,108 @@
     <span class="doccomment">/// Identifier belongs to another dataset</span>
     <span class="ident">WrongDataset</span>,
     <span class="doccomment">/// Name is not valid utf-8</span>
-    <span class="ident">Utf8Conversion</span>(<span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">FromUtf8Error</span>),
+    <span class="ident">Utf8Conversion</span>(<span class="ident">std::string::FromUtf8Error</span>),
 }
 
 <span class="kw">impl</span> <span class="ident">Error</span> {
     <span class="doccomment">/// Was the error due to ambiguity of the</span>
     <span class="doccomment">/// indices or lengths?</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_ambigous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="macro">matches</span><span class="macro">!</span>(<span class="self">self</span>, <span class="self">Self</span>::<span class="ident">Ambiguous</span>)
+        <span class="macro">matches!</span>(<span class="self">self</span>, <span class="self">Self</span><span class="ident">::Ambiguous</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
+<span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>(<span class="kw">dyn</span> <span class="ident">std::error::Error</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>)<span class="op">&gt;</span> {
         <span class="prelude-val">None</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Str</span>(<span class="ident">s</span>.<span class="ident">into</span>())
+        <span class="self">Self</span><span class="ident">::Str</span>(<span class="ident">s</span>.<span class="ident">into</span>())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Str</span>(<span class="ident">s</span>)
+        <span class="self">Self</span><span class="ident">::Str</span>(<span class="ident">s</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">nc_type</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">nc</span>: <span class="ident">nc_type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">if</span> <span class="ident">nc</span> <span class="op">=</span><span class="op">=</span> <span class="ident">netcdf_sys</span>::<span class="ident">NC_EEXIST</span>
-            <span class="op">|</span><span class="op">|</span> <span class="ident">nc</span> <span class="op">=</span><span class="op">=</span> <span class="ident">netcdf_sys</span>::<span class="ident">NC_EATTEXISTS</span>
-            <span class="op">|</span><span class="op">|</span> <span class="ident">nc</span> <span class="op">=</span><span class="op">=</span> <span class="ident">netcdf_sys</span>::<span class="ident">NC_ENAMEINUSE</span>
+        <span class="kw">if</span> <span class="ident">nc</span> <span class="op">=</span><span class="op">=</span> <span class="ident">netcdf_sys::NC_EEXIST</span>
+            <span class="op">|</span><span class="op">|</span> <span class="ident">nc</span> <span class="op">=</span><span class="op">=</span> <span class="ident">netcdf_sys::NC_EATTEXISTS</span>
+            <span class="op">|</span><span class="op">|</span> <span class="ident">nc</span> <span class="op">=</span><span class="op">=</span> <span class="ident">netcdf_sys::NC_ENAMEINUSE</span>
         {
-            <span class="self">Self</span>::<span class="ident">AlreadyExists</span>
+            <span class="self">Self</span><span class="ident">::AlreadyExists</span>
         } <span class="kw">else</span> {
-            <span class="self">Self</span>::<span class="ident">Netcdf</span>(<span class="ident">nc</span>)
+            <span class="self">Self</span><span class="ident">::Netcdf</span>(<span class="ident">nc</span>)
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TryFromIntError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">TryFromIntError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Conversion</span>(<span class="ident">e</span>)
+        <span class="self">Self</span><span class="ident">::Conversion</span>(<span class="ident">e</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">FromUtf8Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">FromUtf8Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">Utf8Conversion</span>(<span class="ident">e</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">std::string::FromUtf8Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">std::string::FromUtf8Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span><span class="ident">::Utf8Conversion</span>(<span class="ident">e</span>)
     }
 }
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="self">Self</span>::<span class="ident">Str</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">x</span>),
-            <span class="self">Self</span>::<span class="ident">IndexLen</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;indices does not match in length with the variable&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">SliceLen</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;slices does not match in length with the variable&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">IndexMismatch</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;requested index is bigger than the dimension length&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">SliceMismatch</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;requested slice is bigger than the dimension length&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">ZeroSlice</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;must request a slice length larger than zero&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Stride</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid strides&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">BufferLen</span>(<span class="ident">has</span>, <span class="ident">need</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(
+            <span class="self">Self</span><span class="ident">::Str</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">x</span>),
+            <span class="self">Self</span><span class="ident">::IndexLen</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;indices does not match in length with the variable&quot;</span>),
+            <span class="self">Self</span><span class="ident">::SliceLen</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;slices does not match in length with the variable&quot;</span>),
+            <span class="self">Self</span><span class="ident">::IndexMismatch</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;requested index is bigger than the dimension length&quot;</span>),
+            <span class="self">Self</span><span class="ident">::SliceMismatch</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;requested slice is bigger than the dimension length&quot;</span>),
+            <span class="self">Self</span><span class="ident">::ZeroSlice</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;must request a slice length larger than zero&quot;</span>),
+            <span class="self">Self</span><span class="ident">::Stride</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid strides&quot;</span>),
+            <span class="self">Self</span><span class="ident">::BufferLen</span>(<span class="ident">has</span>, <span class="ident">need</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;buffer size mismatch, has size {}, but needs size {}&quot;</span>,
                 <span class="ident">has</span>, <span class="ident">need</span>
             ),
-            <span class="self">Self</span>::<span class="ident">TypeMismatch</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;netcdf types does not correspond to what is defined&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">TypeUnknown</span>(<span class="ident">t</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;netcdf type {} is not known&quot;</span>, <span class="ident">t</span>),
-            <span class="self">Self</span>::<span class="ident">AlreadyExists</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;variable/group/dimension already exists&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">NotFound</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Could not find {}&quot;</span>, <span class="ident">x</span>),
-            <span class="self">Self</span>::<span class="ident">Netcdf</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="self">Self</span><span class="ident">::TypeMismatch</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;netcdf types does not correspond to what is defined&quot;</span>),
+            <span class="self">Self</span><span class="ident">::TypeUnknown</span>(<span class="ident">t</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;netcdf type {} is not known&quot;</span>, <span class="ident">t</span>),
+            <span class="self">Self</span><span class="ident">::AlreadyExists</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;variable/group/dimension already exists&quot;</span>),
+            <span class="self">Self</span><span class="ident">::NotFound</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Could not find {}&quot;</span>, <span class="ident">x</span>),
+            <span class="self">Self</span><span class="ident">::Netcdf</span>(<span class="ident">x</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">msg</span>;
                 <span class="kw">unsafe</span> {
                     <span class="comment">// Threadsafe</span>
                     <span class="kw">let</span> <span class="ident">cmsg</span> <span class="op">=</span> <span class="ident">nc_strerror</span>(<span class="kw-2">*</span><span class="ident">x</span>);
-                    <span class="ident">msg</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">cmsg</span>);
+                    <span class="ident">msg</span> <span class="op">=</span> <span class="ident">std::ffi::CStr::from_ptr</span>(<span class="ident">cmsg</span>);
                 }
 
-                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;netcdf error({}): {}&quot;</span>, <span class="ident">x</span>, <span class="ident">msg</span>.<span class="ident">to_string_lossy</span>())
+                <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;netcdf error({}): {}&quot;</span>, <span class="ident">x</span>, <span class="ident">msg</span>.<span class="ident">to_string_lossy</span>())
             }
-            <span class="self">Self</span>::<span class="ident">Ambiguous</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Could not find an appropriate length of the slices&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Overflow</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;slice would exceed maximum size of possible buffers&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Conversion</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">fmt</span>(<span class="ident">f</span>),
-            <span class="self">Self</span>::<span class="ident">WrongDataset</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;This identifier does not belong in this dataset&quot;</span>),
-            <span class="self">Self</span>::<span class="ident">Utf8Conversion</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
+            <span class="self">Self</span><span class="ident">::Ambiguous</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Could not find an appropriate length of the slices&quot;</span>),
+            <span class="self">Self</span><span class="ident">::Overflow</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;slice would exceed maximum size of possible buffers&quot;</span>),
+            <span class="self">Self</span><span class="ident">::Conversion</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">fmt</span>(<span class="ident">f</span>),
+            <span class="self">Self</span><span class="ident">::WrongDataset</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;This identifier does not belong in this dataset&quot;</span>),
+            <span class="self">Self</span><span class="ident">::Utf8Conversion</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
         }
     }
 }
 
 <span class="doccomment">/// Result type used in this crate</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">checked</span>(<span class="ident">err</span>: <span class="ident">nc_type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="ident">err</span> <span class="op">!</span><span class="op">=</span> <span class="ident">netcdf_sys</span>::<span class="ident">NC_NOERR</span> {
+    <span class="kw">if</span> <span class="ident">err</span> <span class="op">!</span><span class="op">=</span> <span class="ident">netcdf_sys::NC_NOERR</span> {
         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>.<span class="ident">into</span>());
     }
     <span class="prelude-val">Ok</span>(())
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="netcdf" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="netcdf" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

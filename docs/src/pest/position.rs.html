@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/pest-2.1.3/src/position.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>position.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pest/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pest/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -630,12 +630,12 @@
 <span class="comment">// option. All files in the project carrying such notice may not be copied,</span>
 <span class="comment">// modified, or distributed except according to those terms.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Range</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>;
+<span class="kw">use</span> <span class="ident">std::cmp::Ordering</span>;
+<span class="kw">use</span> <span class="ident">std::fmt</span>;
+<span class="kw">use</span> <span class="ident">std::hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
+<span class="kw">use</span> <span class="ident">std::ops::Range</span>;
+<span class="kw">use</span> <span class="ident">std::ptr</span>;
+<span class="kw">use</span> <span class="ident">std::str</span>;
 
 <span class="kw">use</span> <span class="ident">span</span>;
 
@@ -656,7 +656,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// `input[pos..]` must be a valid codepoint boundary (should not panic when indexing thus).</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Position</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">input</span>.<span class="ident">get</span>(<span class="ident">pos</span>..).<span class="ident">is_some</span>());
+        <span class="macro">debug_assert!</span>(<span class="ident">input</span>.<span class="ident">get</span>(<span class="ident">pos</span>..).<span class="ident">is_some</span>());
         <span class="ident">Position</span> { <span class="ident">input</span>, <span class="ident">pos</span> }
     }
 
@@ -672,7 +672,7 @@
     <span class="doccomment">/// assert_eq!(Position::new(heart, 1), None);</span>
     <span class="doccomment">/// assert_ne!(Position::new(heart, cheart.len_utf8()), None);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">new_ret_no_self</span>)]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::new_ret_no_self</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;</span> {
         <span class="ident">input</span>.<span class="ident">get</span>(<span class="ident">pos</span>..).<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Position</span> { <span class="ident">input</span>, <span class="ident">pos</span> })
     }
@@ -726,15 +726,15 @@
     <span class="doccomment">/// assert_eq!(span.end(), 0);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">span</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Position</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">span</span>::<span class="ident">Span</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">ptr</span>::<span class="ident">eq</span>(<span class="self">self</span>.<span class="ident">input</span>, <span class="ident">other</span>.<span class="ident">input</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">span</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Position</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">span::Span</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">ptr::eq</span>(<span class="self">self</span>.<span class="ident">input</span>, <span class="ident">other</span>.<span class="ident">input</span>)
         <span class="comment">/* &amp;&amp; self.input.get(self.pos..other.pos).is_some() */</span>
         {
             <span class="comment">// This is safe because the pos field of a Position should always be a valid str index.</span>
-            <span class="kw">unsafe</span> { <span class="ident">span</span>::<span class="ident">Span</span>::<span class="ident">new_unchecked</span>(<span class="self">self</span>.<span class="ident">input</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">other</span>.<span class="ident">pos</span>) }
+            <span class="kw">unsafe</span> { <span class="ident">span::Span::new_unchecked</span>(<span class="self">self</span>.<span class="ident">input</span>, <span class="self">self</span>.<span class="ident">pos</span>, <span class="ident">other</span>.<span class="ident">pos</span>) }
         } <span class="kw">else</span> {
             <span class="comment">// TODO: maybe a panic if self.pos &lt; other.pos</span>
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;span created from positions from different inputs&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">&quot;span created from positions from different inputs&quot;</span>)
         }
     }
 
@@ -757,7 +757,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">line_col</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">input</span>.<span class="ident">len</span>() {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;position out of bounds&quot;</span>);
+            <span class="macro">panic!</span>(<span class="string">&quot;position out of bounds&quot;</span>);
         }
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pos</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pos</span>;
@@ -793,7 +793,7 @@
                     <span class="ident">pos</span> <span class="op">-</span><span class="op">=</span> <span class="ident">c</span>.<span class="ident">len_utf8</span>();
                     <span class="ident">line_col</span> <span class="op">=</span> (<span class="ident">line_col</span>.<span class="number">0</span>, <span class="ident">line_col</span>.<span class="number">1</span> <span class="op">+</span> <span class="number">1</span>);
                 }
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(),
             }
         }
 
@@ -819,7 +819,7 @@
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">line_of</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;i</span> <span class="ident">str</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">input</span>.<span class="ident">len</span>() {
-            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;position out of bounds&quot;</span>);
+            <span class="macro">panic!</span>(<span class="string">&quot;position out of bounds&quot;</span>);
         };
         <span class="comment">// Safe since start and end can only be valid UTF-8 borders.</span>
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">input</span>[<span class="self">self</span>.<span class="ident">find_line_start</span>()..<span class="self">self</span>.<span class="ident">find_line_end</span>()]
@@ -1010,15 +1010,15 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Position</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Position</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Position&quot;</span>).<span class="ident">field</span>(<span class="string">&quot;pos&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">pos</span>).<span class="ident">finish</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Position</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Position</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">ptr</span>::<span class="ident">eq</span>(<span class="self">self</span>.<span class="ident">input</span>, <span class="ident">other</span>.<span class="ident">input</span>) <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">pos</span>
+        <span class="ident">ptr::eq</span>(<span class="self">self</span>.<span class="ident">input</span>, <span class="ident">other</span>.<span class="ident">input</span>) <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">pos</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">pos</span>
     }
 }
 
@@ -1026,7 +1026,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span> <span class="kw">for</span> <span class="ident">Position</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Position</span><span class="op">&lt;</span><span class="lifetime">&#39;i</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">ptr</span>::<span class="ident">eq</span>(<span class="self">self</span>.<span class="ident">input</span>, <span class="ident">other</span>.<span class="ident">input</span>) {
+        <span class="kw">if</span> <span class="ident">ptr::eq</span>(<span class="self">self</span>.<span class="ident">input</span>, <span class="ident">other</span>.<span class="ident">input</span>) {
             <span class="self">self</span>.<span class="ident">pos</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">pos</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -1050,80 +1050,80 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
+    <span class="kw">use</span> <span class="ident">std::collections::HashSet</span>;
 
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">empty</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>;
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_string</span>(<span class="string">&quot;&quot;</span>), <span class="bool-val">true</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_string</span>(<span class="string">&quot;a&quot;</span>), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_string</span>(<span class="string">&quot;&quot;</span>), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(<span class="op">!</span><span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_string</span>(<span class="string">&quot;a&quot;</span>), <span class="bool-val">true</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">parts</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;asdasdf&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_string</span>(<span class="string">&quot;asd&quot;</span>), <span class="bool-val">true</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">3</span>).<span class="ident">unwrap</span>().<span class="ident">match_string</span>(<span class="string">&quot;asdf&quot;</span>), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_string</span>(<span class="string">&quot;asd&quot;</span>), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">3</span>).<span class="ident">unwrap</span>().<span class="ident">match_string</span>(<span class="string">&quot;asdf&quot;</span>), <span class="bool-val">true</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">line_col</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;a\rb\nc\r\nd嗨&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">1</span>, <span class="number">1</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">1</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">1</span>, <span class="number">2</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">2</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">1</span>, <span class="number">3</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">3</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">1</span>, <span class="number">4</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">4</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">2</span>, <span class="number">1</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">5</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">2</span>, <span class="number">2</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">6</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">2</span>, <span class="number">3</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">7</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">3</span>, <span class="number">1</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">8</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">3</span>, <span class="number">2</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">11</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">3</span>, <span class="number">3</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">1</span>, <span class="number">1</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">1</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">1</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">2</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">1</span>, <span class="number">3</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">3</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">1</span>, <span class="number">4</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">4</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">2</span>, <span class="number">1</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">5</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">2</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">6</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">2</span>, <span class="number">3</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">7</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">3</span>, <span class="number">1</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">8</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">3</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">11</span>).<span class="ident">unwrap</span>().<span class="ident">line_col</span>(), (<span class="number">3</span>, <span class="number">3</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">line_of</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;a\rb\nc\r\nd嗨&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;a\rb\n&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">1</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;a\rb\n&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">2</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;a\rb\n&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">3</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;a\rb\n&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">4</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;c\r\n&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">5</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;c\r\n&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">6</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;c\r\n&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">7</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;d嗨&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">8</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;d嗨&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">11</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;d嗨&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;a\rb\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">1</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;a\rb\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">2</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;a\rb\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">3</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;a\rb\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">4</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;c\r\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">5</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;c\r\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">6</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;c\r\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">7</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;d嗨&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">8</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;d嗨&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">11</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;d嗨&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">line_of_empty</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">line_of_new_line</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;\n&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;\n&quot;</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">line_of_between_new_line</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;\n\n&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">1</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;\n&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">1</span>).<span class="ident">unwrap</span>().<span class="ident">line_of</span>(), <span class="string">&quot;\n&quot;</span>);
     }
 
     <span class="kw">fn</span> <span class="ident">measure_skip</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">pos</span>: <span class="ident">usize</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="ident">pos</span>).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="ident">pos</span>).<span class="ident">unwrap</span>();
         <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">skip</span>(<span class="ident">n</span>) {
             <span class="prelude-val">Some</span>(<span class="ident">p</span>.<span class="ident">pos</span> <span class="op">-</span> <span class="ident">pos</span>)
         } <span class="kw">else</span> {
@@ -1135,61 +1135,61 @@
     <span class="kw">fn</span> <span class="ident">skip_empty</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="prelude-val">Some</span>(<span class="number">0</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">0</span>, <span class="number">1</span>), <span class="prelude-val">None</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="prelude-val">Some</span>(<span class="number">0</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">0</span>, <span class="number">1</span>), <span class="prelude-val">None</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">skip</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;d嗨&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="prelude-val">Some</span>(<span class="number">0</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">0</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="number">1</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="number">3</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="prelude-val">Some</span>(<span class="number">0</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">0</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="number">1</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">measure_skip</span>(<span class="ident">input</span>, <span class="number">1</span>, <span class="number">1</span>), <span class="prelude-val">Some</span>(<span class="number">3</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">skip_until</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;ab ac&quot;</span>;
-        <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">Position</span>::<span class="ident">from_start</span>(<span class="ident">input</span>);
+        <span class="kw">let</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">Position::from_start</span>(<span class="ident">input</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">test_pos</span> <span class="op">=</span> <span class="ident">pos</span>.<span class="ident">clone</span>();
         <span class="ident">test_pos</span>.<span class="ident">skip_until</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">0</span>);
 
         <span class="ident">test_pos</span> <span class="op">=</span> <span class="ident">pos</span>.<span class="ident">clone</span>();
         <span class="ident">test_pos</span>.<span class="ident">skip_until</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;b&quot;</span>]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">1</span>);
 
         <span class="ident">test_pos</span> <span class="op">=</span> <span class="ident">pos</span>.<span class="ident">clone</span>();
         <span class="ident">test_pos</span>.<span class="ident">skip_until</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;ab&quot;</span>]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">0</span>);
 
         <span class="ident">test_pos</span> <span class="op">=</span> <span class="ident">pos</span>.<span class="ident">clone</span>();
         <span class="ident">test_pos</span>.<span class="ident">skip_until</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;ac&quot;</span>, <span class="string">&quot;z&quot;</span>]);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">3</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">3</span>);
 
         <span class="ident">test_pos</span> <span class="op">=</span> <span class="ident">pos</span>.<span class="ident">clone</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">test_pos</span>.<span class="ident">skip_until</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;z&quot;</span>]));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">5</span>);
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">test_pos</span>.<span class="ident">skip_until</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;z&quot;</span>]));
+        <span class="macro">assert_eq!</span>(<span class="ident">test_pos</span>.<span class="ident">pos</span>(), <span class="number">5</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">match_range</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;b&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;a&#39;</span>..<span class="string">&#39;c&#39;</span>), <span class="bool-val">true</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;b&#39;</span>..<span class="string">&#39;b&#39;</span>), <span class="bool-val">true</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="op">!</span><span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;a&#39;</span>..<span class="string">&#39;a&#39;</span>),
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;a&#39;</span>..<span class="string">&#39;c&#39;</span>), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;b&#39;</span>..<span class="string">&#39;b&#39;</span>), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(
+            <span class="op">!</span><span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;a&#39;</span>..<span class="string">&#39;a&#39;</span>),
             <span class="bool-val">true</span>
         );
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="op">!</span><span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;c&#39;</span>..<span class="string">&#39;c&#39;</span>),
+        <span class="macro">assert_eq!</span>(
+            <span class="op">!</span><span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;c&#39;</span>..<span class="string">&#39;c&#39;</span>),
             <span class="bool-val">true</span>
         );
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;a&#39;</span>..<span class="string">&#39;嗨&#39;</span>),
+        <span class="macro">assert_eq!</span>(
+            <span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_range</span>(<span class="string">&#39;a&#39;</span>..<span class="string">&#39;嗨&#39;</span>),
             <span class="bool-val">true</span>
         );
     }
@@ -1198,12 +1198,12 @@
     <span class="kw">fn</span> <span class="ident">match_insensitive</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;AsdASdF&quot;</span>;
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_insensitive</span>(<span class="string">&quot;asd&quot;</span>),
+        <span class="macro">assert_eq!</span>(
+            <span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">0</span>).<span class="ident">unwrap</span>().<span class="ident">match_insensitive</span>(<span class="string">&quot;asd&quot;</span>),
             <span class="bool-val">true</span>
         );
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="ident">Position</span>::<span class="ident">new</span>(<span class="ident">input</span>, <span class="number">3</span>).<span class="ident">unwrap</span>().<span class="ident">match_insensitive</span>(<span class="string">&quot;asdf&quot;</span>),
+        <span class="macro">assert_eq!</span>(
+            <span class="ident">Position::new</span>(<span class="ident">input</span>, <span class="number">3</span>).<span class="ident">unwrap</span>().<span class="ident">match_insensitive</span>(<span class="string">&quot;asdf&quot;</span>),
             <span class="bool-val">true</span>
         );
     }
@@ -1211,13 +1211,13 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">cmp</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;a&quot;</span>;
-        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">Position</span>::<span class="ident">from_start</span>(<span class="ident">input</span>);
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">Position::from_start</span>(<span class="ident">input</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">end</span> <span class="op">=</span> <span class="ident">start</span>.<span class="ident">clone</span>();
 
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">end</span>.<span class="ident">skip</span>(<span class="number">1</span>));
+        <span class="macro">assert!</span>(<span class="ident">end</span>.<span class="ident">skip</span>(<span class="number">1</span>));
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">start</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">end</span>);
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">result</span>, <span class="ident">Ordering</span>::<span class="ident">Less</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">result</span>, <span class="ident">Ordering::Less</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1225,8 +1225,8 @@
     <span class="kw">fn</span> <span class="ident">cmp_panic</span>() {
         <span class="kw">let</span> <span class="ident">input1</span> <span class="op">=</span> <span class="string">&quot;a&quot;</span>;
         <span class="kw">let</span> <span class="ident">input2</span> <span class="op">=</span> <span class="string">&quot;b&quot;</span>;
-        <span class="kw">let</span> <span class="ident">pos1</span> <span class="op">=</span> <span class="ident">Position</span>::<span class="ident">from_start</span>(<span class="ident">input1</span>);
-        <span class="kw">let</span> <span class="ident">pos2</span> <span class="op">=</span> <span class="ident">Position</span>::<span class="ident">from_start</span>(<span class="ident">input2</span>);
+        <span class="kw">let</span> <span class="ident">pos1</span> <span class="op">=</span> <span class="ident">Position::from_start</span>(<span class="ident">input1</span>);
+        <span class="kw">let</span> <span class="ident">pos2</span> <span class="op">=</span> <span class="ident">Position::from_start</span>(<span class="ident">input2</span>);
 
         <span class="ident">pos1</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">pos2</span>);
     }
@@ -1234,12 +1234,12 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">hash</span>() {
         <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;a&quot;</span>;
-        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">Position</span>::<span class="ident">from_start</span>(<span class="ident">input</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">positions</span> <span class="op">=</span> <span class="ident">HashSet</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">Position::from_start</span>(<span class="ident">input</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">positions</span> <span class="op">=</span> <span class="ident">HashSet::new</span>();
 
         <span class="ident">positions</span>.<span class="ident">insert</span>(<span class="ident">start</span>);
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pest" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pest" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

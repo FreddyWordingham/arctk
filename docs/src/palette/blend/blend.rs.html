@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/palette-0.5.0/src/blend/blend.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>blend.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../palette/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../palette/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -434,7 +434,7 @@
 <span id="431">431</span>
 <span id="432">432</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="ident">float::Float</span>;
 <span class="kw">use</span> <span class="ident">num_traits</span>::{<span class="ident">One</span>, <span class="ident">Zero</span>};
 
 <span class="kw">use</span> <span class="ident">blend</span>::{<span class="ident">BlendFunction</span>, <span class="ident">PreAlpha</span>};
@@ -450,17 +450,17 @@
 <span class="doccomment">///results._</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Blend</span>: <span class="ident">Sized</span>
 <span class="kw">where</span>
-    <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>: <span class="ident">Float</span>,
+    <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar</span>: <span class="ident">Float</span>,
 {
     <span class="doccomment">///The core color type. Typically `Self` for color types without alpha.</span>
-    <span class="kw">type</span> <span class="ident">Color</span>: <span class="ident">Blend</span><span class="op">&lt;</span><span class="ident">Color</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Color</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ComponentWise</span>;
+    <span class="kw">type</span> <span class="ident">Color</span>: <span class="ident">Blend</span><span class="op">&lt;</span><span class="ident">Color</span> <span class="op">=</span> <span class="self">Self</span><span class="ident">::Color</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ComponentWise</span>;
 
     <span class="doccomment">///Convert the color to premultiplied alpha.</span>
-    <span class="kw">fn</span> <span class="ident">into_premultiplied</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span>, <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_premultiplied</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span>, <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar</span><span class="op">&gt;</span>;
 
     <span class="doccomment">///Convert the color from premultiplied alpha.</span>
     <span class="kw">fn</span> <span class="ident">from_premultiplied</span>(
-        <span class="ident">color</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span>, <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
+        <span class="ident">color</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span>, <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">///Blend self, as the source color, with `destination`, using</span>
@@ -486,9 +486,9 @@
     <span class="doccomment">///```</span>
     <span class="kw">fn</span> <span class="ident">blend</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">destination</span>: <span class="self">Self</span>, <span class="ident">blend_function</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span><span class="op">&gt;</span>,
+        <span class="ident">F</span>: <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span><span class="op">&gt;</span>,
     {
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(
             <span class="ident">blend_function</span>.<span class="ident">apply_to</span>(<span class="self">self</span>.<span class="ident">into_premultiplied</span>(), <span class="ident">destination</span>.<span class="ident">into_premultiplied</span>()),
         )
     }
@@ -496,8 +496,8 @@
     <span class="doccomment">///Place `self` over `other`. This is the good old common alpha</span>
     <span class="doccomment">///composition equation.</span>
     <span class="kw">fn</span> <span class="ident">over</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -509,14 +509,14 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Results in the parts of `self` that overlaps the visible parts of</span>
     <span class="doccomment">///`other`.</span>
     <span class="kw">fn</span> <span class="ident">inside</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -526,14 +526,14 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Results in the parts of `self` that lies outside the visible parts of</span>
     <span class="doccomment">///`other`.</span>
     <span class="kw">fn</span> <span class="ident">outside</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -543,13 +543,13 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> (<span class="ident">one</span> <span class="op">-</span> <span class="ident">dst</span>.<span class="ident">alpha</span>), <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Place `self` over only the visible parts of `other`.</span>
     <span class="kw">fn</span> <span class="ident">atop</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -561,13 +561,13 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Results in either `self` or `other`, where they do not overlap.</span>
     <span class="kw">fn</span> <span class="ident">xor</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
@@ -584,14 +584,14 @@
             ),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Add `self` and `other`. This uses the alpha component to regulate the</span>
     <span class="doccomment">///effect, so it&#39;s not just plain component wise addition.</span>
     <span class="kw">fn</span> <span class="ident">plus</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -601,14 +601,14 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Multiply `self` with `other`. This uses the alpha component to regulate</span>
     <span class="doccomment">///the effect, so it&#39;s not just plain component wise multiplication.</span>
     <span class="kw">fn</span> <span class="ident">multiply</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -620,13 +620,13 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Make a color which is at least as light as `self` or `other`.</span>
     <span class="kw">fn</span> <span class="ident">screen</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -636,14 +636,14 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Multiply `self` or `other` if other is dark, or screen them if `other`</span>
     <span class="doccomment">///is light. This results in an S curve.</span>
     <span class="kw">fn</span> <span class="ident">overlay</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
@@ -662,13 +662,13 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Return the darkest parts of `self` and `other`.</span>
     <span class="kw">fn</span> <span class="ident">darken</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -680,13 +680,13 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Return the lightest parts of `self` and `other`.</span>
     <span class="kw">fn</span> <span class="ident">lighten</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -698,14 +698,14 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Lighten `other` to reflect `self`. Results in `other` if `self` is</span>
     <span class="doccomment">///black.</span>
     <span class="kw">fn</span> <span class="ident">dodge</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -725,14 +725,14 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Darken `other` to reflect `self`. Results in `other` if `self` is</span>
     <span class="doccomment">///white.</span>
     <span class="kw">fn</span> <span class="ident">burn</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
         <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_premultiplied</span>();
@@ -752,15 +752,15 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Multiply `self` or `other` if other is dark, or screen them if `self`</span>
     <span class="doccomment">///is light. This is similar to `overlay`, but depends on `self` instead</span>
     <span class="doccomment">///of `other`.</span>
     <span class="kw">fn</span> <span class="ident">hard_light</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
@@ -779,15 +779,15 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Lighten `other` if `self` is light, or darken `other` as if it&#39;s burned</span>
     <span class="doccomment">///if `self` is dark. The effect is increased if the components of `self`</span>
     <span class="doccomment">///is further from 0.5.</span>
     <span class="kw">fn</span> <span class="ident">soft_light</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
@@ -822,14 +822,14 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Return the absolute difference between `self` and `other`. It&#39;s</span>
     <span class="doccomment">///basically `abs(self - other)`, but regulated by the alpha component.</span>
     <span class="kw">fn</span> <span class="ident">difference</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
@@ -842,15 +842,15 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 
     <span class="doccomment">///Similar to `difference`, but appears to result in a lower contrast.</span>
     <span class="doccomment">///`other` is inverted if `self` is white, and preserved if `self` is</span>
     <span class="doccomment">///black.</span>
     <span class="kw">fn</span> <span class="ident">exclusion</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>();
-        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::one</span>();
+        <span class="kw">let</span> <span class="ident">zero</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Color</span> <span class="kw">as</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span><span class="ident">::Scalar::zero</span>();
         <span class="kw">let</span> <span class="ident">two</span> <span class="op">=</span> <span class="ident">one</span> <span class="op">+</span> <span class="ident">one</span>;
 
         <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_premultiplied</span>();
@@ -863,9 +863,9 @@
             <span class="ident">alpha</span>: <span class="ident">clamp</span>(<span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">+</span> <span class="ident">dst</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">src</span>.<span class="ident">alpha</span> <span class="op">*</span> <span class="ident">dst</span>.<span class="ident">alpha</span>, <span class="ident">zero</span>, <span class="ident">one</span>),
         };
 
-        <span class="self">Self</span>::<span class="ident">from_premultiplied</span>(<span class="ident">result</span>)
+        <span class="self">Self</span><span class="ident">::from_premultiplied</span>(<span class="ident">result</span>)
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="palette" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="palette" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

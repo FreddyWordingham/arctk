@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/pest-2.1.3/src/unicode/binary.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>binary.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../pest/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../pest/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -4941,7 +4941,7 @@
 <span class="comment">//</span>
 <span class="comment">// ucd-generate is available on crates.io.</span>
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BY_NAME</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span>)] <span class="op">=</span> <span class="kw-2">&amp;</span>[
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BY_NAME</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span>)] <span class="op">=</span> <span class="kw-2">&amp;</span>[
   (<span class="string">&quot;ASCII_Hex_Digit&quot;</span>, <span class="ident">ASCII_HEX_DIGIT</span>), (<span class="string">&quot;Alphabetic&quot;</span>, <span class="ident">ALPHABETIC</span>),
   (<span class="string">&quot;Bidi_Control&quot;</span>, <span class="ident">BIDI_CONTROL</span>), (<span class="string">&quot;Case_Ignorable&quot;</span>, <span class="ident">CASE_IGNORABLE</span>),
   (<span class="string">&quot;Cased&quot;</span>, <span class="ident">CASED</span>), (<span class="string">&quot;Changes_When_Casefolded&quot;</span>, <span class="ident">CHANGES_WHEN_CASEFOLDED</span>),
@@ -4979,7 +4979,7 @@
   (<span class="string">&quot;XID_Continue&quot;</span>, <span class="ident">XID_CONTINUE</span>), (<span class="string">&quot;XID_Start&quot;</span>, <span class="ident">XID_START</span>),
 ];
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ASCII_HEX_DIGIT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ASCII_HEX_DIGIT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x3FF000000000000</span>, <span class="number">0x7E0000007E</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -4996,7 +4996,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ALPHABETIC</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ALPHABETIC</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE07FFFFFE</span>, <span class="number">0x420040000000000</span>, <span class="number">0xFF7FFFFFFF7FFFFF</span>,
     <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>,
@@ -5199,7 +5199,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BIDI_CONTROL</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BIDI_CONTROL</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0x10000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -5257,7 +5257,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CASE_IGNORABLE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CASE_IGNORABLE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x400408000000000</span>, <span class="number">0x140000000</span>, <span class="number">0x190A10000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0xFFFF000000000000</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>,
@@ -5394,7 +5394,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CASED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CASED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE07FFFFFE</span>, <span class="number">0x420040000000000</span>, <span class="number">0xFF7FFFFFFF7FFFFF</span>,
     <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xF7FFFFFFFFFFFFFF</span>,
@@ -5502,7 +5502,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_CASEFOLDED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_CASEFOLDED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE</span>, <span class="number">0x20000000000000</span>, <span class="number">0xFF7FFFFF</span>, <span class="number">0xAA55555555555555</span>,
     <span class="number">0xAB555555555556AA</span>, <span class="number">0x11AED2D5B1DBCED6</span>, <span class="number">0x55D655554AAAADB0</span>,
@@ -5597,7 +5597,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_CASEMAPPED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_CASEMAPPED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE07FFFFFE</span>, <span class="number">0x20000000000000</span>, <span class="number">0xFF7FFFFFFF7FFFFF</span>,
     <span class="number">0xFEFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xB3FFF3FFF7FFDFFF</span>,
@@ -5695,7 +5695,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_LOWERCASED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_LOWERCASED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE</span>, <span class="number">0</span>, <span class="number">0x7F7FFFFF</span>, <span class="number">0xAA55555555555555</span>, <span class="number">0x2B555555555554AA</span>,
     <span class="number">0x11AED2D5B1DBCED6</span>, <span class="number">0x55D655554AAAADB0</span>, <span class="number">0x6C05555555555555</span>, <span class="number">0x557A</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -5788,7 +5788,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_TITLECASED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_TITLECASED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE00000000</span>, <span class="number">0x20000000000000</span>, <span class="number">0xFF7FFFFF80000000</span>,
     <span class="number">0x54AAAAAAAAAAAAAA</span>, <span class="number">0xD4AAAAAAAAAAAB55</span>, <span class="number">0xA251212A46241129</span>,
@@ -5883,7 +5883,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_UPPERCASED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHANGES_WHEN_UPPERCASED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE00000000</span>, <span class="number">0x20000000000000</span>, <span class="number">0xFF7FFFFF80000000</span>,
     <span class="number">0x54AAAAAAAAAAAAAA</span>, <span class="number">0xD4AAAAAAAAAAAB55</span>, <span class="number">0xA251212A46241129</span>,
@@ -5978,7 +5978,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DASH</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DASH</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x200000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x4000000000000400</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -6038,7 +6038,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DEFAULT_IGNORABLE_CODE_POINT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DEFAULT_IGNORABLE_CODE_POINT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x200000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x8000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x10000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -6120,7 +6120,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DEPRECATED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DEPRECATED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x200</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x8000000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -6196,7 +6196,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DIACRITIC</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DIACRITIC</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x140000000</span>, <span class="number">0x190810000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0xFFFF000000000000</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>,
@@ -6303,7 +6303,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EXTENDER</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EXTENDER</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x80000000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x30000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x400000000000000</span>,
@@ -6386,7 +6386,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GRAPHEME_BASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GRAPHEME_BASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0xFFFFFFFF00000000</span>, <span class="number">0x7FFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFDFFF00000000</span>,
     <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>,
@@ -6607,7 +6607,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GRAPHEME_EXTEND</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GRAPHEME_EXTEND</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFF</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x3F8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0xBFFFFFFFFFFE0000</span>, <span class="number">0xB6</span>, <span class="number">0x7FF0000</span>,
@@ -6731,7 +6731,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GRAPHEME_LINK</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GRAPHEME_LINK</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -6815,7 +6815,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HEX_DIGIT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HEX_DIGIT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x3FF000000000000</span>, <span class="number">0x7E0000007E</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -6873,7 +6873,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HYPHEN</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HYPHEN</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x200000000000</span>, <span class="number">0</span>, <span class="number">0x200000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x400</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -6932,7 +6932,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IDS_BINARY_OPERATOR</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IDS_BINARY_OPERATOR</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -6990,7 +6990,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IDS_TRINARY_OPERATOR</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IDS_TRINARY_OPERATOR</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -7048,7 +7048,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ID_CONTINUE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ID_CONTINUE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x3FF000000000000</span>, <span class="number">0x7FFFFFE87FFFFFE</span>, <span class="number">0x4A0040000000000</span>,
     <span class="number">0xFF7FFFFFFF7FFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>,
@@ -7244,7 +7244,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ID_START</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ID_START</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE07FFFFFE</span>, <span class="number">0x420040000000000</span>, <span class="number">0xFF7FFFFFFF7FFFFF</span>,
     <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>,
@@ -7439,7 +7439,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IDEOGRAPHIC</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IDEOGRAPHIC</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -7536,7 +7536,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">JOIN_CONTROL</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">JOIN_CONTROL</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -7594,7 +7594,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOGICAL_ORDER_EXCEPTION</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOGICAL_ORDER_EXCEPTION</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -7652,7 +7652,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOWERCASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOWERCASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE00000000</span>, <span class="number">0x420040000000000</span>, <span class="number">0xFF7FFFFF80000000</span>,
     <span class="number">0x55AAAAAAAAAAAAAA</span>, <span class="number">0xD4AAAAAAAAAAAB55</span>, <span class="number">0xE6512D2A4E243129</span>,
@@ -7756,7 +7756,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MATH</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MATH</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x7000080000000000</span>, <span class="number">0x5000000040000000</span>, <span class="number">0x2100000000000</span>, <span class="number">0x80000000800000</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x73000000270000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -7843,7 +7843,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONCHARACTER_CODE_POINT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONCHARACTER_CODE_POINT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -7919,7 +7919,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_ALPHABETIC</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_ALPHABETIC</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x20</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0xBFFF000000000000</span>, <span class="number">0xB6</span>, <span class="number">0x7FF0000</span>, <span class="number">0x10000FEFFF800</span>, <span class="number">0</span>, <span class="number">0x219E1FC00000</span>,
@@ -8030,7 +8030,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_DEFAULT_IGNORABLE_CODE_POINT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_DEFAULT_IGNORABLE_CODE_POINT</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x8000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8107,7 +8107,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_GRAPHEME_EXTEND</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_GRAPHEME_EXTEND</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8190,7 +8190,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_ID_CONTINUE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_ID_CONTINUE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x80000000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x80</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8248,7 +8248,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_ID_START</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_ID_START</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8306,7 +8306,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_LOWERCASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_LOWERCASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x400040000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x1FF000000000000</span>,
     <span class="number">0x1F00000003</span>, <span class="number">0</span>, <span class="number">0x400000000000020</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8368,7 +8368,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_MATH</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_MATH</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x40000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x33000000270000</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8454,7 +8454,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_UPPERCASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OTHER_UPPERCASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8530,7 +8530,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PATTERN_SYNTAX</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PATTERN_SYNTAX</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0xFC00FFFE00000000</span>, <span class="number">0x7800000178000001</span>, <span class="number">0x88435AFE00000000</span>,
     <span class="number">0x80000000800000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8591,7 +8591,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PATTERN_WHITE_SPACE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PATTERN_WHITE_SPACE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x100003E00</span>, <span class="number">0</span>, <span class="number">0x20</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8649,7 +8649,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PREPENDED_CONCATENATION_MARK</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PREPENDED_CONCATENATION_MARK</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0x3F</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x20000000</span>, <span class="number">0x8000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8725,7 +8725,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">QUOTATION_MARK</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">QUOTATION_MARK</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x8400000000</span>, <span class="number">0</span>, <span class="number">0x800080000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8783,7 +8783,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RADICAL</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RADICAL</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8841,7 +8841,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REGIONAL_INDICATOR</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">REGIONAL_INDICATOR</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8876,7 +8876,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SENTENCE_TERMINAL</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SENTENCE_TERMINAL</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x8000400200000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x200</span>, <span class="number">0</span>, <span class="number">0xC0000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x100000</span>, <span class="number">0x7</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -8971,7 +8971,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SOFT_DOTTED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SOFT_DOTTED</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x60000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x800000000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x10000000200</span>,
     <span class="number">0x4000020000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x8000000000000</span>, <span class="number">0</span>, <span class="number">0x1400000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -9051,7 +9051,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TERMINAL_PUNCTUATION</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TERMINAL_PUNCTUATION</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x8C00500200000000</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0x4000000000000000</span>, <span class="number">0x80</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0x200</span>, <span class="number">0x8</span>, <span class="number">0xC8001000</span>, <span class="number">0</span>,
@@ -9153,7 +9153,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UNIFIED_IDEOGRAPH</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UNIFIED_IDEOGRAPH</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -9240,7 +9240,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UPPERCASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UPPERCASE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE</span>, <span class="number">0</span>, <span class="number">0x7F7FFFFF</span>, <span class="number">0xAA55555555555555</span>, <span class="number">0x2B555555555554AA</span>,
     <span class="number">0x11AED2D5B1DBCED6</span>, <span class="number">0x55D255554AAAA490</span>, <span class="number">0x6C05555555555555</span>, <span class="number">0x557A</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -9343,7 +9343,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">VARIATION_SELECTOR</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">VARIATION_SELECTOR</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -9419,7 +9419,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">WHITE_SPACE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">WHITE_SPACE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x100003E00</span>, <span class="number">0</span>, <span class="number">0x100000020</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
     <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,
@@ -9477,7 +9477,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">XID_CONTINUE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">XID_CONTINUE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0x3FF000000000000</span>, <span class="number">0x7FFFFFE87FFFFFE</span>, <span class="number">0x4A0040000000000</span>,
     <span class="number">0xFF7FFFFFFF7FFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>,
@@ -9674,7 +9674,7 @@
   ],
 };
 
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">XID_START</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> ::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span>::<span class="ident">ucd_trie</span>::<span class="ident">TrieSet</span> {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">XID_START</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">::ucd_trie::TrieSet</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">::ucd_trie::TrieSet</span> {
   <span class="ident">tree1_level1</span>: <span class="kw-2">&amp;</span>[
     <span class="number">0</span>, <span class="number">0x7FFFFFE07FFFFFE</span>, <span class="number">0x420040000000000</span>, <span class="number">0xFF7FFFFFFF7FFFFF</span>,
     <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>, <span class="number">0xFFFFFFFFFFFFFFFF</span>,
@@ -9869,5 +9869,5 @@
   ],
 };
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="pest" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="pest" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

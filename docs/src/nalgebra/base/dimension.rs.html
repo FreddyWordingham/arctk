@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.26.1/src/base/dimension.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dimension.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.26.1/src/base/dimension.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dimension.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -310,10 +310,10 @@
 
 <span class="doccomment">//! Traits and tags for identifying the dimension of all algebraic entities.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::{<span class="ident">Any</span>, <span class="ident">TypeId</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Div</span>, <span class="ident">Mul</span>, <span class="ident">Sub</span>};
+<span class="kw">use</span> <span class="ident">std::any</span>::{<span class="ident">Any</span>, <span class="ident">TypeId</span>};
+<span class="kw">use</span> <span class="ident">std::cmp</span>;
+<span class="kw">use</span> <span class="ident">std::fmt::Debug</span>;
+<span class="kw">use</span> <span class="ident">std::ops</span>::{<span class="ident">Add</span>, <span class="ident">Div</span>, <span class="ident">Mul</span>, <span class="ident">Sub</span>};
 <span class="kw">use</span> <span class="ident">typenum</span>::{<span class="self">self</span>, <span class="ident">Diff</span>, <span class="ident">Max</span>, <span class="ident">Maximum</span>, <span class="ident">Min</span>, <span class="ident">Minimum</span>, <span class="ident">Prod</span>, <span class="ident">Quot</span>, <span class="ident">Sum</span>, <span class="ident">Unsigned</span>};
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
@@ -335,7 +335,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Dynamic</span> {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
@@ -345,11 +345,11 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Dynamic</span> {
-    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
-        <span class="ident">usize</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">Dynamic</span> { <span class="ident">value</span>: <span class="ident">x</span> })
+        <span class="ident">usize::deserialize</span>(<span class="ident">deserializer</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">Dynamic</span> { <span class="ident">value</span>: <span class="ident">x</span> })
     }
 }
 
@@ -366,7 +366,7 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Dim</span>: <span class="ident">Any</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> {
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">is</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Dim</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>()
+        <span class="ident">TypeId::of</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">TypeId::of</span>::<span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>()
     }
 
     <span class="doccomment">/// Gets the compile-time value of `Self`. Returns `None` if it is not known, i.e., if `Self =</span>
@@ -390,7 +390,7 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">dim</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">dim</span>)
+        <span class="self">Self</span><span class="ident">::new</span>(<span class="ident">dim</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -404,7 +404,7 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">value</span> <span class="op">+</span> <span class="ident">rhs</span>)
+        <span class="self">Self</span><span class="ident">::new</span>(<span class="self">self</span>.<span class="ident">value</span> <span class="op">+</span> <span class="ident">rhs</span>)
     }
 }
 
@@ -413,7 +413,7 @@
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">value</span> <span class="op">-</span> <span class="ident">rhs</span>)
+        <span class="self">Self</span><span class="ident">::new</span>(<span class="self">self</span>.<span class="ident">value</span> <span class="op">-</span> <span class="ident">rhs</span>)
     }
 }
 
@@ -423,31 +423,31 @@
  *
  */</span>
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">dim_ops</span>(
+<span class="macro">macro_rules!</span> <span class="ident">dim_ops</span>(
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimOp</span>:    <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimNameOp</span>: <span class="ident">ident</span>,
        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Op</span>:       <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_path</span>: <span class="ident">path</span>,
        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimResOp</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimNameResOp</span>: <span class="ident">ident</span>,
        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span>: <span class="ident">ident</span>);<span class="op">*</span> $(;)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {$(
-        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimResOp</span><span class="op">&lt;</span><span class="ident">D1</span>, <span class="ident">D2</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">D1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimOp</span><span class="op">&lt;</span><span class="ident">D2</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">Output</span>;
+        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimResOp</span><span class="op">&lt;</span><span class="ident">D1</span>, <span class="ident">D2</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">D1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimOp</span><span class="op">&lt;</span><span class="ident">D2</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Output</span>;
 
         <span class="kw">pub</span> <span class="kw">trait</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimOp</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Dim</span><span class="op">&gt;</span>: <span class="ident">Dim</span> {
             <span class="kw">type</span> <span class="ident">Output</span>: <span class="ident">Dim</span>;
 
-            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>;
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Output</span>;
         }
 
         <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">A</span>: <span class="ident">usize</span>, <span class="kw">const</span> <span class="ident">B</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimOp</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>: <span class="ident">ToTypenum</span>,
             <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>: <span class="ident">ToTypenum</span>,
-            <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Op</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span><span class="op">&gt;</span>,
-            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span>, <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span><span class="op">&gt;</span>: <span class="ident">ToConst</span>,
+            <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Op</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span><span class="op">&gt;</span>,
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span>, <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span><span class="op">&gt;</span>: <span class="ident">ToConst</span>,
         {
             <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span>
-                <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span>, <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToConst</span><span class="op">&gt;</span>::<span class="ident">Const</span>;
+                <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span>, <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToConst</span><span class="op">&gt;</span><span class="ident">::Const</span>;
 
-            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
-                <span class="self">Self</span>::<span class="ident">Output</span>::<span class="ident">name</span>()
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Output</span> {
+                <span class="self">Self</span><span class="ident">::Output::name</span>()
             }
         }
 
@@ -456,7 +456,7 @@
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Dynamic</span> {
-                <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_path</span>(<span class="self">self</span>.<span class="ident">value</span>, <span class="ident">other</span>.<span class="ident">value</span>()))
+                <span class="ident">Dynamic::new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_path</span>(<span class="self">self</span>.<span class="ident">value</span>, <span class="ident">other</span>.<span class="ident">value</span>()))
             }
         }
 
@@ -466,42 +466,42 @@
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
             <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Dynamic</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Dynamic</span> {
-                <span class="ident">Dynamic</span>::<span class="ident">new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_path</span>(<span class="self">self</span>.<span class="ident">value</span>(), <span class="ident">other</span>.<span class="ident">value</span>))
+                <span class="ident">Dynamic::new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">op_path</span>(<span class="self">self</span>.<span class="ident">value</span>(), <span class="ident">other</span>.<span class="ident">value</span>))
             }
         }
 
-        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimNameResOp</span><span class="op">&lt;</span><span class="ident">D1</span>, <span class="ident">D2</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">D1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimNameOp</span><span class="op">&lt;</span><span class="ident">D2</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">Output</span>;
+        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimNameResOp</span><span class="op">&lt;</span><span class="ident">D1</span>, <span class="ident">D2</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">D1</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimNameOp</span><span class="op">&lt;</span><span class="ident">D2</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Output</span>;
 
         <span class="kw">pub</span> <span class="kw">trait</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimNameOp</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">DimName</span><span class="op">&gt;</span>: <span class="ident">DimName</span> {
             <span class="kw">type</span> <span class="ident">Output</span>: <span class="ident">DimName</span>;
 
-            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>;
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Output</span>;
         }
 
         <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">A</span>: <span class="ident">usize</span>, <span class="kw">const</span> <span class="ident">B</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">DimNameOp</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>: <span class="ident">ToTypenum</span>,
             <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>: <span class="ident">ToTypenum</span>,
-            <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Op</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span><span class="op">&gt;</span>,
-            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span>, <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span><span class="op">&gt;</span>: <span class="ident">ToConst</span>,
+            <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Op</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span><span class="op">&gt;</span>,
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span>, <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span><span class="op">&gt;</span>: <span class="ident">ToConst</span>,
         {
             <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span>
-                <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span>, <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span>::<span class="ident">Typenum</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToConst</span><span class="op">&gt;</span>::<span class="ident">Const</span>;
+                <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">ResOp</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span>, <span class="op">&lt;</span><span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToTypenum</span><span class="op">&gt;</span><span class="ident">::Typenum</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">ToConst</span><span class="op">&gt;</span><span class="ident">::Const</span>;
 
-            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
-                <span class="self">Self</span>::<span class="ident">Output</span>::<span class="ident">name</span>()
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">op</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Output</span> {
+                <span class="self">Self</span><span class="ident">::Output::name</span>()
             }
         }
    )<span class="kw-2">*</span>}
 );
 
-<span class="macro">dim_ops</span><span class="macro">!</span>(
-    <span class="ident">DimAdd</span>, <span class="ident">DimNameAdd</span>, <span class="ident">Add</span>, <span class="ident">add</span>, <span class="ident">Add</span>::<span class="ident">add</span>, <span class="ident">DimSum</span>,     <span class="ident">DimNameSum</span>,     <span class="ident">Sum</span>;
-    <span class="ident">DimMul</span>, <span class="ident">DimNameMul</span>, <span class="ident">Mul</span>, <span class="ident">mul</span>, <span class="ident">Mul</span>::<span class="ident">mul</span>, <span class="ident">DimProd</span>,    <span class="ident">DimNameProd</span>,    <span class="ident">Prod</span>;
-    <span class="ident">DimSub</span>, <span class="ident">DimNameSub</span>, <span class="ident">Sub</span>, <span class="ident">sub</span>, <span class="ident">Sub</span>::<span class="ident">sub</span>, <span class="ident">DimDiff</span>,    <span class="ident">DimNameDiff</span>,    <span class="ident">Diff</span>;
-    <span class="ident">DimDiv</span>, <span class="ident">DimNameDiv</span>, <span class="ident">Div</span>, <span class="ident">div</span>, <span class="ident">Div</span>::<span class="ident">div</span>, <span class="ident">DimQuot</span>,    <span class="ident">DimNameQuot</span>,    <span class="ident">Quot</span>;
-    <span class="ident">DimMin</span>, <span class="ident">DimNameMin</span>, <span class="ident">Min</span>, <span class="ident">min</span>, <span class="ident">cmp</span>::<span class="ident">min</span>, <span class="ident">DimMinimum</span>, <span class="ident">DimNameMinimum</span>, <span class="ident">Minimum</span>;
-    <span class="ident">DimMax</span>, <span class="ident">DimNameMax</span>, <span class="ident">Max</span>, <span class="ident">max</span>, <span class="ident">cmp</span>::<span class="ident">max</span>, <span class="ident">DimMaximum</span>, <span class="ident">DimNameMaximum</span>, <span class="ident">Maximum</span>;
+<span class="macro">dim_ops!</span>(
+    <span class="ident">DimAdd</span>, <span class="ident">DimNameAdd</span>, <span class="ident">Add</span>, <span class="ident">add</span>, <span class="ident">Add::add</span>, <span class="ident">DimSum</span>,     <span class="ident">DimNameSum</span>,     <span class="ident">Sum</span>;
+    <span class="ident">DimMul</span>, <span class="ident">DimNameMul</span>, <span class="ident">Mul</span>, <span class="ident">mul</span>, <span class="ident">Mul::mul</span>, <span class="ident">DimProd</span>,    <span class="ident">DimNameProd</span>,    <span class="ident">Prod</span>;
+    <span class="ident">DimSub</span>, <span class="ident">DimNameSub</span>, <span class="ident">Sub</span>, <span class="ident">sub</span>, <span class="ident">Sub::sub</span>, <span class="ident">DimDiff</span>,    <span class="ident">DimNameDiff</span>,    <span class="ident">Diff</span>;
+    <span class="ident">DimDiv</span>, <span class="ident">DimNameDiv</span>, <span class="ident">Div</span>, <span class="ident">div</span>, <span class="ident">Div::div</span>, <span class="ident">DimQuot</span>,    <span class="ident">DimNameQuot</span>,    <span class="ident">Quot</span>;
+    <span class="ident">DimMin</span>, <span class="ident">DimNameMin</span>, <span class="ident">Min</span>, <span class="ident">min</span>, <span class="ident">cmp::min</span>, <span class="ident">DimMinimum</span>, <span class="ident">DimNameMinimum</span>, <span class="ident">Minimum</span>;
+    <span class="ident">DimMax</span>, <span class="ident">DimNameMax</span>, <span class="ident">Max</span>, <span class="ident">max</span>, <span class="ident">cmp::max</span>, <span class="ident">DimMaximum</span>, <span class="ident">DimNameMaximum</span>, <span class="ident">Maximum</span>;
 );
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
@@ -521,7 +521,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Serializer</span>,
     {
@@ -531,11 +531,11 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="kw">const</span> <span class="ident">D</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Const</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">Des</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">Des</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Des</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">Des</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">Des</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Des::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">Des</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
-        <span class="op">&lt;</span>()<span class="op">&gt;</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>).<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Const</span>::<span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>)
+        <span class="op">&lt;</span>()<span class="op">&gt;</span><span class="ident">::deserialize</span>(<span class="ident">deserializer</span>).<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Const</span>::<span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>)
     }
 }
 
@@ -557,7 +557,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">dim</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">dim</span>, <span class="ident">T</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">dim</span>, <span class="ident">T</span>);
         <span class="self">Self</span>
     }
 }
@@ -578,31 +578,31 @@
 
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">U1</span> <span class="op">=</span> <span class="ident">Const</span><span class="op">&lt;</span><span class="number">1</span><span class="op">&gt;</span>;
 
-<span class="kw">impl</span> <span class="ident">ToTypenum</span> <span class="kw">for</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum</span>::<span class="ident">U1</span>::<span class="ident">USIZE</span> }<span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">Typenum</span> <span class="op">=</span> <span class="ident">typenum</span>::<span class="ident">U1</span>;
+<span class="kw">impl</span> <span class="ident">ToTypenum</span> <span class="kw">for</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum::U1::USIZE</span> }<span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Typenum</span> <span class="op">=</span> <span class="ident">typenum::U1</span>;
 }
 
-<span class="kw">impl</span> <span class="ident">ToConst</span> <span class="kw">for</span> <span class="ident">typenum</span>::<span class="ident">U1</span> {
-    <span class="kw">type</span> <span class="ident">Const</span> <span class="op">=</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum</span>::<span class="ident">U1</span>::<span class="ident">USIZE</span> }<span class="op">&gt;</span>;
+<span class="kw">impl</span> <span class="ident">ToConst</span> <span class="kw">for</span> <span class="ident">typenum::U1</span> {
+    <span class="kw">type</span> <span class="ident">Const</span> <span class="op">=</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum::U1::USIZE</span> }<span class="op">&gt;</span>;
 }
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">from_to_typenum</span> (
+<span class="macro">macro_rules!</span> <span class="ident">from_to_typenum</span> (
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span>: <span class="ident">ident</span>),<span class="op">*</span> $(,)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {$(
-        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span> <span class="op">=</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span>::<span class="ident">USIZE</span> }<span class="op">&gt;</span>;
+        <span class="kw">pub</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span> <span class="op">=</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D::USIZE</span> }<span class="op">&gt;</span>;
 
-        <span class="kw">impl</span> <span class="ident">ToTypenum</span> <span class="kw">for</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span>::<span class="ident">USIZE</span> }<span class="op">&gt;</span> {
+        <span class="kw">impl</span> <span class="ident">ToTypenum</span> <span class="kw">for</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D::USIZE</span> }<span class="op">&gt;</span> {
             <span class="kw">type</span> <span class="ident">Typenum</span> <span class="op">=</span> <span class="ident">typenum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span>;
         }
 
         <span class="kw">impl</span> <span class="ident">ToConst</span> <span class="kw">for</span> <span class="ident">typenum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span> {
-            <span class="kw">type</span> <span class="ident">Const</span> <span class="op">=</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span>::<span class="ident">USIZE</span> }<span class="op">&gt;</span>;
+            <span class="kw">type</span> <span class="ident">Const</span> <span class="op">=</span> <span class="ident">Const</span><span class="op">&lt;</span>{ <span class="ident">typenum</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">D::USIZE</span> }<span class="op">&gt;</span>;
         }
 
         <span class="kw">impl</span> <span class="ident">IsNotStaticOne</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">D</span> { }
     )<span class="kw-2">*</span>}
 );
 
-<span class="macro">from_to_typenum</span><span class="macro">!</span>(
+<span class="macro">from_to_typenum!</span>(
     <span class="ident">U0</span>, <span class="comment">/*U1,*/</span> <span class="ident">U2</span>, <span class="ident">U3</span>, <span class="ident">U4</span>, <span class="ident">U5</span>, <span class="ident">U6</span>, <span class="ident">U7</span>, <span class="ident">U8</span>, <span class="ident">U9</span>, <span class="ident">U10</span>, <span class="ident">U11</span>, <span class="ident">U12</span>, <span class="ident">U13</span>, <span class="ident">U14</span>, <span class="ident">U15</span>, <span class="ident">U16</span>, <span class="ident">U17</span>, <span class="ident">U18</span>,
     <span class="ident">U19</span>, <span class="ident">U20</span>, <span class="ident">U21</span>, <span class="ident">U22</span>, <span class="ident">U23</span>, <span class="ident">U24</span>, <span class="ident">U25</span>, <span class="ident">U26</span>, <span class="ident">U27</span>, <span class="ident">U28</span>, <span class="ident">U29</span>, <span class="ident">U30</span>, <span class="ident">U31</span>, <span class="ident">U32</span>, <span class="ident">U33</span>, <span class="ident">U34</span>, <span class="ident">U35</span>, <span class="ident">U36</span>, <span class="ident">U37</span>,
     <span class="ident">U38</span>, <span class="ident">U39</span>, <span class="ident">U40</span>, <span class="ident">U41</span>, <span class="ident">U42</span>, <span class="ident">U43</span>, <span class="ident">U44</span>, <span class="ident">U45</span>, <span class="ident">U46</span>, <span class="ident">U47</span>, <span class="ident">U48</span>, <span class="ident">U49</span>, <span class="ident">U50</span>, <span class="ident">U51</span>, <span class="ident">U52</span>, <span class="ident">U53</span>, <span class="ident">U54</span>, <span class="ident">U55</span>, <span class="ident">U56</span>,
@@ -613,5 +613,5 @@
     <span class="ident">U127</span>
 );
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="nalgebra" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="nalgebra" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/bytemuck-1.5.1/src/zeroable.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>zeroable.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../bytemuck/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../bytemuck/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -166,7 +166,7 @@
   <span class="doccomment">/// you **must not** override this method.</span>
   <span class="attribute">#[<span class="ident">inline</span>]</span>
   <span class="kw">fn</span> <span class="ident">zeroed</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-    <span class="kw">unsafe</span> { <span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">zeroed</span>() }
+    <span class="kw">unsafe</span> { <span class="ident">core::mem::zeroed</span>() }
   }
 }
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> () {}
@@ -208,7 +208,7 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Zeroable</span><span class="op">&gt;</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">ManuallyDrop</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;zeroable_maybe_uninit&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">core::mem::MaybeUninit</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {}
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Zeroable</span><span class="op">&gt;</span> <span class="ident">Zeroable</span> <span class="kw">for</span> (<span class="ident">A</span>,) {}
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Zeroable</span>, <span class="ident">B</span>: <span class="ident">Zeroable</span><span class="op">&gt;</span> <span class="ident">Zeroable</span> <span class="kw">for</span> (<span class="ident">A</span>, <span class="ident">B</span>) {}
@@ -255,37 +255,37 @@
 {
 }
 
-<span class="macro">impl_unsafe_marker_for_array</span><span class="macro">!</span>(
+<span class="macro">impl_unsafe_marker_for_array!</span>(
   <span class="ident">Zeroable</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>,
   <span class="number">19</span>, <span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">27</span>, <span class="number">28</span>, <span class="number">29</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">48</span>, <span class="number">64</span>, <span class="number">96</span>, <span class="number">128</span>, <span class="number">256</span>,
   <span class="number">512</span>, <span class="number">1024</span>, <span class="number">2048</span>, <span class="number">4096</span>
 );
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86</span>::<span class="ident">__m128i</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86::__m128i</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86</span>::<span class="ident">__m128</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86::__m128</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86</span>::<span class="ident">__m128d</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86::__m128d</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86</span>::<span class="ident">__m256i</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86::__m256i</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86</span>::<span class="ident">__m256</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86::__m256</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86</span>::<span class="ident">__m256d</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86::__m256d</span> {}
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64</span>::<span class="ident">__m128i</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64::__m128i</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64</span>::<span class="ident">__m128</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64::__m128</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64</span>::<span class="ident">__m128d</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64::__m128d</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64</span>::<span class="ident">__m256i</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64::__m256i</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64</span>::<span class="ident">__m256</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64::__m256</span> {}
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;x86_64&quot;</span>)]</span>
-<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64</span>::<span class="ident">__m256d</span> {}
+<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">x86_64::__m256d</span> {}
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="bytemuck" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="bytemuck" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

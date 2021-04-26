@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/simba-0.4.0/src/simd/simd_value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>simd_value.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../simba/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../simba/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -199,37 +199,37 @@
 <span id="196">196</span>
 <span id="197">197</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">simd</span>::<span class="ident">SimdBool</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::simd::SimdBool</span>;
 
 <span class="doccomment">/// Base trait for every SIMD types.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SimdValue</span>: <span class="ident">Sized</span> {
     <span class="doccomment">/// The type of the elements of each lane of this SIMD value.</span>
-    <span class="kw">type</span> <span class="ident">Element</span>: <span class="ident">SimdValue</span><span class="op">&lt;</span><span class="ident">Element</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Element</span>, <span class="ident">SimdBool</span> <span class="op">=</span> <span class="ident">bool</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Element</span>: <span class="ident">SimdValue</span><span class="op">&lt;</span><span class="ident">Element</span> <span class="op">=</span> <span class="self">Self</span><span class="ident">::Element</span>, <span class="ident">SimdBool</span> <span class="op">=</span> <span class="ident">bool</span><span class="op">&gt;</span>;
     <span class="doccomment">/// Type of the result of comparing two SIMD values like `self`.</span>
     <span class="kw">type</span> <span class="ident">SimdBool</span>: <span class="ident">SimdBool</span>;
 
     <span class="doccomment">/// The number of lanes of this SIMD value.</span>
     <span class="kw">fn</span> <span class="ident">lanes</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
     <span class="doccomment">/// Initializes an SIMD value with each lanes set to `val`.</span>
-    <span class="kw">fn</span> <span class="ident">splat</span>(<span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">splat</span>(<span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
     <span class="doccomment">/// Extracts the i-th lane of `self`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if `i &gt;= Self::lanes()`.</span>
-    <span class="kw">fn</span> <span class="ident">extract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Element</span>;
+    <span class="kw">fn</span> <span class="ident">extract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Element</span>;
     <span class="doccomment">/// Extracts the i-th lane of `self` without bound-checking.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">extract_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Element</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">extract_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Element</span>;
     <span class="doccomment">/// Replaces the i-th lane of `self` by `val`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if `i &gt;= Self::lanes()`.</span>
-    <span class="kw">fn</span> <span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>);
+    <span class="kw">fn</span> <span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>);
     <span class="doccomment">/// Replaces the i-th lane of `self` by `val` without bound-checking.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">replace_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>);
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">replace_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>);
 
     <span class="doccomment">/// Merges `self` and `other` depending on the lanes of `cond`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// For each lane of `cond` with bits set to 1, the result&#39;s will contain the value of the lane of `self`.</span>
     <span class="doccomment">/// For each lane of `cond` with bits set to 0, the result&#39;s will contain the value of the lane of `other`.</span>
-    <span class="kw">fn</span> <span class="ident">select</span>(<span class="self">self</span>, <span class="ident">cond</span>: <span class="self">Self</span>::<span class="ident">SimdBool</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">select</span>(<span class="self">self</span>, <span class="ident">cond</span>: <span class="self">Self</span><span class="ident">::SimdBool</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 
     <span class="doccomment">/// Applies a function to each lane of `self`.</span>
     <span class="doccomment">///</span>
@@ -237,13 +237,13 @@
     <span class="doccomment">/// requires to extract each lane of `self` and then combine them again into</span>
     <span class="doccomment">/// a new SIMD value.</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">map_lanes</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="self">Self</span>::<span class="ident">Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">fn</span> <span class="ident">map_lanes</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="self">Self</span><span class="ident">::Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Clone</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
 
-        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">Self</span>::<span class="ident">lanes</span>() {
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">Self</span><span class="ident">::lanes</span>() {
             <span class="kw">unsafe</span> { <span class="ident">result</span>.<span class="ident">replace_unchecked</span>(<span class="ident">i</span>, <span class="ident">f</span>(<span class="self">self</span>.<span class="ident">extract_unchecked</span>(<span class="ident">i</span>))) }
         }
 
@@ -259,14 +259,14 @@
     <span class="kw">fn</span> <span class="ident">zip_map_lanes</span>(
         <span class="self">self</span>,
         <span class="ident">b</span>: <span class="self">Self</span>,
-        <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="self">Self</span>::<span class="ident">Element</span>, <span class="self">Self</span>::<span class="ident">Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Element</span>,
+        <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="self">Self</span><span class="ident">::Element</span>, <span class="self">Self</span><span class="ident">::Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Element</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Clone</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
 
-        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">Self</span>::<span class="ident">lanes</span>() {
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">Self</span><span class="ident">::lanes</span>() {
             <span class="kw">unsafe</span> {
                 <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">extract_unchecked</span>(<span class="ident">i</span>);
                 <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">extract_unchecked</span>(<span class="ident">i</span>);
@@ -286,63 +286,63 @@
 <span class="doccomment">/// `f32x4, i32x8`, etc..</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PrimitiveSimdValue</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">SimdValue</span> {}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdValue</span><span class="op">&gt;</span> <span class="ident">SimdValue</span> <span class="kw">for</span> <span class="ident">num_complex</span>::<span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">Element</span> <span class="op">=</span> <span class="ident">num_complex</span>::<span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">N</span>::<span class="ident">Element</span><span class="op">&gt;</span>;
-    <span class="kw">type</span> <span class="ident">SimdBool</span> <span class="op">=</span> <span class="ident">N</span>::<span class="ident">SimdBool</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">SimdValue</span><span class="op">&gt;</span> <span class="ident">SimdValue</span> <span class="kw">for</span> <span class="ident">num_complex::Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Element</span> <span class="op">=</span> <span class="ident">num_complex::Complex</span><span class="op">&lt;</span><span class="ident">N::Element</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">SimdBool</span> <span class="op">=</span> <span class="ident">N::SimdBool</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="kw">fn</span> <span class="ident">lanes</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
-        <span class="ident">N</span>::<span class="ident">lanes</span>()
+        <span class="ident">N::lanes</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">splat</span>(<span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">num_complex</span>::<span class="ident">Complex</span> {
-            <span class="ident">re</span>: <span class="ident">N</span>::<span class="ident">splat</span>(<span class="ident">val</span>.<span class="ident">re</span>),
-            <span class="ident">im</span>: <span class="ident">N</span>::<span class="ident">splat</span>(<span class="ident">val</span>.<span class="ident">im</span>),
+    <span class="kw">fn</span> <span class="ident">splat</span>(<span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="ident">num_complex::Complex</span> {
+            <span class="ident">re</span>: <span class="ident">N::splat</span>(<span class="ident">val</span>.<span class="ident">re</span>),
+            <span class="ident">im</span>: <span class="ident">N::splat</span>(<span class="ident">val</span>.<span class="ident">im</span>),
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">extract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Element</span> {
-        <span class="ident">num_complex</span>::<span class="ident">Complex</span> {
+    <span class="kw">fn</span> <span class="ident">extract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Element</span> {
+        <span class="ident">num_complex::Complex</span> {
             <span class="ident">re</span>: <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">extract</span>(<span class="ident">i</span>),
             <span class="ident">im</span>: <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">extract</span>(<span class="ident">i</span>),
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">extract_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Element</span> {
-        <span class="ident">num_complex</span>::<span class="ident">Complex</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">extract_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Element</span> {
+        <span class="ident">num_complex::Complex</span> {
             <span class="ident">re</span>: <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">extract_unchecked</span>(<span class="ident">i</span>),
             <span class="ident">im</span>: <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">extract_unchecked</span>(<span class="ident">i</span>),
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>) {
+    <span class="kw">fn</span> <span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>) {
         <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">replace</span>(<span class="ident">i</span>, <span class="ident">val</span>.<span class="ident">re</span>);
         <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">replace</span>(<span class="ident">i</span>, <span class="ident">val</span>.<span class="ident">im</span>);
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">replace_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>) {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">replace_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>) {
         <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">replace_unchecked</span>(<span class="ident">i</span>, <span class="ident">val</span>.<span class="ident">re</span>);
         <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">replace_unchecked</span>(<span class="ident">i</span>, <span class="ident">val</span>.<span class="ident">im</span>);
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">select</span>(<span class="self">self</span>, <span class="ident">cond</span>: <span class="self">Self</span>::<span class="ident">SimdBool</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">num_complex</span>::<span class="ident">Complex</span> {
+    <span class="kw">fn</span> <span class="ident">select</span>(<span class="self">self</span>, <span class="ident">cond</span>: <span class="self">Self</span><span class="ident">::SimdBool</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="ident">num_complex::Complex</span> {
             <span class="ident">re</span>: <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">select</span>(<span class="ident">cond</span>, <span class="ident">other</span>.<span class="ident">re</span>),
             <span class="ident">im</span>: <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">select</span>(<span class="ident">cond</span>, <span class="ident">other</span>.<span class="ident">im</span>),
         }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">PrimitiveSimdValue</span><span class="op">&gt;</span> <span class="ident">PrimitiveSimdValue</span> <span class="kw">for</span> <span class="ident">num_complex</span>::<span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">PrimitiveSimdValue</span><span class="op">&gt;</span> <span class="ident">PrimitiveSimdValue</span> <span class="kw">for</span> <span class="ident">num_complex::Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {}
 
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_primitive_simd_value_for_scalar</span>(
+<span class="macro">macro_rules!</span> <span class="ident">impl_primitive_simd_value_for_scalar</span>(
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ty</span>),<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {$(
         <span class="kw">impl</span> <span class="ident">PrimitiveSimdValue</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {}
         <span class="kw">impl</span> <span class="ident">SimdValue</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
@@ -355,32 +355,32 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">splat</span>(<span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">splat</span>(<span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                 <span class="ident">val</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">extract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Element</span> {
+            <span class="kw">fn</span> <span class="ident">extract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Element</span> {
                 <span class="kw-2">*</span><span class="self">self</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">extract_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Element</span> {
+            <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">extract_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Element</span> {
                 <span class="kw-2">*</span><span class="self">self</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>) {
+            <span class="kw">fn</span> <span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>) {
                 <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">val</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">replace_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Element</span>) {
+            <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">replace_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw">_</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span><span class="ident">::Element</span>) {
                 <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">val</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">select</span>(<span class="self">self</span>, <span class="ident">cond</span>: <span class="self">Self</span>::<span class="ident">SimdBool</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">select</span>(<span class="self">self</span>, <span class="ident">cond</span>: <span class="self">Self</span><span class="ident">::SimdBool</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                 <span class="kw">if</span> <span class="ident">cond</span> {
                     <span class="self">self</span>
                 } <span class="kw">else</span> {
@@ -391,11 +391,11 @@
     )<span class="kw-2">*</span>}
 );
 
-<span class="macro">impl_primitive_simd_value_for_scalar</span><span class="macro">!</span>(
+<span class="macro">impl_primitive_simd_value_for_scalar!</span>(
     <span class="ident">bool</span>, <span class="ident">u8</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">u64</span>, <span class="ident">u128</span>, <span class="ident">usize</span>, <span class="ident">i8</span>, <span class="ident">i16</span>, <span class="ident">i32</span>, <span class="ident">i64</span>, <span class="ident">i128</span>, <span class="ident">isize</span>, <span class="ident">f32</span>, <span class="ident">f64</span>
 );
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;decimal&quot;</span>)]</span>
-<span class="macro">impl_primitive_simd_value_for_scalar</span><span class="macro">!</span>(<span class="ident">decimal</span>::<span class="ident">d128</span>);
+<span class="macro">impl_primitive_simd_value_for_scalar!</span>(<span class="ident">decimal::d128</span>);
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="simba" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="simba" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

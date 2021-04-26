@@ -54,8 +54,8 @@ fn initialisation(term_width: usize) -> (PathBuf, PathBuf, PathBuf) {
     let cwd = current_dir().expect("Failed to determine current working directory.");
     let (in_dir, out_dir) = dir::io_dirs(Some(cwd.join(input_dir)), Some(cwd.join(output_dir)))
         .expect("Failed to initialise directories.");
-        report!(out_dir.display(), "output directory");
-        report!(in_dir.display(), "input directory");
+    report!(out_dir.display(), "output directory");
+    report!(in_dir.display(), "input directory");
 
     (in_dir, out_dir, params_path)
 }

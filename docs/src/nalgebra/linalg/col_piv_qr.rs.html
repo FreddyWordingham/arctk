@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.26.1/src/linalg/col_piv_qr.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>col_piv_qr.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/nalgebra-0.26.1/src/linalg/col_piv_qr.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>col_piv_qr.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://nalgebra.org/img/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../nalgebra/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -334,19 +334,19 @@
 <span id="333">333</span>
 <span id="334">334</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Zero</span>;
+<span class="kw">use</span> <span class="ident">num::Zero</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">allocator</span>::{<span class="ident">Allocator</span>, <span class="ident">Reallocator</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">base</span>::{<span class="ident">Const</span>, <span class="ident">DefaultAllocator</span>, <span class="ident">Matrix</span>, <span class="ident">OMatrix</span>, <span class="ident">OVector</span>, <span class="ident">Unit</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">constraint</span>::{<span class="ident">SameNumberOfRows</span>, <span class="ident">ShapeConstraint</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dimension</span>::{<span class="ident">Dim</span>, <span class="ident">DimMin</span>, <span class="ident">DimMinimum</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">storage</span>::{<span class="ident">Storage</span>, <span class="ident">StorageMut</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ComplexField</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::allocator</span>::{<span class="ident">Allocator</span>, <span class="ident">Reallocator</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::base</span>::{<span class="ident">Const</span>, <span class="ident">DefaultAllocator</span>, <span class="ident">Matrix</span>, <span class="ident">OMatrix</span>, <span class="ident">OVector</span>, <span class="ident">Unit</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::constraint</span>::{<span class="ident">SameNumberOfRows</span>, <span class="ident">ShapeConstraint</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dimension</span>::{<span class="ident">Dim</span>, <span class="ident">DimMin</span>, <span class="ident">DimMinimum</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::storage</span>::{<span class="ident">Storage</span>, <span class="ident">StorageMut</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::ComplexField</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">geometry</span>::<span class="ident">Reflection</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">linalg</span>::{<span class="ident">householder</span>, <span class="ident">PermutationSequence</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::geometry::Reflection</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::linalg</span>::{<span class="ident">householder</span>, <span class="ident">PermutationSequence</span>};
 
 <span class="doccomment">/// The QR decomposition (with column pivoting) of a general matrix.</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde-serialize-no-std&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -400,10 +400,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">matrix</span>: <span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="ident">matrix</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
         <span class="kw">let</span> <span class="ident">min_nrows_ncols</span> <span class="op">=</span> <span class="ident">nrows</span>.<span class="ident">min</span>(<span class="ident">ncols</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">PermutationSequence</span>::<span class="ident">identity_generic</span>(<span class="ident">min_nrows_ncols</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">PermutationSequence::identity_generic</span>(<span class="ident">min_nrows_ncols</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">diag</span> <span class="op">=</span>
-            <span class="kw">unsafe</span> { <span class="kw">crate</span>::<span class="macro">unimplemented_or_uninitialized_generic</span><span class="macro">!</span>(<span class="ident">min_nrows_ncols</span>, <span class="ident">Const</span>::<span class="op">&lt;</span><span class="number">1</span><span class="op">&gt;</span>) };
+            <span class="kw">unsafe</span> { <span class="kw">crate</span><span class="macro">::unimplemented_or_uninitialized_generic!</span>(<span class="ident">min_nrows_ncols</span>, <span class="ident">Const</span>::<span class="op">&lt;</span><span class="number">1</span><span class="op">&gt;</span>) };
 
         <span class="kw">if</span> <span class="ident">min_nrows_ncols</span>.<span class="ident">value</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="ident">ColPivQR</span> {
@@ -419,7 +419,7 @@
             <span class="ident">matrix</span>.<span class="ident">swap_columns</span>(<span class="ident">i</span>, <span class="ident">col_piv</span>);
             <span class="ident">p</span>.<span class="ident">append_permutation</span>(<span class="ident">i</span>, <span class="ident">col_piv</span>);
 
-            <span class="ident">householder</span>::<span class="ident">clear_column_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">matrix</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">diag</span>[<span class="ident">i</span>], <span class="ident">i</span>, <span class="number">0</span>, <span class="prelude-val">None</span>);
+            <span class="ident">householder::clear_column_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">matrix</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">diag</span>[<span class="ident">i</span>], <span class="ident">i</span>, <span class="number">0</span>, <span class="prelude-val">None</span>);
         }
 
         <span class="ident">ColPivQR</span> {
@@ -440,7 +440,7 @@
             .<span class="ident">col_piv_qr</span>
             .<span class="ident">rows_generic</span>(<span class="number">0</span>, <span class="ident">nrows</span>.<span class="ident">min</span>(<span class="ident">ncols</span>))
             .<span class="ident">upper_triangle</span>();
-        <span class="ident">res</span>.<span class="ident">set_partial_diagonal</span>(<span class="self">self</span>.<span class="ident">diag</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">T</span>::<span class="ident">from_real</span>(<span class="ident">e</span>.<span class="ident">modulus</span>())));
+        <span class="ident">res</span>.<span class="ident">set_partial_diagonal</span>(<span class="self">self</span>.<span class="ident">diag</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">T::from_real</span>(<span class="ident">e</span>.<span class="ident">modulus</span>())));
         <span class="ident">res</span>
     }
 
@@ -455,9 +455,9 @@
         <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">col_piv_qr</span>
-            .<span class="ident">resize_generic</span>(<span class="ident">nrows</span>.<span class="ident">min</span>(<span class="ident">ncols</span>), <span class="ident">ncols</span>, <span class="ident">T</span>::<span class="ident">zero</span>());
-        <span class="ident">res</span>.<span class="ident">fill_lower_triangle</span>(<span class="ident">T</span>::<span class="ident">zero</span>(), <span class="number">1</span>);
-        <span class="ident">res</span>.<span class="ident">set_partial_diagonal</span>(<span class="self">self</span>.<span class="ident">diag</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">T</span>::<span class="ident">from_real</span>(<span class="ident">e</span>.<span class="ident">modulus</span>())));
+            .<span class="ident">resize_generic</span>(<span class="ident">nrows</span>.<span class="ident">min</span>(<span class="ident">ncols</span>), <span class="ident">ncols</span>, <span class="ident">T::zero</span>());
+        <span class="ident">res</span>.<span class="ident">fill_lower_triangle</span>(<span class="ident">T::zero</span>(), <span class="number">1</span>);
+        <span class="ident">res</span>.<span class="ident">set_partial_diagonal</span>(<span class="self">self</span>.<span class="ident">diag</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">T::from_real</span>(<span class="ident">e</span>.<span class="ident">modulus</span>())));
         <span class="ident">res</span>
     }
 
@@ -470,13 +470,13 @@
 
         <span class="comment">// NOTE: we could build the identity matrix and call q_mul on it.</span>
         <span class="comment">// Instead we don&#39;t so that we take in account the matrix sparseness.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">identity_generic</span>(<span class="ident">nrows</span>, <span class="ident">nrows</span>.<span class="ident">min</span>(<span class="ident">ncols</span>));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Matrix::identity_generic</span>(<span class="ident">nrows</span>, <span class="ident">nrows</span>.<span class="ident">min</span>(<span class="ident">ncols</span>));
         <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">diag</span>.<span class="ident">len</span>();
 
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="ident">dim</span>).<span class="ident">rev</span>() {
             <span class="kw">let</span> <span class="ident">axis</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">slice_range</span>(<span class="ident">i</span>.., <span class="ident">i</span>);
             <span class="comment">// TODO: sometimes, the axis might have a zero magnitude.</span>
-            <span class="kw">let</span> <span class="ident">refl</span> <span class="op">=</span> <span class="ident">Reflection</span>::<span class="ident">new</span>(<span class="ident">Unit</span>::<span class="ident">new_unchecked</span>(<span class="ident">axis</span>), <span class="ident">T</span>::<span class="ident">zero</span>());
+            <span class="kw">let</span> <span class="ident">refl</span> <span class="op">=</span> <span class="ident">Reflection::new</span>(<span class="ident">Unit::new_unchecked</span>(<span class="ident">axis</span>), <span class="ident">T::zero</span>());
 
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res_rows</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">slice_range_mut</span>(<span class="ident">i</span>.., <span class="ident">i</span>..);
             <span class="ident">refl</span>.<span class="ident">reflect_with_sign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res_rows</span>, <span class="self">self</span>.<span class="ident">diag</span>[<span class="ident">i</span>].<span class="ident">signum</span>());
@@ -521,7 +521,7 @@
 
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">dim</span> {
             <span class="kw">let</span> <span class="ident">axis</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">slice_range</span>(<span class="ident">i</span>.., <span class="ident">i</span>);
-            <span class="kw">let</span> <span class="ident">refl</span> <span class="op">=</span> <span class="ident">Reflection</span>::<span class="ident">new</span>(<span class="ident">Unit</span>::<span class="ident">new_unchecked</span>(<span class="ident">axis</span>), <span class="ident">T</span>::<span class="ident">zero</span>());
+            <span class="kw">let</span> <span class="ident">refl</span> <span class="op">=</span> <span class="ident">Reflection::new</span>(<span class="ident">Unit::new_unchecked</span>(<span class="ident">axis</span>), <span class="ident">T::zero</span>());
 
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rhs_rows</span> <span class="op">=</span> <span class="ident">rhs</span>.<span class="ident">rows_range_mut</span>(<span class="ident">i</span>..);
             <span class="ident">refl</span>.<span class="ident">reflect_with_sign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rhs_rows</span>, <span class="self">self</span>.<span class="ident">diag</span>[<span class="ident">i</span>].<span class="ident">signum</span>().<span class="ident">conjugate</span>());
@@ -564,12 +564,12 @@
         <span class="ident">S2</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R2</span>, <span class="ident">C2</span><span class="op">&gt;</span>,
         <span class="ident">ShapeConstraint</span>: <span class="ident">SameNumberOfRows</span><span class="op">&lt;</span><span class="ident">R2</span>, <span class="ident">D</span><span class="op">&gt;</span>,
     {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="macro">assert_eq!</span>(
             <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">nrows</span>(),
             <span class="ident">b</span>.<span class="ident">nrows</span>(),
             <span class="string">&quot;ColPivQR solve matrix dimension mismatch.&quot;</span>
         );
-        <span class="macro">assert</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(
             <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">is_square</span>(),
             <span class="string">&quot;ColPivQR solve: unable to solve a non-square system.&quot;</span>
         );
@@ -609,7 +609,7 @@
                 }
 
                 <span class="ident">b</span>.<span class="ident">rows_range_mut</span>(..<span class="ident">i</span>)
-                    .<span class="ident">axpy</span>(<span class="op">-</span><span class="ident">coeff</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">slice_range</span>(..<span class="ident">i</span>, <span class="ident">i</span>), <span class="ident">T</span>::<span class="ident">one</span>());
+                    .<span class="ident">axpy</span>(<span class="op">-</span><span class="ident">coeff</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">slice_range</span>(..<span class="ident">i</span>, <span class="ident">i</span>), <span class="ident">T::one</span>());
             }
         }
 
@@ -620,14 +620,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `None` if the decomposed matrix is not invertible.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OMatrix</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(
             <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">is_square</span>(),
             <span class="string">&quot;ColPivQR inverse: unable to compute the inverse of a non-square matrix.&quot;</span>
         );
 
         <span class="comment">// TODO: is there a less naive method ?</span>
         <span class="kw">let</span> (<span class="ident">nrows</span>, <span class="ident">ncols</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">OMatrix</span>::<span class="ident">identity_generic</span>(<span class="ident">nrows</span>, <span class="ident">ncols</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">OMatrix::identity_generic</span>(<span class="ident">nrows</span>, <span class="ident">ncols</span>);
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">solve_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>) {
             <span class="prelude-val">Some</span>(<span class="ident">res</span>)
@@ -638,7 +638,7 @@
 
     <span class="doccomment">/// Indicates if the decomposed matrix is invertible.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_invertible</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(
             <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">is_square</span>(),
             <span class="string">&quot;ColPivQR: unable to test the invertibility of a non-square matrix.&quot;</span>
         );
@@ -655,12 +655,12 @@
     <span class="doccomment">/// Computes the determinant of the decomposed matrix.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">determinant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
         <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">nrows</span>();
-        <span class="macro">assert</span><span class="macro">!</span>(
+        <span class="macro">assert!</span>(
             <span class="self">self</span>.<span class="ident">col_piv_qr</span>.<span class="ident">is_square</span>(),
             <span class="string">&quot;ColPivQR determinant: unable to compute the determinant of a non-square matrix.&quot;</span>
         );
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">T</span>::<span class="ident">one</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">T::one</span>();
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">dim</span> {
             <span class="ident">res</span> <span class="kw-2">*</span><span class="op">=</span> <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">diag</span>.<span class="ident">vget_unchecked</span>(<span class="ident">i</span>) };
         }
@@ -669,5 +669,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="nalgebra" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="nalgebra" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-0.15.1/src/impl_methods.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>impl_methods.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../ndarray/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../ndarray/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -2520,35 +2520,35 @@
 <span class="comment">// option. This file may not be copied, modified, or distributed</span>
 <span class="comment">// except according to those terms.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::{<span class="ident">size_of</span>, <span class="ident">ManuallyDrop</span>};
-<span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">slice</span>;
-<span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">vec</span>;
-<span class="kw">use</span> <span class="ident">alloc</span>::<span class="ident">vec</span>::<span class="ident">Vec</span>;
-<span class="kw">use</span> <span class="ident">rawpointer</span>::<span class="ident">PointerExt</span>;
+<span class="kw">use</span> <span class="ident">std::mem</span>::{<span class="ident">size_of</span>, <span class="ident">ManuallyDrop</span>};
+<span class="kw">use</span> <span class="ident">alloc::slice</span>;
+<span class="kw">use</span> <span class="ident">alloc::vec</span>;
+<span class="kw">use</span> <span class="ident">alloc::vec::Vec</span>;
+<span class="kw">use</span> <span class="ident">rawpointer::PointerExt</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">imp_prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::imp_prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">arraytraits</span>, <span class="ident">DimMax</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">argument_traits</span>::<span class="ident">AssignElem</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dimension</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dimension</span>::<span class="ident">IntoDimension</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dimension</span>::{
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::argument_traits::AssignElem</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dimension</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dimension::IntoDimension</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dimension</span>::{
     <span class="ident">abs_index</span>, <span class="ident">axes_of</span>, <span class="ident">do_slice</span>, <span class="ident">merge_axes</span>, <span class="ident">move_min_stride_axis_to_last</span>,
     <span class="ident">offset_from_ptr_to_memory</span>, <span class="ident">size_of_shape_checked</span>, <span class="ident">stride_offset</span>, <span class="ident">Axes</span>,
 };
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dimension</span>::<span class="ident">broadcast</span>::<span class="ident">co_broadcast</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="self">self</span>, <span class="ident">ErrorKind</span>, <span class="ident">ShapeError</span>, <span class="ident">from_kind</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">math_cell</span>::<span class="ident">MathCell</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">itertools</span>::<span class="ident">zip</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">zip</span>::{<span class="ident">IntoNdProducer</span>, <span class="ident">Zip</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">AxisDescription</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::dimension::broadcast::co_broadcast</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::error</span>::{<span class="self">self</span>, <span class="ident">ErrorKind</span>, <span class="ident">ShapeError</span>, <span class="ident">from_kind</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::math_cell::MathCell</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::itertools::zip</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::zip</span>::{<span class="ident">IntoNdProducer</span>, <span class="ident">Zip</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::AxisDescription</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">iter</span>::{
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::iter</span>::{
     <span class="ident">AxisChunksIter</span>, <span class="ident">AxisChunksIterMut</span>, <span class="ident">AxisIter</span>, <span class="ident">AxisIterMut</span>, <span class="ident">ExactChunks</span>, <span class="ident">ExactChunksMut</span>,
     <span class="ident">IndexedIter</span>, <span class="ident">IndexedIterMut</span>, <span class="ident">Iter</span>, <span class="ident">IterMut</span>, <span class="ident">Lanes</span>, <span class="ident">LanesMut</span>, <span class="ident">Windows</span>,
 };
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">slice</span>::{<span class="ident">MultiSliceArg</span>, <span class="ident">SliceArg</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">stacking</span>::<span class="ident">concatenate</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::slice</span>::{<span class="ident">MultiSliceArg</span>, <span class="ident">SliceArg</span>};
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::stacking::concatenate</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">NdIndex</span>, <span class="ident">Slice</span>, <span class="ident">SliceInfoElem</span>};
 
 <span class="doccomment">/// # Methods For All Array Types</span>
@@ -2585,7 +2585,7 @@
     <span class="doccomment">/// Return the shape of the array in its “pattern” form,</span>
     <span class="doccomment">/// an integer in the one-dimensional case, tuple in the n-dimensional cases</span>
     <span class="doccomment">/// and so on.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dim</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">D</span>::<span class="ident">Pattern</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dim</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">D::Pattern</span> {
         <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>().<span class="ident">into_pattern</span>()
     }
 
@@ -2639,7 +2639,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strides</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">isize</span>] {
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">slice</span>();
         <span class="comment">// reinterpret unsigned integer as signed</span>
-        <span class="kw">unsafe</span> { <span class="ident">slice</span>::<span class="ident">from_raw_parts</span>(<span class="ident">s</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>, <span class="ident">s</span>.<span class="ident">len</span>()) }
+        <span class="kw">unsafe</span> { <span class="ident">slice::from_raw_parts</span>(<span class="ident">s</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>, <span class="ident">s</span>.<span class="ident">len</span>()) }
     }
 
     <span class="doccomment">/// Return the stride of `axis`.</span>
@@ -2658,8 +2658,8 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
-        <span class="kw">unsafe</span> { <span class="ident">ArrayView</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()) }
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
+        <span class="kw">unsafe</span> { <span class="ident">ArrayView::new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()) }
     }
 
     <span class="doccomment">/// Return a read-write view of the array</span>
@@ -2668,7 +2668,7 @@
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
         <span class="self">self</span>.<span class="ident">ensure_unique</span>();
-        <span class="kw">unsafe</span> { <span class="ident">ArrayViewMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()) }
+        <span class="kw">unsafe</span> { <span class="ident">ArrayViewMut::new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()) }
     }
 
     <span class="doccomment">/// Return a shared view of the array with elements as if they were embedded in cells.</span>
@@ -2722,7 +2722,7 @@
     {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">slc</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_slice_memory_order</span>() {
             <span class="kw">unsafe</span> {
-                <span class="ident">Array</span>::<span class="ident">from_shape_vec_unchecked</span>(
+                <span class="ident">Array::from_shape_vec_unchecked</span>(
                     <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>().<span class="ident">strides</span>(<span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()),
                     <span class="ident">slc</span>.<span class="ident">to_vec</span>(),
                 )
@@ -2739,7 +2739,7 @@
         <span class="ident">A</span>: <span class="ident">Clone</span>,
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="ident">S</span>::<span class="ident">to_shared</span>(<span class="self">self</span>)
+        <span class="ident">S::to_shared</span>(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Turn the array into a uniquely owned array, cloning the array elements</span>
@@ -2749,7 +2749,7 @@
         <span class="ident">A</span>: <span class="ident">Clone</span>,
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="ident">S</span>::<span class="ident">into_owned</span>(<span class="self">self</span>)
+        <span class="ident">S::into_owned</span>(<span class="self">self</span>)
     }
 
     <span class="doccomment">/// Turn the array into a shared ownership (copy on write) array,</span>
@@ -2761,7 +2761,7 @@
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">into_shared</span>();
         <span class="comment">// safe because: equivalent unmoved data, ptr and dims remain valid</span>
         <span class="kw">unsafe</span> {
-            <span class="ident">ArrayBase</span>::<span class="ident">from_data_ptr</span>(<span class="ident">data</span>, <span class="self">self</span>.<span class="ident">ptr</span>).<span class="ident">with_strides_dim</span>(<span class="self">self</span>.<span class="ident">strides</span>, <span class="self">self</span>.<span class="ident">dim</span>)
+            <span class="ident">ArrayBase::from_data_ptr</span>(<span class="ident">data</span>, <span class="self">self</span>.<span class="ident">ptr</span>).<span class="ident">with_strides_dim</span>(<span class="self">self</span>.<span class="ident">strides</span>, <span class="self">self</span>.<span class="ident">dim</span>)
         }
     }
 
@@ -2801,7 +2801,7 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
         <span class="self">self</span>.<span class="ident">view</span>().<span class="ident">into_iter_</span>()
     }
 
@@ -2830,7 +2830,7 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="ident">IndexedIter</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view</span>().<span class="ident">into_elements_base</span>())
+        <span class="ident">IndexedIter::new</span>(<span class="self">self</span>.<span class="ident">view</span>().<span class="ident">into_elements_base</span>())
     }
 
     <span class="doccomment">/// Return an iterator of indexes and mutable references to the elements of the array.</span>
@@ -2843,7 +2843,7 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
-        <span class="ident">IndexedIterMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>().<span class="ident">into_elements_base</span>())
+        <span class="ident">IndexedIterMut::new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>().<span class="ident">into_elements_base</span>())
     }
 
     <span class="doccomment">/// Return a sliced view of the array.</span>
@@ -2853,7 +2853,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if an index is out of bounds or step size is zero.&lt;br&gt;</span>
     <span class="doccomment">/// (**Panics** if `D` is `IxDyn` and `info` does not match the number of array axes.)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">info</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayView</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">I</span>::<span class="ident">OutDim</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">info</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayView</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">I::OutDim</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">SliceArg</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
         <span class="ident">S</span>: <span class="ident">Data</span>,
@@ -2868,7 +2868,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if an index is out of bounds or step size is zero.&lt;br&gt;</span>
     <span class="doccomment">/// (**Panics** if `D` is `IxDyn` and `info` does not match the number of array axes.)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice_mut</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">info</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayViewMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">I</span>::<span class="ident">OutDim</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice_mut</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">info</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayViewMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">I::OutDim</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">SliceArg</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
@@ -2899,7 +2899,7 @@
     <span class="doccomment">/// middle.fill(0);</span>
     <span class="doccomment">/// assert_eq!(a, arr2(&amp;[[1, 0, 1], [1, 0, 1]]));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multi_slice_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">M</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">info</span>: <span class="ident">M</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">M</span>::<span class="ident">Output</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multi_slice_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">M</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">info</span>: <span class="ident">M</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">M::Output</span>
     <span class="kw">where</span>
         <span class="ident">M</span>: <span class="ident">MultiSliceArg</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>, <span class="ident">D</span><span class="op">&gt;</span>,
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
@@ -2914,23 +2914,23 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if an index is out of bounds or step size is zero.&lt;br&gt;</span>
     <span class="doccomment">/// (**Panics** if `D` is `IxDyn` and `info` does not match the number of array axes.)</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice_move</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">info</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">I</span>::<span class="ident">OutDim</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice_move</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">info</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">I::OutDim</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">SliceArg</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
     {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="macro">assert_eq!</span>(
             <span class="ident">info</span>.<span class="ident">in_ndim</span>(),
             <span class="self">self</span>.<span class="ident">ndim</span>(),
             <span class="string">&quot;The input dimension of `info` must match the array to be sliced.&quot;</span>,
         );
         <span class="kw">let</span> <span class="ident">out_ndim</span> <span class="op">=</span> <span class="ident">info</span>.<span class="ident">out_ndim</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_dim</span> <span class="op">=</span> <span class="ident">I</span>::<span class="ident">OutDim</span>::<span class="ident">zeros</span>(<span class="ident">out_ndim</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_strides</span> <span class="op">=</span> <span class="ident">I</span>::<span class="ident">OutDim</span>::<span class="ident">zeros</span>(<span class="ident">out_ndim</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_dim</span> <span class="op">=</span> <span class="ident">I::OutDim::zeros</span>(<span class="ident">out_ndim</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_strides</span> <span class="op">=</span> <span class="ident">I::OutDim::zeros</span>(<span class="ident">out_ndim</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">old_axis</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_axis</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="ident">info</span>.<span class="ident">as_ref</span>().<span class="ident">iter</span>().<span class="ident">for_each</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">ax_info</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">ax_info</span> {
-            <span class="ident">SliceInfoElem</span>::<span class="ident">Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> } <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">SliceInfoElem::Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// Slice the axis in-place to update the `dim`, `strides`, and `ptr`.</span>
                 <span class="self">self</span>.<span class="ident">slice_axis_inplace</span>(<span class="ident">Axis</span>(<span class="ident">old_axis</span>), <span class="ident">Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> });
                 <span class="comment">// Copy the sliced dim and stride to corresponding axis.</span>
@@ -2939,7 +2939,7 @@
                 <span class="ident">old_axis</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                 <span class="ident">new_axis</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
-            <span class="ident">SliceInfoElem</span>::<span class="ident">Index</span>(<span class="ident">index</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">SliceInfoElem::Index</span>(<span class="ident">index</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// Collapse the axis in-place to update the `ptr`.</span>
                 <span class="kw">let</span> <span class="ident">i_usize</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="self">self</span>.<span class="ident">len_of</span>(<span class="ident">Axis</span>(<span class="ident">old_axis</span>)), <span class="ident">index</span>);
                 <span class="self">self</span>.<span class="ident">collapse_axis</span>(<span class="ident">Axis</span>(<span class="ident">old_axis</span>), <span class="ident">i_usize</span>);
@@ -2949,15 +2949,15 @@
                 <span class="comment">// is zero length.</span>
                 <span class="ident">old_axis</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
-            <span class="ident">SliceInfoElem</span>::<span class="ident">NewAxis</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">SliceInfoElem::NewAxis</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="comment">// Set the dim and stride of the new axis.</span>
                 <span class="ident">new_dim</span>[<span class="ident">new_axis</span>] <span class="op">=</span> <span class="number">1</span>;
                 <span class="ident">new_strides</span>[<span class="ident">new_axis</span>] <span class="op">=</span> <span class="number">0</span>;
                 <span class="ident">new_axis</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
         });
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">old_axis</span>, <span class="self">self</span>.<span class="ident">ndim</span>());
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">new_axis</span>, <span class="ident">out_ndim</span>);
+        <span class="macro">debug_assert_eq!</span>(<span class="ident">old_axis</span>, <span class="self">self</span>.<span class="ident">ndim</span>());
+        <span class="macro">debug_assert_eq!</span>(<span class="ident">new_axis</span>, <span class="ident">out_ndim</span>);
 
         <span class="comment">// safe because new dimension, strides allow access to a subset of old data</span>
         <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">with_strides_dim</span>(<span class="ident">new_strides</span>, <span class="ident">new_dim</span>) }
@@ -2987,25 +2987,25 @@
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">SliceArg</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
     {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="macro">assert_eq!</span>(
             <span class="ident">info</span>.<span class="ident">in_ndim</span>(),
             <span class="self">self</span>.<span class="ident">ndim</span>(),
             <span class="string">&quot;The input dimension of `info` must match the array to be sliced.&quot;</span>,
         );
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">axis</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="ident">info</span>.<span class="ident">as_ref</span>().<span class="ident">iter</span>().<span class="ident">for_each</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">ax_info</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">ax_info</span> {
-                <span class="ident">SliceInfoElem</span>::<span class="ident">Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">SliceInfoElem::Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> } <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="self">self</span>.<span class="ident">slice_axis_inplace</span>(<span class="ident">Axis</span>(<span class="ident">axis</span>), <span class="ident">Slice</span> { <span class="ident">start</span>, <span class="ident">end</span>, <span class="ident">step</span> });
                     <span class="ident">axis</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                 }
-                <span class="ident">SliceInfoElem</span>::<span class="ident">Index</span>(<span class="ident">index</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">SliceInfoElem::Index</span>(<span class="ident">index</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="ident">i_usize</span> <span class="op">=</span> <span class="ident">abs_index</span>(<span class="self">self</span>.<span class="ident">len_of</span>(<span class="ident">Axis</span>(<span class="ident">axis</span>)), <span class="ident">index</span>);
                     <span class="self">self</span>.<span class="ident">collapse_axis</span>(<span class="ident">Axis</span>(<span class="ident">axis</span>), <span class="ident">i_usize</span>);
                     <span class="ident">axis</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                 }
-                <span class="ident">SliceInfoElem</span>::<span class="ident">NewAxis</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;`slice_collapse` does not support `NewAxis`.&quot;</span>),
+                <span class="ident">SliceInfoElem::NewAxis</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;`slice_collapse` does not support `NewAxis`.&quot;</span>),
             });
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">axis</span>, <span class="self">self</span>.<span class="ident">ndim</span>());
+        <span class="macro">debug_assert_eq!</span>(<span class="ident">axis</span>, <span class="self">self</span>.<span class="ident">ndim</span>());
     }
 
     <span class="doccomment">/// Return a view of the array, sliced along the specified axis.</span>
@@ -3047,7 +3047,7 @@
         <span class="kw">unsafe</span> {
             <span class="self">self</span>.<span class="ident">ptr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset</span>);
         }
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
     }
 
     <span class="doccomment">/// Return a view of a slice of the array, with a closure specifying the</span>
@@ -3181,7 +3181,7 @@
         <span class="ident">S</span>: <span class="ident">Data</span>,
         <span class="ident">I</span>: <span class="ident">NdIndex</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
     {
-        <span class="ident">arraytraits</span>::<span class="ident">debug_bounds_check</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">index</span>);
+        <span class="ident">arraytraits::debug_bounds_check</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">index</span>);
         <span class="kw">let</span> <span class="ident">off</span> <span class="op">=</span> <span class="ident">index</span>.<span class="ident">index_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>);
         <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>().<span class="ident">offset</span>(<span class="ident">off</span>)
     }
@@ -3206,8 +3206,8 @@
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
         <span class="ident">I</span>: <span class="ident">NdIndex</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
     {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">is_unique</span>());
-        <span class="ident">arraytraits</span>::<span class="ident">debug_bounds_check</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">index</span>);
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">is_unique</span>());
+        <span class="ident">arraytraits::debug_bounds_check</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">index</span>);
         <span class="kw">let</span> <span class="ident">off</span> <span class="op">=</span> <span class="ident">index</span>.<span class="ident">index_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>);
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>().<span class="ident">offset</span>(<span class="ident">off</span>)
     }
@@ -3228,12 +3228,12 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">offset1</span>) <span class="op">=</span> <span class="ident">offset1</span> {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">offset2</span>) <span class="op">=</span> <span class="ident">offset2</span> {
                 <span class="kw">unsafe</span> {
-                    <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">swap</span>(<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset1</span>), <span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset2</span>));
+                    <span class="ident">std::ptr::swap</span>(<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset1</span>), <span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset2</span>));
                 }
                 <span class="kw">return</span>;
             }
         }
-        <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;swap: index out of bounds for indices {:?} {:?}&quot;</span>, <span class="ident">index1</span>, <span class="ident">index2</span>);
+        <span class="macro">panic!</span>(<span class="string">&quot;swap: index out of bounds for indices {:?} {:?}&quot;</span>, <span class="ident">index1</span>, <span class="ident">index2</span>);
     }
 
     <span class="doccomment">/// Swap elements *unchecked* at indices `index1` and `index2`.</span>
@@ -3255,12 +3255,12 @@
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
         <span class="ident">I</span>: <span class="ident">NdIndex</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>,
     {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">is_unique</span>());
-        <span class="ident">arraytraits</span>::<span class="ident">debug_bounds_check</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">index1</span>);
-        <span class="ident">arraytraits</span>::<span class="ident">debug_bounds_check</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">index2</span>);
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">is_unique</span>());
+        <span class="ident">arraytraits::debug_bounds_check</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">index1</span>);
+        <span class="ident">arraytraits::debug_bounds_check</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">index2</span>);
         <span class="kw">let</span> <span class="ident">off1</span> <span class="op">=</span> <span class="ident">index1</span>.<span class="ident">index_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>);
         <span class="kw">let</span> <span class="ident">off2</span> <span class="op">=</span> <span class="ident">index2</span>.<span class="ident">index_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>);
-        <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">swap</span>(
+        <span class="ident">std::ptr::swap</span>(
             <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>().<span class="ident">offset</span>(<span class="ident">off1</span>),
             <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>().<span class="ident">offset</span>(<span class="ident">off2</span>),
         );
@@ -3272,7 +3272,7 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">ndim</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span>);
+        <span class="macro">assert!</span>(<span class="self">self</span>.<span class="ident">ndim</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span>);
         <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">as_ptr</span>() }
     }
 
@@ -3297,7 +3297,7 @@
     <span class="doccomment">///     a.index_axis(Axis(1), 1) == ArrayView::from(&amp;[2., 4., 6.])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayView</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index_axis</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayView</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
@@ -3329,7 +3329,7 @@
     <span class="doccomment">///                   [3., 14.]])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index_axis_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayViewMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index_axis_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayViewMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
@@ -3342,7 +3342,7 @@
     <span class="doccomment">/// See [`.index_axis()`](#method.index_axis) and [*Subviews*](#subviews) for full documentation.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if `axis` or `index` is out of bounds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index_axis_move</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index_axis_move</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
     {
@@ -3359,9 +3359,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if `axis` or `index` is out of bounds.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collapse_axis</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">index</span>: <span class="ident">usize</span>) {
-        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">dimension</span>::<span class="ident">do_collapse_axis</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>, <span class="ident">axis</span>.<span class="ident">index</span>(), <span class="ident">index</span>);
+        <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">dimension::do_collapse_axis</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>, <span class="ident">axis</span>.<span class="ident">index</span>(), <span class="ident">index</span>);
         <span class="self">self</span>.<span class="ident">ptr</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset</span>) };
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
     }
 
     <span class="doccomment">/// Along `axis`, select arbitrary subviews corresponding to `indices`</span>
@@ -3391,14 +3391,14 @@
         <span class="ident">S</span>: <span class="ident">Data</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">subs</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="self">self</span>.<span class="ident">view</span>(); <span class="ident">indices</span>.<span class="ident">len</span>()];
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">subs</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="self">self</span>.<span class="ident">view</span>(); <span class="ident">indices</span>.<span class="ident">len</span>()];
         <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">i</span>, <span class="ident">sub</span>) <span class="kw">in</span> <span class="ident">zip</span>(<span class="ident">indices</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">subs</span>[..]) {
             <span class="ident">sub</span>.<span class="ident">collapse_axis</span>(<span class="ident">axis</span>, <span class="ident">i</span>);
         }
         <span class="kw">if</span> <span class="ident">subs</span>.<span class="ident">is_empty</span>() {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw_dim</span>();
             <span class="ident">dim</span>.<span class="ident">set_axis</span>(<span class="ident">axis</span>, <span class="number">0</span>);
-            <span class="kw">unsafe</span> { <span class="ident">Array</span>::<span class="ident">from_shape_vec_unchecked</span>(<span class="ident">dim</span>, <span class="macro">vec</span><span class="macro">!</span>[]) }
+            <span class="kw">unsafe</span> { <span class="ident">Array::from_shape_vec_unchecked</span>(<span class="ident">dim</span>, <span class="macro">vec!</span>[]) }
         } <span class="kw">else</span> {
             <span class="ident">concatenate</span>(<span class="ident">axis</span>, <span class="kw-2">&amp;</span><span class="ident">subs</span>).<span class="ident">unwrap</span>()
         }
@@ -3430,7 +3430,7 @@
     <span class="doccomment">///     /* loop body */</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
@@ -3438,11 +3438,11 @@
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
-        <span class="ident">Lanes</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">Axis</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>))
+        <span class="ident">Lanes::new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">Axis</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>))
     }
 
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;Renamed to .rows()&quot;</span>, <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.15.0&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">genrows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">genrows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
@@ -3453,7 +3453,7 @@
     <span class="doccomment">/// rows of the array and yields mutable array views.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element is `ArrayView1&lt;A&gt;` (1D read-write array view).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rows_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rows_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
@@ -3461,11 +3461,11 @@
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="ident">n</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
-        <span class="ident">LanesMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">Axis</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>))
+        <span class="ident">LanesMut::new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">Axis</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>))
     }
 
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;Renamed to .rows_mut()&quot;</span>, <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.15.0&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">genrows_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">genrows_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
@@ -3498,11 +3498,11 @@
     <span class="doccomment">///     /* loop body */</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">columns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">columns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="ident">Lanes</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">Axis</span>(<span class="number">0</span>))
+        <span class="ident">Lanes::new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">Axis</span>(<span class="number">0</span>))
     }
 
     <span class="doccomment">/// Return a producer and iterable that traverses over the *generalized*</span>
@@ -3510,7 +3510,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Renamed to `.columns()`</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;Renamed to .columns()&quot;</span>, <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.15.0&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gencolumns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gencolumns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
@@ -3521,11 +3521,11 @@
     <span class="doccomment">/// columns of the array and yields mutable array views.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element is `ArrayView1&lt;A&gt;` (1D read-write array view).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">columns_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">columns_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
-        <span class="ident">LanesMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">Axis</span>(<span class="number">0</span>))
+        <span class="ident">LanesMut::new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">Axis</span>(<span class="number">0</span>))
     }
 
     <span class="doccomment">/// Return a producer and iterable that traverses over the *generalized*</span>
@@ -3533,7 +3533,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Renamed to `.columns_mut()`</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span><span class="op">=</span><span class="string">&quot;Renamed to .columns_mut()&quot;</span>, <span class="ident">since</span><span class="op">=</span><span class="string">&quot;0.15.0&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gencolumns_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">gencolumns_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
@@ -3568,22 +3568,22 @@
     <span class="doccomment">/// // The first lane for axis 2 is [0, 1, 2]</span>
     <span class="doccomment">/// assert_eq!(inner2.into_iter().next().unwrap(), aview1(&amp;[0, 1, 2]));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lanes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lanes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lanes</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="ident">Lanes</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">axis</span>)
+        <span class="ident">Lanes::new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">axis</span>)
     }
 
     <span class="doccomment">/// Return a producer and iterable that traverses over all 1D lanes</span>
     <span class="doccomment">/// pointing in the direction of `axis`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element is `ArrayViewMut1&lt;A&gt;` (1D read-write array view).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lanes_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lanes_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LanesMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
-        <span class="ident">LanesMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">axis</span>)
+        <span class="ident">LanesMut::new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">axis</span>)
     }
 
     <span class="doccomment">/// Return an iterator that traverses over the outermost dimension</span>
@@ -3593,7 +3593,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element is `ArrayView&lt;A, D::Smaller&gt;` (read-only array view).</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AxisIter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AxisIter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
@@ -3608,7 +3608,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Iterator element is `ArrayViewMut&lt;A, D::Smaller&gt;` (read-write array view).</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AxisIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">outer_iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AxisIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
@@ -3631,12 +3631,12 @@
     <span class="doccomment">/// **Panics** if `axis` is out of bounds.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// &lt;img src=&quot;https://rust-ndarray.github.io/ndarray/images/axis_iter_3_4_5.svg&quot; height=&quot;250px&quot;&gt;</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AxisIter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis_iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AxisIter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
     {
-        <span class="ident">AxisIter</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">axis</span>)
+        <span class="ident">AxisIter::new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">axis</span>)
     }
 
     <span class="doccomment">/// Return an iterator that traverses over `axis`</span>
@@ -3646,12 +3646,12 @@
     <span class="doccomment">/// (read-write array view).</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if `axis` is out of bounds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis_iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AxisIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">axis_iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AxisIterMut</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
     {
-        <span class="ident">AxisIterMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">axis</span>)
+        <span class="ident">AxisIterMut::new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">axis</span>)
     }
 
     <span class="doccomment">/// Return an iterator that traverses over `axis` by chunks of `size`,</span>
@@ -3685,7 +3685,7 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="ident">AxisChunksIter</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">axis</span>, <span class="ident">size</span>)
+        <span class="ident">AxisChunksIter::new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">axis</span>, <span class="ident">size</span>)
     }
 
     <span class="doccomment">/// Return an iterator that traverses over `axis` by chunks of `size`,</span>
@@ -3698,7 +3698,7 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
-        <span class="ident">AxisChunksIterMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">axis</span>, <span class="ident">size</span>)
+        <span class="ident">AxisChunksIterMut::new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">axis</span>, <span class="ident">size</span>)
     }
 
     <span class="doccomment">/// Return an exact chunks producer (and iterable).</span>
@@ -3717,7 +3717,7 @@
         <span class="ident">E</span>: <span class="ident">IntoDimension</span><span class="op">&lt;</span><span class="ident">Dim</span> <span class="op">=</span> <span class="ident">D</span><span class="op">&gt;</span>,
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="ident">ExactChunks</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">chunk_size</span>)
+        <span class="ident">ExactChunks::new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">chunk_size</span>)
     }
 
     <span class="doccomment">/// Return an exact chunks producer (and iterable).</span>
@@ -3757,7 +3757,7 @@
         <span class="ident">E</span>: <span class="ident">IntoDimension</span><span class="op">&lt;</span><span class="ident">Dim</span> <span class="op">=</span> <span class="ident">D</span><span class="op">&gt;</span>,
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
-        <span class="ident">ExactChunksMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">chunk_size</span>)
+        <span class="ident">ExactChunksMut::new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">chunk_size</span>)
     }
 
     <span class="doccomment">/// Return a window producer and iterable.</span>
@@ -3801,7 +3801,7 @@
         <span class="ident">E</span>: <span class="ident">IntoDimension</span><span class="op">&lt;</span><span class="ident">Dim</span> <span class="op">=</span> <span class="ident">D</span><span class="op">&gt;</span>,
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="ident">Windows</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">window_size</span>)
+        <span class="ident">Windows::new</span>(<span class="self">self</span>.<span class="ident">view</span>(), <span class="ident">window_size</span>)
     }
 
     <span class="comment">// Return (length, stride) for diagonal</span>
@@ -3849,9 +3849,9 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">RawDataMut</span>,
     {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
-        <span class="ident">S</span>::<span class="ident">try_ensure_unique</span>(<span class="self">self</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
+        <span class="ident">S::try_ensure_unique</span>(<span class="self">self</span>);
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
     }
 
     <span class="doccomment">/// Make the array unshared.</span>
@@ -3861,9 +3861,9 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataMut</span>,
     {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
-        <span class="ident">S</span>::<span class="ident">ensure_unique</span>(<span class="self">self</span>);
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
+        <span class="ident">S::ensure_unique</span>(<span class="self">self</span>);
+        <span class="macro">debug_assert!</span>(<span class="self">self</span>.<span class="ident">pointer_is_inbounds</span>());
     }
 
     <span class="doccomment">/// Return `true` if the array data is laid out in contiguous “C order” in</span>
@@ -3873,7 +3873,7 @@
     <span class="doccomment">/// contiguous in memory, it has custom strides, etc.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_standard_layout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">fn</span> <span class="ident">is_standard_layout</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Dimension</span><span class="op">&gt;</span>(<span class="ident">dim</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>, <span class="ident">strides</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="number">1</span>) <span class="op">=</span> <span class="ident">D</span>::<span class="ident">NDIM</span> {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="number">1</span>) <span class="op">=</span> <span class="ident">D::NDIM</span> {
                 <span class="kw">return</span> <span class="ident">strides</span>[<span class="number">0</span>] <span class="op">=</span><span class="op">=</span> <span class="number">1</span> <span class="op">|</span><span class="op">|</span> <span class="ident">dim</span>[<span class="number">0</span>] <span class="op">&lt;</span><span class="op">=</span> <span class="number">1</span>;
             }
             <span class="kw">if</span> <span class="ident">dim</span>.<span class="ident">slice</span>().<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>) {
@@ -3881,7 +3881,7 @@
             }
             <span class="kw">let</span> <span class="ident">defaults</span> <span class="op">=</span> <span class="ident">dim</span>.<span class="ident">default_strides</span>();
             <span class="comment">// check all dimensions -- a dimension of length 1 can have unequal strides</span>
-            <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">s</span>, <span class="kw-2">&amp;</span><span class="ident">ds</span>) <span class="kw">in</span> <span class="macro">izip</span><span class="macro">!</span>(<span class="ident">dim</span>.<span class="ident">slice</span>(), <span class="ident">strides</span>.<span class="ident">slice</span>(), <span class="ident">defaults</span>.<span class="ident">slice</span>()) {
+            <span class="kw">for</span> (<span class="kw-2">&amp;</span><span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">s</span>, <span class="kw-2">&amp;</span><span class="ident">ds</span>) <span class="kw">in</span> <span class="macro">izip!</span>(<span class="ident">dim</span>.<span class="ident">slice</span>(), <span class="ident">strides</span>.<span class="ident">slice</span>(), <span class="ident">defaults</span>.<span class="ident">slice</span>()) {
                 <span class="kw">if</span> <span class="ident">dim</span> <span class="op">!</span><span class="op">=</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="ident">s</span> <span class="op">!</span><span class="op">=</span> <span class="ident">ds</span> {
                     <span class="kw">return</span> <span class="bool-val">false</span>;
                 }
@@ -3893,7 +3893,7 @@
 
     <span class="doccomment">/// Return true if the array is known to be contiguous.</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_contiguous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="ident">D</span>::<span class="ident">is_contiguous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>)
+        <span class="ident">D::is_contiguous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>)
     }
 
     <span class="doccomment">/// Return a standard-layout array containing the data, cloning if</span>
@@ -3924,16 +3924,16 @@
         <span class="ident">A</span>: <span class="ident">Clone</span>,
     {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_standard_layout</span>() {
-            <span class="ident">CowArray</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">view</span>())
+            <span class="ident">CowArray::from</span>(<span class="self">self</span>.<span class="ident">view</span>())
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">iterators</span>::<span class="ident">to_vec_mapped</span>(<span class="self">self</span>.<span class="ident">iter</span>(), <span class="ident">A</span>::<span class="ident">clone</span>);
+            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::iterators::to_vec_mapped</span>(<span class="self">self</span>.<span class="ident">iter</span>(), <span class="ident">A::clone</span>);
             <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>();
-            <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">v</span>.<span class="ident">len</span>(), <span class="ident">dim</span>.<span class="ident">size</span>());
+            <span class="macro">debug_assert_eq!</span>(<span class="ident">v</span>.<span class="ident">len</span>(), <span class="ident">dim</span>.<span class="ident">size</span>());
 
             <span class="kw">unsafe</span> {
                 <span class="comment">// Safe because the shape and element type are from the existing array</span>
                 <span class="comment">// and the strides are the default strides.</span>
-                <span class="ident">CowArray</span>::<span class="ident">from</span>(<span class="ident">Array</span>::<span class="ident">from_shape_vec_unchecked</span>(<span class="ident">dim</span>, <span class="ident">v</span>))
+                <span class="ident">CowArray::from</span>(<span class="ident">Array::from_shape_vec_unchecked</span>(<span class="ident">dim</span>, <span class="ident">v</span>))
             }
         }
     }
@@ -3965,7 +3965,7 @@
     <span class="doccomment">/// Return a raw view of the array.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">raw_view</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RawArrayView</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">D</span><span class="op">&gt;</span> {
-        <span class="kw">unsafe</span> { <span class="ident">RawArrayView</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()) }
+        <span class="kw">unsafe</span> { <span class="ident">RawArrayView::new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()) }
     }
 
     <span class="doccomment">/// Return a raw mutable view of the array.</span>
@@ -3975,7 +3975,7 @@
         <span class="ident">S</span>: <span class="ident">RawDataMut</span>,
     {
         <span class="self">self</span>.<span class="ident">try_ensure_unique</span>(); <span class="comment">// for ArcArray</span>
-        <span class="kw">unsafe</span> { <span class="ident">RawArrayViewMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()) }
+        <span class="kw">unsafe</span> { <span class="ident">RawArrayViewMut::new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()) }
     }
 
     <span class="doccomment">/// Return a raw mutable view of the array.</span>
@@ -3986,7 +3986,7 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataOwned</span>,
     {
-        <span class="ident">RawArrayViewMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>())
+        <span class="ident">RawArrayViewMut::new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>())
     }
 
     <span class="doccomment">/// Return the array’s data as a slice, if it is contiguous and in standard order.</span>
@@ -3999,7 +3999,7 @@
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_standard_layout</span>() {
-            <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">slice</span>::<span class="ident">from_raw_parts</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>(), <span class="self">self</span>.<span class="ident">len</span>())) }
+            <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">slice::from_raw_parts</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>(), <span class="self">self</span>.<span class="ident">len</span>())) }
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
         }
@@ -4013,7 +4013,7 @@
     {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_standard_layout</span>() {
             <span class="self">self</span>.<span class="ident">ensure_unique</span>();
-            <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">slice</span>::<span class="ident">from_raw_parts_mut</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>(), <span class="self">self</span>.<span class="ident">len</span>())) }
+            <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">slice::from_raw_parts_mut</span>(<span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">as_ptr</span>(), <span class="self">self</span>.<span class="ident">len</span>())) }
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
         }
@@ -4031,7 +4031,7 @@
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_contiguous</span>() {
             <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">offset_from_ptr_to_memory</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>);
             <span class="kw">unsafe</span> {
-                <span class="prelude-val">Some</span>(<span class="ident">slice</span>::<span class="ident">from_raw_parts</span>(
+                <span class="prelude-val">Some</span>(<span class="ident">slice::from_raw_parts</span>(
                     <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset</span>).<span class="ident">as_ptr</span>(),
                     <span class="self">self</span>.<span class="ident">len</span>(),
                 ))
@@ -4060,7 +4060,7 @@
             <span class="self">self</span>.<span class="ident">ensure_unique</span>();
             <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">offset_from_ptr_to_memory</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>);
             <span class="kw">unsafe</span> {
-                <span class="prelude-val">Ok</span>(<span class="ident">slice</span>::<span class="ident">from_raw_parts_mut</span>(
+                <span class="prelude-val">Ok</span>(<span class="ident">slice::from_raw_parts_mut</span>(
                     <span class="self">self</span>.<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset</span>).<span class="ident">as_ptr</span>(),
                     <span class="self">self</span>.<span class="ident">len</span>(),
                 ))
@@ -4086,13 +4086,13 @@
     <span class="doccomment">///                 [3., 4.]])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_shape</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">shape</span>: <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">E</span>::<span class="ident">Dim</span><span class="op">&gt;</span>, <span class="ident">ShapeError</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_shape</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">shape</span>: <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">E::Dim</span><span class="op">&gt;</span>, <span class="ident">ShapeError</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">IntoDimension</span>,
     {
         <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> <span class="ident">shape</span>.<span class="ident">into_dimension</span>();
         <span class="kw">if</span> <span class="ident">size_of_shape_checked</span>(<span class="kw-2">&amp;</span><span class="ident">shape</span>) <span class="op">!</span><span class="op">=</span> <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">size</span>()) {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>::<span class="ident">incompatible_shapes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">shape</span>));
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">error::incompatible_shapes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">shape</span>));
         }
         <span class="comment">// Check if contiguous, if not =&gt; copy all, else just adapt strides</span>
         <span class="kw">unsafe</span> {
@@ -4102,7 +4102,7 @@
             } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">ndim</span>() <span class="op">&gt;</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">raw_view</span>().<span class="ident">reversed_axes</span>().<span class="ident">is_standard_layout</span>() {
                 <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">with_strides_dim</span>(<span class="ident">shape</span>.<span class="ident">fortran_strides</span>(), <span class="ident">shape</span>))
             } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">error</span>::<span class="ident">from_kind</span>(<span class="ident">error</span>::<span class="ident">ErrorKind</span>::<span class="ident">IncompatibleLayout</span>))
+                <span class="prelude-val">Err</span>(<span class="ident">error::from_kind</span>(<span class="ident">error::ErrorKind::IncompatibleLayout</span>))
             }
         }
     }
@@ -4127,7 +4127,7 @@
     <span class="doccomment">///                 [3., 4.]])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reshape</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">shape</span>: <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">E</span>::<span class="ident">Dim</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reshape</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">shape</span>: <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">E::Dim</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">DataShared</span> <span class="op">+</span> <span class="ident">DataOwned</span>,
         <span class="ident">A</span>: <span class="ident">Clone</span>,
@@ -4135,7 +4135,7 @@
     {
         <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> <span class="ident">shape</span>.<span class="ident">into_dimension</span>();
         <span class="kw">if</span> <span class="ident">size_of_shape_checked</span>(<span class="kw-2">&amp;</span><span class="ident">shape</span>) <span class="op">!</span><span class="op">=</span> <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">size</span>()) {
-            <span class="macro">panic</span><span class="macro">!</span>(
+            <span class="macro">panic!</span>(
                 <span class="string">&quot;ndarray: incompatible shapes in reshape, attempted from: {:?}, to: {:?}&quot;</span>,
                 <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">slice</span>(),
                 <span class="ident">shape</span>.<span class="ident">slice</span>()
@@ -4150,7 +4150,7 @@
             }
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">cloned</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span><span class="op">&gt;</span>();
-            <span class="kw">unsafe</span> { <span class="ident">ArrayBase</span>::<span class="ident">from_shape_vec_unchecked</span>(<span class="ident">shape</span>, <span class="ident">v</span>) }
+            <span class="kw">unsafe</span> { <span class="ident">ArrayBase::from_shape_vec_unchecked</span>(<span class="ident">shape</span>, <span class="ident">v</span>) }
         }
     }
 
@@ -4166,7 +4166,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_dyn</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">IxDyn</span><span class="op">&gt;</span> {
         <span class="comment">// safe because new dims equivalent</span>
         <span class="kw">unsafe</span> {
-            <span class="ident">ArrayBase</span>::<span class="ident">from_data_ptr</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="self">self</span>.<span class="ident">ptr</span>)
+            <span class="ident">ArrayBase::from_data_ptr</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="self">self</span>.<span class="ident">ptr</span>)
                 .<span class="ident">with_strides_dim</span>(<span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">into_dyn</span>(), <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">into_dyn</span>())
         }
     }
@@ -4192,22 +4192,22 @@
         <span class="ident">D2</span>: <span class="ident">Dimension</span>,
     {
         <span class="kw">unsafe</span> {
-            <span class="kw">if</span> <span class="ident">D</span>::<span class="ident">NDIM</span> <span class="op">=</span><span class="op">=</span> <span class="ident">D2</span>::<span class="ident">NDIM</span> {
+            <span class="kw">if</span> <span class="ident">D::NDIM</span> <span class="op">=</span><span class="op">=</span> <span class="ident">D2::NDIM</span> {
                 <span class="comment">// safe because D == D2</span>
                 <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="ident">unlimited_transmute</span>::<span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D2</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">dim</span>);
                 <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> <span class="ident">unlimited_transmute</span>::<span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">D2</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">strides</span>);
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">ArrayBase</span>::<span class="ident">from_data_ptr</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="self">self</span>.<span class="ident">ptr</span>)
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">ArrayBase::from_data_ptr</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="self">self</span>.<span class="ident">ptr</span>)
                             .<span class="ident">with_strides_dim</span>(<span class="ident">strides</span>, <span class="ident">dim</span>));
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">D</span>::<span class="ident">NDIM</span> <span class="op">=</span><span class="op">=</span> <span class="prelude-val">None</span> <span class="op">|</span><span class="op">|</span> <span class="ident">D2</span>::<span class="ident">NDIM</span> <span class="op">=</span><span class="op">=</span> <span class="prelude-val">None</span> { <span class="comment">// one is dynamic dim</span>
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">D::NDIM</span> <span class="op">=</span><span class="op">=</span> <span class="prelude-val">None</span> <span class="op">|</span><span class="op">|</span> <span class="ident">D2::NDIM</span> <span class="op">=</span><span class="op">=</span> <span class="prelude-val">None</span> { <span class="comment">// one is dynamic dim</span>
                 <span class="comment">// safe because dim, strides are equivalent under a different type</span>
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">dim</span>) <span class="op">=</span> <span class="ident">D2</span>::<span class="ident">from_dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>) {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">strides</span>) <span class="op">=</span> <span class="ident">D2</span>::<span class="ident">from_dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>) {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">dim</span>) <span class="op">=</span> <span class="ident">D2::from_dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>) {
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">strides</span>) <span class="op">=</span> <span class="ident">D2::from_dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>) {
                         <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">with_strides_dim</span>(<span class="ident">strides</span>, <span class="ident">dim</span>));
                     }
                 }
             }
         }
-        <span class="prelude-val">Err</span>(<span class="ident">ShapeError</span>::<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">IncompatibleShape</span>))
+        <span class="prelude-val">Err</span>(<span class="ident">ShapeError::from_kind</span>(<span class="ident">ErrorKind::IncompatibleShape</span>))
     }
 
     <span class="doccomment">/// Act like a larger size and/or shape array by *broadcasting*</span>
@@ -4239,7 +4239,7 @@
     <span class="doccomment">///     == aview2(&amp;[[1., 0.]; 10])</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">broadcast</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dim</span>: <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ArrayView</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">E</span>::<span class="ident">Dim</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">broadcast</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dim</span>: <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ArrayView</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span>, <span class="ident">E::Dim</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">IntoDimension</span>,
         <span class="ident">S</span>: <span class="ident">Data</span>,
@@ -4301,14 +4301,14 @@
             <span class="prelude-val">Some</span>(<span class="ident">st</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">st</span>,
             <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
         };
-        <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">ArrayView</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="ident">dim</span>, <span class="ident">broadcast_strides</span>)) }
+        <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">ArrayView::new</span>(<span class="self">self</span>.<span class="ident">ptr</span>, <span class="ident">dim</span>, <span class="ident">broadcast_strides</span>)) }
     }
 
     <span class="doccomment">/// For two arrays or views, find their common shape if possible and</span>
     <span class="doccomment">/// broadcast them as array views into that shape.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Return `ShapeError` if their shapes can not be broadcast together.</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">type_complexity</span>)]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::type_complexity</span>)]</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">broadcast_with</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="ident">B</span>, <span class="ident">S2</span>, <span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S2</span>, <span class="ident">E</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span>
         <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">ArrayView</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>, <span class="ident">DimMaxOf</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">E</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">ArrayView</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">B</span>, <span class="ident">DimMaxOf</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">E</span><span class="op">&gt;</span><span class="op">&gt;</span>), <span class="ident">ShapeError</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -4317,13 +4317,13 @@
         <span class="ident">D</span>: <span class="ident">Dimension</span> <span class="op">+</span> <span class="ident">DimMax</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>,
         <span class="ident">E</span>: <span class="ident">Dimension</span>,
     {
-        <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> <span class="ident">co_broadcast</span>::<span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">E</span>, <span class="op">&lt;</span><span class="ident">D</span> <span class="kw">as</span> <span class="ident">DimMax</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">Output</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">dim</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> <span class="ident">co_broadcast</span>::<span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">E</span>, <span class="op">&lt;</span><span class="ident">D</span> <span class="kw">as</span> <span class="ident">DimMax</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Output</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">dim</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">dim</span>)<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">view1</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">broadcast</span>(<span class="ident">shape</span>.<span class="ident">clone</span>()) {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">view2</span>) <span class="op">=</span> <span class="ident">other</span>.<span class="ident">broadcast</span>(<span class="ident">shape</span>) {
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>((<span class="ident">view1</span>, <span class="ident">view2</span>));
             }
         }
-        <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind</span>::<span class="ident">IncompatibleShape</span>))
+        <span class="prelude-val">Err</span>(<span class="ident">from_kind</span>(<span class="ident">ErrorKind::IncompatibleShape</span>))
     }
 
     <span class="doccomment">/// Swap axes `ax` and `bx`.</span>
@@ -4375,16 +4375,16 @@
     {
         <span class="kw">let</span> <span class="ident">axes</span> <span class="op">=</span> <span class="ident">axes</span>.<span class="ident">into_dimension</span>();
         <span class="comment">// Ensure that each axis is used exactly once.</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">usage_counts</span> <span class="op">=</span> <span class="ident">D</span>::<span class="ident">zeros</span>(<span class="self">self</span>.<span class="ident">ndim</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">usage_counts</span> <span class="op">=</span> <span class="ident">D::zeros</span>(<span class="self">self</span>.<span class="ident">ndim</span>());
         <span class="kw">for</span> <span class="ident">axis</span> <span class="kw">in</span> <span class="ident">axes</span>.<span class="ident">slice</span>() {
             <span class="ident">usage_counts</span>[<span class="kw-2">*</span><span class="ident">axis</span>] <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         }
         <span class="kw">for</span> <span class="ident">count</span> <span class="kw">in</span> <span class="ident">usage_counts</span>.<span class="ident">slice</span>() {
-            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">count</span>, <span class="number">1</span>, <span class="string">&quot;each axis must be listed exactly once&quot;</span>);
+            <span class="macro">assert_eq!</span>(<span class="kw-2">*</span><span class="ident">count</span>, <span class="number">1</span>, <span class="string">&quot;each axis must be listed exactly once&quot;</span>);
         }
         <span class="comment">// Determine the new shape and strides.</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_dim</span> <span class="op">=</span> <span class="ident">usage_counts</span>; <span class="comment">// reuse to avoid an allocation</span>
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_strides</span> <span class="op">=</span> <span class="ident">D</span>::<span class="ident">zeros</span>(<span class="self">self</span>.<span class="ident">ndim</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_strides</span> <span class="op">=</span> <span class="ident">D::zeros</span>(<span class="self">self</span>.<span class="ident">ndim</span>());
         {
             <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">slice</span>();
             <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">slice</span>();
@@ -4513,8 +4513,8 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ***Panics*** if the axis is out of bounds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert_axis</span>(<span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D</span>::<span class="ident">Larger</span><span class="op">&gt;</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">axis</span>.<span class="ident">index</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">ndim</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert_axis</span>(<span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D::Larger</span><span class="op">&gt;</span> {
+        <span class="macro">assert!</span>(<span class="ident">axis</span>.<span class="ident">index</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">ndim</span>());
         <span class="comment">// safe because a new axis of length one does not affect memory layout</span>
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">insert_axis</span>(<span class="ident">axis</span>);
@@ -4529,7 +4529,7 @@
     <span class="doccomment">/// axis to remove is of length 1.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if the axis is out of bounds or its length is zero.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_axis</span>(<span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_axis</span>(<span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
     {
@@ -4574,11 +4574,11 @@
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="ident">Data</span>,
         <span class="ident">P</span>: <span class="ident">IntoNdProducer</span><span class="op">&lt;</span><span class="ident">Dim</span> <span class="op">=</span> <span class="ident">D</span><span class="op">&gt;</span>,
-        <span class="ident">P</span>::<span class="ident">Item</span>: <span class="ident">AssignElem</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>,
+        <span class="ident">P::Item</span>: <span class="ident">AssignElem</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>,
         <span class="ident">A</span>: <span class="ident">Clone</span>,
     {
-        <span class="ident">Zip</span>::<span class="ident">from</span>(<span class="self">self</span>)
-            .<span class="ident">map_assign_into</span>(<span class="ident">to</span>, <span class="ident">A</span>::<span class="ident">clone</span>);
+        <span class="ident">Zip::from</span>(<span class="self">self</span>)
+            .<span class="ident">map_assign_into</span>(<span class="ident">to</span>, <span class="ident">A::clone</span>);
     }
 
     <span class="doccomment">/// Perform an elementwise assigment to `self` from element `x`.</span>
@@ -4597,7 +4597,7 @@
         <span class="ident">E</span>: <span class="ident">Dimension</span>,
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">A</span>, <span class="kw-2">&amp;</span><span class="ident">B</span>),
     {
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">shape</span>(), <span class="ident">rhs</span>.<span class="ident">shape</span>());
+        <span class="macro">debug_assert_eq!</span>(<span class="self">self</span>.<span class="ident">shape</span>(), <span class="ident">rhs</span>.<span class="ident">shape</span>());
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">strides_equivalent</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">strides</span>, <span class="kw-2">&amp;</span><span class="ident">rhs</span>.<span class="ident">strides</span>) {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">self_s</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_slice_memory_order_mut</span>() {
@@ -4623,15 +4623,15 @@
         <span class="ident">E</span>: <span class="ident">Dimension</span>,
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">A</span>, <span class="kw-2">&amp;</span><span class="ident">B</span>),
     {
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">shape</span>(), <span class="ident">rhs</span>.<span class="ident">shape</span>());
-        <span class="macro">debug_assert_ne</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">ndim</span>(), <span class="number">0</span>);
+        <span class="macro">debug_assert_eq!</span>(<span class="self">self</span>.<span class="ident">shape</span>(), <span class="ident">rhs</span>.<span class="ident">shape</span>());
+        <span class="macro">debug_assert_ne!</span>(<span class="self">self</span>.<span class="ident">ndim</span>(), <span class="number">0</span>);
 
         <span class="comment">// break the arrays up into their inner rows</span>
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ndim</span>();
         <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw_dim</span>();
-        <span class="ident">Zip</span>::<span class="ident">from</span>(<span class="ident">LanesMut</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">Axis</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>)))
-            .<span class="ident">and</span>(<span class="ident">Lanes</span>::<span class="ident">new</span>(<span class="ident">rhs</span>.<span class="ident">broadcast_assume</span>(<span class="ident">dim</span>), <span class="ident">Axis</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>)))
-            .<span class="ident">for_each</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">s_row</span>, <span class="ident">r_row</span><span class="op">|</span> <span class="ident">Zip</span>::<span class="ident">from</span>(<span class="ident">s_row</span>).<span class="ident">and</span>(<span class="ident">r_row</span>).<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">f</span>(<span class="ident">a</span>, <span class="ident">b</span>)));
+        <span class="ident">Zip::from</span>(<span class="ident">LanesMut::new</span>(<span class="self">self</span>.<span class="ident">view_mut</span>(), <span class="ident">Axis</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>)))
+            .<span class="ident">and</span>(<span class="ident">Lanes::new</span>(<span class="ident">rhs</span>.<span class="ident">broadcast_assume</span>(<span class="ident">dim</span>), <span class="ident">Axis</span>(<span class="ident">n</span> <span class="op">-</span> <span class="number">1</span>)))
+            .<span class="ident">for_each</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">s_row</span>, <span class="ident">r_row</span><span class="op">|</span> <span class="ident">Zip::from</span>(<span class="ident">s_row</span>).<span class="ident">and</span>(<span class="ident">r_row</span>).<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">f</span>(<span class="ident">a</span>, <span class="ident">b</span>)));
     }
 
     <span class="kw">fn</span> <span class="ident">zip_mut_with_elem</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rhs_elem</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>)
@@ -4711,16 +4711,16 @@
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">slc</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_slice_memory_order</span>() {
-            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">iterators</span>::<span class="ident">to_vec_mapped</span>(<span class="ident">slc</span>.<span class="ident">iter</span>(), <span class="ident">f</span>);
+            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::iterators::to_vec_mapped</span>(<span class="ident">slc</span>.<span class="ident">iter</span>(), <span class="ident">f</span>);
             <span class="kw">unsafe</span> {
-                <span class="ident">ArrayBase</span>::<span class="ident">from_shape_vec_unchecked</span>(
+                <span class="ident">ArrayBase::from_shape_vec_unchecked</span>(
                     <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>().<span class="ident">strides</span>(<span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>()),
                     <span class="ident">v</span>,
                 )
             }
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">iterators</span>::<span class="ident">to_vec_mapped</span>(<span class="self">self</span>.<span class="ident">iter</span>(), <span class="ident">f</span>);
-            <span class="kw">unsafe</span> { <span class="ident">ArrayBase</span>::<span class="ident">from_shape_vec_unchecked</span>(<span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="ident">v</span>) }
+            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::iterators::to_vec_mapped</span>(<span class="self">self</span>.<span class="ident">iter</span>(), <span class="ident">f</span>);
+            <span class="kw">unsafe</span> { <span class="ident">ArrayBase::from_shape_vec_unchecked</span>(<span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">clone</span>(), <span class="ident">v</span>) }
         }
     }
 
@@ -4740,11 +4740,11 @@
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_contiguous</span>() {
             <span class="kw">let</span> <span class="ident">strides</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">clone</span>();
             <span class="kw">let</span> <span class="ident">slc</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">as_slice_memory_order_mut</span>().<span class="ident">unwrap</span>();
-            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">iterators</span>::<span class="ident">to_vec_mapped</span>(<span class="ident">slc</span>.<span class="ident">iter_mut</span>(), <span class="ident">f</span>);
-            <span class="kw">unsafe</span> { <span class="ident">ArrayBase</span>::<span class="ident">from_shape_vec_unchecked</span>(<span class="ident">dim</span>.<span class="ident">strides</span>(<span class="ident">strides</span>), <span class="ident">v</span>) }
+            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::iterators::to_vec_mapped</span>(<span class="ident">slc</span>.<span class="ident">iter_mut</span>(), <span class="ident">f</span>);
+            <span class="kw">unsafe</span> { <span class="ident">ArrayBase::from_shape_vec_unchecked</span>(<span class="ident">dim</span>.<span class="ident">strides</span>(<span class="ident">strides</span>), <span class="ident">v</span>) }
         } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">iterators</span>::<span class="ident">to_vec_mapped</span>(<span class="self">self</span>.<span class="ident">iter_mut</span>(), <span class="ident">f</span>);
-            <span class="kw">unsafe</span> { <span class="ident">ArrayBase</span>::<span class="ident">from_shape_vec_unchecked</span>(<span class="ident">dim</span>, <span class="ident">v</span>) }
+            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::iterators::to_vec_mapped</span>(<span class="self">self</span>.<span class="ident">iter_mut</span>(), <span class="ident">f</span>);
+            <span class="kw">unsafe</span> { <span class="ident">ArrayBase::from_shape_vec_unchecked</span>(<span class="ident">dim</span>, <span class="ident">v</span>) }
         }
     }
 
@@ -4871,14 +4871,14 @@
     <span class="doccomment">/// Return the result as an `Array`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if `axis` is out of bounds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fold_axis</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">init</span>: <span class="ident">B</span>, <span class="kw-2">mut</span> <span class="ident">fold</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fold_axis</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="ident">init</span>: <span class="ident">B</span>, <span class="kw-2">mut</span> <span class="ident">fold</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="ident">B</span>, <span class="kw-2">&amp;</span><span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">B</span>,
         <span class="ident">B</span>: <span class="ident">Clone</span>,
         <span class="ident">S</span>: <span class="ident">Data</span>,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_elem</span>(<span class="self">self</span>.<span class="ident">raw_dim</span>().<span class="ident">remove_axis</span>(<span class="ident">axis</span>), <span class="ident">init</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Array::from_elem</span>(<span class="self">self</span>.<span class="ident">raw_dim</span>().<span class="ident">remove_axis</span>(<span class="ident">axis</span>), <span class="ident">init</span>);
         <span class="kw">for</span> <span class="ident">subview</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">axis_iter</span>(<span class="ident">axis</span>) {
             <span class="ident">res</span>.<span class="ident">zip_mut_with</span>(<span class="kw-2">&amp;</span><span class="ident">subview</span>, <span class="op">|</span><span class="ident">x</span>, <span class="ident">y</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">x</span> <span class="op">=</span> <span class="ident">fold</span>(<span class="ident">x</span>, <span class="ident">y</span>));
         }
@@ -4893,7 +4893,7 @@
     <span class="doccomment">/// Return the result as an `Array`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if `axis` is out of bounds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">map_axis</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="kw-2">mut</span> <span class="ident">mapping</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">map_axis</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="kw-2">mut</span> <span class="ident">mapping</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">ArrayView1</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">B</span>,
@@ -4904,12 +4904,12 @@
         <span class="kw">let</span> <span class="ident">view_stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">axis</span>(<span class="ident">axis</span>);
         <span class="kw">if</span> <span class="ident">view_len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">let</span> <span class="ident">new_dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">remove_axis</span>(<span class="ident">axis</span>);
-            <span class="ident">Array</span>::<span class="ident">from_shape_simple_fn</span>(<span class="ident">new_dim</span>, <span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="ident">mapping</span>(<span class="ident">ArrayView</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span>[])))
+            <span class="ident">Array::from_shape_simple_fn</span>(<span class="ident">new_dim</span>, <span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="ident">mapping</span>(<span class="ident">ArrayView::from</span>(<span class="kw-2">&amp;</span>[])))
         } <span class="kw">else</span> {
             <span class="comment">// use the 0th subview as a map to each 1d array view extended from</span>
             <span class="comment">// the 0th element.</span>
             <span class="self">self</span>.<span class="ident">index_axis</span>(<span class="ident">axis</span>, <span class="number">0</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">first_elt</span><span class="op">|</span> <span class="kw">unsafe</span> {
-                <span class="ident">mapping</span>(<span class="ident">ArrayView</span>::<span class="ident">new_</span>(<span class="ident">first_elt</span>, <span class="ident">Ix1</span>(<span class="ident">view_len</span>), <span class="ident">Ix1</span>(<span class="ident">view_stride</span>)))
+                <span class="ident">mapping</span>(<span class="ident">ArrayView::new_</span>(<span class="ident">first_elt</span>, <span class="ident">Ix1</span>(<span class="ident">view_len</span>), <span class="ident">Ix1</span>(<span class="ident">view_stride</span>)))
             })
         }
     }
@@ -4924,7 +4924,7 @@
     <span class="doccomment">/// Return the result as an `Array`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Panics** if `axis` is out of bounds.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">map_axis_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="kw-2">mut</span> <span class="ident">mapping</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">D</span>::<span class="ident">Smaller</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">map_axis_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">axis</span>: <span class="ident">Axis</span>, <span class="kw-2">mut</span> <span class="ident">mapping</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">D::Smaller</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">RemoveAxis</span>,
         <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">ArrayViewMut1</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">B</span>,
@@ -4935,12 +4935,12 @@
         <span class="kw">let</span> <span class="ident">view_stride</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">strides</span>.<span class="ident">axis</span>(<span class="ident">axis</span>);
         <span class="kw">if</span> <span class="ident">view_len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">let</span> <span class="ident">new_dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">dim</span>.<span class="ident">remove_axis</span>(<span class="ident">axis</span>);
-            <span class="ident">Array</span>::<span class="ident">from_shape_simple_fn</span>(<span class="ident">new_dim</span>, <span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="ident">mapping</span>(<span class="ident">ArrayViewMut</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [])))
+            <span class="ident">Array::from_shape_simple_fn</span>(<span class="ident">new_dim</span>, <span class="kw">move</span> <span class="op">|</span><span class="op">|</span> <span class="ident">mapping</span>(<span class="ident">ArrayViewMut::from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [])))
         } <span class="kw">else</span> {
             <span class="comment">// use the 0th subview as a map to each 1d array view extended from</span>
             <span class="comment">// the 0th element.</span>
             <span class="self">self</span>.<span class="ident">index_axis_mut</span>(<span class="ident">axis</span>, <span class="number">0</span>).<span class="ident">map_mut</span>(<span class="op">|</span><span class="ident">first_elt</span><span class="op">|</span> <span class="kw">unsafe</span> {
-                <span class="ident">mapping</span>(<span class="ident">ArrayViewMut</span>::<span class="ident">new_</span>(
+                <span class="ident">mapping</span>(<span class="ident">ArrayViewMut::new_</span>(
                     <span class="ident">first_elt</span>,
                     <span class="ident">Ix1</span>(<span class="ident">view_len</span>),
                     <span class="ident">Ix1</span>(<span class="ident">view_stride</span>),
@@ -4987,10 +4987,10 @@
         }
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">curr</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">raw_view_mut</span>(); <span class="comment">// mut borrow of the array here</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">prev</span> <span class="op">=</span> <span class="ident">curr</span>.<span class="ident">raw_view</span>(); <span class="comment">// derive further raw views from the same borrow</span>
-        <span class="ident">prev</span>.<span class="ident">slice_axis_inplace</span>(<span class="ident">axis</span>, <span class="ident">Slice</span>::<span class="ident">from</span>(..<span class="op">-</span><span class="number">1</span>));
-        <span class="ident">curr</span>.<span class="ident">slice_axis_inplace</span>(<span class="ident">axis</span>, <span class="ident">Slice</span>::<span class="ident">from</span>(<span class="number">1</span>..));
+        <span class="ident">prev</span>.<span class="ident">slice_axis_inplace</span>(<span class="ident">axis</span>, <span class="ident">Slice::from</span>(..<span class="op">-</span><span class="number">1</span>));
+        <span class="ident">curr</span>.<span class="ident">slice_axis_inplace</span>(<span class="ident">axis</span>, <span class="ident">Slice::from</span>(<span class="number">1</span>..));
         <span class="comment">// This implementation relies on `Zip` iterating along `axis` in order.</span>
-        <span class="ident">Zip</span>::<span class="ident">from</span>(<span class="ident">prev</span>).<span class="ident">and</span>(<span class="ident">curr</span>).<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">prev</span>, <span class="ident">curr</span><span class="op">|</span> <span class="kw">unsafe</span> {
+        <span class="ident">Zip::from</span>(<span class="ident">prev</span>).<span class="ident">and</span>(<span class="ident">curr</span>).<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">prev</span>, <span class="ident">curr</span><span class="op">|</span> <span class="kw">unsafe</span> {
             <span class="comment">// These pointer dereferences and borrows are safe because:</span>
             <span class="comment">//</span>
             <span class="comment">// 1. They&#39;re pointers to elements in the array.</span>
@@ -5016,12 +5016,12 @@
 <span class="attribute">#[<span class="ident">inline</span>]</span>
 <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unlimited_transmute</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">B</span> {
     <span class="comment">// safe when sizes are equal and caller guarantees that representations are equal</span>
-    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(), <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>());
-    <span class="kw">let</span> <span class="ident">old_data</span> <span class="op">=</span> <span class="ident">ManuallyDrop</span>::<span class="ident">new</span>(<span class="ident">data</span>);
+    <span class="macro">assert_eq!</span>(<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(), <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>());
+    <span class="kw">let</span> <span class="ident">old_data</span> <span class="op">=</span> <span class="ident">ManuallyDrop::new</span>(<span class="ident">data</span>);
     (<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">old_data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">A</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">B</span>).<span class="ident">read</span>()
 }
 
-<span class="kw">type</span> <span class="ident">DimMaxOf</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">A</span> <span class="kw">as</span> <span class="ident">DimMax</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">Output</span>;
+<span class="kw">type</span> <span class="ident">DimMaxOf</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">A</span> <span class="kw">as</span> <span class="ident">DimMax</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Output</span>;
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ndarray" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ndarray" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

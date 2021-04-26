@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-stats-0.5.0/src/correlation.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>correlation.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../ndarray_stats/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../ndarray_stats/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -371,9 +371,9 @@
 <span id="368">368</span>
 <span id="369">369</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">errors</span>::<span class="ident">EmptyInput</span>;
-<span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Data</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::errors::EmptyInput</span>;
+<span class="kw">use</span> <span class="ident">ndarray::prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">ndarray::Data</span>;
 <span class="kw">use</span> <span class="ident">num_traits</span>::{<span class="ident">Float</span>, <span class="ident">FromPrimitive</span>};
 
 <span class="doccomment">/// Extension trait for `ArrayBase` providing functions</span>
@@ -495,7 +495,7 @@
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FromPrimitive</span>;
 
-    <span class="macro">private_decl</span><span class="macro">!</span> {}
+    <span class="macro">private_decl!</span> {}
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="lifetime">&#39;static</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">CorrelationExt</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ArrayBase</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">Ix2</span><span class="op">&gt;</span>
@@ -507,9 +507,9 @@
         <span class="ident">A</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FromPrimitive</span>,
     {
         <span class="kw">let</span> <span class="ident">observation_axis</span> <span class="op">=</span> <span class="ident">Axis</span>(<span class="number">1</span>);
-        <span class="kw">let</span> <span class="ident">n_observations</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">from_usize</span>(<span class="self">self</span>.<span class="ident">len_of</span>(<span class="ident">observation_axis</span>)).<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">n_observations</span> <span class="op">=</span> <span class="ident">A::from_usize</span>(<span class="self">self</span>.<span class="ident">len_of</span>(<span class="ident">observation_axis</span>)).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">dof</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">ddof</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">n_observations</span> {
-            <span class="macro">panic</span><span class="macro">!</span>(
+            <span class="macro">panic!</span>(
                 <span class="string">&quot;`ddof` needs to be strictly smaller than the \
                  number of observations provided for each \
                  random variable!&quot;</span>
@@ -538,7 +538,7 @@
                 <span class="comment">// The ddof value doesn&#39;t matter, as long as we use the same one</span>
                 <span class="comment">// for computing covariance and standard deviation</span>
                 <span class="comment">// We choose 0 as it is the smallest number admitted by std_axis</span>
-                <span class="kw">let</span> <span class="ident">ddof</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">zero</span>();
+                <span class="kw">let</span> <span class="ident">ddof</span> <span class="op">=</span> <span class="ident">A::zero</span>();
                 <span class="kw">let</span> <span class="ident">cov</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cov</span>(<span class="ident">ddof</span>).<span class="ident">unwrap</span>();
                 <span class="kw">let</span> <span class="ident">std</span> <span class="op">=</span> <span class="self">self</span>
                     .<span class="ident">std_axis</span>(<span class="ident">observation_axis</span>, <span class="ident">ddof</span>)
@@ -551,26 +551,26 @@
         }
     }
 
-    <span class="macro">private_impl</span><span class="macro">!</span> {}
+    <span class="macro">private_impl!</span> {}
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">cov_tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">array</span>;
-    <span class="kw">use</span> <span class="ident">ndarray_rand</span>::<span class="ident">rand</span>;
-    <span class="kw">use</span> <span class="ident">ndarray_rand</span>::<span class="ident">rand_distr</span>::<span class="ident">Uniform</span>;
-    <span class="kw">use</span> <span class="ident">ndarray_rand</span>::<span class="ident">RandomExt</span>;
-    <span class="kw">use</span> <span class="ident">quickcheck_macros</span>::<span class="ident">quickcheck</span>;
+    <span class="kw">use</span> <span class="ident">ndarray::array</span>;
+    <span class="kw">use</span> <span class="ident">ndarray_rand::rand</span>;
+    <span class="kw">use</span> <span class="ident">ndarray_rand::rand_distr::Uniform</span>;
+    <span class="kw">use</span> <span class="ident">ndarray_rand::RandomExt</span>;
+    <span class="kw">use</span> <span class="ident">quickcheck_macros::quickcheck</span>;
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
     <span class="kw">fn</span> <span class="ident">constant_random_variables_have_zero_covariance_matrix</span>(<span class="ident">value</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">n_random_variables</span> <span class="op">=</span> <span class="number">3</span>;
         <span class="kw">let</span> <span class="ident">n_observations</span> <span class="op">=</span> <span class="number">4</span>;
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_elem</span>((<span class="ident">n_random_variables</span>, <span class="ident">n_observations</span>), <span class="ident">value</span>);
-        <span class="macro">abs_diff_eq</span><span class="macro">!</span>(
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array::from_elem</span>((<span class="ident">n_random_variables</span>, <span class="ident">n_observations</span>), <span class="ident">value</span>);
+        <span class="macro">abs_diff_eq!</span>(
             <span class="ident">a</span>.<span class="ident">cov</span>(<span class="number">1.</span>).<span class="ident">unwrap</span>(),
-            <span class="kw-2">&amp;</span><span class="ident">Array</span>::<span class="ident">zeros</span>((<span class="ident">n_random_variables</span>, <span class="ident">n_random_variables</span>)),
+            <span class="kw-2">&amp;</span><span class="ident">Array::zeros</span>((<span class="ident">n_random_variables</span>, <span class="ident">n_random_variables</span>)),
             <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-8</span>,
         )
     }
@@ -579,12 +579,12 @@
     <span class="kw">fn</span> <span class="ident">covariance_matrix_is_symmetric</span>(<span class="ident">bound</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">n_random_variables</span> <span class="op">=</span> <span class="number">3</span>;
         <span class="kw">let</span> <span class="ident">n_observations</span> <span class="op">=</span> <span class="number">4</span>;
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">random</span>(
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array::random</span>(
             (<span class="ident">n_random_variables</span>, <span class="ident">n_observations</span>),
-            <span class="ident">Uniform</span>::<span class="ident">new</span>(<span class="op">-</span><span class="ident">bound</span>.<span class="ident">abs</span>(), <span class="ident">bound</span>.<span class="ident">abs</span>()),
+            <span class="ident">Uniform::new</span>(<span class="op">-</span><span class="ident">bound</span>.<span class="ident">abs</span>(), <span class="ident">bound</span>.<span class="ident">abs</span>()),
         );
         <span class="kw">let</span> <span class="ident">covariance</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">cov</span>(<span class="number">1.</span>).<span class="ident">unwrap</span>();
-        <span class="macro">abs_diff_eq</span><span class="macro">!</span>(<span class="ident">covariance</span>, <span class="kw-2">&amp;</span><span class="ident">covariance</span>.<span class="ident">t</span>(), <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-8</span>)
+        <span class="macro">abs_diff_eq!</span>(<span class="ident">covariance</span>, <span class="kw-2">&amp;</span><span class="ident">covariance</span>.<span class="ident">t</span>(), <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-8</span>)
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -592,45 +592,45 @@
     <span class="kw">fn</span> <span class="ident">test_invalid_ddof</span>() {
         <span class="kw">let</span> <span class="ident">n_random_variables</span> <span class="op">=</span> <span class="number">3</span>;
         <span class="kw">let</span> <span class="ident">n_observations</span> <span class="op">=</span> <span class="number">4</span>;
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">random</span>((<span class="ident">n_random_variables</span>, <span class="ident">n_observations</span>), <span class="ident">Uniform</span>::<span class="ident">new</span>(<span class="number">0.</span>, <span class="number">10.</span>));
-        <span class="kw">let</span> <span class="ident">invalid_ddof</span> <span class="op">=</span> (<span class="ident">n_observations</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">+</span> <span class="ident">rand</span>::<span class="ident">random</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">abs</span>();
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array::random</span>((<span class="ident">n_random_variables</span>, <span class="ident">n_observations</span>), <span class="ident">Uniform::new</span>(<span class="number">0.</span>, <span class="number">10.</span>));
+        <span class="kw">let</span> <span class="ident">invalid_ddof</span> <span class="op">=</span> (<span class="ident">n_observations</span> <span class="kw">as</span> <span class="ident">f64</span>) <span class="op">+</span> <span class="ident">rand::random</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">abs</span>();
         <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">cov</span>(<span class="ident">invalid_ddof</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_covariance_zero_variables</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">zeros</span>((<span class="number">0</span>, <span class="number">2</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span><span class="ident">::zeros</span>((<span class="number">0</span>, <span class="number">2</span>));
         <span class="kw">let</span> <span class="ident">cov</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">cov</span>(<span class="number">1.</span>);
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">cov</span>.<span class="ident">is_ok</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cov</span>.<span class="ident">unwrap</span>().<span class="ident">shape</span>(), <span class="kw-2">&amp;</span>[<span class="number">0</span>, <span class="number">0</span>]);
+        <span class="macro">assert!</span>(<span class="ident">cov</span>.<span class="ident">is_ok</span>());
+        <span class="macro">assert_eq!</span>(<span class="ident">cov</span>.<span class="ident">unwrap</span>().<span class="ident">shape</span>(), <span class="kw-2">&amp;</span>[<span class="number">0</span>, <span class="number">0</span>]);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_covariance_zero_observations</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">zeros</span>((<span class="number">2</span>, <span class="number">0</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span><span class="ident">::zeros</span>((<span class="number">2</span>, <span class="number">0</span>));
         <span class="comment">// Negative ddof (-1 &lt; 0) to avoid invalid-ddof panic</span>
         <span class="kw">let</span> <span class="ident">cov</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">cov</span>(<span class="op">-</span><span class="number">1.</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cov</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">cov</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_covariance_zero_variables_zero_observations</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">zeros</span>((<span class="number">0</span>, <span class="number">0</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span><span class="ident">::zeros</span>((<span class="number">0</span>, <span class="number">0</span>));
         <span class="comment">// Negative ddof (-1 &lt; 0) to avoid invalid-ddof panic</span>
         <span class="kw">let</span> <span class="ident">cov</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">cov</span>(<span class="op">-</span><span class="number">1.</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">cov</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">cov</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_covariance_for_random_array</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="macro">array</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="macro">array!</span>[
             [<span class="number">0.72009497</span>, <span class="number">0.12568055</span>, <span class="number">0.55705966</span>, <span class="number">0.5959984</span>, <span class="number">0.69471457</span>],
             [<span class="number">0.56717131</span>, <span class="number">0.47619486</span>, <span class="number">0.21526298</span>, <span class="number">0.88915366</span>, <span class="number">0.91971245</span>],
             [<span class="number">0.59044195</span>, <span class="number">0.10720363</span>, <span class="number">0.76573717</span>, <span class="number">0.54693675</span>, <span class="number">0.95923036</span>],
             [<span class="number">0.24102952</span>, <span class="number">0.131347</span>, <span class="number">0.11118028</span>, <span class="number">0.21451351</span>, <span class="number">0.30515539</span>],
             [<span class="number">0.26952473</span>, <span class="number">0.93079841</span>, <span class="number">0.8080893</span>, <span class="number">0.42814155</span>, <span class="number">0.24642258</span>]
         ];
-        <span class="kw">let</span> <span class="ident">numpy_covariance</span> <span class="op">=</span> <span class="macro">array</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">numpy_covariance</span> <span class="op">=</span> <span class="macro">array!</span>[
             [<span class="number">0.05786248</span>, <span class="number">0.02614063</span>, <span class="number">0.06446215</span>, <span class="number">0.01285105</span>, <span class="op">-</span><span class="number">0.06443992</span>],
             [<span class="number">0.02614063</span>, <span class="number">0.08733569</span>, <span class="number">0.02436933</span>, <span class="number">0.01977437</span>, <span class="op">-</span><span class="number">0.06715555</span>],
             [<span class="number">0.06446215</span>, <span class="number">0.02436933</span>, <span class="number">0.10052129</span>, <span class="number">0.01393589</span>, <span class="op">-</span><span class="number">0.06129912</span>],
@@ -643,39 +643,39 @@
                 <span class="number">0.09909855</span>
             ]
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">ndim</span>(), <span class="number">2</span>);
-        <span class="macro">assert_abs_diff_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">cov</span>(<span class="number">1.</span>).<span class="ident">unwrap</span>(), <span class="kw-2">&amp;</span><span class="ident">numpy_covariance</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-8</span>);
+        <span class="macro">assert_eq!</span>(<span class="ident">a</span>.<span class="ident">ndim</span>(), <span class="number">2</span>);
+        <span class="macro">assert_abs_diff_eq!</span>(<span class="ident">a</span>.<span class="ident">cov</span>(<span class="number">1.</span>).<span class="ident">unwrap</span>(), <span class="kw-2">&amp;</span><span class="ident">numpy_covariance</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-8</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">should_panic</span>]</span>
     <span class="comment">// We lose precision, hence the failing assert</span>
     <span class="kw">fn</span> <span class="ident">test_covariance_for_badly_conditioned_array</span>() {
-        <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">array</span><span class="macro">!</span>[[<span class="number">1e12</span> <span class="op">+</span> <span class="number">1.</span>, <span class="number">1e12</span> <span class="op">-</span> <span class="number">1.</span>], [<span class="number">1e-6</span> <span class="op">+</span> <span class="number">1e-12</span>, <span class="number">1e-6</span> <span class="op">-</span> <span class="number">1e-12</span>],];
-        <span class="kw">let</span> <span class="ident">expected_covariance</span> <span class="op">=</span> <span class="macro">array</span><span class="macro">!</span>[[<span class="number">2.</span>, <span class="number">2e-12</span>], [<span class="number">2e-12</span>, <span class="number">2e-24</span>]];
-        <span class="macro">assert_abs_diff_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">cov</span>(<span class="number">1.</span>).<span class="ident">unwrap</span>(), <span class="kw-2">&amp;</span><span class="ident">expected_covariance</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-24</span>);
+        <span class="kw">let</span> <span class="ident">a</span>: <span class="ident">Array2</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">array!</span>[[<span class="number">1e12</span> <span class="op">+</span> <span class="number">1.</span>, <span class="number">1e12</span> <span class="op">-</span> <span class="number">1.</span>], [<span class="number">1e-6</span> <span class="op">+</span> <span class="number">1e-12</span>, <span class="number">1e-6</span> <span class="op">-</span> <span class="number">1e-12</span>],];
+        <span class="kw">let</span> <span class="ident">expected_covariance</span> <span class="op">=</span> <span class="macro">array!</span>[[<span class="number">2.</span>, <span class="number">2e-12</span>], [<span class="number">2e-12</span>, <span class="number">2e-24</span>]];
+        <span class="macro">assert_abs_diff_eq!</span>(<span class="ident">a</span>.<span class="ident">cov</span>(<span class="number">1.</span>).<span class="ident">unwrap</span>(), <span class="kw-2">&amp;</span><span class="ident">expected_covariance</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-24</span>);
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">pearson_correlation_tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">array</span>;
-    <span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">Array</span>;
-    <span class="kw">use</span> <span class="ident">ndarray_rand</span>::<span class="ident">rand_distr</span>::<span class="ident">Uniform</span>;
-    <span class="kw">use</span> <span class="ident">ndarray_rand</span>::<span class="ident">RandomExt</span>;
-    <span class="kw">use</span> <span class="ident">quickcheck_macros</span>::<span class="ident">quickcheck</span>;
+    <span class="kw">use</span> <span class="ident">ndarray::array</span>;
+    <span class="kw">use</span> <span class="ident">ndarray::Array</span>;
+    <span class="kw">use</span> <span class="ident">ndarray_rand::rand_distr::Uniform</span>;
+    <span class="kw">use</span> <span class="ident">ndarray_rand::RandomExt</span>;
+    <span class="kw">use</span> <span class="ident">quickcheck_macros::quickcheck</span>;
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
     <span class="kw">fn</span> <span class="ident">output_matrix_is_symmetric</span>(<span class="ident">bound</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">n_random_variables</span> <span class="op">=</span> <span class="number">3</span>;
         <span class="kw">let</span> <span class="ident">n_observations</span> <span class="op">=</span> <span class="number">4</span>;
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">random</span>(
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array::random</span>(
             (<span class="ident">n_random_variables</span>, <span class="ident">n_observations</span>),
-            <span class="ident">Uniform</span>::<span class="ident">new</span>(<span class="op">-</span><span class="ident">bound</span>.<span class="ident">abs</span>(), <span class="ident">bound</span>.<span class="ident">abs</span>()),
+            <span class="ident">Uniform::new</span>(<span class="op">-</span><span class="ident">bound</span>.<span class="ident">abs</span>(), <span class="ident">bound</span>.<span class="ident">abs</span>()),
         );
         <span class="kw">let</span> <span class="ident">pearson_correlation</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">pearson_correlation</span>().<span class="ident">unwrap</span>();
-        <span class="macro">abs_diff_eq</span><span class="macro">!</span>(
+        <span class="macro">abs_diff_eq!</span>(
             <span class="ident">pearson_correlation</span>.<span class="ident">view</span>(),
             <span class="ident">pearson_correlation</span>.<span class="ident">t</span>(),
             <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-8</span>
@@ -686,7 +686,7 @@
     <span class="kw">fn</span> <span class="ident">constant_random_variables_have_nan_correlation</span>(<span class="ident">value</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">n_random_variables</span> <span class="op">=</span> <span class="number">3</span>;
         <span class="kw">let</span> <span class="ident">n_observations</span> <span class="op">=</span> <span class="number">4</span>;
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array</span>::<span class="ident">from_elem</span>((<span class="ident">n_random_variables</span>, <span class="ident">n_observations</span>), <span class="ident">value</span>);
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array::from_elem</span>((<span class="ident">n_random_variables</span>, <span class="ident">n_observations</span>), <span class="ident">value</span>);
         <span class="kw">let</span> <span class="ident">pearson_correlation</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">pearson_correlation</span>();
         <span class="ident">pearson_correlation</span>
             .<span class="ident">unwrap</span>()
@@ -697,43 +697,43 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_zero_variables</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">zeros</span>((<span class="number">0</span>, <span class="number">2</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span><span class="ident">::zeros</span>((<span class="number">0</span>, <span class="number">2</span>));
         <span class="kw">let</span> <span class="ident">pearson_correlation</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">pearson_correlation</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pearson_correlation</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>))
+        <span class="macro">assert_eq!</span>(<span class="ident">pearson_correlation</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>))
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_zero_observations</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">zeros</span>((<span class="number">2</span>, <span class="number">0</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span><span class="ident">::zeros</span>((<span class="number">2</span>, <span class="number">0</span>));
         <span class="kw">let</span> <span class="ident">pearson</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">pearson_correlation</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pearson</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">pearson</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_zero_variables_zero_observations</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">zeros</span>((<span class="number">0</span>, <span class="number">0</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array2</span>::<span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span><span class="ident">::zeros</span>((<span class="number">0</span>, <span class="number">0</span>));
         <span class="kw">let</span> <span class="ident">pearson</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">pearson_correlation</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">pearson</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>));
+        <span class="macro">assert_eq!</span>(<span class="ident">pearson</span>, <span class="prelude-val">Err</span>(<span class="ident">EmptyInput</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_for_random_array</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="macro">array</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="macro">array!</span>[
             [<span class="number">0.16351516</span>, <span class="number">0.56863268</span>, <span class="number">0.16924196</span>, <span class="number">0.72579120</span>],
             [<span class="number">0.44342453</span>, <span class="number">0.19834387</span>, <span class="number">0.25411802</span>, <span class="number">0.62462382</span>],
             [<span class="number">0.97162731</span>, <span class="number">0.29958849</span>, <span class="number">0.17338142</span>, <span class="number">0.80198342</span>],
             [<span class="number">0.91727132</span>, <span class="number">0.79817799</span>, <span class="number">0.62237124</span>, <span class="number">0.38970998</span>],
             [<span class="number">0.26979716</span>, <span class="number">0.20887228</span>, <span class="number">0.95454999</span>, <span class="number">0.96290785</span>]
         ];
-        <span class="kw">let</span> <span class="ident">numpy_corrcoeff</span> <span class="op">=</span> <span class="macro">array</span><span class="macro">!</span>[
+        <span class="kw">let</span> <span class="ident">numpy_corrcoeff</span> <span class="op">=</span> <span class="macro">array!</span>[
             [<span class="number">1.</span>, <span class="number">0.38089376</span>, <span class="number">0.08122504</span>, <span class="op">-</span><span class="number">0.59931623</span>, <span class="number">0.1365648</span>],
             [<span class="number">0.38089376</span>, <span class="number">1.</span>, <span class="number">0.80918429</span>, <span class="op">-</span><span class="number">0.52615195</span>, <span class="number">0.38954398</span>],
             [<span class="number">0.08122504</span>, <span class="number">0.80918429</span>, <span class="number">1.</span>, <span class="number">0.07134906</span>, <span class="op">-</span><span class="number">0.17324776</span>],
             [<span class="op">-</span><span class="number">0.59931623</span>, <span class="op">-</span><span class="number">0.52615195</span>, <span class="number">0.07134906</span>, <span class="number">1.</span>, <span class="op">-</span><span class="number">0.8743213</span>],
             [<span class="number">0.1365648</span>, <span class="number">0.38954398</span>, <span class="op">-</span><span class="number">0.17324776</span>, <span class="op">-</span><span class="number">0.8743213</span>, <span class="number">1.</span>]
         ];
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">ndim</span>(), <span class="number">2</span>);
-        <span class="macro">assert_abs_diff_eq</span><span class="macro">!</span>(
+        <span class="macro">assert_eq!</span>(<span class="ident">a</span>.<span class="ident">ndim</span>(), <span class="number">2</span>);
+        <span class="macro">assert_abs_diff_eq!</span>(
             <span class="ident">a</span>.<span class="ident">pearson_correlation</span>().<span class="ident">unwrap</span>(),
             <span class="ident">numpy_corrcoeff</span>,
             <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">1e-7</span>
@@ -741,5 +741,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ndarray_stats" data-search-js="../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ndarray_stats" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>

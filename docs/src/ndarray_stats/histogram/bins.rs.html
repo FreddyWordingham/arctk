@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/Users/freddywordingham/.cargo/registry/src/github.com-1ecc6299db9ec823/ndarray-stats-0.5.0/src/histogram/bins.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>bins.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ndarray_stats/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../ndarray_stats/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -518,10 +518,10 @@
 <span id="515">515</span>
 <span id="516">516</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>, <span class="ident">clippy</span>::<span class="ident">all</span>, <span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>, <span class="ident">clippy::all</span>, <span class="ident">clippy::pedantic</span>)]</span>
 
-<span class="kw">use</span> <span class="ident">ndarray</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Index</span>, <span class="ident">Range</span>};
+<span class="kw">use</span> <span class="ident">ndarray::prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">std::ops</span>::{<span class="ident">Index</span>, <span class="ident">Range</span>};
 
 <span class="doccomment">/// A sorted collection of type `A` elements used to represent the boundaries of intervals, i.e.</span>
 <span class="doccomment">/// [`Bins`] on a 1-dimensional axis.</span>
@@ -622,7 +622,7 @@
     <span class="doccomment">/// [pdqsort]: https://github.com/orlp/pdqsort</span>
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">edges</span>: <span class="ident">Array1</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">to_vec</span>();
-        <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">edges</span>)
+        <span class="self">Self</span><span class="ident">::from</span>(<span class="ident">edges</span>)
     }
 }
 
@@ -646,7 +646,7 @@
     <span class="doccomment">///     5</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Output</span> {
+    <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span><span class="ident">::Output</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">edges</span>[<span class="ident">i</span>]
     }
 }
@@ -706,7 +706,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_array_view</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ArrayView1</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">A</span><span class="op">&gt;</span> {
-        <span class="ident">ArrayView1</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">edges</span>)
+        <span class="ident">ArrayView1::from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">edges</span>)
     }
 
     <span class="doccomment">/// Returns indices of two consecutive `edges` in `self`, if the interval they represent</span>
@@ -952,13 +952,13 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">edges_tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Array1</span>, <span class="ident">Edges</span>};
-    <span class="kw">use</span> <span class="ident">quickcheck_macros</span>::<span class="ident">quickcheck</span>;
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">BTreeSet</span>;
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
+    <span class="kw">use</span> <span class="ident">quickcheck_macros::quickcheck</span>;
+    <span class="kw">use</span> <span class="ident">std::collections::BTreeSet</span>;
+    <span class="kw">use</span> <span class="ident">std::iter::FromIterator</span>;
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
     <span class="kw">fn</span> <span class="ident">check_sorted_from_vec</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">v</span>);
+        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges::from</span>(<span class="ident">v</span>);
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">len</span>();
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">1</span>..<span class="ident">n</span> {
             <span class="kw">if</span> <span class="ident">edges</span>[<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">&gt;</span> <span class="ident">edges</span>[<span class="ident">i</span>] {
@@ -970,8 +970,8 @@
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
     <span class="kw">fn</span> <span class="ident">check_sorted_from_array</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array1</span>::<span class="ident">from</span>(<span class="ident">v</span>);
-        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">a</span>);
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Array1::from</span>(<span class="ident">v</span>);
+        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges::from</span>(<span class="ident">a</span>);
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">len</span>();
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">1</span>..<span class="ident">n</span> {
             <span class="kw">if</span> <span class="ident">edges</span>[<span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">&gt;</span> <span class="ident">edges</span>[<span class="ident">i</span>] {
@@ -983,7 +983,7 @@
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
     <span class="kw">fn</span> <span class="ident">edges_are_right_open</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">v</span>);
+        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges::from</span>(<span class="ident">v</span>);
         <span class="kw">let</span> <span class="ident">view</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">as_array_view</span>();
         <span class="kw">if</span> <span class="ident">view</span>.<span class="ident">is_empty</span>() {
             <span class="bool-val">true</span>
@@ -995,7 +995,7 @@
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
     <span class="kw">fn</span> <span class="ident">edges_are_left_closed</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">v</span>);
+        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges::from</span>(<span class="ident">v</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="number">1</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">len</span>() {
             <span class="bool-val">true</span>
         } <span class="kw">else</span> {
@@ -1010,12 +1010,12 @@
     }
 
     <span class="attribute">#[<span class="ident">quickcheck</span>]</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">needless_pass_by_value</span>)]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::needless_pass_by_value</span>)]</span>
     <span class="kw">fn</span> <span class="ident">edges_are_deduped</span>(<span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">unique_elements</span> <span class="op">=</span> <span class="ident">BTreeSet</span>::<span class="ident">from_iter</span>(<span class="ident">v</span>.<span class="ident">iter</span>());
-        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="ident">v</span>.<span class="ident">clone</span>());
+        <span class="kw">let</span> <span class="ident">unique_elements</span> <span class="op">=</span> <span class="ident">BTreeSet::from_iter</span>(<span class="ident">v</span>.<span class="ident">iter</span>());
+        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges::from</span>(<span class="ident">v</span>.<span class="ident">clone</span>());
         <span class="kw">let</span> <span class="ident">view</span> <span class="op">=</span> <span class="ident">edges</span>.<span class="ident">as_array_view</span>();
-        <span class="kw">let</span> <span class="ident">unique_edges</span> <span class="op">=</span> <span class="ident">BTreeSet</span>::<span class="ident">from_iter</span>(<span class="ident">view</span>.<span class="ident">iter</span>());
+        <span class="kw">let</span> <span class="ident">unique_edges</span> <span class="op">=</span> <span class="ident">BTreeSet::from_iter</span>(<span class="ident">view</span>.<span class="ident">iter</span>());
         <span class="ident">unique_edges</span> <span class="op">=</span><span class="op">=</span> <span class="ident">unique_elements</span>
     }
 }
@@ -1028,12 +1028,12 @@
     <span class="attribute">#[<span class="ident">should_panic</span>]</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_must_use</span>)]</span>
     <span class="kw">fn</span> <span class="ident">get_panics_for_out_of_bounds_indexes</span>() {
-        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges</span>::<span class="ident">from</span>(<span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>]);
-        <span class="kw">let</span> <span class="ident">bins</span> <span class="op">=</span> <span class="ident">Bins</span>::<span class="ident">new</span>(<span class="ident">edges</span>);
+        <span class="kw">let</span> <span class="ident">edges</span> <span class="op">=</span> <span class="ident">Edges::from</span>(<span class="macro">vec!</span>[<span class="number">0</span>]);
+        <span class="kw">let</span> <span class="ident">bins</span> <span class="op">=</span> <span class="ident">Bins::new</span>(<span class="ident">edges</span>);
         <span class="comment">// we need at least two edges to make a valid bin!</span>
         <span class="ident">bins</span>.<span class="ident">index</span>(<span class="number">0</span>);
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ndarray_stats" data-search-js="../../../search-index.js"></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="ndarray_stats" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
     <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
