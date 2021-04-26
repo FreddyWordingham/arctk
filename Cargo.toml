@@ -13,7 +13,8 @@ documentation = "https://freddywordingham.github.io/arctk"
 exclude = ["docs/", "input/", "output/"]
 
 [features]
-# default = ["netcdf", "png"]
+default = []
+sim = []
 
 [dependencies]
 # arctk-attr = { path = "../arctk-attr" }
@@ -46,24 +47,31 @@ terminal_size = "0.1.*"
 
 [[bin]]
 name = "babbage"
+required-features = ["sim"]
 
 [[bin]]
 name = "cartographer"
+required-features = ["sim"]
 
 [[bin]]
 name = "diffuse"
+required-features = ["sim"]
 
 [[bin]]
 name = "flask"
+required-features = ["sim"]
 
 [[bin]]
 name = "reactor"
+required-features = ["sim"]
 
 [[bin]]
 name = "mcrt"
+required-features = ["sim"]
 
 [[bin]]
 name = "render"
+required-features = ["sim"]
 
 [profile.dev]
 # Development profile: "cargo build".
