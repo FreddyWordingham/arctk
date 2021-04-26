@@ -1,0 +1,6 @@
+{
+    'ref_index': {Constant: 1.4},
+    'scat_coeff': {Bifurcation: [850.0e-9, 400.0, 350.0]},
+    'abs_coeff': {Bifurcation: [850.0e-9, 13.0, 20.0]},
+    'asym_fact': {Constant: 0.0}
+}

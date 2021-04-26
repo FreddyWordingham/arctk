@@ -1,0 +1,5 @@
+{
+    op : {
+        Norm: "scale.nc"
+    }
+}
