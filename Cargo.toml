@@ -31,11 +31,11 @@ nalgebra = { version = "0.26.1", features = ["serde-serialize"] }
 ndarray = { version = "0.15.*", features = ["rayon", "serde-1"] }
 ndarray-parallel = "0.9.*"
 ndarray-stats = "0.5.*"
-netcdf = { version = "0.6.*", optional = true }
+netcdf = "0.6.*"
 num_cpus = "1.13.*"
 palette = "0.5.*"
 physical_constants = "0.3.*"
-png = { version = "0.16.*", optional = true }
+png = "0.16.*"
 rand = "0.8.*"
 rayon = "1.5.*"
 rgb = "0.8.*"
@@ -46,30 +46,24 @@ terminal_size = "0.1.*"
 
 [[bin]]
 name = "babbage"
-required-features = ["netcdf"]
 
 [[bin]]
 name = "cartographer"
-required-features = ["netcdf"]
 
 [[bin]]
 name = "diffuse"
-required-features = ["netcdf"]
 
 [[bin]]
 name = "flask"
 
 [[bin]]
 name = "reactor"
-required-features = ["netcdf"]
 
 [[bin]]
 name = "mcrt"
-required-features = ["netcdf"]
 
 [[bin]]
 name = "render"
-required-features = ["png"]
 
 [profile.dev]
 # Development profile: "cargo build".

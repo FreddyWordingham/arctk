@@ -2,18 +2,8 @@
 
 pub mod csv;
 pub mod json;
+pub mod netcdf;
+pub mod png;
 pub mod wavefront;
 
-#[cfg(feature = "netcdf")]
-pub mod netcdf;
-
-#[cfg(feature = "png")]
-pub mod png;
-
-#[cfg(feature = "netcdf")]
-pub use self::netcdf::*;
-
-#[cfg(feature = "png")]
-pub use self::png::*;
-
-pub use self::{csv::*, json::*, wavefront::*};
+pub use self::{csv::*, json::*, netcdf::*, png::*, wavefront::*};
