@@ -22,7 +22,7 @@ pub enum EngineBuilderLoader {
     /// Raman engine.
     Raman(Pos3),
     /// Photography engine.
-    Photo(Set<FrameBuilder>),
+    Photo(Redirect<Set<FrameBuilder>>),
     /// Fluorescence engine.
     Fluorescence(PathBuf, Redirect<FormulaBuilder>),
 }
@@ -35,7 +35,7 @@ impl Load for EngineBuilderLoader {
         Ok(match self {
             Self::Standard => Self::Inst::Standard,
             Self::Raman(p) => Self::Inst::Raman(p),
-            Self::Photo(frames) => Self::Inst::Photo(frames),
+            Self::Photo(frames) => Self::Inst::Photo(frames.load(in_dir)?),
             Self::Fluorescence(shift_map, conc_spec) => Self::Inst::Fluorescence(
                 Array3::new_from_file(&in_dir.join(shift_map))?,
                 conc_spec.load(in_dir)?,
@@ -50,7 +50,7 @@ impl Display for EngineBuilderLoader {
         match *self {
             Self::Standard => write!(fmt, "Standard"),
             Self::Raman(ref _p) => write!(fmt, "Raman"),
-            Self::Photo(ref frames) => write!(fmt, "Photography ({})", frames.len()),
+            Self::Photo(ref _frames) => write!(fmt, "Photography"),
             Self::Fluorescence(..) => write!(fmt, "Fluorescence"),
         }
     }
