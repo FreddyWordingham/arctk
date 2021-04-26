@@ -35,6 +35,7 @@ pub fn raman(
     // Initialisation.
     let mat = input.light.mat();
     let mut env = mat.sample_environment(phot.wavelength());
+    // let mut detected_weight = 0.0;
 
     // Main event loop.
     let mut num_loops = 0;
@@ -70,9 +71,10 @@ pub fn raman(
             Event::Scattering(dist) => {
                 travel(&mut data, &mut phot, &env, index, dist);
 
-                // Capture.
-                // let mut detected_weight = 0.0;
-                // if let Some(weight) = peel_off(input, phot.clone(), &env, *detector_pos) {
+                // // Capture.
+                // if let Some(weight) =
+                //     crate::sim::mcrt::peel_off::peel_off(input, phot.clone(), &env, *detector_pos)
+                // {
                 //     detected_weight += weight;
                 // }
 
