@@ -2,6 +2,7 @@
 
 use crate::{
     geom::Trace,
+    math::Pos3,
     phys::Photon,
     sim::mcrt::{scatter::scatter, surface::surface, travel::travel, Event, Input, Output},
 };
@@ -10,7 +11,13 @@ use rand::{rngs::ThreadRng, Rng};
 /// Simulate the life of a single photon which has the potential to generate a Raman photon.
 #[allow(clippy::expect_used)]
 #[inline]
-pub fn raman(input: &Input, mut data: &mut Output, mut rng: &mut ThreadRng, mut phot: Photon) {
+pub fn raman(
+    _pos: &Pos3,
+    input: &Input,
+    mut data: &mut Output,
+    mut rng: &mut ThreadRng,
+    mut phot: Photon,
+) {
     // Check photon is within the grid.
     if let Some(index) = input.grid.gen_index(phot.ray().pos()) {
         data.emission[index] += phot.power() * phot.weight();

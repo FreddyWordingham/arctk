@@ -1,7 +1,7 @@
 //! Engine function handler.
 
 use crate::{
-    math::Formula,
+    math::{Formula, Pos3},
     ord::Set,
     phys::Photon,
     sim::mcrt::{engines, Frame, Input, Output},
@@ -15,7 +15,7 @@ pub enum Engine {
     /// Standard sampling engine.
     Standard,
     /// Raman engine.
-    Raman,
+    Raman(Pos3),
     /// Photography engine.
     Photo(Set<Frame>),
     /// Fluorescence engine.
@@ -28,7 +28,7 @@ impl Engine {
     pub fn run(&self, input: &Input, data: &mut Output, rng: &mut ThreadRng, phot: Photon) {
         match *self {
             Self::Standard => engines::standard(input, data, rng, phot),
-            Self::Raman => engines::raman(input, data, rng, phot),
+            Self::Raman(ref p) => engines::raman(p, input, data, rng, phot),
             Self::Photo(ref frames) => engines::photo(frames, input, data, rng, phot),
             Self::Fluorescence(ref shift_map, ref conc_spec) => {
                 engines::fluorescence(shift_map, conc_spec, input, data, rng, phot)
@@ -42,7 +42,7 @@ impl Display for Engine {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         match *self {
             Self::Standard => write!(fmt, "Standard"),
-            Self::Raman => write!(fmt, "Raman"),
+            Self::Raman(ref _p) => write!(fmt, "Raman"),
             Self::Photo(ref frames) => write!(fmt, "Photography ({})", frames.len()),
             Self::Fluorescence(..) => write!(fmt, "Fluorescence"),
         }
