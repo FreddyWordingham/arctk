@@ -1,6 +1,0 @@
-{
-    sett    : {
-        cell_size   : 4,            // Cell size in pixels.
-        res         : [100, 100],   // Simulation resolution (window res = cell_size * res).
-    }
-}
