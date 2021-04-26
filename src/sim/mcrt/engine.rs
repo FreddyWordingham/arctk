@@ -14,6 +14,8 @@ use std::fmt::{Display, Error, Formatter};
 pub enum Engine {
     /// Standard sampling engine.
     Standard,
+    /// Ramanisation engine.
+    Raman,
     /// Photography engine.
     Photo(Set<Frame>),
     /// Fluorescence engine.
@@ -26,6 +28,7 @@ impl Engine {
     pub fn run(&self, input: &Input, data: &mut Output, rng: &mut ThreadRng, phot: Photon) {
         match *self {
             Self::Standard => engines::standard(input, data, rng, phot),
+            Self::Raman => engines::raman(input, data, rng, phot),
             Self::Photo(ref frames) => engines::photo(frames, input, data, rng, phot),
             Self::Fluorescence(ref shift_map, ref conc_spec) => {
                 engines::fluorescence(shift_map, conc_spec, input, data, rng, phot)
@@ -39,6 +42,7 @@ impl Display for Engine {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         match *self {
             Self::Standard => write!(fmt, "Standard"),
+            Self::Raman => write!(fmt, "Raman"),
             Self::Photo(ref frames) => write!(fmt, "Photography ({})", frames.len()),
             Self::Fluorescence(..) => write!(fmt, "Fluorescence"),
         }
