@@ -75,16 +75,15 @@ pub fn photo(
                 travel(&mut data, &mut phot, &env, index, dist);
 
                 // Capture.
-                for (n, frame) in frames.iter().enumerate() {
+                for (frame, photo) in frames.iter().zip(data.photos.iter_mut()) {
                     if let Some([x, y]) = frame.transform(phot.ray().pos()) {
                         if let Some(weight) = peel_off(input, phot.clone(), &env, *frame.pos()) {
-                            data.imgs[n].pixels_mut()[[x, y]] += Colour::new(
+                            photo.pixels_mut()[[x, y]] += Colour::new(
                                 phot_col[0] as f32,
                                 phot_col[1] as f32,
                                 phot_col[2] as f32,
                                 1.0,
-                            ) * (phot.weight() * weight)
-                                as f32;
+                            ) * (phot.weight() * weight) as f32;
                         }
                     };
                 }

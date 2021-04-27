@@ -187,10 +187,10 @@ fn gen_base_output<'a>(
         }
     }
 
-    let mut frames = Vec::new();
-    if let Engine::Photo(fs, res) = engine {
-        frames.reserve(fs.len());
-        for _ in 0..fs.len() {
+    let mut photos = Vec::new();
+    if let Engine::Photo(frames, res) = engine {
+        photos.reserve(frames.len());
+        for _ in 0..frames.len() {
             imgs.push(Image::new_blank(*res, background));
         }
     }
@@ -202,6 +202,6 @@ fn gen_base_output<'a>(
         res,
         specs,
         imgs,
-        frames,
+        photos,
     )
 }
