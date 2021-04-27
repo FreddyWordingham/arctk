@@ -2,15 +2,15 @@
     tree        : { There   : 'res/tree/t5_d8.json5' },
     grid        : { There   : 'res/grid/10m_128.json5' },
     engine      : { Photo   : {
-        pos     :   { Circle    : [[10, 0, 5], [0, 0, 0], [0, 1, 1]] },
+        pos     :   { Circle    : [[100, 0, 0], [0, 0, 0], [0, 1, 1]] },
         tar     :   { Static    : [0, 0, 0] },
-        fov     : 120,
-        res     : [1080, 1080],
+        fov     : 200,
+        res     : [512, 512],
         frames  : 36
     } },
     sett        : { Here    : {
-        num_phot            : 1e7,
-        block_size          : 1e4,
+        num_phot            : 1e6,
+        block_size          : 1e3,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
         min_weight          : 0.05,
@@ -36,7 +36,7 @@
     surfs       : { Here    : {
         target  : {
             attr: 'fog',
-            mesh: [["res/objs/shapes/cube.obj"], { trans: [0,0,0], rot:[0,0,0], scale:1.0 } ]
+            mesh: [["res/objs/shapes/torus.obj"], { trans: [0,0,0], rot:[0,0,0], scale:2.0 } ]
         }
     } },
 }

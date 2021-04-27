@@ -1,9 +1,6 @@
 {   // Material optical properties.
     ref_index   : { Constant: 1.0   },  // Constant refractive index of 1.0.
-    scat_coeff  : { LinearSplineAuto  : [
-        [400.0e-9, 800e-9],
-        [1.0e-1, 1.0e1],
-    ] },
-    abs_coeff   : { Constant: 1.0e-1 },
+    scat_coeff  : { Constant: 1.0e0 },
+    abs_coeff   : { Constant: 1.0e0 },
     asym_fact   : { Constant: -0.6 }
 }
