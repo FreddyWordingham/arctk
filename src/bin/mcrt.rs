@@ -191,7 +191,7 @@ fn gen_base_output<'a>(
     if let Engine::Photo(frames, res) = engine {
         photos.reserve(frames.len());
         for _ in 0..frames.len() {
-            imgs.push(Image::new_blank(*res, background));
+            photos.push(Image::new_blank(*res, background));
         }
     }
 

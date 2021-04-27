@@ -131,7 +131,7 @@ impl Save for Output<'_> {
         }
 
         for (n, photo) in self.photos.iter().enumerate() {
-            photo.save(&out_dir.join(&format!("photo_{}.png", n)))?;
+            photo.save(&out_dir.join(&format!("photo_{:03}.png", n)))?;
         }
 
         Ok(())

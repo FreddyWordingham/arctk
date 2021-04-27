@@ -1,4 +1,4 @@
-//! NetCDF file handling.
+//! Netcdf file handling.
 
 use crate::{
     err::Error,
