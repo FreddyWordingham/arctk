@@ -41,6 +41,8 @@ pub struct Output<'a> {
     pub specs: Vec<Histogram>,
     /// Image data.
     pub imgs: Vec<Image>,
+    /// Frame data.
+    pub frames: Vec<Image>,
 }
 
 impl<'a> Output<'a> {
@@ -59,6 +61,7 @@ impl<'a> Output<'a> {
         res: [usize; 3],
         specs: Vec<Histogram>,
         imgs: Vec<Image>,
+        frames: Vec<Image>,
     ) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
@@ -77,6 +80,7 @@ impl<'a> Output<'a> {
             shifts: Array3::zeros(res),
             specs,
             imgs,
+            frames,
         }
     }
 }
@@ -94,6 +98,10 @@ impl AddAssign<&Self> for Output<'_> {
         }
 
         for (a, b) in self.imgs.iter_mut().zip(&rhs.imgs) {
+            *a += b;
+        }
+
+        for (a, b) in self.frames.iter_mut().zip(&rhs.frames) {
             *a += b;
         }
     }
@@ -122,6 +130,10 @@ impl Save for Output<'_> {
             self.imgs[*index].save(&out_dir.join(&format!("img_{}.png", name)))?;
         }
 
+        for (n, frame) in self.frames.iter().enumerate() {
+            frame.save(&out_dir.join(&format!("frame_{}.png", n)))?;
+        }
+
         Ok(())
     }
 }
@@ -142,6 +154,9 @@ impl Display for Output<'_> {
             "absorbed energy data"
         );
         fmt_report!(fmt, DataCube::new(&self.shifts), "shifted energy data");
+        fmt_report!(fmt, self.specs.len(), "spectrometers");
+        fmt_report!(fmt, self.imgs.len(), "images");
+        fmt_report!(fmt, self.frames.len(), "frames");
         Ok(())
     }
 }

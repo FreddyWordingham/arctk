@@ -1,9 +1,11 @@
 //! Track following path enumeration.
 
 use crate::math::{Dir3, Pos3, Rot3, Vec3};
+use arctk_attr::file;
 use std::f64::consts::PI;
 
 /// Line track.
+#[file]
 pub enum Track {
     /// Static point (pos).
     Static(Pos3),

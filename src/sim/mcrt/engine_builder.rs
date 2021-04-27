@@ -2,8 +2,8 @@
 
 use crate::{
     math::{FormulaBuilder, Pos3},
-    ord::{Build, Set},
-    sim::mcrt::{Engine, FrameBuilder},
+    ord::Build,
+    sim::mcrt::{Engine, FilmBuilder},
 };
 use ndarray::Array3;
 use std::fmt::{Display, Error, Formatter};
@@ -15,7 +15,7 @@ pub enum EngineBuilder {
     /// Raman engine.
     Raman(Pos3),
     /// Photography engine.
-    Photo(Set<FrameBuilder>),
+    Photo(FilmBuilder),
     /// Fluorescence engine.
     Fluorescence(Array3<f64>, FormulaBuilder),
 }
@@ -28,7 +28,10 @@ impl Build for EngineBuilder {
         match self {
             Self::Standard => Self::Inst::Standard,
             Self::Raman(p) => Self::Inst::Raman(p),
-            Self::Photo(frames) => Self::Inst::Photo(frames.build()),
+            Self::Photo(film) => {
+                let res = film.res();
+                Self::Inst::Photo(film.build(), res)
+            }
             Self::Fluorescence(shift_map, conc_spec) => {
                 Self::Inst::Fluorescence(shift_map, conc_spec.build())
             }
@@ -42,7 +45,7 @@ impl Display for EngineBuilder {
         match *self {
             Self::Standard => write!(fmt, "Standard"),
             Self::Raman(ref _p) => write!(fmt, "Raman"),
-            Self::Photo(ref frames) => write!(fmt, "Photography ({})", frames.len()),
+            Self::Photo(ref _film) => write!(fmt, "Photography"),
             Self::Fluorescence(..) => write!(fmt, "Fluorescence"),
         }
     }

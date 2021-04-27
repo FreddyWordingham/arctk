@@ -3,7 +3,6 @@
 use crate::{
     geom::Trace,
     img::Colour,
-    ord::Set,
     phys::Photon,
     sim::mcrt::{
         peel_off::peel_off, scatter::scatter, surface::surface, travel::travel, Event, Frame,
@@ -16,7 +15,7 @@ use rand::{rngs::ThreadRng, Rng};
 #[allow(clippy::expect_used)]
 #[inline]
 pub fn photo(
-    frames: &Set<Frame>,
+    frames: &[Frame],
     input: &Input,
     mut data: &mut Output,
     mut rng: &mut ThreadRng,
@@ -76,11 +75,10 @@ pub fn photo(
                 travel(&mut data, &mut phot, &env, index, dist);
 
                 // Capture.
-                for (name, frame) in frames.map() {
+                for (n, frame) in frames.iter().enumerate() {
                     if let Some([x, y]) = frame.transform(phot.ray().pos()) {
                         if let Some(weight) = peel_off(input, phot.clone(), &env, *frame.pos()) {
-                            let idx = data.img_reg().set().map()[name];
-                            data.imgs[idx].pixels_mut()[[x, y]] += Colour::new(
+                            data.imgs[n].pixels_mut()[[x, y]] += Colour::new(
                                 phot_col[0] as f32,
                                 phot_col[1] as f32,
                                 phot_col[2] as f32,

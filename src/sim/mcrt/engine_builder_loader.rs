@@ -4,8 +4,7 @@ use crate::{
     err::Error,
     fs::{File, Load, Redirect},
     math::{FormulaBuilder, Pos3},
-    ord::Set,
-    sim::mcrt::{EngineBuilder, FrameBuilder},
+    sim::mcrt::{EngineBuilder, FilmBuilder},
 };
 use arctk_attr::file;
 use ndarray::Array3;
@@ -22,7 +21,7 @@ pub enum EngineBuilderLoader {
     /// Raman engine.
     Raman(Pos3),
     /// Photography engine.
-    Photo(Redirect<Set<FrameBuilder>>),
+    Photo(FilmBuilder),
     /// Fluorescence engine.
     Fluorescence(PathBuf, Redirect<FormulaBuilder>),
 }
@@ -35,7 +34,7 @@ impl Load for EngineBuilderLoader {
         Ok(match self {
             Self::Standard => Self::Inst::Standard,
             Self::Raman(p) => Self::Inst::Raman(p),
-            Self::Photo(frames) => Self::Inst::Photo(frames.load(in_dir)?),
+            Self::Photo(frames) => Self::Inst::Photo(frames),
             Self::Fluorescence(shift_map, conc_spec) => Self::Inst::Fluorescence(
                 Array3::new_from_file(&in_dir.join(shift_map))?,
                 conc_spec.load(in_dir)?,

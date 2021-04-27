@@ -2,7 +2,7 @@
 
 use crate::{
     math::{Formula, Pos3},
-    ord::Set,
+    ord::{X, Y},
     phys::Photon,
     sim::mcrt::{engines, Frame, Input, Output},
 };
@@ -18,7 +18,7 @@ pub enum Engine {
     /// Raman engine.
     Raman(Pos3),
     /// Photography engine.
-    Photo(Set<Frame>),
+    Photo(Vec<Frame>, [usize; 2]),
     /// Fluorescence engine.
     Fluorescence(Array3<f64>, Formula),
 }
@@ -30,7 +30,7 @@ impl Engine {
         match *self {
             Self::Standard => engines::standard(input, data, rng, phot),
             Self::Raman(ref p) => engines::raman(p, input, data, rng, phot),
-            Self::Photo(ref frames) => engines::photo(frames, input, data, rng, phot),
+            Self::Photo(ref frames, _res) => engines::photo(frames, input, data, rng, phot),
             Self::Fluorescence(ref shift_map, ref conc_spec) => {
                 engines::fluorescence(shift_map, conc_spec, input, data, rng, phot);
             }
@@ -44,7 +44,13 @@ impl Display for Engine {
         match *self {
             Self::Standard => write!(fmt, "Standard"),
             Self::Raman(ref _p) => write!(fmt, "Raman"),
-            Self::Photo(ref frames) => write!(fmt, "Photography ({})", frames.len()),
+            Self::Photo(ref frames, ref res) => write!(
+                fmt,
+                "Photography ({} * [{}x{}])",
+                frames.len(),
+                res[X],
+                res[Y]
+            ),
             Self::Fluorescence(..) => write!(fmt, "Fluorescence"),
         }
     }

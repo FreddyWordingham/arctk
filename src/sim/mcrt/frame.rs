@@ -10,8 +10,6 @@ use crate::{
 pub struct Frame {
     /// Position.
     pos: Pos3,
-    /// Model matrix.
-    model: Mat4,
     /// View matrix.
     view: Mat4,
     /// Projection matrix.
@@ -27,13 +25,12 @@ impl Frame {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(pos: Pos3, model: Mat4, view: Mat4, proj: Mat4, res: [usize; 2]) -> Self {
+    pub fn new(pos: Pos3, view: Mat4, proj: Mat4, res: [usize; 2]) -> Self {
         debug_assert!(res[X] > 0);
         debug_assert!(res[Y] > 0);
 
         Self {
             pos,
-            model,
             view,
             proj,
             res,
@@ -44,7 +41,7 @@ impl Frame {
     #[inline]
     #[must_use]
     pub fn transform(&self, pos: &Pos3) -> Option<[usize; 2]> {
-        let p = self.proj * self.view * self.model * pos.to_homogeneous();
+        let p = self.proj * self.view * pos.to_homogeneous();
 
         if !(-1.0..1.0).contains(&p.x) || !(-1.0..1.0).contains(&p.y) {
             return None;

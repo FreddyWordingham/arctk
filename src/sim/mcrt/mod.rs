@@ -9,8 +9,8 @@ pub mod engine_builder;
 pub mod engine_builder_loader;
 pub mod engines;
 pub mod event;
+pub mod film_builder;
 pub mod frame;
-pub mod frame_builder;
 pub mod input;
 pub mod output;
 pub mod parameters;
@@ -26,6 +26,6 @@ pub mod travel;
 pub use self::{
     attribute::*, attribute_linker::*, attribute_linker_linker::*,
     attribute_linker_linker_linker::*, engine::*, engine_builder::*, engine_builder_loader::*,
-    event::*, frame::*, frame_builder::*, input::*, output::*, parameters::*,
-    parameters_builder::*, parameters_builder_loader::*, run::*, settings::*,
+    event::*, film_builder::*, frame::*, input::*, output::*, parameters::*, parameters_builder::*,
+    parameters_builder_loader::*, run::*, settings::*,
 };
