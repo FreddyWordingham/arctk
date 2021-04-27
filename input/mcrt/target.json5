@@ -1,12 +1,15 @@
 {
     tree        : { There   : 'res/tree/t5_d8.json5' },
     grid        : { There   : 'res/grid/10m_128.json5' },
-    // engine      : "Standard",
     engine      : { Photo   : {
-        There   : 'res/tracks/turn.json5'
+        pos     :   { Circle    : [[10, 0, 0], [0, 0, 0], [0, 0, 1]] },
+        tar     :   { Static    : [0, 0, 0] },
+        fov     : 90,
+        res     : [1080, 1080],
+        frames  : 36
     } },
     sett        : { Here    : {
-        num_phot            : 1e5,
+        num_phot            : 1e6,
         block_size          : 1e3,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
