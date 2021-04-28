@@ -23,22 +23,17 @@
         water   : { There    : 'res/mats/misc/water.json5' },
     } },
     attrs       : { Here    : {
-        water               : { Interface   : ['water', 'air'] },
-        imager_reflection   : { Imager      : ['img_reflection',    [1080, 1080], 10e-3, [-8e-3, 0, 0], [1, 0, 0]] },
-        imager_transmission : { Imager      : ['img_transmission',  [1080, 1080], 10e-3, [8e-3, 0, 0], [-1, 0, 0]] },
+        water   : { Interface   : ['water', 'air'] },
+        imager  : { Imager      : ['reflection',    [1080, 1080], 10e-3, [-8e-3, 0, 0], [1, 0, 0]] },
     } },
     surfs       : { Here    : {
         raindrop : {
             attr: 'water',
             mesh: [["res/objs/shapes/sphere.obj"], { scale: 1e-3 } ]
         },
-        screen_behind   : {
-            attr: 'imager_reflection',
+        screen  : {
+            attr: 'imager',
             mesh: [["res/objs/shapes/square.obj"], { trans:[-8e-3, 0, 0], rot: [0, 90, 0], scale: 10e-3 } ]
-        },
-        screen_front    : {
-            attr: 'imager_transmission',
-            mesh: [["res/objs/shapes/square.obj"], { trans:[8e-3, 0, 0], rot: [0, 90, 0], scale: 10e-3 } ]
         }
     } },
 }
