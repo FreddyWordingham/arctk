@@ -72,7 +72,7 @@ pub fn surface(
                 let res = data.imgs[id].pixels().raw_dim();
                 data.imgs[id].pixels_mut()
                     [[(res[X] as f64 * x) as usize, (res[Y] as f64 * y) as usize]] +=
-                    wavelength_to_col(phot.wavelength()) * phot.weight() as f32;
+                    wavelength_to_col(phot.wavelength()) * (phot.weight() * phot.power()) as f32;
             }
 
             phot.kill();

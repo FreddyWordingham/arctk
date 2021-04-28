@@ -19,7 +19,6 @@
     light   : { Here    : {
         power   : 1.0,
         emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4,0,0], rot: [0,90,0], scale:0.1 }] },
-        // emit    : { Volume : ['../output/absorption_density.nc', { There   : 'misc/grid/10m_128.json5' }] },
         spec    : { Here    : {
             Uniform :   [450.0e-9, 850.0e-9]
         } },
@@ -28,7 +27,6 @@
     mats        : { Here    : {
         air     : { There    : 'res/mats/misc/air.json5' },
         fog     : { There    : 'res/mats/misc/fog.json5' },
-        glass   : { There    : 'res/mats/misc/glass.json5' }
     } },
     attrs       : { Here    : {
         fog     : { Interface   : ['fog', 'air'] },
