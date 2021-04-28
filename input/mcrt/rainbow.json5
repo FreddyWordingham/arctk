@@ -11,7 +11,7 @@
         roulette_barrels    : 8,
     } },
     light   : { Here    : {
-        power   : 1e6,
+        power   : 1e7,
         emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-2e-3, 0, 0], rot: [0, 90, 0], scale:0.99e-3 }] },
         spec    : { Here    : {
             Uniform :   [440e-9, 700e-9]
