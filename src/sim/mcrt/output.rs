@@ -21,14 +21,11 @@ use std::{
 /// MCRT output data.
 #[derive(Clone)]
 pub struct Output<'a> {
-    /// Spectrometer name register.
-    spec_reg: &'a Register,
-    /// Imager name register.
-    img_reg: &'a Register,
     /// Measured volume.
     boundary: Cube,
     /// Cell volume [m^3].
     cell_vol: f64,
+
     /// Emission power.
     pub emission: Array3<f64>,
     /// Photo-energy.
@@ -37,30 +34,43 @@ pub struct Output<'a> {
     pub absorptions: Array3<f64>,
     /// Wavelength shifts.
     pub shifts: Array3<f64>,
+
+    /// Spectrometer name register.
+    spec_reg: &'a Register,
+    /// Imager name register.
+    img_reg: &'a Register,
+    /// CCD name register.
+    ccd_reg: &'a Register,
     /// Spectrometer data.
     pub specs: Vec<Histogram>,
     /// Image data.
     pub imgs: Vec<Image>,
+    /// Ccd data.
+    pub ccds: Vec<Array3<f64>>,
+
     /// Photo data.
     pub photos: Vec<Image>,
 }
 
 impl<'a> Output<'a> {
-    access!(spec_reg, Register);
-    access!(img_reg, Register);
     access!(boundary, Cube);
     clone!(cell_vol, f64);
+    access!(spec_reg, Register);
+    access!(img_reg, Register);
+    access!(ccd_reg, Register);
 
     /// Construct a new instance.
     #[inline]
     #[must_use]
     pub fn new(
-        spec_reg: &'a Register,
-        img_reg: &'a Register,
         boundary: Cube,
         res: [usize; 3],
+        spec_reg: &'a Register,
+        img_reg: &'a Register,
+        ccd_reg: &'a Register,
         specs: Vec<Histogram>,
         imgs: Vec<Image>,
+        ccds: Vec<Array3<f64>>,
         photos: Vec<Image>,
     ) -> Self {
         debug_assert!(res[X] > 0);
@@ -70,16 +80,18 @@ impl<'a> Output<'a> {
         let cell_vol = boundary.vol() / (res[X] * res[Y] * res[Z]) as f64;
 
         Self {
-            spec_reg,
-            img_reg,
             boundary,
             cell_vol,
             emission: Array3::zeros(res),
             energy: Array3::zeros(res),
             absorptions: Array3::zeros(res),
             shifts: Array3::zeros(res),
+            spec_reg,
+            img_reg,
+            ccd_reg,
             specs,
             imgs,
+            ccds,
             photos,
         }
     }
@@ -98,6 +110,10 @@ impl AddAssign<&Self> for Output<'_> {
         }
 
         for (a, b) in self.imgs.iter_mut().zip(&rhs.imgs) {
+            *a += b;
+        }
+
+        for (a, b) in self.ccds.iter_mut().zip(&rhs.ccds) {
             *a += b;
         }
 
@@ -130,6 +146,10 @@ impl Save for Output<'_> {
             self.imgs[*index].save(&out_dir.join(&format!("img_{}.png", name)))?;
         }
 
+        for (name, index) in self.ccd_reg.set().map().iter() {
+            self.ccds[*index].save(&out_dir.join(&format!("ccd_{}.nc", name)))?;
+        }
+
         for (n, photo) in self.photos.iter().enumerate() {
             photo.save(&out_dir.join(&format!("photo_{:03}.png", n)))?;
         }
@@ -142,10 +162,9 @@ impl Display for Output<'_> {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         writeln!(fmt, "...")?;
-        fmt_report!(fmt, self.spec_reg, "spectrometer register");
-        fmt_report!(fmt, self.img_reg, "imager register");
         fmt_report!(fmt, self.boundary, "boundary");
         fmt_report!(fmt, self.cell_vol, "cell volume (m^3)");
+
         fmt_report!(fmt, DataCube::new(&self.emission), "emission data");
         fmt_report!(fmt, DataCube::new(&self.energy), "energy data");
         fmt_report!(
@@ -154,8 +173,15 @@ impl Display for Output<'_> {
             "absorbed energy data"
         );
         fmt_report!(fmt, DataCube::new(&self.shifts), "shifted energy data");
+
+        fmt_report!(fmt, self.spec_reg, "spectrometer register");
+        fmt_report!(fmt, self.img_reg, "imager register");
+        fmt_report!(fmt, self.ccd_reg, "ccd register");
+
         fmt_report!(fmt, self.specs.len(), "spectrometers");
         fmt_report!(fmt, self.imgs.len(), "images");
+        fmt_report!(fmt, self.ccds.len(), "ccds");
+
         fmt_report!(fmt, self.photos.len(), "photos");
         Ok(())
     }
