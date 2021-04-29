@@ -7,7 +7,7 @@ use crate::{
     math::{Dir3, Pos3, Vec3},
     ord::{Link, Name, Set, X, Y},
     sim::mcrt::AttributeLinkerLinker,
-    tools::Range,
+    tools::{Binner, Range},
 };
 use arctk_attr::file;
 use std::fmt::{Display, Formatter};
@@ -24,6 +24,8 @@ pub enum AttributeLinkerLinkerLinker {
     Spectrometer(Name, [f64; 2], u64),
     /// Imager id, resolution, horizontal width (m), center, forward direction.
     Imager(Name, [usize; 2], f64, Pos3, Vec3),
+    /// Imager id, resolution, horizontal width (m), center, forward direction, wavelength range (m), resolution.
+    Ccd(Name, [usize; 2], f64, Pos3, Vec3, [f64; 2], u64),
 }
 
 impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinker {
@@ -47,6 +49,13 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinker {
                     .unwrap_or_else(|| panic!("Failed to link attribute-imager key: {}", id)),
                 width,
                 Orient::new(Ray::new(center, Dir3::new_normalize(forward))),
+            ),
+            Self::Ccd(id, _resolution, width, center, forward, range, bins) => Self::Inst::Ccd(
+                *reg.get(&id)
+                    .unwrap_or_else(|| panic!("Failed to link attribute-imager key: {}", id)),
+                width,
+                Orient::new(Ray::new(center, Dir3::new_normalize(forward))),
+                Binner::new(Range::new(range[0], range[1]), bins),
             ),
         })
     }
@@ -78,6 +87,20 @@ impl Display for AttributeLinkerLinkerLinker {
                 fmt_report!(fmt, width, "width (m)");
                 fmt_report!(fmt, center, "center (m)");
                 fmt_report!(fmt, forward, "forward");
+                Ok(())
+            }
+            Self::Ccd(ref id, res, width, center, forward, range, bins) => {
+                writeln!(fmt, "Ccd: ...")?;
+                fmt_report!(fmt, id, "name");
+                fmt_report!(fmt, &format!("[{} x {}]", res[X], res[Y]), "resolution");
+                fmt_report!(fmt, width, "width (m)");
+                fmt_report!(fmt, center, "center (m)");
+                fmt_report!(fmt, forward, "forward");
+                fmt_report!(
+                    fmt,
+                    &format!("[{} - {}] {}", range[0], range[1], bins),
+                    "resolution"
+                );
                 Ok(())
             }
         }
