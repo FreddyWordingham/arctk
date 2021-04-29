@@ -131,14 +131,16 @@ fn load_parameters(term_width: usize, in_dir: &Path, params_path: &Path) -> Para
 }
 
 /// Generate the detector registers.
-fn gen_detector_registers(attrs: &Set<Attr>) -> (Register, Register) {
+fn gen_detector_registers(attrs: &Set<Attr>) -> (Register, Register, Register) {
     let mut spec_names = Vec::new();
     let mut img_names = Vec::new();
+    let mut ccd_names = Vec::new();
 
     for attr in attrs.map().values() {
         match *attr {
             Attr::Spectrometer(ref name, ..) => spec_names.push(name.clone()),
             Attr::Imager(ref name, ..) => img_names.push(name.clone()),
+            Attr::Ccd(ref name, ..) => ccd_names.push(name.clone()),
             _ => {}
         }
     }
@@ -149,7 +151,10 @@ fn gen_detector_registers(attrs: &Set<Attr>) -> (Register, Register) {
     let img_reg = Register::new(img_names);
     report!(img_reg, "imager register");
 
-    (spec_reg, img_reg)
+    let ccd_reg = Register::new(ccd_names);
+    report!(ccd_reg, "ccd register");
+
+    (spec_reg, img_reg, ccd_reg)
 }
 
 /// Generate the base output instance.
