@@ -24,8 +24,8 @@ pub enum AttributeLinkerLinkerLinkerLinker {
     Spectrometer(Name, [f64; 2], u64),
     /// Imager id, resolution, horizontal width (m), center, forward direction.
     Imager(Name, [usize; 2], f64, Pos3, Vec3),
-    /// Imager id, resolution, horizontal width (m), center, forward direction, wavelength range (m), resolution.
-    Ccd(Name, [usize; 2], f64, Pos3, Vec3, [f64; 2], u64),
+    /// Imager id, resolution, horizontal width (m), center, forward direction, wavelength binner (m).
+    Ccd(Name, [usize; 2], f64, Pos3, Vec3, Binner),
 }
 
 impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinkerLinker {
@@ -47,12 +47,12 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinkerLinker {
             Self::Imager(id, resolution, width, center, forward) => {
                 Self::Inst::Imager(id, resolution, width, center, forward)
             }
-            Self::Ccd(id, _resolution, width, center, forward, range, bins) => Self::Inst::Ccd(
+            Self::Ccd(id, _resolution, width, center, forward, binner) => Self::Inst::Ccd(
                 *reg.get(&id)
                     .unwrap_or_else(|| panic!("Failed to link attribute-ccd key: {}", id)),
                 width,
                 Orient::new(Ray::new(center, Dir3::new_normalize(forward))),
-                Binner::new(Range::new(range[0], range[1]), bins),
+                binner,
             ),
         })
     }
@@ -86,18 +86,14 @@ impl Display for AttributeLinkerLinkerLinkerLinker {
                 fmt_report!(fmt, forward, "forward");
                 Ok(())
             }
-            Self::Ccd(ref id, res, width, center, forward, range, bins) => {
+            Self::Ccd(ref id, res, width, center, forward, ref binner) => {
                 writeln!(fmt, "Ccd: ...")?;
                 fmt_report!(fmt, id, "name");
                 fmt_report!(fmt, &format!("[{} x {}]", res[X], res[Y]), "resolution");
                 fmt_report!(fmt, width, "width (m)");
                 fmt_report!(fmt, center, "center (m)");
                 fmt_report!(fmt, forward, "forward");
-                fmt_report!(
-                    fmt,
-                    &format!("[{} - {}] {}", range[0], range[1], bins),
-                    "resolution"
-                );
+                fmt_report!(fmt, binner, "binner");
                 Ok(())
             }
         }

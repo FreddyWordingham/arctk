@@ -1,10 +1,12 @@
 //! Binner implementation.
 
 use crate::{access, clone, tools::Range};
+use arctk_attr::file;
 use std::fmt::{Display, Error, Formatter};
 
 /// One-dimensional binning structure.
-#[derive(Debug, Clone, PartialEq)]
+#[file]
+#[derive(Clone, PartialEq)]
 pub struct Binner {
     /// Range.
     range: Range,

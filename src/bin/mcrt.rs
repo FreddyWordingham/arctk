@@ -199,9 +199,9 @@ fn gen_base_output<'a>(
     let mut ccds = Vec::with_capacity(ccd_reg.len());
     for name in ccd_reg.set().map().keys() {
         for attr in attrs.values() {
-            if let Attr::Ccd(ccd_name, res, _width, _center, _forward, _range, bins) = attr {
+            if let Attr::Ccd(ccd_name, res, _width, _center, _forward, binner) = attr {
                 if name == ccd_name {
-                    ccds.push(Array3::zeros([res[X], res[Y], *bins as usize]));
+                    ccds.push(Array3::zeros([res[X], res[Y], binner.bins() as usize]));
                     continue;
                 }
             }
