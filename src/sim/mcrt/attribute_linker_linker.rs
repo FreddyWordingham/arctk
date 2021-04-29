@@ -6,7 +6,7 @@ use crate::{
     geom::Orient,
     ord::{Link, Name, Set},
     sim::mcrt::AttributeLinker,
-    tools::Range,
+    tools::{Binner, Range},
 };
 use std::fmt::{Display, Formatter};
 
@@ -21,6 +21,8 @@ pub enum AttributeLinkerLinker {
     Spectrometer(Name, [f64; 2], u64),
     /// Imager id, horizontal size, orientation.
     Imager(usize, f64, Orient),
+    /// CCD detector id, width, orientation, binner.
+    Ccd(usize, f64, Orient, Binner),
 }
 
 impl<'a> Link<'a, usize> for AttributeLinkerLinker {
@@ -41,6 +43,7 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinker {
                     .unwrap_or_else(|| panic!("Failed to link attribute-spectrometer key: {}", id)),
             ),
             Self::Imager(id, width, orient) => Self::Inst::Imager(id, width, orient),
+            Self::Ccd(id, width, orient, binner) => Self::Inst::Ccd(id, width, orient, binner),
         })
     }
 }
@@ -69,6 +72,14 @@ impl Display for AttributeLinkerLinker {
                 fmt_report!(fmt, id, "name");
                 fmt_report!(fmt, width, "width (m)");
                 fmt_report!(fmt, orient, "orientation");
+                Ok(())
+            }
+            Self::Ccd(ref id, width, ref orient, ref binner) => {
+                writeln!(fmt, "Ccd: ...")?;
+                fmt_report!(fmt, id, "name");
+                fmt_report!(fmt, width, "width (m)");
+                fmt_report!(fmt, orient, "orientation");
+                fmt_report!(fmt, binner, "binner");
                 Ok(())
             }
         }
