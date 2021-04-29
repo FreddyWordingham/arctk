@@ -194,6 +194,18 @@ fn gen_base_output<'a>(
         }
     }
 
+    let mut ccds = Vec::with_capacity(ccd_reg.len());
+    for name in ccd_reg.set().map().keys() {
+        for attr in attrs.values() {
+            if let Attr::Ccd(ccd_name, res, _width, _center, _forward, _range, bins) = attr {
+                if name == ccd_name {
+                    ccds.push(Array3::zeros((res[X], res[Y], bins)));
+                    continue;
+                }
+            }
+        }
+    }
+
     let mut photos = Vec::new();
     if let Engine::Photo(frames, res) = engine {
         photos.reserve(frames.len());
@@ -209,6 +221,7 @@ fn gen_base_output<'a>(
         res,
         specs,
         imgs,
+        ccds,
         photos,
     )
 }

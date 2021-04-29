@@ -49,7 +49,7 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinkerLinker {
             }
             Self::Ccd(id, _resolution, width, center, forward, range, bins) => Self::Inst::Ccd(
                 *reg.get(&id)
-                    .unwrap_or_else(|| panic!("Failed to link attribute-imager key: {}", id)),
+                    .unwrap_or_else(|| panic!("Failed to link attribute-ccd key: {}", id)),
                 width,
                 Orient::new(Ray::new(center, Dir3::new_normalize(forward))),
                 Binner::new(Range::new(range[0], range[1]), bins),
