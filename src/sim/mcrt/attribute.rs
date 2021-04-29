@@ -42,7 +42,7 @@ impl Display for Attribute<'_> {
                 fmt_report!(fmt, id, "name");
                 fmt_report!(fmt, width, "width (m)");
                 fmt_report!(fmt, orient, "orientation");
-                fmt_report!(fmt, binner, "binner");
+                fmt_report!(fmt, binner, "binner (m)");
                 Ok(())
             }
         }

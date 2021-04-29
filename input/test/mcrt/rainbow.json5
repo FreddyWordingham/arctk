@@ -3,7 +3,7 @@
     grid        : { There   : 'res/grid/20mm_128.json5' },
     engine      : "Standard",
     sett        : { Here    : {
-        num_phot            : 1e8,
+        num_phot            : 1e7,
         block_size          : 1e5,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
@@ -24,7 +24,7 @@
     } },
     attrs       : { Here    : {
         water   : { Interface   : ['water', 'air'] },
-        imager  : { Ccd         : ['reflection',    [100, 100], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [400e-9, 800e-9], 100] },
+        imager  : { Ccd         : ['reflection',    [100, 100], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 100]] },
         // imager  : { Imager      : ['reflection',    [1080, 1080], 10e-3, [-8e-3, 0, 0], [1, 0, 0]] },
     } },
     surfs       : { Here    : {
