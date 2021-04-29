@@ -7,10 +7,10 @@ use arctk::{
     fs::{File, Load, Save},
     geom::{Grid, Tree},
     img::{Colour, Image},
-    ord::{Build, Link, Register, Set},
+    ord::{Build, Link, Register, Set, X, Y},
     report,
     sim::mcrt::{
-        run, AttributeLinkerLinkerLinker as Attr, Engine, Input, Output, Parameters,
+        run, AttributeLinkerLinkerLinkerLinker as Attr, Engine, Input, Output, Parameters,
         ParametersBuilderLoader,
     },
     util::{
@@ -19,6 +19,7 @@ use arctk::{
         fmt::term,
     },
 };
+use ndarray::Array3;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -48,7 +49,7 @@ fn main() {
 
     sub_section(term_width, "Registration");
     let (spec_reg, img_reg, ccd_reg) = gen_detector_registers(&params.attrs);
-    let output = gen_base_output(&engine, &grid, &spec_reg, &img_reg, &params.attrs);
+    let output = gen_base_output(&engine, &grid, &spec_reg, &img_reg, &ccd_reg, &params.attrs);
 
     sub_section(term_width, "Linking");
     let light = params
@@ -165,6 +166,7 @@ fn gen_base_output<'a>(
     grid: &Grid,
     spec_reg: &'a Register,
     img_reg: &'a Register,
+    ccd_reg: &'a Register,
     attrs: &Set<Attr>,
 ) -> Output<'a> {
     let res = *grid.res();
@@ -199,7 +201,7 @@ fn gen_base_output<'a>(
         for attr in attrs.values() {
             if let Attr::Ccd(ccd_name, res, _width, _center, _forward, _range, bins) = attr {
                 if name == ccd_name {
-                    ccds.push(Array3::zeros((res[X], res[Y], bins)));
+                    ccds.push(Array3::zeros([res[X], res[Y], *bins as usize]));
                     continue;
                 }
             }
@@ -215,10 +217,11 @@ fn gen_base_output<'a>(
     }
 
     Output::new(
-        spec_reg,
-        img_reg,
         grid.boundary().clone(),
         res,
+        spec_reg,
+        img_reg,
+        ccd_reg,
         specs,
         imgs,
         ccds,

@@ -77,6 +77,24 @@ pub fn surface(
 
             phot.kill();
         }
+        Attribute::Ccd(id, width, ref orient, ref binner) => {
+            let projection = orient.pos() - phot.ray().pos();
+            let x = ((orient.right().dot(&projection) / width) + 1.0) / 2.0;
+            let y = ((orient.up().dot(&projection) / width) + 1.0) / 2.0;
+
+            if (0.0..=1.0).contains(&x) && (0.0..=1.0).contains(&y) {
+                let res = data.imgs[id].pixels().raw_dim();
+                if let Some(bin) = binner.try_bin(phot.wavelength()) {
+                    data.ccds[id][[
+                        (res[X] as f64 * x) as usize,
+                        (res[Y] as f64 * y) as usize,
+                        bin,
+                    ]] += phot.weight() * phot.power();
+                }
+            }
+
+            phot.kill();
+        }
     }
 }
 
