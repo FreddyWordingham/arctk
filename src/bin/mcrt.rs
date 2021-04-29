@@ -47,7 +47,7 @@ fn main() {
     report!(mats, "materials");
 
     sub_section(term_width, "Registration");
-    let (spec_reg, img_reg) = gen_detector_registers(&params.attrs);
+    let (spec_reg, img_reg, ccd_reg) = gen_detector_registers(&params.attrs);
     let output = gen_base_output(&engine, &grid, &spec_reg, &img_reg, &params.attrs);
 
     sub_section(term_width, "Linking");
@@ -58,6 +58,8 @@ fn main() {
     report!(light, "light");
     let attrs = params
         .attrs
+        .link(ccd_reg.set())
+        .expect("Failed to link ccds to attributes.")
         .link(img_reg.set())
         .expect("Failed to link imagers to attributes.")
         .link(spec_reg.set())

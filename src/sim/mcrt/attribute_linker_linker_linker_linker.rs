@@ -6,14 +6,16 @@ use crate::{
     geom::{Orient, Ray},
     math::{Dir3, Pos3, Vec3},
     ord::{Link, Name, Set, X, Y},
-    sim::mcrt::AttributeLinkerLinker,
+    sim::mcrt::AttributeLinkerLinkerLinker,
     tools::{Binner, Range},
 };
+use arctk_attr::file;
 use std::fmt::{Display, Formatter};
 
 /// Surface attribute setup.
 /// Handles detector linking.
-pub enum AttributeLinkerLinkerLinker {
+#[file]
+pub enum AttributeLinkerLinkerLinkerLinker {
     /// Material interface, inside material name, outside material name.
     Interface(Name, Name),
     /// Partially reflective mirror, reflection fraction.
@@ -22,12 +24,12 @@ pub enum AttributeLinkerLinkerLinker {
     Spectrometer(Name, [f64; 2], u64),
     /// Imager id, resolution, horizontal width (m), center, forward direction.
     Imager(Name, [usize; 2], f64, Pos3, Vec3),
-    /// CCD detector id, width, orientation, binner.
-    Ccd(usize, f64, Orient, Binner),
+    /// Imager id, resolution, horizontal width (m), center, forward direction, wavelength range (m), resolution.
+    Ccd(Name, [usize; 2], f64, Pos3, Vec3, [f64; 2], u64),
 }
 
-impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinker {
-    type Inst = AttributeLinkerLinker;
+impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinkerLinker {
+    type Inst = AttributeLinkerLinkerLinker;
 
     #[inline]
     fn requires(&self) -> Vec<Name> {
@@ -42,18 +44,21 @@ impl<'a> Link<'a, usize> for AttributeLinkerLinkerLinker {
             Self::Spectrometer(name, range, resolution) => {
                 Self::Inst::Spectrometer(name, range, resolution)
             }
-            Self::Imager(id, _resolution, width, center, forward) => Self::Inst::Imager(
+            Self::Imager(id, resolution, width, center, forward) => {
+                Self::Inst::Imager(id, resolution, width, center, forward)
+            }
+            Self::Ccd(id, _resolution, width, center, forward, range, bins) => Self::Inst::Ccd(
                 *reg.get(&id)
                     .unwrap_or_else(|| panic!("Failed to link attribute-imager key: {}", id)),
                 width,
                 Orient::new(Ray::new(center, Dir3::new_normalize(forward))),
+                Binner::new(Range::new(range[0], range[1]), bins),
             ),
-            Self::Ccd(id, width, orient, binner) => Self::Inst::Ccd(id, width, orient, binner),
         })
     }
 }
 
-impl Display for AttributeLinkerLinkerLinker {
+impl Display for AttributeLinkerLinkerLinkerLinker {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), std::fmt::Error> {
         match *self {
@@ -81,12 +86,18 @@ impl Display for AttributeLinkerLinkerLinker {
                 fmt_report!(fmt, forward, "forward");
                 Ok(())
             }
-            Self::Ccd(ref id, width, ref orient, ref binner) => {
+            Self::Ccd(ref id, res, width, center, forward, range, bins) => {
                 writeln!(fmt, "Ccd: ...")?;
                 fmt_report!(fmt, id, "name");
+                fmt_report!(fmt, &format!("[{} x {}]", res[X], res[Y]), "resolution");
                 fmt_report!(fmt, width, "width (m)");
-                fmt_report!(fmt, orient, "orientation");
-                fmt_report!(fmt, binner, "binner");
+                fmt_report!(fmt, center, "center (m)");
+                fmt_report!(fmt, forward, "forward");
+                fmt_report!(
+                    fmt,
+                    &format!("[{} - {}] {}", range[0], range[1], bins),
+                    "resolution"
+                );
                 Ok(())
             }
         }
