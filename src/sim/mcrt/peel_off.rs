@@ -67,9 +67,10 @@ pub fn peel_off(input: &Input, mut phot: Photon, env: &Local, pos: Pos3) -> Opti
                     phot.ray_mut().travel(bump_dist);
                     prob *= (-bump_dist * inter_coeff).exp();
                 }
-                Attribute::Mirror(..) | Attribute::Spectrometer(..) | Attribute::Imager(..) => {
-                    return None
-                }
+                Attribute::Mirror(..)
+                | Attribute::Spectrometer(..)
+                | Attribute::Imager(..)
+                | Attribute::Ccd(..) => return None,
             }
         } else {
             prob *= (-tar_dist * inter_coeff).exp();
