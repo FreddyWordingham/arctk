@@ -83,7 +83,7 @@ pub fn surface(
             let y = ((orient.up().dot(&projection) / width) + 1.0) / 2.0;
 
             if (0.0..=1.0).contains(&x) && (0.0..=1.0).contains(&y) {
-                let res = data.imgs[id].pixels().raw_dim();
+                let res = data.ccds[id].raw_dim();
                 if let Some(bin) = binner.try_bin(phot.wavelength()) {
                     data.ccds[id][[
                         (res[X] as f64 * x) as usize,
