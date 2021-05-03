@@ -60,6 +60,7 @@ impl<'a> Output<'a> {
     access!(ccd_reg, Register);
 
     /// Construct a new instance.
+    #[allow(clippy::too_many_arguments)]
     #[inline]
     #[must_use]
     pub fn new(
