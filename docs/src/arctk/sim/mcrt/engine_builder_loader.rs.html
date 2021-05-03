@@ -57,7 +57,6 @@
 <span id="54">54</span>
 <span id="55">55</span>
 <span id="56">56</span>
-<span id="57">57</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Loadable Engine selection.</span>
 
@@ -65,8 +64,7 @@
     <span class="ident">err::Error</span>,
     <span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">Load</span>, <span class="ident">Redirect</span>},
     <span class="ident">math</span>::{<span class="ident">FormulaBuilder</span>, <span class="ident">Pos3</span>},
-    <span class="ident">ord::Set</span>,
-    <span class="ident">sim::mcrt</span>::{<span class="ident">EngineBuilder</span>, <span class="ident">FrameBuilder</span>},
+    <span class="ident">sim::mcrt</span>::{<span class="ident">EngineBuilder</span>, <span class="ident">FilmBuilder</span>},
 };
 <span class="kw">use</span> <span class="ident">arctk_attr::file</span>;
 <span class="kw">use</span> <span class="ident">ndarray::Array3</span>;
@@ -83,7 +81,7 @@
     <span class="doccomment">/// Raman engine.</span>
     <span class="ident">Raman</span>(<span class="ident">Pos3</span>),
     <span class="doccomment">/// Photography engine.</span>
-    <span class="ident">Photo</span>(<span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">FrameBuilder</span><span class="op">&gt;</span><span class="op">&gt;</span>),
+    <span class="ident">Photo</span>(<span class="ident">FilmBuilder</span>),
     <span class="doccomment">/// Fluorescence engine.</span>
     <span class="ident">Fluorescence</span>(<span class="ident">PathBuf</span>, <span class="ident">Redirect</span><span class="op">&lt;</span><span class="ident">FormulaBuilder</span><span class="op">&gt;</span>),
 }
@@ -96,7 +94,7 @@
         <span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span><span class="ident">::Standard</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Standard</span>,
             <span class="self">Self</span><span class="ident">::Raman</span>(<span class="ident">p</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Raman</span>(<span class="ident">p</span>),
-            <span class="self">Self</span><span class="ident">::Photo</span>(<span class="ident">frames</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Photo</span>(<span class="ident">frames</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>),
+            <span class="self">Self</span><span class="ident">::Photo</span>(<span class="ident">frames</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Photo</span>(<span class="ident">frames</span>),
             <span class="self">Self</span><span class="ident">::Fluorescence</span>(<span class="ident">shift_map</span>, <span class="ident">conc_spec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Fluorescence</span>(
                 <span class="ident">Array3::new_from_file</span>(<span class="kw-2">&amp;</span><span class="ident">in_dir</span>.<span class="ident">join</span>(<span class="ident">shift_map</span>))<span class="question-mark">?</span>,
                 <span class="ident">conc_spec</span>.<span class="ident">load</span>(<span class="ident">in_dir</span>)<span class="question-mark">?</span>,

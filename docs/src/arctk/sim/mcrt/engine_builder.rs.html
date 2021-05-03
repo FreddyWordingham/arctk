@@ -50,13 +50,16 @@
 <span id="47">47</span>
 <span id="48">48</span>
 <span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Engine selection.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">math</span>::{<span class="ident">FormulaBuilder</span>, <span class="ident">Pos3</span>},
-    <span class="ident">ord</span>::{<span class="ident">Build</span>, <span class="ident">Set</span>},
-    <span class="ident">sim::mcrt</span>::{<span class="ident">Engine</span>, <span class="ident">FrameBuilder</span>},
+    <span class="ident">ord::Build</span>,
+    <span class="ident">sim::mcrt</span>::{<span class="ident">Engine</span>, <span class="ident">FilmBuilder</span>},
 };
 <span class="kw">use</span> <span class="ident">ndarray::Array3</span>;
 <span class="kw">use</span> <span class="ident">std::fmt</span>::{<span class="ident">Display</span>, <span class="ident">Error</span>, <span class="ident">Formatter</span>};
@@ -68,7 +71,7 @@
     <span class="doccomment">/// Raman engine.</span>
     <span class="ident">Raman</span>(<span class="ident">Pos3</span>),
     <span class="doccomment">/// Photography engine.</span>
-    <span class="ident">Photo</span>(<span class="ident">Set</span><span class="op">&lt;</span><span class="ident">FrameBuilder</span><span class="op">&gt;</span>),
+    <span class="ident">Photo</span>(<span class="ident">FilmBuilder</span>),
     <span class="doccomment">/// Fluorescence engine.</span>
     <span class="ident">Fluorescence</span>(<span class="ident">Array3</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>, <span class="ident">FormulaBuilder</span>),
 }
@@ -81,7 +84,10 @@
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="self">Self</span><span class="ident">::Standard</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Standard</span>,
             <span class="self">Self</span><span class="ident">::Raman</span>(<span class="ident">p</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Raman</span>(<span class="ident">p</span>),
-            <span class="self">Self</span><span class="ident">::Photo</span>(<span class="ident">frames</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Photo</span>(<span class="ident">frames</span>.<span class="ident">build</span>()),
+            <span class="self">Self</span><span class="ident">::Photo</span>(<span class="ident">film</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">film</span>.<span class="ident">res</span>();
+                <span class="self">Self</span><span class="ident">::Inst::Photo</span>(<span class="ident">film</span>.<span class="ident">build</span>(), <span class="ident">res</span>)
+            }
             <span class="self">Self</span><span class="ident">::Fluorescence</span>(<span class="ident">shift_map</span>, <span class="ident">conc_spec</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="self">Self</span><span class="ident">::Inst::Fluorescence</span>(<span class="ident">shift_map</span>, <span class="ident">conc_spec</span>.<span class="ident">build</span>())
             }
@@ -95,7 +101,7 @@
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="self">Self</span><span class="ident">::Standard</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Standard&quot;</span>),
             <span class="self">Self</span><span class="ident">::Raman</span>(<span class="kw-2">ref</span> <span class="ident">_p</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Raman&quot;</span>),
-            <span class="self">Self</span><span class="ident">::Photo</span>(<span class="kw-2">ref</span> <span class="ident">frames</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Photography ({})&quot;</span>, <span class="ident">frames</span>.<span class="ident">len</span>()),
+            <span class="self">Self</span><span class="ident">::Photo</span>(<span class="kw-2">ref</span> <span class="ident">_film</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Photography&quot;</span>),
             <span class="self">Self</span><span class="ident">::Fluorescence</span>(..) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Fluorescence&quot;</span>),
         }
     }

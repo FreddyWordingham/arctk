@@ -86,6 +86,7 @@
 <span id="83">83</span>
 <span id="84">84</span>
 <span id="85">85</span>
+<span id="86">86</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Peel-off function.</span>
 
@@ -156,9 +157,10 @@
                     <span class="ident">phot</span>.<span class="ident">ray_mut</span>().<span class="ident">travel</span>(<span class="ident">bump_dist</span>);
                     <span class="ident">prob</span> <span class="kw-2">*</span><span class="op">=</span> (<span class="op">-</span><span class="ident">bump_dist</span> <span class="op">*</span> <span class="ident">inter_coeff</span>).<span class="ident">exp</span>();
                 }
-                <span class="ident">Attribute::Mirror</span>(..) <span class="op">|</span> <span class="ident">Attribute::Spectrometer</span>(..) <span class="op">|</span> <span class="ident">Attribute::Imager</span>(..) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">return</span> <span class="prelude-val">None</span>
-                }
+                <span class="ident">Attribute::Mirror</span>(..)
+                <span class="op">|</span> <span class="ident">Attribute::Spectrometer</span>(..)
+                <span class="op">|</span> <span class="ident">Attribute::Imager</span>(..)
+                <span class="op">|</span> <span class="ident">Attribute::Ccd</span>(..) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
             }
         } <span class="kw">else</span> {
             <span class="ident">prob</span> <span class="kw-2">*</span><span class="op">=</span> (<span class="op">-</span><span class="ident">tar_dist</span> <span class="op">*</span> <span class="ident">inter_coeff</span>).<span class="ident">exp</span>();

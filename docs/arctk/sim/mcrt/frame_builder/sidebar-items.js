@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["FrameBuilder","Picture frame builder."]]});

@@ -77,6 +77,20 @@
 <span id="74">74</span>
 <span id="75">75</span>
 <span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Attribute third-stage material linker.</span>
 
@@ -87,6 +101,7 @@
     <span class="ident">ord</span>::{<span class="ident">Link</span>, <span class="ident">Name</span>, <span class="ident">Set</span>},
     <span class="ident">phys::Material</span>,
     <span class="ident">sim::mcrt::Attribute</span>,
+    <span class="ident">tools::Binner</span>,
 };
 <span class="kw">use</span> <span class="ident">std::fmt</span>::{<span class="ident">Display</span>, <span class="ident">Formatter</span>};
 
@@ -100,6 +115,8 @@
     <span class="ident">Spectrometer</span>(<span class="ident">usize</span>),
     <span class="doccomment">/// Imager id, width, orientation.</span>
     <span class="ident">Imager</span>(<span class="ident">usize</span>, <span class="ident">f64</span>, <span class="ident">Orient</span>),
+    <span class="doccomment">/// CCD detector id, width, orientation, binner.</span>
+    <span class="ident">Ccd</span>(<span class="ident">usize</span>, <span class="ident">f64</span>, <span class="ident">Orient</span>, <span class="ident">Binner</span>),
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Material</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AttributeLinker</span> {
@@ -109,7 +126,9 @@
     <span class="kw">fn</span> <span class="ident">requires</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Name</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="self">Self</span><span class="ident">::Interface</span>(<span class="kw-2">ref</span> <span class="ident">inside</span>, <span class="kw-2">ref</span> <span class="ident">outside</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec!</span>[<span class="ident">inside</span>.<span class="ident">clone</span>(), <span class="ident">outside</span>.<span class="ident">clone</span>()],
-            <span class="self">Self</span><span class="ident">::Mirror</span>(..) <span class="op">|</span> <span class="self">Self</span><span class="ident">::Spectrometer</span>(..) <span class="op">|</span> <span class="self">Self</span><span class="ident">::Imager</span>(..) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">vec!</span>[],
+            <span class="self">Self</span><span class="ident">::Mirror</span>(..) <span class="op">|</span> <span class="self">Self</span><span class="ident">::Spectrometer</span>(..) <span class="op">|</span> <span class="self">Self</span><span class="ident">::Imager</span>(..) <span class="op">|</span> <span class="self">Self</span><span class="ident">::Ccd</span>(..) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">vec!</span>[]
+            }
         }
     }
 
@@ -127,6 +146,7 @@
             <span class="self">Self</span><span class="ident">::Mirror</span>(<span class="ident">r</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Mirror</span>(<span class="ident">r</span>),
             <span class="self">Self</span><span class="ident">::Spectrometer</span>(<span class="ident">id</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Spectrometer</span>(<span class="ident">id</span>),
             <span class="self">Self</span><span class="ident">::Imager</span>(<span class="ident">id</span>, <span class="ident">width</span>, <span class="ident">orient</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Imager</span>(<span class="ident">id</span>, <span class="ident">width</span>, <span class="ident">orient</span>),
+            <span class="self">Self</span><span class="ident">::Ccd</span>(<span class="ident">id</span>, <span class="ident">width</span>, <span class="ident">orient</span>, <span class="ident">binner</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span><span class="ident">::Inst::Ccd</span>(<span class="ident">id</span>, <span class="ident">width</span>, <span class="ident">orient</span>, <span class="ident">binner</span>),
         })
     }
 }
@@ -149,6 +169,14 @@
                 <span class="macro">fmt_report!</span>(<span class="ident">fmt</span>, <span class="ident">id</span>, <span class="string">&quot;name&quot;</span>);
                 <span class="macro">fmt_report!</span>(<span class="ident">fmt</span>, <span class="ident">width</span>, <span class="string">&quot;width (m)&quot;</span>);
                 <span class="macro">fmt_report!</span>(<span class="ident">fmt</span>, <span class="ident">orient</span>, <span class="string">&quot;orientation&quot;</span>);
+                <span class="prelude-val">Ok</span>(())
+            }
+            <span class="self">Self</span><span class="ident">::Ccd</span>(<span class="kw-2">ref</span> <span class="ident">id</span>, <span class="ident">width</span>, <span class="kw-2">ref</span> <span class="ident">orient</span>, <span class="kw-2">ref</span> <span class="ident">binner</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">writeln!</span>(<span class="ident">fmt</span>, <span class="string">&quot;Ccd: ...&quot;</span>)<span class="question-mark">?</span>;
+                <span class="macro">fmt_report!</span>(<span class="ident">fmt</span>, <span class="ident">id</span>, <span class="string">&quot;name&quot;</span>);
+                <span class="macro">fmt_report!</span>(<span class="ident">fmt</span>, <span class="ident">width</span>, <span class="string">&quot;width (m)&quot;</span>);
+                <span class="macro">fmt_report!</span>(<span class="ident">fmt</span>, <span class="ident">orient</span>, <span class="string">&quot;orientation&quot;</span>);
+                <span class="macro">fmt_report!</span>(<span class="ident">fmt</span>, <span class="ident">binner</span>, <span class="string">&quot;binner&quot;</span>);
                 <span class="prelude-val">Ok</span>(())
             }
         }

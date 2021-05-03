@@ -211,6 +211,26 @@
 <span id="208">208</span>
 <span id="209">209</span>
 <span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Monte-Carlo radiative transfer simulation binary.</span>
 <span class="doccomment">//! Compute the radiative field for a given set of setup and light source.</span>
@@ -221,10 +241,10 @@
     <span class="ident">fs</span>::{<span class="ident">File</span>, <span class="ident">Load</span>, <span class="ident">Save</span>},
     <span class="ident">geom</span>::{<span class="ident">Grid</span>, <span class="ident">Tree</span>},
     <span class="ident">img</span>::{<span class="ident">Colour</span>, <span class="ident">Image</span>},
-    <span class="ident">ord</span>::{<span class="ident">Build</span>, <span class="ident">Link</span>, <span class="ident">Register</span>, <span class="ident">Set</span>},
+    <span class="ident">ord</span>::{<span class="ident">Build</span>, <span class="ident">Link</span>, <span class="ident">Register</span>, <span class="ident">Set</span>, <span class="ident">X</span>, <span class="ident">Y</span>},
     <span class="ident">report</span>,
     <span class="ident">sim::mcrt</span>::{
-        <span class="ident">run</span>, <span class="ident">AttributeLinkerLinkerLinker</span> <span class="kw">as</span> <span class="ident">Attr</span>, <span class="ident">Engine</span>, <span class="ident">Input</span>, <span class="ident">Output</span>, <span class="ident">Parameters</span>,
+        <span class="ident">run</span>, <span class="ident">AttributeLinkerLinkerLinkerLinker</span> <span class="kw">as</span> <span class="ident">Attr</span>, <span class="ident">Engine</span>, <span class="ident">Input</span>, <span class="ident">Output</span>, <span class="ident">Parameters</span>,
         <span class="ident">ParametersBuilderLoader</span>,
     },
     <span class="ident">util</span>::{
@@ -233,6 +253,7 @@
         <span class="ident">fmt::term</span>,
     },
 };
+<span class="kw">use</span> <span class="ident">ndarray::Array3</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">env::current_dir</span>,
     <span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>},
@@ -261,8 +282,8 @@
     <span class="macro">report!</span>(<span class="ident">mats</span>, <span class="string">&quot;materials&quot;</span>);
 
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Registration&quot;</span>);
-    <span class="kw">let</span> (<span class="ident">spec_reg</span>, <span class="ident">img_reg</span>) <span class="op">=</span> <span class="ident">gen_detector_registers</span>(<span class="kw-2">&amp;</span><span class="ident">engine</span>, <span class="kw-2">&amp;</span><span class="ident">params</span>.<span class="ident">attrs</span>);
-    <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="ident">gen_base_output</span>(<span class="kw-2">&amp;</span><span class="ident">engine</span>, <span class="kw-2">&amp;</span><span class="ident">grid</span>, <span class="kw-2">&amp;</span><span class="ident">spec_reg</span>, <span class="kw-2">&amp;</span><span class="ident">img_reg</span>, <span class="kw-2">&amp;</span><span class="ident">params</span>.<span class="ident">attrs</span>);
+    <span class="kw">let</span> (<span class="ident">spec_reg</span>, <span class="ident">img_reg</span>, <span class="ident">ccd_reg</span>) <span class="op">=</span> <span class="ident">gen_detector_registers</span>(<span class="kw-2">&amp;</span><span class="ident">params</span>.<span class="ident">attrs</span>);
+    <span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="ident">gen_base_output</span>(<span class="kw-2">&amp;</span><span class="ident">engine</span>, <span class="kw-2">&amp;</span><span class="ident">grid</span>, <span class="kw-2">&amp;</span><span class="ident">spec_reg</span>, <span class="kw-2">&amp;</span><span class="ident">img_reg</span>, <span class="kw-2">&amp;</span><span class="ident">ccd_reg</span>, <span class="kw-2">&amp;</span><span class="ident">params</span>.<span class="ident">attrs</span>);
 
     <span class="ident">sub_section</span>(<span class="ident">term_width</span>, <span class="string">&quot;Linking&quot;</span>);
     <span class="kw">let</span> <span class="ident">light</span> <span class="op">=</span> <span class="ident">params</span>
@@ -272,6 +293,8 @@
     <span class="macro">report!</span>(<span class="ident">light</span>, <span class="string">&quot;light&quot;</span>);
     <span class="kw">let</span> <span class="ident">attrs</span> <span class="op">=</span> <span class="ident">params</span>
         .<span class="ident">attrs</span>
+        .<span class="ident">link</span>(<span class="ident">ccd_reg</span>.<span class="ident">set</span>())
+        .<span class="ident">expect</span>(<span class="string">&quot;Failed to link ccds to attributes.&quot;</span>)
         .<span class="ident">link</span>(<span class="ident">img_reg</span>.<span class="ident">set</span>())
         .<span class="ident">expect</span>(<span class="string">&quot;Failed to link imagers to attributes.&quot;</span>)
         .<span class="ident">link</span>(<span class="ident">spec_reg</span>.<span class="ident">set</span>())
@@ -345,22 +368,16 @@
 }
 
 <span class="doccomment">/// Generate the detector registers.</span>
-<span class="kw">fn</span> <span class="ident">gen_detector_registers</span>(<span class="ident">engine</span>: <span class="kw-2">&amp;</span><span class="ident">Engine</span>, <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Attr</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">Register</span>, <span class="ident">Register</span>) {
+<span class="kw">fn</span> <span class="ident">gen_detector_registers</span>(<span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Attr</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">Register</span>, <span class="ident">Register</span>, <span class="ident">Register</span>) {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">spec_names</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">img_names</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ccd_names</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
 
-    <span class="comment">// Engines.</span>
-    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Engine::Photo</span>(<span class="ident">frames</span>) <span class="op">=</span> <span class="ident">engine</span> {
-        <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="ident">frames</span>.<span class="ident">map</span>().<span class="ident">keys</span>() {
-            <span class="ident">img_names</span>.<span class="ident">push</span>(<span class="ident">name</span>.<span class="ident">clone</span>());
-        }
-    }
-
-    <span class="comment">// Attributes.</span>
     <span class="kw">for</span> <span class="ident">attr</span> <span class="kw">in</span> <span class="ident">attrs</span>.<span class="ident">map</span>().<span class="ident">values</span>() {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">attr</span> {
             <span class="ident">Attr::Spectrometer</span>(<span class="kw-2">ref</span> <span class="ident">name</span>, ..) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">spec_names</span>.<span class="ident">push</span>(<span class="ident">name</span>.<span class="ident">clone</span>()),
             <span class="ident">Attr::Imager</span>(<span class="kw-2">ref</span> <span class="ident">name</span>, ..) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">img_names</span>.<span class="ident">push</span>(<span class="ident">name</span>.<span class="ident">clone</span>()),
+            <span class="ident">Attr::Ccd</span>(<span class="kw-2">ref</span> <span class="ident">name</span>, ..) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ccd_names</span>.<span class="ident">push</span>(<span class="ident">name</span>.<span class="ident">clone</span>()),
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
         }
     }
@@ -371,7 +388,10 @@
     <span class="kw">let</span> <span class="ident">img_reg</span> <span class="op">=</span> <span class="ident">Register::new</span>(<span class="ident">img_names</span>);
     <span class="macro">report!</span>(<span class="ident">img_reg</span>, <span class="string">&quot;imager register&quot;</span>);
 
-    (<span class="ident">spec_reg</span>, <span class="ident">img_reg</span>)
+    <span class="kw">let</span> <span class="ident">ccd_reg</span> <span class="op">=</span> <span class="ident">Register::new</span>(<span class="ident">ccd_names</span>);
+    <span class="macro">report!</span>(<span class="ident">ccd_reg</span>, <span class="string">&quot;ccd register&quot;</span>);
+
+    (<span class="ident">spec_reg</span>, <span class="ident">img_reg</span>, <span class="ident">ccd_reg</span>)
 }
 
 <span class="doccomment">/// Generate the base output instance.</span>
@@ -380,6 +400,7 @@
     <span class="ident">grid</span>: <span class="kw-2">&amp;</span><span class="ident">Grid</span>,
     <span class="ident">spec_reg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Register</span>,
     <span class="ident">img_reg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Register</span>,
+    <span class="ident">ccd_reg</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Register</span>,
     <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="ident">Set</span><span class="op">&lt;</span><span class="ident">Attr</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Output</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">grid</span>.<span class="ident">res</span>();
@@ -390,37 +411,56 @@
             <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Attr::Spectrometer</span>(<span class="ident">spec_name</span>, [<span class="ident">min</span>, <span class="ident">max</span>], <span class="ident">bins</span>) <span class="op">=</span> <span class="ident">attr</span> {
                 <span class="kw">if</span> <span class="ident">name</span> <span class="op">=</span><span class="op">=</span> <span class="ident">spec_name</span> {
                     <span class="ident">specs</span>.<span class="ident">push</span>(<span class="ident">Histogram::new</span>(<span class="kw-2">*</span><span class="ident">min</span>, <span class="kw-2">*</span><span class="ident">max</span>, <span class="kw-2">*</span><span class="ident">bins</span>));
+                    <span class="kw">continue</span>;
                 }
             }
         }
     }
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">imgs</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">img_reg</span>.<span class="ident">len</span>());
+    <span class="kw">let</span> <span class="ident">background</span> <span class="op">=</span> <span class="ident">Colour::new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>);
     <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="ident">img_reg</span>.<span class="ident">set</span>().<span class="ident">map</span>().<span class="ident">keys</span>() {
-        <span class="comment">// Engines.</span>
-        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Engine::Photo</span>(<span class="ident">frames</span>) <span class="op">=</span> <span class="ident">engine</span> {
-            <span class="kw">for</span> (<span class="ident">photo_name</span>, <span class="ident">frame</span>) <span class="kw">in</span> <span class="ident">frames</span>.<span class="ident">map</span>() {
-                <span class="kw">if</span> <span class="ident">name</span> <span class="op">=</span><span class="op">=</span> <span class="ident">photo_name</span> {
-                    <span class="ident">imgs</span>.<span class="ident">push</span>(<span class="ident">Image::new_blank</span>(
-                        <span class="kw-2">*</span><span class="ident">frame</span>.<span class="ident">res</span>(),
-                        <span class="ident">Colour::new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>),
-                    ));
-                    <span class="kw">continue</span>;
-                }
-            }
-        }
-
-        <span class="comment">// Attributes</span>
         <span class="kw">for</span> <span class="ident">attr</span> <span class="kw">in</span> <span class="ident">attrs</span>.<span class="ident">values</span>() {
             <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Attr::Imager</span>(<span class="ident">img_name</span>, <span class="ident">res</span>, <span class="ident">_width</span>, <span class="ident">_center</span>, <span class="ident">_forward</span>) <span class="op">=</span> <span class="ident">attr</span> {
                 <span class="kw">if</span> <span class="ident">name</span> <span class="op">=</span><span class="op">=</span> <span class="ident">img_name</span> {
-                    <span class="ident">imgs</span>.<span class="ident">push</span>(<span class="ident">Image::new_blank</span>(<span class="kw-2">*</span><span class="ident">res</span>, <span class="ident">Colour::new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>)));
+                    <span class="ident">imgs</span>.<span class="ident">push</span>(<span class="ident">Image::new_blank</span>(<span class="kw-2">*</span><span class="ident">res</span>, <span class="ident">background</span>));
                     <span class="kw">continue</span>;
                 }
             }
         }
     }
-    <span class="ident">Output::new</span>(<span class="ident">spec_reg</span>, <span class="ident">img_reg</span>, <span class="ident">grid</span>.<span class="ident">boundary</span>().<span class="ident">clone</span>(), <span class="ident">res</span>, <span class="ident">specs</span>, <span class="ident">imgs</span>)
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ccds</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">ccd_reg</span>.<span class="ident">len</span>());
+    <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="ident">ccd_reg</span>.<span class="ident">set</span>().<span class="ident">map</span>().<span class="ident">keys</span>() {
+        <span class="kw">for</span> <span class="ident">attr</span> <span class="kw">in</span> <span class="ident">attrs</span>.<span class="ident">values</span>() {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Attr::Ccd</span>(<span class="ident">ccd_name</span>, <span class="ident">res</span>, <span class="ident">_width</span>, <span class="ident">_center</span>, <span class="ident">_forward</span>, <span class="ident">binner</span>) <span class="op">=</span> <span class="ident">attr</span> {
+                <span class="kw">if</span> <span class="ident">name</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ccd_name</span> {
+                    <span class="ident">ccds</span>.<span class="ident">push</span>(<span class="ident">Array3::zeros</span>([<span class="ident">res</span>[<span class="ident">X</span>], <span class="ident">res</span>[<span class="ident">Y</span>], <span class="ident">binner</span>.<span class="ident">bins</span>() <span class="kw">as</span> <span class="ident">usize</span>]));
+                    <span class="kw">continue</span>;
+                }
+            }
+        }
+    }
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">photos</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Engine::Photo</span>(<span class="ident">frames</span>, <span class="ident">res</span>) <span class="op">=</span> <span class="ident">engine</span> {
+        <span class="ident">photos</span>.<span class="ident">reserve</span>(<span class="ident">frames</span>.<span class="ident">len</span>());
+        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">frames</span>.<span class="ident">len</span>() {
+            <span class="ident">photos</span>.<span class="ident">push</span>(<span class="ident">Image::new_blank</span>(<span class="kw-2">*</span><span class="ident">res</span>, <span class="ident">background</span>));
+        }
+    }
+
+    <span class="ident">Output::new</span>(
+        <span class="ident">grid</span>.<span class="ident">boundary</span>().<span class="ident">clone</span>(),
+        <span class="ident">res</span>,
+        <span class="ident">spec_reg</span>,
+        <span class="ident">img_reg</span>,
+        <span class="ident">ccd_reg</span>,
+        <span class="ident">specs</span>,
+        <span class="ident">imgs</span>,
+        <span class="ident">ccds</span>,
+        <span class="ident">photos</span>,
+    )
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="mcrt" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
