@@ -6,46 +6,73 @@ from perlin import Perlin
 import math
 
 
+def prime_list(min, max):
+    assert(min >= 2)
+    assert(max > min)
+
+    primes = []
+    for n in range(min, max + 1):
+        for i in range(2, n):
+            if (n % i) == 0:
+                break
+        else:
+            primes.append(n)
+
+    return primes
+
+
 def __main__():
     print("Hello arctk!")
 
-    powers = [10, 20, 4, 234, 68, 9, 192, 93]
-    noise = []
-    ratios = []
-    for p in powers:
-        noise.append(Perlin(p, p))
-        ratios.append(1.0 / p)
-
-    l = 7
-    p = 8
+    l = 10
+    p = 12
+    # ny = 1440
+    # nx = 900
     nx = 2 ** p
     ny = 2 ** p
+    nt = 2000
     fx = 1.0 / nx
     fy = 1.0 / ny
 
+    # powers = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, ]
+    powers = prime_list(2, 9)
+    print(f"powers: {powers}")
+    noise = []
+    ratios = []
+    for p in powers:
+        noise.append(Perlin(p, int(p * ny / nx)))
+        ratios.append(1.0 / p)
+
     samples = np.zeros([nx, ny])
-    dt = 0.1
-    for t in range(1000):
-        bar = Bar("Sampling", max=nx * ny)
+    dt = 0.25
+    for t in range(nt):
+        bar = Bar("Sampling", max=ny)
         for iy in range(ny):
             y = iy * fy
             for ix in range(nx):
                 x = ix * fx
                 samples[ix, iy] = sample(noise, ratios, x, y)
-                bar.next()
+            bar.next()
         bar.finish()
 
         min = samples.min()
         max = samples.max()
         samples = (samples - min) / (max - min)
 
+        # plt.hist(samples.flatten(), bins=1000)
+        # plt.title("histogram")
+        # plt.show()
+
         for iy in range(ny):
             for ix in range(nx):
-                x = samples[ix, iy]
-                x = math.floor(x * l) / l
-                samples[ix, iy] = x
-
-        # samples = np.vectorize(step)(samples)
+                z = samples[ix, iy]
+        #         if z < 0.495:
+        #             samples[ix, iy] = 0.0
+        #         if z > 0.505:
+        #             samples[ix, iy] = 0.0
+        #         else:
+                z = math.fmod(z, 1.0 / l)
+                samples[ix, iy] = z
 
         fig = plt.figure(figsize=(6, 3.2))
 
@@ -59,7 +86,8 @@ def __main__():
         ax.set_frame_on(False)
         plt.savefig(f"output/noise_{t:03}.png", bbox_inches='tight')
 
-        for n in noise:
+        for (n, r) in zip(noise, ratios):
+            # n.update(dt * r)
             n.update(dt)
 
 
@@ -68,10 +96,6 @@ def sample(noise, ratios, x, y):
     for (n, r) in zip(noise, ratios):
         t += r * n.sample(x, y)
     return t
-
-
-def step(x):
-    2.0 * x
 
 
 __main__()

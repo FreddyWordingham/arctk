@@ -24,8 +24,8 @@
     } },
     attrs       : { Here    : {
         water   : { Interface   : ['water', 'air'] },
-        imager  : { Ccd         : ['reflection',    [100, 100], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 100]] },
-        // imager  : { Imager      : ['reflection',    [1080, 1080], 10e-3, [-8e-3, 0, 0], [1, 0, 0]] },
+        // imager  : { Ccd         : ['reflection',    [100, 100], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 100]] },
+        imager  : { Imager      : ['reflection',    [1080, 1080], 10e-3, [-8e-3, 0, 0], [1, 0, 0]] },
     } },
     surfs       : { Here    : {
         raindrop : {

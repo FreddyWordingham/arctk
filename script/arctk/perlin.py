@@ -15,11 +15,15 @@ class Perlin:
         self.rates = np.empty((nx, ny))
 
         for iy in range(ny):
+            t = 0
             for ix in range(nx):
                 theta = random.uniform(0.0, 2.0 * math.pi)
+                # t += (2.0 * math.pi) / (nx - 1)
+                # theta = t
                 self.grid[ix, iy, 0] = math.sin(theta)
                 self.grid[ix, iy, 1] = math.cos(theta)
                 self.rates[ix, iy] = random.uniform(0.0, 1.0)
+                # self.rates[ix, iy] = (iy / (ny - 1))
 
     def update(self, t):
         (nx, ny, _) = self.grid.shape
@@ -38,33 +42,4 @@ class Perlin:
         assert(x <= 1)
         assert(y >= 0)
         assert(y <= 1)
-
-        (nx, ny, _) = self.grid.shape
-        dx = 1.0 / (nx - 1)
-        dy = 1.0 / (ny - 1)
-
-        ix = math.floor(x / dx)
-        iy = math.floor(y / dy)
-
-        u = (x - (ix * dx)) / dx
-        v = (y - (iy * dy)) / dy
-
-        g00 = self.grid[ix, iy, :].dot([1.0 - u, 1.0 - v])
-        g10 = self.grid[ix + 1, iy, :].dot([u, 1.0 - v])
-        g01 = self.grid[ix, iy + 1, :].dot([1.0 - u, v])
-        g11 = self.grid[ix + 1, iy + 1, :].dot([u, v])
-
-        a = interpolate(1.0 - u, g00, g10)
-        b = interpolate(1.0 - u, g01, g11)
-        c = interpolate(1.0 - v, a, b)
-
-        return c
-
-
-def fade(t):
-    return t*t*t*(t*(t*6.0 - 15.0) + 10.0)
-
-
-def interpolate(x, a, b):
-    x = fade(x)
-    return (x * a) + ((1.0 - x) * b)
+ 
