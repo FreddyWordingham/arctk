@@ -3,7 +3,7 @@
     grid        : { There   : 'res/grid/10m_128.json5' },
     engine      : "Standard",
     sett        : { Here    : {
-        num_phot            : 1e7,
+        num_phot            : 1e8,
         block_size          : 1e5,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
@@ -25,6 +25,7 @@
     attrs       : { Here    : {
         fog     : { Interface   : ['fog', 'air'] },
         imager  : { Imager      : ['transmission',  [128, 128], 1e0, [-1, 0, 0], [1, 0, 0]] },
+        // imager  : { Ccd         : ['reflection',    [128, 128], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 100]] },
     } },
     surfs       : { Here    : {
         target  : {
