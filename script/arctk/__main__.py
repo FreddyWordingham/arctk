@@ -21,76 +21,6 @@ def prime_list(min, max):
     return primes
 
 
-def old__main__():
-    print("Hello arctk!")
-
-    l = 10
-    p = 12
-    # ny = 1440
-    # nx = 900
-    nx = 2 ** p
-    ny = 2 ** p
-    nt = 2000
-    fx = 1.0 / nx
-    fy = 1.0 / ny
-
-    # powers = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, ]
-    powers = prime_list(2, 9)
-    print(f"powers: {powers}")
-    noise = []
-    ratios = []
-    for p in powers:
-        noise.append(Perlin(p, int(p * ny / nx)))
-        ratios.append(1.0 / p)
-
-    samples = np.zeros([nx, ny])
-    dt = 0.25
-    for t in range(nt):
-        bar = Bar("Sampling", max=ny)
-        for iy in range(ny):
-            y = iy * fy
-            for ix in range(nx):
-                x = ix * fx
-                samples[ix, iy] = sample(noise, ratios, x, y)
-            bar.next()
-        bar.finish()
-
-        min = samples.min()
-        max = samples.max()
-        samples = (samples - min) / (max - min)
-
-        # plt.hist(samples.flatten(), bins=1000)
-        # plt.title("histogram")
-        # plt.show()
-
-        for iy in range(ny):
-            for ix in range(nx):
-                z = samples[ix, iy]
-        #         if z < 0.495:
-        #             samples[ix, iy] = 0.0
-        #         if z > 0.505:
-        #             samples[ix, iy] = 0.0
-        #         else:
-                z = math.fmod(z, 1.0 / l)
-                samples[ix, iy] = z
-
-        fig = plt.figure(figsize=(6, 3.2))
-
-        ax = fig.add_subplot(111)
-        plt.imshow(samples)
-        ax.set_aspect('equal')
-
-        ax.get_xaxis().set_visible(False)
-        ax.get_yaxis().set_visible(False)
-        ax.patch.set_alpha(0)
-        ax.set_frame_on(False)
-        plt.savefig(f"output/noise_{t:03}.png", bbox_inches='tight')
-
-        for (n, r) in zip(noise, ratios):
-            # n.update(dt * r)
-            n.update(dt)
-
-
 def plot(data):
     print("Plotting")
     print("Min: ", data.min())
@@ -111,16 +41,29 @@ def plot(data):
     plt.savefig(f"output/noise_{t:03}.png", bbox_inches='tight')
 
 
+def sample(noise, ratios, x, y):
+    sum = 0.0
+    for (n, r) in zip(noise, ratios):
+        sum += n.sample(x, y) * r
+    return sum
+
+
 def __main__():
-    p = 10
+    p = 14
     nx = 2 ** p
     ny = 2 ** p
     fx = 2.0 / nx
     fy = 2.0 / ny
-
-    noise = Perlin(5, 7)
+    powers = prime_list(10, 30)
 
     print(f"Resolution {nx} x {ny}")
+    print(f"powers: {powers}")
+
+    noise = []
+    ratios = []
+    for p in powers:
+        noise.append(Perlin(p, int(p * ny / nx)))
+        ratios.append(1.0 / p)
 
     bar = Bar("Sampling", max=ny)
     samples = np.zeros([nx, ny])
@@ -128,9 +71,21 @@ def __main__():
         y = iy * fy
         for ix in range(nx):
             x = ix * fx
-            samples[ix, iy] = noise.sample(x, y)
+            samples[ix, iy] = sample(noise, ratios, x, y)
         bar.next()
     bar.finish()
+
+    min = samples.min()
+    max = samples.max()
+    print("Min: ", min)
+    print("Max: ", max)
+
+    samples -= min
+    samples /= (max - min)
+
+    for iy in range(ny):
+        for ix in range(nx):
+            samples[ix, iy] = samples[ix, iy] % 0.5
 
     plot(samples)
 
