@@ -2,14 +2,7 @@
     tree        : { There   : 'res/tree/t5_d8.json5' },
     grid        : { There   : 'res/grid/20mm_128.json5' },
     engine      : "Standard",
-    sett        : { Here    : {
-        num_phot            : 1e6,
-        block_size          : 1e3,
-        bump_dist           : 1e-9,
-        loop_limit          : 1e6,
-        min_weight          : 0.05,
-        roulette_barrels    : 8,
-    } },
+    sett        : { There   : 'res/sett/mcrt/1e6.json5' },
     light   : { Here    : {
         power   : 1e0,
         emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-10e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
