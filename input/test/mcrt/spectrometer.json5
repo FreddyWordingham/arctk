@@ -17,11 +17,9 @@
         mat     : "air"
     } },
     mats        : { Here    : {
-        air     : { There    : 'res/mats/misc/air.json5' },
-        black   : { There    : 'res/mats/misc/black.json5' }
+        air     : { There    : 'res/mats/misc/air.json5' }
     } },
     attrs       : { Here    : {
-        black   : { Interface       : ['black', 'air'] },
         spectro : { Spectrometer    : ['spectrometer', [100e-9, 1100e-9], 400] },
     } },
     surfs       : { Here    : {
