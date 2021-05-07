@@ -24,8 +24,8 @@
     } },
     attrs       : { Here    : {
         fog     : { Interface   : ['fog', 'air'] },
-        imager  : { Imager      : ['transmission',  [128, 128], 1e0, [-1, 0, 0], [1, 0, 0]] },
-        // imager  : { Ccd         : ['reflection',    [128, 128], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 100]] },
+        // imager  : { Imager      : ['transmission',  [128, 128], 1e0, [-1, 0, 0], [1, 0, 0]] },
+        imager  : { Ccd         : ['reflection',    [128, 128], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 100]] },
     } },
     surfs       : { Here    : {
         target  : {
