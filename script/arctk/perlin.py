@@ -5,41 +5,54 @@ import numpy as np
 
 class Perlin:
     grid = []
-    rates = []
 
     def __init__(self, nx, ny):
         assert(nx >= 2)
         assert(ny >= 2)
 
         self.grid = np.empty((nx, ny, 2))
-        self.rates = np.empty((nx, ny))
 
         for iy in range(ny):
-            t = 0
             for ix in range(nx):
                 theta = random.uniform(0.0, 2.0 * math.pi)
-                # t += (2.0 * math.pi) / (nx - 1)
-                # theta = t
                 self.grid[ix, iy, 0] = math.sin(theta)
                 self.grid[ix, iy, 1] = math.cos(theta)
-                self.rates[ix, iy] = random.uniform(0.0, 1.0)
-                # self.rates[ix, iy] = (iy / (ny - 1))
-
-    def update(self, t):
-        (nx, ny, _) = self.grid.shape
-        for iy in range(ny):
-            for ix in range(nx):
-                x = self.grid[ix, iy, 0]
-                y = self.grid[ix, iy, 1]
-                r = self.rates[ix, iy]
-                self.grid[ix, iy, 0] = (
-                    x * math.cos(t * r)) - (y * math.sin(t * r))
-                self.grid[ix, iy, 1] = (
-                    x * math.sin(t * r)) + (y * math.cos(t * r))
 
     def sample(self, x, y):
-        assert(x >= 0)
-        assert(x <= 1)
-        assert(y >= 0)
-        assert(y <= 1)
- 
+        (nx, ny, _) = self.grid.shape
+
+        # Move point inside the grid.
+        x = math.modf(x)[0]
+        y = math.modf(y)[0]
+
+        # Indices
+        ix0 = math.floor(x * nx)
+        ix1 = (ix0 + 1) % nx
+        iy0 = math.floor(y * ny)
+        iy1 = (iy0 + 1) % ny
+
+        # UV coordinates
+        u = 1.0 - (x * nx) + ix0
+        v = 1.0 - (y * ny) + iy0
+
+        # Gradient vectors dot position vectors
+        g00 = self.grid[ix0, iy0, :].dot([u, v])
+        g10 = self.grid[ix1, iy0, :].dot([1.0 - u, v])
+        g01 = self.grid[ix0, iy1, :].dot([u, 1.0 - v])
+        g11 = self.grid[ix1, iy1, :].dot([1.0 - u, 1.0 - v])
+
+        # Interpolate
+        a = interpolate(u, g00, g10)
+        b = interpolate(u, g01, g11)
+        c = interpolate(v, a, b)
+
+        return c / math.sqrt(2)
+
+
+def fade(t):
+    return t*t*t*(t*(t*6.0 - 15.0) + 10.0)
+
+
+def interpolate(x, a, b):
+    x = fade(x)
+    return (x * a) + ((1.0 - x) * b)

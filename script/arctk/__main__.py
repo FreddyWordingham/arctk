@@ -21,7 +21,7 @@ def prime_list(min, max):
     return primes
 
 
-def __main__():
+def old__main__():
     print("Hello arctk!")
 
     l = 10
@@ -91,11 +91,48 @@ def __main__():
             n.update(dt)
 
 
-def sample(noise, ratios, x, y):
-    t = 0.0
-    for (n, r) in zip(noise, ratios):
-        t += r * n.sample(x, y)
-    return t
+def plot(data):
+    print("Plotting")
+    print("Min: ", data.min())
+    print("Max: ", data.max())
+
+    fig = plt.figure(figsize=(6, 3.2))
+
+    ax = fig.add_subplot(111)
+    plt.imshow(data)
+    ax.set_aspect('equal')
+
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+    ax.patch.set_alpha(0)
+    ax.set_frame_on(False)
+
+    t = 0
+    plt.savefig(f"output/noise_{t:03}.png", bbox_inches='tight')
+
+
+def __main__():
+    p = 10
+    nx = 2 ** p
+    ny = 2 ** p
+    fx = 2.0 / nx
+    fy = 2.0 / ny
+
+    noise = Perlin(5, 7)
+
+    print(f"Resolution {nx} x {ny}")
+
+    bar = Bar("Sampling", max=ny)
+    samples = np.zeros([nx, ny])
+    for iy in range(ny):
+        y = iy * fy
+        for ix in range(nx):
+            x = ix * fx
+            samples[ix, iy] = noise.sample(x, y)
+        bar.next()
+    bar.finish()
+
+    plot(samples)
 
 
 __main__()
