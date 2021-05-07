@@ -3,8 +3,8 @@
     grid        : { There   : 'res/grid/10m_128.json5' },
     engine      : "Standard",
     sett        : { Here    : {
-        num_phot            : 1e8,
-        block_size          : 1e5,
+        num_phot            : 1e6,
+        block_size          : 1e3,
         bump_dist           : 1e-9,
         loop_limit          : 1e6,
         min_weight          : 0.05,
@@ -12,9 +12,9 @@
     } },
     light   : { Here    : {
         power   : 1e6,
-        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4,0,0], rot: [0,90,0], scale:0.1 }] },
+        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4, 0, 0], rot: [0, 90, 0], scale: 0.1 }] },
         spec    : { Here    : {
-            Uniform :   [450.0e-9, 850.0e-9]
+            Uniform :   [450e-9, 850e-9]
         } },
         mat     : "air"
     } },
@@ -30,11 +30,11 @@
     surfs       : { Here    : {
         target  : {
             attr: 'fog',
-            mesh: [["res/objs/shapes/cube.obj"], { trans: [0,0,0], rot:[0,0,0], scale:1.0 } ]
+            mesh: [["res/objs/shapes/cube.obj"], null ]
         },
         screen  : {
             attr: 'imager',
-            mesh: [["res/objs/shapes/square.obj"], { trans:[1.001, 0, 0], rot: [0, 90, 0], scale: 1 } ]
+            mesh: [["res/objs/shapes/square.obj"], { trans:[1.001, 0, 0], rot: [0, 90, 0] } ]
         }
     } },
 }
