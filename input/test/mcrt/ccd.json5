@@ -1,33 +1,32 @@
 {
     tree        : { There   : 'res/tree/t5_d8.json5' },
     grid        : { There   : 'res/grid/10mm_127.json5' },
-    engine      : "Standard",
     sett        : { There   : 'res/sett/mcrt/1e6.json5' },
-    light   : { Here    : {
-        power   : 1e6,
-        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
-        spec    : { Here    : {
-            Uniform :   [450e-9, 850e-9]
-        } },
-        mat     : "air"
-    } },
     mats        : { Here    : {
-        air     : { There    : 'res/mats/misc/air.json5' },
-        fog     : { There    : 'res/mats/misc/fog.json5' },
+        air         : { There   : 'res/mats/misc/air.json5' },
+        dispersion  : { There   : 'res/mats/misc/dispersion.json5' },
     } },
     attrs       : { Here    : {
-        fog     : { Interface   : ['fog', 'air'] },
-        // imager  : { Imager      : ['transmission',  [128, 128], 0.1e-3, [-8e-3, 0, 0], [1, 0, 0]] },
-        imager  : { Ccd         : ['reflection',    [32, 32], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 16]] },
+        dispersion  : { Interface   : ['dispersion', 'air'] },
+        imager  : { Ccd         : ['transmission', [32, 32], 5e-3, [-4.5e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 16]] },
     } },
     surfs       : { Here    : {
         target  : {
-            attr: 'fog',
-            mesh: [["res/objs/shapes/cube.obj"], null ]
+            attr: 'dispersion',
+            mesh: [["res/objs/shapes/cube.obj"], { scale: 4.0e-3 } ]
         },
         screen  : {
             attr: 'imager',
-            mesh: [["res/objs/shapes/square.obj"], { trans:[1.001e-3, 0, 0], rot: [0, 90, 0] } ]
+            mesh: [["res/objs/shapes/square.obj"], { trans: [4.5e-3, 0, 0], rot: [0, 90, 0] } ]
         }
     } },
+    light   : { Here    : {
+        power   : 1e5,
+        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 1e-3 }] },
+        spec    : { Here    : {
+            Uniform :   [440e-9, 700e-9]
+        } },
+        mat     : "air"
+    } },
+    engine      : "Standard",
 }

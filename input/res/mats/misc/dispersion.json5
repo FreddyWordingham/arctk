@@ -1,6 +1,5 @@
 {   // Material optical properties.
     ref_index   : { Constant: 1.0 },
-    scat_coeff  : { Constant: 1.0e0 },
-    abs_coeff   : { Constant: 1.0e0 },
+    scat_coeff  : { Line: [0.0, 1384615385] },
     asym_fact   : { Constant: 0.0 }
 }
