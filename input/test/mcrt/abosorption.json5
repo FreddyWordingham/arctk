@@ -1,18 +1,7 @@
 {
     tree        : { There   : 'res/tree/t5_d8.json5' },
     grid        : { There   : 'res/grid/10mm_127.json5' },
-    engine      : "Standard",
     sett        : { There   : 'res/sett/mcrt/1e6.json5' },
-    light       : { Here    : {
-        power   : 1.0,
-        emit    : { Surface: [['res/objs/shapes/circle.obj'], { trans: [-4.0e-3, 0.0, 0.0], rot: [0.0, 90.0, 0.0], scale: 0.1e-3, } ] },
-        spec    : { Here: {
-            Uniform : [
-                440e-9, 700e-9,
-            ],
-        } },
-        mat     : "air"
-    } },
     mats        : { Here    : {
         air     : { There    : 'res/mats/misc/air.json5' },
         black   : { There    : 'res/mats/misc/black.json5' }
@@ -23,7 +12,18 @@
     surfs       : { Here    : {
         centerpiece : {
             attr: 'black',
-            mesh: [["res/objs/shapes/cube.obj"], { scale: 2.0e-3 } ]
-        }
+            mesh: [["res/objs/shapes/cube.obj"], { scale: 4e-3 } ]
+        },
     } },
+    light       : { Here    : {
+        power   : 1.0,
+        emit    : { Surface: [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 1e-4, } ] },
+        spec    : { Here: {
+            Uniform : [
+                440e-9, 700e-9,
+            ],
+        } },
+        mat     : "air"
+    } },
+    engine      : "Standard",
 }
