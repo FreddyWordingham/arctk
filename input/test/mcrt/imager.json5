@@ -1,24 +1,14 @@
 {
-    tree        : { There   : 'res/tree/t5_d8.json5' },
-    grid        : { There   : 'res/grid/20mm_128.json5' },
-    engine      : "Standard",
-    sett        : { There   : 'res/sett/mcrt/1e6.json5' },
-    light   : { Here    : {
-        power   : 1e6,
-        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-2e-3, 0, 0], rot: [0, 90, 0], scale: 0.9e-3 }] },
-        spec    : { Here    : {
-            Uniform :   [440e-9, 700e-9]
-        } },
-        mat     : "air"
-    } },
+    tree        : { There   : 'res/tree/t5_d6.json5' },
+    grid        : { There   : 'res/grid/10mm_127.json5' },
+    sett        : { There   : 'res/sett/mcrt/1e8.json5' },
     mats        : { Here    : {
-        air     : { There    : 'res/mats/misc/fog.json5' },
+        air     : { There    : 'res/mats/misc/air.json5' },
         water   : { There    : 'res/mats/misc/water.json5' },
     } },
     attrs       : { Here    : {
         water   : { Interface   : ['water', 'air'] },
-        imager  : { Imager      : ['reflection',    [1080, 1080], 10e-3, [-8e-3, 0, 0], [1, 0, 0]] },
-        // imager  : { Ccd         : ['reflection',    [100, 100], 10e-3, [-8e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 100]] },
+        imager  : { Imager      : ['reflection', [1080, 1080], 5e-3, [0, 0, -3e-3], [0, 0, 1]] },
     } },
     surfs       : { Here    : {
         raindrop : {
@@ -27,7 +17,16 @@
         },
         screen  : {
             attr: 'imager',
-            mesh: [["res/objs/shapes/square.obj"], { trans:[-8e-3, 0, 0], rot: [0, 90, 0], scale: 10e-3 } ]
+            mesh: [["res/objs/shapes/square.obj"], { trans: [0, 0, -3e-3], scale: 5e-3 } ]
         }
     } },
+    light   : { Here    : {
+        power   : 1e6,
+        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [0, 0, -1.1e-3], scale: 0.9e-3 }] },
+        spec    : { Here    : {
+            Uniform :   [440e-9, 700e-9]
+        } },
+        mat     : "air"
+    } },
+    engine      : "Standard",
 }

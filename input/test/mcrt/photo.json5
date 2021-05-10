@@ -1,37 +1,40 @@
 {
     tree        : { There   : 'res/tree/t5_d8.json5' },
-    grid        : { There   : 'res/grid/20mm_128.json5' },
-    engine      : "Standard",
+    grid        : { There   : 'res/grid/10mm_127.json5' },
     sett        : { There   : 'res/sett/mcrt/1e6.json5' },
-    light   : { Here    : {
-        power   : 1e0,
-        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-10e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
-        spec    : { There   : 'res/spectra/aktilite.json5' },
-        mat     : "air"
-    } },
     mats        : { Here    : {
-        air     : { There    : 'res/mats/misc/air.json5' }
+        fog     : { There    : 'res/mats/misc/fog.json5' },
+        glass   : { There    : 'res/mats/misc/glass.json5' },
     } },
     attrs       : { Here    : {
-        spectro : { Spectrometer    : ['spectrometer', [100e-9, 1100e-9], 400] },
+        glass   : { Interface : ['glass', 'fog'] },
+        mirror  : { Mirror: 0.5 },
     } },
     surfs       : { Here    : {
         centerpiece : {
-            attr: 'spectro',
-            mesh: [["res/objs/shapes/cube.obj"], { trans: [0.0, 0.0, 0.0], rot:[0.0, 0.0, 0.0], scale: 0.25 } ]
+            attr: 'glass',
+            mesh: [["res/objs/shapes/prism.obj"], { rot: [0, 30, 0], scale: 1e-3 } ]
         }
+    } },
+    light   : { Here    : {
+        power   : 1e6,
+        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
+        spec    : { Here    : {
+            Uniform :   [440e-9, 700e-9]
+        } },
+        mat     : "fog"
     } },
     engine      : { Photo   : {
         pos :   {
             Circle: [
-                [10e-3, 0, 0],
+                [0, 10e-3, 0],
                 [0, 0, 0],
                 [0, 0, 1],
             ]
         },
         tar :   {   Static: [0, 0, 0] },
-        fov     : 1.0,
-        res     : [1024, 1024],
+        fov     : 0.5,
+        res     : [512, 512],
         frames  : 90
     } },
 }

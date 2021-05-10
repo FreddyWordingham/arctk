@@ -21,7 +21,7 @@
         }
     } },
     light   : { Here    : {
-        power   : 1e5,
+        power   : 1e6,
         emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 1e-3 }] },
         spec    : { Here    : {
             Uniform :   [440e-9, 700e-9]
