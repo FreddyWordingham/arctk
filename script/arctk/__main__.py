@@ -21,12 +21,14 @@ def prime_list(min, max):
     return primes
 
 
-def plot(data):
+def plot(data, t):
     print("Plotting")
     print("Min: ", data.min())
     print("Max: ", data.max())
 
     fig = plt.figure(figsize=(6, 3.2))
+    # plt.set_cmap('RdPu')
+    # plt.set_cmap('gist_rainbow')
 
     ax = fig.add_subplot(111)
     plt.imshow(data)
@@ -37,7 +39,6 @@ def plot(data):
     ax.patch.set_alpha(0)
     ax.set_frame_on(False)
 
-    t = 0
     plt.savefig(f"output/noise_{t:03}.png", bbox_inches='tight')
 
 
@@ -49,12 +50,20 @@ def sample(noise, ratios, x, y):
 
 
 def __main__():
-    p = 14
+    p = 10
     nx = 2 ** p
     ny = 2 ** p
-    fx = 2.0 / nx
-    fy = 2.0 / ny
+    sx = 1.0
+    sy = 1.0
+    fx = sx / nx
+    fy = sy / ny
     powers = prime_list(10, 30)
+
+    steps = 1000
+    rate = 0.25
+
+    levels = 4
+    inv_levels = 1.0 / levels
 
     print(f"Resolution {nx} x {ny}")
     print(f"powers: {powers}")
@@ -65,29 +74,32 @@ def __main__():
         noise.append(Perlin(p, int(p * ny / nx)))
         ratios.append(1.0 / p)
 
-    bar = Bar("Sampling", max=ny)
-    samples = np.zeros([nx, ny])
-    for iy in range(ny):
-        y = iy * fy
-        for ix in range(nx):
-            x = ix * fx
-            samples[ix, iy] = sample(noise, ratios, x, y)
-        bar.next()
-    bar.finish()
+    for nt in range(steps):
+        bar = Bar("Sampling", max=ny)
+        samples = np.zeros([nx, ny])
+        for iy in range(ny):
+            y = iy * fy
+            for ix in range(nx):
+                x = ix * fx
+                samples[ix, iy] = sample(noise, ratios, x, y)
+            bar.next()
+        bar.finish()
 
-    min = samples.min()
-    max = samples.max()
-    print("Min: ", min)
-    print("Max: ", max)
+        min = samples.min()
+        max = samples.max()
+        print("Min: ", min)
+        print("Max: ", max)
 
-    samples -= min
-    samples /= (max - min)
+        samples -= min
+        samples /= (max - min)
 
-    for iy in range(ny):
-        for ix in range(nx):
-            samples[ix, iy] = samples[ix, iy] % 0.5
+        for iy in range(ny):
+            for ix in range(nx):
+                samples[ix, iy] = (samples[ix, iy] % inv_levels) * levels
 
-    plot(samples)
+        plot(samples, nt)
+        for (n_map, r) in zip(noise, ratios):
+            n_map.evolve(r * rate)
 
 
 __main__()
