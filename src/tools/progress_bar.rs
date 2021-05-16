@@ -14,7 +14,7 @@ impl ProgressBar {
     /// Construct a new instance.
     #[inline]
     #[must_use]
-    pub fn new(msg: &str, total: usize) -> Self {
+    pub fn new(msg: &'static str, total: usize) -> Self {
         debug_assert!(total > 0);
 
         let pb = indicatif::ProgressBar::new(total as u64);
