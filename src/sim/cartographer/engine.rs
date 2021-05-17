@@ -54,7 +54,7 @@ fn find_mat(input: &Input, pos: &Pos3) -> Option<usize> {
         while grid.contains(ray.pos()) {
             // Loop limit check.
             if num_loops >= loop_limit {
-                println!("[WARN] : Terminating photon: loop limit reached.");
+                println!("[WARN] : Terminating tracer: loop limit reached.");
                 break;
             }
             num_loops += 1;
