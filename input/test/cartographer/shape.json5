@@ -14,7 +14,7 @@
     surfs   : { Here    : {
         object  : {
             attr: 'air_to_plastic',
-            mesh: [['res/objs/shapes/torus.obj'], { scale: 1.0e-2 }]
+            mesh: [['res/objs/shapes/torus.obj'], { scale: 0.25e-2 }]
         },
     } },
 }
