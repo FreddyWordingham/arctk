@@ -1,0 +1,17 @@
+{
+    sett    : { Here    : {
+        time        :   1800,
+        dumps       :   7,
+        quality     :   0.9,
+        block_size  :   1e4,
+    } },
+    grid    : { Here    : {
+        boundary: {
+            mins: [ 0,  0,  0],
+            maxs: [10, 10, 10],
+        },
+        res: [100, 100, 100],
+    } },
+    init    : "res/maps/cube_100.nc",
+    coeffs  : "res/maps/tenth.nc",
+}

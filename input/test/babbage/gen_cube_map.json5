@@ -1,0 +1,17 @@
+{
+    ops: [
+        [   "cube",
+            { Fill  : {
+                res     : [100, 100, 100],
+                mins    : [ 25,  25,  25],
+                maxs    : [ 74,  74,  74]
+            } }
+        ],
+        [   "norm_cube",
+            { Norm  : "../output/cube.nc" } ],
+        [   "cube_100",
+            { Mult  : ["../output/norm_cube.nc", 100] } ],
+        [   "info",
+            { Info  : "../output/cube_100.nc" } ]
+    ]
+}
