@@ -1,0 +1,10 @@
+{
+    ops: [
+        [   "point",                                // Create new point cube
+            { Point : [101, 101, 101] } ],
+        [   "point_50",                             // Scale the values
+            { Mult  : ["../output/point.nc", 50.0] } ],
+        [   "info",
+            { Info  : "../output/point_50.nc" } ]   // Analyse the generated file
+    ]
+}
