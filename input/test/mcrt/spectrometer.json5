@@ -1,14 +1,7 @@
 {
     tree        : { There   : 'res/tree/t5_d8.json5' },
-    grid        : { There   : 'res/grid/20mm_128.json5' },
-    engine      : "Standard",
+    grid        : { There   : 'res/grid/10mm_127.json5' },
     sett        : { There   : 'res/sett/mcrt/1e6.json5' },
-    light   : { Here    : {
-        power   : 1e0,
-        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-10e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
-        spec    : { There   : 'res/spectra/aktilite.json5' },
-        mat     : "air"
-    } },
     mats        : { Here    : {
         air     : { There    : 'res/mats/misc/air.json5' }
     } },
@@ -21,4 +14,11 @@
             mesh: [["res/objs/shapes/cube.obj"], { scale: 1.0e-3 } ]
         }
     } },
+    light   : { Here    : {
+        power   : 1e0,
+        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
+        spec    : { There   : 'res/spectra/aktilite.json5' },
+        mat     : "air"
+    } },
+    engine      : "Standard",
 }
