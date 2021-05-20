@@ -3,7 +3,7 @@
     grid    : { There   : 'res/grid/4mm_255.json5' },
     sett    : { There   : 'res/sett/cartographer/fine_soft.json5' },
     attrs   : { Here    : {
-        air_to_plastic  : { Interface   : ['platic', 'air'] },
+        air_to_plastic  : { Interface   : ['plastic', 'air'] },
     } },
     surfs   : { Here    : {
         object  : {
