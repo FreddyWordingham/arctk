@@ -1,6 +1,6 @@
 {
     tree    : { There   : 'res/tree/t5_d6.json5' },
-    grid    : { There   : 'res/grid/10mm_127.json5' },
+    grid    : { There   : 'res/grid/4mm_200.json5' },
     sett    : { Here    : {
         block_size      : 1e3,
         bump_dist       : 1e-9,
@@ -14,7 +14,7 @@
     surfs   : { Here    : {
         object  : {
             attr: 'air_to_plastic',
-            mesh: [['res/objs/shapes/torus.obj'], { scale: 0.25e-2 }]
+            mesh: [['res/objs/shapes/cylinder.obj'], { scale: 1e-3 }]
         },
     } },
 }
