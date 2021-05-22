@@ -1,10 +1,5 @@
 {
-    sett    : { Here    : {
-        time        :   1800,                   // Time (s).
-        dumps       :   7,                     // Intermediate dumps.
-        quality     :   0.9,                    // Quality parameter.
-        block_size  :   1e4,                    // Block size.
-    } },
+    sett    : { There   : 'res/sett/diffuse/30min_high.json5' },
     grid    : { Here    : {
         boundary: {                             // Boundary limits.
             mins: [ 0.0e-3,  0.0e-3,  0.0e-3],  // Minimum bound.

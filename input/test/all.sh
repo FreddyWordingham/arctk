@@ -1,16 +1,16 @@
-# read -rsp $'Babbage Test: generate filled map\nPress any key to continue...' -n1 key;
-# babbage output/tmp input/ test/babbage/gen_nano_map.json5;
-# mv output/tmp/nano.nc input/res/maps/;
+read -rsp $'Babbage Test: generate filled map\nPress any key to continue...' -n1 key;
+babbage output/tmp input/ test/babbage/gen_nano_map.json5;
+mv output/tmp/nano.nc input/res/maps/;
 
-# read -rsp $'Babbage Test: generate point map\nPress any key to continue...' -n1 key;
-# babbage output/tmp input/ test/babbage/gen_point_map.json5;
-# mv output/tmp/point_50.nc input/res/maps/;
+read -rsp $'Babbage Test: generate point map\nPress any key to continue...' -n1 key;
+babbage output/tmp input/ test/babbage/gen_point_map.json5;
+mv output/tmp/point_50.nc input/res/maps/;
 
 read -rsp $'Cartographer Test: torus knot interior volume map\nPress any key to continue...' -n1 key;
-cartographer output input/ test/cartographer/shape.json5
+cartographer output/test/cartographer input/ test/cartographer/shape.json5
 
-# read -rsp $'Press any key to continue...\n' -n1 key;
-# diffuse output input/ test/diffuse/point.json5;
+read -rsp $'Diffuse Test: heat kernel\nPress any key to continue...' -n1 key;
+diffuse output/test/diffuse input/ test/diffuse/kernel.json5;
 
 # read -rsp $'Press any key to continue...\n' -n1 key;
 # babbage output input/ test/babbage/gen_tenth_map.json5;
