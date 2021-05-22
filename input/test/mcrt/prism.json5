@@ -1,0 +1,34 @@
+{
+    tree        : { There   : 'res/tree/t5_d8.json5' },
+    grid        : { There   : 'res/grid/10mm_127.json5' },
+    sett        : { There   : 'res/sett/mcrt/1e6.json5' },
+    mats        : { Here    : {
+        air     : { There   : 'res/mats/misc/air.json5' },
+        glass   : { There   : 'res/mats/misc/refractive_glass.json5' },
+    } },
+    attrs       : { Here    : {
+        glass   : { Interface   : ['glass', 'air'] },
+        // imager  : { Ccd         : ['transmission', [32, 32], 5e-3, [-4.5e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 16]] },
+        imager  : { Imager      : ['transmission', [1024, 1024], 5e-3, [-4.5e-3, 0, 0], [1, 0, 0]] },
+    } },
+    surfs       : { Here    : {
+        target  : {
+            attr: 'glass',
+            mesh: [["res/objs/shapes/prism.obj"], { scale: 2.0e-3 } ]
+        },
+        screen  : {
+            attr: 'imager',
+            mesh: [["res/objs/shapes/square.obj"], { trans: [4.5e-3, 0, 0], rot: [0, 90, 0] } ]
+        }
+    } },
+    light   : { Here    : {
+        power   : 1e3,
+        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
+        spec    : { Here    : {
+            Points  :   [445e-9, 500e-9, 550e-9, 600e-9, 650e-9, 700e-9],
+            // Uniform :   [440e-9, 700e-9]
+        } },
+        mat     : "air"
+    } },
+    engine      : "Standard",
+}
