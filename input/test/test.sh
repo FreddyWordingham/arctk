@@ -19,8 +19,8 @@ babbage output/tmp input/ test/babbage/gen_cube_map.json5;
 mv output/cube_100.nc input/res/maps/;
 diffuse output/test/diffuse/cube input/ test/diffuse/cube.json5;
 
-# read -rsp $'Press any key to continue...\n' -n1 key;
-# flask output input/ test/flask/chain.json5;
+read -rsp $'Diffuse Test: heat cube\nPress any key to continue...' -n1 key;
+flask output/test/flask/simple input/ test/flask/simple.json5;
 
 # read -rsp $'Press any key to continue...\n' -n1 key;
 # mcrt output input/ test/mcrt/absorption.json5;

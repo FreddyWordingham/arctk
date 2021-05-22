@@ -6,7 +6,7 @@
         },
         res: [100, 100, 100],
     } },
-    init    : "res/maps/cube_100.nc",
     sett    : { There   : 'res/sett/diffuse/1min_high.json5' },
+    init    : "res/maps/cube_100.nc",
     coeffs  : "res/maps/tenth.nc",
 }
