@@ -8,10 +8,10 @@
             } }
         ],
         [   "norm_cube",
-            { Norm  : "../output/cube.nc" } ],
+            { Norm  : "../output/tmp/cube.nc" } ],
         [   "cube_100",
-            { Mult  : ["../output/norm_cube.nc", 100] } ],
+            { Mult  : ["../output/tmp/norm_cube.nc", 100] } ],
         [   "info",
-            { Info  : "../output/cube_100.nc" } ]
+            { Info  : "../output/tmp/cube_100.nc" } ]
     ]
 }

@@ -3,8 +3,8 @@
         [   "unit",
             { Unit  : [100, 100, 100] } ],
         [   "tenth",
-            { Mult  : ["../output/unit.nc", 0.1] } ],
+            { Mult  : ["../output/tmp/unit.nc", 0.1] } ],
         [   "info",
-            { Info  : "../output/tenth.nc" } ]
+            { Info  : "../output/tmp/tenth.nc" } ]
     ]
 }

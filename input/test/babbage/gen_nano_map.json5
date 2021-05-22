@@ -1,10 +1,10 @@
 {
     ops: [
-        [   "unit",                             // Output filename
+        [   "unit",                             // output filename
             { Unit  : [101, 101, 101] } ],      // Create new unit cube
         [   "nano",                             // Scale the values
-            { Mult  : ["../output/unit.nc", 1.0e-9] } ],
+            { Mult  : ["../output/tmp/unit.nc", 1.0e-9] } ],
         [   "info",
-            { Info  : "../output/nano.nc" } ]   // Analyse the generated file
+            { Info  : "../output/tmp/nano.nc" } ]   // Analyse the generated file
     ]
 }
