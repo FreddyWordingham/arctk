@@ -6,7 +6,7 @@
         },
         res: [101, 101, 101],               // Grid resolution in [x,y,z].
     } },
-    sett    : { There   : 'res/sett/reactor/30min_high.json5' },
+    sett    : { There   : 'res/sett/reactor/30min_low.json5' },
     coeffs_values_sources   : { Here    : {
         "A"   :   [
             "res/maps/nano.nc",
