@@ -1,12 +1,12 @@
 {
     grid    : { Here    : {
-        boundary: {                             // Boundary limits.
-            mins: [ 0.0e-3,  0.0e-3,  0.0e-3],  // Minimum bound.
-            maxs: [10.0e-3, 10.0e-3, 10.0e-3],  // Maximum bound.
+        boundary: {                         // Boundary limits.
+            mins: [    0,     0,     0],    // Minimum bound.
+            maxs: [10e-3, 10e-3, 10e-3],    // Maximum bound.
         },
-        res: [101, 101, 101],                   // Grid resolution in [x,y,z].
+        res: [101, 101, 101],               // Grid resolution in [x,y,z].
     } },
     sett    : { There   : 'res/sett/diffuse/30min_high.json5' },
-    init    : "res/maps/point_50.nc",           // Initial value map.
-    coeffs  : "res/maps/nano.nc",               // Diffusion coefficient map.
+    init    : "res/maps/point_50.nc",       // Initial value map.
+    coeffs  : "res/maps/nano.nc",           // Diffusion coefficient map.
 }

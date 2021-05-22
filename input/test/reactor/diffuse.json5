@@ -1,14 +1,12 @@
 {
-    grid    : { There   : 'res/grid/10mm_101.json5' },
-    sett    : { Here    : {
-        time            :   1800,       // Total integration time (s).
-        dumps           :   7,          // Intermediate outputs.
-        d_block_size    :   1e4,        // Diffusion block size.
-        r_block_size    :   1e3,        // Reaction block size.
-        d_quality       :   0.9,        // Diffusion quality parameter (0-1).
-        r_quality       :   0.9,        // Reaction quality parameter (0-1).
-        min_time        :   1.0e-3,     // Minimum reaction time step size (s).
+    grid    : { Here    : {
+        boundary: {                         // Boundary limits.
+            mins: [    0,     0,     0],    // Minimum bound.
+            maxs: [10e-3, 10e-3, 10e-3],    // Maximum bound.
+        },
+        res: [101, 101, 101],               // Grid resolution in [x,y,z].
     } },
+    sett    : { There   : 'res/sett/reactor/30min_high.json5' },
     coeffs_values_sources   : { Here    : {
         "A"   :   [
             "res/maps/nano.nc",
