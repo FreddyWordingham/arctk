@@ -1,0 +1,22 @@
+
+{
+    sett    : { There   : 'res/sett/flask/25sec_high.json5' },
+    init    : [
+        ["A", 1.0],
+        ["B", 4.0],
+    ],
+    sources : [
+    ],
+    reactor: { Here     : [
+        {
+            rate        : [0.3, [["A", 1]]],
+            reactants   : [["A", 1]],
+            products    : [["B", 1]],
+        },
+        {
+            rate        : [0.5, [["B", 1]]],
+            reactants   : [["B", 1]],
+            products    : [["A", 1]],
+        }
+    ] }
+}
