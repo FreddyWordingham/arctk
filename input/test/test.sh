@@ -14,9 +14,9 @@
 
 # read -rsp $'Diffuse Test: heat cube\nPress any key to continue...' -n1 key;
 # babbage output/tmp input/ test/babbage/gen_tenth_map.json5;
-# mv output/tenth.nc input/res/maps/;
-# babbage output/tmp input/ test/babbage/gen_cube_map.json5;
-# mv output/cube_100.nc input/res/maps/;
+# mv output/tmp/tenth.nc input/res/maps/;
+# babbage output/tmp input/ test/babbage/gen_cube_100_map.json5;
+# mv output/tmp/cube_100.nc input/res/maps/;
 # diffuse output/test/diffuse/cube input/ test/diffuse/cube.json5;
 
 # read -rsp $'Flask Test: simple reaction\nPress any key to continue...' -n1 key;
@@ -44,10 +44,15 @@
 # # flask output/test/flask/sink input/ test/flask/sink.json5;
 # python3 input/plot.py output/test/flask/sink/values.csv
 
-read -rsp $'Reactor Test: diffusion\nPress any key to continue...' -n1 key;
-babbage output/tmp input/ test/babbage/gen_unit_101_map.json5;
-mv output/tmp/unit_101.nc input/res/maps/;
-reactor output/test/reactor/diffuse input/ test/reactor/diffuse.json5
+# read -rsp $'Reactor Test: diffusion\nPress any key to continue...' -n1 key;
+# babbage output/tmp input/ test/babbage/gen_unit_101_map.json5;
+# mv output/tmp/unit_101.nc input/res/maps/;
+# reactor output/test/reactor/diffuse input/ test/reactor/diffuse.json5
+
+read -rsp $'Reactor Test: duel\nPress any key to continue...' -n1 key;
+babbage output/tmp input/ test/babbage/gen_cube_101_map.json5;
+mv output/tmp/cube_101.nc input/res/maps/;
+reactor output/test/reactor/duel input/ test/reactor/duel.json5
 
 
 # read -rsp $'Press any key to continue...\n' -n1 key;
