@@ -1,6 +1,6 @@
 {
-    tree        : { There   : 'res/tree/t5_d6.json5' },
-    grid        : { There   : 'res/grid/10mm_127.json5' },
+    tree        : { There   : 'res/tree/t5_d10.json5' },
+    grid        : { There   : 'res/grid/20mm_127.json5' },
     sett        : { There   : 'res/sett/mcrt/1e6.json5' },
     mats        : { Here    : {
         air     : { There    : 'res/mats/misc/air.json5' },
@@ -11,24 +11,24 @@
         imager  : { Imager      : [
             'reflection',   // Image name
             [1080, 1080],   // Resolution
-            5e-3,           // Sceen width (m)
-            [0, 0, -3e-3],  // Translation (m)
+            10e-3,           // Sceen width (m)
+            [0, 0, -5e-3],  // Translation (m)
             [0, 0, 1]       // Orientation
         ] },
     } },
     surfs       : { Here    : {
         raindrop : {
             attr: 'water',
-            mesh: [["res/objs/shapes/sphere.obj"], { scale: 1e-3 } ]
+            mesh: [["res/objs/shapes/sphere.obj"], { scale: 0.01e-3 } ]
         },
         screen  : {
             attr: 'imager',
-            mesh: [["res/objs/shapes/square.obj"], { trans: [0, 0, -3e-3], scale: 5e-3 } ]
+            mesh: [["res/objs/shapes/square.obj"], { trans: [0, 0, -5e-3], scale: 10e-3 } ]
         }
     } },
     light   : { Here    : {
         power   : 1e6,
-        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [0, 0, -1.1e-3], scale: 0.9e-3 }] },
+        emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [0, 0, -1.1e-3], scale: 0.01e-3 }] },
         spec    : { Here    : {
             Uniform :   [440e-9, 700e-9]
         } },
