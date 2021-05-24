@@ -5,6 +5,9 @@ babbage output/tmp input/ inv/babbage/build_map_diff_oxy.json5;
 mv output/tmp/diff_oxy.nc input/res/maps/;
 babbage output/tmp input/ inv/babbage/build_map_source_oxy.json5;
 mv output/tmp/source_oxy.nc input/res/maps/;
+diffuse output/inv/diffuse/oxy input/ inv/diffuse/oxy.json5;
+mv output/inv/diffuse/oxy/099_diff.nc input/res/maps/init_oxy.nc;
+
 
 # cp output/source_oxy.nc input/res/maps/;
 # diffuse input/ output/diffuse/oxy diffuse/oxy.json5;
