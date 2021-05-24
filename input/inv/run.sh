@@ -1,20 +1,22 @@
 #   Oxygen setup.
-cartographer input output/cartographer/skin cartographer/skin.json5;
-babbage input/ output/ babbage/build_map_diff_oxy.json5;
-cp output/diff_oxy.nc input/res/maps/;
-babbage input/ output/ babbage/build_map_source_oxy.json5;
-cp output/source_oxy.nc input/res/maps/;
-diffuse input/ output/diffuse/oxy diffuse/oxy.json5;
-cp output/diffuse/oxy/008_diff.nc input/res/maps/init_oxy.nc;
-touch done_oxy.txt;
+read -rsp $'Setup: oxygen diffusion\nPress any key to continue...' -n1 key;
+cartographer output/inv/cartographer/skin input/ inv/cartographer/skin.json5;
+babbage output/tmp input/ inv/babbage/build_map_diff_oxy.json5;
+mv output/tmp/diff_oxy.nc input/res/maps/;
 
-#   ALA setup.
-cartographer input output/cartographer/cream cartographer/cream.json5;
-babbage input/ output/ babbage/build_map_init_ala.json5;
-cp output/init_ala.nc input/res/maps/;
-babbage input/ output/ babbage/build_map_diff_ala.json5;
-cp output/diff_ala.nc input/res/maps/;
-touch done_ala.txt
+# babbage input/ output/ babbage/build_map_source_oxy.json5;
+# cp output/source_oxy.nc input/res/maps/;
+# diffuse input/ output/diffuse/oxy diffuse/oxy.json5;
+# cp output/diffuse/oxy/008_diff.nc input/res/maps/init_oxy.nc;
+# touch done_oxy.txt;
+
+# #   ALA setup.
+# cartographer input output/cartographer/cream cartographer/cream.json5;
+# babbage input/ output/ babbage/build_map_init_ala.json5;
+# cp output/init_ala.nc input/res/maps/;
+# babbage input/ output/ babbage/build_map_diff_ala.json5;
+# cp output/diff_ala.nc input/res/maps/;
+# touch done_ala.txt
 
 
 # #   Shallow tumour
