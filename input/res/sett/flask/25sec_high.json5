@@ -1,6 +1,6 @@
 {
-    time        :   25.0,
-    dumps       :   248,
+    time        :   25,
+    dumps       :   98,
     quality     :   0.99,
     min_time    :   1e-9
 }
