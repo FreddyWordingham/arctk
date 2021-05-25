@@ -1,0 +1,24 @@
+[
+    {   /// Char time: 3 hrs.
+        rate        : [9.25925926e-5,   [["ala", 1]]],
+        reactants   : [["ala", 8]],
+        products    : [["ppix", 1]],
+    },
+    {   /// Char time: 1 millisecond.
+        rate        : [1e4,   [["oxy", 1], ["udens", 1], ["ppix", 1]]],
+        // rate        : [0.00111111111,   [["oxy", 1], ["udens", 1], ["ppix", 1]]],
+        reactants   : [
+            ["oxy",     1.0],
+            ["ppix",    0.4],
+        ],
+        products    : [
+            ["radical", 1.0],
+            // ["ppix",    0.9],
+        ],
+    },
+    // {   /// Char time: 15 min.
+    //     rate        : [0.00111111111,   [["radical", 1]]],
+    //     reactants   : [["radical", 1]],
+    //     products    : [["necro", 1]],
+    // },
+]

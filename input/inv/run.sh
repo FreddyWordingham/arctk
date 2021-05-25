@@ -21,9 +21,9 @@ mv output/tmp/diff_ala.nc input/res/maps/;
 read -rsp $'Shallow tumour: PpIX profile\nPress any key to continue...' -n1 key;
 cartographer output/inv/cartographer/tumour_shallow input/ inv/cartographer/tumour_shallow.json5;
 babbage output/tmp input/ inv/babbage/build_map_multipliers_tumour_shallow.json5;
-# cp output/multipliers_shallow.nc input/res/maps/;
-# cp output/cartographer/tumour_shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
-# reactor input/ output/reactor/ppix/shallow reactor/ppix_shallow.json5;
+mv output/tmp/multipliers_shallow.nc input/res/maps/;
+mv output/inv/cartographer/tumour/shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
+reactor output/inv/reactor/ppix/shallow input/ inv/reactor/ppix_shallow.json5;
 # cp output/reactor/ppix/shallow/008_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc
 # cp output/reactor/ppix/shallow/008_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc
 
