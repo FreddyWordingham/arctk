@@ -1,0 +1,14 @@
+{
+    tree    : { There   : 'res/tree/t5_d8.json5' },
+    grid    : { There   : 'res/grid/16mm_master.json5' },
+    sett    : { There   : 'res/sett/cartographer/radient_high.json5' },
+    attrs   : { Here   : {
+        air_to_cream    : { Interface   : ['cream', 'air'] },
+    } },
+    surfs   : { Here    : {
+        cream   : {
+            attr: 'air_to_cream',
+            mesh: [['res/objs/pdt/cream.obj'], { scale:1.0e-3 } ]
+        },
+    } },
+}

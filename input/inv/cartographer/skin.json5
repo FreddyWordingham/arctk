@@ -1,13 +1,7 @@
 {
     tree    : { There   : 'res/tree/t5_d8.json5' },
     grid    : { There   : 'res/grid/16mm_master.json5' },
-    sett    : { Here    : {
-        block_size      : 1e3,
-        bump_dist       : 1e-9,
-        loop_limit      : 1e4,
-        caster          : { Radiant: 101 },
-        super_sampling  : { Uniform: [16, 16, 16] }
-    } },
+    sett    : { There   : 'res/sett/cartographer/radient_high.json5' },
+    attrs   : { There   : 'models/skin/attributes.json5' },
     surfs   : { There   : 'models/skin/surfaces.json5' },
-    attrs   : { There   : 'models/skin/attributes.json5' }
 }

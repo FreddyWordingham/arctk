@@ -1,0 +1,18 @@
+
+{
+    ops: [
+        [
+            "cream_unit",
+            { Norm  : "../output/inv/cartographer/cream/map_{cream}.nc" }
+        ],
+        [
+            "init_ala",
+            // { Mult      : ["../output/cream_unit.nc", 7.17e20] } // Particles.
+            { Mult      : ["../output/tmp/cream_unit.nc", 1.12e-3] } // Moles.
+        ],
+        [
+            "info",
+            { Info    : "../output/tmp/init_ala.nc" }
+        ]
+    ]
+}
