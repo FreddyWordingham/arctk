@@ -27,12 +27,13 @@ reactor output/inv/reactor/ppix/shallow input/ inv/reactor/ppix_shallow.json5;
 mv output/inv/reactor/ppix/shallow/099_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
 mv output/inv/reactor/ppix/shallow/099_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
 
-# #   PDT phase.
-# mcrt input/ output/mcrt/shallow mcrt/tumour_shallow.json5;
-# cp output/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
-# reactor input/ output/reactor/pdt/shallow reactor/pdt_shallow.json5;
-# babbage input/ output/ babbage/build_map_tumour_shallow_kill.json5;
-# touch done_tumour_shallow.txt
+#   PDT phase.
+read -rsp $'Shallow tumour: PDT phase\nPress any key to continue...' -n1 key;
+mcrt output/inv/mcrt/shallow input/ inv/mcrt/tumour/shallow.json5;
+cp output/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
+reactor input/ output/reactor/pdt/shallow reactor/pdt_shallow.json5;
+babbage input/ output/ babbage/build_map_tumour_shallow_kill.json5;
+touch done_tumour_shallow.txt
 
 
 # #   Thick tumour
