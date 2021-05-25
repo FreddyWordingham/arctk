@@ -1,6 +1,6 @@
 [
-    {   /// Char time: 3 hrs.
-        rate        : [9.25925926e-5,  [["ala", 1]]],
+    {   /// Char time: 1 hrs. (Apply 3hrs before treatment)
+        rate        : [0.000277777778,  [["ala", 1]]],
         reactants   : [["ala", 8]],
         products    : [["ppix", 1]],
     }
