@@ -1,0 +1,17 @@
+[
+    {   /// Char time: 1 hrs. (Apply 3hrs before treatment)
+        rate        : [0.000277777778,  [["ala", 1]]],
+        reactants   : [["ala", 8]],
+        products    : [["ppix", 1]],
+    },
+    {   /// Char time: 1 hrs. (Apply 3hrs before treatment)
+        rate        : [0.000277777778,  [["ppix", 1], ["fe", 1]]],
+        reactants   : [["ppix", 1], ["fe", 1]],
+        products    : [["haem", 1]],
+    },
+    {   /// Char time: 1 hrs. (Apply 3hrs before treatment)
+        rate        : [0.000277777778,  [["chelt", 1], ["fe", 1]]],
+        reactants   : [["chelt", 1], ["fe", 1]],
+        products    : [["x", 1]],
+    }
+]
