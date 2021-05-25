@@ -24,8 +24,8 @@ babbage output/tmp input/ inv/babbage/build_map_multipliers_tumour_shallow.json5
 mv output/tmp/multipliers_shallow.nc input/res/maps/;
 mv output/inv/cartographer/tumour/shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
 reactor output/inv/reactor/ppix/shallow input/ inv/reactor/ppix_shallow.json5;
-# cp output/reactor/ppix/shallow/008_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc
-# cp output/reactor/ppix/shallow/008_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc
+mv output/inv/reactor/ppix/shallow/099_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
+mv output/inv/reactor/ppix/shallow/099_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
 
 # #   PDT phase.
 # mcrt input/ output/mcrt/shallow mcrt/tumour_shallow.json5;
