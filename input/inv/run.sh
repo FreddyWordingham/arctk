@@ -17,15 +17,9 @@ babbage output/tmp input/ inv/babbage/build_map_diff_ala.json5;
 mv output/tmp/diff_ala.nc input/res/maps/;
 
 
-# #   ALA setup.
-# babbage input/ output/ babbage/build_map_diff_ala.json5;
-# cp output/diff_ala.nc input/res/maps/;
-# touch done_ala.txt
-
-
-# #   Shallow tumour
-# #   PpIX setup.
-# cartographer input output/cartographer/tumour_shallow cartographer/tumour_shallow.json5;
+#   Shallow tumour
+read -rsp $'Shallow tumour: PpIX profile\nPress any key to continue...' -n1 key;
+cartographer output/inv/cartographer/tumour_shallow input/ inv/cartographer/tumour_shallow.json5;
 # babbage input/ output/ babbage/build_map_multipliers_tumour_shallow.json5;
 # cp output/multipliers_shallow.nc input/res/maps/;
 # cp output/cartographer/tumour_shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
