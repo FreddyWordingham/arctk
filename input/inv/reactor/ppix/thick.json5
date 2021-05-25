@@ -1,0 +1,18 @@
+{
+    grid    : { There   : 'res/grid/16mm_master.json5' },
+    sett    : { There   : 'res/sett/reactor/30min_low.json5' },
+    coeffs_values_sources   : { Here    : {
+        "ala"   :   [
+            "res/maps/diff_ala.nc",
+            "res/maps/init_ala.nc",
+            null
+        ],
+        // "ppix"   :   [
+        //     "res/maps/diff_ala.nc",
+        //     null,
+        //     null
+        // ]
+    } },
+    multipliers : "res/maps/multipliers_thick.nc",
+    reactor: { There    : "res/reactions/ppix.json5" }
+}

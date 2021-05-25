@@ -23,15 +23,15 @@ cartographer output/inv/cartographer/tumour_shallow input/ inv/cartographer/tumo
 babbage output/tmp input/ inv/babbage/build_map_multipliers_tumour_shallow.json5;
 mv output/tmp/multipliers_shallow.nc input/res/maps/;
 mv output/inv/cartographer/tumour/shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
-reactor output/inv/reactor/ppix/shallow input/ inv/reactor/ppix_shallow.json5;
+reactor output/inv/reactor/ppix/shallow input/ inv/reactor/ppix/shallow.json5;
 mv output/inv/reactor/ppix/shallow/099_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
 mv output/inv/reactor/ppix/shallow/099_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
 
 #   PDT phase.
 read -rsp $'Shallow tumour: PDT phase\nPress any key to continue...' -n1 key;
 mcrt output/inv/mcrt/shallow input/ inv/mcrt/tumour/shallow.json5;
-cp output/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
-reactor input/ output/reactor/pdt/shallow reactor/pdt_shallow.json5;
+mv output/inv/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
+reactor output/inv/reactor/pdt/shallow input/ inv/reactor/pdt/shallow.json5;
 babbage input/ output/ babbage/build_map_tumour_shallow_kill.json5;
 touch done_tumour_shallow.txt
 
