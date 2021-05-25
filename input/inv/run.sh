@@ -13,17 +13,11 @@ read -rsp $'Setup: ALA diffusion\nPress any key to continue...' -n1 key;
 cartographer output/inv/cartographer/cream input/ inv/cartographer/cream.json5;
 babbage output/tmp input/ inv/babbage/build_map_init_ala.json5;
 mv output/tmp/init_ala.nc input/res/maps/;
+babbage output/tmp input/ inv/babbage/build_map_diff_ala.json5;
+mv output/tmp/diff_ala.nc input/res/maps/;
 
-# mv output/tmp/diff_oxy.nc input/res/maps/;
-# babbage output/tmp input/ inv/babbage/build_map_source_oxy.json5;
-# mv output/tmp/source_oxy.nc input/res/maps/;
-# diffuse output/inv/diffuse/oxy input/ inv/diffuse/oxy.json5;
-# mv output/inv/diffuse/oxy/099_diff.nc input/res/maps/init_oxy.nc;
 
 # #   ALA setup.
-# cartographer input output/cartographer/cream cartographer/cream.json5;
-# babbage input/ output/ babbage/build_map_init_ala.json5;
-# cp output/init_ala.nc input/res/maps/;
 # babbage input/ output/ babbage/build_map_diff_ala.json5;
 # cp output/diff_ala.nc input/res/maps/;
 # touch done_ala.txt
