@@ -32,8 +32,7 @@ read -rsp $'Shallow tumour: PDT phase\nPress any key to continue...' -n1 key;
 mcrt output/inv/mcrt/shallow input/ inv/mcrt/tumour/shallow.json5;
 mv output/inv/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
 reactor output/inv/reactor/pdt/shallow input/ inv/reactor/pdt/shallow.json5;
-babbage input/ output/ babbage/build_map_tumour_shallow_kill.json5;
-touch done_tumour_shallow.txt
+babbage output/tmp input/ inv/babbage/build_map_tumour_shallow_kill.json5;
 
 
 # #   Thick tumour

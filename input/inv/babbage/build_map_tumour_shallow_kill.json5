@@ -1,0 +1,20 @@
+{
+    ops: [
+        [
+            "critical_shallow",
+            { Div       : ["../output/inv/reactor/pdt/shallow/099_{radical}_diff.nc", 1.0e-11] }
+        ],
+        [
+            "diff_shallow",
+            { Remove    : ["res/maps/tumour_shallow.nc", "../output/tmp/critical_shallow.nc"] }
+        ],
+        [
+            "kill_zone_shallow",
+            { Clamp     : ["../output/tmp/diff_shallow.nc", 0.0, 1.0] }
+        ],
+        [
+            "info",
+            { Info    : "../output/tmp/kill_zone_shallow.nc" }
+        ]
+    ]
+}
