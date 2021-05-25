@@ -1,0 +1,15 @@
+{
+    tree    : { There   : 'res/tree/t5_d8.json5' },
+    grid    : { There   : 'res/grid/16mm_master.json5' },
+    sett    : { There   : 'res/sett/mcrt/1e6.json5' },
+    mats    : { There   : 'models/tumour/thick/materials.json5' },
+    attrs   : { There   : 'models/tumour/thick/attributes.json5' },
+    surfs   : { There   : 'models/tumour/thick/surfaces.json5' },
+    light   : { There   : 'models/pdt/light.json5' },
+    engine  : { Fluorescence : [
+        'res/maps/init_ppix_thick.nc',
+        {
+            There: 'res/spectra/ppix.json5'
+        }
+    ] },
+}
