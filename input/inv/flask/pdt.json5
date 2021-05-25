@@ -1,6 +1,5 @@
 {
-    sett    : { There   : 'res/sett/flask/5min_high.json5' },
-    // sett    : { There   : 'res/sett/flask/25sec_high.json5' },
+    sett    : { There   : 'res/sett/flask/10min_high.json5' },
     init    : [
         ["ala",     0],
         ["ppix",    1],

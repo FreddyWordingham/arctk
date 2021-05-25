@@ -1,5 +1,5 @@
 {
-    sett    : { There   : 'res/sett/flask/30min_high.json5' },
+    sett    : { There   : 'res/sett/flask/3hr_high.json5' },
     init    : [
         ["ala", 1.0]
     ],

@@ -1,6 +1,7 @@
 [
     {   /// Char time: 1 hrs. (Apply 3hrs before treatment)
-        rate        : [0.000277777778,  [["ala", 1]]],
+        // rate        : [0.000277777778,  [["ala", 1]]], // tau = 1hr
+        rate        : [9.25925926e-5,  [["ala", 1]]], // tau = 3hrs
         reactants   : [["ala", 8]],
         products    : [["ppix", 1]],
     }
