@@ -14,11 +14,11 @@ mv output/tmp/diff_chelt.nc input/res/maps/;
 # read -rsp $'Shallow tumour: Chelated PpIX profile\nPress any key to continue...' -n1 key;
 touch 5a_Setup__Chelt_PPIX_generation.txt;
 reactor output/inv/reactor/haem/shallow input/ inv/reactor/haem/shallow.json5;
-# mv output/inv/reactor/haem/shallow/099_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
-# mv output/inv/reactor/haem/shallow/099_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
-# mv output/inv/reactor/haem/shallow/099_\{fe\}_diff.nc input/res/maps/init_fe_shallow.nc;
-# mv output/inv/reactor/haem/shallow/099_\{chelt\}_diff.nc input/res/maps/init_haem_shallow.nc;
-# mv output/inv/reactor/haem/shallow/099_\{haem\}_diff.nc input/res/maps/init_haem_shallow.nc;
+mv output/inv/reactor/haem/shallow/099_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
+mv output/inv/reactor/haem/shallow/099_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
+mv output/inv/reactor/haem/shallow/099_\{fe\}_diff.nc input/res/maps/init_fe_shallow.nc;
+mv output/inv/reactor/haem/shallow/099_\{chelt\}_diff.nc input/res/maps/init_haem_shallow.nc;
+mv output/inv/reactor/haem/shallow/099_\{haem\}_diff.nc input/res/maps/init_haem_shallow.nc;
 
 # #   PDT phase.
 # # read -rsp $'Shallow tumour: PDT phase\nPress any key to continue...' -n1 key;
