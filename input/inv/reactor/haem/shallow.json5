@@ -7,12 +7,17 @@
             "res/maps/init_ala.nc",
             null
         ],
+        "fe"    : [
+            null,
+            "res/maps/init_fe.nc",
+            null
+        ],
         "chelt" : [
             "res/maps/diff_chelt.nc",
             "res/maps/init_chelt.nc",
             null
         ]
     } },
-    multipliers : "res/maps/multipliers_thick.nc",
+    multipliers : "res/maps/multipliers_shallow.nc",
     reactor: { There    : "res/reactions/haem.json5" }
 }
