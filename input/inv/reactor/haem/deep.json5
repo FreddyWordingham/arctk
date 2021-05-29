@@ -18,6 +18,6 @@
             null
         ]
     } },
-    multipliers : "res/maps/multipliers_thick.nc",
+    multipliers : "res/maps/multipliers_deep.nc",
     reactor: { There    : "res/reactions/haem.json5" }
 }
