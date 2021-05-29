@@ -7,9 +7,9 @@
             "res/maps/init_ala.nc",
             null
         ],
-        "haem"   :   [
-            "res/maps/diff_haem.nc",
-            "res/maps/init_haem.nc",
+        "chelt"   :   [
+            "res/maps/diff_chelt.nc",
+            "res/maps/init_chelt.nc",
             null
         ]
     } },
