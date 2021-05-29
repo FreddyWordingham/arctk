@@ -5,7 +5,7 @@
         ["udens",   1],
         ["oxy",     1],
         ["fe",      1],
-        ["chelt",   20],
+        ["chelt",   2],
     ],
     sources : [
     ],
