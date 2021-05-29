@@ -1,0 +1,18 @@
+
+{
+    ops: [
+        [
+            "chelt_unit",
+            { Norm  : "../output/inv/cartographer/chelt/map_{chelt}.nc" }
+        ],
+        [
+            "init_chelt",
+            // { Mult      : ["../output/tmp/chelt_unit.nc", 7.17e20] } // Particles.
+            { Mult      : ["../output/tmp/chelt_unit.nc", 1.12e-3] } // Moles.
+        ],
+        [
+            "info",
+            { Info    : "../output/tmp/init_chelt.nc" }
+        ]
+    ]
+}
