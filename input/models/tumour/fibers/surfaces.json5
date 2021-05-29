@@ -1,0 +1,82 @@
+{   // Map of surface attributes.
+    layer_0 : {
+        attr: 'air_to_SC',
+        mesh: [["res/objs/tumour/fibers/L0.obj"], {scale:1.0e-3}]
+    },
+    layer_1 : {
+        attr: 'SC_to_LE',
+        mesh: [["res/objs/tumour/fibers/L1.obj"], {scale:1.0e-3}]
+    },
+    layer_2 : {
+        attr: 'LE_to_PD',
+        mesh: [["res/objs/tumour/fibers/L2.obj"], {scale:1.0e-3}]
+    },
+    layer_3 : {
+        attr: 'PD_to_UBND',
+        mesh: [["res/objs/tumour/fibers/L3.obj"], {scale:1.0e-3}]
+    },
+    layer_4 : {
+        attr: 'UBND_to_dermis',
+        mesh: [["res/objs/tumour/fibers/L4.obj"], {scale:1.0e-3}]
+    },
+    layer_5 : {
+        attr: 'dermis_to_DBND',
+        mesh: [["res/objs/tumour/fibers/L5.obj"], {scale:1.0e-3}]
+    },
+    layer_6 : {
+        attr: 'DBND_to_SF',
+        mesh: [["res/objs/tumour/fibers/L6.obj"], {scale:1.0e-3}]
+    },
+    // layer_7 : {
+    //     attr: 'SF_to_',
+    //     mesh: [["res/objs/tumour/fibers/L7.obj"], {scale:1.0e-3}]
+    // },
+
+    ring_0  : {
+        attr: 'SC_to_tumour',
+        mesh: [["res/objs/tumour/fibers/R0.obj"], {scale:1.0e-3}]
+    },
+    ring_1  : {
+        attr: 'LE_to_tumour',
+        mesh: [["res/objs/tumour/fibers/R1.obj"], {scale:1.0e-3}]
+    },
+    ring_2  : {
+        attr: 'PD_to_tumour',
+        mesh: [["res/objs/tumour/fibers/R2.obj"], {scale:1.0e-3}]
+    },
+    ring_3  : {
+        attr: 'UBND_to_tumour',
+        mesh: [["res/objs/tumour/fibers/R3.obj"], {scale:1.0e-3}]
+    },
+    ring_4  : {
+        attr: 'dermis_to_tumour',
+        mesh: [["res/objs/tumour/fibers/R4.obj"], {scale:1.0e-3}]
+    },
+    ring_5  : {
+        attr: 'DBND_to_tumour',
+        mesh: [["res/objs/tumour/fibers/R5.obj"], {scale:1.0e-3}]
+    },
+
+    cap     : {
+        attr: 'air_to_tumour',
+        mesh: [["res/objs/tumour/fibers/cap_holes.obj"], {scale:1.0e-3}]
+    },
+    base    : {
+        attr: 'SF_to_tumour',
+        mesh: [["res/objs/tumour/fibers/base.obj"], {scale:1.0e-3}]
+    },
+
+    fiber_top   : {
+        attr: 'air_to_glass',
+        mesh: [["res/objs/tumour/fibers/fibers_top.obj"], {scale:1.0e-3}]
+    },
+    fiber_bottom    : {
+        attr: 'glass_to_tumour',
+        mesh: [["res/objs/tumour/fibers/fibers_bottom.obj"], {scale:1.0e-3}]
+    },
+
+    // spectrometer    : {
+    //     attr: 'spectro',
+    //     mesh: [["res/objs/pdt/detector.obj"], {scale:0.1e-3, trans:[0, 0, -2.0e-3]}]
+    // }``
+}
