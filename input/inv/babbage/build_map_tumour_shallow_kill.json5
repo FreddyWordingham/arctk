@@ -2,11 +2,11 @@
     ops: [
         [
             "critical_shallow",
-            { Div       : ["../output/inv/reactor/pdt/shallow/099_{radical}_diff.nc", 1.3] }
+            { Div       : ["../output/inv/reactor/pdt/shallow/099_{radical}_diff.nc", 1e-2] }
         ],
         [
             "diff_shallow",
-            { Remove    : ["res/maps/tumour_shallow.nc", "../output/tmp/critical_shallow.nc"] }
+            { PiecewiseMult : ["../output/tmp/critical_shallow.nc", "res/maps/tumour_shallow.nc"] }
         ],
         [
             "kill_zone_shallow",
