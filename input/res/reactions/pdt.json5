@@ -6,7 +6,7 @@
         products    : [["ppix", 1]],
     },
     {   /// Char time: 1 sec.
-        rate        : [1,   [["udens", 1], ["ppix", 1], ["oxy", 1]]],
+        rate        : [1e6,   [["udens", 1], ["ppix", 1], ["oxy", 1]]],
         reactants   : [
             ["oxy",     1],
             ["ppix",    0.44], // (1 - quantum yeild = 0.56)

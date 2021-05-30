@@ -12,4 +12,5 @@
             There: 'res/spectra/ppix.json5'
         }
     ] },
+    // engine  : "Standard",
 }
