@@ -40,6 +40,7 @@ mcrt output/inv/mcrt/shallow input/ inv/mcrt/tumour/shallow.json5;
 mv output/inv/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
 touch 3d_Sim__photodynamic_therapy.txt;
 reactor output/inv/reactor/pdt/shallow input/ inv/reactor/pdt/shallow.json5;
+mv output/inv/cartographer/tumour/shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
 babbage output/tmp input/ inv/babbage/build_map_tumour_shallow_kill.json5;
 touch 3e_COMPLETE.txt;
 
@@ -64,6 +65,7 @@ mcrt output/inv/mcrt/thick input/ inv/mcrt/tumour/thick.json5;
 mv output/inv/mcrt/thick/shift_density.nc input/res/maps/udens_thick.nc;
 touch 4d_Sim__photodynamic_therapy.txt;
 reactor output/inv/reactor/pdt/thick input/ inv/reactor/pdt/thick.json5;
+mv output/inv/cartographer/tumour/thick/map_\{tumour\}.nc input/res/maps/tumour_thick.nc;
 babbage output/tmp input/ inv/babbage/build_map_tumour_thick_kill.json5;
 touch 4e_COMPLETE.txt;
 
@@ -88,5 +90,6 @@ mcrt output/inv/mcrt/deep input/ inv/mcrt/tumour/deep.json5;
 mv output/inv/mcrt/deep/shift_density.nc input/res/maps/udens_deep.nc;
 touch 5d_Sim__photodynamic_therapy.txt;
 reactor output/inv/reactor/pdt/deep input/ inv/reactor/pdt/deep.json5;
+mv output/inv/cartographer/tumour/deep/map_\{tumour\}.nc input/res/maps/tumour_deep.nc;
 babbage output/tmp input/ inv/babbage/build_map_tumour_deep_kill.json5;
 touch 5e_COMPLETE.txt;
