@@ -1,0 +1,22 @@
+{
+    tree    : { There   : 'res/tree/t5_d8.json5' },
+    grid    : { There   : 'res/grid/16mm_master.json5' },
+    sett    : { There   : 'res/sett/mcrt/1e6.json5' },
+    mats    : { There   : 'models/tumour/spectrometer/materials.json5' },
+    attrs   : { There   : 'models/tumour/spectrometer/attributes.json5' },
+    surfs   : { There   : 'models/tumour/spectrometer/surfaces.json5' },
+    light   : { Here    : {
+        power   : 128.125e-3, // 82mW in a 8mm^2 plane.
+        emit    : { Surface : [['res/objs/pdt/led.obj'], {scale: 0.99e-3, trans: [0.0, 0.0, 0.95e-3]}] },
+        spec    : { Here    : {
+            Uniform : [450e-9, 850e-9],
+        } },
+        mat     : "air"
+    } },
+    engine  : { Fluorescence : [
+        'res/maps/init_ppix_deep.nc',
+        {
+            There: 'res/spectra/ppix.json5'
+        }
+    ] },
+}

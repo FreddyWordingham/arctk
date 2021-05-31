@@ -1,3 +1,11 @@
+#   Spectrometer.
+# read -rsp $'Spectrometer tumour\nPress any key to continue...' -n1 key;
+touch output/ch7/1a_Sim__illumination.txt;
+mcrt output/ch7/mcrt/spectrometer input/ ch7/mcrt/spectrometer.json5;
+touch output/ch7/1b_COMPLETE.txt;
+
+
+
 #   Laser.
 # read -rsp $'Laser tumour\nPress any key to continue...' -n1 key;
 touch output/ch7/2a_Sim__illumination.txt;
