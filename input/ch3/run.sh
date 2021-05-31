@@ -1,10 +1,10 @@
 # read -rsp $'Babbage Test: generate filled map\nPress any key to continue...' -n1 key;
-# babbage output/tmp input/ ch3/babbage/gen_nano_map.json5;
-# mv output/tmp/nano.nc input/res/maps/;
+babbage output/tmp input/ ch3/babbage/gen_nano_map.json5;
+mv output/tmp/nano.nc input/res/maps/;
 
 # read -rsp $'Babbage Test: generate point map\nPress any key to continue...' -n1 key;
-# babbage output/tmp input/ ch3/babbage/gen_point_map.json5;
-# mv output/tmp/point_50.nc input/res/maps/;
+babbage output/tmp input/ ch3/babbage/gen_point_map.json5;
+mv output/tmp/point_50.nc input/res/maps/;
 
 # read -rsp $'Cartographer Test: torus knot interior volume map\nPress any key to continue...' -n1 key;
 # cartographer output/ch3/cartographer/shape input/ ch3/cartographer/shape.json5
@@ -45,9 +45,9 @@
 # python3 input/plot.py output/ch3/flask/sink/values.csv
 
 # read -rsp $'Reactor Test: diffusion\nPress any key to continue...' -n1 key;
-# babbage output/tmp input/ ch3/babbage/gen_unit_101_map.json5;
-# mv output/tmp/unit_101.nc input/res/maps/;
-# reactor output/ch3/reactor/diffuse input/ ch3/reactor/diffuse.json5
+babbage output/tmp input/ ch3/babbage/gen_unit_101_map.json5;
+mv output/tmp/unit_101.nc input/res/maps/;
+reactor output/ch3/reactor/diffuse input/ ch3/reactor/diffuse.json5
 
 # read -rsp $'Reactor Test: duel\nPress any key to continue...' -n1 key;
 babbage output/tmp input/ ch3/babbage/gen_cube_101_map.json5;
