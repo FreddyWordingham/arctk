@@ -3,38 +3,38 @@
     ops: [
         [
             "scaled_stratum_corneum",
-            { Mult      : ["../output/inv/cartographer/tumour/thick/map_{stratum_corneum}.nc", 1.0] }
+            { Mult      : ["../output/ch4/cartographer/tumour/deep/map_{stratum_corneum}.nc", 1.0] }
         ],
         [
             "scaled_living_epidermis",
-            { Mult      : ["../output/inv/cartographer/tumour/thick/map_{living_epidermis}.nc", 1.0] }
+            { Mult      : ["../output/ch4/cartographer/tumour/deep/map_{living_epidermis}.nc", 1.0] }
         ],
         [
             "scaled_papillary_dermis",
-            { Mult      : ["../output/inv/cartographer/tumour/thick/map_{papillary_dermis}.nc", 1.0] }
+            { Mult      : ["../output/ch4/cartographer/tumour/deep/map_{papillary_dermis}.nc", 1.0] }
         ],
         [
             "scaled_upper_blood_net_dermis",
-            { Mult      : ["../output/inv/cartographer/tumour/thick/map_{upper_blood_net_dermis}.nc", 1.0] }
+            { Mult      : ["../output/ch4/cartographer/tumour/deep/map_{upper_blood_net_dermis}.nc", 1.0] }
         ],
         [
             "scaled_dermis",
-            { Mult      : ["../output/inv/cartographer/tumour/thick/map_{dermis}.nc", 1.0] }
+            { Mult      : ["../output/ch4/cartographer/tumour/deep/map_{dermis}.nc", 1.0] }
         ],
         [
             "scaled_deep_blood_net_dermis",
-            { Mult      : ["../output/inv/cartographer/tumour/thick/map_{deep_blood_net_dermis}.nc", 1.0] }
+            { Mult      : ["../output/ch4/cartographer/tumour/deep/map_{deep_blood_net_dermis}.nc", 1.0] }
         ],
         [
             "scaled_subcutaneous_fat",
-            { Mult      : ["../output/inv/cartographer/tumour/thick/map_{subcutaneous_fat}.nc", 1.0] }
+            { Mult      : ["../output/ch4/cartographer/tumour/deep/map_{subcutaneous_fat}.nc", 1.0] }
         ],
         [
             "scaled_tumour",
-            { Mult      : ["../output/inv/cartographer/tumour/thick/map_{tumour}.nc", 2.0] }
+            { Mult      : ["../output/ch4/cartographer/tumour/deep/map_{tumour}.nc", 2.0] }
         ],
         [
-            "multipliers_thick",
+            "multipliers_deep",
             { Sum     : [
                 "../output/tmp/scaled_stratum_corneum.nc",
                 "../output/tmp/scaled_living_epidermis.nc",
@@ -48,7 +48,7 @@
         ],
         [
             "info",
-            { Info    : "../output/tmp/multipliers_thick.nc" }
+            { Info    : "../output/tmp/multipliers_deep.nc" }
         ]
     ]
 }

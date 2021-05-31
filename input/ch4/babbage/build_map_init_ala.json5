@@ -3,7 +3,7 @@
     ops: [
         [
             "cream_unit",
-            { Norm  : "../output/inv/cartographer/cream/map_{cream}.nc" }
+            { Norm  : "../output/ch4/cartographer/cream/map_{cream}.nc" }
         ],
         [
             "init_ala",
