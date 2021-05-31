@@ -44,6 +44,7 @@ impl DataCube {
             .sqrt();
 
         let min = if let Ok(x) = data.min() {
+            // TODO: Add to other data_ methods when stabilised.
             *x
         } else {
             println!("[WARN] Could not determine minimum value of datacube.");
