@@ -1,3 +1,11 @@
+#   Laser.
+# read -rsp $'Laser tumour\nPress any key to continue...' -n1 key;
+touch output/ch7/2a_Sim__illumination.txt;
+mcrt output/ch7/mcrt/laser input/ ch7/mcrt/laser.json5;
+touch output/ch7/2b_COMPLETE.txt;
+
+
+
 #   Fibre PDT.
 # read -rsp $'Fibre tumour\nPress any key to continue...' -n1 key;
 touch output/ch7/3a_Sim__illumination.txt;
