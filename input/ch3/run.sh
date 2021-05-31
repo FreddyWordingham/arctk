@@ -49,7 +49,7 @@
 # mv output/tmp/unit_101.nc input/res/maps/;
 # reactor output/ch3/reactor/diffuse input/ ch3/reactor/diffuse.json5
 
-read -rsp $'Reactor Test: duel\nPress any key to continue...' -n1 key;
+# read -rsp $'Reactor Test: duel\nPress any key to continue...' -n1 key;
 babbage output/tmp input/ ch3/babbage/gen_cube_101_map.json5;
 mv output/tmp/cube_101.nc input/res/maps/;
 reactor output/ch3/reactor/duel input/ ch3/reactor/duel.json5
