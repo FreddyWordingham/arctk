@@ -1,3 +1,27 @@
+#   Fibre PDT.
+# read -rsp $'Fibre tumour\nPress any key to continue...' -n1 key;
+touch output/ch7/3a_Sim__illumination.txt;
+mcrt output/ch7/mcrt/fibre input/ ch7/mcrt/fibre.json5;
+mv output/ch7/mcrt/fibre/shift_density.nc input/res/maps/udens_fibre.nc;
+touch output/ch7/3b_Sim__photodynamic_therapy.txt;
+reactor output/ch7/reactor/fibre input/ ch7/reactor/pdt/fibre.json5;
+babbage output/tmp input/ ch7/babbage/build_map_tumour_fibre_kill.json5;
+touch output/ch7/3c_COMPLETE.txt;
+
+
+
+#   Fibres PDT.
+# read -rsp $'Fibres tumour\nPress any key to continue...' -n1 key;
+touch output/ch7/4a_Sim__illumination.txt;
+mcrt output/ch7/mcrt/fibres input/ ch7/mcrt/fibres.json5;
+mv output/ch7/mcrt/fibres/shift_density.nc input/res/maps/udens_fibres.nc;
+touch output/ch7/4b_Sim__photodynamic_therapy.txt;
+reactor output/ch7/reactor/fibres input/ ch7/reactor/pdt/fibres.json5;
+babbage output/tmp input/ ch7/babbage/build_map_tumour_fibres_kill.json5;
+touch output/ch7/4c_COMPLETE.txt;
+
+
+
 #   Chelt setup.
 # read -rsp $'Setup: Chelating agent diffusion\nPress any key to continue...' -n1 key;
 touch 4__Setup__chelt_cartography.txt;
@@ -8,6 +32,9 @@ babbage output/tmp input/ inv/babbage/build_map_init_chelt.json5;
 mv output/tmp/init_chelt.nc input/res/maps/;
 babbage output/tmp input/ inv/babbage/build_map_diff_chelt.json5;
 mv output/tmp/diff_chelt.nc input/res/maps/;
+
+
+
 
 
 #   Shallow tumour

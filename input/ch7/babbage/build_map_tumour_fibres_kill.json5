@@ -1,0 +1,20 @@
+{
+    ops: [
+        [
+            "critical_thick",
+            { Div       : ["../output/ch7/reactor/fibres/099_{radical}_diff.nc", 1e-2] }
+        ],
+        [
+            "diff_thick",
+            { PiecewiseMult : ["../output/tmp/critical_thick.nc", "res/maps/tumour_thick.nc"] }
+        ],
+        [
+            "kill_zone_thick",
+            { Clamp     : ["../output/tmp/diff_thick.nc", 0.0, 1.0] }
+        ],
+        [
+            "info",
+            { Info    : "../output/tmp/kill_zone_thick.nc" }
+        ]
+    ]
+}
