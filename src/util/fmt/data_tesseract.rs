@@ -39,11 +39,24 @@ impl DataTesseract {
             / data.len() as f64)
             .sqrt();
 
+        let min = if let Ok(x) = data.min() {
+            *x
+        } else {
+            println!("[WARN] Could not determine minimum value of datacube.");
+            0.0
+        };
+        let max = if let Ok(x) = data.max() {
+            *x
+        } else {
+            println!("[WARN] Could not determine maximum value of datacube.");
+            0.0
+        };
+
         Self {
             res: [shape[0], shape[1], shape[2], shape[3]],
             sum: data.sum(),
-            min: *data.min().expect("Unable to determine minimum value."),
-            max: *data.max().expect("Unable to determine maximum value."),
+            min,
+            max,
             ave,
             sd,
         }
