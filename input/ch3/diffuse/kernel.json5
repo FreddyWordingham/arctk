@@ -7,6 +7,6 @@
         res: [101, 101, 101],               // Grid resolution in [x,y,z].
     } },
     sett    : { There   : 'res/sett/diffuse/30min_high.json5' },
-    init    : "res/maps/point_50.nc",       // Initial value map.
+    init    : "res/maps/point_101.nc",      // Initial value map.
     coeffs  : "res/maps/nano.nc",           // Diffusion coefficient map.
 }

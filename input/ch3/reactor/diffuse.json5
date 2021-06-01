@@ -10,7 +10,7 @@
     coeffs_values_sources   : { Here    : {
         "A"   :   [
             "res/maps/nano.nc",
-            "res/maps/point_50.nc",
+            "res/maps/point_51.nc",
             null
         ],
     } },

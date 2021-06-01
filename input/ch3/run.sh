@@ -3,8 +3,8 @@ babbage output/tmp input/ ch3/babbage/gen_nano_map.json5;
 mv output/tmp/nano.nc input/res/maps/;
 
 echo "Ch3: Babbage test II"
-babbage output/tmp input/ ch3/babbage/gen_point_map.json5;
-mv output/tmp/point_50.nc input/res/maps/;
+babbage output/tmp input/ ch3/babbage/gen_point_101_map.json5;
+mv output/tmp/point_101.nc input/res/maps/;
 
 
 echo "Ch3: Cartographer test I"
@@ -46,6 +46,8 @@ cargo run --bin flask --features="sim" output/ch3/flask/sink input/ ch3/flask/si
 echo "Ch3: Reactor test I"
 babbage output/tmp input/ ch3/babbage/gen_unit_51_map.json5;
 mv output/tmp/unit_51.nc input/res/maps/;
+babbage output/tmp input/ ch3/babbage/gen_point_51_map.json5;
+mv output/tmp/point_51.nc input/res/maps/;
 reactor output/ch3/reactor/diffuse input/ ch3/reactor/diffuse.json5;
 
 echo "Ch3: Reactor test II"
