@@ -9,7 +9,6 @@
     attrs       : { Here    : {
         // glass   : { Interface   : ['glass', 'air'] },
         glass   : { Mirror   : 0.99 },
-        // imager  : { Ccd         : ['transmission', [32, 32], 5e-3, [-4.5e-3, 0, 0], [1, 0, 0], [[400e-9, 800e-9], 16]] },
         imager  : { Imager      : ['transmission', [2048, 2048], 5e-3, [-4.5e-3, 0, 0], [1, 0, 0]] },
     } },
     surfs       : { Here    : {
@@ -26,23 +25,9 @@
         power   : 1e5,
         emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 1.0e-3 }] },
         spec    : { Here    : {
-            Points  :   [445e-9, 500e-9, 550e-9, 600e-9, 650e-9, 700e-9],
-            // Uniform :   [440e-9, 700e-9]
+            Uniform :   [440e-9, 700e-9]
         } },
         mat     : "air"
     } },
     engine      : "Standard",
-    // engine      : { Photo   : {
-    //     pos :   {
-    //         Circle: [
-    //             [0, 10e-3, 0],
-    //             [0, 0, 0],
-    //             [0, 0, 1],
-    //         ]
-    //     },
-    //     tar :   {   Static: [0, 0, 0] },
-    //     fov     : 0.5,
-    //     res     : [512, 512],
-    //     frames  : 90
-    // } },
 }

@@ -25,8 +25,8 @@
         power   : 1e3,
         emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
         spec    : { Here    : {
-            Points  :   [445e-9, 500e-9, 550e-9, 600e-9, 650e-9, 700e-9],
-            // Uniform :   [440e-9, 700e-9]
+            // Points  :   [445e-9, 500e-9, 550e-9, 600e-9, 650e-9, 700e-9],
+            Uniform :   [440e-9, 700e-9]
         } },
         mat     : "air"
     } },

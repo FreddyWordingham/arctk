@@ -56,17 +56,24 @@ mv output/tmp/cube_51.nc input/res/maps/;
 reactor output/ch3/reactor/react input/ ch3/reactor/react.json5;
 
 
-# read -rsp $'Press any key to continue...\n' -n1 key;
-# mcrt output input/ ch3/mcrt/absorption.json5;
+echo "Ch3: MCRT test I"
+mcrt output/ch3/mcrt/absorption input/ ch3/mcrt/absorption.json5;
 
-# read -rsp $'Press any key to continue...\n' -n1 key;
-# mcrt output input/ ch3/mcrt/ccd.json5;
+echo "Ch3: MCRT test II"
+mcrt output/ch3/mcrt/ccd input/ ch3/mcrt/ccd.json5;
 
-# read -rsp $'Press any key to continue...\n' -n1 key;
-# mcrt output input/ ch3/mcrt/imager.json5;
+echo "Ch3: MCRT test III"
+mcrt output/ch3/mcrt/rainbow input/ ch3/mcrt/rainbow.json5;
 
-# read -rsp $'Press any key to continue...\n' -n1 key;
-# mcrt output input/ ch3/mcrt/photo.json5;
+echo "Ch3: MCRT test IV"
+mcrt output/ch3/mcrt/prism input/ ch3/mcrt/prism.json5;
 
-# read -rsp $'Press any key to continue...\n' -n1 key;
-# mcrt output input/ ch3/mcrt/spectrometer.json5;
+echo "Ch3: MCRT test V"
+mcrt output/ch3/mcrt/spectrometer input/ ch3/mcrt/spectrometer.json5;
+# python3 input/plot.py output/ch3/mcrt/spectrometer/spectrometer_\{spectrometer\}.csv
+
+echo "Ch3: MCRT test VI"
+mcrt output/ch3/mcrt/lens input/ ch3/mcrt/lens.json5;
+
+echo "Ch3: MCRT test VII"
+mcrt output/ch3/mcrt/photo input/ ch3/mcrt/photo.json5;

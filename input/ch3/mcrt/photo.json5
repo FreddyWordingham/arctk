@@ -1,7 +1,7 @@
 {
     tree        : { There   : 'res/tree/t5_d8.json5' },
     grid        : { There   : 'res/grid/10mm_127.json5' },
-    sett        : { There   : 'res/sett/mcrt/1e6.json5' },
+    sett        : { There   : 'res/sett/mcrt/1e7.json5' },
     mats        : { Here    : {
         fog     : { There    : 'res/mats/misc/fog.json5' },
         glass   : { There    : 'res/mats/misc/glass.json5' },
@@ -17,7 +17,7 @@
         }
     } },
     light   : { Here    : {
-        power   : 1e6,
+        power   : 1e7,
         emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
         spec    : { Here    : {
             Uniform :   [440e-9, 700e-9]
@@ -35,6 +35,6 @@
         tar :   {   Static: [0, 0, 0] },
         fov     : 0.5,
         res     : [512, 512],
-        frames  : 90
+        frames  : 180
     } },
 }
