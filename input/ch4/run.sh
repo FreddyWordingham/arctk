@@ -1,5 +1,5 @@
 #   Oxygen setup.
-# read -rsp $'Setup: oxygen diffusion\nPress any key to continue...' -n1 key;
+read -rsp $'Setup: oxygen diffusion\nPress any key to continue...' -n1 key;
 touch output/ch4/0__Setup__oxygen_cartography.txt;
 cartographer output/ch4/cartographer/skin input/ ch4/cartographer/skin.json5;
 babbage output/tmp input/ ch4/babbage/build_map_diff_oxy.json5;
@@ -11,7 +11,7 @@ diffuse output/ch4/diffuse/oxy input/ ch4/diffuse/oxy.json5;
 mv output/ch4/diffuse/oxy/099_diff.nc input/res/maps/init_oxy.nc;
 
 #   ALA setup.
-# read -rsp $'Setup: ALA diffusion\nPress any key to continue...' -n1 key;
+read -rsp $'Setup: ALA diffusion\nPress any key to continue...' -n1 key;
 touch output/ch4/2__Setup__ALA_cartography.txt;
 cartographer output/ch4/cartographer/cream input/ ch4/cartographer/cream.json5;
 babbage output/tmp input/ ch4/babbage/build_map_init_ala.json5;
