@@ -17,7 +17,7 @@
         }
     } },
     light   : { Here    : {
-        power   : 1e7,
+        power   : 1e5,
         emit    : { Surface : [['res/objs/shapes/circle.obj'], { trans: [-4.5e-3, 0, 0], rot: [0, 90, 0], scale: 0.1e-3 }] },
         spec    : { Here    : {
             Uniform :   [440e-9, 700e-9]
@@ -34,7 +34,7 @@
         },
         tar :   {   Static: [0, 0, 0] },
         fov     : 0.5,
-        res     : [512, 512],
+        res     : [256, 256],
         frames  : 180
     } },
 }

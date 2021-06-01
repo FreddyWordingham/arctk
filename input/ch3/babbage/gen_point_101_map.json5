@@ -5,6 +5,6 @@
         [   "point_101",                                // Scale the values
             { Mult  : ["../output/tmp/point.nc", 50] } ],
         [   "info",
-            { Info  : "../output/tmp/point_101.nc" } ]   // Analyse the generated file
+            { Info  : "../output/tmp/point_101.nc" } ]  // Analyse the generated file
     ]
 }
