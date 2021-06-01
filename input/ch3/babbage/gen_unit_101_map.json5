@@ -1,8 +1,0 @@
-{
-    ops: [
-        [   "unit_101",
-            { Unit  : [101, 101, 101] } ],
-        [   "info",
-            { Info  : "../output/tmp/unit_101.nc" } ]
-    ]
-}
