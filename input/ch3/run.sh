@@ -1,23 +1,23 @@
-# read -rsp $'Babbage Test: generate filled map\nPress any key to continue...' -n1 key;
+echo "Ch3: Babbage test I"
 babbage output/tmp input/ ch3/babbage/gen_nano_map.json5;
 mv output/tmp/nano.nc input/res/maps/;
 
-# read -rsp $'Babbage Test: generate point map\nPress any key to continue...' -n1 key;
+echo "Ch4: Babbage test II"
 babbage output/tmp input/ ch3/babbage/gen_point_map.json5;
 mv output/tmp/point_50.nc input/res/maps/;
 
-# read -rsp $'Cartographer Test: torus knot interior volume map\nPress any key to continue...' -n1 key;
-# cartographer output/ch3/cartographer/shape input/ ch3/cartographer/shape.json5
+echo "Ch4: Cartographer test I"
+cartographer output/ch3/cartographer/shape input/ ch3/cartographer/shape.json5
 
-# read -rsp $'Diffuse Test: heat kernel\nPress any key to continue...' -n1 key;
-# diffuse output/ch3/diffuse/kernel input/ ch3/diffuse/kernel.json5;
+echo "Ch4: Diffuse test  I"
+diffuse output/ch3/diffuse/kernel input/ ch3/diffuse/kernel.json5;
 
-# read -rsp $'Diffuse Test: heat cube\nPress any key to continue...' -n1 key;
-# babbage output/tmp input/ ch3/babbage/gen_tenth_map.json5;
-# mv output/tmp/tenth.nc input/res/maps/;
-# babbage output/tmp input/ ch3/babbage/gen_cube_100_map.json5;
-# mv output/tmp/cube_100.nc input/res/maps/;
-# diffuse output/ch3/diffuse/cube input/ ch3/diffuse/cube.json5;
+echo "Ch4: Diffuse test  II"
+babbage output/tmp input/ ch3/babbage/gen_tenth_map.json5;
+mv output/tmp/tenth.nc input/res/maps/;
+babbage output/tmp input/ ch3/babbage/gen_cube_100_map.json5;
+mv output/tmp/cube_100.nc input/res/maps/;
+diffuse output/ch3/diffuse/cube input/ ch3/diffuse/cube.json5;
 
 # read -rsp $'Flask Test: simple reaction\nPress any key to continue...' -n1 key;
 # cargo run --bin flask --features="sim" output/ch3/flask/simple input/ ch3/flask/simple.json5;
