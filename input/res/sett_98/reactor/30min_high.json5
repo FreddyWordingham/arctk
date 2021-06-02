@@ -1,6 +1,6 @@
 {
     time            :   10800,  // Total integration time (s).
-    dumps           :   8,      // Intermediate outputs.
+    dumps           :   98,     // Intermediate outputs.
     d_block_size    :   1e5,    // Diffusion block size.
     r_block_size    :   1e4,    // Reaction block size.
     d_quality       :   0.9,    // Diffusion quality parameter (0-1).
