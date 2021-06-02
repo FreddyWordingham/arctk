@@ -12,7 +12,7 @@
             ["ppix",    0.44], // (1 - quantum yeild = 0.56)
         ],
         products    : [
-            ["radical", 1e9]
+            ["radical", 1e10]
         ],
     },
 ]
