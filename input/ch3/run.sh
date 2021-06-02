@@ -77,3 +77,7 @@ mcrt output/ch3/mcrt/lens input/ ch3/mcrt/lens.json5;
 
 echo "Ch3: MCRT test VII"
 mcrt output/ch3/mcrt/photo input/ ch3/mcrt/photo.json5;
+
+
+# echo "Ch3: Render test I"
+# mcrt output/ch3/render/tree input/ ch3/render/tree.json5;

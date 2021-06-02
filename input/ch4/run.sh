@@ -16,30 +16,20 @@ babbage output/tmp input/ ch4/babbage/build_map_diff_ala.json5;
 mv output/tmp/diff_ala.nc input/res/maps/;
 
 
+echo "Ch4: Shallow tumour setup"
+cartographer output/ch4/cartographer/tumour/shallow input/ ch4/cartographer/tumour/shallow.json5;
+babbage output/tmp input/ ch4/babbage/build_map_multipliers_tumour_shallow.json5;
+mv output/tmp/multipliers_shallow.nc input/res/maps/;
+mv output/ch4/cartographer/tumour/shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
+reactor output/ch4/reactor/ppix/shallow input/ ch4/reactor/ppix/shallow.json5;
+mv output/ch4/reactor/ppix/shallow/099_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
+mv output/ch4/reactor/ppix/shallow/099_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
 
-# #   Shallow tumour
-# # read -rsp $'Shallow tumour: PpIX profile\nPress any key to continue...' -n1 key;
-# touch output/ch4/3a_Setup__shallow_cartography.txt;
-# cartographer output/ch4/cartographer/tumour/shallow input/ ch4/cartographer/tumour/shallow.json5;
-# babbage output/tmp input/ ch4/babbage/build_map_multipliers_tumour_shallow.json5;
-# mv output/tmp/multipliers_shallow.nc input/res/maps/;
-# mv output/ch4/cartographer/tumour/shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
-# touch output/ch4/3b_Setup__PPIX_generation.txt;
-# reactor output/ch4/reactor/ppix/shallow input/ ch4/reactor/ppix/shallow.json5;
-# mv output/ch4/reactor/ppix/shallow/099_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
-# mv output/ch4/reactor/ppix/shallow/099_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
-
-# #   PDT phase.
-# # read -rsp $'Shallow tumour: PDT phase\nPress any key to continue...' -n1 key;
-# touch output/ch4/3c_Sim__illumination.txt;
-# mcrt output/ch4/mcrt/shallow input/ ch4/mcrt/tumour/shallow.json5;
-# mv output/ch4/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
-# touch output/ch4/3d_Sim__photodynamic_therapy.txt;
-# reactor output/ch4/reactor/pdt/shallow input/ ch4/reactor/pdt/shallow.json5;
-# mv output/ch4/cartographer/tumour/shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
-# babbage output/tmp input/ ch4/babbage/build_map_tumour_shallow_kill.json5;
-# touch output/ch4/3e_COMPLETE.txt;
-
+echo "Ch4: Shallow tumour run"
+mcrt output/ch4/mcrt/shallow input/ ch4/mcrt/tumour/shallow.json5;
+mv output/ch4/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
+reactor output/ch4/reactor/pdt/shallow input/ ch4/reactor/pdt/shallow.json5;
+babbage output/tmp input/ ch4/babbage/build_map_tumour_shallow_kill.json5;
 
 
 echo "Ch4: Thick tumour setup"
@@ -58,25 +48,17 @@ reactor output/ch4/reactor/pdt/thick input/ ch4/reactor/pdt/thick.json5;
 babbage output/tmp input/ ch4/babbage/build_map_tumour_thick_kill.json5;
 
 
+echo "Ch4: Deep tumour setup"
+cartographer output/ch4/cartographer/tumour/deep input/ ch4/cartographer/tumour/deep.json5;
+babbage output/tmp input/ ch4/babbage/build_map_multipliers_tumour_deep.json5;
+mv output/tmp/multipliers_deep.nc input/res/maps/;
+mv output/ch4/cartographer/tumour/deep/map_\{tumour\}.nc input/res/maps/tumour_deep.nc;
+reactor output/ch4/reactor/ppix/deep input/ ch4/reactor/ppix/deep.json5;
+mv output/ch4/reactor/ppix/deep/099_\{ppix\}_diff.nc input/res/maps/init_ppix_deep.nc;
+mv output/ch4/reactor/ppix/deep/099_\{ala\}_diff.nc input/res/maps/init_ala_deep.nc;
 
-# #   Deep tumour
-# # read -rsp $'Deep tumour: PpIX profile\nPress any key to continue...' -n1 key;
-# touch output/ch4/5a_Setup__deep_cartography.txt;
-# cartographer output/ch4/cartographer/tumour/deep input/ ch4/cartographer/tumour/deep.json5;
-# babbage output/tmp input/ ch4/babbage/build_map_multipliers_tumour_deep.json5;
-# mv output/tmp/multipliers_deep.nc input/res/maps/;
-# mv output/ch4/cartographer/tumour/deep/map_\{tumour\}.nc input/res/maps/tumour_deep.nc;
-# touch output/ch4/5b_Setup__PPIX_generation.txt;
-# reactor output/ch4/reactor/ppix/deep input/ ch4/reactor/ppix/deep.json5;
-# mv output/ch4/reactor/ppix/deep/099_\{ppix\}_diff.nc input/res/maps/init_ppix_deep.nc;
-# mv output/ch4/reactor/ppix/deep/099_\{ala\}_diff.nc input/res/maps/init_ala_deep.nc;
-
-# #   PDT phase.
-# # read -rsp $'Deep tumour: PDT phase\nPress any key to continue...' -n1 key;
-# touch output/ch4/5c_Sim__illumination.txt;
-# mcrt output/ch4/mcrt/deep input/ ch4/mcrt/tumour/deep.json5;
-# mv output/ch4/mcrt/deep/shift_density.nc input/res/maps/udens_deep.nc;
-# touch output/ch4/5d_Sim__photodynamic_therapy.txt;
-# reactor output/ch4/reactor/pdt/deep input/ ch4/reactor/pdt/deep.json5;
-# babbage output/tmp input/ ch4/babbage/build_map_tumour_deep_kill.json5;
-# touch output/ch4/5e_COMPLETE.txt;
+echo "Ch4: Deep tumour run"
+mcrt output/ch4/mcrt/deep input/ ch4/mcrt/tumour/deep.json5;
+mv output/ch4/mcrt/deep/shift_density.nc input/res/maps/udens_deep.nc;
+reactor output/ch4/reactor/pdt/deep input/ ch4/reactor/pdt/deep.json5;
+babbage output/tmp input/ ch4/babbage/build_map_tumour_deep_kill.json5;
