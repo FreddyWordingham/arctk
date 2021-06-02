@@ -1,0 +1,60 @@
+{
+    mirror  : {
+        attr: 'glass',
+        mesh: [['res/objs/dream/buildings/mirror.obj'],  null]
+    },
+    // mirror  : {
+    //     attr: 'jwst_mirror',
+    //     mesh: [['res/objs/dream/buildings/mirror.obj'],  null]
+    // },
+    // wall        : [['res/objs/dream/buildings/wall.obj'],    null],
+
+    // dome_bottom : [['res/objs/dream/dome/bottom.obj'],   null],
+    // dome_top    : [['res/objs/dream/dome/top.obj'],      null],
+    // lava        : [['res/objs/dream/dome/lava.obj'],     null],
+    // clouds      : [['res/objs/dream/dome/clouds.obj'],   null],
+
+    // jwst_body   : [['res/objs/dream/jwst/body.obj'],     null],
+    // jwst_dish   : [['res/objs/dream/jwst/dish.obj'],     null],
+    // jwst_mirror : [['res/objs/dream/jwst/mirror.obj'],   null],
+    // jwst_nose   : [['res/objs/dream/jwst/nose.obj'],     null],
+    // jwst_panels : [['res/objs/dream/jwst/panels.obj'],   null],
+    // jwst_stem   : [['res/objs/dream/jwst/stem.obj'],     null],
+    // jwst_reflect: [['res/objs/dream/jwst/reflect.obj'],  null],
+
+    // bulbs       : [['res/objs/dream/lamps/bulbs.obj'],   null],
+    // lamps       : [['res/objs/dream/lamps/lamps.obj'],   null],
+
+    // bushes      : [['res/objs/dream/landscape/bushes.obj'],  null],
+    // fall        : [['res/objs/dream/landscape/fall.obj'],    null],
+    // floor       : [['res/objs/dream/landscape/floor.obj'],   null],
+    // hills       : [['res/objs/dream/landscape/hills.obj'],   null],
+    // knot        : [['res/objs/dream/landscape/knot.obj'],    null],
+    // puddles     : [['res/objs/dream/landscape/puddles.obj'], null],
+
+    // path        : [['res/objs/dream/path/path_0.obj', 'res/objs/dream/path/path_1.obj', 'res/objs/dream/path/path_2.obj'], null],  // Combine these three objects together before linking.
+    // sides       : [['res/objs/dream/path/sides.obj'],        null],
+    // underboard  : [['res/objs/dream/path/underboard.obj'],   null],
+
+    // dog         : [['res/objs/dream/people/dog.obj'],        null],
+    // fjmw        : [['res/objs/dream/people/fjmw.obj'],       null],
+    // klm         : [['res/objs/dream/people/klm.obj'],        null],
+    // lead        : [['res/objs/dream/people/lead.obj'],       null],
+    // umbrella    : [['res/objs/dream/people/umbrella.obj'],   null],
+
+    // core        : [['res/objs/dream/space/core.obj'],        null],
+    // inner_ring  : [['res/objs/dream/space/inner_ring.obj'],  null],
+    // outer_ring  : [['res/objs/dream/space/outer_ring.obj'],  null],
+    // glide_0     : [['res/objs/dream/space/glide_0.obj'],     null],
+    // glide_1     : [['res/objs/dream/space/glide_1.obj'],     null],
+    // glide_2     : [['res/objs/dream/space/glide_2.obj'],     null],
+    // knot        : [['res/objs/dream/space/knot.obj'],        null],
+    // moon        : [['res/objs/dream/space/moon.obj'],        null],
+    // solar       : [['res/objs/dream/space/solar.obj'],       null],
+    // starfield   : [['res/objs/dream/space/starfield.obj'],   null],
+
+    // leaves_0    : [['res/objs/dream/trees/leaves_0.obj'],    null],
+    // leaves_1    : [['res/objs/dream/trees/leaves_1.obj'],    null],
+    // leaves_2    : [['res/objs/dream/trees/leaves_2.obj'],    null],
+    // trees       : [['res/objs/dream/trees/trees.obj'],       null],
+}
