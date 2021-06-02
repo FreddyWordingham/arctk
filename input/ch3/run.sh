@@ -8,7 +8,7 @@ mv output/tmp/point_101.nc input/res/maps/;
 
 
 echo "Ch3: Cartographer test I"
-cartographer output/ch3/cartographer/shape input/ ch3/cartographer/shape.json5
+cartographer output/ch3/cartographer/shape input/ ch3/cartographer/shape.json5;
 
 
 echo "Ch3: Diffuse test I"
@@ -79,5 +79,5 @@ echo "Ch3: MCRT test VII"
 mcrt output/ch3/mcrt/photo input/ ch3/mcrt/photo.json5;
 
 
-# echo "Ch3: Render test I"
-# mcrt output/ch3/render/tree input/ ch3/render/tree.json5;
+echo "Ch3: Render test I"
+render output/ch3/render/dream input/ ch3/render/dream.json5;
