@@ -14,7 +14,7 @@
     surfs       : { Here    : {
         target  : {
             attr: 'glass',
-            mesh: [["res/objs/shapes/prism.obj"], { scale: 2.0e-3 } ]
+            mesh: [["res/objs/shapes/prism.obj"], { scale: 2e-3 } ]
         },
         screen  : {
             attr: 'imager',
