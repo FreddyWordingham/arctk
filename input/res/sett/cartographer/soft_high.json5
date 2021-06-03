@@ -3,5 +3,5 @@
     bump_dist       : 1e-9,
     loop_limit      : 1e4,
     caster          : { Soft: [101, [0, 0, 0], 5] },
-    super_sampling  : { Uniform: [4, 4, 4] }
+    super_sampling  : { Uniform: [8, 8, 8] }
 }
