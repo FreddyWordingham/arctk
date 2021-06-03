@@ -1,0 +1,8 @@
+{
+    power   : 128.125e-3, // 82mW in a 8mm^2 plane.
+    emit    : { Surface : [['res/objs/thermal/led.obj'], {scale: 0.99e-3, trans: [0.0, 0.0, 0.95e-3]}] },
+    spec    : { Here    : {
+        Point   : 550e-9
+    } },
+    mat     : "air"
+}

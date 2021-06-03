@@ -1,0 +1,11 @@
+{   // Map of surface attributes.
+    skin    : {
+        attr: 'air_to_flesh',
+        mesh: [["res/objs/thermal/skin.obj"], {scale:1.0e-3}]
+    },
+    tumour  : {
+        // attr: 'flesh_to_tumour',
+        attr: 'flesh_to_tumour',
+        mesh: [["res/objs/thermal/tumour.obj"], {scale:1.0e-3}]
+    }
+}
