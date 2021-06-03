@@ -14,6 +14,10 @@
         ],
         [
             "info",
+            { Info    : "res/maps/tumour_deep.nc" }
+        ],
+        [
+            "info",
             { Info    : "../output/tmp/kill_zone_deep.nc" }
         ]
     ]
