@@ -3,7 +3,7 @@
     ops: [
         [
             "chelt_unit",
-            { Norm  : "../output/ch7/cartographer/chelt/map_{chelt}.nc" }
+            { Norm  : "../output/ch6/cartographer/chelt/map_{chelt}.nc" }
         ],
         [
             "init_chelt",

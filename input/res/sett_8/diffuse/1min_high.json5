@@ -1,6 +1,6 @@
 {
     time        :   60,
-    dumps       :   98,
+    dumps       :   8,
     quality     :   0.1,
     block_size  :   1e5,
 }
