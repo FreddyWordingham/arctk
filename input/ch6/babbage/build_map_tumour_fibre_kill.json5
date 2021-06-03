@@ -1,20 +1,20 @@
 {
     ops: [
         [
-            "critical_thick",
+            "critical_fibre",
             { Div       : ["../output/ch6/reactor/fibre/011_{radical}_diff.nc", 1] }
         ],
         [
-            "diff_thick",
-            { PiecewiseMult : ["../output/tmp/critical_thick.nc", "res/maps/tumour_thick.nc"] }
+            "diff_fibre",
+            { PiecewiseMult : ["../output/tmp/critical_fibre.nc", "res/maps/tumour_thick.nc"] }
         ],
         [
-            "kill_zone_thick",
-            { Clamp     : ["../output/tmp/diff_thick.nc", 0, 1] }
+            "kill_zone_fibre",
+            { Clamp     : ["../output/tmp/diff_fibre.nc", 0, 1] }
         ],
         [
             "info",
-            { Info    : "../output/tmp/kill_zone_thick.nc" }
+            { Info    : "../output/tmp/kill_zone_fibre.nc" }
         ]
     ]
 }
