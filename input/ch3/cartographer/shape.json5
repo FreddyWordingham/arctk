@@ -1,7 +1,7 @@
 {
     tree    : { There   : 'res/tree/t5_d6.json5' },
     grid    : { There   : 'res/grid/4mm_255.json5' },
-    sett    : { There   : 'res/sett/cartographer/soft_high.json5' },
+    sett    : { There   : 'res/sett/cartographer/soft_medium.json5' },
     attrs   : { Here    : {
         air_to_plastic  : { Interface   : ['plastic', 'air'] },
     } },
