@@ -1,6 +1,6 @@
 {
     time        :   10800,  // Time (s).
-    dumps       :   98,     // Intermediate dumps.
+    dumps       :   10,     // Intermediate dumps.
     quality     :   0.1,    // Quality parameter.
     block_size  :   1e5,    // Block size.
 }
