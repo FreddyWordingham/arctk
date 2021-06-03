@@ -14,11 +14,11 @@
         ],
         [
             "info",
-            { Info    : "res/maps/tumour_deep.nc" }
+            { Info    : "res/maps/tumour_thick.nc" }
         ],
         [
             "info",
-            { Info    : "../output/tmp/kill_zone_deep.nc" }
+            { Info    : "../output/tmp/kill_zone_thick.nc" }
         ]
     ]
 }
