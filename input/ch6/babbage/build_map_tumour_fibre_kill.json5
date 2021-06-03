@@ -14,6 +14,10 @@
         ],
         [
             "info",
+            { Info    : "res/maps/tumour_thick.nc" }
+        ],
+        [
+            "info",
             { Info    : "../output/tmp/kill_zone_fibre.nc" }
         ]
     ]
