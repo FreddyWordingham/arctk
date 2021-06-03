@@ -11,7 +11,7 @@
         imager  : { Imager      : [
             'reflection',   // Image name
             [1080, 1080],   // Resolution
-            10e-3,           // Sceen width (m)
+            10e-3,          // Screen width (m)
             [0, 0, -5e-3],  // Translation (m)
             [0, 0, 1]       // Orientation
         ] },

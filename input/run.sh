@@ -1,3 +1,5 @@
+# Installation
+sh ./input/install.sh;
 # Tests
 sh ./input/ch3/run.sh;
 # Fiducial model
