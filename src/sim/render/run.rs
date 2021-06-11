@@ -19,7 +19,12 @@ pub fn multi_thread<'a>(engine: Engine, input: &'a Input) -> Result<Output<'a>, 
     let pb = ProgressBar::new("Multi-threaded", input.cam.num_samples());
     let pb = Arc::new(Mutex::new(pb));
 
-    let threads: Vec<_> = (0..num_cpus::get()).collect();
+    let num_threads = input
+        .sett
+        .num_threads()
+        .unwrap_or(std::usize::MAX)
+        .min(num_cpus::get());
+    let threads: Vec<_> = (0..num_threads).collect();
     let mut out: Vec<_> = threads
         .par_iter()
         .map(|_id| thread(engine, input, &Arc::clone(&pb)))
