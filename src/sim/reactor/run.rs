@@ -157,7 +157,12 @@ fn react(
         "Reacting",
         values.len() / input.specs.len(),
     )));
-    let threads: Vec<_> = (0..num_cpus::get()).collect();
+    let num_threads = input
+        .sett
+        .num_threads()
+        .unwrap_or(std::usize::MAX)
+        .min(num_cpus::get());
+    let threads: Vec<_> = (0..num_threads).collect();
     let _out: Vec<_> = threads
         .par_iter()
         .map(|_id| react_impl(input, &values, &new_values, dt, &Arc::clone(&spb)))
