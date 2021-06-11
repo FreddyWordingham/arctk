@@ -36,6 +36,7 @@ impl Settings {
     clone!(r_block_size, usize);
 
     /// Construct a new instance.
+    #[allow(clippy::too_many_arguments)]
     #[inline]
     #[must_use]
     pub fn new(
