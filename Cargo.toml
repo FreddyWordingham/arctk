@@ -28,7 +28,7 @@ hex = "0.4.*"
 indicatif = "0.16.*"
 json5 = "0.3.*"
 lazy_static = "1.4.*"
-nalgebra = { version = "0.26.1", features = ["serde-serialize"] }
+nalgebra = { version = "0.27.0", features = ["serde-serialize"] }
 ndarray = { version = "0.15.*", features = ["rayon", "serde-1"] }
 ndarray-parallel = "0.9.*"
 ndarray-stats = "0.5.*"
