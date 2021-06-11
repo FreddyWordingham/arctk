@@ -1,5 +1,5 @@
 {
-    power   : 128.125e-3, // 82mW in a 8mm^2 plane.
+    power   : 640e-3, // 150J in a 16mm^2 plane over 10min.
     emit    : { Surface : [['res/objs/pdt/led.obj'], {scale: 0.99e-3, trans: [0.0, 0.0, 0.95e-3]}] },
     spec    : { There   : 'res/spectra/aktilite.json5' },
     mat     : "air"

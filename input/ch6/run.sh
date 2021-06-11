@@ -33,4 +33,16 @@ mv output/ch6/reactor/ppix/haem/011_\{ala\}_diff.nc input/res/maps/init_ala_chel
 mv output/ch6/reactor/ppix/haem/011_\{ppix\}_diff.nc input/res/maps/init_ppix_chelt.nc;
 mv output/ch6/reactor/ppix/haem/011_\{chelt\}_diff.nc input/res/maps/init_chelt_chelt.nc;
 mv output/ch6/reactor/ppix/haem/011_\{fe\}_diff.nc input/res/maps/init_fe_chelt.nc;
-reactor output/ch6/reactor/chelt input/ ch6/reactor/chelt.json5;
+reactor output/ch6/reactor/pdt/chelt input/ ch6/reactor/pdt/chelt.json5;
+
+
+echo "Ch6: Chelation"
+cartographer output/ch6/cartographer/chelt input/ ch6/cartographer/chelt.json5;
+babbage output/tmp input/ ch6/babbage/build_map_init_fe.json5;
+mv output/tmp/init_fe.nc input/res/maps/;
+reactor output/ch6/reactor/ppix/haem_no input/ ch6/reactor/ppix/haem_no.json5;
+mv output/ch6/reactor/ppix/haem/011_\{ala\}_diff.nc input/res/maps/init_ala_chelt.nc;
+mv output/ch6/reactor/ppix/haem/011_\{ppix\}_diff.nc input/res/maps/init_ppix_chelt.nc;
+mv output/ch6/reactor/ppix/haem/011_\{chelt\}_diff.nc input/res/maps/init_chelt_chelt.nc;
+mv output/ch6/reactor/ppix/haem/011_\{fe\}_diff.nc input/res/maps/init_fe_chelt.nc;
+reactor output/ch6/reactor/pdt/chelt_no input/ ch6/reactor/pdt/chelt_no.json5;
