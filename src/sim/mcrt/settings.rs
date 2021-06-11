@@ -7,6 +7,8 @@ use std::fmt::{Display, Error, Formatter};
 /// General settings structure.
 #[file]
 pub struct Settings {
+    /// Optional limit on number of threads to use.
+    num_threads: Option<usize>,
     /// Number of photons to simulate.
     num_phot: usize,
     /// Number of photons to simulate in each thread block.
@@ -22,6 +24,7 @@ pub struct Settings {
 }
 
 impl Settings {
+    clone!(num_threads, Option<usize>);
     clone!(num_phot, usize);
     clone!(block_size, usize);
     clone!(bump_dist, f64);
@@ -33,6 +36,7 @@ impl Settings {
     #[inline]
     #[must_use]
     pub fn new(
+        num_threads: Option<usize>,
         num_phot: usize,
         block_size: usize,
         bump_dist: f64,
@@ -40,6 +44,7 @@ impl Settings {
         min_weight: f64,
         roulette_barrels: u64,
     ) -> Self {
+        debug_assert!(num_threads.is_none() || num_threads.unwrap() >= 1);
         debug_assert!(num_phot > 0);
         debug_assert!(block_size > 0);
         debug_assert!(bump_dist > 0.0);
@@ -47,6 +52,7 @@ impl Settings {
         debug_assert!(roulette_barrels > 1);
 
         Self {
+            num_threads,
             num_phot,
             block_size,
             bump_dist,
@@ -61,6 +67,11 @@ impl Display for Settings {
     #[inline]
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         writeln!(fmt, "...")?;
+        if let Some(num_threads) = self.num_threads {
+            fmt_report!(fmt, num_threads, "num_threads");
+        } else {
+            fmt_report!(fmt, "unlimited", "num_threads");
+        }
         fmt_report!(fmt, self.num_phot, "num_phot");
         fmt_report!(fmt, self.block_size, "block size");
         fmt_report!(fmt, self.bump_dist, "bump distance (m)");

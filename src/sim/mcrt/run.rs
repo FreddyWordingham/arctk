@@ -22,7 +22,8 @@ pub fn multi_thread<'a>(
     let pb = ProgressBar::new("MCRT", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
-    let threads: Vec<_> = (0..num_cpus::get()).collect();
+    let num_threads = input.sett.num_threads().map_or_else(num_cpus::get, |n| n);
+    let threads: Vec<_> = (0..num_threads).collect();
     let mut out: Vec<_> = threads
         .par_iter()
         .map(|_id| thread(engine, input, output.clone(), &Arc::clone(&pb)))

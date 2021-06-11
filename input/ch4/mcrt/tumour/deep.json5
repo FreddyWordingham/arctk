@@ -1,7 +1,7 @@
 {
     tree    : { There   : 'res/tree/t5_d8.json5' },
     grid    : { There   : 'res/grid/16mm_master.json5' },
-    sett    : { There   : 'res/sett/mcrt/1e8.json5' },
+    sett    : { There   : 'res/sett/mcrt/high.json5' },
     mats    : { There   : 'models/tumour/deep/materials.json5' },
     attrs   : { There   : 'models/tumour/deep/attributes.json5' },
     surfs   : { There   : 'models/tumour/deep/surfaces.json5' },
