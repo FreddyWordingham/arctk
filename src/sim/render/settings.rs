@@ -42,6 +42,7 @@ impl Settings {
         debug_assert!(min_weight >= 0.0);
 
         Self {
+            num_threads,
             block_size,
             bump_dist,
             loop_limit,
