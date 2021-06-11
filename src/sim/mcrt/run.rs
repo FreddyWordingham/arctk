@@ -9,13 +9,6 @@ use rand::thread_rng;
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
 
-/// Determine the number of parallel threads to use.
-#[must_use]
-#[inline]
-pub fn set_num_threads(n: Option<usize>) -> usize {
-    n.unwrap_or(std::usize::MAX).min(num_cpus::get())
-}
-
 /// Run a multi-threaded MCRT simulation.
 /// # Errors
 /// if the progress bar can not be locked.
@@ -29,7 +22,11 @@ pub fn multi_thread<'a>(
     let pb = ProgressBar::new("MCRT", input.sett.num_phot());
     let pb = Arc::new(Mutex::new(pb));
 
-    let num_threads = set_num_threads(input.sett.num_threads());
+    let num_threads = input
+        .sett
+        .num_threads()
+        .unwrap_or(std::usize::MAX)
+        .min(num_cpus::get());
     let threads: Vec<_> = (0..num_threads).collect();
     let mut out: Vec<_> = threads
         .par_iter()

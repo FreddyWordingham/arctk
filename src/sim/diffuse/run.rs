@@ -87,7 +87,12 @@ pub fn evolve(
 
     // Threading.
     let rates = Mutex::new(rates);
-    let threads: Vec<_> = (0..num_cpus::get()).collect();
+    let num_threads = input
+        .sett
+        .num_threads()
+        .unwrap_or(std::usize::MAX)
+        .min(num_cpus::get());
+    let threads: Vec<_> = (0..num_threads).collect();
 
     // Evolution.
     let mut pb = ProgressBar::new("Diffusing", steps);
