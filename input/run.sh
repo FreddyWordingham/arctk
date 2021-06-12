@@ -1,5 +1,5 @@
 # Tests
-# sh ./input/ch3/run.sh;
+sh ./input/ch3/run.sh;
 # Fiducial model
 sh ./input/ch4/run.sh;
 # PTT I investigation
