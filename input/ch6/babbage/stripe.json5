@@ -2,51 +2,67 @@
     ops: [
         [
             "stripe_000",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/000_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/000_{ppix}_diff.nc" }
         ],
         [
             "stripe_001",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/001_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/001_{ppix}_diff.nc" }
         ],
         [
             "stripe_002",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/002_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/002_{ppix}_diff.nc" }
         ],
         [
             "stripe_003",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/003_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/003_{ppix}_diff.nc" }
         ],
         [
             "stripe_004",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/004_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/004_{ppix}_diff.nc" }
         ],
         [
             "stripe_005",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/005_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/005_{ppix}_diff.nc" }
         ],
         [
             "stripe_006",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/006_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/006_{ppix}_diff.nc" }
         ],
         [
             "stripe_007",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/007_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/007_{ppix}_diff.nc" }
         ],
         [
             "stripe_008",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/008_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/008_{ppix}_diff.nc" }
         ],
         [
             "stripe_009",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/009_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/009_{ppix}_diff.nc" }
         ],
         [
             "stripe_010",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/010_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/010_{ppix}_diff.nc" }
         ],
         [
             "stripe_011",
-            { Stripe    : "../output/ch6/reactor/pdt/chelt/011_{radical}_diff.nc" }
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/011_{ppix}_diff.nc" }
+        ],
+        [
+            "stripe_012",
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/012_{ppix}_diff.nc" }
+        ],
+        [
+            "stripe_013",
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/013_{ppix}_diff.nc" }
+        ],
+        [
+            "stripe_014",
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/014_{ppix}_diff.nc" }
+        ],
+        [
+            "stripe_015",
+            { Stripe    : "../output/ch6/reactor/pdt/chelt/015_{ppix}_diff.nc" }
         ],
     ]
 }

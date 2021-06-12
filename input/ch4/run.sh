@@ -6,7 +6,7 @@ mv output/tmp/diff_oxy.nc input/res/maps/;
 babbage output/tmp input/ ch4/babbage/build_map_source_oxy.json5;
 mv output/tmp/source_oxy.nc input/res/maps/;
 diffuse output/ch4/diffuse/oxy input/ ch4/diffuse/oxy.json5;
-mv output/ch4/diffuse/oxy/011_diff.nc input/res/maps/init_oxy.nc;
+mv output/ch4/diffuse/oxy/015_diff.nc input/res/maps/init_oxy.nc;
 
 echo "Ch4: ALA setup"
 cartographer output/ch4/cartographer/cream input/ ch4/cartographer/cream.json5;
@@ -22,8 +22,8 @@ babbage output/tmp input/ ch4/babbage/build_map_multipliers_tumour_shallow.json5
 mv output/tmp/multipliers_shallow.nc input/res/maps/;
 mv output/ch4/cartographer/tumour/shallow/map_\{tumour\}.nc input/res/maps/tumour_shallow.nc;
 reactor output/ch4/reactor/ppix/shallow input/ ch4/reactor/ppix/shallow.json5;
-mv output/ch4/reactor/ppix/shallow/011_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
-mv output/ch4/reactor/ppix/shallow/011_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
+mv output/ch4/reactor/ppix/shallow/015_\{ppix\}_diff.nc input/res/maps/init_ppix_shallow.nc;
+mv output/ch4/reactor/ppix/shallow/015_\{ala\}_diff.nc input/res/maps/init_ala_shallow.nc;
 
 echo "Ch4: Shallow tumour run"
 mcrt output/ch4/mcrt/shallow input/ ch4/mcrt/tumour/shallow.json5;
@@ -38,8 +38,8 @@ babbage output/tmp input/ ch4/babbage/build_map_multipliers_tumour_thick.json5;
 mv output/tmp/multipliers_thick.nc input/res/maps/;
 mv output/ch4/cartographer/tumour/thick/map_\{tumour\}.nc input/res/maps/tumour_thick.nc;
 reactor output/ch4/reactor/ppix/thick input/ ch4/reactor/ppix/thick.json5;
-mv output/ch4/reactor/ppix/thick/011_\{ppix\}_diff.nc input/res/maps/init_ppix_thick.nc;
-mv output/ch4/reactor/ppix/thick/011_\{ala\}_diff.nc input/res/maps/init_ala_thick.nc;
+mv output/ch4/reactor/ppix/thick/015_\{ppix\}_diff.nc input/res/maps/init_ppix_thick.nc;
+mv output/ch4/reactor/ppix/thick/015_\{ala\}_diff.nc input/res/maps/init_ala_thick.nc;
 
 echo "Ch4: Thick tumour run"
 mcrt output/ch4/mcrt/thick input/ ch4/mcrt/tumour/thick.json5;
@@ -54,8 +54,8 @@ babbage output/tmp input/ ch4/babbage/build_map_multipliers_tumour_deep.json5;
 mv output/tmp/multipliers_deep.nc input/res/maps/;
 mv output/ch4/cartographer/tumour/deep/map_\{tumour\}.nc input/res/maps/tumour_deep.nc;
 reactor output/ch4/reactor/ppix/deep input/ ch4/reactor/ppix/deep.json5;
-mv output/ch4/reactor/ppix/deep/011_\{ppix\}_diff.nc input/res/maps/init_ppix_deep.nc;
-mv output/ch4/reactor/ppix/deep/011_\{ala\}_diff.nc input/res/maps/init_ala_deep.nc;
+mv output/ch4/reactor/ppix/deep/015_\{ppix\}_diff.nc input/res/maps/init_ppix_deep.nc;
+mv output/ch4/reactor/ppix/deep/015_\{ala\}_diff.nc input/res/maps/init_ala_deep.nc;
 
 echo "Ch4: Deep tumour run"
 mcrt output/ch4/mcrt/deep input/ ch4/mcrt/tumour/deep.json5;

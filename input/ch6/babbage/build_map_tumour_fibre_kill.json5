@@ -2,7 +2,7 @@
     ops: [
         [
             "critical_fibre",
-            { Div       : ["../output/ch6/reactor/fibre/011_{radical}_diff.nc", 1] }
+            { Div       : ["../output/ch6/reactor/fibre/015_{radical}_diff.nc", 1] }
         ],
         [
             "diff_fibre",
