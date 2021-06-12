@@ -16,12 +16,12 @@
         ],
     },
     {   /// Char time: 1 hrs. (Apply 3hrs before treatment)
-        rate        : [1e4,  [["ppix", 1], ["fe", 1]]],  // tau = 1hr
+        rate        : [1e6,  [["ppix", 1], ["fe", 1]]],  // tau = 1hr
         reactants   : [["ppix", 1], ["fe", 1]],
         products    : [["haem", 1]],
     },
     {   /// Char time: 1 hrs. (Apply 3hrs before treatment)
-        rate        : [1e4,  [["chelt", 1], ["fe", 1]]],  // tau = 1hr
+        rate        : [1e6,  [["chelt", 1], ["fe", 1]]],  // tau = 1hr
         reactants   : [["chelt", 1], ["fe", 1]],
         products    : [["x", 1]],
     }

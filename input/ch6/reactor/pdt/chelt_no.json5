@@ -4,22 +4,22 @@
     coeffs_values_sources   : { Here    : {
         "ala"   : [
             "res/maps/diff_ala.nc",
-            "res/maps/init_ala_chelt.nc",
+            "res/maps/init_ala_chelt_no.nc",
             null
         ],
         "ppix"   :   [
             null,
-            "res/maps/init_ppix_chelt.nc",
+            "res/maps/init_ppix_chelt_no.nc",
             null
         ],
         "fe"    : [
             null,
-            "res/maps/init_fe_chelt.nc",
+            "res/maps/init_fe_chelt_no.nc",
             null
         ],
         "chelt" : [
             "res/maps/diff_chelt.nc",
-            "res/maps/init_chelt_chelt.nc",
+            "res/maps/init_chelt_chelt_no.nc",
             null
         ],
         "oxy"    :   [
@@ -29,7 +29,7 @@
         ],
         "udens"   :   [
             null,
-            "res/maps/udens_thick.nc",
+            "res/maps/udens_chelt_no.nc",
             null
         ],
     } },

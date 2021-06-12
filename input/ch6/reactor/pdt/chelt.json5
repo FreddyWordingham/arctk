@@ -29,7 +29,7 @@
         ],
         "udens"   :   [
             null,
-            "res/maps/udens_thick.nc",
+            "res/maps/udens_chelt.nc",
             null
         ],
     } },
