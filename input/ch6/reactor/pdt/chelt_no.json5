@@ -1,6 +1,6 @@
 {
     grid    : { There   : 'res/grid/16mm_master.json5' },
-    sett    : { There   : 'res/sett/reactor/3hrs_low.json5' },
+    sett    : { There   : 'res/sett/reactor/10min_low.json5' },
     coeffs_values_sources   : { Here    : {
         "ala"   : [
             "res/maps/diff_ala.nc",
