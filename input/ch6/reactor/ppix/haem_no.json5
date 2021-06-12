@@ -19,5 +19,5 @@
         ]
     } },
     multipliers : "res/maps/multipliers_thick.nc",
-    reactor: { There    : "res/reactions/full.json5" }
+    reactor: { There    : "res/reactions/haem.json5" }
 }

@@ -21,7 +21,17 @@
             "res/maps/diff_chelt.nc",
             "res/maps/init_chelt_chelt.nc",
             null
-        ]
+        ],
+        "oxy"    :   [
+            "res/maps/diff_oxy.nc",
+            "res/maps/init_oxy.nc",
+            "res/maps/source_oxy.nc"
+        ],
+        "udens"   :   [
+            null,
+            "res/maps/udens_thick.nc",
+            null
+        ],
     } },
     multipliers : "res/maps/multipliers_thick.nc",
     reactor: { There    : "res/reactions/full.json5" }
