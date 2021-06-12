@@ -49,3 +49,6 @@ cp output/ch6/reactor/ppix/chelt_no/011_\{fe\}_diff.nc input/res/maps/init_fe_ch
 mcrt output/ch6/mcrt/chelt_no input/ ch6/mcrt/chelt_no.json5;
 cp output/ch6/mcrt/chelt_no/shift_density.nc input/res/maps/udens_chelt_no.nc;
 reactor output/ch6/reactor/pdt/chelt_no input/ ch6/reactor/pdt/chelt_no.json5;
+
+
+# paste -d, stripe_000.csv <(cut -d"," -f2- stripe_001.csv) <(cut -d"," -f2- stripe_002.csv) <(cut -d"," -f2- stripe_003.csv) <(cut -d"," -f2- stripe_004.csv) <(cut -d"," -f2- stripe_005.csv) <(cut -d"," -f2- stripe_006.csv) <(cut -d"," -f2- stripe_007.csv) <(cut -d"," -f2- stripe_008.csv) <(cut -d"," -f2- stripe_009.csv) <(cut -d"," -f2- stripe_010.csv) <(cut -d"," -f2- stripe_011.csv)
