@@ -2,7 +2,7 @@
     ops: [
         [
             "critical_chelt",
-            { Div       : ["../output/ch6/reactor/chelt/011_{radical}_diff.nc", 1] }
+            { Div       : ["../output/ch6/reactor/pdt/chelt/011_{radical}_diff.nc", 1] }
         ],
         [
             "sub_chelt",
