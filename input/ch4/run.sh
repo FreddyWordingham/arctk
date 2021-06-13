@@ -5,6 +5,7 @@ babbage output/tmp input/ ch4/babbage/build_map_diff_oxy.json5;
 cp output/tmp/diff_oxy.nc input/res/maps/;
 babbage output/tmp input/ ch4/babbage/build_map_source_oxy.json5;
 cp output/tmp/source_oxy.nc input/res/maps/;
+# diffuse output/ch4/diffuse/doxy input/ ch4/diffuse/doxy.json5;
 diffuse output/ch4/diffuse/oxy input/ ch4/diffuse/oxy.json5;
 cp output/ch4/diffuse/oxy/015_diff.nc input/res/maps/init_oxy.nc;
 
@@ -30,6 +31,7 @@ mcrt output/ch4/mcrt/shallow input/ ch4/mcrt/tumour/shallow.json5;
 cp output/ch4/mcrt/shallow/shift_density.nc input/res/maps/udens_shallow.nc;
 reactor output/ch4/reactor/pdt/shallow input/ ch4/reactor/pdt/shallow.json5;
 babbage output/tmp input/ ch4/babbage/build_map_tumour_shallow_kill.json5;
+babbage output/tmp input/ ch4/babbage/build_map_tumour_shallow_remain.json5;
 
 
 echo "Ch4: Thick tumour setup"
@@ -46,6 +48,7 @@ mcrt output/ch4/mcrt/thick input/ ch4/mcrt/tumour/thick.json5;
 cp output/ch4/mcrt/thick/shift_density.nc input/res/maps/udens_thick.nc;
 reactor output/ch4/reactor/pdt/thick input/ ch4/reactor/pdt/thick.json5;
 babbage output/tmp input/ ch4/babbage/build_map_tumour_thick_kill.json5;
+babbage output/tmp input/ ch4/babbage/build_map_tumour_thick_remain.json5;
 
 
 echo "Ch4: Deep tumour setup"
@@ -62,3 +65,4 @@ mcrt output/ch4/mcrt/deep input/ ch4/mcrt/tumour/deep.json5;
 cp output/ch4/mcrt/deep/shift_density.nc input/res/maps/udens_deep.nc;
 reactor output/ch4/reactor/pdt/deep input/ ch4/reactor/pdt/deep.json5;
 babbage output/tmp input/ ch4/babbage/build_map_tumour_deep_kill.json5;
+babbage output/tmp input/ ch4/babbage/build_map_tumour_deep_remain.json5;

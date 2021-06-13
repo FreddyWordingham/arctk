@@ -1,0 +1,24 @@
+{
+    ops: [
+        [
+            "critical_thick",
+            { Div       : ["../output/ch4/reactor/pdt/thick/011_{radical}_diff.nc", 1] }
+        ],
+        [
+            "sub_thick",
+            { Remove       : ["res/maps/tumour_thick.nc", "../output/tmp/critical_thick.nc"] }
+        ],
+        [
+            "remain_zone_thick",
+            { Clamp     : ["../output/tmp/sub_thick.nc", 0, 1] }
+        ],
+        [
+            "info",
+            { Info    : "res/maps/tumour_thick.nc" }
+        ],
+        [
+            "info",
+            { Info    : "../output/tmp/remain_zone_thick.nc" }
+        ]
+    ]
+}
