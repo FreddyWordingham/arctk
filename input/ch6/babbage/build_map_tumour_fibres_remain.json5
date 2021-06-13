@@ -1,0 +1,24 @@
+{
+    ops: [
+        [
+            "critical_fibres",
+            { Div       : ["../output/ch6/reactor/fibres/011_{radical}_diff.nc", 1] }
+        ],
+        [
+            "sub_fibres",
+            { Remove       : ["res/maps/tumour_thick.nc", "../output/tmp/critical_fibres.nc"] }
+        ],
+        [
+            "remain_zone_fibres",
+            { Clamp     : ["../output/tmp/sub_fibres.nc", 0, 1] }
+        ],
+        [
+            "info",
+            { Info    : "res/maps/tumour_thick.nc" }
+        ],
+        [
+            "info",
+            { Info    : "../output/tmp/remain_zone_fibres.nc" }
+        ]
+    ]
+}

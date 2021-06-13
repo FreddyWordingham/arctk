@@ -11,6 +11,7 @@ mcrt output/ch6/mcrt/fibre input/ ch6/mcrt/fibre.json5;
 cp output/ch6/mcrt/fibre/shift_density.nc input/res/maps/udens_fibre.nc;
 reactor output/ch6/reactor/fibre input/ ch6/reactor/pdt/fibre.json5;
 babbage output/tmp input/ ch6/babbage/build_map_tumour_fibre_kill.json5;
+babbage output/tmp input/ ch6/babbage/build_map_tumour_fibre_remain.json5;
 
 
 echo "Ch6: Fibres"
@@ -18,6 +19,7 @@ mcrt output/ch6/mcrt/fibres input/ ch6/mcrt/fibres.json5;
 cp output/ch6/mcrt/fibres/shift_density.nc input/res/maps/udens_fibres.nc;
 reactor output/ch6/reactor/fibres input/ ch6/reactor/pdt/fibres.json5;
 babbage output/tmp input/ ch6/babbage/build_map_tumour_fibres_kill.json5;
+babbage output/tmp input/ ch6/babbage/build_map_tumour_fibres_remain.json5;
 
 
 echo "Ch6: Chelation"
