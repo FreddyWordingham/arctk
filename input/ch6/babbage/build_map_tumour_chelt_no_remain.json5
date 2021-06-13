@@ -1,0 +1,24 @@
+{
+    ops: [
+        [
+            "critical_chelt_no",
+            { Div       : ["../output/ch6/reactor/chelt_no/011_{radical}_diff.nc", 1] }
+        ],
+        [
+            "sub_chelt_no",
+            { Remove       : ["res/maps/tumour_thick.nc", "../output/tmp/critical_chelt_no.nc"] }
+        ],
+        [
+            "remain_zone_chelt_no",
+            { Clamp     : ["../output/tmp/sub_chelt_no.nc", 0, 1] }
+        ],
+        [
+            "info",
+            { Info    : "res/maps/tumour_thick.nc" }
+        ],
+        [
+            "info",
+            { Info    : "../output/tmp/remain_zone_chelt_no.nc" }
+        ]
+    ]
+}

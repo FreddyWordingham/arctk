@@ -38,6 +38,8 @@ cp output/ch6/reactor/ppix/chelt/015_\{fe\}_diff.nc input/res/maps/init_fe_chelt
 mcrt output/ch6/mcrt/chelt input/ ch6/mcrt/chelt.json5;
 cp output/ch6/mcrt/chelt/shift_density.nc input/res/maps/udens_chelt.nc;
 reactor output/ch6/reactor/pdt/chelt input/ ch6/reactor/pdt/chelt.json5;
+babbage output/tmp input/ ch6/babbage/build_map_tumour_chelt_kill.json5;
+babbage output/tmp input/ ch6/babbage/build_map_tumour_chelt_remain.json5;
 
 
 echo "Ch6: Chelation"
