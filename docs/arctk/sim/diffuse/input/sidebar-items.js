@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Input","Diffuse simulation resources conglomerate."]]});

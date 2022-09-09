@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["babbage","Babbage datacube manipulation module."],["cartographer","Cartography surface-to-volume mapping module."],["diffuse","Diffusion simulation module."],["flask","Reaction kinetics module."],["mcrt","Monte Carlo Radiative-transfer module."],["reactor","Reaction-diffusion simulation module."],["render","Rendering module."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"derive":[["File","Create the procedural macro File."],["Input","Create the procedural macro Input."],["Output","Create the procedural macro Output."],["Save","Create the procedural macro Save."]]});

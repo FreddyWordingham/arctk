@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["fluorescence","Lifetime of a single photon capable of participating in fluorescence."]]});

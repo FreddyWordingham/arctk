@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["csv","Commer-Separated-Variable file handling."],["json","Json loading."],["netcdf","Netcdf file handling."],["png","Png writing."],["wavefront","Wavefront file handling."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["as_json","Serialise the type in json format."]],"trait":[["Save","Types implementing this trait can be saved to file."]]});

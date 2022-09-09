@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Event","Event determination enumeration."]]});

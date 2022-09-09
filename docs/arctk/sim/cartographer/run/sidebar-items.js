@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["multi_thread","Run a multi-threaded Cartography simulation."],["single_thread","Run a Cartography simulation using a single thread."]]});

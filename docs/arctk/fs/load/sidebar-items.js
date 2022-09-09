@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["Load","Types implementing this trait can be built into another type by loading in additional resources."]]});

@@ -1,4 +1,0 @@
-{   // Surface attributes.
-    air_to_flesh                : { Interface   : ['flesh',             'air'] },
-    flesh_to_tumour             : { Interface   : ['tumour',            'flesh'] },
-}

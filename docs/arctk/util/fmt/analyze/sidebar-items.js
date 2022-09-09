@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["Analyze","Types implementing this trait can be analysed to produce a printable type."]]});

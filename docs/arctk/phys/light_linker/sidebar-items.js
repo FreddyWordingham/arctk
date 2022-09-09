@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["LightLinker","Photon emission structure linker."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Reactor","Complete reactor structure."]]});

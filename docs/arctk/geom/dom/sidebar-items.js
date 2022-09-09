@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["grid","Regular Cartesian-grid cell scheme."],["grid_builder","Regular-Cartesian grid builder."],["surface","Optical surface structure."],["surface_linker","Surface linking structure."],["surface_linker_loader","Surface linker loading structure."],["tree","Adaptive tree cell scheme."],["tree_settings","Adaptive tree construction settings."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["travel","Move the photon forward and record the flight."]]});

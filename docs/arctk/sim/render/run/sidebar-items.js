@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["multi_thread","Run a multi-threaded rendering simulation."],["single_thread","Run a rendering simulation using a single thread."]]});

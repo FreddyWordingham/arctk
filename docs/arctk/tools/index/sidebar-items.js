@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["linear_to_three_dim","Create the next three-dimensional index from the given linear index."],["two_dim_to_linear","Determine the linear index form a two-dimension index and resolution."]]});

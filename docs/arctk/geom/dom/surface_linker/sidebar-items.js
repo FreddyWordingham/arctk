@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["SurfaceLinker","Surface with named attribute."]]});

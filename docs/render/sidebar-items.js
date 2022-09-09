@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["BACKUP_TERM_WIDTH","Backup print width if the terminal width can not be determined."]],"fn":[["initialisation","Initialise the input arguments."],["load_parameters","Load the required files and form the input parameters."],["main","Main program function."]]});

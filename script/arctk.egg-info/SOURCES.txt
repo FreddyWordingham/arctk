@@ -1,8 +1,0 @@
-LICENSE
-README.md
-pyproject.toml
-setup.cfg
-script/arctk.egg-info/PKG-INFO
-script/arctk.egg-info/SOURCES.txt
-script/arctk.egg-info/dependency_links.txt
-script/arctk.egg-info/top_level.txt

@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Output","Diffuse output data."]]});

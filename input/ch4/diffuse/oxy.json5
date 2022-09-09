@@ -1,6 +1,0 @@
-{
-    grid    : { There   : 'res/grid/16mm_master.json5' },
-    sett    : { There   : 'res/sett/diffuse/3hr_low.json5' },
-    sources : "res/maps/source_oxy.nc",
-    coeffs  : "res/maps/diff_oxy.nc",
-}

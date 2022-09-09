@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["AttributeLinkerLinkerLinker","Surface attribute setup. Handles detector linking."]]});

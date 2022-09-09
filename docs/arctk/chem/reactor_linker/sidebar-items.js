@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["ReactorLinker","Reactor linking structure."]]});
