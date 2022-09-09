@@ -1,0 +1,15 @@
+[package]
+name = "arctk"
+version = "2.0.0"
+authors = ["Freddy Wordingham <freddy@digilab.co.uk>"]
+description = "Numerical simulations of physical systems"
+repository = "https://github.com/FreddyWordingham/arctk"
+readme = "README.md"
+keywords = ["physics", "mcrt", "ray-tracing", "numerical", "simulation"]
+categories = ["science", "simulation"]
+edition = "2021"
+documentation = "https://freddywordingham.github.io/arctk"
+
+[features]
+
+[dependencies]
