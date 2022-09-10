@@ -35,4 +35,5 @@
     clippy::single_char_lifetime_names
 )]
 
+pub mod geom;
 pub mod rt;
