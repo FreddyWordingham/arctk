@@ -38,4 +38,5 @@
 pub mod dom;
 pub mod geom;
 pub mod parse;
+pub mod phys;
 pub mod rt;
