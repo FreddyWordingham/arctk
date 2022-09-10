@@ -26,3 +26,13 @@ after which you can use the tools:
 ```sh
 mcrt -i input/ -o output/ parameters.json
 ```
+
+## Modules
+
+Sub-module dependency diagram:
+
+```mermaid
+graph TD;
+    RT-->Geom;
+    Geom-->Dom;
+```
