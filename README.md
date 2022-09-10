@@ -14,7 +14,7 @@ cd arctk
 and then install the binary:
 
 ```sh
-cargo install
+cargo install --path . --release
 ```
 
 after which you can use the tools:

@@ -13,3 +13,4 @@ documentation = "https://freddywordingham.github.io/arctk"
 [features]
 
 [dependencies]
+clap = { version = "3.2.20", features = ["derive"] }
