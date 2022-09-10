@@ -2,22 +2,8 @@ use clap::Parser;
 use log::{debug, error, info};
 use std::{fs::create_dir_all, path::PathBuf};
 
-/// Command line arguments.
-#[derive(Parser, Debug)]
-#[clap(author, version, about, long_about = None)]
-struct Args {
-    /// Input directory.
-    #[clap(short, long, value_parser, default_value = ".")]
-    input_dir: PathBuf,
-
-    /// Output directory.
-    #[clap(short, long, value_parser, default_value = "output/")]
-    output_dir: PathBuf,
-
-    /// Parameters filename.
-    #[clap(short, long, value_parser, default_value = "parameters.json")]
-    parameters_filename: PathBuf,
-}
+mod args;
+use args::Args;
 
 /// Entrypoint function.
 fn main() {
