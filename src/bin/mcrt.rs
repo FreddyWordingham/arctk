@@ -1,6 +1,6 @@
 use clap::Parser;
 use env_logger;
-use log::{debug, info};
+use log::{debug, error, info};
 use std::{fs::create_dir_all, path::PathBuf};
 
 /// Simple program to greet a person
@@ -40,6 +40,7 @@ fn init_directories(output_dir: PathBuf) {
         debug!("Overwriting output directory: {}", output_dir.display());
     } else {
         debug!("Creating output directory: {}", output_dir.display());
-        create_dir_all(&output_dir).expect("Failed to create output directory!");
+        create_dir_all(&output_dir)
+            .unwrap_or_else(|_| error!("Failed to create output directory!"));
     }
 }
