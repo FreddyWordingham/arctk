@@ -14,7 +14,10 @@ license = "MIT OR Apache-2.0"
 [features]
 
 [dependencies]
+atty = "0.2.14"
 clap = { version = "3.2.20", features = ["derive"] }
+hex = "0.4.3"
+indicatif = "0.17.0"
 itertools = "0.10.3"
 json5 = "0.4.1"
 nalgebra = { version = "0.31.1", features = ["serde-serialize"] }
