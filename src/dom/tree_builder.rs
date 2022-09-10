@@ -1,8 +1,11 @@
 //! Oct-tree construction settings.
 
+use serde::Deserialize;
+
 use crate::dom::{Surface, Tree};
 
 /// Tree construction settings.
+#[derive(Deserialize)]
 pub struct TreeBuilder {
     /// Target maximum number of triangles per cell.
     pub tar_tris: usize,
