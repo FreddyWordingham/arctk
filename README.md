@@ -1,5 +1,7 @@
 # ARCTK
 
+![status](https://github.com/FreddyWordingham/arctk/actions/workflows/ci.yml/badge.svg)
+
 Numerical simulations of physical systems.
 
 ## Quickstart

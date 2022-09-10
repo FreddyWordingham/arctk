@@ -1,5 +1,4 @@
 use clap::Parser;
-use env_logger;
 use log::{debug, error, info};
 use std::{fs::create_dir_all, path::PathBuf};
 
