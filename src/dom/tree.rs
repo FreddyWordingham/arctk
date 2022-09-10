@@ -6,6 +6,7 @@ use crate::{
     dom::{Surface, TreeBuilder},
     geom::{Cube, Triangle},
     rt::{Hit, Ray, Scan},
+    util::ProgressBar,
 };
 
 /// Tree cell enumeration.
@@ -43,11 +44,20 @@ impl<'a, T> Tree<'a, T> {
             }
         }
 
+        let mut pb = ProgressBar::new("Growing tree", 8_usize.pow(sett.max_depth));
         if (sett.max_depth == 0) || (tris.len() <= sett.tar_tris) {
+            pb.finish_with_message("Tree grown");
             return Self::Leaf { boundary, tris };
         }
 
-        let children = Box::new(Self::init_children(sett, &boundary, 1, tris.as_slice()));
+        let children = Box::new(Self::init_children(
+            &mut pb,
+            sett,
+            &boundary,
+            1,
+            tris.as_slice(),
+        ));
+        pb.finish_with_message("Tree grown");
 
         Self::Branch { boundary, children }
     }
@@ -105,6 +115,7 @@ impl<'a, T> Tree<'a, T> {
     #[inline]
     #[must_use]
     fn init_children(
+        pb: &mut ProgressBar,
         sett: &TreeBuilder,
         parent_boundary: &Cube,
         depth: u32,
@@ -114,9 +125,9 @@ impl<'a, T> Tree<'a, T> {
         debug_assert!(!potential_tris.is_empty());
 
         let hws = parent_boundary.half_widths();
-        let make_child = |min_x: f64, min_y: f64, min_z: f64| {
+        let mut make_child = |min_x: f64, min_y: f64, min_z: f64| {
             let min = Point3::new(min_x, min_y, min_z);
-            Self::init_child(sett, Cube::new(min, min + hws), depth, potential_tris)
+            Self::init_child(pb, sett, Cube::new(min, min + hws), depth, potential_tris)
         };
 
         let min = parent_boundary.mins;
@@ -137,6 +148,7 @@ impl<'a, T> Tree<'a, T> {
     #[inline]
     #[must_use]
     fn init_child(
+        pb: &mut ProgressBar,
         sett: &TreeBuilder,
         boundary: Cube,
         depth: u32,
@@ -155,10 +167,11 @@ impl<'a, T> Tree<'a, T> {
         }
 
         if (tris.len() <= sett.tar_tris) || (depth >= sett.max_depth) {
+            pb.block(8_usize.pow(sett.max_depth - depth));
             return Tree::Leaf { boundary, tris };
         }
 
-        let children = Box::new(Self::init_children(sett, &boundary, depth + 1, &tris));
+        let children = Box::new(Self::init_children(pb, sett, &boundary, depth + 1, &tris));
 
         Tree::Branch { boundary, children }
     }
