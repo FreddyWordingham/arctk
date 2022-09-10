@@ -12,7 +12,7 @@ struct Args {
     #[clap(short, long, value_parser, default_value = "./output")]
     output_dir: String,
 
-    /// Verbose mode (-v, -vv, -vvv, etc.)
+    /// Verbose mode
     #[clap(short, long, value_parser)]
     verbose: bool,
 }
