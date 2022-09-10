@@ -1,5 +1,4 @@
 use clap::Parser;
-use log::{debug, error, info};
 use std::{fs::create_dir_all, path::PathBuf};
 
 mod util;
@@ -7,7 +6,6 @@ use util::Args;
 
 /// Entrypoint function.
 fn main() {
-    env_logger::init();
     let args = Args::parse();
     load_parameters(args.input_dir, args.parameters_filename);
     init_directories(args.output_dir);
@@ -17,17 +15,17 @@ fn main() {
 #[inline]
 fn load_parameters(input_dir: PathBuf, parameters_filename: PathBuf) {
     let parameters_filepath = input_dir.join(&parameters_filename);
-    info!("Loading parameters file: {}", parameters_filepath.display());
+    println!("Loading parameters file: {}", parameters_filepath.display());
 }
 
 /// Create the output directory if it does not exist.
 #[inline]
 fn init_directories(output_dir: PathBuf) {
     if output_dir.exists() {
-        debug!("Overwriting output directory: {}", output_dir.display());
+        println!("Overwriting output directory: {}", output_dir.display());
     } else {
-        debug!("Creating output directory: {}", output_dir.display());
+        println!("Creating output directory: {}", output_dir.display());
         create_dir_all(&output_dir)
-            .unwrap_or_else(|_| error!("Failed to create output directory!"));
+            .unwrap_or_else(|_| panic!("Failed to create output directory!"));
     }
 }
