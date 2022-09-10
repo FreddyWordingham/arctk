@@ -14,12 +14,14 @@ fn main() {
 }
 
 /// Load parameters from a JSON file.
+#[inline]
 fn load_parameters(input_dir: PathBuf, parameters_filename: PathBuf) {
     let parameters_filepath = input_dir.join(&parameters_filename);
     info!("Loading parameters file: {}", parameters_filepath.display());
 }
 
 /// Create the output directory if it does not exist.
+#[inline]
 fn init_directories(output_dir: PathBuf) {
     if output_dir.exists() {
         debug!("Overwriting output directory: {}", output_dir.display());
