@@ -2,8 +2,8 @@ use clap::Parser;
 use log::{debug, error, info};
 use std::{fs::create_dir_all, path::PathBuf};
 
-mod args;
-use args::Args;
+mod util;
+use util::Args;
 
 /// Entrypoint function.
 fn main() {
