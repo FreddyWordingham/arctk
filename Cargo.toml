@@ -9,6 +9,7 @@ keywords = ["physics", "mcrt", "ray-tracing", "numerical", "simulation"]
 categories = ["science", "simulation"]
 edition = "2021"
 documentation = "https://freddywordingham.github.io/arctk"
+license = "MIT OR Apache-2.0"
 
 [features]
 
