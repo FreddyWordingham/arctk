@@ -4,7 +4,7 @@ use rand::{rngs::ThreadRng, seq::SliceRandom, thread_rng};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::{
     fs,
-    path::{Path, PathBuf},
+    path::Path,
     sync::{Arc, Mutex},
 };
 
@@ -20,7 +20,7 @@ pub fn run<
     T: Fn(&Input<'_>, &Camera, Ray, f64, [usize; 2], &mut Output, &mut ThreadRng) + Send + Sync + Copy,
 >(
     parameters: &Parameters,
-    output_dir: &PathBuf,
+    output_dir: &Path,
     sample: T,
 ) {
     // Setup.
@@ -37,12 +37,12 @@ pub fn run<
     let runtime = Input::new(settings, shader, tree);
 
     // Run
-    let output_dir = output_dir.join("tiles");
-    if output_dir.exists() {
-        fs::remove_dir_all(&output_dir).expect("Failed to initialise output directory.");
+    let tiles_output_dir = output_dir.join("tiles");
+    if tiles_output_dir.exists() {
+        fs::remove_dir_all(&tiles_output_dir).expect("Failed to initialise output directory.");
     }
-    fs::create_dir_all(&output_dir).expect("Failed to create output directory.");
-    render(&output_dir, &runtime, &camera, sample);
+    fs::create_dir_all(&tiles_output_dir).expect("Failed to create output directory.");
+    render(&tiles_output_dir, &runtime, &camera, sample);
 }
 
 /// Perform the rendering.
