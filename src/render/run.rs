@@ -1,10 +1,10 @@
 //! Run control.
 
-use rand::{seq::SliceRandom, thread_rng};
+use rand::{rngs::ThreadRng, seq::SliceRandom, thread_rng};
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::{
     fs,
-    path::Path,
+    path::{Path, PathBuf},
     sync::{Arc, Mutex},
 };
 
@@ -13,7 +13,6 @@ use crate::{
     rt::{Camera, Ray},
     util::ProgressBar,
 };
-use rand::rngs::ThreadRng;
 
 /// Run the simulation with the given parameterisation.
 #[inline]
@@ -21,6 +20,7 @@ pub fn run<
     T: Fn(&Input<'_>, &Camera, Ray, f64, [usize; 2], &mut Output, &mut ThreadRng) + Send + Sync + Copy,
 >(
     parameters: &Parameters,
+    output_dir: &PathBuf,
     sample: T,
 ) {
     // Setup.
@@ -37,14 +37,12 @@ pub fn run<
     let runtime = Input::new(settings, shader, tree);
 
     // Run
-    let output_dir = parameters.output_dir.join("tiles");
+    let output_dir = output_dir.join("tiles");
     if output_dir.exists() {
         fs::remove_dir_all(&output_dir).expect("Failed to initialise output directory.");
     }
     fs::create_dir_all(&output_dir).expect("Failed to create output directory.");
     render(&output_dir, &runtime, &camera, sample);
-
-    println!("FINISHED");
 }
 
 /// Perform the rendering.

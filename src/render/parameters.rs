@@ -16,9 +16,7 @@ use crate::{
 #[derive(Deserialize)]
 pub struct Parameters {
     /// Path to the top level resource directory.
-    input_dir: PathBuf,
-    /// Path to the output directory.
-    pub output_dir: PathBuf,
+    resources_dir: PathBuf,
     /// Oct-tree settings.
     tree: TreeBuilder,
     /// Technical settings.
@@ -42,7 +40,7 @@ impl Parameters {
         gradient_names.extend(&mut self.used_attribute_names().iter().flat_map(|n| {
             json::load::<AttributeBuilder>(
                 &self
-                    .input_dir
+                    .resources_dir
                     .join("attributes")
                     .join(n)
                     .with_extension("json"),
@@ -97,7 +95,7 @@ impl Parameters {
         for name in self.used_gradient_names() {
             let grad = json::load::<GradientBuilder>(
                 &self
-                    .input_dir
+                    .resources_dir
                     .join("gradients")
                     .join(name.clone())
                     .with_extension("json"),
@@ -121,7 +119,7 @@ impl Parameters {
         for name in self.used_attribute_names() {
             let attr = json::load::<AttributeBuilder>(
                 &self
-                    .input_dir
+                    .resources_dir
                     .join("attributes")
                     .join(name.clone())
                     .with_extension("json"),
@@ -142,7 +140,7 @@ impl Parameters {
         for name in self.used_mesh_names() {
             let mesh = wavefront::load(
                 &self
-                    .input_dir
+                    .resources_dir
                     .join("meshes")
                     .join(name.clone())
                     .with_extension("obj"),

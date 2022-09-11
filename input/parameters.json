@@ -1,0 +1,62 @@
+{
+    "resources_dir": "app/static/resources",
+    "tree": {
+        "tar_tris": 5,
+        "max_depth": 8,
+        "padding": 0.01
+    },
+    "settings": {
+        "tiles": [172, 72],
+        "bump_dist": 0.001,
+        "loop_limit": 1e6,
+        "min_weight": 0.01,
+        "max_distance": 1.0e3
+    },
+    "shader": {
+        "sun_pos": [-40.0, -20.0, 25.0],
+        "light": [0.3, 0.5, 0.2],
+        "shadow": [0.3, 0.7],
+        "spec_pow": 8,
+        "soft_shadow_samples": [7, 2.0],
+        "ambient_shadow_samples": [31, 2.0],
+        "occ_dist": [1.0e3, 1.0e3],
+        "fall_off": 5.0,
+        "sky_grad": "royal",
+        "data_grad": "grayscale"
+    },
+    "camera": {
+        "pos": [-8, -12, 3],
+        "tar": [0, 0, 0],
+        "fov": 120.0,
+        "res": [1920, 1080],
+        "ss_power": 2
+    },
+    "surfaces": [
+        ["orbit/tree", "rock"],
+        ["orbit/leaves", "crystal"],
+
+        ["orbit/dome", "glass"],
+        ["orbit/ground", "grass"],
+        ["orbit/stones", "rock"],
+        ["orbit/puddle", "chrome"],
+
+        ["orbit/body_a", "default"],
+        ["orbit/eyes_a", "black"],
+        ["orbit/hair_a", "rainbow"],
+        ["orbit/spines_a", "plasma"],
+        ["orbit/tail_a", "plasma"],
+        ["orbit/body_b", "default"],
+        ["orbit/eyes_b", "black"],
+        ["orbit/hair_b", "rainbow"],
+        ["orbit/spines_b", "plasma"],
+        ["orbit/tail_b", "plasma"],
+
+        ["orbit/greens", "grass"],
+        ["orbit/heads", "rock"],
+        ["orbit/petals", "yellow"],
+        ["orbit/stems", "grass"],
+
+        ["orbit/starfield", "gold"],
+        ["orbit/path", "chrome"]
+    ]
+}
