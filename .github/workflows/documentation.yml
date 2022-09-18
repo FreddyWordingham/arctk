@@ -23,10 +23,6 @@ jobs:
               with:
                   fetch-depth: 2
 
-            - uses: actions/download-artifact@v3
-              with:
-                  name: target-artifact
-
             - name: Run cargo check
               uses: actions-rs/cargo@v1
               with:

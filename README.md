@@ -10,7 +10,7 @@
 ![status](https://github.com/FreddyWordingham/arctk/actions/workflows/full_ci.yml/badge.svg)
 ![minimum rustc 1.63](https://img.shields.io/badge/rustc-1.63+-red.svg)
 
-Numerical simulations of physical systems.
+A numerical simulation framework for physical systems.
 
 ## Quickstart
 
