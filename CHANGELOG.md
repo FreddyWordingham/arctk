@@ -11,7 +11,7 @@ These elements are released and available in version 1.0, but further work is ne
 -   Simulations
     -   Reaction networks
     -   Diffusion
-    -   N dimensional reaction-diffusion
+    -   N-dimensional reaction-diffusion
 
 ## [2.0.7] - In progress
 
