@@ -33,9 +33,9 @@ jobs:
               env:
                   API_TOKEN_GITHUB: ${{ secrets.DOCUMENTATION_HOSTING }}
               with:
-                  source_folder: "./target/docs"
+                  source_folder: "/target/docs"
                   destination_repo: "FreddyWordingham/arctk"
-                  destination_folder: "."
+                  destination_folder: "/"
                   destination_branch: "docs"
                   user_email: "freddy@digilab.co.uk"
                   user_name: "FreddyWordingham"
