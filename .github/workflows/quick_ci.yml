@@ -47,8 +47,6 @@ jobs:
             matrix:
                 os:
                     - ubuntu-latest
-                    - macOS-latest
-                    - windows-latest
         steps:
             - name: Checkout sources
               uses: actions/checkout@v2
@@ -70,8 +68,6 @@ jobs:
             matrix:
                 os:
                     - ubuntu-latest
-                    - macOS-latest
-                    - windows-latest
         steps:
             - name: Checkout sources
               uses: actions/checkout@v2
