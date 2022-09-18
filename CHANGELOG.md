@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
     -   GitHub issue templates and labels
     -   README and CHANGELOG
 
-## [2.0.6] - In progress
+## [2.0.6] - 11/09/2022
 
 ### Added
 
