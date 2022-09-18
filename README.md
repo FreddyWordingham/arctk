@@ -26,6 +26,14 @@ and then install the library:
 cargo install --path . --release
 ```
 
+## ARCTK in the wild
+
+`arctk` is a collection of classes that form the simulation framework for other projects:
+
+-   [Antler](https://github.com/FreddyWordingham/antler) - A textureless rendering engine
+-   [MCRT](https://github.com/FreddyWordingham/mcrt) - A physically accurate light dosimetry tool
+-   [SOLAR](https://github.com/digiLab-Ai/solar) - A tool used to determine the expected power output of solar panels
+
 ## Modules
 
 Sub-module dependency diagram:
