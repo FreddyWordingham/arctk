@@ -23,7 +23,7 @@ jobs:
               with:
                   fetch-depth: 2
 
-            - name: Run cargo check
+            - name: Generate Documentation
               uses: actions-rs/cargo@v1
               with:
                   command: doc
