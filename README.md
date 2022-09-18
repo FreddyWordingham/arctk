@@ -20,16 +20,10 @@ git clone git@github.com:FreddyWordingham/arctk.git
 cd arctk
 ```
 
-and then install the binary:
+and then install the library:
 
 ```sh
 cargo install --path . --release
-```
-
-after which you can use the tools:
-
-```sh
-mcrt -i input/ -o output/ parameters.json
 ```
 
 ## Modules
