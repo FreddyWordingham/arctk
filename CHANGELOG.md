@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.X.X] - Upcoming
+
+## Added
+
+These elements are released and available in version 1.0, but further work is needed to make them polished enough for 2.0 inclusion:
+
+-   Simulations
+    -   Reaction networks
+    -   Diffusion
+    -   N dimensional reaction-diffusion
+
 ## [2.0.7] - In progress
 
 ## Added
