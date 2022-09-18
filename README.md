@@ -4,9 +4,10 @@
     <img src="./resources/icons/arctk.svg" width="200" height="200" />
 </p>
 
-[![crate](https://img.shields.io/crates/v/arctk.svg)](https://crates.io/crates/arctk)
 [![documentation](https://docs.rs/arctk/badge.svg)](https://docs.rs/arctk)
 ![status](https://github.com/FreddyWordingham/arctk/actions/workflows/ci.yml/badge.svg)
+[![crate](https://img.shields.io/crates/v/arctk.svg)](https://crates.io/crates/arctk)
+![minimum rustc 1.63](https://img.shields.io/badge/rustc-1.63+-red.svg)
 
 Numerical simulations of physical systems.
 

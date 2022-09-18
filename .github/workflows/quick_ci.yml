@@ -1,6 +1,13 @@
-on: [push, pull_request]
+---
+name: Quick CI
 
-name: CI
+on:
+    push:
+        branches:
+            - dev
+    pull_request:
+        branches:
+            - dev
 
 jobs:
     build:
@@ -10,8 +17,6 @@ jobs:
             matrix:
                 os:
                     - ubuntu-latest
-                    - macOS-latest
-                    - windows-latest
         steps:
             - name: Checkout sources
               uses: actions/checkout@v2
