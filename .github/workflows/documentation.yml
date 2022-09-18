@@ -33,7 +33,7 @@ jobs:
               env:
                   API_TOKEN_GITHUB: ${{ secrets.DOCUMENTATION_HOSTING }}
               with:
-                  source_folder: "target/docs"
+                  source_folder: "target/doc"
                   destination_repo: "FreddyWordingham/arctk"
                   destination_folder: "docs"
                   destination_branch: "docs"
