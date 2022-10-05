@@ -5,6 +5,7 @@ use num_traits::Zero;
 use std::{fs, path::Path, str::FromStr};
 
 /// Load a two-dimensional array from a CSV file.
+/// The first line of the string must contain the column headers.
 #[inline]
 #[must_use]
 pub fn load<T: Clone + Zero + FromStr>(path: &Path) -> Array2<T> {
