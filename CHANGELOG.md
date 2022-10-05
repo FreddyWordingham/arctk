@@ -13,7 +13,7 @@ These elements are released and available in version 1.0, but further work is ne
     -   Diffusion
     -   N-dimensional reaction-diffusion
 
-## [2.0.7] - In progress
+## [2.0.7] - 05/10/2022
 
 ## Added
 
@@ -24,6 +24,7 @@ These elements are released and available in version 1.0, but further work is ne
     -   Documentation generation
     -   GitHub issue templates and labels
     -   README and CHANGELOG
+-   Parsing for CSV files
 
 ## [2.0.6] - 11/09/2022
 
