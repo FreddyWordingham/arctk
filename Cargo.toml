@@ -1,6 +1,6 @@
 [package]
 name = "arctk"
-version = "2.0.7"
+version = "2.0.8"
 authors = ["Freddy Wordingham <freddy@digilab.co.uk>"]
 description = "Numerical simulations of physical systems"
 repository = "https://github.com/FreddyWordingham/arctk"
