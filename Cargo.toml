@@ -14,18 +14,18 @@ license = "MIT OR Apache-2.0"
 [features]
 
 [dependencies]
-atty = "0.2.14"
-hex = "0.4.3"
-indicatif = "0.17.0"
-itertools = "0.10.3"
-json5 = "0.4.1"
-nalgebra = { version = "0.31.1", features = ["serde-serialize"] }
-ndarray = { version = "0.15.6", features = ["rayon"] }
-ndarray-stats = "0.5.1"
-palette = "0.6.1"
-png = "0.17.6"
-rand = "0.8.5"
-rayon = "1.5.3"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-slice-of-array = "0.3.2"
+atty = "0.2.*"
+hex = "0.4.*"
+indicatif = "0.17.*"
+itertools = "0.10.*"
+json5 = "0.4.*"
+nalgebra = { version = "0.32.*", features = ["serde-serialize"] }
+ndarray = { version = "0.15.*", features = ["rayon"] }
+ndarray-stats = "0.5.*"
+palette = "0.6.*"
+png = "0.17.*"
+rand = "0.8.*"
+rayon = "1.7.*"
+serde = { version = "1.0.*", features = ["derive"] }
+serde_json = "1.0.*"
+slice-of-array = "0.3.*"
