@@ -41,7 +41,7 @@ impl Crossing {
         {
             (1.0, None)
         } else {
-            let s2t = (n * n) * (1.0 - (ci * ci));
+            let s2t = (n * n) * ci.mul_add(-ci, 1.0);
             let ct = (1.0 - s2t).sqrt();
 
             (
@@ -105,7 +105,7 @@ impl Crossing {
         ci: f64,
         ct: f64,
     ) -> Unit<Vector3<f64>> {
-        Unit::new_unchecked((n * inc.into_inner()) + ((n * ci) - ct) * norm.into_inner())
+        Unit::new_unchecked((n * inc.into_inner()) + n.mul_add(ci, -ct) * norm.into_inner())
     }
 
     /// Get the transmission probability.

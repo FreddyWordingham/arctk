@@ -36,6 +36,7 @@ impl ProgressBar {
     }
 
     /// Tick the bar forward a single increment.
+    #[allow(clippy::print_stdout)]
     #[inline]
     pub fn tick(&mut self) {
         self.count += 1;

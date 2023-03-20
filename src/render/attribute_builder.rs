@@ -49,40 +49,40 @@ impl<'a> AttributeBuilder {
             Self::Opaque(ref grad) => Attribute::Opaque(
                 grads
                     .get(grad)
-                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {grad}")),
             ),
             Self::Mirror(ref grad, abs_frac) => Attribute::Mirror(
                 grads
                     .get(grad)
-                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {grad}")),
                 abs_frac,
             ),
             Self::Transparent(ref grad, abs_frac) => Attribute::Transparent(
                 grads
                     .get(grad)
-                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {grad}")),
                 abs_frac,
             ),
             Self::Refractive(ref grad, abs_frac, ref_indices) => Attribute::Refractive(
                 grads
                     .get(grad)
-                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {grad}")),
                 abs_frac,
                 ref_indices,
             ),
             Self::Luminous(ref grad, bright_mult) => Attribute::Luminous(
                 grads
                     .get(grad)
-                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {}", grad)),
+                    .unwrap_or_else(|| panic!("Failed to link attribute-gradient key: {grad}")),
                 bright_mult,
             ),
             Self::Switchable([ref grad_a, ref grad_b], x) => Attribute::Switchable(
                 [
                     grads.get(grad_a).unwrap_or_else(|| {
-                        panic!("Failed to link attribute-gradient key: {}", grad_a)
+                        panic!("Failed to link attribute-gradient key: {grad_a}")
                     }),
                     grads.get(grad_b).unwrap_or_else(|| {
-                        panic!("Failed to link attribute-gradient key: {}", grad_b)
+                        panic!("Failed to link attribute-gradient key: {grad_b}")
                     }),
                 ],
                 x,

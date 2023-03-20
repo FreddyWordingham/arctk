@@ -1,7 +1,7 @@
 //! Axis-aligned cuboid.
 
+use core::cmp::Ordering;
 use nalgebra::{Point3, Unit, Vector3};
-use std::cmp::Ordering;
 
 use crate::rt::{Ray, Side};
 

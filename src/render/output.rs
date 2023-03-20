@@ -39,7 +39,7 @@ impl Output {
         png::save(
             self.colour.view(),
             &output_dir
-                .join(&format!("colour_{}", tag))
+                .join(format!("colour_{tag}"))
                 .with_extension("png"),
         );
 
@@ -48,9 +48,7 @@ impl Output {
             self.time
                 .map(|t| shader.data_grad.get((t / max_time) as f32))
                 .view(),
-            &output_dir
-                .join(&format!("time_{}", tag))
-                .with_extension("png"),
+            &output_dir.join(format!("time_{tag}")).with_extension("png"),
         );
 
         // let max_thread_id = self.thread.max().expect("Failed to resolve thread data.") + 1;

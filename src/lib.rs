@@ -9,6 +9,7 @@
     clippy::restriction
 )]
 #![allow(
+    clippy::arithmetic_side_effects,
     clippy::as_conversions,
     clippy::blanket_clippy_restriction_lints,
     clippy::cargo_common_metadata,
@@ -32,7 +33,8 @@
     clippy::pub_use,
     clippy::self_named_module_files,
     clippy::separated_literal_suffix,
-    clippy::single_char_lifetime_names
+    clippy::single_char_lifetime_names,
+    clippy::std_instead_of_alloc
 )]
 
 pub mod dom;

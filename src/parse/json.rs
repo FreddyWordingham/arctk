@@ -1,8 +1,9 @@
 //! JavaScript Object Notation.
 
+use core::any::type_name;
 use serde::{Deserialize, Serialize};
 use serde_json::to_string;
-use std::{any::type_name, fs, path::Path};
+use std::{fs, path::Path};
 
 /// Load a type from a JSON file.
 #[inline]
