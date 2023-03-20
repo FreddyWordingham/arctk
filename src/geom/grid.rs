@@ -11,9 +11,9 @@ pub struct Grid {
     /// Number of voxels in each direction.
     pub num_voxels: [usize; 3],
     /// Size of a voxel.
-    voxel_size: Vector3<f64>,
+    pub voxel_size: Vector3<f64>,
     /// Voxel inverse size.
-    voxel_inv_size: Vector3<f64>,
+    pub voxel_inv_size: Vector3<f64>,
 }
 
 impl Grid {
@@ -59,9 +59,15 @@ impl Grid {
     #[must_use]
     pub fn generate_voxel(&self, index: [usize; 3]) -> Cube {
         let mins = Point3::new(
-            self.boundary.mins.x + (self.voxel_size.x * index[0] as f64),
-            self.boundary.mins.y + (self.voxel_size.y * index[1] as f64),
-            self.boundary.mins.z + (self.voxel_size.z * index[2] as f64),
+            self.voxel_size
+                .x
+                .mul_add(index[0] as f64, self.boundary.mins.x),
+            self.voxel_size
+                .y
+                .mul_add(index[1] as f64, self.boundary.mins.y),
+            self.voxel_size
+                .z
+                .mul_add(index[2] as f64, self.boundary.mins.z),
         );
         let maxs = mins + self.voxel_size;
 

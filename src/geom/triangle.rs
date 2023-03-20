@@ -17,7 +17,7 @@ pub struct Triangle {
     /// vertex normals.
     pub norms: [Unit<Vector3<f64>>; 3],
     /// Plane normal.
-    plane_norm: Unit<Vector3<f64>>,
+    pub plane_norm: Unit<Vector3<f64>>,
 }
 
 impl Triangle {

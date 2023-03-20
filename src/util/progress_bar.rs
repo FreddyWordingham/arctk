@@ -51,6 +51,7 @@ impl ProgressBar {
     /// If there is not enough, return the remaining block.
     /// If there are none at all, return None.
     #[inline]
+    #[allow(clippy::print_stdout)]
     pub fn block(&mut self, size: usize) -> Option<(usize, usize)> {
         debug_assert!(size > 0);
 
